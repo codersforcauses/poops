@@ -172,7 +172,7 @@
   //#region  //*=========== Snippet Wrap ===========
   "Wrap with Fragment": {
     "prefix": "ff",
-    "body": ["<>", "\t${TM_SELECTED_TEXT}", "</>"]
+    "body": ["<${1}>", "\t${TM_SELECTED_TEXT}", "</${1}>"]
   },
   "Wrap with clsx": {
     "prefix": "cx",
