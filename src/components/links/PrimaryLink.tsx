@@ -1,10 +1,10 @@
-import * as React from 'react';
+import * as React from 'react'
 
-import clsxm from '@/lib/clsxm';
+import clsxm from '@/lib/clsxm'
 
 import UnstyledLink, {
-  UnstyledLinkProps,
-} from '@/components/links/UnstyledLink';
+  UnstyledLinkProps
+} from '@/components/links/UnstyledLink'
 
 const PrimaryLink = React.forwardRef<HTMLAnchorElement, UnstyledLinkProps>(
   ({ className, children, ...rest }, ref) => {
@@ -21,8 +21,8 @@ const PrimaryLink = React.forwardRef<HTMLAnchorElement, UnstyledLinkProps>(
       >
         {children}
       </UnstyledLink>
-    );
+    )
   }
-);
+)
 
-export default PrimaryLink;
+export default PrimaryLink

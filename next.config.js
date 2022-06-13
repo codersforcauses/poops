@@ -1,14 +1,14 @@
 /** @type {import('next').NextConfig} */
 module.exports = {
   eslint: {
-    dirs: ['src'],
+    dirs: ['src']
   },
 
   reactStrictMode: true,
 
   swcMinify: true,
   experimental: {
-    optimizeCss: true,
+    optimizeCss: true
   },
 
   // Uncoment to add domain whitelist
@@ -28,12 +28,12 @@ module.exports = {
           loader: '@svgr/webpack',
           options: {
             typescript: true,
-            icon: true,
-          },
-        },
-      ],
-    });
+            icon: true
+          }
+        }
+      ]
+    })
 
-    return config;
-  },
-};
+    return config
+  }
+}
