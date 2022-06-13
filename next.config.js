@@ -6,6 +6,11 @@ module.exports = {
 
   reactStrictMode: true,
 
+  swcMinify: true,
+  experimental: {
+    optimizeCss: true,
+  },
+
   // Uncoment to add domain whitelist
   // images: {
   //   domains: [
