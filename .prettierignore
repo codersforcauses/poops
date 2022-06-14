@@ -9,6 +9,7 @@
 /coverage
 
 # next.js
+.next
 /.next/
 /out/
 
@@ -33,7 +34,5 @@ yarn-error.log*
 # vercel
 .vercel
 
-# next-sitemap
-robots.txt
-sitemap.xml
-sitemap-*.xml
+# changelog
+CHANGELOG.md
