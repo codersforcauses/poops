@@ -85,13 +85,7 @@ module.exports = {
     {
       files: ['*.ts', '*.tsx'],
       rules: {
-        'jsx-a11y/anchor-is-valid': 'off',
-        'prettier/prettier': [
-          'error',
-          {
-            endOfLine: 'auto'
-          }
-        ]
+        'jsx-a11y/anchor-is-valid': 'off'
       }
     }
   ],
