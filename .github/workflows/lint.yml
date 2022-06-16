@@ -12,6 +12,7 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: '16'
+          cache: 'yarn'
       - run: yarn
       - run: yarn lint:strict
 
@@ -23,6 +24,7 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: '16'
+          cache: 'yarn'
       - run: yarn
       - run: yarn typecheck
 
@@ -34,6 +36,7 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: '16'
+          cache: 'yarn'
       - run: yarn
       - run: yarn format:check
 
@@ -45,5 +48,6 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: '16'
+          cache: 'yarn'
       - run: yarn
       - run: yarn test
