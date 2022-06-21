@@ -1,7 +1,17 @@
 {
-  "name": "ts-nextjs-tailwind-starter",
+  "name": "poops",
   "version": "0.1.0",
   "private": true,
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/codersforcauses/poops.git"
+  },
+  "author": "Coders for Causes",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/codersforcauses/poops/issues"
+  },
+  "homepage": "https://github.com/codersforcauses/poops#readme",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -14,13 +24,11 @@
     "test": "jest",
     "format": "prettier -w .",
     "format:check": "prettier -c .",
-    "push-release": "git push --follow-tags origin main",
-    "NONONpostbuild": "next-sitemap --config next-sitemap.config.js",
+    "postbuild": "next-sitemap --config next-sitemap.config.js",
     "prepare": "husky install"
   },
   "dependencies": {
     "clsx": "^1.1.1",
-    "critters": "^0.0.16",
     "next": "^12.1.6",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
@@ -38,6 +46,7 @@
     "@typescript-eslint/eslint-plugin": "^5.27.0",
     "@typescript-eslint/parser": "^5.27.0",
     "autoprefixer": "^10.4.7",
+    "critters": "^0.0.16",
     "eslint": "^8.17.0",
     "eslint-config-next": "^12.1.6",
     "eslint-config-prettier": "^8.5.0",

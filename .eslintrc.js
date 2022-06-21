@@ -44,19 +44,20 @@ module.exports = {
       {
         groups: [
           // ext library & side effect imports
-          ['^@?\\w', '^\\u0000'],
-          // {s}css files
-          ['^.+\\.s?css$'],
+          ['^react$', '^next', '^@?\\w', '^\\u0000'],
           // Lib and hooks
-          ['^@/lib', '^@/hooks'],
+          ['^@lib', '^@hooks'],
           // static data
-          ['^@/data'],
+          ['^@data'],
+
+          // pages
+          ['^pages'],
           // components
-          ['^@/components', '^@/container'],
+          ['^@components', '^@container'],
           // zustand store
-          ['^@/store'],
+          ['^@store'],
           // Other imports
-          ['^@/'],
+          ['^@'],
           // relative paths up until 3 level
           [
             '^\\./?$',
@@ -68,14 +69,26 @@ module.exports = {
             '^\\.\\./\\.\\./\\.\\./?$',
             '^\\.\\./\\.\\./\\.\\.(?!/?$)'
           ],
-          ['^@/types'],
+          ['^@types'],
+          // public
+          ['^public'],
           // other that didnt fit in
-          ['^']
+          ['^'],
+          // {s}css files
+          ['^.+\\.s?css$']
         ]
       }
     ]
     //#endregion  //*======== Import Sort ===========
   },
+  overrides: [
+    {
+      files: ['*.ts', '*.tsx'],
+      rules: {
+        'jsx-a11y/anchor-is-valid': 'off'
+      }
+    }
+  ],
   globals: {
     React: true,
     JSX: true
