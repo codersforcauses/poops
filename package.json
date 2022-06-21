@@ -1,7 +1,17 @@
 {
-  "name": "ts-nextjs-tailwind-starter",
+  "name": "poops",
   "version": "0.1.0",
   "private": true,
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/codersforcauses/poops.git"
+  },
+  "author": "Coders for Causes",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/codersforcauses/poops/issues"
+  },
+  "homepage": "https://github.com/codersforcauses/poops#readme",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
