@@ -9,7 +9,7 @@ Frontend
 - Client
   - [NextJS](https://nextjs.org/)
   - [ReactJS](https://reactjs.org/)
-  - [Typescript](https://www.typescriptlang.org/)
+  - [TypeScript](https://www.typescriptlang.org/)
   - [Tailwind CSS](https://tailwindcss.com/)
 - Testing
   - [Jest](https://jestjs.io/)
@@ -17,7 +17,7 @@ Frontend
 
 Backend
 
-- [Firebase](hhttps://firebase.google.com/)
+- [Firebase](https://firebase.google.com/)
   - Authentication
   - Cloud Firestore (noSQL)
 
