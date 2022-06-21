@@ -1,12 +1,51 @@
+# POOPS - Pets of Older Persons 2022
+
+## Introduction
+
+### Technologies
+
+Frontend
+
+- Client
+  - [NextJS](https://nextjs.org/)
+  - [ReactJS](https://reactjs.org/)
+  - [Typescript](https://www.typescriptlang.org/)
+  - [Tailwind CSS](https://tailwindcss.com/)
+- Testing
+  - [Jest](https://jestjs.io/)
+  - [Cypress](https://www.cypress.io/)
+
+Backend
+
+- [Firebase](hhttps://firebase.google.com/)
+  - Authentication
+  - Cloud Firestore (noSQL)
+
+Other
+
+- Documentation
+  - [MkDocs](https://www.mkdocs.org/)
+  - [MkDocstrings](https://mkdocstrings.github.io/)
+
+Recommended VS Code extensions
+
+- ESLint
+- Prettier
+- Tailwind CSS IntelliSense
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
 
-First, run the development server:
+First, install yarn:
 
 ```bash
-npm run dev
-# or
+npm install --global yarn
+```
+
+Then, run the development server:
+
+```bash
 yarn dev
 ```
 
