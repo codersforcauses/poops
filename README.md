@@ -2,37 +2,6 @@
 
 ## Introduction
 
-### Technologies
-
-Frontend
-
-- Client
-  - [NextJS](https://nextjs.org/)
-  - [ReactJS](https://reactjs.org/)
-  - [TypeScript](https://www.typescriptlang.org/)
-  - [Tailwind CSS](https://tailwindcss.com/)
-- Testing
-  - [Jest](https://jestjs.io/)
-  - [Cypress](https://www.cypress.io/)
-
-Backend
-
-- [Firebase](https://firebase.google.com/)
-  - Authentication
-  - Cloud Firestore (noSQL)
-
-Other
-
-- Documentation
-  - [MkDocs](https://www.mkdocs.org/)
-  - [MkDocstrings](https://mkdocstrings.github.io/)
-
-Recommended VS Code extensions
-
-- ESLint
-- Prettier
-- Tailwind CSS IntelliSense
-
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
