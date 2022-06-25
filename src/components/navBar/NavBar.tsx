@@ -7,9 +7,9 @@ import {
 
 import NavLink from '@/components/navBar/NavLink'
 
-const NavBar = () => {
+export default function NavBar() {
   return (
-    <div className='w-full'>
+    <div className='h-14 w-full'>
       <section
         id='bottom-navigation'
         className='fixed inset-x-0 bottom-0 z-10 block bg-white shadow'
@@ -24,5 +24,3 @@ const NavBar = () => {
     </div>
   )
 }
-
-export default NavBar

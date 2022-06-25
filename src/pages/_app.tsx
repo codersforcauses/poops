@@ -14,8 +14,8 @@ import '@/styles/colors.css'
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <div>
-      <NavBar />
       <Component {...pageProps} />
+      <NavBar />
     </div>
   )
 }

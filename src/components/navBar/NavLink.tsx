@@ -15,7 +15,7 @@ export default function NavLink({ href, name, icon }: NavLinkProps) {
   return (
     <a
       href={href}
-      className='inline-block w-full justify-center pt-2 pb-1 text-center hover:text-poops-red focus:text-blue-500'
+      className='inline-block w-full justify-center pt-2 pb-1 text-center hover:text-poops-red'
       onMouseEnter={() => setIsHighlighted(true)}
       onMouseLeave={() => setIsHighlighted(false)}
     >
