@@ -12,6 +12,12 @@ First, install yarn:
 npm install --global yarn
 ```
 
+Then, install the dependencies:
+
+```bash
+yarn install
+```
+
 Then, run the development server:
 
 ```bash
