@@ -1,4 +1,4 @@
-import { mdiHomeOutline, mdiMessageProcessingOutline, mdiAlert, mdiClipboardAlertOutline  } from '@mdi/js'
+import { mdiHomeOutline, mdiMessageProcessingOutline, mdiMapMarkerOutline, mdiClipboardAlertOutline  } from '@mdi/js'
 
 import NavLink from '@/components/navBar/NavLink'
 
@@ -11,6 +11,9 @@ const NavBar = () => {
       >
         <div id='tabs' className='flex justify-between'>
           <NavLink href='#' name='Home' icon={mdiHomeOutline} />
+          <NavLink href='#' name='Contact' icon={mdiMessageProcessingOutline} />
+          <NavLink href='#' name='Visit' icon={mdiMapMarkerOutline} />
+          <NavLink href='#' name='Incidents' icon={mdiClipboardAlertOutline} />
         </div>
       </section>
     </div>

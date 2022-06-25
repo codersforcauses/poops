@@ -15,7 +15,7 @@ export default function NavLink({ href, name, icon }: NavLinkProps) {
       <Icon
         className='mb-1 inline-block'
         path={icon}
-        size={2}
+        size={1}
         vertical={false}
         color='black'
       />
