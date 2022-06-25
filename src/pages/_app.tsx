@@ -1,9 +1,10 @@
 import { AppProps } from 'next/app'
 
+import NavBar from '@/components/navBar/navbar'
+
 import '@/styles/globals.css'
 // !STARTERCONF This is for demo purposes, remove @/styles/colors.css import immediately
 import '@/styles/colors.css'
-import NavBar from '@/components/navBar/navbar'
 
 /**
  * !STARTERCONF info
@@ -11,12 +12,12 @@ import NavBar from '@/components/navBar/navbar'
  */
 
 function MyApp({ Component, pageProps }: AppProps) {
-  
   return (
     <div>
-      <NavBar/>
+      <NavBar />
       <Component {...pageProps} />
-    </div>)
+    </div>
+  )
 }
 
 export default MyApp
