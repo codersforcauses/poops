@@ -1,4 +1,4 @@
-import { mdiHome } from '@mdi/js'
+import { mdiHomeOutline, mdiMessageProcessingOutline, mdiAlert, mdiClipboardAlertOutline  } from '@mdi/js'
 
 import NavLink from '@/components/navBar/NavLink'
 
@@ -10,7 +10,7 @@ const NavBar = () => {
         className='fixed inset-x-0 bottom-0 z-10 block bg-white shadow'
       >
         <div id='tabs' className='flex justify-between'>
-          <NavLink href='#' name='Home' icon={mdiHome} />
+          <NavLink href='#' name='Home' icon={mdiHomeOutline} />
         </div>
       </section>
     </div>
