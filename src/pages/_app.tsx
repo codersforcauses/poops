@@ -1,6 +1,6 @@
 import { AppProps } from 'next/app'
 
-import NavBar from '@/components/navBar/navbar'
+import NavBar from '@/components/navBar/NavBar'
 
 import '@/styles/globals.css'
 // !STARTERCONF This is for demo purposes, remove @/styles/colors.css import immediately
