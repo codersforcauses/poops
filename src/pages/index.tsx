@@ -4,7 +4,7 @@ const Home = () => {
   return (
     <>
       {/* <Seo /> */}
-      <Seo pageTitle='Home' />
+      <Seo />
 
       <main>
         <p>Home Page</p>
