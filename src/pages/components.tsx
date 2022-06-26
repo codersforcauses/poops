@@ -1,23 +1,23 @@
 // !STARTERCONF You can delete this page
-import * as React from 'react'
+import { useState } from 'react'
 import clsx from 'clsx'
 
-import Button from '@/components/buttons/Button'
-import Layout from '@/components/layout/Layout'
-import ArrowLink from '@/components/links/ArrowLink'
-import ButtonLink from '@/components/links/ButtonLink'
-import PrimaryLink from '@/components/links/PrimaryLink'
-import UnderlineLink from '@/components/links/UnderlineLink'
-import UnstyledLink from '@/components/links/UnstyledLink'
+import Button from '@/components/Button'
+import Layout from '@/components/Layout'
+import ArrowLink from '@/components/Links/ArrowLink'
+import ButtonLink from '@/components/Links/ButtonLink'
+import PrimaryLink from '@/components/Links/PrimaryLink'
+import UnderlineLink from '@/components/Links/UnderlineLink'
+import UnstyledLink from '@/components/Links/UnstyledLink'
 import NextImage from '@/components/NextImage'
 import Seo from '@/components/Seo'
 import Skeleton from '@/components/Skeleton'
 
 type Color = typeof colorList[number]
 
-export default function ComponentsPage() {
-  const [mode, setMode] = React.useState<'dark' | 'light'>('light')
-  const [color, setColor] = React.useState<Color>('sky')
+const Components = () => {
+  const [mode, setMode] = useState<'dark' | 'light'>('light')
+  const [color, setColor] = useState<Color>('sky')
   function toggleMode() {
     return mode === 'dark' ? setMode('light') : setMode('dark')
   }
@@ -65,6 +65,7 @@ export default function ComponentsPage() {
                 </p>
                 <div className='flex flex-wrap gap-2'>
                   <select
+                    title='color'
                     name='color'
                     id='color'
                     value={color}
@@ -344,3 +345,5 @@ const colorList = [
   'neutral',
   'stone'
 ] as const
+
+export default Components
