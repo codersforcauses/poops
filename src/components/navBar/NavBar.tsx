@@ -6,6 +6,7 @@ import {
   LocationMarkerIcon
 } from '@heroicons/react/outline'
 
+import { NavIcon } from '@/components/navBar/NavIcon'
 import NavLink from '@/components/navBar/NavLink'
 
 export default function NavBar() {
@@ -45,15 +46,18 @@ export default function NavBar() {
   })
 
   return (
-    <div className='h-16 w-full'>
-      <nav
-        id='bottom-navigation'
-        className='fixed inset-x-0 bottom-0 z-10 block bg-white shadow'
-      >
-        <div id='tabs' className='flex justify-between'>
-          {tabs}
-        </div>
-      </nav>
+    <div>
+      <div className='h-16 w-full justify-center'>
+        <nav
+          id='bottom-navigation'
+          className='fixed inset-x-0 bottom-0 z-10 block bg-white shadow'
+        >
+          <div id='tabs' className='flex justify-between'>
+            {tabs}
+          </div>
+        </nav>
+        <NavIcon />
+      </div>
     </div>
   )
 }
