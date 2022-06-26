@@ -9,15 +9,15 @@ module.exports = {
     'eslint:recommended',
     'next',
     'next/core-web-vitals',
+    'prettier',
     'plugin:@typescript-eslint/recommended',
-    'prettier'
+    'plugin:jsx-a11y/recommended'
   ],
   rules: {
     'no-unused-vars': 'off',
     'no-console': 'warn',
     '@typescript-eslint/explicit-module-boundary-types': 'off',
 
-    'react/display-name': 'off',
     'react/jsx-curly-brace-presence': [
       'warn',
       { props: 'never', children: 'never' }

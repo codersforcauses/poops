@@ -1,16 +1,16 @@
 import Seo from '@/components/Seo'
 
-const Home = () => {
+const Visit = () => {
   return (
     <>
       {/* <Seo /> */}
-      <Seo />
+      <Seo pageTitle='Visit' />
 
       <main>
-        <p>Home Page</p>
+        <p>Visit Page</p>
       </main>
     </>
   )
 }
 
-export default Home
+export default Visit
