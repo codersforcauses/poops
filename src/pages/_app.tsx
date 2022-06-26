@@ -1,8 +1,8 @@
 import { AppProps } from 'next/app'
 
+import NavBar from '@/components/navBar/NavBar'
+
 import '@/styles/globals.css'
-// !STARTERCONF This is for demo purposes, remove @/styles/colors.css import immediately
-import '@/styles/colors.css'
 
 /**
  * !STARTERCONF info
@@ -10,7 +10,12 @@ import '@/styles/colors.css'
  */
 
 const POOPS = ({ Component, pageProps }: AppProps) => {
-  return <Component {...pageProps} />
+  return (
+    <>
+      <Component {...pageProps} />
+      <NavBar />
+    </>
+  )
 }
 
 export default POOPS
