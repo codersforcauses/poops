@@ -10,13 +10,13 @@ type ArrowLinkProps<C extends React.ElementType> = {
 } & UnstyledLinkProps &
   React.ComponentProps<C>
 
-export default function ArrowLink<C extends React.ElementType>({
+const ArrowLink = <C extends React.ElementType>({
   children,
   className,
   direction = 'right',
   as,
   ...rest
-}: ArrowLinkProps<C>) {
+}: ArrowLinkProps<C>) => {
   const Component = as || UnderlineLink
 
   return (
@@ -61,3 +61,5 @@ export default function ArrowLink<C extends React.ElementType>({
     </Component>
   )
 }
+
+export default ArrowLink
