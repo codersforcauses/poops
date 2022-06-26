@@ -2,7 +2,7 @@ import * as React from 'react'
 
 import UnstyledLink, {
   UnstyledLinkProps
-} from '@/components/links/UnstyledLink'
+} from '@/components/Linksa/UnstyledLink'
 import clsxm from '@/lib/clsxm'
 
 enum ButtonVariant {
