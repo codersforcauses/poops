@@ -1,6 +1,6 @@
 import * as React from 'react'
 
-import Layout from '@/components/layout/Layout'
+import Layout from '@/components/Layout'
 import ArrowLink from '@/components/links/ArrowLink'
 import ButtonLink from '@/components/links/ButtonLink'
 import UnderlineLink from '@/components/links/UnderlineLink'
@@ -20,7 +20,7 @@ import Vercel from '~/svg/Vercel.svg'
 // Before you begin editing, follow all comments with `STARTERCONF`,
 // to customize the default configuration.
 
-export default function HomePage() {
+const Home = () => {
   return (
     <Layout>
       {/* <Seo templateTitle='Home' /> */}
@@ -72,3 +72,5 @@ export default function HomePage() {
     </Layout>
   )
 }
+
+export default Home

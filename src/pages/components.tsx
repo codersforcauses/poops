@@ -2,8 +2,8 @@
 import * as React from 'react'
 import clsx from 'clsx'
 
-import Button from '@/components/buttons/Button'
-import Layout from '@/components/layout/Layout'
+import Button from '@/components/Button'
+import Layout from '@/components/Layout'
 import ArrowLink from '@/components/links/ArrowLink'
 import ButtonLink from '@/components/links/ButtonLink'
 import PrimaryLink from '@/components/links/PrimaryLink'
@@ -15,7 +15,7 @@ import Skeleton from '@/components/Skeleton'
 
 type Color = typeof colorList[number]
 
-export default function ComponentsPage() {
+const Components = () => {
   const [mode, setMode] = React.useState<'dark' | 'light'>('light')
   const [color, setColor] = React.useState<Color>('sky')
   function toggleMode() {
@@ -344,3 +344,5 @@ const colorList = [
   'neutral',
   'stone'
 ] as const
+
+export default Components
