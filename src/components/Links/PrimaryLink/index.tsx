@@ -2,7 +2,7 @@ import * as React from 'react'
 
 import UnstyledLink, {
   UnstyledLinkProps
-} from '@/components/Linksa/UnstyledLink'
+} from '@/components/Links/UnstyledLink'
 import clsxm from '@/lib/clsxm'
 
 const PrimaryLink = React.forwardRef<HTMLAnchorElement, UnstyledLinkProps>(
