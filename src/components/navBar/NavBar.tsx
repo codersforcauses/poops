@@ -32,42 +32,31 @@ export default function NavBar() {
     }
   ]
 
+  const navLinks = linkDetails.map((link) => {
+    return (
+      <NavLink
+        href={link.href}
+        name={link.name}
+        key={link.name}
+        currentPage={link.name === currentPage}
+        setCurrentPage={setCurrentPage}
+        icon={link.icon}
+      />
+    )
+  })
+
   return (
     <div className='h-16 w-full justify-center'>
       <nav
         id='bottom-navigation'
         className='fixed inset-x-0 bottom-0 z-10 block bg-white shadow'
       >
-        <div id='tabs' className='flex justify-between'>
-          <NavLink
-            href={linkDetails[0].href}
-            name={linkDetails[0].name}
-            currentPage={linkDetails[0].name === currentPage}
-            setCurrentPage={setCurrentPage}
-            icon={linkDetails[0].icon}
-          />
-          <NavLink
-            href={linkDetails[1].href}
-            name={linkDetails[1].name}
-            currentPage={linkDetails[1].name === currentPage}
-            setCurrentPage={setCurrentPage}
-            icon={linkDetails[1].icon}
-          />
+        <div className='flex justify-between'>
+          {navLinks[0]}
+          {navLinks[1]}
           <NavIcon />
-          <NavLink
-            href={linkDetails[2].href}
-            name={linkDetails[2].name}
-            currentPage={linkDetails[2].name === currentPage}
-            setCurrentPage={setCurrentPage}
-            icon={linkDetails[2].icon}
-          />
-          <NavLink
-            href={linkDetails[3].href}
-            name={linkDetails[3].name}
-            currentPage={linkDetails[3].name === currentPage}
-            setCurrentPage={setCurrentPage}
-            icon={linkDetails[3].icon}
-          />
+          {navLinks[2]}
+          {navLinks[3]}
         </div>
       </nav>
     </div>
