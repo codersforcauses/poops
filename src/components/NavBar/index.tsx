@@ -14,20 +14,20 @@ export default function NavBar() {
   const iconClasses = 'inline-block h-7 w-8 hover:text-poops-red'
 
   const linkDetails = [
-    { name: 'Home', href: '#', icon: <HomeIcon className={iconClasses} /> },
+    { name: 'Home', route: '/', icon: <HomeIcon className={iconClasses} /> },
     {
       name: 'Contact',
-      href: '#',
+      route: '/contact',
       icon: <ChatAltIcon className={iconClasses} />
     },
     {
       name: 'Visit',
-      href: '#',
+      route: '/visit',
       icon: <LocationMarkerIcon className={iconClasses} />
     },
     {
       name: 'Incidents',
-      href: '#',
+      route: '/incidents',
       icon: <ExclamationCircleIcon className={iconClasses} />
     }
   ]
@@ -35,7 +35,7 @@ export default function NavBar() {
   const navLinks = linkDetails.map((link) => {
     return (
       <NavLink
-        href={link.href}
+        href={link.route}
         name={link.name}
         key={link.name}
         currentPage={link.name === currentPage}
