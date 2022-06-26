@@ -7,8 +7,11 @@ assignees: ''
 ---
 
 ## Basic Information
+
 Description of the issue
-- [ ] Issue task
+
+- [ ] Issue task 1
 
 ## Other Information
+
 Potential scopes:
