@@ -1,3 +1,5 @@
+import Link from 'next/link'
+
 type NavLinkProps = {
   href: string
   name: string
@@ -18,13 +20,14 @@ export default function NavLink({
   const currentTabClasses = tabClasses + ' border-t-2 border-t-poops-red'
 
   return (
-    <a
-      href={href}
-      className={currentPage ? currentTabClasses : tabClasses}
-      onClick={() => setCurrentPage(name)}
-    >
-      {icon}
-      <span className='tab tab-home block text-xs'>{name}</span>
-    </a>
+    <Link href={href}>
+      <a
+        className={currentPage ? currentTabClasses : tabClasses}
+        onClick={() => setCurrentPage(name)}
+      >
+        {icon}
+        <span className='tab tab-home block text-xs'>{name}</span>
+      </a>
+    </Link>
   )
 }
