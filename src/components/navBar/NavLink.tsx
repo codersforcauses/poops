@@ -15,7 +15,8 @@ export default function NavLink({
 }: NavLinkProps) {
   const tabClasses =
     'inline-block w-full justify-center pt-2 pb-1 text-center hover:text-poops-red'
-  const currentTabClasses = tabClasses + ' border-2 border-t-poops-red'
+  const currentTabClasses = tabClasses + ' border-t-2 border-t-poops-red'
+
   return (
     <a
       href={href}

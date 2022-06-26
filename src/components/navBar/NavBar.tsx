@@ -32,32 +32,44 @@ export default function NavBar() {
     }
   ]
 
-  const tabs = linkDetails.map((link) => {
-    return (
-      <NavLink
-        href={link.href}
-        name={link.name}
-        key={link.name}
-        currentPage={link.name === currentPage}
-        setCurrentPage={setCurrentPage}
-        icon={link.icon}
-      />
-    )
-  })
-
   return (
-    <div>
-      <div className='h-16 w-full justify-center'>
-        <nav
-          id='bottom-navigation'
-          className='fixed inset-x-0 bottom-0 z-10 block bg-white shadow'
-        >
-          <div id='tabs' className='flex justify-between'>
-            {tabs}
-          </div>
-        </nav>
-        <NavIcon />
-      </div>
+    <div className='h-16 w-full justify-center'>
+      <nav
+        id='bottom-navigation'
+        className='fixed inset-x-0 bottom-0 z-10 block bg-white shadow'
+      >
+        <div id='tabs' className='flex justify-between'>
+          <NavLink
+            href={linkDetails[0].href}
+            name={linkDetails[0].name}
+            currentPage={linkDetails[0].name === currentPage}
+            setCurrentPage={setCurrentPage}
+            icon={linkDetails[0].icon}
+          />
+          <NavLink
+            href={linkDetails[1].href}
+            name={linkDetails[1].name}
+            currentPage={linkDetails[1].name === currentPage}
+            setCurrentPage={setCurrentPage}
+            icon={linkDetails[1].icon}
+          />
+          <NavIcon />
+          <NavLink
+            href={linkDetails[2].href}
+            name={linkDetails[2].name}
+            currentPage={linkDetails[2].name === currentPage}
+            setCurrentPage={setCurrentPage}
+            icon={linkDetails[2].icon}
+          />
+          <NavLink
+            href={linkDetails[3].href}
+            name={linkDetails[3].name}
+            currentPage={linkDetails[3].name === currentPage}
+            setCurrentPage={setCurrentPage}
+            icon={linkDetails[3].icon}
+          />
+        </div>
+      </nav>
     </div>
   )
 }
