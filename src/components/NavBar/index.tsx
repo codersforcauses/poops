@@ -6,8 +6,8 @@ import {
   LocationMarkerIcon
 } from '@heroicons/react/outline'
 
-import { NavIcon } from '@/components/avBar/NavIcon'
-import NavLink from '@/components/avBar/NavLink'
+import { NavIcon } from '@/components/NavBar/NavIcon'
+import NavLink from '@/components/NavBar/NavLink'
 
 export default function NavBar() {
   const [currentPage, setCurrentPage] = useState('Home')
