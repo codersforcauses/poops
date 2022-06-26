@@ -1,5 +1,3 @@
-import * as React from 'react'
-
 import UnstyledLink from '@/components/Links/UnstyledLink'
 
 const links = [

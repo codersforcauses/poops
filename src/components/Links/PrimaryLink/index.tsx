@@ -1,11 +1,11 @@
-import * as React from 'react'
+import { forwardRef } from 'react'
 
 import UnstyledLink, {
   UnstyledLinkProps
 } from '@/components/Links/UnstyledLink'
 import clsxm from '@/lib/clsxm'
 
-const PrimaryLink = React.forwardRef<HTMLAnchorElement, UnstyledLinkProps>(
+const PrimaryLink = forwardRef<HTMLAnchorElement, UnstyledLinkProps>(
   ({ className, children, ...rest }, ref) => {
     return (
       <UnstyledLink

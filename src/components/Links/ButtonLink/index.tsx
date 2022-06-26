@@ -1,4 +1,4 @@
-import * as React from 'react'
+import { forwardRef } from 'react'
 
 import UnstyledLink, {
   UnstyledLinkProps
@@ -18,7 +18,7 @@ type ButtonLinkProps = {
   variant?: keyof typeof ButtonVariant
 } & UnstyledLinkProps
 
-const ButtonLink = React.forwardRef<HTMLAnchorElement, ButtonLinkProps>(
+const ButtonLink = forwardRef<HTMLAnchorElement, ButtonLinkProps>(
   (
     { children, className, variant = 'primary', isDarkBg = false, ...rest },
     ref

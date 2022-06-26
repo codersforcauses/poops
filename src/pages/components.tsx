@@ -1,5 +1,5 @@
 // !STARTERCONF You can delete this page
-import * as React from 'react'
+import { useState } from 'react'
 import clsx from 'clsx'
 
 import Button from '@/components/Button'
@@ -16,8 +16,8 @@ import Skeleton from '@/components/Skeleton'
 type Color = typeof colorList[number]
 
 const Components = () => {
-  const [mode, setMode] = React.useState<'dark' | 'light'>('light')
-  const [color, setColor] = React.useState<Color>('sky')
+  const [mode, setMode] = useState<'dark' | 'light'>('light')
+  const [color, setColor] = useState<Color>('sky')
   function toggleMode() {
     return mode === 'dark' ? setMode('light') : setMode('dark')
   }
@@ -65,6 +65,7 @@ const Components = () => {
                 </p>
                 <div className='flex flex-wrap gap-2'>
                   <select
+                    title='color'
                     name='color'
                     id='color'
                     value={color}

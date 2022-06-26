@@ -1,5 +1,3 @@
-import * as React from 'react'
-
 import UnderlineLink from '@/components/Links/UnderlineLink'
 import { UnstyledLinkProps } from '@/components/Links/UnstyledLink'
 import clsxm from '@/lib/clsxm'

@@ -1,5 +1,3 @@
-import * as React from 'react'
-
 import clsxm from '@/lib/clsxm'
 
 type SkeletonProps = React.ComponentPropsWithoutRef<'div'>

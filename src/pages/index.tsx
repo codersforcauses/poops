@@ -1,5 +1,3 @@
-import * as React from 'react'
-
 import Layout from '@/components/Layout'
 import ArrowLink from '@/components/Links/ArrowLink'
 import ButtonLink from '@/components/Links/ButtonLink'
