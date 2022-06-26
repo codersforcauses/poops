@@ -22,7 +22,7 @@ type SeoProps = {
   templateTitle?: string
 } & Partial<typeof defaultMeta>
 
-export default function Seo(props: SeoProps) {
+const Seo = (props: SeoProps) => {
   const router = useRouter()
   const meta = {
     ...defaultMeta,
@@ -88,6 +88,8 @@ export default function Seo(props: SeoProps) {
     </Head>
   )
 }
+
+export default Seo
 
 type Favicons = {
   rel: string

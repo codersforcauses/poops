@@ -1,11 +1,10 @@
-import * as React from 'react'
 import { RiAlarmWarningFill } from 'react-icons/ri'
 
-import Layout from '@/components/layout/Layout'
-import ArrowLink from '@/components/links/ArrowLink'
+import Layout from '@/components/Layout'
+import ArrowLink from '@/components/Links/ArrowLink'
 import Seo from '@/components/Seo'
 
-export default function NotFoundPage() {
+const NotFound = () => {
   return (
     <Layout>
       <Seo templateTitle='Not Found' />
@@ -27,3 +26,5 @@ export default function NotFoundPage() {
     </Layout>
   )
 }
+
+export default NotFound

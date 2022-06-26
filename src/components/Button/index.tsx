@@ -1,4 +1,4 @@
-import * as React from 'react'
+import { ComponentPropsWithRef, forwardRef } from 'react'
 import { ImSpinner2 } from 'react-icons/im'
 
 import clsxm from '@/lib/clsxm'
@@ -15,9 +15,9 @@ type ButtonProps = {
   isLoading?: boolean
   isDarkBg?: boolean
   variant?: keyof typeof ButtonVariant
-} & React.ComponentPropsWithRef<'button'>
+} & ComponentPropsWithRef<'button'>
 
-const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
+const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   (
     {
       children,
