@@ -1,11 +1,11 @@
 import React from 'react'
 import { useState } from 'react'
 
-import Modal from './modal'
+import Modal from './Modal'
 
 export default function EditButton() {
   return (
-    <button type='button' className='text-red-500'>
+    <button type='button' className='bg-poops-red'>
       Edit!
     </button>
   )
@@ -14,10 +14,10 @@ export default function EditButton() {
 export const AddButton = () => {
   const [openModal, setOpenModal] = useState(false)
   return (
-    <div className=' absolute right-5 bottom-20 bg-red-500 py-2 px-5 '>
+    <div className='absolute right-5 bottom-20 bg-poops-red py-2 px-5 '>
       <button
         type='button'
-        className='text bg-red-500 text-white'
+        className='text bg-poops-red text-white'
         onClick={() => {
           setOpenModal(true)
         }}

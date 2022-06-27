@@ -2,7 +2,7 @@ import React from 'react'
 
 import Data from '@/../mockData/MOCK_DATA.json'
 import EditButton from '@/components/visit/Buttons'
-import DatePicker from '@/components/visit/DatePicker'
+import DatePicker from '@/components/visit/datePicker'
 
 interface SearchBarState {
   query: string
@@ -63,7 +63,7 @@ class SearchBar extends React.Component<Record<string, never>, SearchBarState> {
           }).map((post) => (
             <div
               key={post.id}
-              className='m-2 flex flex-col space-y-1 rounded border-2 p-2'
+              className='m-2 flex flex-col space-y-1 rounded border p-2'
             >
               <div className='relative'>
                 <input
@@ -72,10 +72,10 @@ class SearchBar extends React.Component<Record<string, never>, SearchBarState> {
                 ></input>
                 <p className=''>{`${post.first_name} ${post.last_name}`}</p>
                 <div className='flex justify-between'>
-                  <p className='font-bold text-red-500'>{post.pet}</p>
+                  <p className='font-bold text-poops-red'>{post.pet}</p>
                   <p className=''>{post.date}</p>
                 </div>
-                <div className='max-h-0 overflow-hidden bg-red-100 transition-all duration-500 peer-checked:max-h-40'>
+                <div className='max-h-0 overflow-hidden transition-all duration-500 peer-checked:max-h-40'>
                   <p>Client Phone Number: {post.number}</p>
                   <p>Distance travelled: {post.travelled}</p>
                   <div className='flex justify-between'>
