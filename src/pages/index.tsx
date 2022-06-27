@@ -1,10 +1,10 @@
-import Seo from '@/components/Seo'
+import Header from '@/components/Header'
 
 const Home = () => {
   return (
     <>
-      {/* <Seo /> */}
-      <Seo />
+      {/* <Header /> */}
+      <Header />
 
       <main>
         <p>Home Page</p>
