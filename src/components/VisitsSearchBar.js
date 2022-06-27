@@ -30,15 +30,17 @@ function VisitsSearchBar() {
             key={post.id}
             className='m-2 flex flex-col space-y-1 rounded border-2 p-2'
           >
-            <details>
-              <summary className='list-none'>
-                <p className=''>{`${post.first_name} ${post.last_name}`}</p>
-                <div className='flex justify-between'>
-                  <p className='font-bold text-red-500'>{post.pet}</p>
-                  <p className=''>{post.date}</p>
-                </div>
-              </summary>
-              <div>
+            <div className='relative'>
+              <input
+                type='checkbox'
+                className='peer absolute top-0 h-full w-full cursor-pointer opacity-0'
+              ></input>
+              <p className=''>{`${post.first_name} ${post.last_name}`}</p>
+              <div className='flex justify-between'>
+                <p className='font-bold text-red-500'>{post.pet}</p>
+                <p className=''>{post.date}</p>
+              </div>
+              <div className='max-h-0 overflow-hidden transition-all duration-500 peer-checked:max-h-40'>
                 <p>Client Phone Number</p>
                 <p>Distance travelled.</p>
                 <p>Walk Metres.</p>
@@ -46,7 +48,7 @@ function VisitsSearchBar() {
                 <p>Commute Metres</p>
                 <p>Commute Method</p>
               </div>
-            </details>
+            </div>
           </div>
         ))}
       </div>
