@@ -16,19 +16,29 @@ export default function NavLink({
   setCurrentPage
 }: NavLinkProps) {
   const tabClasses =
-    'inline-block w-full justify-center pt-2 pb-1 text-center hover:text-poops-red'
+    'inline-block w-full justify-center pt-2 pb-1 text-center hover:text-poops-red select-none'
   const currentTabClasses = tabClasses + ' border-t-2 border-t-poops-red'
 
   return (
     <Link href={href}>
-      <a
-        className={currentPage ? currentTabClasses : tabClasses}
-        onMouseDown={() => setCurrentPage(name)}
-        aria-hidden='true' // TODO: need work on accessibility
-      >
-        {icon}
-        <span className='tab tab-home block text-xs'>{name}</span>
-      </a>
+      {name !== 'Visit' ? (
+        <a
+          className={currentPage ? currentTabClasses : tabClasses}
+          onMouseDown={() => setCurrentPage(name)}
+          aria-hidden='true' // TODO: need work on accessibility
+        >
+          {icon}
+          <span className='tab tab-home block text-xs'>{name}</span>
+        </a>
+      ) : (
+        <a
+          className={tabClasses}
+          onMouseDown={() => setCurrentPage(name)}
+          aria-hidden='true' // TODO: need work on accessibility
+        >
+          {icon}
+        </a>
+      )}
     </Link>
   )
 }
