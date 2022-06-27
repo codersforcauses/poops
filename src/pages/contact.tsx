@@ -1,10 +1,10 @@
-import Seo from '@/components/Header'
+import Header from '@/components/Header'
 
 const Contact = () => {
   return (
     <>
       {/* <Seo /> */}
-      <Seo pageTitle='Contact' />
+      <Header pageTitle='Contact' />
 
       <main>
         <p>Contact Page</p>
