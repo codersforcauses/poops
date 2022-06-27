@@ -2,11 +2,11 @@ import Head from 'next/head'
 
 const defaultTitle = 'POOPS'
 
-interface SeoProps {
+interface HeaderProps {
   pageTitle?: string
 }
 
-const Seo = ({ pageTitle = defaultTitle }: SeoProps) => {
+const Header = ({ pageTitle = defaultTitle }: HeaderProps) => {
   return (
     <Head>
       <title>{pageTitle}</title>
@@ -14,4 +14,4 @@ const Seo = ({ pageTitle = defaultTitle }: SeoProps) => {
   )
 }
 
-export default Seo
+export default Header

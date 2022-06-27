@@ -1,6 +1,6 @@
 import { Head, Html, Main, NextScript } from 'next/document'
 
-import Favicon from '@/components/Seo/Favicon'
+import Favicon from '@/components/Header/favicon'
 
 const Document = () => {
   return (
