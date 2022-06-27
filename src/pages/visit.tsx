@@ -1,6 +1,6 @@
 import { AddButton } from '@/components/visit/Buttons'
 
-import VisitsSearchBar from '../components/visit/VisitsSearchBar'
+import VisitsSearchBar from '../components/visit/searchBar'
 
 function Visit() {
   return (
