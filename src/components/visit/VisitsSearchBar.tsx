@@ -1,30 +1,41 @@
 import { useState } from 'react'
 
 import EditButton from '@/components/visit/Buttons'
+import DatePicker from '@/components/visit/DatePicker'
 
 import Data from '../../../mockData/MOCK_DATA.json'
 
 function VisitsSearchBar() {
   const [query, setQuery] = useState('')
-  // const [date, setDate] = useState()
+  const [, setStartDate] = useState('')
+  const [, setEndDate] = useState('')
+
   return (
     <div className='flex h-full flex-col content-center'>
       <div className='flex justify-center pb-4 pt-1'>
         <input
-          className='form-input text-center'
+          className='form-input m-0 block w-full rounded border text-center'
           placeholder='Search Past Visits...'
           type='search'
           onChange={(event) => setQuery(event.target.value)}
         />
       </div>
 
-      {/* <DatePicker onDateChange={handleDate} date={date} /> */}
+      <div className='container mx-auto mb-2 flex flex-row justify-center'>
+        <DatePicker
+          value='From'
+          onChange={(date: string) => setStartDate(date)}
+        />
+        <p className='self-center align-middle'>—</p>
+        <DatePicker value='To' onChange={(date: string) => setEndDate(date)} />
+      </div>
 
       <div className='h-0 shrink grow overflow-y-auto'>
         {Data.filter((post) => {
           if (
             query === '' ||
             post.first_name.toLowerCase().includes(query.toLowerCase()) ||
+            post.last_name.toLowerCase().includes(query.toLowerCase()) ||
             post.pet.toLowerCase().includes(query.toLowerCase())
           ) {
             return post
@@ -61,10 +72,5 @@ function VisitsSearchBar() {
     </div>
   )
 }
-
-// function handleDate(date) {
-//   const d = new Date(date)
-//   setDate(date)
-// }
 
 export default VisitsSearchBar
