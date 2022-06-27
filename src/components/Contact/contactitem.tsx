@@ -13,6 +13,7 @@ const ContactItem = ({ userid, name, image }: ContactItemProps) => {
         <div className='flex items-center space-x-4'>
           <Image
             className='h-2 w-2 rounded-full'
+            {/*This is a placeholder image*/}
             src='https://zachmanson.com/images/sitting.jpeg'
             alt='Neil image'
             width={50}
