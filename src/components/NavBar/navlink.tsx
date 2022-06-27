@@ -23,7 +23,8 @@ export default function NavLink({
     <Link href={href}>
       <a
         className={currentPage ? currentTabClasses : tabClasses}
-        onClick={() => setCurrentPage(name)}
+        onMouseDown={() => setCurrentPage(name)}
+        aria-hidden='true' // TODO: need work on accessibility
       >
         {icon}
         <span className='tab tab-home block text-xs'>{name}</span>
