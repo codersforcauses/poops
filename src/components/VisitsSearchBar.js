@@ -30,11 +30,23 @@ function VisitsSearchBar() {
             key={post.id}
             className='m-2 flex flex-col space-y-1 rounded border-2 p-2'
           >
-            <p className=''>{`${post.first_name} ${post.last_name}`}</p>
-            <div className='flex justify-between'>
-              <p className='font-bold text-red-500'>{post.pet}</p>
-              <p className=''>{post.date}</p>
-            </div>
+            <details>
+              <summary className='list-none'>
+                <p className=''>{`${post.first_name} ${post.last_name}`}</p>
+                <div className='flex justify-between'>
+                  <p className='font-bold text-red-500'>{post.pet}</p>
+                  <p className=''>{post.date}</p>
+                </div>
+              </summary>
+              <div>
+                <p>Client Phone Number</p>
+                <p>Distance travelled.</p>
+                <p>Walk Metres.</p>
+                <p>Distance travelled.</p>
+                <p>Commute Metres</p>
+                <p>Commute Method</p>
+              </div>
+            </details>
           </div>
         ))}
       </div>
