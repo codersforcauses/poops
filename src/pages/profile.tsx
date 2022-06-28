@@ -1,16 +1,16 @@
 import Header from '@/components/Header'
 
-const Contact = () => {
+const Profile = () => {
   return (
     <>
       {/* <Seo /> */}
-      <Header pageTitle='Contact' />
+      <Header pageTitle='Profile' />
 
       <main>
-        <p>Contact Page</p>
+        <p>Profile Page</p>
       </main>
     </>
   )
 }
 
-export default Contact
+export default Profile

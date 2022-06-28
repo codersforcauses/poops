@@ -1,12 +1,23 @@
-import React from 'react'
 import Image from 'next/image'
 
-export const NavIcon = () => {
+type CurrentPageProp = {
+  currentPage: string
+}
+export const NavIcon = ({ currentPage }: CurrentPageProp) => {
+  const buttonStyle =
+    'fixed bottom-1 z-10 h-16 w-16 rounded-full border-8 bg-poops-red'
+  const inactiveButtonStyle = buttonStyle + ' border-poops-dark-red'
+  const activeButtonStyle = buttonStyle + ' border-poops-red'
+
   return (
-    <div className='flex w-80 justify-center'>
-      <div className='fixed bottom-1 z-10 h-16 w-16 rounded-full border-8 border-poops-dark-red bg-poops-red'>
+    <div className='flex justify-center'>
+      <button
+        className={
+          currentPage === 'Visit' ? activeButtonStyle : inactiveButtonStyle
+        }
+      >
         <Image alt='dog-icon' src='/images/dog-icon.png' layout='fill' />
-      </div>
+      </button>
     </div>
   )
 }
