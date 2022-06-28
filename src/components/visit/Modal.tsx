@@ -1,5 +1,4 @@
 const ModalView = ({ openfunc }) => {
-  // console.log(closeModal)
   return (
     <div className='fixed inset-0 bg-black bg-opacity-25 '>
       <div className='flex-initial rounded-sm bg-white py-10 px-10 shadow '>

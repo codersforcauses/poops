@@ -1,7 +1,7 @@
 import React from 'react'
 
 import Data from '@/../mockData/MOCK_DATA.json'
-import EditButton from '@/components/visit/Buttons'
+import EditButton from '@/components/visit/buttons'
 import DatePicker from '@/components/visit/datePicker'
 
 interface SearchBarState {
