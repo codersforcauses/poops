@@ -31,7 +31,7 @@ export const AddButton = () => {
       >
         Add visit
       </button>
-      {openModal && <Modal openfunc={opening} />}
+      {openModal && <Modal openFunc={opening} />}
     </div>
   )
 }
