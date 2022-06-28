@@ -1,5 +1,5 @@
+import ContactInfo from '@/components/Contact/contactInfo'
 import Seo from '@/components/Header'
-
 const Incidents = () => {
   return (
     <>
@@ -7,7 +7,7 @@ const Incidents = () => {
       <Seo pageTitle='Incidents' />
 
       <main>
-        <p>Incidents Page</p>
+        <ContactInfo />
       </main>
     </>
   )
