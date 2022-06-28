@@ -13,6 +13,13 @@ export default function EditButton() {
 
 export const AddButton = () => {
   const [openModal, setOpenModal] = useState(false)
+  const opening = () => {
+    if (openModal) {
+      setOpenModal(false)
+    } else {
+      setOpenModal(true)
+    }
+  }
   return (
     <div className='absolute right-5 bottom-20 bg-poops-red py-2 px-5 '>
       <button
@@ -24,7 +31,7 @@ export const AddButton = () => {
       >
         Add visit
       </button>
-      {openModal && <Modal closeModal={setOpenModal} />}
+      {openModal && <Modal openfunc={opening} />}
     </div>
   )
 }
