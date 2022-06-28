@@ -1,10 +1,10 @@
-import Seo from '@/components/Header'
+import Header from '@/components/Header'
 
 const Profile = () => {
   return (
     <>
       {/* <Seo /> */}
-      <Seo pageTitle='Profile' />
+      <Header pageTitle='Profile' />
 
       <main>
         <p>Profile Page</p>
