@@ -18,14 +18,7 @@ type contactsProp = {
 
 const ContactList = ({ contacts }: contactsProp) => {
   const contactItems = contacts.map((contact) => {
-    return (
-      <ContactItem
-        key={contact.id}
-        userid={contact.id}
-        image=''
-        name={`${contact.first_name} ${contact.last_name}`}
-      />
-    )
+    return <ContactItem key={contact.id} contact={contact} image='' />
   })
 
   return (

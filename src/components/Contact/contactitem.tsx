@@ -1,13 +1,24 @@
 import Image from 'next/image'
 import { UserCircleIcon } from '@heroicons/react/outline'
 
+type contactData = {
+  id: string
+  first_name: string
+  last_name: string
+  pets: string
+  email: string
+  phone: string
+  street_address: string
+  region: string
+  notes: string
+}
+
 type ContactItemProps = {
-  userid: string
-  name: string
+  contact: contactData
   image: string
 }
 
-const ContactItem = ({ userid, name, image }: ContactItemProps) => {
+const ContactItem = ({ contact, image }: ContactItemProps) => {
   return (
     <>
       <li className='rounded-lg bg-white p-3 px-5 hover:bg-grey focus:bg-grey sm:py-4'>
@@ -26,7 +37,9 @@ const ContactItem = ({ userid, name, image }: ContactItemProps) => {
             />
           )}
           <div className='min-w-0 flex-1'>
-            <p className='text-gray-900 truncate text-sm font-medium'>{name}</p>
+            <p className='text-gray-900 truncate text-sm font-medium'>
+              {`${contact.first_name} ${contact.last_name}`}
+            </p>
           </div>
         </div>
       </li>
