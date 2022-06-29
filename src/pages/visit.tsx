@@ -1,5 +1,5 @@
 import Header from '@/components/Header'
-import { AddButton } from '@/components/visit/buttons'
+import { AddButton } from '@/components/visit/Buttons'
 import VisitsSearchBar from '@/components/visit/searchBar'
 
 const Visit = () => {

@@ -1,13 +1,14 @@
 import React from 'react'
-import { SearchIcon } from '@heroicons/react/outline'
+import { ChevronDownIcon, SearchIcon } from '@heroicons/react/outline'
 
 import Data from '@/../mockData/MOCK_DATA.json'
-import EditButton from '@/components/visit/buttons'
+import EditButton from '@/components/visit/Buttons'
 
 interface SearchBarState {
   query: string
   startDate: string
   endDate: string
+  isEditable: boolean
 }
 
 class SearchBar extends React.Component<Record<string, never>, SearchBarState> {
@@ -17,19 +18,19 @@ class SearchBar extends React.Component<Record<string, never>, SearchBarState> {
     this.state = {
       query: '',
       startDate: '',
-      endDate: ''
+      endDate: '',
+      isEditable: false
     }
   }
 
   render() {
     return (
       <div className='flex h-full flex-col content-center'>
-        <div className='flex flex-row rounded-full border p-1'>
-          <SearchIcon className='flex h-8 w-8 self-center'></SearchIcon>
+        <div className='flex w-60 flex-row self-center rounded-xl border p-1 text-poops-dark-gray'>
+          <SearchIcon className='floating pointer-events-none m-1 h-6 w-6 text-poops-dark-gray'></SearchIcon>
           <input
-            className='form-input m-0 w-full rounded-full border-0 text-left'
+            className='m-0 w-full border-0 text-left outline-0'
             placeholder='Search'
-            type='search'
             onChange={(event) => this.setState({ query: event.target.value })}
           />
         </div>
@@ -71,36 +72,37 @@ class SearchBar extends React.Component<Record<string, never>, SearchBarState> {
                   <input
                     type='checkbox'
                     className='peer absolute top-0 h-12 w-full cursor-pointer opacity-0'
-                  ></input>
+                  />
+                  <ChevronDownIcon className='absolute top-3 right-5 h-6 w-6 rotate-0 text-poops-dark-red transition-transform duration-500 peer-checked:rotate-180' />
+
                   <div className='font-bold peer-checked:font-normal'>
                     <p className='font-bold text-poops-dark-red'>{`# ${post.id} - ${post.date}`}</p>
                     <p className='text-sm'>{`Client Name: ${post.first_name} ${post.last_name}`}</p>
                   </div>
-                  <div className='absolute top-3 right-5 rotate-0 text-poops-dark-red transition-transform duration-500 peer-checked:rotate-180'>
-                    <svg
-                      xmlns='http://www.w3.org/2000/svg'
-                      className='h-6 w-6'
-                      fill='none'
-                      viewBox='0 0 24 24'
-                      stroke='currentColor'
-                      strokeWidth='2'
-                    >
-                      <path
-                        strokeLinecap='round'
-                        strokeLinejoin='round'
-                        d='M19 9l-7 7-7-7'
-                      />
-                    </svg>
-                  </div>
+
                   <div className='max-h-0 justify-between overflow-hidden text-sm transition-all duration-300 peer-checked:max-h-40'>
-                    <p>Client Phone Number: {post.number}</p>
-                    <p>Distance travelled: {post.travelled}</p>
-                    <p>Walk Metres: {post.walk_metres}</p>
-                    <p>Commute Metres: {post.commute_metres}</p>
-                    <p>Commute Method: {post.method}</p>
+                    {this.state.isEditable ? (
+                      <p>Test</p>
+                    ) : (
+                      <>
+                        <p>Client Phone Number: {post.number}</p>
+                        <p>Distance travelled: {post.travelled}</p>
+                        <p>Walk Metres: {post.walk_metres}</p>
+                        <p>Commute Metres: {post.commute_metres}</p>
+                        <p>Commute Method: {post.method}</p>
+                      </>
+                    )}
                   </div>
                   <div className='invisible absolute right-5 bottom-1 h-5 w-5 rounded-full bg-poops-dark-red text-poops-dark-red transition-all peer-checked:visible'>
-                    <EditButton />
+                    <button
+                      type='button'
+                      onClick={() => {
+                        this.setState({ isEditable: true })
+                      }}
+                      className=''
+                    >
+                      <EditButton />
+                    </button>
                   </div>
                 </div>
               </div>

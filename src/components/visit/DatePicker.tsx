@@ -20,7 +20,7 @@ class DatePicker extends React.Component<DatePickerProps> {
             className='form-control m-0 block w-full rounded border'
             onChange={this.handleChange}
           />
-          <label htmlFor='floatingInput' className='text-gray-700'>
+          <label htmlFor='floatingInput' className='poops-dark-gray'>
             {this.props.value}
           </label>
         </div>

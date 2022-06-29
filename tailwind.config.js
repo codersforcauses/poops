@@ -12,7 +12,8 @@ module.exports = {
   ],
   theme: {
     colors: {
-      'poops-gray': '#fafafa',
+      'poops-dark-gray': '#7B7B7B',
+      'poops-gray': '#f9f9f9',
       'poops-red': '#ce283d',
       'poops-dark-red': '#a52a2a',
       transparent: 'transparent',
