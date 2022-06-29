@@ -1,16 +1,16 @@
 import Header from '@/components/Header'
 
-const Home = () => {
+const Visit = () => {
   return (
     <>
       {/* <Header /> */}
-      <Header />
+      <Header pageTitle='Visit' />
 
       <main>
-        <p>Home Page</p>
+        <p>Visit Page</p>
       </main>
     </>
   )
 }
 
-export default Home
+export default Visit
