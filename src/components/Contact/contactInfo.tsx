@@ -1,5 +1,5 @@
 import { UserCircleIcon } from '@heroicons/react/outline'
-import data from 'mockData/MOCK_DATA.json'
+import data from 'mockData/CONTACT_DATA.json'
 
 function ContactInfo() {
   const currentUser = data[0]
