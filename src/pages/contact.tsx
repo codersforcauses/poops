@@ -24,8 +24,10 @@ const Contact = () => {
 
       <main>
         <h1 className='m-3 text-center text-2xl'>Contacts</h1>
-        <SearchBar onChangeHandler={onSearchChange} />
-        <ContactList contacts={filteredContacts} />
+        <div className='m-auto max-w-md'>
+          <SearchBar onChangeHandler={onSearchChange} />
+          <ContactList contacts={filteredContacts} />
+        </div>
       </main>
     </>
   )

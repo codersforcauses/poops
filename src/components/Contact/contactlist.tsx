@@ -30,7 +30,7 @@ const ContactList = ({ contacts }: contactsProp) => {
 
   return (
     <>
-      <div className='m-auto max-w-md flex-col items-center'>
+      <div className='flex-col'>
         <div className='flow-root'>
           <ul>{contactItems}</ul>
         </div>
