@@ -3,7 +3,7 @@ import {
   ChatAltIcon,
   ExclamationCircleIcon,
   HomeIcon,
-  LocationMarkerIcon
+  UserIcon
 } from '@heroicons/react/outline'
 
 import { NavIcon } from '@/components/NavBar/navicon'
@@ -23,12 +23,17 @@ export default function NavBar() {
     {
       name: 'Visit',
       route: '/visit',
-      icon: <LocationMarkerIcon className={iconClasses} />
+      icon: <NavIcon currentPage={currentPage} />
     },
     {
       name: 'Incidents',
       route: '/incidents',
       icon: <ExclamationCircleIcon className={iconClasses} />
+    },
+    {
+      name: 'Profile',
+      route: '/profile',
+      icon: <UserIcon className={iconClasses} />
     }
   ]
 
@@ -51,13 +56,7 @@ export default function NavBar() {
         id='bottom-navigation'
         className='fixed inset-x-0 bottom-0 z-10 block bg-white shadow'
       >
-        <div className='flex justify-between'>
-          {navLinks[0]}
-          {navLinks[1]}
-          <NavIcon />
-          {navLinks[2]}
-          {navLinks[3]}
-        </div>
+        <div className='flex justify-between'>{navLinks}</div>
       </nav>
     </div>
   )

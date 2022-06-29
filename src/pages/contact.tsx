@@ -1,12 +1,12 @@
 import CONTACT_DATA from '@/../mockData/CONTACT_DATA.json'
 import ContactList from '@/components/Contact/contactlist'
-import Seo from '@/components/Header'
+import Header from '@/components/Header'
 
 const Contact = () => {
   return (
     <>
       {/* <Seo /> */}
-      <Seo pageTitle='Contact' />
+      <Header pageTitle='Contact' />
 
       <main>
         <h1 className='m-3 text-center text-2xl'>Contacts</h1>
