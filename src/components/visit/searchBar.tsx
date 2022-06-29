@@ -87,6 +87,9 @@ class SearchBar extends React.Component<Record<string, never>, SearchBarState> {
                     {this.state.isEditable ? (
                       <>
                         <p>
+                          Pet/Pets: <input placeholder={post.pet} />
+                        </p>
+                        <p>
                           Client Phone Number:{' '}
                           <input placeholder={post.number} />
                         </p>
@@ -108,6 +111,7 @@ class SearchBar extends React.Component<Record<string, never>, SearchBarState> {
                       </>
                     ) : (
                       <>
+                        <p>Pet/Pets: {post.pet}</p>
                         <p>Client Phone Number: {post.number}</p>
                         <p>Distance travelled: {post.travelled}</p>
                         <p>Walk Metres: {post.walk_metres}</p>
