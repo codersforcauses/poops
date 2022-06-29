@@ -1,16 +1,20 @@
-import React, { createContext, useContext, useEffect, useState } from "react";
-import { onAuthStateChanged } from "firebase/auth";
+import React, { createContext, useContext, useEffect, useState } from 'react'
+import { onAuthStateChanged } from 'firebase/auth'
+import { User } from 'firebase/auth'
 
-import { auth } from "../firebase/clientApp";
+import { auth } from '../firebase/clientApp'
 
 const authContext = createContext({})
 
 export const useAuth = () => useContext(authContext)
 
-export const AuthContextProvider = ({ children }: { children: React.ReactNode }) => {
-
-  const [currentUser, setCurrentUser] = useState<any>(null)
-  const [loading, setLoading] = useState<any>(true)
+export const AuthContextProvider = ({
+  children
+}: {
+  children: React.ReactNode
+}) => {
+  const [currentUser, setCurrentUser] = useState<User | null>(null)
+  const [loading, setLoading] = useState(true)
 
   // function signup(email: string, password: string) { // CURRENTLY NOT IN USE, COULD BE USED IF SCOPE CHANGES
   //   return createUserWithEmailAndPassword(auth, email, password)
@@ -25,10 +29,9 @@ export const AuthContextProvider = ({ children }: { children: React.ReactNode })
   }, [])
 
   const value = {
-    currentUser,
+    currentUser
     // signup,
   }
-
 
   return (
     <authContext.Provider value={{ value }}>
