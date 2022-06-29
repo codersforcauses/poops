@@ -71,6 +71,9 @@ class SearchBar extends React.Component<Record<string, never>, SearchBarState> {
                 <div className='relative w-full'>
                   <input
                     type='checkbox'
+                    onClick={() => {
+                      this.setState({ isEditable: false })
+                    }}
                     className='peer absolute top-0 h-12 w-full cursor-pointer opacity-0'
                   />
                   <ChevronDownIcon className='absolute top-3 right-5 h-6 w-6 rotate-0 text-poops-dark-red transition-transform duration-500 peer-checked:rotate-180' />
@@ -82,7 +85,27 @@ class SearchBar extends React.Component<Record<string, never>, SearchBarState> {
 
                   <div className='max-h-0 justify-between overflow-hidden text-sm transition-all duration-300 peer-checked:max-h-40'>
                     {this.state.isEditable ? (
-                      <p>Test</p>
+                      <>
+                        <p>
+                          Client Phone Number:{' '}
+                          <input placeholder={post.number} />
+                        </p>
+                        <p>
+                          Distance travelled:{' '}
+                          <input placeholder={String(post.travelled)} />
+                        </p>
+                        <p>
+                          Walk Metres:{' '}
+                          <input placeholder={String(post.walk_metres)} />
+                        </p>
+                        <p>
+                          Commute Metres:{' '}
+                          <input placeholder={String(post.commute_metres)} />
+                        </p>
+                        <p>
+                          Commute Method: <input placeholder={post.method} />
+                        </p>
+                      </>
                     ) : (
                       <>
                         <p>Client Phone Number: {post.number}</p>
