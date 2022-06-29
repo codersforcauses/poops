@@ -13,7 +13,7 @@ const ContactItem = ({ userid, name, image }: ContactItemProps) => {
       <li className='rounded-lg bg-white p-3 px-5 hover:bg-grey focus:bg-grey sm:py-4'>
         <div className='flex items-center space-x-4'>
           {/* This is a placeholder image */}
-          {image === undefined ? (
+          {image === '' ? (
             <UserCircleIcon className='h-12 w-12' />
           ) : (
             <Image

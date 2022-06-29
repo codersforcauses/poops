@@ -12,13 +12,20 @@ type contactData = {
   notes: string
 }
 
+type contactsProp = {
+  contacts: contactData[]
+}
 
-const ContactList = ({ contacts }: any) => {
-  const contactItems = contacts.map((contact:any) => {
+const ContactList = ({ contacts }: contactsProp) => {
+  const contactItems = contacts.map((contact) => {
     return (
-      <ContactItem userid={contact.id} image={contact.image} name={`${contact.first_name} ${contact.last_name}`}/>
+      <ContactItem
+        key={contact.id}
+        userid={contact.id}
+        image=''
+        name={`${contact.first_name} ${contact.last_name}`}
+      />
     )
-    
   })
 
   return (
