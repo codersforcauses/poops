@@ -1,5 +1,5 @@
 import ContactItem from '@/components/Contact/contactitem'
-
+import Link from 'next/link'
 type contactData = {
   id: string
   first_name: string
@@ -19,12 +19,15 @@ type contactsProp = {
 const ContactList = ({ contacts }: contactsProp) => {
   const contactItems = contacts.map((contact) => {
     return (
-      <ContactItem
-        key={contact.id}
-        userid={contact.id}
-        image=''
-        name={`${contact.first_name} ${contact.last_name}`}
-      />
+      <Link href={`/contact/${contact.id}`} key={contact.id}>
+        <a>
+        <ContactItem
+          userid={contact.id}
+          image=''
+          name={`${contact.first_name} ${contact.last_name}`}
+        />
+        </a>
+      </Link>
     )
   })
 
