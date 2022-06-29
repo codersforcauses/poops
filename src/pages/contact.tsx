@@ -1,18 +1,6 @@
-import MOCK_DATA from '@/../mockData/MOCK_DATA.json'
+import CONTACT_DATA from '@/../mockData/CONTACT_DATA.json'
 import ContactList from '@/components/Contact/contactlist'
 import Seo from '@/components/Header'
-
-type contactData = {
-  id: string
-  first_name: string
-  last_name: string
-  pets: string
-  email: string
-  phone: string
-  street_address: string
-  region: string
-  notes: string
-}
 
 const Contact = () => {
   return (
@@ -22,7 +10,7 @@ const Contact = () => {
 
       <main>
         <h1 className='m-3 text-center text-2xl'>Contacts</h1>
-        <ContactList contacts={MOCK_DATA} />
+        <ContactList contacts={CONTACT_DATA} />
       </main>
     </>
   )
