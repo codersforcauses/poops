@@ -12,26 +12,20 @@ type contactData = {
   notes: string
 }
 
-const ContactList = ({ contacts }) => {
-  const contactsItems = []
 
-  for (let i = 0; i < contacts.length; i++) {
-    contactsItems.push(
-      <ContactItem
-        key={contacts[i].id}
-        userid={contacts[i].id}
-        image={contacts.image}
-        name={`${contacts[i].first_name} ${contacts[i].last_name}`}
-      />
+const ContactList = ({ contacts }: any) => {
+  const contactItems = contacts.map((contact:any) => {
+    return (
+      <ContactItem userid={contact.id} image={contact.image} name={`${contact.first_name} ${contact.last_name}`}/>
     )
-  }
-  console.log(`contactsItems len: ${contactsItems.length}`)
+    
+  })
 
   return (
     <>
       <div className='m-auto max-w-md flex-col items-center'>
         <div className='flow-root'>
-          <ul>{contactsItems}</ul>
+          <ul>{contactItems}</ul>
         </div>
       </div>
     </>
