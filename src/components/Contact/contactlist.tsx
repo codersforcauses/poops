@@ -21,11 +21,7 @@ const ContactList = ({ contacts }: contactsProp) => {
     return (
       <Link href={`/contact/${contact.id}`} key={contact.id}>
         <a>
-        <ContactItem
-          userid={contact.id}
-          image=''
-          name={`${contact.first_name} ${contact.last_name}`}
-        />
+        <ContactItem contact={contact} image='' />
         </a>
       </Link>
     )
