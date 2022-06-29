@@ -9,12 +9,10 @@ module.exports = {
   swcMinify: true,
   experimental: {
     optimizeCss: true
-  }
+  },
 
   // Uncoment to add domain whitelist
-  // images: {
-  //   domains: [
-  //     'res.cloudinary.com',
-  //   ],
-  // },
+  images: {
+    domains: ['res.cloudinary.com']
+  }
 }

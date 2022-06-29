@@ -1,13 +1,14 @@
-import Seo from '@/components/Header'
+import ContactInfo from '@/components/Contact/contactInfo'
+import Header from '@/components/Header'
 
 const Incidents = () => {
   return (
     <>
       {/* <Seo /> */}
-      <Seo pageTitle='Incidents' />
+      <Header pageTitle='Incidents' />
 
       <main>
-        <p>Incidents Page</p>
+        <ContactInfo />
       </main>
     </>
   )
