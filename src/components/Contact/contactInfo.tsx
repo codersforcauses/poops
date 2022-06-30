@@ -1,19 +1,10 @@
 import { UserCircleIcon } from '@heroicons/react/outline'
 import tw from 'tailwind-styled-components'
-type contactData = {
-  id: string
-  first_name: string
-  last_name: string
-  pets: string
-  email: string
-  phone: string
-  street_address: string
-  region: string
-  notes: string
-}
+
+import type { Contact } from '@/types/types'
 
 type contactProp = {
-  contact: contactData
+  contact: Contact
 }
 
 function ContactInfo({ contact }: contactProp) {

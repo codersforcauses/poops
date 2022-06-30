@@ -1,20 +1,10 @@
 import Image from 'next/image'
 import { UserCircleIcon } from '@heroicons/react/outline'
 
-type contactData = {
-  id: string
-  first_name: string
-  last_name: string
-  pets: string
-  email: string
-  phone: string
-  street_address: string
-  region: string
-  notes: string
-}
+import type { Contact } from '@/types/types'
 
 type ContactItemProps = {
-  contact: contactData
+  contact: Contact
   image: string
 }
 

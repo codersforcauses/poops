@@ -2,21 +2,10 @@ import { GetStaticPaths, GetStaticProps } from 'next'
 
 import CONTACT_DATA from '@/../mockData/CONTACT_DATA.json'
 import ContactInfo from '@/components/Contact/contactInfo'
-
-type contactData = {
-  id: string
-  first_name: string
-  last_name: string
-  pets: string
-  email: string
-  phone: string
-  street_address: string
-  region: string
-  notes: string
-}
+import type { Contact } from '@/types/types'
 
 type contactProp = {
-  contact: contactData
+  contact: Contact
 }
 const Contact = ({ contact }: contactProp) => {
   return (
