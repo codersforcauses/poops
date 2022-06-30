@@ -3,7 +3,7 @@ import { useState } from 'react'
 import CONTACT_DATA from '@/../mockData/CONTACT_DATA.json'
 import ContactList from '@/components/Contact/contactlist'
 import Header from '@/components/Header'
-import SearchBar from '@/components/SearchBar/SearchBar'
+import SearchBar from '@/components/SearchBar/searchbar'
 
 const Contact = () => {
   const [searchField, setSearchField] = useState('')
