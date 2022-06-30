@@ -1,9 +1,21 @@
 import { UserCircleIcon } from '@heroicons/react/outline'
 import data from 'mockData/CONTACT_DATA.json'
 import tw from 'tailwind-styled-components'
+type contactData = {
+  id: string
+  first_name: string
+  last_name: string
+  pets: string
+  email: string
+  phone: string
+  street_address: string
+  region: string
+  notes: string
+}
 
-function ContactInfo() {
-  const currentUser = data[0]
+function ContactInfo(props: { id: string }) {
+  const id = props.id
+  const currentUser = data.find((x) => x.id === id)
   return (
     <div className='flex flex-col items-center justify-center gap-3'>
       <UserCircleIcon className='w-32 rounded-full' />

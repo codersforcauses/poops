@@ -1,4 +1,3 @@
-import ContactInfo from '@/components/Contact/contactInfo'
 import Header from '@/components/Header'
 
 const Incidents = () => {
@@ -8,7 +7,7 @@ const Incidents = () => {
       <Header pageTitle='Incidents' />
 
       <main>
-        <ContactInfo />
+        <p>Incidents Page</p>
       </main>
     </>
   )
