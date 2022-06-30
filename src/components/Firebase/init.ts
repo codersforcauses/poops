@@ -1,7 +1,8 @@
 import { getApp, getApps, initializeApp } from 'firebase/app'
 import { getAuth } from 'firebase/auth'
+import { getFirestore } from 'firebase/firestore'
 
-const clientCredentials = {
+const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
   authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
   projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
@@ -10,12 +11,13 @@ const clientCredentials = {
   appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID
 }
 
-let firebaseApp
+let app
 if (!getApps().length) {
-  firebaseApp = initializeApp(clientCredentials)
+  app = initializeApp(firebaseConfig) // Initializes app if no app exists
 } else {
-  firebaseApp = getApp()
+  app = getApp() // Uses existing app if app exists
 }
 
-export const auth = getAuth()
-export default firebaseApp
+export const auth = getAuth(app)
+export const db = getFirestore(app)
+export default app
