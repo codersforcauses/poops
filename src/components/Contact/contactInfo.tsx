@@ -1,5 +1,4 @@
 import { UserCircleIcon } from '@heroicons/react/outline'
-import data from 'mockData/CONTACT_DATA.json'
 import tw from 'tailwind-styled-components'
 type contactData = {
   id: string
@@ -13,29 +12,31 @@ type contactData = {
   notes: string
 }
 
-function ContactInfo(props: { id: string }) {
-  const id = props.id
-  const currentUser = data.find((x) => x.id === id)
+type contactProp = {
+  contact: contactData
+}
+
+function ContactInfo({ contact }: contactProp) {
   return (
     <div className='flex flex-col items-center justify-center gap-3'>
       <UserCircleIcon className='w-32 rounded-full' />
 
       <h1 className='text-4xl font-normal'>
-        {currentUser.first_name} {currentUser.last_name}
+        {contact.first_name} {contact.last_name}
       </h1>
-      <h3>{currentUser.notes}</h3>
+      <h3>{contact.notes}</h3>
 
       <Box>
         <h3>Phone</h3>
-        <p className='text-xl text-poops-red'>{currentUser.phone}</p>
+        <p className='text-xl text-poops-red'>{contact.phone}</p>
       </Box>
       <Box>
         <h3>Email</h3>
-        <p className='text-xl text-poops-red'>{currentUser.email}</p>
+        <p className='text-xl text-poops-red'>{contact.email}</p>
       </Box>
       <Box>
         <h3>Address</h3>
-        <p className='text-xl text-poops-red'>{currentUser.street_address}</p>
+        <p className='text-xl text-poops-red'>{contact.street_address}</p>
       </Box>
       <Box>
         <h3>Tags</h3>
@@ -65,7 +66,7 @@ function ContactInfo(props: { id: string }) {
       </Box>
       <Box>
         <h3>Pets </h3>
-        <p className='text-xl text-poops-red'>{currentUser.pets}</p>
+        <p className='text-xl text-poops-red'>{contact.pets}</p>
       </Box>
       <Box>Notes</Box>
     </div>

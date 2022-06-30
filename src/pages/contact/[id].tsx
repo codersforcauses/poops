@@ -21,7 +21,7 @@ type contactProp = {
 const Contact = ({ contact }: contactProp) => {
   return (
     <>
-      <ContactInfo id={contact.id} />
+      <ContactInfo contact={contact} />
     </>
   )
 }
@@ -39,11 +39,7 @@ export const getStaticPaths: GetStaticPaths = () => {
 
 export const getStaticProps: GetStaticProps = (context: any) => {
   const id = context.params.id
-  const contact = CONTACT_DATA.find((contact) => {
-    if (contact.id === id) {
-      return contact
-    }
-  })
+  const contact = CONTACT_DATA.find((contact) => contact.id === id)
   return {
     props: {
       contact
