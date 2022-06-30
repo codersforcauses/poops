@@ -1,8 +1,8 @@
 import React from 'react'
-import { ChevronDownIcon, SearchIcon } from '@heroicons/react/outline'
+import { SearchIcon } from '@heroicons/react/outline'
 
 import Data from '@/../mockData/MOCK_DATA.json'
-import EditButton from '@/components/visit/Buttons'
+import VisitInstance from '@/components/visit/visitInstance'
 
 interface SearchBarState {
   query: string
@@ -43,7 +43,7 @@ class SearchBar extends React.Component<Record<string, never>, SearchBarState> {
           </button>
           <button>
             <div className='h-[23.48px] w-[78px] rounded-md bg-poops-dark-red p-0.5 text-center text-xs font-semibold text-white drop-shadow-[0_4px_4px_rgba(0,0,0,0.25)] '>
-              <p>Report</p>
+              <p>REPORT</p>
             </div>
           </button>
           <button>
@@ -81,77 +81,19 @@ class SearchBar extends React.Component<Record<string, never>, SearchBarState> {
               return post
             }
           }).map((post) => (
-            <div
+            <VisitInstance
               key={post.id}
-              className='m-2 flex flex-col space-y-1 rounded-xl bg-poops-gray p-2 drop-shadow-[0_4px_4px_rgba(0,0,0,0.25)]'
-            >
-              <div className='flex justify-between'>
-                <div className='relative w-full'>
-                  <input
-                    type='checkbox'
-                    onClick={() => {
-                      this.setState({ isEditable: false })
-                    }}
-                    className='peer absolute top-0 h-12 w-full cursor-pointer opacity-0'
-                  />
-                  <ChevronDownIcon className='absolute top-3 right-5 h-6 w-6 rotate-0 text-poops-dark-red transition-transform duration-500 peer-checked:rotate-180' />
-
-                  <div className='font-bold peer-checked:font-normal'>
-                    <p className='font-bold text-poops-dark-red'>{`# ${post.id} - ${post.date}`}</p>
-                    <p className='text-sm'>{`Client Name: ${post.first_name} ${post.last_name}`}</p>
-                  </div>
-
-                  <div className='max-h-0 justify-between overflow-hidden text-sm transition-all duration-300 peer-checked:max-h-40'>
-                    {this.state.isEditable ? (
-                      <>
-                        <p>
-                          Pet/Pets: <input placeholder={post.pet} />
-                        </p>
-                        <p>
-                          Client Phone Number:{' '}
-                          <input placeholder={post.number} />
-                        </p>
-                        <p>
-                          Distance travelled:{' '}
-                          <input placeholder={String(post.travelled)} />
-                        </p>
-                        <p>
-                          Walk Metres:{' '}
-                          <input placeholder={String(post.walk_metres)} />
-                        </p>
-                        <p>
-                          Commute Metres:{' '}
-                          <input placeholder={String(post.commute_metres)} />
-                        </p>
-                        <p>
-                          Commute Method: <input placeholder={post.method} />
-                        </p>
-                      </>
-                    ) : (
-                      <>
-                        <p>Pet/Pets: {post.pet}</p>
-                        <p>Client Phone Number: {post.number}</p>
-                        <p>Distance travelled: {post.travelled}</p>
-                        <p>Walk Metres: {post.walk_metres}</p>
-                        <p>Commute Metres: {post.commute_metres}</p>
-                        <p>Commute Method: {post.method}</p>
-                      </>
-                    )}
-                  </div>
-                  <div className='invisible absolute right-5 bottom-1 h-5 w-5 rounded-full bg-poops-dark-red text-poops-dark-red transition-all peer-checked:visible'>
-                    <button
-                      type='button'
-                      onClick={() => {
-                        this.setState({ isEditable: true })
-                      }}
-                      className=''
-                    >
-                      <EditButton />
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
+              id={post.id}
+              first_name={post.first_name}
+              last_name={post.last_name}
+              pet={post.pet}
+              date={post.date}
+              number={post.number}
+              travelled={post.travelled}
+              walk_metres={post.walk_metres}
+              commute_metres={post.commute_metres}
+              method={post.method}
+            />
           ))}
         </div>
       </div>

@@ -58,6 +58,7 @@ const ModalView: React.FC<ModalViewProps> = ({ openFunc }) => {
             />
             <input
               placeholder='Date'
+              type='date'
               id='DateInput'
               onChange={(event) => setDate(event.target.value)}
             />
