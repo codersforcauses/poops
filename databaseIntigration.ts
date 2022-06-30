@@ -10,22 +10,21 @@ const firebaseConfig = {
   appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID
 }
 
-
 const app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApp()
 const database = getFirestore(app)
-const poopsref = collection(database, 'Users')
+export const poopsRef = collection(database, 'Users')
 
 export async function writeUserData(
-  fname: string,
-  lname: string,
-  pname: string,
+  fName: string,
+  lName: string,
+  pName: string,
   date: string,
   distance: string
 ) {
-  await addDoc(poopsref, {
-    firstName: fname,
-    lastName: lname,
-    petName: pname,
+  await addDoc(poopsRef, {
+    firstName: fName,
+    lastName: lName,
+    petName: pName,
     dateTime: date,
     distanceWalked: distance
   })

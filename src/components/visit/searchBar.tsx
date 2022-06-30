@@ -2,6 +2,7 @@ import React from 'react'
 import { SearchIcon } from '@heroicons/react/outline'
 
 import Data from '@/../mockData/MOCK_DATA.json'
+import ListVisits from '@/components/visit/ListVisits'
 import VisitInstance from '@/components/visit/visitInstance'
 
 interface SearchBarState {
@@ -52,6 +53,7 @@ class SearchBar extends React.Component<Record<string, never>, SearchBarState> {
             </div>
           </button>
         </div>
+        <ListVisits />
 
         {/* <div className='container mx-auto mb-2 flex flex-row justify-center'>
           <DatePicker
