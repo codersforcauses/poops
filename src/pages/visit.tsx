@@ -14,8 +14,8 @@ const Visit = () => {
             <h1 className='py-2 text-center'>Visit Page</h1>
             <VisitsSearchBar />
           </div>
-          <AddButton />
         </div>
+        <AddButton />
       </main>
     </>
   )

@@ -32,15 +32,17 @@ export const AddButton = () => {
     }
   }
   return (
-    <div className='absolute right-5 bottom-20 bg-poops-red py-2 px-5 '>
+    //awful fix
+    <div className='absolute top-[96px] right-[31px] '>
       <button
         type='button'
-        className='text bg-poops-red text-white'
         onClick={() => {
           setOpenModal(true)
         }}
       >
-        Add visit
+        <div className='relative h-[37px] w-[37px] rounded-full bg-poops-dark-red text-xl font-semibold'>
+          <p className='absolute top-1 left-3 text-white'>+</p>
+        </div>
       </button>
       {openModal && <Modal openFunc={opening} />}
     </div>
