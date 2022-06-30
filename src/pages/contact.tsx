@@ -18,7 +18,8 @@ type contactData = {
 }
 
 const Contact = () => {
-  const [filteredContacts, setFilteredContacts] = useState<contactData[]>(CONTACT_DATA)
+  const [filteredContacts, setFilteredContacts] =
+    useState<contactData[]>(CONTACT_DATA)
 
   const onSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const searchFieldString = event.target.value.toLocaleLowerCase()
@@ -28,7 +29,7 @@ const Contact = () => {
     })
     setFilteredContacts(filteredContacts)
   }
-  
+
   return (
     <>
       {/* <Seo /> */}
