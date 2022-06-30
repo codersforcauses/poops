@@ -26,7 +26,7 @@ class SearchBar extends React.Component<Record<string, never>, SearchBarState> {
   render() {
     return (
       <div className='flex h-full flex-col content-center'>
-        <div className='flex h-[40px] w-[300px] flex-row self-center rounded-xl border p-1 text-poops-dark-gray shadow-md'>
+        <div className='flex h-[40px] w-[300px] flex-row self-center rounded-xl border p-1 text-poops-dark-gray shadow-xl'>
           <SearchIcon className='floating pointer-events-none m-1 h-6 w-6 text-poops-dark-gray '></SearchIcon>
           <input
             className='m-0 w-full border-0 text-left outline-0'
@@ -34,11 +34,21 @@ class SearchBar extends React.Component<Record<string, never>, SearchBarState> {
             onChange={(event) => this.setState({ query: event.target.value })}
           />
         </div>
-        <div className='flex justify-between'>
+        <div className='flex justify-between p-4'>
           <button>
-            <div className='h-[36px] w-[115px] rounded-md bg-poops-dark-red text-center text-sm text-white'>
+            <div className='h-[36px] w-[115px] rounded-md bg-poops-dark-red p-0.5 text-center text-xs font-semibold text-white drop-shadow-[0_4px_4px_rgba(0,0,0,0.25)] '>
               <p>REGISTER</p>
               <p>VET CONCERN</p>
+            </div>
+          </button>
+          <button>
+            <div className='h-[23.48px] w-[78px] rounded-md bg-poops-dark-red p-0.5 text-center text-xs font-semibold text-white drop-shadow-[0_4px_4px_rgba(0,0,0,0.25)] '>
+              <p>Report</p>
+            </div>
+          </button>
+          <button>
+            <div className='relative h-[37px] w-[37px] rounded-full bg-poops-dark-red p-0.5 text-xl font-semibold text-white drop-shadow-[0_4px_4px_rgba(0,0,0,0.25)] '>
+              <p className='absolute top-1 left-3'>+</p>
             </div>
           </button>
         </div>
