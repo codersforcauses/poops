@@ -39,7 +39,6 @@ const ModalView: React.FC<ModalViewProps> = ({ openFunc }) => {
                 data.date,
                 data.dist
               )
-              //console.warn('added to database')
               event.preventDefault()
             }}
           >
