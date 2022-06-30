@@ -1,5 +1,8 @@
 import React from 'react'
 import { useState } from 'react'
+
+import { writeUserData } from '../../../databaseIntigration'
+
 interface ModalViewProps {
   openFunc: () => void
 }
@@ -29,9 +32,14 @@ const ModalView: React.FC<ModalViewProps> = ({ openFunc }) => {
                 date: date,
                 dist: dist
               }
-              const jsonData = JSON.stringify(data)
-              alert(jsonData) //fuck eslint
-              // send api request here
+              writeUserData(
+                data.fName,
+                data.lName,
+                data.pName,
+                data.date,
+                data.dist
+              )
+              //console.warn('added to database')
               event.preventDefault()
             }}
           >

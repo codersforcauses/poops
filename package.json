@@ -28,14 +28,15 @@
   },
   "dependencies": {
     "@heroicons/react": "^1.0.6",
+    "firebase": "^9.8.4",
     "next": "^12.1.6",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
     "react-icons": "^4.4.0",
     "react-modal": "^3.15.1",
+    "sharp": "^0.30.7",
     "tailwind-merge": "^1.2.1",
-    "tw-elements": "^1.0.0-alpha12",
-    "sharp": "^0.30.7"
+    "tw-elements": "^1.0.0-alpha12"
   },
   "devDependencies": {
     "@tailwindcss/forms": "^0.5.2",

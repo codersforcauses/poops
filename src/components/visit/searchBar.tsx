@@ -26,13 +26,21 @@ class SearchBar extends React.Component<Record<string, never>, SearchBarState> {
   render() {
     return (
       <div className='flex h-full flex-col content-center'>
-        <div className='flex w-60 flex-row self-center rounded-xl border p-1 text-poops-dark-gray'>
-          <SearchIcon className='floating pointer-events-none m-1 h-6 w-6 text-poops-dark-gray'></SearchIcon>
+        <div className='flex h-[40px] w-[300px] flex-row self-center rounded-xl border p-1 text-poops-dark-gray shadow-md'>
+          <SearchIcon className='floating pointer-events-none m-1 h-6 w-6 text-poops-dark-gray '></SearchIcon>
           <input
             className='m-0 w-full border-0 text-left outline-0'
-            placeholder='Search'
+            placeholder='Search...'
             onChange={(event) => this.setState({ query: event.target.value })}
           />
+        </div>
+        <div className='flex justify-between'>
+          <button>
+            <div className='h-[36px] w-[115px] rounded-md bg-poops-dark-red text-center text-sm text-white'>
+              <p>REGISTER</p>
+              <p>VET CONCERN</p>
+            </div>
+          </button>
         </div>
 
         {/* <div className='container mx-auto mb-2 flex flex-row justify-center'>
