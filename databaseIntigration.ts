@@ -1,5 +1,5 @@
 import { getApp, getApps, initializeApp } from 'firebase/app' // no compat for new SDK
-import { getDatabase, ref, set } from 'firebase/database'
+import { addDoc, collection, getFirestore } from 'firebase/firestore'
 
 const firebaseConfig = {
   apikey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
@@ -10,18 +10,20 @@ const firebaseConfig = {
   appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID
 }
 
-const app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApp()
-const database = getDatabase(app)
-const poopsref = ref(database, 'Users')
+console.log(firebaseConfig)
 
-export function writeUserData(
+const app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApp()
+const database = getFirestore(app)
+const poopsref = collection(database, 'Users')
+
+export async function writeUserData(
   fname: string,
   lname: string,
   pname: string,
   date: string,
   distance: string
 ) {
-  set(poopsref, {
+  await addDoc(poopsref, {
     firstName: fname,
     lastName: lname,
     petName: pname,
