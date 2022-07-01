@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useRouter } from 'next/router'
 import {
   ChatAltIcon,
   ExclamationCircleIcon,
@@ -10,7 +11,15 @@ import { NavIcon } from '@/components/NavBar/navicon'
 import NavLink from '@/components/NavBar/navlink'
 
 export default function NavBar() {
-  const [currentPage, setCurrentPage] = useState('Home')
+  // Gets top level path, capitalises first letter
+  const { asPath } = useRouter()
+  const pathStart = asPath.split('/')[1]
+  const currentPageTitle =
+    pathStart === ''
+      ? 'Home'
+      : `${pathStart.charAt(0).toUpperCase()}${pathStart.slice(1)}`
+
+  const [currentPage, setCurrentPage] = useState(currentPageTitle)
   const iconClasses = 'inline-block h-7 w-8 hover:text-poops-red'
 
   const linkDetails = [
