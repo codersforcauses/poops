@@ -1,62 +1,90 @@
+// import Link from 'next/link'
 import { UserCircleIcon } from '@heroicons/react/outline'
-import data from 'mockData/CONTACT_DATA.json'
 import tw from 'tailwind-styled-components'
 
-function ContactInfo() {
-  const currentUser = data[0]
+type contactData = {
+  id: string
+  first_name: string
+  last_name: string
+  pets: string
+  email: string
+  phone: string
+  street_address: string
+  region: string
+  notes: string
+}
+
+type ContactInfoProps = {
+  contact: contactData
+  image: string
+}
+
+function ContactInfo({ contact, image }: ContactInfoProps) {
   return (
-    <div className='flex flex-col items-center justify-center gap-3'>
-      <UserCircleIcon className='w-32 rounded-full' />
+    <>
+      <div className='flex flex-col items-center justify-center gap-3'>
+        {image === '' ? (
+          <UserCircleIcon className='w-32 rounded-full' />
+        ) : (
+          <Image
+            className='h-2 w-2 rounded-full'
+            src={image}
+            alt='Neil image'
+            width={48}
+            height={48}
+            layout='fixed'
+          />
+        )}
+        <h1 className='text-4xl font-normal'>
+          {contact.first_name} {contact.last_name}
+        </h1>
+        <h3>{contact.notes}</h3>
 
-      <h1 className='text-4xl font-normal'>
-        {currentUser.first_name} {currentUser.last_name}
-      </h1>
-      <h3>{currentUser.notes}</h3>
-
-      <Box>
-        <h3>Phone</h3>
-        <p className='text-xl text-poops-red'>{currentUser.phone}</p>
-      </Box>
-      <Box>
-        <h3>Email</h3>
-        <p className='text-xl text-poops-red'>{currentUser.email}</p>
-      </Box>
-      <Box>
-        <h3>Address</h3>
-        <p className='text-xl text-poops-red'>{currentUser.street_address}</p>
-      </Box>
-      <Box>
-        <h3>Tags</h3>
-        <div className='h-auto bg-white bg-opacity-100'>
-          Tags
+        <Box>
+          <h3>Phone</h3>
+          <p className='text-xl text-poops-red'>{contact.phone}</p>
+        </Box>
+        <Box>
+          <h3>Email</h3>
+          <p className='text-xl text-poops-red'>{contact.email}</p>
+        </Box>
+        <Box>
+          <h3>Address</h3>
+          <p className='text-xl text-poops-red'>{contact.street_address}</p>
+        </Box>
+        <Box>
+          <h3>Tags</h3>
+          <div className='h-auto bg-white bg-opacity-100'>
+            Tags
+            <br />
+            Hello
+            <br />
+            Hi
+            <br />{' '}
+          </div>
+          {/* This should be done as a react component i think? */}
+          <label>
+            <input type='checkbox' /> Client
+          </label>
           <br />
-          Hello
+          <label>
+            <input type='checkbox' /> Coordinator
+          </label>
           <br />
-          Hi
-          <br />{' '}
-        </div>
-        {/* This should be done as a react component i think? */}
-        <label>
-          <input type='checkbox' /> Client
-        </label>
-        <br />
-        <label>
-          <input type='checkbox' /> Coordinator
-        </label>
-        <br />
-        <label>
-          <input type='checkbox' /> Volunteer
-        </label>
-      </Box>
-      <Box>
-        <h3>Region </h3>
-      </Box>
-      <Box>
-        <h3>Pets </h3>
-        <p className='text-xl text-poops-red'>{currentUser.pets}</p>
-      </Box>
-      <Box>Notes</Box>
-    </div>
+          <label>
+            <input type='checkbox' /> Volunteer
+          </label>
+        </Box>
+        <Box>
+          <h3>Region </h3>
+        </Box>
+        <Box>
+          <h3>Pets </h3>
+          <p className='text-xl text-poops-red'>{contact.pets}</p>
+        </Box>
+        <Box>Notes</Box>
+      </div>
+    </>
   )
 }
 
