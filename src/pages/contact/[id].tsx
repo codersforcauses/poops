@@ -8,6 +8,7 @@ import type { Contact } from '@/types/types'
 type contactProp = {
   contact: Contact
 }
+
 const Contact = ({ contact }: contactProp) => {
   return (
     <>
@@ -26,7 +27,7 @@ const Contact = ({ contact }: contactProp) => {
 }
 
 // TODO: Update to getServerSideProps when API is created
-export const getStaticPaths: GetStaticPaths = () => {
+export const getStaticPaths: GetStaticPaths = async () => {
   const paths = CONTACT_DATA.map((contact) => {
     return { params: { id: contact.id.toString() } }
   })
@@ -36,8 +37,8 @@ export const getStaticPaths: GetStaticPaths = () => {
   }
 }
 
-export const getStaticProps: GetStaticProps = (context: any) => {
-  const id = context.params.id
+export const getStaticProps: GetStaticProps = async (context) => {
+  const id = context.params?.id
   const contact = CONTACT_DATA.find((contact) => contact.id === id)
   return {
     props: {
