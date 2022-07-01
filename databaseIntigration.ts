@@ -1,5 +1,5 @@
 import { getApp, getApps, initializeApp } from 'firebase/app' // no compat for new SDK
-import { addDoc, collection, getFirestore } from 'firebase/firestore'
+import { addDoc, collection, getDocs, getFirestore } from 'firebase/firestore'
 
 const firebaseConfig = {
   apikey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
@@ -12,20 +12,54 @@ const firebaseConfig = {
 
 const app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApp()
 const database = getFirestore(app)
-export const poopsRef = collection(database, 'Users')
+
+const poopsRef = collection(database, 'Users')
 
 export async function writeUserData(
-  fName: string,
-  lName: string,
-  pName: string,
+  firstName: string,
+  lastName: string,
+  petName: string,
   date: string,
   distance: string
 ) {
   await addDoc(poopsRef, {
-    firstName: fName,
-    lastName: lName,
-    petName: pName,
+    firstName: firstName,
+    lastName: lastName,
+    petName: petName,
     dateTime: date,
     distanceWalked: distance
   })
+}
+
+export interface Visit {
+  id: number
+  firstName: string
+  lastName: string
+  petName: string
+  date: string
+  distance: string
+}
+
+// this runs twice for some reason every time the visit page is loaded
+export async function getVisitData() {
+  const querySnapshot = await getDocs(poopsRef)
+
+  const visitData: Visit[] = []
+  let i = 0
+  querySnapshot.forEach((doc) => {
+    const data = doc.data()
+    const User: Visit = {
+      id: i,
+      firstName: data.firstName,
+      lastName: data.lastName,
+      petName: data.petName,
+      date: data.dateTime,
+      distance: data.distanceWalked
+    }
+
+    visitData[i] = User
+    i++
+  })
+  console.log(visitData)
+  return visitData
 }

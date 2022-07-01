@@ -1,15 +1,12 @@
 import React from 'react'
 import { SearchIcon } from '@heroicons/react/outline'
 
-import Data from '@/../mockData/MOCK_DATA.json'
-import ListVisits from '@/components/visit/ListVisits'
-import VisitInstance from '@/components/visit/visitInstance'
+import VisitList from '@/components/visit/visitList'
 
 interface SearchBarState {
-  query: string
+  searchQuery: string
   startDate: string
   endDate: string
-  isEditable: boolean
 }
 
 class SearchBar extends React.Component<Record<string, never>, SearchBarState> {
@@ -17,10 +14,9 @@ class SearchBar extends React.Component<Record<string, never>, SearchBarState> {
     super(props)
 
     this.state = {
-      query: '',
+      searchQuery: '',
       startDate: '',
-      endDate: '',
-      isEditable: false
+      endDate: ''
     }
   }
 
@@ -32,7 +28,9 @@ class SearchBar extends React.Component<Record<string, never>, SearchBarState> {
           <input
             className='m-0 w-full border-0 text-left outline-0'
             placeholder='Search...'
-            onChange={(event) => this.setState({ query: event.target.value })}
+            onChange={(event) =>
+              this.setState({ searchQuery: event.target.value })
+            }
           />
         </div>
         <div className='flex justify-between p-4'>
@@ -53,7 +51,6 @@ class SearchBar extends React.Component<Record<string, never>, SearchBarState> {
             </div>
           </button>
         </div>
-        <ListVisits />
 
         {/* <div className='container mx-auto mb-2 flex flex-row justify-center'>
           <DatePicker
@@ -68,36 +65,7 @@ class SearchBar extends React.Component<Record<string, never>, SearchBarState> {
         </div> */}
 
         {/* would be nice if this was in its own component */}
-        <div className='h-0 shrink grow overflow-y-auto'>
-          {Data.filter((post) => {
-            if (
-              this.state.query === '' ||
-              post.first_name
-                .toLowerCase()
-                .includes(this.state.query.toLowerCase()) ||
-              post.last_name
-                .toLowerCase()
-                .includes(this.state.query.toLowerCase()) ||
-              post.pet.toLowerCase().includes(this.state.query.toLowerCase())
-            ) {
-              return post
-            }
-          }).map((post) => (
-            <VisitInstance
-              key={post.id}
-              id={post.id}
-              first_name={post.first_name}
-              last_name={post.last_name}
-              pet={post.pet}
-              date={post.date}
-              number={post.number}
-              travelled={post.travelled}
-              walk_metres={post.walk_metres}
-              commute_metres={post.commute_metres}
-              method={post.method}
-            />
-          ))}
-        </div>
+        <VisitList searchQuery={this.state.searchQuery} />
       </div>
     )
   }

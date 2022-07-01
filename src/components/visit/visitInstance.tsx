@@ -5,20 +5,22 @@ import EditButton from '@/components/visit/Buttons'
 
 interface VisitInstanceProps {
   id: number
-  first_name: string
-  last_name: string
-  pet: string
+  firstName: string
+  lastName: string
+  petName: string
   date: string
-  number: string
-  travelled: number
-  walk_metres: number
-  commute_metres: number
-  method: string
+  distance: string
+  // number: string
+  // travelled: number
+  // walkMetres: number
+  // commuteMetres: number
+  // method: string
 }
 
 interface VisitInstanceState {
   isEditable: boolean
   isOpen: boolean
+  isLoaded: boolean
 }
 
 class VisitInstance extends React.Component<
@@ -29,7 +31,8 @@ class VisitInstance extends React.Component<
     super(props)
     this.state = {
       isEditable: false,
-      isOpen: false
+      isOpen: false,
+      isLoaded: false
     }
   }
 
@@ -60,43 +63,51 @@ class VisitInstance extends React.Component<
 
             <div className='font-bold peer-checked:font-normal'>
               <p className='font-bold text-poops-dark-red'>{`# ${this.props.id} - ${this.props.date}`}</p>
-              <p className='text-sm'>{`Client Name: ${this.props.first_name} ${this.props.last_name}`}</p>
+              <p className='text-sm'>{`Client Name: ${this.props.firstName} ${this.props.lastName}`}</p>
             </div>
 
             <div className='max-h-0 justify-between overflow-hidden text-sm transition-all duration-300 peer-checked:max-h-40'>
               {this.state.isEditable ? (
                 <>
                   <p>
-                    Pet/Pets: <input placeholder={this.props.pet} />
+                    Pet/Pets: <input placeholder={this.props.petName} />
                   </p>
-                  <p>
+                  {/* <p>
                     Client Phone Number:{' '}
                     <input placeholder={this.props.number} />
-                  </p>
+                  </p> */}
                   <p>
                     Distance travelled:{' '}
-                    <input placeholder={String(this.props.travelled)} />
+                    <input placeholder={this.props.distance} />
                   </p>
-                  <p>
+                  {/* <p>
                     Walk Metres:{' '}
-                    <input placeholder={String(this.props.walk_metres)} />
+                    <input placeholder={String(this.props.walkMetres)} />
                   </p>
                   <p>
                     Commute Metres:{' '}
-                    <input placeholder={String(this.props.commute_metres)} />
+                    <input placeholder={String(this.props.commuteMetres)} />
                   </p>
                   <p>
                     Commute Method: <input placeholder={this.props.method} />
-                  </p>
+                  </p> */}
                 </>
               ) : (
                 <>
-                  <p>Pet/Pets: {this.props.pet}</p>
-                  <p>Client Phone Number: {this.props.number}</p>
-                  <p>Distance travelled: {this.props.travelled}</p>
-                  <p>Walk Metres: {this.props.walk_metres}</p>
-                  <p>Commute Metres: {this.props.commute_metres}</p>
-                  <p>Commute Method: {this.props.method}</p>
+                  <p>Pet/Pets: {this.props.petName}</p>
+                  {/* <p>Client Phone Number: {this.props.number}</p> */}
+                  <p>Distance travelled: {this.props.distance}</p>
+                  {/* <button
+                    type='button'
+                    onClick={() => {
+                      if (!this.state.isLoaded) {
+                        this.setState({ isLoaded: true })
+                      }
+                    }}
+                  ></button> */}
+                  {/* <p>Walk Metres: {this.props.walkMetres}</p>
+                  <p>Commute Metres: {this.props.commuteMetres}</p>
+                  <p>Commute Method: {this.props.method}</p> */}
                 </>
               )}
             </div>
