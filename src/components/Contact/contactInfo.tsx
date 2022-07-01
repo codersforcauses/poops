@@ -1,4 +1,4 @@
-// import Link from 'next/link'
+import Image from 'next/image'
 import { UserCircleIcon } from '@heroicons/react/outline'
 import tw from 'tailwind-styled-components'
 
