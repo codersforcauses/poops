@@ -16,13 +16,21 @@ interface VisitInstanceProps {
   method: string
 }
 
+interface VisitInstanceState {
+  isEditable: boolean
+  isOpen: boolean
+}
+
 class VisitInstance extends React.Component<
   VisitInstanceProps,
-  { isEditable: boolean }
+  VisitInstanceState
 > {
   constructor(props: VisitInstanceProps) {
     super(props)
-    this.state = { isEditable: false }
+    this.state = {
+      isEditable: false,
+      isOpen: false
+    }
   }
 
   render() {
@@ -35,12 +43,20 @@ class VisitInstance extends React.Component<
           <div className='relative w-full'>
             <input
               type='checkbox'
-              onClick={() => {
-                this.setState({ isEditable: false })
+              checked={this.state.isOpen}
+              onChange={() => {
+                this.setState({
+                  isEditable: false,
+                  isOpen: !this.state.isOpen
+                })
               }}
               className='peer absolute top-0 h-12 w-full cursor-pointer opacity-0'
             />
-            <ChevronDownIcon className='absolute top-3 right-5 h-6 w-6 rotate-0 text-poops-dark-red transition-transform duration-500 peer-checked:rotate-180' />
+
+            <ChevronDownIcon
+              className='absolute top-3 right-5 h-6 w-6 cursor-pointer text-poops-dark-red transition-transform duration-500 peer-checked:rotate-180'
+              onClick={() => this.setState({ isOpen: !this.state.isOpen })}
+            />
 
             <div className='font-bold peer-checked:font-normal'>
               <p className='font-bold text-poops-dark-red'>{`# ${this.props.id} - ${this.props.date}`}</p>
@@ -84,6 +100,8 @@ class VisitInstance extends React.Component<
                 </>
               )}
             </div>
+
+            {/* Edit button */}
             <div className='invisible absolute right-5 bottom-1 h-5 w-5 rounded-full bg-poops-dark-red text-poops-dark-red transition-all peer-checked:visible'>
               <button
                 type='button'
