@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import { UserCircleIcon } from '@heroicons/react/outline'
+import { UserCircleIcon, LocationMarkerIcon } from '@heroicons/react/outline'
 import tw from 'tailwind-styled-components'
 
 import type { Contact } from '@/types/types'
@@ -24,10 +24,6 @@ function ContactInfo({ contact, image }: contactProp) {
           layout='fixed'
         />
       )}
-      <h1 className='text-4xl font-normal'>
-        {contact.first_name} {contact.last_name}
-      </h1>
-      <h3>{contact.notes}</h3>
 
       <h1 className='text-4xl font-normal'>
         {contact.first_name} {contact.last_name}
@@ -43,19 +39,16 @@ function ContactInfo({ contact, image }: contactProp) {
         <p className='text-xl text-poops-red'>{contact.email}</p>
       </Box>
       <Box>
-        <h3>Address</h3>
+        <div className='w-full flex justify-between'>
+          <h3>Address</h3>
+          <a href={`http://maps.google.com/?q=${contact.street_address}`} target='_blank' className="h-6 w-6"><LocationMarkerIcon /></a>
+        </div>
         <p className='text-xl text-poops-red'>{contact.street_address}</p>
+          
       </Box>
       <Box>
         <h3>Tags</h3>
         <div className='h-auto bg-white bg-opacity-100'>
-          Tags
-          <br />
-          <label>
-            <input type='checkbox' /> Coordinator
-          </label>
-          <br />
-          Hi
           <br />{' '}
         </div>
         {/* This should be done as a react component i think? */}
@@ -91,7 +84,6 @@ const Box = tw.div`
     box-content
     w-80
     rounded-lg
-    border-2
     px-3
     py-1
 `
