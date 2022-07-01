@@ -1,5 +1,10 @@
 import Image from 'next/image'
-import { LocationMarkerIcon, UserCircleIcon } from '@heroicons/react/outline'
+import {
+  LocationMarkerIcon,
+  PencilAltIcon,
+  PlusIcon,
+  UserCircleIcon
+} from '@heroicons/react/outline'
 import tw from 'tailwind-styled-components'
 
 import type { Contact } from '@/types/types'
@@ -44,17 +49,19 @@ function ContactInfo({ contact, image }: contactProp) {
           <a
             href={`http://maps.google.com/?q=${contact.street_address}`}
             target='_blank'
-            className='h-6 w-6'
             rel='noreferrer'
           >
-            <LocationMarkerIcon />
+            <LocationMarkerIcon className='h-5 w-5' />
           </a>
         </div>
         <p className='text-xl text-poops-red'>{contact.street_address}</p>
       </Box>
       <Box>
-        <h3>Tags</h3>
-        <TagHolder className=''>
+        <div className='flex w-full justify-between'>
+          <h3>Tags</h3>
+          <PlusIcon className='h-5 w-5' />
+        </div>
+        <TagHolder className='mt-1'>
           <br />{' '}
         </TagHolder>
         {/* This should be done as a react component i think? */}
@@ -76,7 +83,7 @@ function ContactInfo({ contact, image }: contactProp) {
       {/* Padding to counter shadow */}
       <Box className='pb-3'>
         <h3>Region </h3>
-        <TagHolder>
+        <TagHolder className='mt-1'>
           <Tag>hello</Tag>
           <Tag>hi</Tag>
         </TagHolder>
@@ -85,7 +92,13 @@ function ContactInfo({ contact, image }: contactProp) {
         <h3>Pets </h3>
         <p className='text-xl text-poops-red'>{contact.pets}</p>
       </Box>
-      <Box>Notes</Box>
+
+      <Box>
+        <div className='flex w-full justify-between'>
+          <h3>Notes</h3>
+          <PencilAltIcon className='h-5 w-5' />
+        </div>
+      </Box>
     </div>
   )
 }
