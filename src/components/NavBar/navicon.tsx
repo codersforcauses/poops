@@ -16,7 +16,7 @@ export const NavIcon = ({ currentPage }: CurrentPageProp) => {
           currentPage === 'Visit' ? activeButtonStyle : inactiveButtonStyle
         }
       >
-        <Image alt='dog-icon' src='/images/dog-icon.png' layout='fill' />
+        <Image alt='dog-icon' src='/images/dog-icon.webp' layout='fill' />
       </button>
     </div>
   )
