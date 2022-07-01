@@ -1,19 +1,10 @@
-import ContactItem from '@/components/Contact/contactitem'
 import Link from 'next/link'
-type contactData = {
-  id: string
-  first_name: string
-  last_name: string
-  pets: string
-  email: string
-  phone: string
-  street_address: string
-  region: string
-  notes: string
-}
+
+import ContactItem from '@/components/Contact/contactitem'
+import type { Contact } from '@/types/types'
 
 type contactsProp = {
-  contacts: contactData[]
+  contacts: Contact[]
 }
 
 const ContactList = ({ contacts }: contactsProp) => {
@@ -21,7 +12,7 @@ const ContactList = ({ contacts }: contactsProp) => {
     return (
       <Link href={`/contact/${contact.id}`} key={contact.id}>
         <a>
-        <ContactItem contact={contact} image='' />
+          <ContactItem contact={contact} image='' />
         </a>
       </Link>
     )

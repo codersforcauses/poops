@@ -1,23 +1,12 @@
-import { GetStaticProps } from 'next'
+import { GetStaticPaths, GetStaticProps } from 'next'
 import router from 'next/router'
 
 import CONTACT_DATA from '@/../mockData/CONTACT_DATA.json'
 import ContactInfo from '@/components/Contact/contactInfo'
-
-type contactData = {
-  id: string
-  first_name: string
-  last_name: string
-  pets: string
-  email: string
-  phone: string
-  street_address: string
-  region: string
-  notes: string
-}
+import type { Contact } from '@/types/types'
 
 type contactProp = {
-  contact: contactData
+  contact: Contact
 }
 const Contact = ({ contact }: contactProp) => {
   return (
@@ -37,7 +26,7 @@ const Contact = ({ contact }: contactProp) => {
 }
 
 // TODO: Update to getServerSideProps when API is created
-export const getStaticPaths = () => {
+export const getStaticPaths: GetStaticPaths = () => {
   const paths = CONTACT_DATA.map((contact) => {
     return { params: { id: contact.id.toString() } }
   })
@@ -49,11 +38,7 @@ export const getStaticPaths = () => {
 
 export const getStaticProps: GetStaticProps = (context: any) => {
   const id = context.params.id
-  const contact = CONTACT_DATA.find((contact) => {
-    if (contact.id === id) {
-      return contact
-    }
-  })
+  const contact = CONTACT_DATA.find((contact) => contact.id === id)
   return {
     props: {
       contact
