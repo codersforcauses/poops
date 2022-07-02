@@ -6,11 +6,23 @@ const Incidents = () => {
       {/* <Seo /> */}
       <Header pageTitle='Incidents' />
 
-      <main className='flex-col space-y-8'>
-        <div className='space-between w-100 h-100 flex flex-col'>
-          <div className='flex h-screen flex-col px-4'>
-            <h1 className='py-2 text-center'>Incident Form</h1>
-          </div>
+      <main>
+        <p>Incidents Page</p>
+
+        <div>
+          <form>
+            <label>
+              User Email:
+              <input type='text' name='email' />
+            </label>
+
+            <label>
+              User Name:
+              <input type='text' name='name' />
+            </label>
+
+            <input type='submit' value='Submit' />
+          </form>
         </div>
       </main>
     </>
