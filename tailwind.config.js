@@ -10,11 +10,11 @@ module.exports = {
   ],
   theme: {
     colors: {
-      'poops-red': '#ce283d',
-      'poops-dark-red': '#a52a2a',
-      grey: '#C5C5C5',
+      primary: '#ce283d',
+      'dark-red': '#a52a2a',
       transparent: 'transparent',
       current: 'currentColor',
+      grey: '#C5C5C5',
       white: '#ffffff',
       black: '#000000'
     },
