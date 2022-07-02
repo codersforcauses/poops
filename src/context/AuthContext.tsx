@@ -13,7 +13,10 @@ import { auth } from '../components/Firebase/init'
 
 const authContext = createContext({})
 
-export const useAuth = () => useContext(authContext)
+// export const useAuth = () => useContext(authContext)
+export function useAuth() {
+  return useContext(authContext)
+}
 
 export const AuthContextProvider = ({
   children
@@ -84,6 +87,13 @@ export const AuthContextProvider = ({
     return () => unsubscribe()
   }, [])
 
+  // type value = {
+  //   currentUser: User | null
+  //   googleSignIn: (auth: Auth) => Promise<User | Error>
+  //   getGoogleResults: (auth: Auth) => Promise<User | Error>
+  //   logOut: () => Promise<void>
+  // }
+
   const value = {
     currentUser,
     googleSignIn,
@@ -92,7 +102,7 @@ export const AuthContextProvider = ({
   }
 
   return (
-    <authContext.Provider value={{ value }}>
+    <authContext.Provider value={value}>
       {!loading && children}
     </authContext.Provider>
   )
