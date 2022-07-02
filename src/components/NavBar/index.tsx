@@ -11,7 +11,7 @@ import NavLink from '@/components/NavBar/navlink'
 
 export default function NavBar() {
   const [currentPage, setCurrentPage] = useState('Home')
-  const iconClasses = 'inline-block h-7 w-8 hover:text-poops-red'
+  const iconClasses = 'inline-block h-7 w-8 hover:text-primary'
 
   const linkDetails = [
     { name: 'Home', route: '/', icon: <HomeIcon className={iconClasses} /> },
