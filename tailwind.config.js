@@ -12,6 +12,7 @@ module.exports = {
     colors: {
       'poops-red': '#ce283d',
       'poops-dark-red': '#a52a2a',
+      grey: '#C5C5C5',
       transparent: 'transparent',
       current: 'currentColor',
       white: '#ffffff',
