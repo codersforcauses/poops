@@ -17,7 +17,9 @@ export default function NavBar() {
   const currentPageTitle =
     pathStart === ''
       ? 'Home'
-      : `${pathStart.charAt(0).toUpperCase()}${pathStart.slice(1)}`
+      : `${pathStart.charAt(0).toUpperCase()}${pathStart
+          .slice(1)
+          .toLowerCase()}`
 
   const [currentPage, setCurrentPage] = useState(currentPageTitle)
   const iconClasses = 'inline-block h-7 w-8 hover:text-poops-red'
