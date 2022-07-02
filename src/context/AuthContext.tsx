@@ -11,12 +11,18 @@ import {
 
 import { auth } from '../components/Firebase/init'
 
-const authContext = createContext({})
-
-// export const useAuth = () => useContext(authContext)
-export function useAuth() {
-  return useContext(authContext)
+interface FirebaseContextProps {
+  auth: Auth
+  googleSignIn?: (auth: Auth) => void
+  getGoogleResults?: (auth: Auth) => void
+  signOut?: () => void
 }
+
+const authContext = createContext<FirebaseContextProps>({
+  auth: auth
+})
+
+export const useAuth = () => useContext(authContext)
 
 export const AuthContextProvider = ({
   children
@@ -87,14 +93,8 @@ export const AuthContextProvider = ({
     return () => unsubscribe()
   }, [])
 
-  // type value = {
-  //   currentUser: User | null
-  //   googleSignIn: (auth: Auth) => Promise<User | Error>
-  //   getGoogleResults: (auth: Auth) => Promise<User | Error>
-  //   logOut: () => Promise<void>
-  // }
-
   const value = {
+    auth,
     currentUser,
     googleSignIn,
     getGoogleResults,

@@ -18,7 +18,7 @@ const Login: NextPage = () => {
     // e.preventDefault()
     // console.log('test1')
     // getGoogleResults(auth)
-    googleSignIn(auth)
+    googleSignIn?.(auth)
   }
 
   return (
