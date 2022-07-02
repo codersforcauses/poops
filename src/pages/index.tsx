@@ -13,7 +13,7 @@ const Home = () => {
           <div className='flex h-screen flex-col px-4'>
             <h1 className='py-2 text-center'>Welcome, User!</h1>
             <Summary />
-            <br/>
+            <br />
             <Button />
           </div>
         </div>
