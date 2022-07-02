@@ -113,6 +113,7 @@ const Box = tw.div`
     rounded-lg
     px-3
     py-1
+    break-words
 `
 // Styling for div that holds the selected tags
 const TagHolder = tw.div`
