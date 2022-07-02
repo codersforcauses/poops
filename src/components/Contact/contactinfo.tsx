@@ -13,9 +13,10 @@ import type { Contact } from '@/types/types'
 type contactProp = {
   contact: Contact
   image: string
+  isEditing: boolean
 }
 
-function ContactInfo({ contact, image }: contactProp) {
+function ContactInfo({ contact, image, isEditing }: contactProp) {
   return (
     <div className='flex flex-col items-center justify-center gap-3'>
       {image === '' ? (
