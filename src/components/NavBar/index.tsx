@@ -22,7 +22,8 @@ export default function NavBar() {
           .toLowerCase()}`
 
   const [currentPage, setCurrentPage] = useState(currentPageTitle)
-  const iconClasses = 'inline-block h-7 w-8 hover:text-poops-red'
+  const iconClasses = 'inline-block h-7 w-8 hover:text-primary'
+
 
   const linkDetails = [
     { name: 'Home', route: '/', icon: <HomeIcon className={iconClasses} /> },
