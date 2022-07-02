@@ -114,7 +114,7 @@ function ContactInfo({ contact, image, isEditing }: contactProp) {
       <Box>
           <h3>Notes</h3>
           { !isEditing ? <p> THIS IS A NOTE </p> :
-          <input defaultValue={contact.notes}/> }
+          <textarea defaultValue={contact.notes}/> }
       </Box>
     </div>
   )
