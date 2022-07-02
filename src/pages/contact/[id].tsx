@@ -2,7 +2,7 @@ import { GetStaticPaths, GetStaticProps } from 'next'
 import Link from 'next/link'
 
 import CONTACT_DATA from '@/../mockData/CONTACT_DATA.json'
-import ContactInfo from '@/components/Contact/contactInfo'
+import ContactInfo from '@/components/Contact/contactinfo'
 import Header from '@/components/Header'
 import type { Contact } from '@/types/types'
 
