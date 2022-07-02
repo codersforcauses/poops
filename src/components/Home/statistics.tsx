@@ -9,9 +9,9 @@ interface SummaryStatistics {
 function Statistics(props: SummaryStatistics) {
   return (
     <div>
-    <p>{props.title}</p>
-    <p>{props.data}</p>
-  </div>
+      <p style={{ fontSize: 30 }}>{props.title}</p>
+      <p style={{ fontSize: 50, color: '#a52a2a' }}>{props.data}</p>
+    </div>
   );
 }
 
