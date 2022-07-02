@@ -6,18 +6,9 @@ import { auth } from '../components/Firebase/init'
 import { useAuth } from '../context/AuthContext'
 
 const Login: NextPage = () => {
-  // const { auth } = useAuth();
-  const { googleSignIn } = useAuth()
-  // googleSignIn
-  // const { value } = useAuth()
-  // const googleSignIn = value.googleSignIn
-  // value.googleSignIn(auth)
-  // console.log(value)
+  const { googleSignIn, logOut } = useAuth()
 
-  function handleSubmit(auth: Auth) {
-    // e.preventDefault()
-    // console.log('test1')
-    // getGoogleResults(auth)
+  function handleGoogle(auth: Auth) {
     googleSignIn?.(auth)
   }
 
@@ -41,7 +32,7 @@ const Login: NextPage = () => {
           <button
             className='border-gray-300 hover:border-blue-400 focus:bg-blue-50 active:bg-blue-100 group h-12 rounded-full border-2 
  px-6 transition duration-300'
-            onClick={() => handleSubmit(auth)}
+            onClick={() => handleGoogle(auth)}
           >
             <div className='relative flex items-center justify-center space-x-4'>
               {/* <Image
@@ -91,6 +82,7 @@ const Login: NextPage = () => {
               </span>
             </div>
           </button>
+          <button onClick={logOut}>logout test</button>
         </div>
       </main>
     </>

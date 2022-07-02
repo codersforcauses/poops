@@ -15,11 +15,13 @@ interface FirebaseContextProps {
   auth: Auth
   googleSignIn?: (auth: Auth) => void
   getGoogleResults?: (auth: Auth) => void
-  signOut?: () => void
+  logOut?: () => void
+  currentUser?: User | null
 }
 
 const authContext = createContext<FirebaseContextProps>({
-  auth: auth
+  auth: auth,
+  currentUser: null
 })
 
 export const useAuth = () => useContext(authContext)
@@ -33,16 +35,12 @@ export const AuthContextProvider = ({
   const [loading, setLoading] = useState(true)
 
   function googleSignIn(auth: Auth) {
-    // TODO add error checking
     const googleProvider = new GoogleAuthProvider()
-    // return signInWithRedirect(auth, googleProvider);
-    signInWithRedirect(auth, googleProvider)
+    signInWithRedirect(auth, googleProvider) // Not working in chrome incognito?, but signInWithPopup does
       .then((result) => {
-        // console.log(result);
         return result
       })
       .catch((error) => {
-        // console.log(error);
         return error
       })
   }
@@ -61,7 +59,6 @@ export const AuthContextProvider = ({
       })
       .catch((error) => {
         return error
-        // console.log(error);
         // const errorCode = error.code;
         // const errorMessage = error.message;
         // The email of the user's account used.
@@ -72,15 +69,11 @@ export const AuthContextProvider = ({
   }
 
   function logOut() {
-    // TODO add error checking
-    // return signOut(auth);
     signOut(auth)
       .then((result) => {
-        // console.log(result)
         return result
       })
       .catch((error) => {
-        // console.log(error)
         return error
       })
   }
@@ -93,12 +86,12 @@ export const AuthContextProvider = ({
     return () => unsubscribe()
   }, [])
 
-  const value = {
+  const value: FirebaseContextProps = {
     auth,
-    currentUser,
     googleSignIn,
     getGoogleResults,
-    logOut
+    logOut,
+    currentUser
   }
 
   return (
