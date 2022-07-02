@@ -18,7 +18,7 @@ const Contact = ({ contact }: contactProp) => {
   return (
     <>
       <Header pageTitle={`${contact.first_name} ${contact.last_name}`} />
-      <div className='m-2 mx-auto flex w-96 justify-between'>
+      <div className='sticky top-0 z-50 m-2 mx-auto flex w-96 justify-between bg-white py-2'>
         <Link href='/contact'>
           <button
             type='button'
@@ -36,9 +36,15 @@ const Contact = ({ contact }: contactProp) => {
       </div>
       <ContactInfo contact={contact} image='' isEditing={isEditing} />
       <div className='my-3 flex justify-center'>
-      { isEditing && <button type='button'
-            className='rounded bg-primary w-80 font-bold text-white hover:bg-dark-red'
-            onClick={() => setIsEditing(false)}> Save</button> }
+        {isEditing && (
+          <button
+            type='button'
+            className='w-80 rounded bg-primary py-1 font-bold text-white hover:bg-dark-red'
+            onClick={() => setIsEditing(false)}
+          >
+            Save
+          </button>
+        )}
       </div>
     </>
   )
