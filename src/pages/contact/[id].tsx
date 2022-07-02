@@ -36,16 +36,9 @@ const Contact = ({ contact }: contactProp) => {
       </div>
       <ContactInfo contact={contact} image='' isEditing={isEditing} />
       <div className='my-3 flex justify-center'>
-        {isEditing && (
-          <button
-            type='button'
-            className='bg-poops-red w-80 rounded font-bold text-white hover:bg-dark-red'
-            onClick={() => setIsEditing(false)}
-          >
-            {' '}
-            Save
-          </button>
-        )}
+      { isEditing && <button type='button'
+            className='rounded bg-primary w-80 font-bold text-white hover:bg-dark-red'
+            onClick={() => setIsEditing(false)}> Save</button> }
       </div>
     </>
   )

@@ -35,11 +35,16 @@ function ContactInfo({ contact, image, isEditing }: contactProp) {
       <h1 className='text-4xl font-normal'>
         {contact.first_name} {contact.last_name}
       </h1>
-      <h3>{contact.notes}</h3>
+      { !isEditing ? 
+      <h3>{contact.notes}</h3> :
+      <input defaultValue={contact.notes}/> }
+
 
       <Box>
         <h3>Phone</h3>
-        <p className='text-xl text-primary'>{contact.phone}</p>
+        { !isEditing ? 
+        <p className='text-xl text-primary'>{contact.phone}</p> :
+        <input defaultValue={contact.phone}/> }
       </Box>
       <Box>
         <div className='flex w-full justify-between'>
@@ -48,7 +53,9 @@ function ContactInfo({ contact, image, isEditing }: contactProp) {
             <MailIcon className='h-5 w-5' />
           </a>
         </div>
-        <p className='text-xl text-primary'>{contact.email}</p>
+        { !isEditing ? 
+        <p className='text-xl text-primary'>{contact.email}</p> :
+        <input defaultValue={contact.email}/> }
       </Box>
       <Box>
         <div className='flex w-full justify-between'>
@@ -61,7 +68,9 @@ function ContactInfo({ contact, image, isEditing }: contactProp) {
             <LocationMarkerIcon className='h-5 w-5' />
           </a>
         </div>
-        <p className='text-xl text-primary'>{contact.street_address}</p>
+        { !isEditing ? 
+        <p className='text-xl text-primary'>{contact.street_address}</p> :
+        <input defaultValue={contact.street_address}/> }
       </Box>
       <Box>
         <div className='flex w-full justify-between'>
@@ -97,14 +106,15 @@ function ContactInfo({ contact, image, isEditing }: contactProp) {
       </Box>
       <Box>
         <h3>Pets </h3>
-        <p className='text-xl text-primary'>{contact.pets}</p>
+        { !isEditing ? 
+        <p className='text-xl text-primary'>{contact.pets}</p> :
+        <input defaultValue={contact.pets}/> }
       </Box>
 
       <Box>
-        <div className='flex w-full justify-between'>
           <h3>Notes</h3>
-          <PencilAltIcon className='h-5 w-5' />
-        </div>
+          { !isEditing ? <p> THIS IS A NOTE </p> :
+          <input defaultValue={contact.notes}/> }
       </Box>
     </div>
   )
