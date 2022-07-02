@@ -10,8 +10,8 @@ module.exports = {
   ],
   theme: {
     colors: {
-      'poops-red': '#ce283d',
-      'poops-dark-red': '#a52a2a',
+      primary: '#ce283d',
+      'dark-red': '#a52a2a',
       transparent: 'transparent',
       current: 'currentColor',
       white: '#ffffff',
