@@ -3,6 +3,7 @@ import Link from 'next/link'
 
 import CONTACT_DATA from '@/../mockData/CONTACT_DATA.json'
 import ContactInfo from '@/components/Contact/contactInfo'
+import Header from '@/components/Header'
 import type { Contact } from '@/types/types'
 
 type contactProp = {
@@ -12,6 +13,7 @@ type contactProp = {
 const Contact = ({ contact }: contactProp) => {
   return (
     <>
+      <Header pageTitle={`${contact.first_name} ${contact.last_name}`} />
       <div className='mx-auto w-96'>
         <Link href='/contact'>
           <button
