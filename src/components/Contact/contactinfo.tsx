@@ -1,6 +1,7 @@
 import Image from 'next/image'
 import {
   LocationMarkerIcon,
+  MailIcon,
   PencilAltIcon,
   PlusIcon,
   UserCircleIcon
@@ -40,7 +41,12 @@ function ContactInfo({ contact, image }: contactProp) {
         <p className='text-xl text-poops-red'>{contact.phone}</p>
       </Box>
       <Box>
-        <h3>Email</h3>
+        <div className='flex w-full justify-between'>
+          <h3>Email</h3>
+          <a href={`mailto:${contact.email}`} target='_blank' rel='noreferrer'>
+            <MailIcon className='h-5 w-5' />
+          </a>
+        </div>
         <p className='text-xl text-poops-red'>{contact.email}</p>
       </Box>
       <Box>
