@@ -18,7 +18,7 @@ const Contact = ({ contact }: contactProp) => {
         <Link href='/contact'>
           <button
             type='button'
-            className='m-2 rounded bg-poops-red py-2 px-4 font-bold text-white hover:bg-poops-dark-red'
+            className='hover:bg-poops-dark-red m-2 rounded bg-primary py-2 px-4 font-bold text-white'
           >
             Back
           </button>

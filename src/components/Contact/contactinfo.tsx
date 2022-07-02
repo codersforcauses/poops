@@ -38,7 +38,7 @@ function ContactInfo({ contact, image }: contactProp) {
 
       <Box>
         <h3>Phone</h3>
-        <p className='text-xl text-poops-red'>{contact.phone}</p>
+        <p className='text-xl text-primary'>{contact.phone}</p>
       </Box>
       <Box>
         <div className='flex w-full justify-between'>
@@ -47,7 +47,7 @@ function ContactInfo({ contact, image }: contactProp) {
             <MailIcon className='h-5 w-5' />
           </a>
         </div>
-        <p className='text-xl text-poops-red'>{contact.email}</p>
+        <p className='text-xl text-primary'>{contact.email}</p>
       </Box>
       <Box>
         <div className='flex w-full justify-between'>
@@ -60,7 +60,7 @@ function ContactInfo({ contact, image }: contactProp) {
             <LocationMarkerIcon className='h-5 w-5' />
           </a>
         </div>
-        <p className='text-xl text-poops-red'>{contact.street_address}</p>
+        <p className='text-xl text-primary'>{contact.street_address}</p>
       </Box>
       <Box>
         <div className='flex w-full justify-between'>
@@ -96,7 +96,7 @@ function ContactInfo({ contact, image }: contactProp) {
       </Box>
       <Box>
         <h3>Pets </h3>
-        <p className='text-xl text-poops-red'>{contact.pets}</p>
+        <p className='text-xl text-primary'>{contact.pets}</p>
       </Box>
 
       <Box>
@@ -135,7 +135,7 @@ const TagHolder = tw.div`
 const Tag = tw.div`
   px-2
   border-2
-  bg-poops-red
+  bg-primary
   text-white
   rounded-2xl
 `
