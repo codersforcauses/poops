@@ -1,5 +1,5 @@
 import { GetStaticPaths, GetStaticProps } from 'next'
-import router from 'next/router'
+import Link from 'next/link'
 
 import CONTACT_DATA from '@/../mockData/CONTACT_DATA.json'
 import ContactInfo from '@/components/Contact/contactInfo'
@@ -13,13 +13,14 @@ const Contact = ({ contact }: contactProp) => {
   return (
     <>
       <div className='mx-auto w-96'>
-        <button
-          type='button'
-          onClick={() => router.back()}
-          className='m-2 rounded bg-poops-red py-2 px-4 font-bold text-white hover:bg-poops-dark-red'
-        >
-          Back
-        </button>
+        <Link href='/contact'>
+          <button
+            type='button'
+            className='m-2 rounded bg-poops-red py-2 px-4 font-bold text-white hover:bg-poops-dark-red'
+          >
+            Back
+          </button>
+        </Link>
       </div>
       <ContactInfo contact={contact} image='' />
     </>
