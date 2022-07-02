@@ -44,11 +44,13 @@ const Login: NextPage = () => {
             onClick={() => handleSubmit(auth)}
           >
             <div className='relative flex items-center justify-center space-x-4'>
-              <Image
+              {/* <Image
                 src='https://tailus.io/sources/blocks/social/preview/images/google.svg'
+                width={5}
+                height={5}
                 className='absolute left-0 w-5'
                 alt='google logo'
-              />
+              /> */}
               <span className='text-gray-700 group-hover:text-blue-600 block w-max text-sm font-semibold tracking-wide transition duration-300 sm:text-base'>
                 Continue with Google
               </span>
@@ -77,11 +79,13 @@ const Login: NextPage = () => {
                                      px-6 transition duration-300'
           >
             <div className='relative flex items-center justify-center space-x-4'>
-              <Image
+              {/* <Image
                 src='https://upload.wikimedia.org/wikipedia/en/0/04/Facebook_f_logo_%282021%29.svg'
+                width={5}
+                height={5}
                 className='absolute left-0 w-5'
                 alt='Facebook logo'
-              />
+              /> */}
               <span className='text-gray-700 group-hover:text-blue-600 block w-max text-sm font-semibold tracking-wide transition duration-300 sm:text-base'>
                 Continue with Facebook
               </span>
