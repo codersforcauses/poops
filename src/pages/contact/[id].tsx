@@ -16,7 +16,7 @@ const Contact = ({ contact }: contactProp) => {
         <button
           type='button'
           onClick={() => router.back()}
-          className='my-1  rounded bg-poops-red py-2 px-4 font-bold text-white hover:bg-poops-dark-red'
+          className='my-2 rounded bg-poops-red py-2 px-4 font-bold text-white hover:bg-poops-dark-red'
         >
           Back
         </button>
