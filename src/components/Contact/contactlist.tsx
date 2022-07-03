@@ -20,10 +20,8 @@ const ContactList = ({ contacts }: ContactsProp) => {
 
   return (
     <>
-      <div className='flex-col'>
-        <div className='flow-root'>
+      <div className='flex-col mt-1'>
           <ul>{contactItems}</ul>
-        </div>
       </div>
     </>
   )
