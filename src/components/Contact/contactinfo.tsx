@@ -3,7 +3,8 @@ import {
   LocationMarkerIcon,
   MailIcon,
   PlusIcon,
-  UserCircleIcon
+  UserCircleIcon,
+  PhoneIcon,
 } from '@heroicons/react/outline'
 import tw from 'tailwind-styled-components'
 
@@ -44,7 +45,12 @@ function ContactInfo({ contact, image, isEditing }: ContactInfoProps) {
       )}
 
       <Box>
-        <h3>Phone</h3>
+        <div className='flex w-full justify-between'>
+          <h3>Phone</h3>
+          <a href={`tel:${contact.phone}`}>
+            <PhoneIcon className='h-5 w-5' />
+          </a>
+        </div>
         {!isEditing ? (
           <p className='text-xl text-primary'>{contact.phone}</p>
         ) : (
