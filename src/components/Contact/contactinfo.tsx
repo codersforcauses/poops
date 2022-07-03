@@ -131,7 +131,7 @@ function ContactInfo({ contact, image, isEditing }: ContactInfoProps) {
       <Box>
         <h3>Pets </h3>
         {!isEditing ? (
-          <p className='text-xl text-primary'>{contact.pets}</p>
+          <p className='text-xl text-primary'>{contact.pets.join(', ')}</p>
         ) : (
           <input
             defaultValue={contact.pets}
