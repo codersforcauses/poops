@@ -51,6 +51,10 @@ const Contact = () => {
   const onSearchTagChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const option_value = event.target.value
     setSelectedOption(option_value)
+    const filteredContacts = CONTACT_DATA.filter((contact) => {
+      return contact.region.includes(option_value)
+    })
+    setFilteredContacts(filteredContacts)
   }
 
   return (
