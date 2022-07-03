@@ -9,13 +9,13 @@ import tw from 'tailwind-styled-components'
 
 import type { Contact } from '@/types/types'
 
-type contactProp = {
+type ContactInfoProps = {
   contact: Contact
   image: string
   isEditing: boolean
 }
 
-function ContactInfo({ contact, image, isEditing }: contactProp) {
+function ContactInfo({ contact, image, isEditing }: ContactInfoProps) {
   return (
     <div className='flex flex-col items-center justify-center gap-3'>
       {image === '' ? (

@@ -8,11 +8,11 @@ import ContactInfo from '@/components/Contact/contactinfo'
 import Header from '@/components/Header'
 import type { Contact } from '@/types/types'
 
-type contactProp = {
+type ContactProp = {
   contact: Contact
 }
 
-const Contact = ({ contact }: contactProp) => {
+const Contact = ({ contact }: ContactProp) => {
   const [isEditing, setIsEditing] = useState(false)
 
   return (
