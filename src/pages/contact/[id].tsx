@@ -37,13 +37,22 @@ const Contact = ({ contact }: contactProp) => {
       <ContactInfo contact={contact} image='' isEditing={isEditing} />
       <div className='my-3 flex justify-center'>
         {isEditing && (
-          <button
-            type='button'
-            className='w-80 rounded bg-primary py-1 font-bold text-white hover:bg-dark-red'
-            onClick={() => setIsEditing(false)}
-          >
-            Save
-          </button>
+          <div className='flex flex-col space-y-1'>
+            <button
+              type='button'
+              className='w-80 rounded bg-primary py-1 font-bold text-white hover:bg-dark-red'
+              onClick={() => setIsEditing(false)}
+            >
+              Save
+            </button>
+            <button
+              type='button'
+              className='w-80 rounded bg-grey py-1 font-bold text-black hover:bg-grey'
+              onClick={() => setIsEditing(false)}
+            >
+              Cancel
+            </button>
+          </div>
         )}
       </div>
     </>

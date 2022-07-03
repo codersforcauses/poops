@@ -2,7 +2,6 @@ import Image from 'next/image'
 import {
   LocationMarkerIcon,
   MailIcon,
-  PencilAltIcon,
   PlusIcon,
   UserCircleIcon
 } from '@heroicons/react/outline'
@@ -35,16 +34,25 @@ function ContactInfo({ contact, image, isEditing }: contactProp) {
       <h1 className='text-4xl font-normal'>
         {contact.first_name} {contact.last_name}
       </h1>
-      { !isEditing ? 
-      <h3>{contact.notes}</h3> :
-      <input defaultValue={contact.notes}/> }
-
+      {!isEditing ? (
+        <h3>{contact.notes}</h3>
+      ) : (
+        <input
+          defaultValue={contact.notes}
+          className='w-80 rounded-lg border border-grey pl-1'
+        />
+      )}
 
       <Box>
         <h3>Phone</h3>
-        { !isEditing ? 
-        <p className='text-xl text-primary'>{contact.phone}</p> :
-        <input defaultValue={contact.phone}/> }
+        {!isEditing ? (
+          <p className='text-xl text-primary'>{contact.phone}</p>
+        ) : (
+          <input
+            defaultValue={contact.phone}
+            className='w-full rounded-lg border border-grey pl-1'
+          />
+        )}
       </Box>
       <Box>
         <div className='flex w-full justify-between'>
@@ -53,9 +61,14 @@ function ContactInfo({ contact, image, isEditing }: contactProp) {
             <MailIcon className='h-5 w-5' />
           </a>
         </div>
-        { !isEditing ? 
-        <p className='text-xl text-primary'>{contact.email}</p> :
-        <input defaultValue={contact.email}/> }
+        {!isEditing ? (
+          <p className='text-xl text-primary'>{contact.email}</p>
+        ) : (
+          <input
+            defaultValue={contact.email}
+            className='w-full rounded-lg border border-grey pl-1'
+          />
+        )}
       </Box>
       <Box>
         <div className='flex w-full justify-between'>
@@ -68,9 +81,14 @@ function ContactInfo({ contact, image, isEditing }: contactProp) {
             <LocationMarkerIcon className='h-5 w-5' />
           </a>
         </div>
-        { !isEditing ? 
-        <p className='text-xl text-primary'>{contact.street_address}</p> :
-        <input defaultValue={contact.street_address}/> }
+        {!isEditing ? (
+          <p className='text-xl text-primary'>{contact.street_address}</p>
+        ) : (
+          <input
+            defaultValue={contact.street_address}
+            className='w-full rounded-lg border border-grey pl-1'
+          />
+        )}
       </Box>
       <Box>
         <div className='flex w-full justify-between'>
@@ -106,15 +124,26 @@ function ContactInfo({ contact, image, isEditing }: contactProp) {
       </Box>
       <Box>
         <h3>Pets </h3>
-        { !isEditing ? 
-        <p className='text-xl text-primary'>{contact.pets}</p> :
-        <input defaultValue={contact.pets}/> }
+        {!isEditing ? (
+          <p className='text-xl text-primary'>{contact.pets}</p>
+        ) : (
+          <input
+            defaultValue={contact.pets}
+            className='w-full rounded-lg border border-grey pl-1'
+          />
+        )}
       </Box>
 
       <Box>
-          <h3>Notes</h3>
-          { !isEditing ? <p> THIS IS A NOTE </p> :
-          <textarea defaultValue={contact.notes}/> }
+        <h3>Notes</h3>
+        {!isEditing ? (
+          <p> THIS IS A NOTE </p>
+        ) : (
+          <textarea
+            defaultValue={contact.notes}
+            className='w-full rounded-lg border border-grey'
+          />
+        )}
       </Box>
     </div>
   )
