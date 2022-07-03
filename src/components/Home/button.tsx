@@ -8,27 +8,30 @@ function Button() {
 
   return (
     <div>
-      {!modalIsOpen && (
-        <button
-          className='relative h-[37px] w-[150px] rounded-lg bg-poops-dark-red text-xl font-semibold text-white'
-          onClick={() => {
-            setModalOpen(true)
-          }}
-        >
-          START VISIT
-        </button>
-      )}
-      {modalIsOpen && (
-        <button
-          className='relative h-[37px] w-[150px] rounded-lg bg-poops-dark-red text-xl font-semibold text-white'
-          onClick={() => {
-            setModalOpen(false)
-          }}
-        >
-          STOP VISIT
-        </button>
-      )}
-      {modalIsOpen && <Modal />}
+      <div className='text-center'>
+        {!modalIsOpen && (
+          <button
+            className='relative h-[37px] w-[150px] rounded-lg bg-poops-dark-red text-xl font-semibold text-white'
+            onClick={() => {
+              setModalOpen(true)
+            }}
+          >
+            START VISIT
+          </button>
+        )}
+        {modalIsOpen && (
+          <button
+            className='relative h-[37px] w-[150px] rounded-lg bg-poops-dark-red text-xl font-semibold text-white'
+            onClick={() => {
+              setModalOpen(false)
+            }}
+          >
+            STOP VISIT
+          </button>
+        )}
+      </div>
+      <br />
+      <div>{modalIsOpen && <Modal />}</div>
     </div>
   )
 }
