@@ -3,11 +3,11 @@ import Link from 'next/link'
 import ContactItem from '@/components/Contact/contactitem'
 import type { Contact } from '@/types/types'
 
-type contactsProp = {
+type ContactsProp = {
   contacts: Contact[]
 }
 
-const ContactList = ({ contacts }: contactsProp) => {
+const ContactList = ({ contacts }: ContactsProp) => {
   const contactItems = contacts.map((contact) => {
     return (
       <Link href={`/contact/${contact.id}`} key={contact.id}>
@@ -20,10 +20,8 @@ const ContactList = ({ contacts }: contactsProp) => {
 
   return (
     <>
-      <div className='flex-col'>
-        <div className='flow-root'>
+      <div className='flex-col mt-1'>
           <ul>{contactItems}</ul>
-        </div>
       </div>
     </>
   )

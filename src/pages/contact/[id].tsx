@@ -8,11 +8,11 @@ import ContactInfo from '@/components/Contact/contactinfo'
 import Header from '@/components/Header'
 import type { Contact } from '@/types/types'
 
-type contactProp = {
+type ContactProp = {
   contact: Contact
 }
 
-const Contact = ({ contact }: contactProp) => {
+const Contact = ({ contact }: ContactProp) => {
   const [isEditing, setIsEditing] = useState(false)
 
   return (
@@ -37,13 +37,22 @@ const Contact = ({ contact }: contactProp) => {
       <ContactInfo contact={contact} image='' isEditing={isEditing} />
       <div className='my-3 flex justify-center'>
         {isEditing && (
-          <button
-            type='button'
-            className='w-80 rounded bg-primary py-1 font-bold text-white hover:bg-dark-red'
-            onClick={() => setIsEditing(false)}
-          >
-            Save
-          </button>
+          <div className='flex flex-col space-y-1'>
+            <button
+              type='button'
+              className='w-80 rounded bg-primary py-1 font-bold text-white hover:bg-dark-red'
+              onClick={() => setIsEditing(false)}
+            >
+              Save
+            </button>
+            <button
+              type='button'
+              className='w-80 rounded bg-grey py-1 font-bold text-black hover:bg-grey'
+              onClick={() => setIsEditing(false)}
+            >
+              Cancel
+            </button>
+          </div>
         )}
       </div>
     </>

@@ -2,6 +2,7 @@ import Image from 'next/image'
 import {
   LocationMarkerIcon,
   MailIcon,
+  PhoneIcon,
   PlusIcon,
   UserCircleIcon
 } from '@heroicons/react/outline'
@@ -9,13 +10,13 @@ import tw from 'tailwind-styled-components'
 
 import type { Contact } from '@/types/types'
 
-type contactProp = {
+type ContactInfoProps = {
   contact: Contact
   image: string
   isEditing: boolean
 }
 
-function ContactInfo({ contact, image, isEditing }: contactProp) {
+function ContactInfo({ contact, image, isEditing }: ContactInfoProps) {
   return (
     <div className='flex flex-col items-center justify-center gap-3'>
       {image === '' ? (
@@ -37,15 +38,26 @@ function ContactInfo({ contact, image, isEditing }: contactProp) {
       {!isEditing ? (
         <h3>{contact.notes}</h3>
       ) : (
-        <input defaultValue={contact.notes} />
+        <input
+          defaultValue={contact.notes}
+          className='w-80 rounded-lg border border-grey pl-1'
+        />
       )}
 
       <Box>
-        <h3>Phone</h3>
+        <div className='flex w-full justify-between'>
+          <h3>Phone</h3>
+          <a href={`tel:${contact.phone}`}>
+            <PhoneIcon className='h-5 w-5' />
+          </a>
+        </div>
         {!isEditing ? (
           <p className='text-xl text-primary'>{contact.phone}</p>
         ) : (
-          <input defaultValue={contact.phone} />
+          <input
+            defaultValue={contact.phone}
+            className='w-full rounded-lg border border-grey pl-1'
+          />
         )}
       </Box>
       <Box>
@@ -58,7 +70,10 @@ function ContactInfo({ contact, image, isEditing }: contactProp) {
         {!isEditing ? (
           <p className='text-xl text-primary'>{contact.email}</p>
         ) : (
-          <input defaultValue={contact.email} />
+          <input
+            defaultValue={contact.email}
+            className='w-full rounded-lg border border-grey pl-1'
+          />
         )}
       </Box>
       <Box>
@@ -75,7 +90,10 @@ function ContactInfo({ contact, image, isEditing }: contactProp) {
         {!isEditing ? (
           <p className='text-xl text-primary'>{contact.street_address}</p>
         ) : (
-          <input defaultValue={contact.street_address} />
+          <input
+            defaultValue={contact.street_address}
+            className='w-full rounded-lg border border-grey pl-1'
+          />
         )}
       </Box>
       <Box>
@@ -115,7 +133,10 @@ function ContactInfo({ contact, image, isEditing }: contactProp) {
         {!isEditing ? (
           <p className='text-xl text-primary'>{contact.pets}</p>
         ) : (
-          <input defaultValue={contact.pets} />
+          <input
+            defaultValue={contact.pets}
+            className='w-full rounded-lg border border-grey pl-1'
+          />
         )}
       </Box>
 
@@ -124,7 +145,10 @@ function ContactInfo({ contact, image, isEditing }: contactProp) {
         {!isEditing ? (
           <p> THIS IS A NOTE </p>
         ) : (
-          <textarea defaultValue={contact.notes} />
+          <textarea
+            defaultValue={contact.notes}
+            className='w-full rounded-lg border border-grey'
+          />
         )}
       </Box>
     </div>

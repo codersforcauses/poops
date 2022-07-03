@@ -5,18 +5,7 @@ import ContactList from '@/components/Contact/contactlist'
 import Header from '@/components/Header'
 import SearchBar from '@/components/SearchBar/searchbar'
 import SearchTag from '@/components/SearchBar/searchtag'
-
-type contactData = {
-  id: string
-  first_name: string
-  last_name: string
-  pets: string
-  email: string
-  phone: string
-  street_address: string
-  region: string
-  notes: string
-}
+import type { Contact } from '@/types/types'
 
 const Contact = () => {
   const tags = [
@@ -32,7 +21,7 @@ const Contact = () => {
   ]
 
   const [filteredContacts, setFilteredContacts] =
-    useState<contactData[]>(CONTACT_DATA)
+    useState<Contact[]>(CONTACT_DATA)
 
   const [selectedOption, setSelectedOption] = useState('')
 

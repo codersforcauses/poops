@@ -11,7 +11,7 @@ type ContactItemProps = {
 const ContactItem = ({ contact, image }: ContactItemProps) => {
   return (
     <>
-      <li className='rounded-lg bg-white p-3 px-5 hover:bg-grey focus:bg-grey sm:py-4'>
+      <li className='bg-white p-3 px-5 hover:bg-grey focus:bg-grey sm:py-4 border-b border-grey'>
         <div className='flex items-center space-x-4'>
           {/* This is a placeholder image */}
           {image === '' ? (
