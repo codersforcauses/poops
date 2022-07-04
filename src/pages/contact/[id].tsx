@@ -18,11 +18,11 @@ const Contact = ({ contact }: ContactProp) => {
   return (
     <>
       <Header pageTitle={`${contact.first_name} ${contact.last_name}`} />
-      <div className='sticky top-0 z-50 m-2 mx-auto flex w-96 justify-between bg-white py-2'>
+      <div className='sticky top-0 z-50 mx-auto flex w-80 justify-between bg-white py-2'>
         <Link href='/contact'>
           <button
             type='button'
-            className='rounded bg-primary py-2 px-4 font-bold text-white hover:bg-dark-red'
+            className='rounded bg-primary py-1 px-4 font-bold text-white hover:bg-dark-red'
           >
             Back
           </button>
