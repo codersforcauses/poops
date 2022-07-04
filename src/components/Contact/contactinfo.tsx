@@ -38,35 +38,60 @@ function ContactInfo({
             layout='fixed'
           />
         )}
+        {/* FIRST AND LAST NAME */}
         {!isEditing ? (
-        <h1 className='text-4xl font-normal'>
-          {contact.first_name} {contact.last_name}
-        </h1> ) : (
-          <input
-          defaultValue={`${contact.first_name} ${contact.last_name}`}
-          className='w-80 rounded-lg border border-grey pl-1 text-3xl'
-        />
-
+          <h1 className='text-4xl font-normal'>
+            {contact.first_name} {contact.last_name}
+          </h1>
+        ) : (
+          <>
+            <Box>
+              <label htmlFor={contact.first_name} className='text-dark-red'>
+                First Name
+              </label>
+              <input
+                id='firstName'
+                defaultValue={contact.first_name}
+                className='mb-2 w-80 rounded-lg border border-grey pl-1'
+              />
+            </Box>
+            <Box>
+              <label htmlFor={contact.last_name} className='text-dark-red'>
+                Last Name
+              </label>
+              <input
+                defaultValue={contact.last_name}
+                className='w-80 rounded-lg border border-grey pl-1'
+              />
+            </Box>
+          </>
         )}
-
+        {/* DESCRIPTION */}
         {!isEditing ? (
           <h3>{contact.notes}</h3>
         ) : (
-          <input
-            defaultValue={contact.notes}
-            className='w-80 rounded-lg border border-grey pl-1'
-          />
+          <Box>
+            <label htmlFor={contact.notes} className='text-dark-red'>
+              Description
+            </label>
+            <input
+              defaultValue={contact.notes}
+              className='w-80 rounded-lg border border-grey pl-1'
+            />
+          </Box>
         )}
-
+        {/* PHONE */}
         <Box>
           <div className='flex w-full justify-between'>
-            <h3>Phone</h3>
+            <label htmlFor={contact.phone} className='text-dark-red'>
+              Phone
+            </label>
             <a href={`tel:${contact.phone}`}>
               <PhoneIcon className='h-5 w-5' />
             </a>
           </div>
           {!isEditing ? (
-            <p className='text-xl text-primary'>{contact.phone}</p>
+            <p className='text-xl'>{contact.phone}</p>
           ) : (
             <input
               defaultValue={contact.phone}
@@ -74,9 +99,12 @@ function ContactInfo({
             />
           )}
         </Box>
+        {/* EMAIL */}
         <Box>
           <div className='flex w-full justify-between'>
-            <h3>Email</h3>
+            <label htmlFor={contact.email} className='text-dark-red'>
+              Email
+            </label>
             <a
               href={`mailto:${contact.email}`}
               target='_blank'
@@ -86,7 +114,7 @@ function ContactInfo({
             </a>
           </div>
           {!isEditing ? (
-            <p className='text-xl text-primary'>{contact.email}</p>
+            <p className='text-xl'>{contact.email}</p>
           ) : (
             <input
               defaultValue={contact.email}
@@ -94,9 +122,12 @@ function ContactInfo({
             />
           )}
         </Box>
+        {/* ADDRESS */}
         <Box>
           <div className='flex w-full justify-between'>
-            <h3>Address</h3>
+            <label htmlFor={contact.street_address} className='text-dark-red'>
+              Address
+            </label>
             <a
               href={`http://maps.google.com/?q=${contact.street_address}`}
               target='_blank'
@@ -106,7 +137,7 @@ function ContactInfo({
             </a>
           </div>
           {!isEditing ? (
-            <p className='text-xl text-primary'>{contact.street_address}</p>
+            <p className='text-xl'>{contact.street_address}</p>
           ) : (
             <input
               defaultValue={contact.street_address}
@@ -114,9 +145,12 @@ function ContactInfo({
             />
           )}
         </Box>
+        {/* TAGS */}
         <Box>
           <div className='flex w-full justify-between'>
-            <h3>Tags</h3>
+            <label htmlFor='tags' className='text-dark-red'>
+              Tags
+            </label>
             <PlusIcon className='h-5 w-5' />
           </div>
           <TagHolder className='mt-1'>
@@ -138,30 +172,36 @@ function ContactInfo({
             </label>
           </div>
         </Box>
-        {/* Padding to counter shadow */}
+        {/* REGIONS */}
         <Box className='pb-3'>
-          <h3>Region </h3>
+          <label htmlFor='regions' className='text-dark-red'>
+            Region{' '}
+          </label>
           <TagHolder className='mt-1'>
             <Tag>hello</Tag>
             <Tag>hi</Tag>
           </TagHolder>
         </Box>
         <Box>
-          <h3>Pets </h3>
+          <label htmlFor='pets' className='text-dark-red'>
+            Pets
+          </label>
           {!isEditing ? (
-            <p className='text-xl text-primary'>{contact.pets.join(', ')}</p>
+            <p className='text-xl'>{contact.pets.join(', ')}</p>
           ) : (
             <input
-              defaultValue={contact.pets}
+              // defaultValue={contact.pets}
               className='w-full rounded-lg border border-grey pl-1'
             />
           )}
         </Box>
-
+        {/* NOTES */}
         <Box>
-          <h3>Notes</h3>
+          <label htmlFor={contact.notes} className='text-dark-red'>
+            Notes
+          </label>
           {!isEditing ? (
-            <p> THIS IS A NOTE </p>
+            <p className='text-xl'> THIS IS A NOTE </p>
           ) : (
             <textarea
               defaultValue={contact.notes}
@@ -169,8 +209,9 @@ function ContactInfo({
             />
           )}
         </Box>
-        <div className='mb-3 flex justify-center'>
-          {isEditing && (
+        {/* FORMS BUTTONS */}
+        {isEditing && (
+          <div className='mb-3 flex justify-center'>
             <div className='flex flex-col space-y-1'>
               <button
                 type='submit'
@@ -187,8 +228,8 @@ function ContactInfo({
                 Cancel
               </button>
             </div>
-          )}
-        </div>
+          </div>
+        )}
       </div>
     </form>
   )
