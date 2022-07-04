@@ -2,16 +2,7 @@ import { useEffect, useState } from 'react'
 import { getVisitData, Visit } from 'databaseIntigration'
 
 import VisitInstance from './visitInstance'
-// dylan update?
-// i'm attemptping to refactor visit list because i'm trying to use useEffect but that requires a function componennt
-// you too loser
-// love you too have you won yet
-// aww baby cant get getdata to work
-// fuck u tioo far
-// <3
-// fuck yeah, no idea how people die in the first round
 
-// real
 interface VisitListProps {
   searchQuery: string
 }

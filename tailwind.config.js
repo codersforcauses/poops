@@ -12,18 +12,21 @@ module.exports = {
   ],
   theme: {
     colors: {
-      'poops-dark-gray': '#7B7B7B',
-      'poops-gray': '#f9f9f9',
       primary: '#ce283d',
       'dark-red': '#a52a2a',
       transparent: 'transparent',
       current: 'currentColor',
       white: '#ffffff',
-      black: '#000000'
+      black: '#000000',
+      gray: '#f9f9f9',
+      'dark-gray': '#7B7B7B'
     },
     extend: {
       fontFamily: {
         primary: ['Inter', ...fontFamily.sans]
+      },
+      dropShadow: {
+        'default': '0 4px 4px rgba(0, 0, 0, 0.25)'
       }
     }
   },

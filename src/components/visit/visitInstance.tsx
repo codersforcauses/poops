@@ -5,7 +5,7 @@ import { updateUserData } from 'databaseIntigration'
 import EditButton from '@/components/visit/Buttons'
 
 interface VisitInstanceProps {
-  id: number
+  id: string
   firstName: string
   lastName: string
   petName: string
@@ -36,8 +36,8 @@ class VisitInstance extends React.Component<
       isEditable: false,
       isOpen: false,
       isLoaded: false,
-      editPet: '',
-      editDistance: ''
+      editPet: props.petName,
+      editDistance: props.distance
     }
   }
 
@@ -45,7 +45,7 @@ class VisitInstance extends React.Component<
     return (
       <div
         key={this.props.id}
-        className='m-2 flex flex-col space-y-1 rounded-xl bg-poops-gray p-2 drop-shadow-[0_4px_4px_rgba(0,0,0,0.25)]'
+        className='m-2 flex flex-col space-y-1 rounded-xl bg-gray p-2 drop-shadow-[0_4px_4px_rgba(0,0,0,0.25)]'
       >
         <div className='flex justify-between'>
           <div className='relative w-full'>
@@ -62,12 +62,12 @@ class VisitInstance extends React.Component<
             />
 
             <ChevronDownIcon
-              className='absolute top-3 right-5 h-6 w-6 cursor-pointer text-dark-red transition-transform duration-500 peer-checked:rotate-180'
+              className='absolute top-3 right-5 h-6 w-6 cursor-pointer text-primary transition-transform duration-500 peer-checked:rotate-180'
               onClick={() => this.setState({ isOpen: !this.state.isOpen })}
             />
 
             <div className='font-bold peer-checked:font-normal'>
-              <p className='font-bold text-dark-red'>{`# ${this.props.id} - ${this.props.date}`}</p>
+              <p className='font-bold text-primary'>{`# ${this.props.id} - ${this.props.date}`}</p>
               <p className='text-sm'>{`${this.props.lastName}, ${this.props.firstName}`}</p>
             </div>
 
@@ -89,7 +89,8 @@ class VisitInstance extends React.Component<
                   <p>
                     Pet/Pets:{' '}
                     <input
-                      placeholder={this.props.petName}
+                      placeholder='Pet Name(s)'
+                      value={this.state.editPet}
                       onChange={(event) =>
                         this.setState({ editPet: event.target.value })
                       }
@@ -102,7 +103,8 @@ class VisitInstance extends React.Component<
                   <p>
                     Distance travelled:{' '}
                     <input
-                      placeholder={this.props.distance}
+                      placeholder='Distance'
+                      value={this.state.editDistance}
                       onChange={(event) =>
                         this.setState({ editDistance: event.target.value })
                       }
@@ -123,7 +125,7 @@ class VisitInstance extends React.Component<
                     type='submit'
                     onClick={() =>
                       setTimeout(function () {
-                        window.location.reload()
+                        window.location.reload() // what
                       }, 500)
                     }
                   >
@@ -135,14 +137,6 @@ class VisitInstance extends React.Component<
                   <p>Pet/Pets: {this.props.petName}</p>
                   {/* <p>Client Phone Number: {this.props.number}</p> */}
                   <p>Distance travelled: {this.props.distance}</p>
-                  {/* <button
-                    type='button'
-                    onClick={() => {
-                      if (!this.state.isLoaded) {
-                        this.setState({ isLoaded: true })
-                      }
-                    }}
-                  ></button> */}
                   {/* <p>Walk Metres: {this.props.walkMetres}</p>
                   <p>Commute Metres: {this.props.commuteMetres}</p>
                   <p>Commute Method: {this.props.method}</p> */}
@@ -151,7 +145,7 @@ class VisitInstance extends React.Component<
             </div>
 
             {/* Edit button */}
-            <div className='invisible absolute right-5 bottom-1 h-5 w-5 rounded-full bg-dark-red text-dark-red transition-all peer-checked:visible'>
+            <div className='invisible absolute right-5 bottom-1 h-5 w-5 rounded-full bg-primary text-primary transition-all peer-checked:visible'>
               <button
                 type='button'
                 onClick={() => {

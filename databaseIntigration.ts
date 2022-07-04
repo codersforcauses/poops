@@ -73,10 +73,10 @@ export async function updateUserData(
   distance: string
 ) {
   await setDoc(doc(poopsRef, id), {
-    // firstName: firstName,
-    // lastName: lastName,
+    firstName: firstName,
+    lastName: lastName,
     petName: petName,
-    // dateTime: date,
+    dateTime: date,
     distanceWalked: distance
   })
 }
