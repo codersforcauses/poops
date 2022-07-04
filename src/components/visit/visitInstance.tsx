@@ -57,12 +57,12 @@ class VisitInstance extends React.Component<
             />
 
             <ChevronDownIcon
-              className='absolute top-3 right-5 h-6 w-6 cursor-pointer text-poops-dark-red transition-transform duration-500 peer-checked:rotate-180'
+              className='absolute top-3 right-5 h-6 w-6 cursor-pointer text-dark-red transition-transform duration-500 peer-checked:rotate-180'
               onClick={() => this.setState({ isOpen: !this.state.isOpen })}
             />
 
             <div className='font-bold peer-checked:font-normal'>
-              <p className='font-bold text-poops-dark-red'>{`# ${this.props.id} - ${this.props.date}`}</p>
+              <p className='font-bold text-dark-red'>{`# ${this.props.id} - ${this.props.date}`}</p>
               <p className='text-sm'>{`Client Name: ${this.props.firstName} ${this.props.lastName}`}</p>
             </div>
 
@@ -113,7 +113,7 @@ class VisitInstance extends React.Component<
             </div>
 
             {/* Edit button */}
-            <div className='invisible absolute right-5 bottom-1 h-5 w-5 rounded-full bg-poops-dark-red text-poops-dark-red transition-all peer-checked:visible'>
+            <div className='invisible absolute right-5 bottom-1 h-5 w-5 rounded-full bg-dark-red text-dark-red transition-all peer-checked:visible'>
               <button
                 type='button'
                 onClick={() => {

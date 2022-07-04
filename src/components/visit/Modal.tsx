@@ -39,6 +39,7 @@ const ModalView: React.FC<ModalViewProps> = ({ openFunc }) => {
                 data.date,
                 data.dist
               )
+              openFunc
               event.preventDefault()
             }}
           >

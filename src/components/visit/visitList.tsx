@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { getVisitData, Visit } from 'databaseIntigration'
 
 import VisitInstance from './visitInstance'
@@ -17,19 +17,15 @@ interface VisitListProps {
 }
 
 export default function VisitList(props: VisitListProps) {
-  const [isLoading, setIsLoading] = useState(true) //im taking credit for this bit
-  // ok nerd
   const [visitData, setVisitData] = useState<Visit[]>([])
 
-  const fetchData = async () => {
-    const response: Visit[] = await getVisitData()
-    setVisitData(response)
-  }
-
-  if (isLoading) {
+  useEffect(() => {
+    const fetchData = async () => {
+      const response: Visit[] = await getVisitData()
+      setVisitData(response)
+    }
     fetchData()
-    setIsLoading(false)
-  }
+  }, [])
 
   return (
     <div className='h-0 shrink grow overflow-y-auto'>
