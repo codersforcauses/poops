@@ -1,5 +1,6 @@
 import React from 'react'
 import ChevronDownIcon from '@heroicons/react/outline/ChevronDownIcon'
+import { updateUserData } from 'databaseIntigration'
 
 import EditButton from '@/components/visit/Buttons'
 
@@ -21,6 +22,8 @@ interface VisitInstanceState {
   isEditable: boolean
   isOpen: boolean
   isLoaded: boolean
+  editPet: string
+  editDistance: string
 }
 
 class VisitInstance extends React.Component<
@@ -32,7 +35,9 @@ class VisitInstance extends React.Component<
     this.state = {
       isEditable: false,
       isOpen: false,
-      isLoaded: false
+      isLoaded: false,
+      editPet: '',
+      editDistance: ''
     }
   }
 
@@ -63,14 +68,32 @@ class VisitInstance extends React.Component<
 
             <div className='font-bold peer-checked:font-normal'>
               <p className='font-bold text-dark-red'>{`# ${this.props.id} - ${this.props.date}`}</p>
-              <p className='text-sm'>{`Client Name: ${this.props.firstName} ${this.props.lastName}`}</p>
+              <p className='text-sm'>{`${this.props.lastName}, ${this.props.firstName}`}</p>
             </div>
 
             <div className='max-h-0 justify-between overflow-hidden text-sm transition-all duration-300 peer-checked:max-h-40'>
               {this.state.isEditable ? (
-                <>
+                <form
+                  onSubmit={(event) => {
+                    updateUserData(
+                      String(this.props.id),
+                      this.props.firstName,
+                      this.props.lastName,
+                      this.state.editPet,
+                      this.props.date,
+                      this.state.editDistance
+                    )
+                    event.preventDefault()
+                  }}
+                >
                   <p>
-                    Pet/Pets: <input placeholder={this.props.petName} />
+                    Pet/Pets:{' '}
+                    <input
+                      placeholder={this.props.petName}
+                      onChange={(event) =>
+                        this.setState({ editPet: event.target.value })
+                      }
+                    />
                   </p>
                   {/* <p>
                     Client Phone Number:{' '}
@@ -78,7 +101,12 @@ class VisitInstance extends React.Component<
                   </p> */}
                   <p>
                     Distance travelled:{' '}
-                    <input placeholder={this.props.distance} />
+                    <input
+                      placeholder={this.props.distance}
+                      onChange={(event) =>
+                        this.setState({ editDistance: event.target.value })
+                      }
+                    />
                   </p>
                   {/* <p>
                     Walk Metres:{' '}
@@ -91,7 +119,17 @@ class VisitInstance extends React.Component<
                   <p>
                     Commute Method: <input placeholder={this.props.method} />
                   </p> */}
-                </>
+                  <button
+                    type='submit'
+                    onClick={() =>
+                      setTimeout(function () {
+                        window.location.reload()
+                      }, 500)
+                    }
+                  >
+                    Submit
+                  </button>
+                </form>
               ) : (
                 <>
                   <p>Pet/Pets: {this.props.petName}</p>

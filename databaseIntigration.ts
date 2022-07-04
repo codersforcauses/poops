@@ -1,5 +1,5 @@
 import { getApp, getApps, initializeApp } from 'firebase/app' // no compat for new SDK
-import { addDoc, collection, getDocs, getFirestore } from 'firebase/firestore'
+import { addDoc, collection, doc, getDocs, getFirestore, setDoc } from 'firebase/firestore'
 
 const firebaseConfig = {
   apikey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
@@ -32,7 +32,7 @@ export async function writeUserData(
 }
 
 export interface Visit {
-  id: number
+  id: string
   firstName: string
   lastName: string
   petName: string
@@ -49,7 +49,7 @@ export async function getVisitData() {
   querySnapshot.forEach((doc) => {
     const data = doc.data()
     const User: Visit = {
-      id: i,
+      id: doc.id,
       firstName: data.firstName,
       lastName: data.lastName,
       petName: data.petName,
@@ -62,4 +62,21 @@ export async function getVisitData() {
   })
   console.log(visitData)
   return visitData
+}
+
+export async function updateUserData(
+  id: string,
+  firstName: string,
+  lastName: string,
+  petName: string,
+  date: string,
+  distance: string
+) {
+  await setDoc(doc(poopsRef, id), {
+    // firstName: firstName,
+    // lastName: lastName,
+    petName: petName,
+    // dateTime: date,
+    distanceWalked: distance
+  })
 }

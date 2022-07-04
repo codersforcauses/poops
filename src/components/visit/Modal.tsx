@@ -39,7 +39,6 @@ const ModalView: React.FC<ModalViewProps> = ({ openFunc }) => {
                 data.date,
                 data.dist
               )
-              openFunc
               event.preventDefault()
             }}
           >
@@ -68,7 +67,16 @@ const ModalView: React.FC<ModalViewProps> = ({ openFunc }) => {
               id='distanceInput'
               onChange={(event) => setDistance(event.target.value)}
             />
-            <button type='submit'>Submit</button>
+            <button
+              type='submit'
+              onClick={() =>
+                setTimeout(function () {
+                  window.location.reload()
+                }, 500)
+              }
+            >
+              Submit
+            </button>
           </form>
           <div className=''>
             <button onClick={openFunc} className=''>
