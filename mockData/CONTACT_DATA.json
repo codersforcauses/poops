@@ -3,7 +3,11 @@
     "id": "62b98f1a66ea8b5c05b353c5",
     "first_name": "Dollie",
     "last_name": "Mcmahon",
-    "pets": ["Susanne", "Tia"],
+    "desc": "description",
+    "pets": [
+      { "name": "Susanne", "notes": "this is a note about the pet" },
+      { "name": "Tia", "notes": "this is a note about the pet 2" }
+    ],
     "email": "tiamcmahon@kegular.com",
     "phone": "(886) 578-3300",
     "street_address": "691 Cleveland Street",
@@ -15,7 +19,11 @@
     "id": "62b98f1a35cf119cfd93348c",
     "first_name": "Corina",
     "last_name": "Church",
-    "pets": ["Robert", "Estela"],
+    "desc": "description",
+    "pets": [
+      { "name": "Robert", "notes": "this is a note about the pet" },
+      { "name": "Estella", "notes": "this is a note about the pet 2" }
+    ],
     "email": "estelachurch@kegular.com",
     "phone": "(844) 547-2976",
     "street_address": "279 Bushwick Place",
@@ -27,7 +35,8 @@
     "id": "62b98f1a0368326081ed7e7d",
     "first_name": "Dunlap",
     "last_name": "Warner",
-    "pets": ["Jeanie"],
+    "desc": "description",
+    "pets": [{ "name": "Jeanie", "notes": "this is a note about the pet" }],
     "email": "griffithwarner@kegular.com",
     "phone": "(916) 485-3946",
     "street_address": "393 Humboldt Street",
@@ -39,7 +48,11 @@
     "id": "62b98f1a73749f471f13ebd6",
     "first_name": "Colleen",
     "last_name": "Pacheco",
-    "pets": ["Esther", "Brian"],
+    "desc": "description",
+    "pets": [
+      { "name": "Esther", "notes": "this is a note about the pet" },
+      { "name": "Brian", "notes": "this is a note about the pet 2" }
+    ],
     "email": "delorespacheco@kegular.com",
     "phone": "(804) 408-2838",
     "street_address": "782 Oxford Street",
@@ -51,7 +64,8 @@
     "id": "62b98f1aae58f08fd2493a25",
     "first_name": "Santos",
     "last_name": "Morrow",
-    "pets": ["Lea", "Frye"],
+    "desc": "description",
+    "pets": [{ "name": "Lea", "notes": "this is a note about the pet" }],
     "email": "fryemorrow@kegular.com",
     "phone": "(947) 500-3740",
     "street_address": "310 Engert Avenue",
@@ -63,7 +77,11 @@
     "id": "62b98f1a8d203b0b6166e224",
     "first_name": "Romero",
     "last_name": "Grant",
-    "pets": ["Todd", "Veronica"],
+    "desc": "description",
+    "pets": [
+      { "name": "Todd", "notes": "this is a note about the pet" },
+      { "name": "Veronica", "notes": "this is a note about the pet 2" }
+    ],
     "email": "veronicagrant@kegular.com",
     "phone": "(918) 433-2381",
     "street_address": "400 Bancroft Place",
@@ -75,7 +93,8 @@
     "id": "62b98f1a7e66059162f19849",
     "first_name": "Rosanna",
     "last_name": "Mcdowell",
-    "pets": ["Morrow"],
+    "desc": "description",
+    "pets": [{ "name": "Morris", "notes": "this is a note about the pet" }],
     "email": "randimcdowell@kegular.com",
     "phone": "(943) 446-2998",
     "street_address": "822 Kent Street",
@@ -87,7 +106,11 @@
     "id": "62b98f1aba06af2642e05195",
     "first_name": "Darlene",
     "last_name": "Hendricks",
-    "pets": ["Mccullough"],
+    "desc": "description",
+    "pets": [
+      { "name": "Jim", "notes": "this is a note about the pet" },
+      { "name": "Lula", "notes": "this is a note about the pet 2" }
+    ],
     "email": "alicehendricks@kegular.com",
     "phone": "(836) 577-2059",
     "street_address": "953 Pulaski Street",
@@ -99,7 +122,11 @@
     "id": "62b98f1a34373c19ace5ad62",
     "first_name": "Brandie",
     "last_name": "Quinn",
-    "pets": ["Molly", "Oneal"],
+    "desc": "description",
+    "pets": [
+      { "name": "Neal", "notes": "this is a note about the pet" },
+      { "name": "Molly", "notes": "this is a note about the pet 2" }
+    ],
     "email": "onealquinn@kegular.com",
     "phone": "(913) 576-3601",
     "street_address": "652 Rugby Road",
@@ -111,7 +138,11 @@
     "id": "62b98f1a0c4d7b6cd8bb24c5",
     "first_name": "Valentine",
     "last_name": "Nielsen",
-    "pets": ["Dudley", "King"],
+    "desc": "description",
+    "pets": [
+      { "name": "King", "notes": "this is a note about the pet" },
+      { "name": "Duds", "notes": "this is a note about the pet 2" }
+    ],
     "email": "kingnielsen@kegular.com",
     "phone": "(838) 432-2731",
     "street_address": "542 Beaumont Street",
@@ -123,7 +154,8 @@
     "id": "62b98f1aa81dd03b6dc69f5c",
     "first_name": "Spencer",
     "last_name": "Prince",
-    "pets": ["Leonor"],
+    "desc": "description",
+    "pets": [{ "name": "Peng", "notes": "this is a note about the pet" }],
     "email": "ollieprince@kegular.com",
     "phone": "(974) 435-3562",
     "street_address": "99 Montauk Court",
@@ -135,7 +167,11 @@
     "id": "62b98f1ae1da8d1b7f8a141c",
     "first_name": "Bertie",
     "last_name": "Donaldson",
-    "pets": ["Sweeney", "Sloan"],
+    "desc": "description",
+    "pets": [
+      { "name": "Sweetie", "notes": "this is a note about the pet" },
+      { "name": "Shoe", "notes": "this is a note about the pet 2" }
+    ],
     "email": "sloandonaldson@kegular.com",
     "phone": "(995) 532-2905",
     "street_address": "889 Highlawn Avenue",
@@ -147,7 +183,11 @@
     "id": "62b98f1ab7e2e2177ee0cf5a",
     "first_name": "Sherrie",
     "last_name": "Noble",
-    "pets": ["Merle"],
+    "desc": "description",
+    "pets": [
+      { "name": "Sea", "notes": "this is a note about the pet" },
+      { "name": "Lincoln", "notes": "this is a note about the pet 2" }
+    ],
     "email": "veleznoble@kegular.com",
     "phone": "(861) 520-3118",
     "street_address": "963 Conway Street",
@@ -159,7 +199,11 @@
     "id": "62b98f1a2002d2b82678e2a2",
     "first_name": "Sharpe",
     "last_name": "Greer",
-    "pets": ["Hogan", "Manning"],
+    "desc": "description",
+    "pets": [
+      { "name": "Hogan", "notes": "this is a note about the pet" },
+      { "name": "Tia", "notes": "this is a note about the pet 2" }
+    ],
     "email": "manninggreer@kegular.com",
     "phone": "(834) 445-2920",
     "street_address": "395 Remsen Street",
@@ -171,7 +215,8 @@
     "id": "62b98f1a2a9025cf7eddf04e",
     "first_name": "Olivia",
     "last_name": "Snow",
-    "pets": ["Deanne"],
+    "desc": "description",
+    "pets": [{ "name": "Dean", "notes": "this is a note about the pet" }],
     "email": "latoyasnow@kegular.com",
     "phone": "(964) 416-3932",
     "street_address": "428 Lewis Avenue",
@@ -183,7 +228,11 @@
     "id": "62b98f1a132862ac47caa05f",
     "first_name": "Sims",
     "last_name": "Bryan",
-    "pets": ["Mendoza"],
+    "desc": "description",
+    "pets": [
+      { "name": "Susan", "notes": "this is a note about the pet" },
+      { "name": "Tia", "notes": "this is a note about the pet 2" }
+    ],
     "email": "wilmabryan@kegular.com",
     "phone": "(946) 446-2457",
     "street_address": "551 Dunham Place",
@@ -195,7 +244,11 @@
     "id": "62b98f1a5bd6d64800bb92d0",
     "first_name": "Dorthy",
     "last_name": "Mills",
-    "pets": ["Bryant"],
+    "desc": "description",
+    "pets": [
+      { "name": "Bryant", "notes": "this is a note about the pet" },
+      { "name": "Joe", "notes": "this is a note about the pet 2" }
+    ],
     "email": "goodmanmills@kegular.com",
     "phone": "(897) 456-2121",
     "street_address": "473 Croton Loop",
@@ -207,7 +260,11 @@
     "id": "62b98f1acd0824604ced0460",
     "first_name": "Jones",
     "last_name": "Savage",
-    "pets": ["Carmela", "Suzette"],
+    "desc": "description",
+    "pets": [
+      { "name": "Carmen", "notes": "this is a note about the pet" },
+      { "name": "Joey", "notes": "this is a note about the pet 2" }
+    ],
     "email": "suzettesavage@kegular.com",
     "phone": "(945) 487-2030",
     "street_address": "245 Bush Street",
@@ -219,7 +276,11 @@
     "id": "62b98f1a3d86f796ccd071ed",
     "first_name": "Herman",
     "last_name": "Garner",
-    "pets": ["Stark", "Billie"],
+    "desc": "description",
+    "pets": [
+      { "name": "Gates", "notes": "this is a note about the pet" },
+      { "name": "Toby", "notes": "this is a note about the pet 2" }
+    ],
     "email": "billiegarner@kegular.com",
     "phone": "(893) 425-2370",
     "street_address": "958 Voorhies Avenue",
@@ -231,7 +292,11 @@
     "id": "62b98f1a42e023a43e704b05",
     "first_name": "Terry",
     "last_name": "Klein",
-    "pets": ["Anne", "Claudette"],
+    "desc": "description",
+    "pets": [
+      { "name": "Anne", "notes": "this is a note about the pet" },
+      { "name": "Clause", "notes": "this is a note about the pet 2" }
+    ],
     "email": "claudetteklein@kegular.com",
     "phone": "(815) 407-2204",
     "street_address": "568 Buffalo Avenue",
@@ -243,7 +308,11 @@
     "id": "62b98f1ae500403f04bc3c3e",
     "first_name": "Abby",
     "last_name": "Thornton",
-    "pets": ["Elise"],
+    "desc": "description",
+    "pets": [
+      { "name": "Red", "notes": "this is a note about the pet" },
+      { "name": "Blue", "notes": "this is a note about the pet 2" }
+    ],
     "email": "patethornton@kegular.com",
     "phone": "(883) 425-3221",
     "street_address": "806 Osborn Street",
@@ -255,7 +324,11 @@
     "id": "62b98f1a80db3fc89fe66fa7",
     "first_name": "Rosetta",
     "last_name": "Cummings",
-    "pets": ["Muriel", "Harrison"],
+    "desc": "description",
+    "pets": [
+      { "name": "Susanne", "notes": "this is a note about the pet" },
+      { "name": "Tia", "notes": "this is a note about the pet 2" }
+    ],
     "email": "harrisoncummings@kegular.com",
     "phone": "(962) 444-2283",
     "street_address": "514 Ferris Street",
@@ -267,7 +340,11 @@
     "id": "62b98f1a63ec10604d0376ac",
     "first_name": "Della",
     "last_name": "Christian",
-    "pets": ["Bright"],
+    "desc": "description",
+    "pets": [
+      { "name": "Susanne", "notes": "this is a note about the pet" },
+      { "name": "Tia", "notes": "this is a note about the pet 2" }
+    ],
     "email": "monicachristian@kegular.com",
     "phone": "(840) 450-2137",
     "street_address": "947 Greenwood Avenue",
@@ -279,7 +356,11 @@
     "id": "62b98f1aa19d949f6837cd31",
     "first_name": "Lucille",
     "last_name": "Rivas",
-    "pets": ["Marion"],
+    "desc": "description",
+    "pets": [
+      { "name": "Susanne", "notes": "this is a note about the pet" },
+      { "name": "Tia", "notes": "this is a note about the pet 2" }
+    ],
     "email": "lourdesrivas@kegular.com",
     "phone": "(835) 404-3561",
     "street_address": "421 Beach Place",
@@ -291,7 +372,11 @@
     "id": "62b98f1a8a45722bb8d20d41",
     "first_name": "Blanca",
     "last_name": "Mcdaniel",
-    "pets": ["Socorro", "Bobbi"],
+    "desc": "description",
+    "pets": [
+      { "name": "Susanne", "notes": "this is a note about the pet" },
+      { "name": "Tia", "notes": "this is a note about the pet 2" }
+    ],
     "email": "bobbimcdaniel@kegular.com",
     "phone": "(993) 410-3876",
     "street_address": "472 Fleet Walk",
@@ -303,7 +388,11 @@
     "id": "62b98f1a2cfecf7a96307735",
     "first_name": "Johanna",
     "last_name": "Booker",
-    "pets": ["Allen", "Estella"],
+    "desc": "description",
+    "pets": [
+      { "name": "Joe", "notes": "this is a note about the pet" },
+      { "name": "Pierre", "notes": "this is a note about the pet 2" }
+    ],
     "email": "estellabooker@kegular.com",
     "phone": "(974) 519-3016",
     "street_address": "235 Wythe Place",
@@ -315,7 +404,11 @@
     "id": "62b98f1a4ca617157f5d5584",
     "first_name": "Joy",
     "last_name": "Murphy",
-    "pets": ["Jodie", "Cox"],
+    "desc": "description",
+    "pets": [
+      { "name": "Susanne", "notes": "this is a note about the pet" },
+      { "name": "Tia", "notes": "this is a note about the pet 2" }
+    ],
     "email": "coxmurphy@kegular.com",
     "phone": "(821) 555-2218",
     "street_address": "260 Bliss Terrace",
@@ -327,7 +420,11 @@
     "id": "62b98f1aea46f493bfe88aed",
     "first_name": "Neva",
     "last_name": "Snyder",
-    "pets": ["Rivas"],
+    "desc": "description",
+    "pets": [
+      { "name": "Susanne", "notes": "this is a note about the pet" },
+      { "name": "Tia", "notes": "this is a note about the pet 2" }
+    ],
     "email": "powellsnyder@kegular.com",
     "phone": "(989) 474-2647",
     "street_address": "266 Ide Court",
@@ -339,7 +436,11 @@
     "id": "62b98f1a094ca2381b723dd6",
     "first_name": "Janet",
     "last_name": "Steele",
-    "pets": ["Gray", "Wiggins"],
+    "desc": "description",
+    "pets": [
+      { "name": "Lellow", "notes": "this is a note about the pet" },
+      { "name": "Wink", "notes": "this is a note about the pet 2" }
+    ],
     "email": "wigginssteele@kegular.com",
     "phone": "(942) 441-3722",
     "street_address": "552 Verona Street",
@@ -351,7 +452,8 @@
     "id": "62b98f1a4009daba697ee3db",
     "first_name": "Jimmie",
     "last_name": "Hardin",
-    "pets": ["French"],
+    "desc": "description",
+    "pets": [{ "name": "French", "notes": "this is a note about the pet" }],
     "email": "corneliahardin@kegular.com",
     "phone": "(914) 470-2523",
     "street_address": "361 National Drive",
@@ -363,7 +465,11 @@
     "id": "62b98f1af0c810cfb6a248ac",
     "first_name": "Beverly",
     "last_name": "Mcgowan",
-    "pets": ["Burris", "Craig"],
+    "desc": "description",
+    "pets": [
+      { "name": "Dobby", "notes": "this is a note about the pet" },
+      { "name": "Minus", "notes": "this is a note about the pet 2" }
+    ],
     "email": "craigmcgowan@kegular.com",
     "phone": "(918) 512-2167",
     "street_address": "877 Maple Avenue",
@@ -375,7 +481,11 @@
     "id": "62b98f1ae37ca4c703e963fe",
     "first_name": "Felecia",
     "last_name": "Salazar",
-    "pets": ["Gordon", "Michele"],
+    "desc": "description",
+    "pets": [
+      { "name": "Pootter", "notes": "this is a note about the pet" },
+      { "name": "Weasley", "notes": "this is a note about the pet 2" }
+    ],
     "email": "michelesalazar@kegular.com",
     "phone": "(801) 544-2081",
     "street_address": "575 Karweg Place",
@@ -387,7 +497,11 @@
     "id": "62b98f1adb11d2bf2e4ce0b1",
     "first_name": "Cleo",
     "last_name": "Dominguez",
-    "pets": ["Combs"],
+    "desc": "description",
+    "pets": [
+      { "name": "Yes", "notes": "this is a note about the pet" },
+      { "name": "Combs", "notes": "this is a note about the pet 2" }
+    ],
     "email": "ivadominguez@kegular.com",
     "phone": "(931) 492-3651",
     "street_address": "130 Cooper Street",
@@ -399,7 +513,8 @@
     "id": "62b98f1a7755690ced85a5e7",
     "first_name": "Sherri",
     "last_name": "Hampton",
-    "pets": ["Casey"],
+    "desc": "description",
+    "pets": [{ "name": "Casey", "notes": "this is a note about the pet" }],
     "email": "aprilhampton@kegular.com",
     "phone": "(862) 586-3086",
     "street_address": "339 Varet Street",
@@ -411,7 +526,11 @@
     "id": "62b98f1a4d901c5966845962",
     "first_name": "Jerri",
     "last_name": "Guzman",
-    "pets": ["Margie"],
+    "desc": "description",
+    "pets": [
+      { "name": "Ronaldo", "notes": "this is a note about the pet" },
+      { "name": "Sewey", "notes": "this is a note about the pet 2" }
+    ],
     "email": "earleneguzman@kegular.com",
     "phone": "(927) 597-3314",
     "street_address": "38 Sullivan Place",
@@ -423,7 +542,11 @@
     "id": "62b98f1a5a377d713454492f",
     "first_name": "Sonya",
     "last_name": "Avila",
-    "pets": ["Odom", "Ingram"],
+    "desc": "description",
+    "pets": [
+      { "name": "FBI", "notes": "this is a note about the pet" },
+      { "name": "IG", "notes": "this is a note about the pet 2" }
+    ],
     "email": "ingramavila@kegular.com",
     "phone": "(817) 526-3003",
     "street_address": "450 Ridge Court",
@@ -435,7 +558,11 @@
     "id": "62b98f1a3b7bb9382ef0c43d",
     "first_name": "Conley",
     "last_name": "Sharp",
-    "pets": ["Rhoda, Dixie"],
+    "desc": "description",
+    "pets": [
+      { "name": "CR7", "notes": "this is a note about the pet" },
+      { "name": "Messi", "notes": "this is a note about the pet 2" }
+    ],
     "email": "dixiesharp@kegular.com",
     "phone": "(922) 426-2360",
     "street_address": "169 Hegeman Avenue",
