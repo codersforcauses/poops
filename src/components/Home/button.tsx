@@ -1,10 +1,15 @@
 import React from 'react'
 import { useState } from 'react'
+import Image from 'next/image'
 
 import Modal from '@/components/Home/modal'
 
+
 function Button() {
   const [modalIsOpen, setModalOpen] = useState(false)
+  const [used, setUsed] = useState(false)
+  const [start, setStart] = useState(0)
+  const [stop, setStop] = useState(0)
 
   return (
     <div>
@@ -13,7 +18,7 @@ function Button() {
           <button
             className='relative h-[37px] w-[150px] rounded-lg bg-poops-dark-red text-xl font-semibold text-white'
             onClick={() => {
-              setModalOpen(true)
+              setModalOpen(true), setUsed(true), setStart(Date.now())
             }}
           >
             START VISIT
@@ -23,7 +28,7 @@ function Button() {
           <button
             className='relative h-[37px] w-[150px] rounded-lg bg-poops-dark-red text-xl font-semibold text-white'
             onClick={() => {
-              setModalOpen(false)
+              setModalOpen(false), setStop(Date.now())
             }}
           >
             STOP VISIT
@@ -31,7 +36,9 @@ function Button() {
         )}
       </div>
       <br />
-      <div>{modalIsOpen && <Modal />}</div>
+      <div>{modalIsOpen && <Modal start={start} stop={stop} />}</div>
+      <div>{!used && !modalIsOpen && <Image alt='logo' src='/images/dog.png' width='350px' height='250px' />}</div>
+      <div>{used && !modalIsOpen && <Modal stop={stop} start={start} />}</div>
     </div>
   )
 }
