@@ -187,7 +187,23 @@ function ContactInfo({
             Pets
           </label>
           {!isEditing ? (
-            <p className='text-xl'>{contact.pets.join(', ')}</p>
+            <p className='text-xl'>
+              {contact.pets.map((pet, index) => (
+                <span key={index}>
+                  {pet.name}
+                  {index < contact.pets.length - 1 ? ', ' : ''}
+                </span>
+              ))}
+              {/* Move this to expandable/pop up which will show the pets notes */}
+              <br />
+              <br />
+              {contact.pets.map((pet, index) => (
+                <div key={index}>
+                  <p className='text-dark-red'>{pet.name}</p> {pet.notes}. They
+                  love to eat chocolate
+                </div>
+              ))}
+            </p>
           ) : (
             <input
               // defaultValue={contact.pets}
