@@ -38,10 +38,17 @@ function ContactInfo({
             layout='fixed'
           />
         )}
-
+        {!isEditing ? (
         <h1 className='text-4xl font-normal'>
           {contact.first_name} {contact.last_name}
-        </h1>
+        </h1> ) : (
+          <input
+          defaultValue={`${contact.first_name} ${contact.last_name}`}
+          className='w-80 rounded-lg border border-grey pl-1 text-3xl'
+        />
+
+        )}
+
         {!isEditing ? (
           <h3>{contact.notes}</h3>
         ) : (
