@@ -20,8 +20,8 @@ const ContactList = ({ contacts }: ContactsProp) => {
 
   return (
     <>
-      <div className='flex-col mt-1'>
-          <ul>{contactItems}</ul>
+      <div className='mt-1 flex-col'>
+        <ul>{contactItems}</ul>
       </div>
     </>
   )

@@ -14,144 +14,176 @@ type ContactInfoProps = {
   contact: Contact
   image: string
   isEditing: boolean
+  setIsEditing: (value: boolean) => void
 }
 
-function ContactInfo({ contact, image, isEditing }: ContactInfoProps) {
+function ContactInfo({
+  contact,
+  image,
+  isEditing,
+  setIsEditing
+}: ContactInfoProps) {
   return (
-    <div className='flex flex-col items-center justify-center gap-3'>
-      {image === '' ? (
-        <UserCircleIcon className='w-32 rounded-full' />
-      ) : (
-        <Image
-          className='h-2 w-2 rounded-full'
-          src={image}
-          alt='Neil image'
-          width={48}
-          height={48}
-          layout='fixed'
-        />
-      )}
+    <form>
+      <div className='flex flex-col items-center justify-center gap-3'>
+        {image === '' ? (
+          <UserCircleIcon className='w-32 rounded-full' />
+        ) : (
+          <Image
+            className='h-2 w-2 rounded-full'
+            src={image}
+            alt='Neil image'
+            width={48}
+            height={48}
+            layout='fixed'
+          />
+        )}
 
-      <h1 className='text-4xl font-normal'>
-        {contact.first_name} {contact.last_name}
-      </h1>
-      {!isEditing ? (
-        <h3>{contact.notes}</h3>
-      ) : (
-        <input
-          defaultValue={contact.notes}
-          className='w-80 rounded-lg border border-grey pl-1'
-        />
-      )}
-
-      <Box>
-        <div className='flex w-full justify-between'>
-          <h3>Phone</h3>
-          <a href={`tel:${contact.phone}`}>
-            <PhoneIcon className='h-5 w-5' />
-          </a>
-        </div>
+        <h1 className='text-4xl font-normal'>
+          {contact.first_name} {contact.last_name}
+        </h1>
         {!isEditing ? (
-          <p className='text-xl text-primary'>{contact.phone}</p>
+          <h3>{contact.notes}</h3>
         ) : (
           <input
-            defaultValue={contact.phone}
-            className='w-full rounded-lg border border-grey pl-1'
-          />
-        )}
-      </Box>
-      <Box>
-        <div className='flex w-full justify-between'>
-          <h3>Email</h3>
-          <a href={`mailto:${contact.email}`} target='_blank' rel='noreferrer'>
-            <MailIcon className='h-5 w-5' />
-          </a>
-        </div>
-        {!isEditing ? (
-          <p className='text-xl text-primary'>{contact.email}</p>
-        ) : (
-          <input
-            defaultValue={contact.email}
-            className='w-full rounded-lg border border-grey pl-1'
-          />
-        )}
-      </Box>
-      <Box>
-        <div className='flex w-full justify-between'>
-          <h3>Address</h3>
-          <a
-            href={`http://maps.google.com/?q=${contact.street_address}`}
-            target='_blank'
-            rel='noreferrer'
-          >
-            <LocationMarkerIcon className='h-5 w-5' />
-          </a>
-        </div>
-        {!isEditing ? (
-          <p className='text-xl text-primary'>{contact.street_address}</p>
-        ) : (
-          <input
-            defaultValue={contact.street_address}
-            className='w-full rounded-lg border border-grey pl-1'
-          />
-        )}
-      </Box>
-      <Box>
-        <div className='flex w-full justify-between'>
-          <h3>Tags</h3>
-          <PlusIcon className='h-5 w-5' />
-        </div>
-        <TagHolder className='mt-1'>
-          <br />{' '}
-        </TagHolder>
-        {/* This should be done as a react component i think? */}
-        {/* Padding to counter the shadow */}
-        <div className='pt-2'>
-          <label>
-            <input type='checkbox' /> Client
-          </label>
-          <br />
-          <label>
-            <input type='checkbox' /> Coordinator
-          </label>
-          <br />
-          <label>
-            <input type='checkbox' /> Volunteer
-          </label>
-        </div>
-      </Box>
-      {/* Padding to counter shadow */}
-      <Box className='pb-3'>
-        <h3>Region </h3>
-        <TagHolder className='mt-1'>
-          <Tag>hello</Tag>
-          <Tag>hi</Tag>
-        </TagHolder>
-      </Box>
-      <Box>
-        <h3>Pets </h3>
-        {!isEditing ? (
-          <p className='text-xl text-primary'>{contact.pets.join(', ')}</p>
-        ) : (
-          <input
-            defaultValue={contact.pets}
-            className='w-full rounded-lg border border-grey pl-1'
-          />
-        )}
-      </Box>
-
-      <Box>
-        <h3>Notes</h3>
-        {!isEditing ? (
-          <p> THIS IS A NOTE </p>
-        ) : (
-          <textarea
             defaultValue={contact.notes}
-            className='w-full rounded-lg border border-grey'
+            className='w-80 rounded-lg border border-grey pl-1'
           />
         )}
-      </Box>
-    </div>
+
+        <Box>
+          <div className='flex w-full justify-between'>
+            <h3>Phone</h3>
+            <a href={`tel:${contact.phone}`}>
+              <PhoneIcon className='h-5 w-5' />
+            </a>
+          </div>
+          {!isEditing ? (
+            <p className='text-xl text-primary'>{contact.phone}</p>
+          ) : (
+            <input
+              defaultValue={contact.phone}
+              className='w-full rounded-lg border border-grey pl-1'
+            />
+          )}
+        </Box>
+        <Box>
+          <div className='flex w-full justify-between'>
+            <h3>Email</h3>
+            <a
+              href={`mailto:${contact.email}`}
+              target='_blank'
+              rel='noreferrer'
+            >
+              <MailIcon className='h-5 w-5' />
+            </a>
+          </div>
+          {!isEditing ? (
+            <p className='text-xl text-primary'>{contact.email}</p>
+          ) : (
+            <input
+              defaultValue={contact.email}
+              className='w-full rounded-lg border border-grey pl-1'
+            />
+          )}
+        </Box>
+        <Box>
+          <div className='flex w-full justify-between'>
+            <h3>Address</h3>
+            <a
+              href={`http://maps.google.com/?q=${contact.street_address}`}
+              target='_blank'
+              rel='noreferrer'
+            >
+              <LocationMarkerIcon className='h-5 w-5' />
+            </a>
+          </div>
+          {!isEditing ? (
+            <p className='text-xl text-primary'>{contact.street_address}</p>
+          ) : (
+            <input
+              defaultValue={contact.street_address}
+              className='w-full rounded-lg border border-grey pl-1'
+            />
+          )}
+        </Box>
+        <Box>
+          <div className='flex w-full justify-between'>
+            <h3>Tags</h3>
+            <PlusIcon className='h-5 w-5' />
+          </div>
+          <TagHolder className='mt-1'>
+            <br />{' '}
+          </TagHolder>
+          {/* This should be done as a react component i think? */}
+          {/* Padding to counter the shadow */}
+          <div className='pt-2'>
+            <label>
+              <input type='checkbox' /> Client
+            </label>
+            <br />
+            <label>
+              <input type='checkbox' /> Coordinator
+            </label>
+            <br />
+            <label>
+              <input type='checkbox' /> Volunteer
+            </label>
+          </div>
+        </Box>
+        {/* Padding to counter shadow */}
+        <Box className='pb-3'>
+          <h3>Region </h3>
+          <TagHolder className='mt-1'>
+            <Tag>hello</Tag>
+            <Tag>hi</Tag>
+          </TagHolder>
+        </Box>
+        <Box>
+          <h3>Pets </h3>
+          {!isEditing ? (
+            <p className='text-xl text-primary'>{contact.pets.join(', ')}</p>
+          ) : (
+            <input
+              defaultValue={contact.pets}
+              className='w-full rounded-lg border border-grey pl-1'
+            />
+          )}
+        </Box>
+
+        <Box>
+          <h3>Notes</h3>
+          {!isEditing ? (
+            <p> THIS IS A NOTE </p>
+          ) : (
+            <textarea
+              defaultValue={contact.notes}
+              className='w-full rounded-lg border border-grey'
+            />
+          )}
+        </Box>
+        <div className='mb-3 flex justify-center'>
+          {isEditing && (
+            <div className='flex flex-col space-y-1'>
+              <button
+                type='submit'
+                className='w-80 rounded bg-primary py-1 font-bold text-white hover:bg-dark-red'
+                onClick={() => setIsEditing(false)}
+              >
+                Save
+              </button>
+              <button
+                type='button'
+                className='w-80 rounded bg-grey py-1 font-bold text-black hover:bg-grey'
+                onClick={() => setIsEditing(false)}
+              >
+                Cancel
+              </button>
+            </div>
+          )}
+        </div>
+      </div>
+    </form>
   )
 }
 
