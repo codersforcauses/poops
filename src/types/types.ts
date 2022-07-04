@@ -1,8 +1,13 @@
+interface Pet {
+  name: string
+  notes: string
+}
 interface Contact {
   id: string
   first_name: string
   last_name: string
-  pets: string[]
+  desc: string
+  pets: Pet[]
   email: string
   phone: string
   street_address: string
@@ -11,4 +16,4 @@ interface Contact {
   tags: string[]
 }
 
-export type { Contact }
+export type { Contact, Pet }
