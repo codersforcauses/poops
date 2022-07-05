@@ -189,26 +189,37 @@ function ContactInfo({
           {!isEditing ? (
             <p className='text-xl'>
               {contact.pets.map((pet, index) => (
-                <span key={index}>
-                  {pet.name}
-                  {index < contact.pets.length - 1 ? ', ' : ''}
-                </span>
-              ))}
-              {/* Move this to expandable/pop up which will show the pets notes */}
-              <br />
-              <br />
-              {contact.pets.map((pet, index) => (
                 <div key={index}>
-                  <p className='text-dark-red'>{pet.name}</p> {pet.notes}. They
-                  love to eat chocolate
+                  <PetContainer>
+                    <p className='text-dark-red'>{pet.name}</p> {pet.notes}
+                  </PetContainer>
                 </div>
               ))}
             </p>
           ) : (
-            <input
-              // defaultValue={contact.pets}
-              className='w-full rounded-lg border border-grey pl-1'
-            />
+            <>
+              {contact.pets.map((pet, index) => (
+                <div key={index}>
+                  <PetContainer>
+                    <label htmlFor={pet.name} className='text-dark-red'>
+                      Name
+                    </label>
+                    <input
+                      defaultValue={pet.name}
+                      className='mb-2 w-full rounded-lg border border-grey pl-1'
+                    />
+
+                    <label htmlFor={pet.notes} className='text-dark-red'>
+                      Notes
+                    </label>
+                    <input
+                      defaultValue={pet.notes}
+                      className='mb-2 w-full rounded-lg border border-grey pl-1'
+                    />
+                  </PetContainer>
+                </div>
+              ))}
+            </>
           )}
         </Box>
         {/* NOTES */}
@@ -217,7 +228,7 @@ function ContactInfo({
             Notes
           </label>
           {!isEditing ? (
-            <p className='text-xl'> THIS IS A NOTE </p>
+            <p className='text-xl'> {contact.notes} </p>
           ) : (
             <textarea
               defaultValue={contact.notes}
@@ -279,5 +290,12 @@ const Tag = tw.div`
   border-2
   bg-primary
   text-white
+  rounded-2xl
+`
+
+const PetContainer = tw.div`
+  px-2
+  my-2
+  bg-white
   rounded-2xl
 `

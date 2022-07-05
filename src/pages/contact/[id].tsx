@@ -19,22 +19,22 @@ const Contact = ({ contact }: ContactProp) => {
     <>
       <Header pageTitle={`${contact.first_name} ${contact.last_name}`} />
       <div className='sticky top-0 z-50 w-full bg-white'>
-      <div className='mx-auto flex w-80 justify-between py-2'>
-        <Link href='/contact'>
-          <button
-            type='button'
-            className='rounded bg-primary py-1 px-4 font-bold text-white hover:bg-dark-red'
-          >
-            Back
-          </button>
-        </Link>
-        {!isEditing && (
-          <PencilIcon
-            className='flex h-7 w-7 justify-end'
-            onClick={() => setIsEditing(true)}
-          />
-        )}
-      </div>
+        <div className='mx-auto flex w-80 justify-between py-2'>
+          <Link href='/contact'>
+            <button
+              type='button'
+              className='rounded bg-primary py-1 px-4 font-bold text-white hover:bg-dark-red'
+            >
+              Back
+            </button>
+          </Link>
+          {!isEditing && (
+            <PencilIcon
+              className='flex h-7 w-7 justify-end'
+              onClick={() => setIsEditing(true)}
+            />
+          )}
+        </div>
       </div>
       <ContactInfo
         contact={contact}
