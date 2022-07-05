@@ -33,11 +33,8 @@ const Login: NextPage = () => {
     <>
       <main>
         <title>Login</title>
-        <div
-          className='animate-text  
-            bg-gradient-to-b from-zinc-300 via-zinc-200 to-zinc-50'
-        >
-          <div className='	 m-auto max-w-sm p-10'>
+        <div className='animate-text bg-gradient-to-b from-zinc-300 via-zinc-200 to-zinc-50'>
+          <div className='m-auto max-w-sm p-10'>
             <Image
               src='/images/poops-logo.jpg'
               width={36}
