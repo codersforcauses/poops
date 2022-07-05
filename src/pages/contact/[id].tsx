@@ -18,7 +18,8 @@ const Contact = ({ contact }: ContactProp) => {
   return (
     <>
       <Header pageTitle={`${contact.first_name} ${contact.last_name}`} />
-      <div className='sticky top-0 z-50 mx-auto flex w-80 justify-between bg-white py-2'>
+      <div className='sticky top-0 z-50 w-full bg-white'>
+      <div className='mx-auto flex w-80 justify-between py-2'>
         <Link href='/contact'>
           <button
             type='button'
@@ -33,6 +34,7 @@ const Contact = ({ contact }: ContactProp) => {
             onClick={() => setIsEditing(true)}
           />
         )}
+      </div>
       </div>
       <ContactInfo
         contact={contact}
