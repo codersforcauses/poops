@@ -48,7 +48,7 @@ const Login: NextPage = () => {
         <div className='m-auto grid h-1/3 w-1/2 max-w-xs justify-center space-y-4 p-5'>
           {/* Google Button */}
           <button
-            className='border-gray-300 h-12 rounded-full border-2 px-6 transition duration-300 '
+            className='border-t-googleblue border-r-googlegreen border-b-googleyellow border-l-googlered h-12 rounded-full border-4 px-6 transition duration-300 '
             onClick={() => handleGoogle(auth)}
           >
             <div className='relative flex items-center space-x-4'>
@@ -58,19 +58,12 @@ const Login: NextPage = () => {
               </span>
             </div>
           </button>
-          {/* Github Button
-          <button
-            className='border-gray-300 group h-12 rounded-full border-2 px-6 transition duration-300'
-          >
-            <div className='relative flex items-center space-x-4'>
-              <div className=''>{githubIcon}</div>
-              <span className='text-gray-700 block w-max text-sm font-semibold tracking-wide transition duration-300 sm:text-base'>
-                Continue with Github
-              </span>
-            </div>
-          </button> */}
+
+          {/* TODO: check types and finish refactoring */}
+          {/* <LoginButton handlerFunction={handleGoogle(auth)} icon='googleIcon' buttonlabel='Continue with Google' /> */}
+
           {/* FaceBook Button */}
-          <button className='border-gray-300 group h-12 rounded-full border-2 px-6 transition duration-300'>
+          <button className='border-facebook group h-12 rounded-full border-4 px-6 transition duration-300'>
             <div className='relative flex items-center space-x-4'>
               <div className='w-5'>{facebookIcon}</div>
               <span className='text-gray-700 block w-max text-sm font-semibold tracking-wide transition duration-300 sm:text-base'>
@@ -79,7 +72,7 @@ const Login: NextPage = () => {
             </div>
           </button>
           {/* Twitter Button */}
-          <button className='border-gray-300 group h-12 rounded-full border-2 px-6 transition duration-300'>
+          <button className='border-twitter group h-12 rounded-full border-4 px-6 transition duration-300'>
             <div className='relative flex items-center space-x-4'>
               <div className='w-5'>{twitterIcon}</div>
               <span className='text-gray-700 block w-max text-sm font-semibold tracking-wide transition duration-300 sm:text-base'>
@@ -88,7 +81,7 @@ const Login: NextPage = () => {
             </div>
           </button>
           {/* Apple Button */}
-          <button className='border-gray-300 group h-12 rounded-full border-2 px-6 transition duration-300'>
+          <button className='border-applegrey group h-12 rounded-full border-4 px-6 transition duration-300'>
             <div className='relative flex items-center space-x-4'>
               <div className='w-5'>{appleIcon}</div>
               <span className='text-gray-700 block w-max text-sm font-semibold tracking-wide transition duration-300 sm:text-base'>
@@ -97,7 +90,7 @@ const Login: NextPage = () => {
             </div>
           </button>
           {/* Microsoft Button */}
-          <button className='border-gray-300 group h-12 rounded-full border-2 px-6 transition duration-300'>
+          <button className='border-microsoftblue group h-12 rounded-full border-4 px-6 transition duration-300'>
             <div className='relative flex items-center space-x-4'>
               <div className='w-5'>{microsoftIcon}</div>
               <span className='text-gray-700 block w-max text-sm font-semibold tracking-wide transition duration-300 sm:text-base'>
@@ -106,7 +99,7 @@ const Login: NextPage = () => {
             </div>
           </button>
           {/* Yahoo Button */}
-          <button className='border-gray-300 group h-12 rounded-full border-2 px-6 transition duration-300'>
+          <button className='border-yahoopurple group h-12 rounded-full border-4 px-6 transition duration-300'>
             <div className='relative flex items-center space-x-4'>
               <div className='w-5'>{yahooIcon}</div>
               <span className='text-gray-700 block w-max text-sm font-semibold tracking-wide transition duration-300 sm:text-base'>
