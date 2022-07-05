@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { useRouter } from 'next/router'
 import { ChatAltIcon, HomeIcon } from '@heroicons/react/outline'
 
@@ -8,20 +8,16 @@ import NavLink from '@/components/NavBar/navlink'
 export default function NavBar() {
   // Gets top level path, capitalises first letter
   const { asPath } = useRouter()
+  const pathStart = asPath.split('/')[1]
+  const currentPageTitle =
+    pathStart === ''
+      ? 'Home'
+      : `${pathStart.charAt(0).toUpperCase()}${pathStart
+          .slice(1)
+          .toLowerCase()}`
 
-  const [currentPage, setCurrentPage] = useState('')
+  const [currentPage, setCurrentPage] = useState(currentPageTitle)
   const iconClasses = 'inline-block h-7 w-8 hover:text-primary'
-
-  useEffect(() => {
-    const pathStart = asPath.split('/')[1]
-    const currentPageTitle =
-      pathStart === ''
-        ? 'Home'
-        : `${pathStart.charAt(0).toUpperCase()}${pathStart
-            .slice(1)
-            .toLowerCase()}`
-    setCurrentPage(currentPageTitle)
-  }, [asPath])
 
   const linkDetails = [
     { name: 'Home', route: '/', icon: <HomeIcon className={iconClasses} /> },
