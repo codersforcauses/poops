@@ -24,13 +24,33 @@ module.exports = {
       googlered: '#EA4335',
       applegrey: '#A2AAAD',
       microsoftblue: '#00A4EF',
-      yahoopurple: '#430297'
+      yahoopurple: '#430297',
+      'zinc-200': '#F8F8F8',
+      'zinc-300' : '#F5F5F5',
+      'zinc-50': '#FFFFFF',
 
     },
-    extend: {
-      fontFamily: {
+    extend: 
+    {
+      fontFamily: 
+      {
         primary: ['Inter', ...fontFamily.sans]
-      }
+      },
+      'animation': {
+            'text':'text 5s ease infinite',
+        },
+        'keyframes': {
+            'text': {
+                '0%, 100%': {
+                   'background-size':'200% ',
+                    'background-position': 'left center'
+                },
+                '50%': {
+                   'background-size':'200%',
+                    'background-position': 'right center'
+                }
+            },
+        }
     }
   },
   plugins: [require('@tailwindcss/forms')]
