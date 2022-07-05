@@ -219,6 +219,10 @@ function ContactInfo({
                   </PetContainer>
                 </div>
               ))}
+              {/* Plus icon that adds a new pet container */}
+              <div className='flex justify-center'>
+                <PlusIcon className='h-7 w-7 rounded-full bg-white p-1 text-dark-red' />
+              </div>
             </>
           )}
         </Box>
@@ -236,7 +240,7 @@ function ContactInfo({
             />
           )}
         </Box>
-        {/* FORMS BUTTONS */}
+        {/* FORM BUTTONS */}
         {isEditing && (
           <div className='mb-3 flex justify-center'>
             <div className='flex flex-col space-y-1'>
