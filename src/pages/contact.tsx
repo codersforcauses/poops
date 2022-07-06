@@ -25,7 +25,7 @@ const Contact = () => {
       const full_name = contact.first_name + ' ' + contact.last_name
       const filtered =
         full_name.toLocaleLowerCase().includes(searchFieldString) &&
-        contact.tags.some((v) => v === selectedOption)
+        contact.tags.some((v) => v.includes(selectedOption))
       return filtered
     })
     setFilteredContacts(filteredContacts)
@@ -33,10 +33,9 @@ const Contact = () => {
 
   const onSearchTagChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const option_value = event.target.value
-
     setSelectedOption(option_value)
     const filteredContacts = CONTACT_DATA.filter((contact) => {
-      const filteredwithTag = contact.tags.some((v) => v === option_value)
+      const filteredwithTag = contact.tags.some((v) => v.includes(option_value))
 
       return filteredwithTag
     })
