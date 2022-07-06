@@ -23,6 +23,9 @@ const Contact = () => {
     const searchFieldString = event.target.value.toLocaleLowerCase()
     const filteredContacts = CONTACT_DATA.filter((contact) => {
       const full_name = contact.first_name + ' ' + contact.last_name
+      if (selectedOption == '') {
+        return full_name.toLocaleLowerCase().includes(searchFieldString)
+      }
       const filtered =
         full_name.toLocaleLowerCase().includes(searchFieldString) &&
         contact.tags.some((v) => v.includes(selectedOption))
@@ -35,8 +38,10 @@ const Contact = () => {
     const option_value = event.target.value
     setSelectedOption(option_value)
     const filteredContacts = CONTACT_DATA.filter((contact) => {
+      if (option_value == '') {
+        return contact
+      }
       const filteredwithTag = contact.tags.some((v) => v.includes(option_value))
-
       return filteredwithTag
     })
     setFilteredContacts(filteredContacts)
