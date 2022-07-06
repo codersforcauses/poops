@@ -1,7 +1,9 @@
 import { useState } from 'react'
 
 import CONTACT_DATA from '@/../mockData/CONTACT_DATA.json'
+import PROFILE_DATA from '@/../mockData/PROFILE_DATA.json'
 import ContactList from '@/components/Contact/contactlist'
+import ProfileItem from '@/components/Contact/profileitem'
 import Header from '@/components/Header'
 import SearchBar from '@/components/SearchBar/searchbar'
 import SearchTag from '@/components/SearchBar/searchtag'
@@ -63,6 +65,7 @@ const Contact = () => {
         <div className='m-auto max-w-md'>
           <SearchTag options={taglist} onChangehandler={onSearchTagChange} />
           <SearchBar onChangeHandler={onSearchChange} />
+          <ProfileItem profile={PROFILE_DATA} image='' />
           <ContactList contacts={filteredContacts} />
         </div>
       </main>

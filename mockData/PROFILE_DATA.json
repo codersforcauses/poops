@@ -1,0 +1,18 @@
+{
+  "id": "me",
+  "first_name": "John",
+  "last_name": "Doe",
+  "desc": "description",
+  "pets": [
+    { "name": "Zoe", "notes": "Is Moth" },
+    { "name": "Kato", "notes": "Guinea Pig" },
+    { "name": "John", "notes": "Capubara" },
+    { "name": "Goggy", "notes": "Praying Mantis" }
+  ],
+  "email": "tiamcmahon@kegular.com",
+  "phone": "(886) 578-3300",
+  "street_address": "691 Cleveland Street",
+  "region": ["Northern", "Busselton", "Western"],
+  "notes": "Likes to eat chocolate",
+  "tags": ["volunteer", "profile"]
+}

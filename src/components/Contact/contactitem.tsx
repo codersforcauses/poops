@@ -15,14 +15,14 @@ const ContactItem = ({ contact, image }: ContactItemProps) => {
         <div className='flex items-center space-x-4'>
           {/* This is a placeholder image */}
           {image === '' ? (
-            <UserCircleIcon className='h-12 w-12' />
+            <UserCircleIcon className='h-10 w-10' />
           ) : (
             <Image
               className='h-2 w-2 rounded-full'
               src={image}
               alt='Neil image'
-              width={48}
-              height={48}
+              width={40}
+              height={40}
               layout='fixed'
             />
           )}

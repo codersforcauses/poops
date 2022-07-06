@@ -1,5 +1,5 @@
-import Image from 'next/image'
 import React from 'react'
+import Image from 'next/image'
 import {
   LocationMarkerIcon,
   MailIcon,
@@ -16,11 +16,7 @@ type ContactInfoProps = {
   setIsEditing: (value: boolean) => void
 }
 
-const ContactForm = ({
-  contact,
-  image,
-  setIsEditing
-}: ContactInfoProps) => {
+const ContactForm = ({ contact, image, setIsEditing }: ContactInfoProps) => {
   return (
     <form>
       <div className='flex flex-col items-center justify-center gap-3'>
@@ -37,35 +33,35 @@ const ContactForm = ({
           />
         )}
         {/* FIRST AND LAST NAME */}
-            <Box>
-              <label htmlFor={contact.first_name} className='text-dark-red'>
-                First Name
-              </label>
-              <input
-                id='firstName'
-                defaultValue={contact.first_name}
-                className='mb-2 w-80 rounded-lg border border-grey pl-1'
-              />
-            </Box>
-            <Box>
-              <label htmlFor={contact.last_name} className='text-dark-red'>
-                Last Name
-              </label>
-              <input
-                defaultValue={contact.last_name}
-                className='w-80 rounded-lg border border-grey pl-1'
-              />
-            </Box>
+        <Box>
+          <label htmlFor={contact.first_name} className='text-dark-red'>
+            First Name
+          </label>
+          <input
+            id='firstName'
+            defaultValue={contact.first_name}
+            className='mb-2 w-80 rounded-lg border border-grey pl-1'
+          />
+        </Box>
+        <Box>
+          <label htmlFor={contact.last_name} className='text-dark-red'>
+            Last Name
+          </label>
+          <input
+            defaultValue={contact.last_name}
+            className='w-80 rounded-lg border border-grey pl-1'
+          />
+        </Box>
         {/* DESCRIPTION */}
-          <Box>
-            <label htmlFor={contact.notes} className='text-dark-red'>
-              Description
-            </label>
-            <input
-              defaultValue={contact.notes}
-              className='w-80 rounded-lg border border-grey pl-1'
-            />
-          </Box>
+        <Box>
+          <label htmlFor={contact.notes} className='text-dark-red'>
+            Description
+          </label>
+          <input
+            defaultValue={contact.notes}
+            className='w-80 rounded-lg border border-grey pl-1'
+          />
+        </Box>
         {/* PHONE */}
         <Box>
           <div className='flex w-full justify-between'>
@@ -76,10 +72,10 @@ const ContactForm = ({
               <PhoneIcon className='h-5 w-5' />
             </a>
           </div>
-            <input
-              defaultValue={contact.phone}
-              className='w-full rounded-lg border border-grey pl-1'
-            />
+          <input
+            defaultValue={contact.phone}
+            className='w-full rounded-lg border border-grey pl-1'
+          />
         </Box>
         {/* EMAIL */}
         <Box>
@@ -95,10 +91,10 @@ const ContactForm = ({
               <MailIcon className='h-5 w-5' />
             </a>
           </div>
-            <input
-              defaultValue={contact.email}
-              className='w-full rounded-lg border border-grey pl-1'
-            />
+          <input
+            defaultValue={contact.email}
+            className='w-full rounded-lg border border-grey pl-1'
+          />
         </Box>
         {/* ADDRESS */}
         <Box>
@@ -114,10 +110,10 @@ const ContactForm = ({
               <LocationMarkerIcon className='h-5 w-5' />
             </a>
           </div>
-            <input
-              defaultValue={contact.street_address}
-              className='w-full rounded-lg border border-grey pl-1'
-            />
+          <input
+            defaultValue={contact.street_address}
+            className='w-full rounded-lg border border-grey pl-1'
+          />
         </Box>
         {/* TAGS */}
         <Box>
@@ -160,62 +156,61 @@ const ContactForm = ({
           <label htmlFor='pets' className='text-dark-red'>
             Pets
           </label>
-              {contact.pets.map((pet, index) => (
-                <div key={index}>
-                  <PetContainer>
-                    <label htmlFor={pet.name} className='text-dark-red'>
-                      Name
-                    </label>
-                    <input
-                      defaultValue={pet.name}
-                      className='mb-2 w-full rounded-lg border border-grey pl-1'
-                    />
+          {contact.pets.map((pet, index) => (
+            <div key={index}>
+              <PetContainer>
+                <label htmlFor={pet.name} className='text-dark-red'>
+                  Name
+                </label>
+                <input
+                  defaultValue={pet.name}
+                  className='mb-2 w-full rounded-lg border border-grey pl-1'
+                />
 
-                    <label htmlFor={pet.notes} className='text-dark-red'>
-                      Notes
-                    </label>
-                    <input
-                      defaultValue={pet.notes}
-                      className='mb-2 w-full rounded-lg border border-grey pl-1'
-                    />
-                  </PetContainer>
-                </div>
-              ))}
-              {/* Plus icon that adds a new pet container */}
-              <div className='flex justify-center'>
-                <PlusIcon className='h-7 w-7 rounded-full bg-white p-1 text-dark-red' />
-              </div>
-
+                <label htmlFor={pet.notes} className='text-dark-red'>
+                  Notes
+                </label>
+                <input
+                  defaultValue={pet.notes}
+                  className='mb-2 w-full rounded-lg border border-grey pl-1'
+                />
+              </PetContainer>
+            </div>
+          ))}
+          {/* Plus icon that adds a new pet container */}
+          <div className='flex justify-center'>
+            <PlusIcon className='h-7 w-7 rounded-full bg-white p-1 text-dark-red' />
+          </div>
         </Box>
         {/* NOTES */}
         <Box>
           <label htmlFor={contact.notes} className='text-dark-red'>
             Notes
           </label>
-            <textarea
-              defaultValue={contact.notes}
-              className='w-full rounded-lg border border-grey'
-            />
+          <textarea
+            defaultValue={contact.notes}
+            className='w-full rounded-lg border border-grey'
+          />
         </Box>
         {/* FORM BUTTONS */}
-          <div className='mb-3 flex justify-center'>
-            <div className='flex flex-col space-y-1'>
-              <button
-                type='submit'
-                className='w-80 rounded bg-primary py-1 font-bold text-white hover:bg-dark-red'
-                onClick={() => setIsEditing(false)}
-              >
-                Save
-              </button>
-              <button
-                type='button'
-                className='w-80 rounded bg-grey py-1 font-bold text-black hover:bg-grey'
-                onClick={() => setIsEditing(false)}
-              >
-                Cancel
-              </button>
-            </div>
+        <div className='mb-3 flex justify-center'>
+          <div className='flex flex-col space-y-1'>
+            <button
+              type='submit'
+              className='w-80 rounded bg-primary py-1 font-bold text-white hover:bg-dark-red'
+              onClick={() => setIsEditing(false)}
+            >
+              Save
+            </button>
+            <button
+              type='button'
+              className='w-80 rounded bg-grey py-1 font-bold text-black hover:bg-grey'
+              onClick={() => setIsEditing(false)}
+            >
+              Cancel
+            </button>
           </div>
+        </div>
       </div>
     </form>
   )

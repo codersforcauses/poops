@@ -4,8 +4,9 @@ import Link from 'next/link'
 import { PencilIcon } from '@heroicons/react/outline'
 
 import CONTACT_DATA from '@/../mockData/CONTACT_DATA.json'
-import ContactInfo from '@/components/Contact/contactinfo'
+import PROFILE_DATA from '@/../mockData/PROFILE_DATA.json'
 import ContactForm from '@/components/Contact/contactform'
+import ContactInfo from '@/components/Contact/contactinfo'
 import Header from '@/components/Header'
 import type { Contact } from '@/types/types'
 
@@ -15,7 +16,7 @@ type ContactProp = {
 
 const Contact = ({ contact }: ContactProp) => {
   const [isEditing, setIsEditing] = useState(false)
-
+  const isEditable = !contact.tags.includes('profile')
   return (
     <>
       <Header pageTitle={`${contact.first_name} ${contact.last_name}`} />
@@ -29,7 +30,7 @@ const Contact = ({ contact }: ContactProp) => {
               Back
             </button>
           </Link>
-          {!isEditing && (
+          {isEditable && !isEditing && (
             <PencilIcon
               className='flex h-7 w-7 justify-end'
               onClick={() => setIsEditing(true)}
@@ -37,26 +38,18 @@ const Contact = ({ contact }: ContactProp) => {
           )}
         </div>
       </div>
-      { !isEditing ? (
-        <ContactInfo
-        contact={contact}
-        image=''
-      />
+      {!isEditing ? (
+        <ContactInfo contact={contact} image='' />
       ) : (
-        <ContactForm
-        contact={contact}
-        image=''
-        setIsEditing={setIsEditing}
-      />
+        <ContactForm contact={contact} image='' setIsEditing={setIsEditing} />
       )}
-      
     </>
   )
 }
 
 // TODO: Update to getServerSideProps when API is created
 export const getStaticPaths: GetStaticPaths = async () => {
-  const paths = CONTACT_DATA.map((contact) => {
+  const paths = [PROFILE_DATA].concat(CONTACT_DATA).map((contact) => {
     return { params: { id: contact.id.toString() } }
   })
   return {
@@ -67,7 +60,9 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
 export const getStaticProps: GetStaticProps = async (context) => {
   const id = context.params?.id
-  const contact = CONTACT_DATA.find((contact) => contact.id === id)
+  const contact = [PROFILE_DATA]
+    .concat(CONTACT_DATA)
+    .find((contact) => contact.id === id)
   return {
     props: {
       contact
