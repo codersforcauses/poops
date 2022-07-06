@@ -7,19 +7,13 @@ import SearchBar from '@/components/SearchBar/searchbar'
 import SearchTag from '@/components/SearchBar/searchtag'
 import type { Contact } from '@/types/types'
 
-const Contact = () => {
-  const tags = [
-    'Armadale',
-    'Busselton',
-    'Coastal South',
-    'Eastern',
-    'Preston',
-    'Southern',
-    'Western',
-    'Central',
-    'Northern'
-  ]
+const tags = CONTACT_DATA.map((contact) => {
+  return contact.tags
+}).flat()
+const set = new Set(tags)
+const taglist = [...set]
 
+const Contact = () => {
   const [filteredContacts, setFilteredContacts] =
     useState<Contact[]>(CONTACT_DATA)
 
@@ -31,7 +25,7 @@ const Contact = () => {
       const full_name = contact.first_name + ' ' + contact.last_name
       const filtered =
         full_name.toLocaleLowerCase().includes(searchFieldString) &&
-        contact.region.includes(selectedOption)
+        contact.tags.some((v) => v === selectedOption)
       return filtered
     })
     setFilteredContacts(filteredContacts)
@@ -39,9 +33,12 @@ const Contact = () => {
 
   const onSearchTagChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const option_value = event.target.value
+
     setSelectedOption(option_value)
     const filteredContacts = CONTACT_DATA.filter((contact) => {
-      return contact.region.includes(option_value)
+      const filteredwithTag = contact.tags.some((v) => v === option_value)
+
+      return filteredwithTag
     })
     setFilteredContacts(filteredContacts)
   }
@@ -54,7 +51,7 @@ const Contact = () => {
       <main>
         <h1 className='m-3 text-center text-2xl'>Contacts</h1>
         <div className='m-auto max-w-md'>
-          <SearchTag options={tags} onChangehandler={onSearchTagChange} />
+          <SearchTag options={taglist} onChangehandler={onSearchTagChange} />
           <SearchBar onChangeHandler={onSearchChange} />
           <ContactList contacts={filteredContacts} />
         </div>
