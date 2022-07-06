@@ -5,6 +5,7 @@ import { PencilIcon } from '@heroicons/react/outline'
 
 import CONTACT_DATA from '@/../mockData/CONTACT_DATA.json'
 import ContactInfo from '@/components/Contact/contactinfo'
+import ContactForm from '@/components/Contact/contactform'
 import Header from '@/components/Header'
 import type { Contact } from '@/types/types'
 
@@ -36,12 +37,19 @@ const Contact = ({ contact }: ContactProp) => {
           )}
         </div>
       </div>
-      <ContactInfo
+      { !isEditing ? (
+        <ContactInfo
         contact={contact}
         image=''
-        isEditing={isEditing}
+      />
+      ) : (
+        <ContactForm
+        contact={contact}
+        image=''
         setIsEditing={setIsEditing}
       />
+      )}
+      
     </>
   )
 }

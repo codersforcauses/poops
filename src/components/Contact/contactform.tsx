@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import React from 'react'
 import {
   LocationMarkerIcon,
   MailIcon,
@@ -9,17 +10,19 @@ import {
 import tw from 'tailwind-styled-components'
 
 import type { Contact } from '@/types/types'
-
 type ContactInfoProps = {
   contact: Contact
   image: string
+  setIsEditing: (value: boolean) => void
 }
 
-function ContactInfo({
+const ContactForm = ({
   contact,
-  image
-}: ContactInfoProps) {
+  image,
+  setIsEditing
+}: ContactInfoProps) => {
   return (
+    <form>
       <div className='flex flex-col items-center justify-center gap-3'>
         {image === '' ? (
           <UserCircleIcon className='w-32 rounded-full' />
@@ -34,11 +37,35 @@ function ContactInfo({
           />
         )}
         {/* FIRST AND LAST NAME */}
-          <h1 className='text-4xl font-normal'>
-            {contact.first_name} {contact.last_name}
-          </h1>
+            <Box>
+              <label htmlFor={contact.first_name} className='text-dark-red'>
+                First Name
+              </label>
+              <input
+                id='firstName'
+                defaultValue={contact.first_name}
+                className='mb-2 w-80 rounded-lg border border-grey pl-1'
+              />
+            </Box>
+            <Box>
+              <label htmlFor={contact.last_name} className='text-dark-red'>
+                Last Name
+              </label>
+              <input
+                defaultValue={contact.last_name}
+                className='w-80 rounded-lg border border-grey pl-1'
+              />
+            </Box>
         {/* DESCRIPTION */}
-          <h3>{contact.notes}</h3>
+          <Box>
+            <label htmlFor={contact.notes} className='text-dark-red'>
+              Description
+            </label>
+            <input
+              defaultValue={contact.notes}
+              className='w-80 rounded-lg border border-grey pl-1'
+            />
+          </Box>
         {/* PHONE */}
         <Box>
           <div className='flex w-full justify-between'>
@@ -49,7 +76,10 @@ function ContactInfo({
               <PhoneIcon className='h-5 w-5' />
             </a>
           </div>
-            <span className='text-xl'>{contact.phone}</span>
+            <input
+              defaultValue={contact.phone}
+              className='w-full rounded-lg border border-grey pl-1'
+            />
         </Box>
         {/* EMAIL */}
         <Box>
@@ -65,7 +95,10 @@ function ContactInfo({
               <MailIcon className='h-5 w-5' />
             </a>
           </div>
-          <span className='text-xl'>{contact.email}</span>
+            <input
+              defaultValue={contact.email}
+              className='w-full rounded-lg border border-grey pl-1'
+            />
         </Box>
         {/* ADDRESS */}
         <Box>
@@ -81,8 +114,10 @@ function ContactInfo({
               <LocationMarkerIcon className='h-5 w-5' />
             </a>
           </div>
-            <span className='text-xl'>{contact.street_address}</span>
-          
+            <input
+              defaultValue={contact.street_address}
+              className='w-full rounded-lg border border-grey pl-1'
+            />
         </Box>
         {/* TAGS */}
         <Box>
@@ -125,28 +160,68 @@ function ContactInfo({
           <label htmlFor='pets' className='text-dark-red'>
             Pets
           </label>
-            <span className='text-xl'>
               {contact.pets.map((pet, index) => (
                 <div key={index}>
                   <PetContainer>
-                    <p className='text-dark-red'>{pet.name}</p> {pet.notes}
+                    <label htmlFor={pet.name} className='text-dark-red'>
+                      Name
+                    </label>
+                    <input
+                      defaultValue={pet.name}
+                      className='mb-2 w-full rounded-lg border border-grey pl-1'
+                    />
+
+                    <label htmlFor={pet.notes} className='text-dark-red'>
+                      Notes
+                    </label>
+                    <input
+                      defaultValue={pet.notes}
+                      className='mb-2 w-full rounded-lg border border-grey pl-1'
+                    />
                   </PetContainer>
                 </div>
               ))}
-            </span>
+              {/* Plus icon that adds a new pet container */}
+              <div className='flex justify-center'>
+                <PlusIcon className='h-7 w-7 rounded-full bg-white p-1 text-dark-red' />
+              </div>
+
         </Box>
         {/* NOTES */}
-        <Box className='flex flex-col'>
+        <Box>
           <label htmlFor={contact.notes} className='text-dark-red'>
             Notes
           </label>
-          <span className='text-xl'> {contact.notes} </span>
+            <textarea
+              defaultValue={contact.notes}
+              className='w-full rounded-lg border border-grey'
+            />
         </Box>
+        {/* FORM BUTTONS */}
+          <div className='mb-3 flex justify-center'>
+            <div className='flex flex-col space-y-1'>
+              <button
+                type='submit'
+                className='w-80 rounded bg-primary py-1 font-bold text-white hover:bg-dark-red'
+                onClick={() => setIsEditing(false)}
+              >
+                Save
+              </button>
+              <button
+                type='button'
+                className='w-80 rounded bg-grey py-1 font-bold text-black hover:bg-grey'
+                onClick={() => setIsEditing(false)}
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
       </div>
+    </form>
   )
 }
 
-export default ContactInfo
+export default ContactForm
 
 const Box = tw.div`
     bg-grey
