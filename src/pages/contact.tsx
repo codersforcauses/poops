@@ -18,9 +18,11 @@ const Contact = () => {
     useState<Contact[]>(CONTACT_DATA)
 
   const [selectedOption, setSelectedOption] = useState('')
+  const [searchFieldString, setSearchFieldString] = useState('')
 
   const onSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const searchFieldString = event.target.value.toLocaleLowerCase()
+    setSearchFieldString(searchFieldString)
     const filteredContacts = CONTACT_DATA.filter((contact) => {
       const full_name = contact.first_name + ' ' + contact.last_name
       if (selectedOption == '') {
@@ -38,10 +40,14 @@ const Contact = () => {
     const option_value = event.target.value
     setSelectedOption(option_value)
     const filteredContacts = CONTACT_DATA.filter((contact) => {
+      const full_name = contact.first_name + ' ' + contact.last_name
       if (option_value == '') {
-        return contact
+        return full_name.toLocaleLowerCase().includes(searchFieldString)
       }
-      const filteredwithTag = contact.tags.some((v) => v.includes(option_value))
+
+      const filteredwithTag =
+        contact.tags.some((v) => v.includes(option_value)) &&
+        full_name.toLocaleLowerCase().includes(searchFieldString)
       return filteredwithTag
     })
     setFilteredContacts(filteredContacts)
