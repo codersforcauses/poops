@@ -1,4 +1,5 @@
 import React from 'react'
+import { useState } from 'react'
 import Image from 'next/image'
 import {
   LocationMarkerIcon,
@@ -17,6 +18,16 @@ type ContactInfoProps = {
 }
 
 const ContactForm = ({ contact, image, setIsEditing }: ContactInfoProps) => {
+  const [pets, setPets] = useState(contact.pets)
+
+  function addNewPetFields() {
+      let newPetField = {
+        name: "",
+        notes: "",
+      }
+      setPets((pets) => [...pets, newPetField])
+  }
+
   return (
     <form>
       <div className='flex flex-col items-center justify-center gap-3'>
@@ -156,7 +167,7 @@ const ContactForm = ({ contact, image, setIsEditing }: ContactInfoProps) => {
           <label htmlFor='pets' className='text-dark-red'>
             Pets
           </label>
-          {contact.pets.map((pet, index) => (
+          {Object.values(pets).map((pet, index) => (
             <div key={index}>
               <PetContainer>
                 <label htmlFor={pet.name} className='text-dark-red'>
@@ -179,7 +190,7 @@ const ContactForm = ({ contact, image, setIsEditing }: ContactInfoProps) => {
           ))}
           {/* Plus icon that adds a new pet container */}
           <div className='flex justify-center'>
-            <PlusIcon className='h-7 w-7 rounded-full bg-white p-1 text-dark-red' />
+            <PlusIcon className='h-7 w-7 rounded-full bg-white p-1 text-dark-red' onClick={addNewPetFields}/>
           </div>
         </Box>
         {/* NOTES */}
