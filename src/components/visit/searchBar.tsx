@@ -2,36 +2,21 @@ import React from 'react'
 import { SearchIcon } from '@heroicons/react/outline'
 
 import { AddButton } from '@/components/visit/Buttons'
-import VisitList from '@/components/visit/visitList'
 
-interface SearchBarState {
-  searchQuery: string
-  startDate: string
-  endDate: string
-}
-
-class SearchBar extends React.Component<Record<string, never>, SearchBarState> {
+class SearchBar extends React.Component<Record<string, never>> {
   constructor(props: Record<string, never>) {
     super(props)
-
-    this.state = {
-      searchQuery: '',
-      startDate: '',
-      endDate: ''
-    }
   }
 
   render() {
     return (
-      <div className='flex h-full flex-col content-center'>
+      <div className='flex flex-col content-center'>
         <div className='flex h-[40px] w-[300px] flex-row self-center rounded-xl border border-dark-gray bg-white p-1 drop-shadow-default'>
           <SearchIcon className='floating pointer-events-none m-1 h-6 w-6 text-dark-gray'></SearchIcon>
           <input
             className='bg m-0 w-full border-0 text-left outline-0'
             placeholder='Search...'
-            onChange={(event) =>
-              this.setState({ searchQuery: event.target.value })
-            }
+            onChange={this.props.setSearchQuery}
           />
         </div>
         <div className='flex justify-between p-4'>
@@ -50,7 +35,6 @@ class SearchBar extends React.Component<Record<string, never>, SearchBarState> {
         </div>
 
         {/* move this to the visit page? search bar state would need to be lifted up */}
-        <VisitList searchQuery={this.state.searchQuery} />
       </div>
     )
   }

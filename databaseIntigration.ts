@@ -15,32 +15,26 @@ const database = getFirestore(app)
 
 const poopsRef = collection(database, 'Users')
 
-export async function writeUserData(
-  firstName: string,
-  lastName: string,
-  petName: string,
-  date: string,
-  distance: string
-) {
-  await addDoc(poopsRef, {
-    firstName: firstName,
-    lastName: lastName,
-    petName: petName,
-    dateTime: date,
-    distanceWalked: distance
-  })
-}
-
-export interface Visit {
-  id: string
+export interface User {
   firstName: string
   lastName: string
   petName: string
-  date: string
-  distance: string
+  dateTime: string
+  duration: string
+  walkDist: string
+  commuteDist: string
+  commuteMethod: string
+  notes: string
 }
 
-// this runs twice for some reason every time the visit page is loaded
+export interface Visit extends User {
+  id: string
+}
+
+export async function writeUserData(props: User) {
+  await addDoc(poopsRef, { props })
+}
+
 export async function getVisitData() {
   const querySnapshot = await getDocs(poopsRef)
 
@@ -48,35 +42,25 @@ export async function getVisitData() {
   let i = 0
   querySnapshot.forEach((doc) => {
     const data = doc.data()
-    const User: Visit = {
+    const visit: Visit = {
       id: doc.id,
       firstName: data.firstName,
       lastName: data.lastName,
       petName: data.petName,
-      date: data.dateTime,
-      distance: data.distanceWalked
+      dateTime: data.dateTime,
+      duration: data.duration,
+      walkDist: data.walkDist,
+      commuteDist: data.commuteDist,
+      commuteMethod: data.commuteMethod,
+      notes: data.notes
     }
 
-    visitData[i] = User
+    visitData[i] = visit
     i++
   })
-  console.log(visitData)
   return visitData
 }
 
-export async function updateUserData(
-  id: string,
-  firstName: string,
-  lastName: string,
-  petName: string,
-  date: string,
-  distance: string
-) {
-  await setDoc(doc(poopsRef, id), {
-    firstName: firstName,
-    lastName: lastName,
-    petName: petName,
-    dateTime: date,
-    distanceWalked: distance
-  })
+export async function updateUserData(id: string, props: User) {
+  await setDoc(doc(poopsRef, id), props)
 }

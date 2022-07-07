@@ -60,7 +60,7 @@ export default function NavBar() {
   )
 
   return (
-    <div className='fixed h-16 w-full'>
+    <div className='h-16 w-full'>
       <nav
         id='bottom-navigation'
         className='fixed inset-x-0 bottom-0 z-10 block bg-white shadow'

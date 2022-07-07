@@ -1,34 +1,15 @@
 import React from 'react'
 import ChevronDownIcon from '@heroicons/react/outline/ChevronDownIcon'
-import { updateUserData } from 'databaseIntigration'
+import { updateUserData, User, Visit } from 'databaseIntigration'
 
 import EditButton from '@/components/visit/Buttons'
 
-interface VisitInstanceProps {
-  clientNameFirst: string
-  clientNameLast: string
-  id: string
-  firstName: string
-  lastName: string
-  petName: string
-  date: string
-  distance: string
-  // number: string
-  // travelled: number
-  // walkMetres: number
-  // commuteMetres: number
-  // method: string
-}
+type VisitInstanceProps = Visit
 
-interface VisitInstanceState {
+interface VisitInstanceState extends User {
   isEditable: boolean
   isOpen: boolean
   isLoaded: boolean
-  editClientFirst: string
-  editClientLast: string
-  editPet: string
-  editDate: string
-  editDistance: string
 }
 
 class VisitInstance extends React.Component<
@@ -41,11 +22,15 @@ class VisitInstance extends React.Component<
       isEditable: false,
       isOpen: false,
       isLoaded: false,
-      editClientFirst: props.firstName,
-      editClientLast: props.lastName,
-      editDate: props.date,
-      editPet: props.petName,
-      editDistance: props.distance
+      firstName: props.firstName,
+      lastName: props.lastName,
+      dateTime: props.dateTime,
+      petName: props.petName,
+      walkDist: props.walkDist,
+      duration: props.duration,
+      commuteDist: props.commuteDist,
+      commuteMethod: props.commuteMethod,
+      notes: props.notes
     }
   }
 
@@ -73,73 +58,128 @@ class VisitInstance extends React.Component<
             {this.state.isEditable ? (
               <form
                 onSubmit={(event) => {
-                  updateUserData(
-                    String(this.props.id),
-                    this.state.editClientFirst,
-                    this.state.editClientLast,
-                    this.state.editPet,
-                    this.state.editDate,
-                    this.state.editDistance
-                  )
+                  const userData: User = {
+                    firstName: this.state.firstName,
+                    lastName: this.state.lastName,
+                    petName: this.state.petName,
+                    dateTime: this.state.dateTime,
+                    duration: this.state.duration,
+                    walkDist: this.state.walkDist,
+                    commuteDist: this.state.commuteDist,
+                    commuteMethod: this.state.commuteMethod,
+                    notes: this.state.notes
+                  }
+                  updateUserData(this.props.id, userData)
                   event.preventDefault()
                 }}
               >
                 <div className='font-bold peer-checked:font-normal'>
                   <input
                     placeholder='Date'
-                    value={this.state.editDate}
+                    value={this.state.dateTime}
                     onChange={(event) =>
-                      this.setState({ editDate: event.target.value })
+                      this.setState({ dateTime: event.target.value })
                     }
                     className='bg-gray font-normal text-primary'
                   />
-                  <input
-                    className='bg-gray text-sm font-normal text-primary'
-                    placeholder='Last Name'
-                    value={this.state.editClientLast}
-                    onChange={(event) =>
-                      this.setState({ editClientLast: event.target.value })
-                    }
-                  />
-                  <input
-                    className='bg-gray text-sm font-normal text-primary'
-                    placeholder='First Name'
-                    value={this.state.editClientFirst}
-                    onChange={(event) =>
-                      this.setState({ editClientFirst: event.target.value })
-                    }
-                  />
+                  <div>
+                    <input
+                      size={8}
+                      className='bg-gray text-sm font-normal text-primary'
+                      placeholder='Last Name'
+                      value={this.state.lastName}
+                      onChange={(event) =>
+                        this.setState({ lastName: event.target.value })
+                      }
+                    />
+                    <input
+                      size={8}
+                      className='bg-gray text-sm font-normal text-primary'
+                      placeholder='First Name'
+                      value={this.state.firstName}
+                      onChange={(event) =>
+                        this.setState({ firstName: event.target.value })
+                      }
+                    />
+                  </div>
                 </div>
                 <p className='text-sm'>
                   Pet/Pets:{' '}
                   <input
+                    size={8}
                     className='bg-gray text-primary'
                     placeholder='Pet Name(s)'
-                    value={this.state.editPet}
+                    value={this.state.petName}
                     onChange={(event) =>
-                      this.setState({ editPet: event.target.value })
+                      this.setState({ petName: event.target.value })
                     }
                   />
                 </p>
-                {/* <p>
-                    Client Phone Number:{' '}
-                    <input placeholder={this.props.number} />
-                  </p> */}
                 <p className='text-sm'>
-                  Distance travelled:{' '}
+                  Duration:{' '}
                   <input
+                    size={8}
+                    className='bg-gray text-primary'
+                    placeholder='Duration'
+                    value={this.state.duration}
+                    onChange={(event) =>
+                      this.setState({ duration: event.target.value })
+                    }
+                  />
+                </p>
+                <p className='text-sm'>
+                  Walk Metres:{' '}
+                  <input
+                    size={8}
                     className='bg-gray text-primary'
                     placeholder='Distance'
-                    value={this.state.editDistance}
+                    value={this.state.walkDist}
                     onChange={(event) =>
-                      this.setState({ editDistance: event.target.value })
+                      this.setState({ walkDist: event.target.value })
+                    }
+                  />
+                </p>
+                <p className='text-sm'>
+                  Commute Metres:{' '}
+                  <input
+                    size={8}
+                    className='bg-gray text-primary'
+                    placeholder='Distance'
+                    value={this.state.commuteDist}
+                    onChange={(event) =>
+                      this.setState({ commuteDist: event.target.value })
+                    }
+                  />
+                </p>
+                <p className='text-sm'>
+                  Commute Method:{' '}
+                  <input
+                    size={8}
+                    className='bg-gray text-primary'
+                    placeholder='Method'
+                    value={this.state.commuteMethod}
+                    onChange={(event) =>
+                      this.setState({ commuteMethod: event.target.value })
+                    }
+                  />
+                </p>
+                <p className='text-sm'>
+                  Notes:{' '}
+                  <input
+                    size={8}
+                    className='bg-gray text-primary'
+                    placeholder='Distance'
+                    value={this.state.notes}
+                    onChange={(event) =>
+                      this.setState({ notes: event.target.value })
                     }
                   />
                 </p>
                 <button
                   type='submit'
+                  className='rounded-xl bg-primary'
                   onClick={() =>
-                    setTimeout(function () {
+                    setTimeout(() => {
                       window.location.reload() // what
                     }, 500)
                   }
@@ -150,30 +190,29 @@ class VisitInstance extends React.Component<
             ) : (
               <>
                 <div className='font-bold peer-checked:font-normal'>
-                  <p className='font-bold text-primary'>{`${this.props.date}`}</p>
+                  <p className='font-bold text-primary'>{`${this.props.dateTime}`}</p>
                   <p className='text-sm'>{`${this.props.lastName}, ${this.props.firstName}`}</p>
                 </div>
                 <div className='max-h-0 justify-between overflow-hidden text-sm transition-all duration-300 peer-checked:max-h-40'>
                   <p>Pet/Pets: {this.props.petName}</p>
-                  {/* <p>Client Phone Number: {this.props.number}</p> */}
-                  <p>Distance travelled: {this.props.distance}</p>
-                  {/* <p>Walk Metres: {this.props.walkMetres}</p>
-                  <p>Commute Metres: {this.props.commuteMetres}</p>
-                  <p>Commute Method: {this.props.method}</p> */}
+                  <p>Duration: {this.props.duration}</p>
+                  <p>Walk Metres: {this.props.walkDist}</p>
+                  <p>Commute Metres: {this.props.commuteDist}</p>
+                  <p>Commute Method: {this.props.commuteMethod}</p>
+                  <p>Notes: {this.props.notes}</p>
                 </div>
               </>
             )}
 
             {/* Edit button */}
-            <div className='invisible absolute right-5 bottom-1 h-5 w-5 rounded-full bg-primary text-primary transition-all peer-checked:visible'>
+            <div className='invisible absolute right-4 bottom-1 h-7 w-7 rounded-full bg-primary text-primary transition-all peer-checked:visible'>
               <button
                 type='button'
                 onClick={() => {
-                  this.setState({ isEditable: true })
+                  this.setState({ isEditable: !this.state.isEditable })
                 }}
-                className=''
               >
-                <EditButton />
+                <EditButton isEdit={this.state.isEditable} />
               </button>
             </div>
           </div>

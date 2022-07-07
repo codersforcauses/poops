@@ -19,7 +19,7 @@ export default function VisitList(props: VisitListProps) {
   }, [])
 
   return (
-    <div className='h-0 shrink grow overflow-y-auto'>
+    <div className=''>
       {visitData
         .filter((post: Visit) => {
           if (
@@ -42,13 +42,12 @@ export default function VisitList(props: VisitListProps) {
             firstName={post.firstName}
             lastName={post.lastName}
             petName={post.petName}
-            date={post.date}
-            distance={post.distance}
-            // number={post.number}
-            // travelled={post.travelled}
-            // walkMetres={post.walkMetres}
-            // commuteMetres={post.commuteMetres}
-            // method={post.method}
+            duration={post.duration}
+            dateTime={post.dateTime}
+            walkDist={post.walkDist}
+            commuteDist={post.commuteDist}
+            commuteMethod={post.commuteMethod}
+            notes={post.notes}
           />
         ))}
     </div>
