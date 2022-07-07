@@ -32,7 +32,7 @@ export interface Visit extends User {
 }
 
 export async function writeUserData(props: User) {
-  await addDoc(poopsRef, { props })
+  await addDoc(poopsRef, props)
 }
 
 export async function getVisitData() {
