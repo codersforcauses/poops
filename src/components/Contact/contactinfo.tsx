@@ -96,9 +96,9 @@ function ContactInfo({ contact, image }: ContactInfoProps) {
         <div className='pt-2'>
           {[
             ...new Set([...contact.tags, 'Client', 'Coordinator', 'Volunteer'])
-          ].map((tag) => {
+          ].map((tag, index) => {
             return (
-              <>
+              <div key={index}>
                 <label>
                   <input
                     type='checkbox'
@@ -107,7 +107,7 @@ function ContactInfo({ contact, image }: ContactInfoProps) {
                   {tag}
                 </label>
                 <br />
-              </>
+              </div>
             )
           })}
         </div>

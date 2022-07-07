@@ -6,11 +6,12 @@ import {
   MailIcon,
   PhoneIcon,
   PlusIcon,
-  UserCircleIcon
+  UserCircleIcon,
+  XIcon
 } from '@heroicons/react/outline'
 import tw from 'tailwind-styled-components'
 
-import type { Contact } from '@/types/types'
+import type { Contact, Pet } from '@/types/types'
 type ContactInfoProps = {
   contact: Contact
   image: string
@@ -18,14 +19,18 @@ type ContactInfoProps = {
 }
 
 const ContactForm = ({ contact, image, setIsEditing }: ContactInfoProps) => {
-  const [pets, setPets] = useState(contact.pets)
+  const [pets, setPets] = useState<Pet[]>(contact.pets)
 
-  function addNewPetFields() {
-      let newPetField = {
-        name: "",
-        notes: "",
-      }
-      setPets((pets) => [...pets, newPetField])
+  function addPet() {
+    const newPetField = {
+      name: '',
+      notes: ''
+    }
+    setPets((pets) => [...pets, newPetField])
+  }
+
+  const removePet = (pet: Pet) => {
+    setPets([...pets.filter((p) => p.name !== pet.name)])
   }
 
   return (
@@ -167,12 +172,17 @@ const ContactForm = ({ contact, image, setIsEditing }: ContactInfoProps) => {
           <label htmlFor='pets' className='text-dark-red'>
             Pets
           </label>
-          {Object.values(pets).map((pet, index) => (
-            <div key={index}>
-              <PetContainer>
-                <label htmlFor={pet.name} className='text-dark-red'>
-                  Name
-                </label>
+          {pets.map((pet) => (
+            <div key={pet.name}>
+              <PetContainer className='py-1'>
+                <div className='flex w-full justify-between'>
+                  <label htmlFor={pet.name} className='text-dark-red'>
+                    Name
+                  </label>
+                  <button type='button' onClick={() => removePet(pet)}>
+                    <XIcon className='h-5 w-5 text-dark-red' />
+                  </button>
+                </div>
                 <input
                   defaultValue={pet.name}
                   className='mb-2 w-full rounded-lg border border-grey pl-1'
@@ -190,7 +200,9 @@ const ContactForm = ({ contact, image, setIsEditing }: ContactInfoProps) => {
           ))}
           {/* Plus icon that adds a new pet container */}
           <div className='flex justify-center'>
-            <PlusIcon className='h-7 w-7 rounded-full bg-white p-1 text-dark-red' onClick={addNewPetFields}/>
+            <button type='button' onClick={addPet}>
+              <PlusIcon className='h-7 w-7 rounded-full bg-white p-1 text-dark-red' />
+            </button>
           </div>
         </Box>
         {/* NOTES */}
