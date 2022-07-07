@@ -20,6 +20,7 @@ type ContactInfoProps = {
 
 const ContactForm = ({ contact, image, setIsEditing }: ContactInfoProps) => {
   const [pets, setPets] = useState<Pet[]>(contact.pets)
+  const [contactForm, setContactForm] = useState(contact)
 
   function addPet() {
     const newPetField = {
@@ -31,6 +32,28 @@ const ContactForm = ({ contact, image, setIsEditing }: ContactInfoProps) => {
 
   const removePet = (pet: Pet) => {
     setPets([...pets.filter((p) => p.name !== pet.name)])
+  }
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLTextAreaElement>) => {
+      const { name, value } = e.target
+      setContactForm({...contactForm, [name]: value, })
+  }
+  // Bug: Doesn't capture last character for last entered pet details in setContactForm, however the pet state updates correctly
+  const handlePetChange = (petIndex:number, e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target
+    const newPets = pets.map((p,i) => i === petIndex
+     ? {
+      ...p,
+      [name]: value,
+      } : p,
+    )
+    setPets(newPets)
+    setContactForm({...contactForm, pets: pets})
+    }
+
+  // TODO: Submit Form to database
+  const submitForm = () => {
+    console.log("SUBMITNG", contactForm)
   }
 
   return (
@@ -54,9 +77,10 @@ const ContactForm = ({ contact, image, setIsEditing }: ContactInfoProps) => {
             First Name
           </label>
           <input
-            id='firstName'
+            name="first_name"
             defaultValue={contact.first_name}
             className='mb-2 w-80 rounded-lg border border-grey pl-1'
+            onChange={handleInputChange}
           />
         </Box>
         <Box>
@@ -64,8 +88,10 @@ const ContactForm = ({ contact, image, setIsEditing }: ContactInfoProps) => {
             Last Name
           </label>
           <input
+            name="last_name"
             defaultValue={contact.last_name}
             className='w-80 rounded-lg border border-grey pl-1'
+            onChange={handleInputChange}
           />
         </Box>
         {/* DESCRIPTION */}
@@ -74,8 +100,10 @@ const ContactForm = ({ contact, image, setIsEditing }: ContactInfoProps) => {
             Description
           </label>
           <input
-            defaultValue={contact.notes}
+            name="desc"
+            defaultValue={contact.desc}
             className='w-80 rounded-lg border border-grey pl-1'
+            onChange={handleInputChange}
           />
         </Box>
         {/* PHONE */}
@@ -89,8 +117,10 @@ const ContactForm = ({ contact, image, setIsEditing }: ContactInfoProps) => {
             </a>
           </div>
           <input
+            name="phone"
             defaultValue={contact.phone}
             className='w-full rounded-lg border border-grey pl-1'
+            onChange={handleInputChange}
           />
         </Box>
         {/* EMAIL */}
@@ -108,8 +138,10 @@ const ContactForm = ({ contact, image, setIsEditing }: ContactInfoProps) => {
             </a>
           </div>
           <input
+            name="email"
             defaultValue={contact.email}
             className='w-full rounded-lg border border-grey pl-1'
+            onChange={handleInputChange}
           />
         </Box>
         {/* ADDRESS */}
@@ -127,8 +159,10 @@ const ContactForm = ({ contact, image, setIsEditing }: ContactInfoProps) => {
             </a>
           </div>
           <input
+            name="street_address"
             defaultValue={contact.street_address}
             className='w-full rounded-lg border border-grey pl-1'
+            onChange={handleInputChange}
           />
         </Box>
         {/* TAGS */}
@@ -172,8 +206,9 @@ const ContactForm = ({ contact, image, setIsEditing }: ContactInfoProps) => {
           <label htmlFor='pets' className='text-dark-red'>
             Pets
           </label>
-          {pets.map((pet) => (
-            <div key={pet.name}>
+          {/* TODO: Add Key for pet, It can't be i */}
+          {pets.map((pet, i) => (
+            <div>
               <PetContainer className='py-1'>
                 <div className='flex w-full justify-between'>
                   <label htmlFor={pet.name} className='text-dark-red'>
@@ -184,16 +219,20 @@ const ContactForm = ({ contact, image, setIsEditing }: ContactInfoProps) => {
                   </button>
                 </div>
                 <input
+                  name="name"
                   defaultValue={pet.name}
                   className='mb-2 w-full rounded-lg border border-grey pl-1'
+                  onChange={(e) => handlePetChange(i, e)}
                 />
 
                 <label htmlFor={pet.notes} className='text-dark-red'>
                   Notes
                 </label>
                 <input
+                  name="notes"
                   defaultValue={pet.notes}
                   className='mb-2 w-full rounded-lg border border-grey pl-1'
+                  onChange={(e) => handlePetChange(i, e)}
                 />
               </PetContainer>
             </div>
@@ -211,17 +250,19 @@ const ContactForm = ({ contact, image, setIsEditing }: ContactInfoProps) => {
             Notes
           </label>
           <textarea
+            name="notes"
             defaultValue={contact.notes}
             className='w-full rounded-lg border border-grey'
+            onChange={handleInputChange}
           />
         </Box>
         {/* FORM BUTTONS */}
         <div className='mb-3 flex justify-center'>
           <div className='flex flex-col space-y-1'>
             <button
-              type='submit'
+              type='button'
               className='w-80 rounded bg-primary py-1 font-bold text-white hover:bg-dark-red'
-              onClick={() => setIsEditing(false)}
+              onClick={submitForm}//setIsEditing(false)}
             >
               Save
             </button>
