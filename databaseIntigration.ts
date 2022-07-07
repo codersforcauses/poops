@@ -1,5 +1,12 @@
 import { getApp, getApps, initializeApp } from 'firebase/app' // no compat for new SDK
-import { addDoc, collection, doc, getDocs, getFirestore, setDoc } from 'firebase/firestore'
+import {
+  addDoc,
+  collection,
+  doc,
+  getDocs,
+  getFirestore,
+  setDoc
+} from 'firebase/firestore'
 
 const firebaseConfig = {
   apikey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,

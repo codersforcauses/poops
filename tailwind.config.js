@@ -26,7 +26,7 @@ module.exports = {
         primary: ['Inter', ...defaultTheme.fontFamily.sans]
       },
       dropShadow: {
-        'default': '0 4px 4px rgba(0, 0, 0, 0.25)'
+        default: '0 4px 4px rgba(0, 0, 0, 0.25)'
       }
     }
   },
