@@ -91,10 +91,10 @@ class VisitInstance extends React.Component<
                     onChange={(event) =>
                       this.setState({ editDate: event.target.value })
                     }
-                    className='font-bold text-primary'
+                    className='bg-gray font-normal text-primary'
                   />
                   <input
-                    className='text-sm'
+                    className='bg-gray text-sm font-normal text-primary'
                     placeholder='Last Name'
                     value={this.state.editClientLast}
                     onChange={(event) =>
@@ -102,7 +102,7 @@ class VisitInstance extends React.Component<
                     }
                   />
                   <input
-                    className='text-sm'
+                    className='bg-gray text-sm font-normal text-primary'
                     placeholder='First Name'
                     value={this.state.editClientFirst}
                     onChange={(event) =>
@@ -110,9 +110,10 @@ class VisitInstance extends React.Component<
                     }
                   />
                 </div>
-                <p>
+                <p className='text-sm'>
                   Pet/Pets:{' '}
                   <input
+                    className='bg-gray text-primary'
                     placeholder='Pet Name(s)'
                     value={this.state.editPet}
                     onChange={(event) =>
@@ -124,9 +125,10 @@ class VisitInstance extends React.Component<
                     Client Phone Number:{' '}
                     <input placeholder={this.props.number} />
                   </p> */}
-                <p>
+                <p className='text-sm'>
                   Distance travelled:{' '}
                   <input
+                    className='bg-gray text-primary'
                     placeholder='Distance'
                     value={this.state.editDistance}
                     onChange={(event) =>

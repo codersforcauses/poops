@@ -42,50 +42,64 @@ const ModalView: React.FC<ModalViewProps> = ({ openFunc }) => {
             event.preventDefault()
           }}
         >
-          <table>
+          <table className='table-fixed'>
             <tr>
-              <FormField
-                id='fNameInput'
-                type='text'
-                placeholder='First Name'
-                label='First Name:'
-                isRequired={true}
-                onChange={(event) => setFirstName(event.target.value)}
-              />
-              <FormField
-                id='lNameInput'
-                type='text'
-                placeholder='Last Name'
-                label='Last Name:'
-                isRequired={true}
-                onChange={(event) => setLastName(event.target.value)}
-              />
+              <td>
+                <FormField
+                  id='fNameInput'
+                  type='text'
+                  placeholder='First Name'
+                  label='First Name:'
+                  isRequired={true}
+                  onChange={(event) => setFirstName(event.target.value)}
+                />
+              </td>
+              <td>
+                <FormField
+                  id='lNameInput'
+                  type='text'
+                  placeholder='Last Name'
+                  label='Last Name:'
+                  isRequired={true}
+                  onChange={(event) => setLastName(event.target.value)}
+                />
+              </td>
             </tr>
 
-            <FormField
-              id='pNameInput'
-              type='text'
-              placeholder='Pet Name'
-              label='Pet Name:'
-              isRequired={true}
-              onChange={(event) => setPetName(event.target.value)}
-            />
-            <FormField
-              id='dateInput'
-              type='date'
-              placeholder='Date'
-              label='Date:'
-              isRequired={true}
-              onChange={(event) => setDate(event.target.value)}
-            />
-            <FormField
-              id='distInput'
-              type='number'
-              placeholder='Distance (km)'
-              label='Distance:'
-              isRequired={true}
-              onChange={(event) => setDistance(event.target.value)}
-            />
+            <tr>
+              <td>
+                <FormField
+                  id='distInput'
+                  type='number'
+                  placeholder='Distance (km)'
+                  label='Distance:'
+                  isRequired={true}
+                  onChange={(event) => setDistance(event.target.value)}
+                />
+              </td>
+              <td>
+                <FormField
+                  id='pNameInput'
+                  type='text'
+                  placeholder='Pet Name'
+                  label='Pet Name:'
+                  isRequired={true}
+                  onChange={(event) => setPetName(event.target.value)}
+                />
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <FormField
+                  id='dateInput'
+                  type='datetime-local'
+                  placeholder='Date'
+                  label='Date:'
+                  isRequired={true}
+                  onChange={(event) => setDate(event.target.value)}
+                />
+              </td>
+            </tr>
             <button
               type='submit'
               onClick={() =>
