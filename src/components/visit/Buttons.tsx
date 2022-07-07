@@ -40,7 +40,7 @@ export const AddButton = () => {
           setOpenModal(true)
         }}
       >
-        <div className='relative h-[37px] w-[37px] rounded-full bg-primary text-xl font-semibold'>
+        <div className='relative h-[37px] w-[37px] rounded-full bg-primary text-xl font-semibold drop-shadow-default'>
           <p className='absolute top-1 left-3 text-white'>+</p>
         </div>
       </button>

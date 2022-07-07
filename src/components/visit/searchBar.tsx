@@ -47,24 +47,7 @@ class SearchBar extends React.Component<Record<string, never>, SearchBarState> {
             </div>
           </button>
           <AddButton />
-          {/* <button>
-            <div className='relative h-[37px] w-[37px] rounded-full bg-primary p-0.5 text-xl font-semibold text-white drop-shadow-default'>
-              <p className='absolute top-1 left-3'>+</p>
-            </div>
-          </button> */}
         </div>
-
-        {/* <div className='container mx-auto mb-2 flex flex-row justify-center'>
-          <DatePicker
-            value='From'
-            onChange={(date: string) => this.setState({ startDate: date })}
-          />
-          <p className='self-center align-middle'>—</p>
-          <DatePicker
-            value='To'
-            onChange={(date: string) => this.setState({ endDate: date })}
-          />
-        </div> */}
 
         {/* move this to the visit page? search bar state would need to be lifted up */}
         <VisitList searchQuery={this.state.searchQuery} />
