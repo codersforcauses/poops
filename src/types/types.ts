@@ -1,4 +1,5 @@
 interface Pet {
+  id: string
   name: string
   notes: string
 }
