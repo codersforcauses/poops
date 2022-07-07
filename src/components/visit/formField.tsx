@@ -21,7 +21,7 @@ const FormField = (props: FormFieldProps) => {
           className='rounded text-[#6b7280]'
           id={props.id}
           type={props.type}
-          required
+          required={props.isRequired}
           placeholder={props.placeholder}
           onChange={props.onChange}
         />

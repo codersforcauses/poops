@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-import VisitsSearchBar from '@/components/visit/searchBar'
+import SearchBar from '@/components/visit/searchBar'
 import VisitList from '@/components/visit/visitList'
 
 const Visit = () => {
@@ -8,11 +8,8 @@ const Visit = () => {
   return (
     <main>
       <div className='space-between flex h-screen w-screen flex-col p-4'>
-        <VisitsSearchBar />
-        <VisitList
-          searchQuery={searchQuery}
-          setSearchQuery={(event) => setSearchQuery(event.target.value)}
-        />
+        <SearchBar onChange={(event) => setSearchQuery(event.target.value)} />
+        <VisitList searchQuery={searchQuery} />
       </div>
     </main>
   )
