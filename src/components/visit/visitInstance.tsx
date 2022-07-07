@@ -177,7 +177,7 @@ class VisitInstance extends React.Component<
                 </p>
                 <button
                   type='submit'
-                  className='rounded-xl bg-primary'
+                  className='text-bold mt-2 rounded-xl bg-primary p-2 text-white drop-shadow-default'
                   onClick={() =>
                     setTimeout(() => {
                       window.location.reload() // what
