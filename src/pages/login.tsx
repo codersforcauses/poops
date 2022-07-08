@@ -11,6 +11,8 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Auth } from 'firebase/auth'
 
+import LoginButton from '@/components/Login/LoginButton'
+
 import { auth } from '../components/Firebase/init'
 import { useAuth } from '../context/AuthContext'
 
@@ -49,66 +51,28 @@ const Login: NextPage = () => {
 
           <div className='m-auto grid h-1/3 w-1/2 max-w-xs justify-center space-y-4 p-5'>
             {/* Google Button */}
-            <button
-              className='h-12 rounded-full border-4 border-t-googleblue border-r-googlegreen border-b-googleyellow border-l-googlered px-6 transition duration-300 '
-              onClick={() => handleGoogle(auth)}
-            >
-              <div className='relative flex items-center space-x-4'>
-                <div className='w-5'>{googleIcon}</div>
-                <span className='text-gray-700 block w-max text-sm font-semibold tracking-wide transition duration-300 sm:text-base'>
-                  Continue with Google
-                </span>
-              </div>
-            </button>
-
-            {/* TODO: check types and finish refactoring */}
-            {/* <LoginButton handlerFunction={handleGoogle(auth)} icon='googleIcon' buttonlabel='Continue with Google' /> */}
+            <LoginButton handler={() => handleGoogle(auth)} icon={googleIcon} buttonlabel='Continue with Google'
+              style="h-12 rounded-full border-4 border-t-googleblue border-r-googlegreen border-b-googleyellow border-l-googlered px-6 transition duration-300" />
 
             {/* FaceBook Button */}
-            <button className='group h-12 rounded-full border-4 border-facebook px-6 transition duration-300'>
-              <div className='relative flex items-center space-x-4'>
-                <div className='w-5'>{facebookIcon}</div>
-                <span className='text-gray-700 block w-max text-sm font-semibold tracking-wide transition duration-300 sm:text-base'>
-                  Continue with Facebook
-                </span>
-              </div>
-            </button>
+            <LoginButton handler={() => undefined} icon={facebookIcon} buttonlabel='Continue with Facebook'
+              style='group h-12 rounded-full border-4 border-facebook px-6 transition duration-300' />
+
             {/* Twitter Button */}
-            <button className='group h-12 rounded-full border-4 border-twitter px-6 transition duration-300'>
-              <div className='relative flex items-center space-x-4'>
-                <div className='w-5'>{twitterIcon}</div>
-                <span className='text-gray-700 block w-max text-sm font-semibold tracking-wide transition duration-300 sm:text-base'>
-                  Continue with Twitter
-                </span>
-              </div>
-            </button>
+            <LoginButton handler={() => undefined} icon={twitterIcon} buttonlabel='Continue with Twitter'
+              style='group h-12 rounded-full border-4 border-twitter px-6 transition duration-300' />
+
             {/* Apple Button */}
-            <button className='group h-12 rounded-full border-4 border-applegrey px-6 transition duration-300'>
-              <div className='relative flex items-center space-x-4'>
-                <div className='w-5'>{appleIcon}</div>
-                <span className='text-gray-700 block w-max text-sm font-semibold tracking-wide transition duration-300 sm:text-base'>
-                  Continue with Apple
-                </span>
-              </div>
-            </button>
+            <LoginButton handler={() => undefined} icon={appleIcon} buttonlabel='Continue with Apple'
+              style='group h-12 rounded-full border-4 border-applegrey px-6 transition duration-300' />
+
             {/* Microsoft Button */}
-            <button className='group h-12 rounded-full border-4 border-microsoftblue px-6 transition duration-300'>
-              <div className='relative flex items-center space-x-4'>
-                <div className='w-5'>{microsoftIcon}</div>
-                <span className='text-gray-700 block w-max text-sm font-semibold tracking-wide transition duration-300 sm:text-base'>
-                  Continue with Microsoft
-                </span>
-              </div>
-            </button>
+            <LoginButton handler={() => undefined} icon={microsoftIcon} buttonlabel='Continue with Microsoft'
+              style='group h-12 rounded-full border-4 border-microsoftblue px-6 transition duration-300' />
+
             {/* Yahoo Button */}
-            <button className='group h-12 rounded-full border-4 border-yahoopurple px-6 transition duration-300'>
-              <div className='relative flex items-center space-x-4'>
-                <div className='w-5'>{yahooIcon}</div>
-                <span className='text-gray-700 block w-max text-sm font-semibold tracking-wide transition duration-300 sm:text-base'>
-                  Continue with Yahoo
-                </span>
-              </div>
-            </button>
+            <LoginButton handler={() => undefined} icon={yahooIcon} buttonlabel='Continue with Yahoo'
+              style='group h-12 rounded-full border-4 border-yahoopurple px-6 transition duration-300' />
             {/* <button onClick={logOut}>logout test</button> */}
           </div>
         </div>
