@@ -2,6 +2,7 @@ import React from 'react'
 import { useState } from 'react'
 
 import { User, writeUserData } from '@/../databaseIntigration'
+import { CancelButton } from '@/components/visit/Buttons'
 import FormField from '@/components/visit/formField'
 
 interface ModalViewProps {
@@ -14,21 +15,26 @@ const ModalView: React.FC<ModalViewProps> = ({ openFunc }) => {
   const [petName, setPetName] = useState('')
   const [dateTime, setDateTime] = useState('')
   const [duration, setDuration] = useState('')
-  const [walkDist, setWalkDist] = useState('')
-  const [commuteDist, setCommuteDist] = useState('')
+  const [walkDist, setWalkDist] = useState(0)
+  const [commuteDist, setCommuteDist] = useState(0)
   const [commuteMethod, setCommuteMethod] = useState('')
   const [notes, setNotes] = useState('')
 
   return (
     <div className='fixed inset-0 z-50 h-screen w-screen rounded-sm bg-white p-4 shadow '>
-      <div className=''>
-        <button onClick={openFunc}> X </button>
-        <div className=''>
-          <h1> Add Your Visit</h1>
+      <div>
+        <div className='fixed right-2 top-2 h-7 w-7 rounded-full bg-primary'>
+          <button onClick={openFunc}>
+            <CancelButton />
+          </button>
         </div>
+
+        <h1 className='mx-1 border-b-2 border-primary py-3 pt-10 text-2xl font-bold'>
+          Add Your Visit
+        </h1>
         <form
-          className=''
-          onSubmit={(event) => {
+          className='pt-3'
+          onSubmit={() => {
             const data: User = {
               firstName: firstName,
               lastName: lastName,
@@ -41,7 +47,6 @@ const ModalView: React.FC<ModalViewProps> = ({ openFunc }) => {
               notes: notes
             }
             writeUserData(data)
-            event.preventDefault()
           }}
         >
           <table className='container mx-auto table-fixed'>
@@ -83,10 +88,12 @@ const ModalView: React.FC<ModalViewProps> = ({ openFunc }) => {
                   <FormField
                     id='walkDistInput'
                     type='number'
-                    placeholder='Distance (metres)'
+                    placeholder='Distance (km)'
                     label='Walk Distance:'
                     isRequired={true}
-                    onChange={(event) => setWalkDist(event.target.value)}
+                    onChange={(event) =>
+                      setWalkDist(parseFloat(event.target.value))
+                    }
                   />
                 </td>
               </tr>
@@ -95,10 +102,12 @@ const ModalView: React.FC<ModalViewProps> = ({ openFunc }) => {
                   <FormField
                     id='commuteDistInput'
                     type='number'
-                    placeholder='Distance (metres)'
+                    placeholder='Distance (km)'
                     label='Commute Distance:'
                     isRequired={true}
-                    onChange={(event) => setCommuteDist(event.target.value)}
+                    onChange={(event) =>
+                      setCommuteDist(parseFloat(event.target.value))
+                    }
                   />
                 </td>
                 <td>
@@ -124,7 +133,7 @@ const ModalView: React.FC<ModalViewProps> = ({ openFunc }) => {
           />
           <FormField
             id='durationInput'
-            type='time'
+            type='time' // there is no type='duration' so this is a clock time not duration time. will look weird on mobile which usually has nice fancy interfaces. need to write custom component. easiest fix is to use endTime instead
             placeholder='Duration'
             label='Duration:'
             isRequired={true}
@@ -138,22 +147,28 @@ const ModalView: React.FC<ModalViewProps> = ({ openFunc }) => {
             isRequired={false}
             onChange={(event) => setNotes(event.target.value)}
           />
-          <button
-            type='submit'
-            // onClick={() =>
-            //   setTimeout(() => {
-            //     window.location.reload()
-            //   }, 500)
-            // }
-          >
-            Submit
-          </button>
+          <div className='mx-auto my-2 flex flex-col p-1 '>
+            <button
+              className='text-bold rounded bg-primary px-12 py-4 text-white drop-shadow-default'
+              disabled={
+                !(
+                  firstName &&
+                  lastName &&
+                  petName &&
+                  dateTime &&
+                  duration &&
+                  walkDist &&
+                  commuteDist &&
+                  commuteMethod &&
+                  true
+                )
+              }
+            >
+              Submit
+            </button>
+          </div>
         </form>
-        <div className=''>
-          <button onClick={openFunc} className=''>
-            Cancel
-          </button>
-        </div>
+        <div className=''></div>
       </div>
     </div>
   )

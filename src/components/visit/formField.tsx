@@ -7,6 +7,7 @@ interface FormFieldProps {
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => void
   isRequired: boolean
+  additionalAttributes?: string[]
 }
 
 const FormField = (props: FormFieldProps) => {
@@ -18,9 +19,10 @@ const FormField = (props: FormFieldProps) => {
       </label>
       {props.type !== 'textarea' ? (
         <input
-          className='rounded text-[#6b7280]'
+          className='form-input rounded text-[#6b7280]'
           id={props.id}
           type={props.type}
+          step={props.type === 'number' ? '0.001' : undefined}
           required={props.isRequired}
           placeholder={props.placeholder}
           onChange={props.onChange}

@@ -131,12 +131,20 @@ class VisitInstance extends React.Component<
                   Walk Metres:{' '}
                   <input
                     size={8}
-                    className='bg-gray text-primary'
+                    className='bg-gray p-0 text-sm text-primary'
+                    type='number'
+                    step='0.001'
                     placeholder='Distance'
-                    value={this.state.walkDist}
-                    onChange={(event) =>
-                      this.setState({ walkDist: event.target.value })
-                    }
+                    value={this.state.walkDist.toString()}
+                    onChange={(event) => {
+                      if (!isNaN(parseFloat(event.target.value))) {
+                        this.setState({
+                          walkDist: parseFloat(event.target.value)
+                        })
+                      } else {
+                        this.setState({ walkDist: 0 })
+                      }
+                    }}
                   />
                 </p>
                 <p className='text-sm'>
@@ -144,11 +152,19 @@ class VisitInstance extends React.Component<
                   <input
                     size={8}
                     className='bg-gray text-primary'
+                    type='number'
+                    step='0.001'
                     placeholder='Distance'
-                    value={this.state.commuteDist}
-                    onChange={(event) =>
-                      this.setState({ commuteDist: event.target.value })
-                    }
+                    value={this.state.commuteDist.toString()}
+                    onChange={(event) => {
+                      if (!isNaN(parseFloat(event.target.value))) {
+                        this.setState({
+                          commuteDist: parseFloat(event.target.value)
+                        })
+                      } else {
+                        this.setState({ commuteDist: 0 })
+                      }
+                    }}
                   />
                 </p>
                 <p className='text-sm'>
@@ -165,10 +181,10 @@ class VisitInstance extends React.Component<
                 </p>
                 <p className='text-sm'>
                   Notes:{' '}
-                  <input
+                  <input // maybe use textarea tag instead?
                     size={8}
                     className='bg-gray text-primary'
-                    placeholder='Distance'
+                    placeholder='Notes'
                     value={this.state.notes}
                     onChange={(event) =>
                       this.setState({ notes: event.target.value })
@@ -180,7 +196,7 @@ class VisitInstance extends React.Component<
                   className='text-bold mt-2 rounded-xl bg-primary p-2 text-white drop-shadow-default'
                   onClick={() =>
                     setTimeout(() => {
-                      window.location.reload() // what
+                      window.location.reload()
                     }, 500)
                   }
                 >
@@ -196,8 +212,8 @@ class VisitInstance extends React.Component<
                 <div className='max-h-0 justify-between overflow-hidden text-sm transition-all duration-300 peer-checked:max-h-40'>
                   <p>Pet/Pets: {this.props.petName}</p>
                   <p>Duration: {this.props.duration}</p>
-                  <p>Walk Metres: {this.props.walkDist}</p>
-                  <p>Commute Metres: {this.props.commuteDist}</p>
+                  <p>Walk Metres: {this.props.walkDist.toFixed(3)} km</p>
+                  <p>Commute Metres: {this.props.commuteDist.toFixed(1)} km</p>
                   <p>Commute Method: {this.props.commuteMethod}</p>
                   <p>Notes: {this.props.notes}</p>
                 </div>
@@ -205,7 +221,7 @@ class VisitInstance extends React.Component<
             )}
 
             {/* Edit button */}
-            <div className='invisible absolute right-4 bottom-1 h-7 w-7 rounded-full bg-primary text-primary transition-all peer-checked:visible'>
+            <div className='invisible absolute right-4 bottom-1 h-7 w-7 rounded-full bg-primary text-primary drop-shadow-default transition-all peer-checked:visible'>
               <button
                 type='button'
                 onClick={() => {

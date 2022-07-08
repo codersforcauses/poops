@@ -28,8 +28,8 @@ export interface User {
   petName: string
   dateTime: string
   duration: string
-  walkDist: string
-  commuteDist: string
+  walkDist: number
+  commuteDist: number
   commuteMethod: string
   notes: string
 }
@@ -39,7 +39,18 @@ export interface Visit extends User {
 }
 
 export async function writeUserData(props: User) {
-  await addDoc(poopsRef, props)
+  const data = {
+    firstName: props.firstName,
+    lastName: props.lastName,
+    petName: props.petName,
+    dateTime: props.dateTime,
+    duration: props.duration,
+    walkDist: props.walkDist,
+    commuteDist: props.commuteDist,
+    commuteMethod: props.commuteMethod,
+    notes: props.notes
+  }
+  await addDoc(poopsRef, data)
 }
 
 export async function getVisitData() {
