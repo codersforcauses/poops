@@ -69,7 +69,9 @@ const Contact = () => {
             <SearchBar onChangeHandler={onSearchChange} />
             <SearchIcon className='my-auto mx-3 h-6 rounded-full' />
           </div>
-          <ProfileItem profile={PROFILE_DATA} image='' />
+          {searchFieldString === '' && (
+            <ProfileItem profile={PROFILE_DATA} image='' />
+          )}
           <ContactList contacts={filteredContacts} />
         </div>
       </main>
