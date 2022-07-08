@@ -1,3 +1,4 @@
+import { Dispatch, SetStateAction } from 'react'
 import Link from 'next/link'
 
 type NavLinkProps = {
@@ -5,7 +6,7 @@ type NavLinkProps = {
   name: string
   icon: JSX.Element
   currentPage: boolean
-  setCurrentPage: (name: string) => unknown
+  setCurrentPage: Dispatch<SetStateAction<string>>
 }
 
 export default function NavLink({
@@ -16,8 +17,8 @@ export default function NavLink({
   setCurrentPage
 }: NavLinkProps) {
   const tabClasses =
-    'inline-block w-full justify-center pt-2 pb-1 text-center hover:text-poops-red'
-  const currentTabClasses = tabClasses + ' border-t-2 border-t-poops-red'
+    'inline-block w-full justify-center pt-2 pb-1 text-center hover:text-primary'
+  const currentTabClasses = tabClasses + ' border-t-2 border-t-primary'
 
   return (
     <Link href={href}>
