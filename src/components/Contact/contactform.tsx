@@ -17,6 +17,8 @@ type ContactInfoProps = {
   image: string
   setIsEditing: Dispatch<SetStateAction<boolean>>
 }
+import RegionSelector from '@/components/Contact/regiondropdown'
+import TagSelector from '@/components/Contact/tagdropdown'
 
 const ContactForm = ({ contact, image, setIsEditing }: ContactInfoProps) => {
   const [pets, setPets] = useState<Pet[]>(contact.pets)
@@ -184,34 +186,19 @@ const ContactForm = ({ contact, image, setIsEditing }: ContactInfoProps) => {
             </label>
             <PlusIcon className='h-5 w-5' />
           </div>
-          <TagHolder className='mt-1'>
-            <br />{' '}
-          </TagHolder>
+
+          <TagSelector tags={contact.tags} />
+
           {/* This should be done as a react component i think? */}
           {/* Padding to counter the shadow */}
-          <div className='pt-2'>
-            <label>
-              <input type='checkbox' /> Client
-            </label>
-            <br />
-            <label>
-              <input type='checkbox' /> Coordinator
-            </label>
-            <br />
-            <label>
-              <input type='checkbox' /> Volunteer
-            </label>
-          </div>
+          <div className='pt-2'></div>
         </Box>
         {/* REGIONS */}
         <Box className='pb-3'>
           <label htmlFor='regions' className='text-dark-red'>
-            Region{' '}
+            Region
           </label>
-          <TagHolder className='mt-1'>
-            <Tag>hello</Tag>
-            <Tag>hi</Tag>
-          </TagHolder>
+          <RegionSelector regions={contact.region} />
         </Box>
         <Box>
           <label htmlFor='pets' className='text-dark-red'>
@@ -301,24 +288,6 @@ const Box = tw.div`
     px-3
     py-1
     break-words
-`
-// Styling for div that holds the selected tags
-const TagHolder = tw.div`
-    h-auto
-    bg-white
-    shadow-md
-    shadow-[0_5px_1.5px_-1.5px_#ce283d]
-    rounded-xl
-    flex
-    p-1
-`
-// Styling for individual tags
-const Tag = tw.div`
-  px-2
-  border-2
-  bg-primary
-  text-white
-  rounded-2xl
 `
 
 const PetContainer = tw.div`

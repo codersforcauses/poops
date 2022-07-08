@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import Select from 'react-select'
-const options = [
+const regionOptions = [
   { value: 'Eastern', label: 'Eastern' },
   { value: 'Coastal South', label: 'Coastal South' },
   { value: 'Armadale', label: 'Armadale' },
@@ -50,7 +50,8 @@ const RegionSelector = ({ regions }) => {
         onChange={(value) => handleChange('roles', value)}
         closeMenuOnSelect={false}
         isMulti
-        options={options}
+        isClearable={false}
+        options={regionOptions}
         value={regionValue}
         defaultValue={regions.map((r: string) => ({ value: r, label: r }))}
         styles={customStyles}

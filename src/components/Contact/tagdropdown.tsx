@@ -47,6 +47,7 @@ const TagSelector = ({ tags }) => {
         onChange={(value) => handleChange('roles', value)}
         closeMenuOnSelect={false}
         isMulti
+        isClearable={false}
         options={roles}
         value={roleValue}
         defaultValue={tags.map((t: string) => ({ value: t, label: t }))}

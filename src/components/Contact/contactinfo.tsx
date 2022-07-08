@@ -8,8 +8,6 @@ import {
 } from '@heroicons/react/outline'
 import tw from 'tailwind-styled-components'
 
-import RegionSelector from '@/components/Contact/regiondropdown'
-import TagSelector from '@/components/Contact/tagdropdown'
 import type { Contact } from '@/types/types'
 
 type ContactInfoProps = {
@@ -86,7 +84,7 @@ function ContactInfo({ contact, image }: ContactInfoProps) {
           </label>
           <PlusIcon className='h-5 w-5' />
         </div>
-        <TagSelector tags={contact.tags} />
+
         <TagHolder className='mt-1'>
           {contact.tags.map((tag, index) => (
             <div key={index}>
@@ -103,7 +101,7 @@ function ContactInfo({ contact, image }: ContactInfoProps) {
         <label htmlFor='regions' className='text-dark-red'>
           Region
         </label>
-        <RegionSelector regions={contact.region} />
+
         <TagHolder className='mt-1'>
           {contact.region.map((region, index) => (
             <div key={index}>
