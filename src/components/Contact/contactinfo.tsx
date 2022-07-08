@@ -9,6 +9,7 @@ import {
 import tw from 'tailwind-styled-components'
 
 import RegionSelector from '@/components/Contact/regiondropdown'
+import TagSelector from '@/components/Contact/tagdropdown'
 import type { Contact } from '@/types/types'
 
 type ContactInfoProps = {
@@ -85,33 +86,17 @@ function ContactInfo({ contact, image }: ContactInfoProps) {
           </label>
           <PlusIcon className='h-5 w-5' />
         </div>
+        <TagSelector tags={contact.tags} />
         <TagHolder className='mt-1'>
-          <br />{' '}
+          {contact.tags.map((tag, index) => (
+            <div key={index}>
+              <Tag>{tag}</Tag>
+            </div>
+          ))}
         </TagHolder>
         {/* This should be done as a react component i think? */}
         {/* Padding to counter the shadow */}
-        {/* I am sorry for how horrific this is
-        It creates a union array of 'client', 'coordinator', 'volunteer'
-         and the contact's tags, then displays all of them and checks 
-         those found in contact*/}
-        <div className='pt-2'>
-          {[
-            ...new Set([...contact.tags, 'client', 'coordinator', 'volunteer'])
-          ].map((tag, index) => {
-            return (
-              <div key={index}>
-                <label>
-                  <input
-                    type='checkbox'
-                    defaultChecked={contact.tags.includes(tag)}
-                  />{' '}
-                  {tag}
-                </label>
-                <br />
-              </div>
-            )
-          })}
-        </div>
+        <div className='pt-2'></div>
       </Box>
       {/* REGIONS */}
       <Box className='pb-3'>

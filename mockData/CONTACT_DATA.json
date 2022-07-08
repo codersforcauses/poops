@@ -21,7 +21,7 @@
     "street_address": "691 Cleveland Street",
     "region": ["Northern", "Busselton", "Western"],
     "notes": "Likes to eat chocolate",
-    "tags": ["volunteer"]
+    "tags": ["Volunteer"]
   },
   {
     "id": "62b98f1a35cf119cfd93348c",
@@ -45,7 +45,7 @@
     "street_address": "279 Bushwick Place",
     "region": ["Central", "Western", "Preston", "Southern"],
     "notes": "",
-    "tags": ["coordinator", "client"]
+    "tags": ["Coordinator", "Client"]
   },
   {
     "id": "62b98f1a0368326081ed7e7d",
@@ -64,7 +64,7 @@
     "street_address": "393 Humboldt Street",
     "region": ["Central", "Busselton"],
     "notes": "Likes to eat chocolate",
-    "tags": ["volunteer", "coordinator"]
+    "tags": ["Volunteer", "Coordinator"]
   },
   {
     "id": "62b98f1a73749f471f13ebd6",
@@ -88,7 +88,7 @@
     "street_address": "782 Oxford Street",
     "region": ["Armadale", "Coastal South", "Eastern"],
     "notes": "",
-    "tags": ["client"]
+    "tags": ["Client"]
   },
   {
     "id": "62b98f1aae58f08fd2493a25",
@@ -107,7 +107,7 @@
     "street_address": "310 Engert Avenue",
     "region": ["Armadale", "Western"],
     "notes": "",
-    "tags": ["coordinator", "client"]
+    "tags": ["Coordinator", "Client"]
   },
   {
     "id": "62b98f1a8d203b0b6166e224",
@@ -131,7 +131,7 @@
     "street_address": "400 Bancroft Place",
     "region": ["Central", "Coastal South"],
     "notes": "",
-    "tags": ["volunteer"]
+    "tags": ["Volunteer"]
   },
   {
     "id": "62b98f1a7e66059162f19849",
@@ -150,7 +150,7 @@
     "street_address": "822 Kent Street",
     "region": ["Eastern", "Southern"],
     "notes": "Likes to eat chocolate",
-    "tags": ["volunteer"]
+    "tags": ["Volunteer"]
   },
   {
     "id": "62b98f1aba06af2642e05195",
@@ -174,7 +174,7 @@
     "street_address": "953 Pulaski Street",
     "region": ["Northern", "Preston"],
     "notes": "",
-    "tags": ["coordinator"]
+    "tags": ["Coordinator"]
   },
   {
     "id": "62b98f1a34373c19ace5ad62",
@@ -198,7 +198,7 @@
     "street_address": "652 Rugby Road",
     "region": ["Northern", "Southern"],
     "notes": "",
-    "tags": ["volunteer", "coordinator"]
+    "tags": ["Volunteer", "Coordinator"]
   },
   {
     "id": "62b98f1a0c4d7b6cd8bb24c5",
@@ -222,7 +222,7 @@
     "street_address": "542 Beaumont Street",
     "region": ["Armadale", "Preston"],
     "notes": "Likes to eat chocolate",
-    "tags": ["volunteer"]
+    "tags": ["Volunteer"]
   },
   {
     "id": "62b98f1aa81dd03b6dc69f5c",
@@ -241,7 +241,7 @@
     "street_address": "99 Montauk Court",
     "region": ["Armadale", "Coastal South"],
     "notes": "Likes to eat chocolate",
-    "tags": ["coordinator", "client"]
+    "tags": ["Coordinator", "Client"]
   },
   {
     "id": "62b98f1ae1da8d1b7f8a141c",
@@ -265,7 +265,7 @@
     "street_address": "889 Highlawn Avenue",
     "region": ["Central", "Eastern"],
     "notes": "",
-    "tags": ["volunteer"]
+    "tags": ["Volunteer"]
   },
   {
     "id": "62b98f1ab7e2e2177ee0cf5a",
@@ -289,7 +289,7 @@
     "street_address": "963 Conway Street",
     "region": ["Armadale"],
     "notes": "",
-    "tags": ["volunteer"]
+    "tags": ["Volunteer"]
   },
   {
     "id": "62b98f1a2002d2b82678e2a2",
@@ -313,7 +313,7 @@
     "street_address": "395 Remsen Street",
     "region": ["Eastern"],
     "notes": "Likes to eat chocolate",
-    "tags": ["volunteer"]
+    "tags": ["Volunteer"]
   },
   {
     "id": "62b98f1a2a9025cf7eddf04e",
@@ -332,7 +332,7 @@
     "street_address": "428 Lewis Avenue",
     "region": ["Central"],
     "notes": "",
-    "tags": ["client"]
+    "tags": ["Client"]
   },
   {
     "id": "62b98f1a132862ac47caa05f",
@@ -356,7 +356,7 @@
     "street_address": "551 Dunham Place",
     "region": ["Armadale", "Coastal South"],
     "notes": "Likes to eat chocolate",
-    "tags": ["volunteer", "coordinator"]
+    "tags": ["Volunteer", "Coordinator"]
   },
   {
     "id": "62b98f1a5bd6d64800bb92d0",
@@ -380,7 +380,7 @@
     "street_address": "473 Croton Loop",
     "region": ["Central"],
     "notes": "",
-    "tags": ["client"]
+    "tags": ["Client"]
   },
   {
     "id": "62b98f1acd0824604ced0460",
@@ -404,7 +404,7 @@
     "street_address": "245 Bush Street",
     "region": ["Northern"],
     "notes": "Likes to eat chocolate",
-    "tags": ["volunteer", "client"]
+    "tags": ["Volunteer", "Client"]
   },
   {
     "id": "62b98f1a3d86f796ccd071ed",
@@ -428,7 +428,7 @@
     "street_address": "958 Voorhies Avenue",
     "region": ["Armadale"],
     "notes": "Likes to eat chocolate",
-    "tags": ["coordinator", "client"]
+    "tags": ["Coordinator", "Client"]
   },
   {
     "id": "62b98f1a42e023a43e704b05",
@@ -452,7 +452,7 @@
     "street_address": "568 Buffalo Avenue",
     "region": ["Southern"],
     "notes": "Likes to eat chocolate",
-    "tags": ["coordinator", "client"]
+    "tags": ["Coordinator", "Client"]
   },
   {
     "id": "62b98f1ae500403f04bc3c3e",
@@ -476,7 +476,7 @@
     "street_address": "806 Osborn Street",
     "region": ["Central"],
     "notes": "",
-    "tags": ["volunteer", "coordinator", "client"]
+    "tags": ["Volunteer", "Coordinator", "Client"]
   },
   {
     "id": "62b98f1a80db3fc89fe66fa7",
@@ -500,7 +500,7 @@
     "street_address": "514 Ferris Street",
     "region": ["Armadale"],
     "notes": "Likes to eat chocolate",
-    "tags": ["volunteer", "coordinator", "client"]
+    "tags": ["Volunteer", "Coordinator", "Client"]
   },
   {
     "id": "62b98f1a63ec10604d0376ac",
@@ -524,7 +524,7 @@
     "street_address": "947 Greenwood Avenue",
     "region": ["Central"],
     "notes": "",
-    "tags": ["volunteer", "coordinator", "client"]
+    "tags": ["Volunteer", "Coordinator", "Client"]
   },
   {
     "id": "62b98f1aa19d949f6837cd31",
@@ -548,7 +548,7 @@
     "street_address": "421 Beach Place",
     "region": ["Central"],
     "notes": "Likes to eat chocolate",
-    "tags": ["volunteer", "coordinator", "client"]
+    "tags": ["Volunteer", "Coordinator", "Client"]
   },
   {
     "id": "62b98f1a8a45722bb8d20d41",
@@ -572,7 +572,7 @@
     "street_address": "472 Fleet Walk",
     "region": ["Central"],
     "notes": "",
-    "tags": ["volunteer", "coordinator", "client"]
+    "tags": ["Volunteer", "Coordinator", "Client"]
   },
   {
     "id": "62b98f1a2cfecf7a96307735",
@@ -596,7 +596,7 @@
     "street_address": "235 Wythe Place",
     "region": ["Northern"],
     "notes": "Likes to eat chocolate",
-    "tags": ["volunteer", "coordinator", "client"]
+    "tags": ["Volunteer", "Coordinator", "Client"]
   },
   {
     "id": "62b98f1a4ca617157f5d5584",
@@ -620,7 +620,7 @@
     "street_address": "260 Bliss Terrace",
     "region": ["Central"],
     "notes": "",
-    "tags": ["volunteer", "coordinator", "client"]
+    "tags": ["Volunteer", "Coordinator", "Client"]
   },
   {
     "id": "62b98f1aea46f493bfe88aed",
@@ -644,7 +644,7 @@
     "street_address": "266 Ide Court",
     "region": ["Armadale"],
     "notes": "",
-    "tags": ["volunteer", "coordinator", "client"]
+    "tags": ["Volunteer", "Coordinator", "Client"]
   },
   {
     "id": "62b98f1a094ca2381b723dd6",
@@ -668,7 +668,7 @@
     "street_address": "552 Verona Street",
     "region": ["Armadale"],
     "notes": "",
-    "tags": ["volunteer", "coordinator", "client"]
+    "tags": ["Volunteer", "Coordinator", "Client"]
   },
   {
     "id": "62b98f1a4009daba697ee3db",
@@ -687,7 +687,7 @@
     "street_address": "361 National Drive",
     "region": ["Northern"],
     "notes": "",
-    "tags": ["volunteer", "coordinator", "client"]
+    "tags": ["Volunteer", "Coordinator", "Client"]
   },
   {
     "id": "62b98f1af0c810cfb6a248ac",
@@ -711,7 +711,7 @@
     "street_address": "877 Maple Avenue",
     "region": ["Armadale"],
     "notes": "",
-    "tags": ["volunteer", "coordinator", "client"]
+    "tags": ["Volunteer", "Coordinator", "Client"]
   },
   {
     "id": "62b98f1ae37ca4c703e963fe",
@@ -735,7 +735,7 @@
     "street_address": "575 Karweg Place",
     "region": ["Eastern"],
     "notes": "",
-    "tags": ["volunteer", "coordinator", "client"]
+    "tags": ["Volunteer", "Coordinator", "Client"]
   },
   {
     "id": "62b98f1adb11d2bf2e4ce0b1",
@@ -759,7 +759,7 @@
     "street_address": "130 Cooper Street",
     "region": ["Central"],
     "notes": "",
-    "tags": ["volunteer", "coordinator", "client"]
+    "tags": ["Volunteer", "Coordinator", "Client"]
   },
   {
     "id": "62b98f1a7755690ced85a5e7",
@@ -778,7 +778,7 @@
     "street_address": "339 Varet Street",
     "region": ["Central"],
     "notes": "",
-    "tags": ["volunteer", "coordinator", "client"]
+    "tags": ["Volunteer", "Coordinator", "Client"]
   },
   {
     "id": "62b98f1a4d901c5966845962",
@@ -802,7 +802,7 @@
     "street_address": "38 Sullivan Place",
     "region": ["Eastern", "Preston"],
     "notes": "Likes to eat chocolate",
-    "tags": ["volunteer", "coordinator", "client"]
+    "tags": ["Volunteer", "Coordinator", "Client"]
   },
   {
     "id": "62b98f1a5a377d713454492f",
@@ -826,7 +826,7 @@
     "street_address": "450 Ridge Court",
     "region": ["Armadale"],
     "notes": "",
-    "tags": ["volunteer", "coordinator", "client"]
+    "tags": ["Volunteer", "Coordinator", "Client"]
   },
   {
     "id": "62b98f1a3b7bb9382ef0c43d",
@@ -850,6 +850,6 @@
     "street_address": "169 Hegeman Avenue",
     "region": ["Northern", "Southern"],
     "notes": "Likes to eat chocolate",
-    "tags": ["volunteer", "coordinator", "client"]
+    "tags": ["Volunteer", "Coordinator", "Client"]
   }
 ]

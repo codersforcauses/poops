@@ -1,5 +1,5 @@
+import { useState } from 'react'
 import Select from 'react-select'
-
 const options = [
   { value: 'Eastern', label: 'Eastern' },
   { value: 'Coastal South', label: 'Coastal South' },
@@ -30,16 +30,33 @@ const customStyles = {
   }
 }
 
-const RegionSelector = ({ regions }) => (
-  <div>
-    <Select
-      closeMenuOnSelect={false}
-      isMulti
-      options={options}
-      defaultValue={regions.map((r) => ({ value: r, label: r }))}
-      styles={customStyles}
-    />
-  </div>
-)
+const RegionSelector = ({ regions }) => {
+  const [regionValue, setRegionValue] = useState(
+    regions.map((r: string) => ({ value: r, label: r }))
+  )
+  const handleChange = (field: string, value: []) => {
+    switch (field) {
+      case 'roles':
+        setRegionValue(value)
+        break
+
+      default:
+        break
+    }
+  }
+  return (
+    <div>
+      <Select
+        onChange={(value) => handleChange('roles', value)}
+        closeMenuOnSelect={false}
+        isMulti
+        options={options}
+        value={regionValue}
+        defaultValue={regions.map((r: string) => ({ value: r, label: r }))}
+        styles={customStyles}
+      />
+    </div>
+  )
+}
 
 export default RegionSelector
