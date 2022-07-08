@@ -1,5 +1,6 @@
 import Header from '@/components/Header'
 import Button from '@/components/Home/button'
+import Modal from '@/components/Home/modal'
 import Summary from '@/components/Home/summary'
 
 const Home = () => {
@@ -15,7 +16,8 @@ const Home = () => {
             <Summary />
             <br />
             <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-              <Button />
+              {/* <Button /> */}
+              <Modal />
             </div>
           </div>
         </div>

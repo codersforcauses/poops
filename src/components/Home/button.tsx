@@ -4,13 +4,22 @@ import Image from 'next/image'
 
 import Modal from '@/components/Home/modal'
 
+interface Checkers {
+  open: boolean
+  distance: Number
+  visit: String
+  pet: String
+}
 
-function Button() {
+function Button(props: Checkers) {
   const [modalIsOpen, setModalOpen] = useState(false)
   const [used, setUsed] = useState(false)
   const [start, setStart] = useState(0)
   const [stop, setStop] = useState(0)
-
+  var visit = false
+  if (props.visit == "walk"){
+    visit = true
+  }
   return (
     <div>
       <div className='text-center'>
@@ -37,8 +46,8 @@ function Button() {
       </div>
       <br />
       <div>{modalIsOpen && <Modal start={start} stop={stop} />}</div>
-      <div>{!used && !modalIsOpen && <Image alt='logo' src='/images/dog.png' width='350px' height='250px' />}</div>
-      <div>{used && !modalIsOpen && <Modal stop={stop} start={start} />}</div>
+      <div>{!modalIsOpen && <Image alt='logo' src='/images/dog.png' width='350px' height='250px' />}</div>
+      {/* <div>{used && !modalIsOpen && <Modal stop={stop} start={start} />}</div> */}
     </div>
   )
 }
