@@ -1,5 +1,5 @@
 import React from 'react'
-import { useState, Dispatch, SetStateAction } from 'react'
+import { Dispatch, SetStateAction, useState } from 'react'
 import Image from 'next/image'
 import {
   LocationMarkerIcon,
@@ -35,27 +35,35 @@ const ContactForm = ({ contact, image, setIsEditing }: ContactInfoProps) => {
     setPets([...pets.filter((p) => p.name !== pet.name)])
   }
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLTextAreaElement>) => {
-      const { name, value } = e.target
-      setContactForm({...contactForm, [name]: value, })
+  const handleInputChange = (
+    e:
+      | React.ChangeEvent<HTMLInputElement>
+      | React.ChangeEvent<HTMLTextAreaElement>
+  ) => {
+    const { name, value } = e.target
+    setContactForm({ ...contactForm, [name]: value })
   }
 
-  const handlePetChange = (petIndex:number, e: React.ChangeEvent<HTMLInputElement>) => {
+  const handlePetChange = (
+    petIndex: number,
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
     const { name, value } = e.target
-    const newPets = pets.map((pet,i) => i === petIndex
-     ? {
-      ...pet,
-      [name]: value,
-      } : pet,
+    const newPets = pets.map((pet, i) =>
+      i === petIndex
+        ? {
+            ...pet,
+            [name]: value
+          }
+        : pet
     )
     setPets(newPets)
-    setContactForm({...contactForm, pets: newPets})
-    }
+    setContactForm({ ...contactForm, pets: newPets })
+  }
 
   // TODO: Submit ContactForm to database
   // Make sure contact info has the updated data
   const submitForm = () => {
-    console.log(contactForm)
     setIsEditing(false)
   }
 
@@ -80,7 +88,7 @@ const ContactForm = ({ contact, image, setIsEditing }: ContactInfoProps) => {
             First Name
           </label>
           <input
-            name="first_name"
+            name='first_name'
             defaultValue={contact.first_name}
             className='mb-2 w-80 rounded-lg border border-grey pl-1'
             onChange={handleInputChange}
@@ -91,7 +99,7 @@ const ContactForm = ({ contact, image, setIsEditing }: ContactInfoProps) => {
             Last Name
           </label>
           <input
-            name="last_name"
+            name='last_name'
             defaultValue={contact.last_name}
             className='w-80 rounded-lg border border-grey pl-1'
             onChange={handleInputChange}
@@ -103,7 +111,7 @@ const ContactForm = ({ contact, image, setIsEditing }: ContactInfoProps) => {
             Description
           </label>
           <input
-            name="desc"
+            name='desc'
             defaultValue={contact.desc}
             className='w-80 rounded-lg border border-grey pl-1'
             onChange={handleInputChange}
@@ -120,7 +128,7 @@ const ContactForm = ({ contact, image, setIsEditing }: ContactInfoProps) => {
             </a>
           </div>
           <input
-            name="phone"
+            name='phone'
             defaultValue={contact.phone}
             className='w-full rounded-lg border border-grey pl-1'
             onChange={handleInputChange}
@@ -141,7 +149,7 @@ const ContactForm = ({ contact, image, setIsEditing }: ContactInfoProps) => {
             </a>
           </div>
           <input
-            name="email"
+            name='email'
             defaultValue={contact.email}
             className='w-full rounded-lg border border-grey pl-1'
             onChange={handleInputChange}
@@ -162,7 +170,7 @@ const ContactForm = ({ contact, image, setIsEditing }: ContactInfoProps) => {
             </a>
           </div>
           <input
-            name="street_address"
+            name='street_address'
             defaultValue={contact.street_address}
             className='w-full rounded-lg border border-grey pl-1'
             onChange={handleInputChange}
@@ -221,7 +229,7 @@ const ContactForm = ({ contact, image, setIsEditing }: ContactInfoProps) => {
                   </button>
                 </div>
                 <input
-                  name="name"
+                  name='name'
                   defaultValue={pet.name}
                   className='mb-2 w-full rounded-lg border border-grey pl-1'
                   onChange={(e) => handlePetChange(i, e)}
@@ -231,7 +239,7 @@ const ContactForm = ({ contact, image, setIsEditing }: ContactInfoProps) => {
                   Notes
                 </label>
                 <input
-                  name="notes"
+                  name='notes'
                   defaultValue={pet.notes}
                   className='mb-2 w-full rounded-lg border border-grey pl-1'
                   onChange={(e) => handlePetChange(i, e)}
@@ -252,7 +260,7 @@ const ContactForm = ({ contact, image, setIsEditing }: ContactInfoProps) => {
             Notes
           </label>
           <textarea
-            name="notes"
+            name='notes'
             defaultValue={contact.notes}
             className='w-full rounded-lg border border-grey'
             onChange={handleInputChange}
@@ -264,7 +272,7 @@ const ContactForm = ({ contact, image, setIsEditing }: ContactInfoProps) => {
             <button
               type='button'
               className='w-80 rounded bg-primary py-1 font-bold text-white hover:bg-dark-red'
-              onClick={submitForm}//setIsEditing(false)}
+              onClick={submitForm} //setIsEditing(false)}
             >
               Save
             </button>
