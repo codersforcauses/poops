@@ -39,7 +39,7 @@ const ContactForm = ({ contact, image, setIsEditing }: ContactInfoProps) => {
       const { name, value } = e.target
       setContactForm({...contactForm, [name]: value, })
   }
-  // Bug: Doesn't capture last character for last entered pet details in setContactForm, however the pet state updates correctly
+
   const handlePetChange = (petIndex:number, e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
     const newPets = pets.map((pet,i) => i === petIndex
@@ -49,12 +49,13 @@ const ContactForm = ({ contact, image, setIsEditing }: ContactInfoProps) => {
       } : pet,
     )
     setPets(newPets)
-    setContactForm({...contactForm, pets: pets})
+    setContactForm({...contactForm, pets: newPets})
     }
 
   // TODO: Submit ContactForm to database
   // Make sure contact info has the updated data
   const submitForm = () => {
+    console.log(contactForm)
     setIsEditing(false)
   }
 
