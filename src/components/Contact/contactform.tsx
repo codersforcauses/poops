@@ -1,5 +1,5 @@
 import React from 'react'
-import { useState } from 'react'
+import { useState, Dispatch, SetStateAction } from 'react'
 import Image from 'next/image'
 import {
   LocationMarkerIcon,
@@ -15,7 +15,7 @@ import type { Contact, Pet } from '@/types/types'
 type ContactInfoProps = {
   contact: Contact
   image: string
-  setIsEditing: (value: boolean) => void
+  setIsEditing: Dispatch<SetStateAction<boolean>>
 }
 
 const ContactForm = ({ contact, image, setIsEditing }: ContactInfoProps) => {
@@ -24,6 +24,7 @@ const ContactForm = ({ contact, image, setIsEditing }: ContactInfoProps) => {
 
   function addPet() {
     const newPetField = {
+      id: Math.random().toString().substring(2, 8),
       name: '',
       notes: ''
     }
@@ -41,19 +42,20 @@ const ContactForm = ({ contact, image, setIsEditing }: ContactInfoProps) => {
   // Bug: Doesn't capture last character for last entered pet details in setContactForm, however the pet state updates correctly
   const handlePetChange = (petIndex:number, e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
-    const newPets = pets.map((p,i) => i === petIndex
+    const newPets = pets.map((pet,i) => i === petIndex
      ? {
-      ...p,
+      ...pet,
       [name]: value,
-      } : p,
+      } : pet,
     )
     setPets(newPets)
     setContactForm({...contactForm, pets: pets})
     }
 
-  // TODO: Submit Form to database
+  // TODO: Submit ContactForm to database
+  // Make sure contact info has the updated data
   const submitForm = () => {
-    console.log("SUBMITNG", contactForm)
+    setIsEditing(false)
   }
 
   return (
@@ -206,9 +208,8 @@ const ContactForm = ({ contact, image, setIsEditing }: ContactInfoProps) => {
           <label htmlFor='pets' className='text-dark-red'>
             Pets
           </label>
-          {/* TODO: Add Key for pet, It can't be i */}
           {pets.map((pet, i) => (
-            <div>
+            <div key={pet.id}>
               <PetContainer className='py-1'>
                 <div className='flex w-full justify-between'>
                   <label htmlFor={pet.name} className='text-dark-red'>
