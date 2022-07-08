@@ -16,7 +16,6 @@ type ContactProp = {
 
 const Contact = ({ contact }: ContactProp) => {
   const [isEditing, setIsEditing] = useState(false)
-  const isEditable = !contact.tags.includes('profile')
   return (
     <>
       <Header pageTitle={`${contact.first_name} ${contact.last_name}`} />
@@ -30,7 +29,7 @@ const Contact = ({ contact }: ContactProp) => {
               Back
             </button>
           </Link>
-          {isEditable && !isEditing && (
+          {!isEditing && (
             <PencilIcon
               className='flex h-7 w-7 justify-end'
               onClick={() => setIsEditing(true)}

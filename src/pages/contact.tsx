@@ -55,7 +55,6 @@ const Contact = () => {
     })
     setFilteredContacts(filteredContacts)
   }
-
   return (
     <>
       {/* <Seo /> */}
@@ -69,7 +68,7 @@ const Contact = () => {
             <SearchBar onChangeHandler={onSearchChange} />
             <SearchIcon className='my-auto mx-3 h-6 rounded-full' />
           </div>
-          {searchFieldString === '' && (
+          {searchFieldString === '' && selectedOption === '' && (
             <ProfileItem profile={PROFILE_DATA} image='' />
           )}
           <ContactList contacts={filteredContacts} />

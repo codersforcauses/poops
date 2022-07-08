@@ -90,12 +90,12 @@ function ContactInfo({ contact, image }: ContactInfoProps) {
         {/* This should be done as a react component i think? */}
         {/* Padding to counter the shadow */}
         {/* I am sorry for how horrific this is
-        It creates a union array of 'Client', 'Coordinator', 'Volunteer'
+        It creates a union array of 'client', 'coordinator', 'volunteer'
          and the contact's tags, then displays all of them and checks 
          those found in contact*/}
         <div className='pt-2'>
           {[
-            ...new Set([...contact.tags, 'Client', 'Coordinator', 'Volunteer'])
+            ...new Set([...contact.tags, 'client', 'coordinator', 'volunteer'])
           ].map((tag, index) => {
             return (
               <div key={index}>
