@@ -24,16 +24,3 @@
 
 @layer utilities {
 }
-
-/**SearchBar CSS**/
-
-.SearchTag {
-  position: relative;
-}
-.Search {
-  display: flex;
-  flex-direction: row;
-  border: 1px solid grey;
-  border-radius: 15px;
-  margin: 10px;
-}

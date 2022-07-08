@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { SearchIcon } from '@heroicons/react/outline'
 
 import CONTACT_DATA from '@/../mockData/CONTACT_DATA.json'
 import PROFILE_DATA from '@/../mockData/PROFILE_DATA.json'
@@ -63,9 +64,10 @@ const Contact = () => {
       <main>
         <h1 className='m-3 text-center text-2xl'>Contacts</h1>
         <div className='m-auto max-w-md'>
-          <div className='Search'>
+          <div className='m-2 flex flex-row rounded-xl border-2 border-grey'>
             <SearchTag options={taglist} onChangehandler={onSearchTagChange} />
             <SearchBar onChangeHandler={onSearchChange} />
+            <SearchIcon className='my-auto mx-3 h-6 rounded-full' />
           </div>
           <ProfileItem profile={PROFILE_DATA} image='' />
           <ContactList contacts={filteredContacts} />
