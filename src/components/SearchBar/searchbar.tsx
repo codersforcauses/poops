@@ -4,9 +4,9 @@ type ContactBoxProps = {
 
 function SearchBar({ onChangeHandler }: ContactBoxProps) {
   return (
-    <div className='flex-col items-center pt-2'>
+    <div className='flex-col items-center'>
       <input
-        className='h-10 w-full rounded-lg border-2 bg-white px-5 pr-20 text-sm focus:outline-none'
+        className='h-10 w-full rounded-lg border-none bg-transparent px-5 pr-20 text-sm focus:outline-none'
         type='search'
         name='search'
         placeholder='Search'

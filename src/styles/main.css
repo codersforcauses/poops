@@ -29,9 +29,11 @@
 
 .SearchTag {
   position: relative;
-  top: 7px;
 }
 .Search {
   display: flex;
   flex-direction: row;
+  border: 2px solid black;
+  border-radius: 15px;
+  margin: 10px;
 }
