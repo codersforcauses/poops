@@ -63,8 +63,10 @@ const Contact = () => {
       <main>
         <h1 className='m-3 text-center text-2xl'>Contacts</h1>
         <div className='m-auto max-w-md'>
-          <SearchTag options={taglist} onChangehandler={onSearchTagChange} />
-          <SearchBar onChangeHandler={onSearchChange} />
+          <div className='Search'>
+            <SearchTag options={taglist} onChangehandler={onSearchTagChange} />
+            <SearchBar onChangeHandler={onSearchChange} />
+          </div>
           <ProfileItem profile={PROFILE_DATA} image='' />
           <ContactList contacts={filteredContacts} />
         </div>

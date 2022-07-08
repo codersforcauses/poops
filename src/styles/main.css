@@ -24,3 +24,14 @@
 
 @layer utilities {
 }
+
+/**SearchBar CSS**/
+
+.SearchTag {
+  position: relative;
+  top: 7px;
+}
+.Search {
+  display: flex;
+  flex-direction: row;
+}
