@@ -25,7 +25,11 @@ const customStyles = {
   }
 }
 
-const TagSelector = ({ tags }) => {
+type TagSelectorProps = {
+  tags: string[]
+}
+
+const TagSelector = ({ tags }: TagSelectorProps) => {
   const [roleValue, setRoleValue] = useState(
     tags.map((t: string) => ({ value: t, label: t }))
   )

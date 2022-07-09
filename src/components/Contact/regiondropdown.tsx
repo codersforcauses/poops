@@ -30,7 +30,11 @@ const customStyles = {
   }
 }
 
-const RegionSelector = ({ regions }) => {
+type RegionSelectorProps = {
+  regions: string[]
+}
+
+const RegionSelector = ({ regions }: RegionSelectorProps) => {
   const [regionValue, setRegionValue] = useState(
     regions.map((r: string) => ({ value: r, label: r }))
   )
