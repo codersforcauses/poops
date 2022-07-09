@@ -60,11 +60,16 @@ const ContactForm = ({ contact, image, setIsEditing }: ContactInfoProps) => {
   }
 
   useEffect(() => {
-    setContactForm({ ...contactForm, region: regions, pets: pets })
-  }, [regions, pets])
+    setContactForm((contactForm) => ({
+      ...contactForm,
+      tags: tags,
+      region: regions,
+      pets: pets
+    }))
+  }, [regions, pets, tags])
 
   // TODO: Submit ContactForm to database
-  const submitForm = (e: any) => {
+  const submitForm = (e: React.FormEvent) => {
     e.preventDefault()
   }
 

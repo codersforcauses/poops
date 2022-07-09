@@ -38,6 +38,7 @@ const TagSelector = ({ tags, setTags }: Props) => {
     switch (field) {
       case 'roles':
         setRoleValue(value)
+        setTags(value.map((val) => val['value']))
         break
 
       default:
