@@ -41,7 +41,9 @@ const ContactForm = ({ contact, image, setIsEditing }: ContactInfoProps) => {
 
   const handlePetChange = (
     petIndex: number,
-    e: React.ChangeEvent<HTMLInputElement>
+    e:
+      | React.ChangeEvent<HTMLInputElement>
+      | React.ChangeEvent<HTMLTextAreaElement>
   ) => {
     const { name, value } = e.target
     const newPets = pets.map((pet, i) =>
@@ -59,7 +61,7 @@ const ContactForm = ({ contact, image, setIsEditing }: ContactInfoProps) => {
   // TODO: Submit ContactForm to database
   // Make sure contact info has the updated data
   const submitForm = () => {
-    console.log(contactForm)
+    //console.log(contactForm)
     //setIsEditing(false)
   }
 
@@ -106,7 +108,7 @@ const ContactForm = ({ contact, image, setIsEditing }: ContactInfoProps) => {
           <label htmlFor={contact.notes} className='text-dark-red'>
             Description
           </label>
-          <input
+          <textarea
             name='desc'
             defaultValue={contact.desc}
             className='w-80 rounded-lg border border-grey pl-1'
@@ -193,7 +195,7 @@ const ContactForm = ({ contact, image, setIsEditing }: ContactInfoProps) => {
                 <label htmlFor={pet.notes} className='text-dark-red'>
                   Notes
                 </label>
-                <input
+                <textarea
                   name='notes'
                   defaultValue={pet.notes}
                   className='mb-2 w-full rounded-lg border border-grey pl-1'
