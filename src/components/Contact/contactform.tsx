@@ -84,23 +84,23 @@ const ContactForm = ({ contact, image, setIsEditing }: ContactInfoProps) => {
         )}
         {/* FIRST AND LAST NAME */}
         <Box>
-          <label htmlFor={contact.first_name} className='text-dark-red'>
+          <label htmlFor={contact.firstName} className='text-dark-red'>
             First Name
           </label>
           <input
             name='first_name'
-            defaultValue={contact.first_name}
+            defaultValue={contact.firstName}
             className='mb-2 w-80 rounded-lg border border-grey pl-1'
             onChange={handleInputChange}
           />
         </Box>
         <Box>
-          <label htmlFor={contact.last_name} className='text-dark-red'>
+          <label htmlFor={contact.lastName} className='text-dark-red'>
             Last Name
           </label>
           <input
             name='last_name'
-            defaultValue={contact.last_name}
+            defaultValue={contact.lastName}
             className='w-80 rounded-lg border border-grey pl-1'
             onChange={handleInputChange}
           />
@@ -143,12 +143,12 @@ const ContactForm = ({ contact, image, setIsEditing }: ContactInfoProps) => {
         </Box>
         {/* ADDRESS */}
         <Box>
-          <label htmlFor={contact.street_address} className='text-dark-red'>
+          <label htmlFor={contact.streetAddress} className='text-dark-red'>
             Address
           </label>
           <input
             name='street_address'
-            defaultValue={contact.street_address}
+            defaultValue={contact.streetAddress}
             className='w-full rounded-lg border border-grey pl-1'
             onChange={handleInputChange}
           />

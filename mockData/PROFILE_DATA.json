@@ -1,7 +1,7 @@
 {
   "id": "me",
-  "first_name": "John",
-  "last_name": "Doe",
+  "firstName": "John",
+  "lastName": "Doe",
   "desc": "description",
   "pets": [
     { "id": "62c6f9a7a9ff10abfef8f4b0", "name": "Zoe", "notes": "Is Moth" },
@@ -15,7 +15,7 @@
   ],
   "email": "tiamcmahon@kegular.com",
   "phone": "(886) 578-3300",
-  "street_address": "691 Cleveland Street",
+  "streetAddress": "691 Cleveland Street",
   "region": ["Northern", "Busselton", "Western"],
   "notes": "Likes to eat chocolate",
   "tags": ["volunteer", "profile"]

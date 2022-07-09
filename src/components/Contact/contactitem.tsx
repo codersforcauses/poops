@@ -28,7 +28,7 @@ const ContactItem = ({ contact, image }: ContactItemProps) => {
           )}
           <div className='min-w-0 flex-1'>
             <p className='text-gray-900 truncate text-sm font-medium'>
-              {`${contact.first_name} ${contact.last_name}`}
+              {`${contact.firstName} ${contact.lastName}`}
             </p>
           </div>
         </div>
