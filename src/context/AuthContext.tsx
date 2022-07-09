@@ -16,7 +16,7 @@ interface FirebaseContextProps {
   auth: Auth
   googleSignIn?: (auth: Auth) => void
   getGoogleResults?: (auth: Auth) => void
-  linkGoogleAccount?: (auth: Auth) => void
+  linkGoogleAccount?: (currentUser: User) => void
   logOut?: () => void
   currentUser?: User | null
 }
