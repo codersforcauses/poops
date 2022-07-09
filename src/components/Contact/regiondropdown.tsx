@@ -42,6 +42,7 @@ const RegionSelector = ({ regions, setRegions }: Props) => {
     switch (field) {
       case 'roles':
         setRegionValue(value)
+        setRegions(value.map((val) => val['value']))
         break
 
       default:
