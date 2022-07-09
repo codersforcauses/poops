@@ -90,7 +90,7 @@ const Login: NextPage = () => {
 
             {/* Apple Button */}
             <LoginButton
-              handler={() => handleMicrosoft(auth)}
+              handler={() => undefined}
               icon={appleIcon}
               buttonlabel='Continue with Apple'
               style='group h-12 rounded-full border-4 border-applegrey px-6 transition duration-300'
@@ -98,7 +98,7 @@ const Login: NextPage = () => {
 
             {/* Microsoft Button */}
             <LoginButton
-              handler={() => undefined}
+              handler={() => handleMicrosoft(auth)}
               icon={microsoftIcon}
               buttonlabel='Continue with Microsoft'
               style='group h-12 rounded-full border-4 border-microsoftblue px-6 transition duration-300'
