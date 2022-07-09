@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { Dispatch, SetStateAction, useState } from 'react'
 import Select from 'react-select'
 const regionOptions = [
   { value: 'Eastern', label: 'Eastern' },
@@ -29,12 +29,12 @@ const customStyles = {
     }
   }
 }
-
-type RegionSelectorProps = {
-  regions: string[]
+type Props = {
+  regions: Array<string>
+  setRegions: Dispatch<SetStateAction<Array<string>>>
 }
 
-const RegionSelector = ({ regions }: RegionSelectorProps) => {
+const RegionSelector = ({ regions, setRegions }: Props) => {
   const [regionValue, setRegionValue] = useState(
     regions.map((r: string) => ({ value: r, label: r }))
   )
@@ -42,6 +42,7 @@ const RegionSelector = ({ regions }: RegionSelectorProps) => {
     switch (field) {
       case 'roles':
         setRegionValue(value)
+        setRegions(value.map((val) => val['value']))
         break
 
       default:

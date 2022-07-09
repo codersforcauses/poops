@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Dispatch, SetStateAction, useState } from 'react'
 import Image from 'next/image'
 import { PlusIcon, UserCircleIcon, XIcon } from '@heroicons/react/outline'
@@ -15,6 +15,8 @@ import TagSelector from '@/components/Contact/tagdropdown'
 
 const ContactForm = ({ contact, image, setIsEditing }: ContactInfoProps) => {
   const [pets, setPets] = useState<Pet[]>(contact.pets)
+  const [regions, setRegions] = useState(contact.region)
+  const [tags, setTags] = useState(contact.tags)
   const [contactForm, setContactForm] = useState(contact)
 
   function addPet() {
@@ -55,18 +57,24 @@ const ContactForm = ({ contact, image, setIsEditing }: ContactInfoProps) => {
         : pet
     )
     setPets(newPets)
-    setContactForm({ ...contactForm, pets: newPets })
   }
 
+  useEffect(() => {
+    setContactForm((contactForm) => ({
+      ...contactForm,
+      tags: tags,
+      region: regions,
+      pets: pets
+    }))
+  }, [regions, pets, tags])
+
   // TODO: Submit ContactForm to database
-  // Make sure contact info has the updated data
-  const submitForm = () => {
-    //console.log(contactForm)
-    //setIsEditing(false)
+  const submitForm = (e: React.FormEvent) => {
+    e.preventDefault()
   }
 
   return (
-    <form>
+    <form onSubmit={submitForm}>
       <div className='flex flex-col items-center justify-center gap-3'>
         {image === '' ? (
           <UserCircleIcon className='w-32 rounded-full' />
@@ -157,7 +165,7 @@ const ContactForm = ({ contact, image, setIsEditing }: ContactInfoProps) => {
             Tags
           </label>
 
-          <TagSelector tags={contact.tags} />
+          <TagSelector tags={contact.tags} setTags={setTags} />
 
           {/* This should be done as a react component i think? */}
           {/* Padding to counter the shadow */}
@@ -168,7 +176,7 @@ const ContactForm = ({ contact, image, setIsEditing }: ContactInfoProps) => {
           <label htmlFor='regions' className='text-dark-red'>
             Region
           </label>
-          <RegionSelector regions={contact.region} />
+          <RegionSelector regions={contact.region} setRegions={setRegions} />
         </Box>
         <Box>
           <label htmlFor='pets' className='text-dark-red'>
@@ -227,9 +235,8 @@ const ContactForm = ({ contact, image, setIsEditing }: ContactInfoProps) => {
         <div className='mb-3 flex justify-center'>
           <div className='flex flex-col space-y-1'>
             <button
-              type='button'
+              type='submit'
               className='w-80 rounded bg-primary py-1 font-bold text-white hover:bg-dark-red'
-              onClick={submitForm} //setIsEditing(false)}
             >
               Save
             </button>

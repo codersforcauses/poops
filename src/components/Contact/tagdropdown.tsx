@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { Dispatch, SetStateAction, useState } from 'react'
 import Creatable from 'react-select/creatable'
 
 const roles = [
@@ -24,12 +24,12 @@ const customStyles = {
     }
   }
 }
-
-type TagSelectorProps = {
-  tags: string[]
+type Props = {
+  tags: Array<string>
+  setTags: Dispatch<SetStateAction<Array<string>>>
 }
 
-const TagSelector = ({ tags }: TagSelectorProps) => {
+const TagSelector = ({ tags, setTags }: Props) => {
   const [roleValue, setRoleValue] = useState(
     tags.map((t: string) => ({ value: t, label: t }))
   )
@@ -38,6 +38,7 @@ const TagSelector = ({ tags }: TagSelectorProps) => {
     switch (field) {
       case 'roles':
         setRoleValue(value)
+        setTags(value.map((val) => val['value']))
         break
 
       default:
