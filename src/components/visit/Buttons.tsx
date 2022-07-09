@@ -12,13 +12,8 @@ export default function EditButton(prop: { isEdit: boolean }) {
 
 export const AddButton = () => {
   const [openModal, setOpenModal] = useState(false)
-  const opening = () => {
-    if (openModal) {
-      setOpenModal(false)
-    } else {
-      setOpenModal(true)
-    }
-  }
+  const opening = () => setOpenModal(!openModal)
+
   return (
     // slightly less awful fix
     <div className='relative top-[3px]'>
