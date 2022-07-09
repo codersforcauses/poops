@@ -15,6 +15,8 @@ const tags = CONTACT_DATA.map((contact) => {
 }).flat()
 const set = new Set(tags)
 const taglist = [...set]
+import NavBar from '@/components/NavBar'
+import { withProtected } from '@/components/PrivateRoute'
 
 const Contact = () => {
   const [filteredContacts, setFilteredContacts] =
@@ -74,8 +76,9 @@ const Contact = () => {
           <ContactList contacts={filteredContacts} />
         </div>
       </main>
+      <NavBar />
     </>
   )
 }
 
-export default Contact
+export default withProtected(Contact)
