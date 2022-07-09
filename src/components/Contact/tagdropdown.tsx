@@ -1,5 +1,6 @@
 import { Dispatch, SetStateAction, useState } from 'react'
 import Creatable from 'react-select/creatable'
+import { StylesConfig } from 'react-select'
 
 const roles = [
   { value: 'Volunteer', label: 'Volunteer' },
@@ -7,7 +8,12 @@ const roles = [
   { value: 'Coordinator', label: 'Coordinator' }
 ]
 
-const customStyles = {
+type MultiValueProp = {
+  value: string
+  label: string
+}
+
+const customStyles: StylesConfig<MultiValueProp> = {
   input: (provided) => ({
     ...provided,
     'input:focus': {
