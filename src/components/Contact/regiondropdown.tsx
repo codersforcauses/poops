@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction, useState } from 'react'
-import Select, { StylesConfig } from 'react-select'
+import Select, { StylesConfig, MultiValue } from 'react-select'
 const regionOptions = [
   { value: 'Eastern', label: 'Eastern' },
   { value: 'Coastal South', label: 'Coastal South' },
@@ -37,12 +37,12 @@ const customStyles: StylesConfig<MyOption> = {
 }
 
 const RegionSelector = ({ regions, setRegions }: Props) => {
-  const [regionValue, setRegionValue] = useState(
-    regions.map((r: string) => ({ value: r, label: r }))
+  const [regionValue, setRegionValue] = useState<MultiValue<MyOption>>(
+    // regions.map((r: string) => ({ value: r, label: r }))
   )
 
   const handleChange = (
-    newValue: SetStateAction<{ value: string; label: string }[]>
+    newValue: MultiValue<MyOption>
   ) => {
     setRegionValue(newValue)
     setRegions(Object.values(newValue).map((val) => val.value))

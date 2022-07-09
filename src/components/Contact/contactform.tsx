@@ -72,6 +72,7 @@ const ContactForm = ({ contact, image, setIsEditing }: ContactInfoProps) => {
   // TODO: Submit ContactForm to database
   const submitForm = (e: React.FormEvent) => {
     e.preventDefault()
+    console.log(contactForm)
     // TODO: submit to firestore here
     setIsEditing(false)
 
