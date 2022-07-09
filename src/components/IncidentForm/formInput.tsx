@@ -1,9 +1,11 @@
 import { IncidentForm } from '@/types'
+import { HTMLInputTypeAttribute, InputHTMLAttributes } from 'react'
 import { UseFormRegister } from 'react-hook-form'
 
 export type FormInputProps = {
   label: string
   field: keyof IncidentForm
+  type: HTMLInputTypeAttribute
   required: boolean
   register: UseFormRegister<IncidentForm>
 }
@@ -11,6 +13,7 @@ export type FormInputProps = {
 const FormInput: React.FC<FormInputProps> = ({
   label,
   field,
+  type,
   required,
   register
 }) => {
@@ -21,7 +24,8 @@ const FormInput: React.FC<FormInputProps> = ({
         <span>{label}</span>
       </label>
       <input
-        className='rounded-lg border border-black py-1 px-2 selection:bg-primary/70 selection:text-white focus:outline-primary'
+        type={type}
+        className='rounded-lg border border-black py-1 px-2 selection:bg-primary/70 selection:text-white focus:outline-primary active:ring active:ring-primary'
         {...register(field)}
       />
     </div>

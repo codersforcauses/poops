@@ -4,7 +4,7 @@ export type IncidentForm = {
   email: string
   petName: string
   vetName?: string
-  date: Date
-  time: Date
+  date: string
+  time: string
   details: string
 }
