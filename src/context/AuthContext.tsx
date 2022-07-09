@@ -3,6 +3,7 @@ import {
   Auth,
   getRedirectResult,
   GoogleAuthProvider,
+  linkWithRedirect,
   onAuthStateChanged,
   signInWithRedirect,
   signOut,
@@ -15,6 +16,7 @@ interface FirebaseContextProps {
   auth: Auth
   googleSignIn?: (auth: Auth) => void
   getGoogleResults?: (auth: Auth) => void
+  linkGoogleAccount?: (auth: Auth) => void
   logOut?: () => void
   currentUser?: User | null
 }
@@ -37,6 +39,20 @@ export const AuthContextProvider = ({
   function googleSignIn(auth: Auth) {
     const googleProvider = new GoogleAuthProvider()
     signInWithRedirect(auth, googleProvider) // Not working in chrome incognito?, but signInWithPopup does
+      .then((result) => {
+        return result
+      })
+      .catch((error) => {
+        return error
+      })
+  }
+
+  function linkGoogleAccount(currentUser: User) {
+    const googleProvider = new GoogleAuthProvider()
+    if (currentUser === null) {
+      return
+    }
+    linkWithRedirect(currentUser, googleProvider)
       .then((result) => {
         return result
       })
@@ -90,6 +106,7 @@ export const AuthContextProvider = ({
     auth,
     googleSignIn,
     getGoogleResults,
+    linkGoogleAccount,
     logOut,
     currentUser
   }
