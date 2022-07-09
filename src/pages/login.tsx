@@ -38,7 +38,7 @@ const Login: NextPage = () => {
         <div className='animate-text bg-gradient-to-b from-zinc-300 via-zinc-200 to-zinc-50 '>
           <div className='m-auto max-w-sm p-10'>
             <Image
-              src='/images/poops-logo.jpg'
+              src='/images/poops-logo-transparent.png'
               width={36}
               height={36}
               layout='responsive'
@@ -47,32 +47,60 @@ const Login: NextPage = () => {
             ></Image>
           </div>
 
-          <div className='text-center text-xl font-bold'>Sign In</div>
+          <div className='p-3 text-center text-xl font-bold'>Sign In</div>
+
+          <div className='text-x1 text-center font-sans'>
+            Use any one of your profiles
+          </div>
 
           <div className='m-auto grid h-1/3 w-1/2 max-w-xs justify-center space-y-4 p-5'>
             {/* Google Button */}
-            <LoginButton handler={() => handleGoogle(auth)} icon={googleIcon} buttonlabel='Continue with Google'
-              style="h-12 rounded-full border-4 border-t-googleblue border-r-googlegreen border-b-googleyellow border-l-googlered px-6 transition duration-300" />
+            <LoginButton
+              handler={() => handleGoogle(auth)}
+              icon={googleIcon}
+              buttonlabel='Continue with Google'
+              style='h-12 rounded-full border-4 border-t-googleblue border-r-googlegreen border-b-googleyellow border-l-googlered px-6 transition duration-300'
+            />
 
             {/* FaceBook Button */}
-            <LoginButton handler={() => undefined} icon={facebookIcon} buttonlabel='Continue with Facebook'
-              style='group h-12 rounded-full border-4 border-facebook px-6 transition duration-300' />
+            <LoginButton
+              handler={() => undefined}
+              icon={facebookIcon}
+              buttonlabel='Continue with Facebook'
+              style='group h-12 rounded-full border-4 border-facebook px-6 transition duration-300'
+            />
 
             {/* Twitter Button */}
-            <LoginButton handler={() => undefined} icon={twitterIcon} buttonlabel='Continue with Twitter'
-              style='group h-12 rounded-full border-4 border-twitter px-6 transition duration-300' />
+            <LoginButton
+              handler={() => undefined}
+              icon={twitterIcon}
+              buttonlabel='Continue with Twitter'
+              style='group h-12 rounded-full border-4 border-twitter px-6 transition duration-300'
+            />
 
             {/* Apple Button */}
-            <LoginButton handler={() => undefined} icon={appleIcon} buttonlabel='Continue with Apple'
-              style='group h-12 rounded-full border-4 border-applegrey px-6 transition duration-300' />
+            <LoginButton
+              handler={() => undefined}
+              icon={appleIcon}
+              buttonlabel='Continue with Apple'
+              style='group h-12 rounded-full border-4 border-applegrey px-6 transition duration-300'
+            />
 
             {/* Microsoft Button */}
-            <LoginButton handler={() => undefined} icon={microsoftIcon} buttonlabel='Continue with Microsoft'
-              style='group h-12 rounded-full border-4 border-microsoftblue px-6 transition duration-300' />
+            <LoginButton
+              handler={() => undefined}
+              icon={microsoftIcon}
+              buttonlabel='Continue with Microsoft'
+              style='group h-12 rounded-full border-4 border-microsoftblue px-6 transition duration-300'
+            />
 
             {/* Yahoo Button */}
-            <LoginButton handler={() => undefined} icon={yahooIcon} buttonlabel='Continue with Yahoo'
-              style='group h-12 rounded-full border-4 border-yahoopurple px-6 transition duration-300' />
+            <LoginButton
+              handler={() => undefined}
+              icon={yahooIcon}
+              buttonlabel='Continue with Yahoo'
+              style='group h-12 rounded-full border-4 border-yahoopurple px-6 transition duration-300'
+            />
             {/* <button onClick={logOut}>logout test</button> */}
           </div>
         </div>
