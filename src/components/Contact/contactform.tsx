@@ -3,6 +3,7 @@ import { Dispatch, SetStateAction, useState } from 'react'
 import Image from 'next/image'
 import { PlusIcon, UserCircleIcon, XIcon } from '@heroicons/react/outline'
 import tw from 'tailwind-styled-components'
+import { v4 as uuidv4 } from 'uuid'
 
 import type { Contact, Pet } from '@/types/types'
 type ContactInfoProps = {
@@ -21,7 +22,7 @@ const ContactForm = ({ contact, image, setIsEditing }: ContactInfoProps) => {
 
   function addPet() {
     const newPetField = {
-      id: Math.random().toString().substring(2, 8),
+      id: uuidv4(),
       name: '',
       notes: ''
     }
@@ -71,6 +72,9 @@ const ContactForm = ({ contact, image, setIsEditing }: ContactInfoProps) => {
   // TODO: Submit ContactForm to database
   const submitForm = (e: React.FormEvent) => {
     e.preventDefault()
+    // TODO: submit to firestore here
+    setIsEditing(false)
+    // TODO: reload page here
   }
 
   return (
