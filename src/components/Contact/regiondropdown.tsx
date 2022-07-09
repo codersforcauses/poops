@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { Dispatch, SetStateAction, useState } from 'react'
 import Select from 'react-select'
 const regionOptions = [
   { value: 'Eastern', label: 'Eastern' },
@@ -29,8 +29,12 @@ const customStyles = {
     }
   }
 }
+type Props = {
+  regions: Array<string>
+  setRegions: Dispatch<SetStateAction<Array<string>>>
+}
 
-const RegionSelector = ({ regions }) => {
+const RegionSelector = ({ regions, setRegions }: Props) => {
   const [regionValue, setRegionValue] = useState(
     regions.map((r: string) => ({ value: r, label: r }))
   )

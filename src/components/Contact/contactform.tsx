@@ -15,6 +15,8 @@ import TagSelector from '@/components/Contact/tagdropdown'
 
 const ContactForm = ({ contact, image, setIsEditing }: ContactInfoProps) => {
   const [pets, setPets] = useState<Pet[]>(contact.pets)
+  const [regions, setRegions] = useState(contact.region)
+  const [tags, setTags] = useState(contact.tags)
   const [contactForm, setContactForm] = useState(contact)
 
   function addPet() {
@@ -157,7 +159,7 @@ const ContactForm = ({ contact, image, setIsEditing }: ContactInfoProps) => {
             Tags
           </label>
 
-          <TagSelector tags={contact.tags} />
+          <TagSelector tags={contact.tags} setTags={setTags} />
 
           {/* This should be done as a react component i think? */}
           {/* Padding to counter the shadow */}
@@ -168,7 +170,7 @@ const ContactForm = ({ contact, image, setIsEditing }: ContactInfoProps) => {
           <label htmlFor='regions' className='text-dark-red'>
             Region
           </label>
-          <RegionSelector regions={contact.region} />
+          <RegionSelector regions={contact.region} setRegions={setRegions} />
         </Box>
         <Box>
           <label htmlFor='pets' className='text-dark-red'>

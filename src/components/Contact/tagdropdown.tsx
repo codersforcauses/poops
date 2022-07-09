@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { Dispatch, SetStateAction, useState } from 'react'
 import Creatable from 'react-select/creatable'
 
 const roles = [
@@ -24,8 +24,12 @@ const customStyles = {
     }
   }
 }
+type Props = {
+  tags: Array<string>
+  setTags: Dispatch<SetStateAction<Array<string>>>
+}
 
-const TagSelector = ({ tags }) => {
+const TagSelector = ({ tags, setTags }: Props) => {
   const [roleValue, setRoleValue] = useState(
     tags.map((t: string) => ({ value: t, label: t }))
   )
