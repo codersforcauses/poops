@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction, useState } from 'react'
-import { StylesConfig } from 'react-select'
+import { MultiValue, StylesConfig } from 'react-select'
 import Creatable from 'react-select/creatable'
 
 const roles = [
@@ -7,13 +7,13 @@ const roles = [
   { value: 'Client', label: 'Client' },
   { value: 'Coordinator', label: 'Coordinator' }
 ]
-
-type MultiValueProp = {
-  value: string
-  label: string
+type Props = {
+  tags: Array<string>
+  setTags: Dispatch<SetStateAction<Array<string>>>
 }
+type MyOption = { label: string; value: string }
 
-const customStyles: StylesConfig<MultiValueProp> = {
+const customStyles: StylesConfig<MyOption> = {
   input: (provided) => ({
     ...provided,
     'input:focus': {
@@ -30,32 +30,18 @@ const customStyles: StylesConfig<MultiValueProp> = {
     }
   }
 }
-type Props = {
-  tags: Array<string>
-  setTags: Dispatch<SetStateAction<Array<string>>>
-}
 
 const TagSelector = ({ tags, setTags }: Props) => {
-  const [roleValue, setRoleValue] = useState(
-    tags.map((t: string) => ({ value: t, label: t }))
-  )
+  const [roleValue, setRoleValue] = useState<MultiValue<MyOption>>()
 
-  const handleChange = (field: string, value: []) => {
-    switch (field) {
-      case 'roles':
-        setRoleValue(value)
-        setTags(value.map((val) => val['value']))
-        break
-
-      default:
-        break
-    }
+  const handleChange = (newValue: MultiValue<MyOption>) => {
+    setRoleValue(newValue)
+    setTags(Object.values(newValue).map((val) => val.value))
   }
-
   return (
     <div>
       <Creatable
-        onChange={(value) => handleChange('roles', value)}
+        onChange={handleChange}
         closeMenuOnSelect={false}
         isMulti
         isClearable={false}
