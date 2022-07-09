@@ -1,14 +1,7 @@
 import React from 'react'
 import { Dispatch, SetStateAction, useState } from 'react'
 import Image from 'next/image'
-import {
-  LocationMarkerIcon,
-  MailIcon,
-  PhoneIcon,
-  PlusIcon,
-  UserCircleIcon,
-  XIcon
-} from '@heroicons/react/outline'
+import { PlusIcon, UserCircleIcon, XIcon } from '@heroicons/react/outline'
 import tw from 'tailwind-styled-components'
 
 import type { Contact, Pet } from '@/types/types'
@@ -66,7 +59,8 @@ const ContactForm = ({ contact, image, setIsEditing }: ContactInfoProps) => {
   // TODO: Submit ContactForm to database
   // Make sure contact info has the updated data
   const submitForm = () => {
-    setIsEditing(false)
+    console.log(contactForm)
+    //setIsEditing(false)
   }
 
   return (
@@ -121,14 +115,9 @@ const ContactForm = ({ contact, image, setIsEditing }: ContactInfoProps) => {
         </Box>
         {/* PHONE */}
         <Box>
-          <div className='flex w-full justify-between'>
-            <label htmlFor={contact.phone} className='text-dark-red'>
-              Phone
-            </label>
-            <a href={`tel:${contact.phone}`}>
-              <PhoneIcon className='h-5 w-5' />
-            </a>
-          </div>
+          <label htmlFor={contact.phone} className='text-dark-red'>
+            Phone
+          </label>
           <input
             name='phone'
             defaultValue={contact.phone}
@@ -138,18 +127,9 @@ const ContactForm = ({ contact, image, setIsEditing }: ContactInfoProps) => {
         </Box>
         {/* EMAIL */}
         <Box>
-          <div className='flex w-full justify-between'>
-            <label htmlFor={contact.email} className='text-dark-red'>
-              Email
-            </label>
-            <a
-              href={`mailto:${contact.email}`}
-              target='_blank'
-              rel='noreferrer'
-            >
-              <MailIcon className='h-5 w-5' />
-            </a>
-          </div>
+          <label htmlFor={contact.email} className='text-dark-red'>
+            Email
+          </label>
           <input
             name='email'
             defaultValue={contact.email}
@@ -159,18 +139,9 @@ const ContactForm = ({ contact, image, setIsEditing }: ContactInfoProps) => {
         </Box>
         {/* ADDRESS */}
         <Box>
-          <div className='flex w-full justify-between'>
-            <label htmlFor={contact.street_address} className='text-dark-red'>
-              Address
-            </label>
-            <a
-              href={`http://maps.google.com/?q=${contact.street_address}`}
-              target='_blank'
-              rel='noreferrer'
-            >
-              <LocationMarkerIcon className='h-5 w-5' />
-            </a>
-          </div>
+          <label htmlFor={contact.street_address} className='text-dark-red'>
+            Address
+          </label>
           <input
             name='street_address'
             defaultValue={contact.street_address}
@@ -180,12 +151,9 @@ const ContactForm = ({ contact, image, setIsEditing }: ContactInfoProps) => {
         </Box>
         {/* TAGS */}
         <Box>
-          <div className='flex w-full justify-between'>
-            <label htmlFor='tags' className='text-dark-red'>
-              Tags
-            </label>
-            <PlusIcon className='h-5 w-5' />
-          </div>
+          <label htmlFor='tags' className='text-dark-red'>
+            Tags
+          </label>
 
           <TagSelector tags={contact.tags} />
 

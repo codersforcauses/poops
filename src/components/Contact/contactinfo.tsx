@@ -3,7 +3,6 @@ import {
   LocationMarkerIcon,
   MailIcon,
   PhoneIcon,
-  PlusIcon,
   UserCircleIcon
 } from '@heroicons/react/outline'
 import tw from 'tailwind-styled-components'
@@ -78,13 +77,9 @@ function ContactInfo({ contact, image }: ContactInfoProps) {
       </Box>
       {/* TAGS */}
       <Box>
-        <div className='flex w-full justify-between'>
-          <label htmlFor='tags' className='text-dark-red'>
-            Tags
-          </label>
-          <PlusIcon className='h-5 w-5' />
-        </div>
-
+        <label htmlFor='tags' className='text-dark-red'>
+          Tags
+        </label>
         <TagHolder className='mt-1'>
           {contact.tags.map((tag, index) => (
             <div key={index}>
