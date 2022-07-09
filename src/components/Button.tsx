@@ -13,7 +13,7 @@ const Button = (props: ButtonInterface) => {
   return (
     <button className={props.style} onClick={props.handler}>
       <div className='relative flex items-center space-x-4'>
-        <span className='text-gray-700 block w-max text-sm font-semibold tracking-wide transition duration-300 sm:text-base'>
+        <span className='text-white-600 block w-max text-sm font-semibold tracking-wide  sm:text-base'>
           {props.buttonlabel}
         </span>
       </div>
