@@ -31,7 +31,7 @@ function ContactInfo({ contact, image }: ContactInfoProps) {
       )}
       {/* FIRST AND LAST NAME */}
       <h1 className='text-4xl font-normal'>
-        {contact.first_name} {contact.last_name}
+        {contact.firstName} {contact.lastName}
       </h1>
       {/* DESCRIPTION */}
       <h3>{contact.notes}</h3>
@@ -62,18 +62,18 @@ function ContactInfo({ contact, image }: ContactInfoProps) {
       {/* ADDRESS */}
       <Box>
         <div className='flex w-full justify-between'>
-          <label htmlFor={contact.street_address} className='text-dark-red'>
+          <label htmlFor={contact.streetAddress} className='text-dark-red'>
             Address
           </label>
           <a
-            href={`http://maps.google.com/?q=${contact.street_address}`}
+            href={`http://maps.google.com/?q=${contact.streetAddress}`}
             target='_blank'
             rel='noreferrer'
           >
             <LocationMarkerIcon className='h-5 w-5' />
           </a>
         </div>
-        <span className='text-xl'>{contact.street_address}</span>
+        <span className='text-xl'>{contact.streetAddress}</span>
       </Box>
       {/* TAGS */}
       <Box>

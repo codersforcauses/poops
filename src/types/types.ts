@@ -5,13 +5,13 @@ interface Pet {
 }
 interface Contact {
   id: string
-  first_name: string
-  last_name: string
+  firstName: string
+  lastName: string
   desc: string
   pets: Pet[]
   email: string
   phone: string
-  street_address: string
+  streetAddress: string
   region: string[]
   notes: string
   tags: string[]

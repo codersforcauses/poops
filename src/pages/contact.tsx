@@ -27,7 +27,7 @@ const Contact = () => {
     const searchFieldString = event.target.value.toLocaleLowerCase()
     setSearchFieldString(searchFieldString)
     const filteredContacts = CONTACT_DATA.filter((contact) => {
-      const full_name = contact.first_name + ' ' + contact.last_name
+      const full_name = contact.firstName + ' ' + contact.lastName
       if (selectedOption == '') {
         return full_name.toLocaleLowerCase().includes(searchFieldString)
       }
@@ -43,7 +43,7 @@ const Contact = () => {
     const option_value = event.target.value
     setSelectedOption(option_value)
     const filteredContacts = CONTACT_DATA.filter((contact) => {
-      const full_name = contact.first_name + ' ' + contact.last_name
+      const full_name = contact.firstName + ' ' + contact.lastName
       if (option_value == '') {
         return full_name.toLocaleLowerCase().includes(searchFieldString)
       }
@@ -66,7 +66,7 @@ const Contact = () => {
           <div className='m-2 flex flex-row rounded-xl border-2 border-grey'>
             <SearchTag options={taglist} onChangehandler={onSearchTagChange} />
             <SearchBar onChangeHandler={onSearchChange} />
-            <SearchIcon className='my-auto mx-3 h-6 rounded-full' />
+            <SearchIcon className='my-auto h-6 rounded-full object-right' />
           </div>
           {searchFieldString === '' && selectedOption === '' && (
             <ProfileItem profile={PROFILE_DATA} image='' />
