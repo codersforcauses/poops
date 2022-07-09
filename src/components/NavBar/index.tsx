@@ -1,11 +1,6 @@
 import { useState } from 'react'
 import { useRouter } from 'next/router'
-import {
-  ChatAltIcon,
-  ExclamationCircleIcon,
-  HomeIcon,
-  UserIcon
-} from '@heroicons/react/outline'
+import { ChatAltIcon, HomeIcon } from '@heroicons/react/outline'
 
 import { NavIcon } from '@/components/NavBar/navicon'
 import NavLink from '@/components/NavBar/navlink'
@@ -26,25 +21,11 @@ export default function NavBar() {
 
   const linkDetails = [
     { name: 'Home', route: '/', icon: <HomeIcon className={iconClasses} /> },
+
     {
       name: 'Contact',
       route: '/contact',
       icon: <ChatAltIcon className={iconClasses} />
-    },
-    {
-      name: 'Visit',
-      route: '/visit',
-      icon: <NavIcon currentPage={currentPage} />
-    },
-    {
-      name: 'Incidents',
-      route: '/incidents',
-      icon: <ExclamationCircleIcon className={iconClasses} />
-    },
-    {
-      name: 'Profile',
-      route: '/profile',
-      icon: <UserIcon className={iconClasses} />
     }
   ]
 
@@ -61,12 +42,30 @@ export default function NavBar() {
     )
   })
 
+  const visitLinkDetail = {
+    name: 'Visit',
+    route: '/visit',
+    icon: <NavIcon currentPage={currentPage} />
+  }
+
+  const visitNavLink = (
+    <NavLink
+      href={visitLinkDetail.route}
+      name={visitLinkDetail.name}
+      key={visitLinkDetail.name}
+      currentPage={visitLinkDetail.name === currentPage}
+      setCurrentPage={setCurrentPage}
+      icon={visitLinkDetail.icon}
+    />
+  )
+
   return (
     <div className='h-16 w-full justify-center'>
       <nav
         id='bottom-navigation'
         className='fixed inset-x-0 bottom-0 z-10 block bg-white shadow'
       >
+        {visitNavLink}
         <div className='flex justify-between'>{navLinks}</div>
       </nav>
     </div>

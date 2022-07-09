@@ -12,6 +12,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Auth } from 'firebase/auth'
 
 import LoginButton from '@/components/Login/LoginButton'
+import { withPublic } from '@/components/PrivateRoute'
 
 import { auth } from '../components/Firebase/init'
 import { useAuth } from '../context/AuthContext'
@@ -21,7 +22,6 @@ const Login: NextPage = () => {
 
   const googleIcon = <FontAwesomeIcon icon={faGoogle} />
   const facebookIcon = <FontAwesomeIcon icon={faFacebookF} />
-  // const githubIcon = <FontAwesomeIcon icon={faGithub} />
   const twitterIcon = <FontAwesomeIcon icon={faTwitter} />
   const appleIcon = <FontAwesomeIcon icon={faApple} />
   const microsoftIcon = <FontAwesomeIcon icon={faMicrosoft} />
@@ -101,7 +101,6 @@ const Login: NextPage = () => {
               buttonlabel='Continue with Yahoo'
               style='group h-12 rounded-full border-4 border-yahoopurple px-6 transition duration-300'
             />
-            {/* <button onClick={logOut}>logout test</button> */}
           </div>
         </div>
       </main>
@@ -109,4 +108,4 @@ const Login: NextPage = () => {
   )
 }
 
-export default Login
+export default withPublic(Login)

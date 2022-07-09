@@ -1,12 +1,12 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
-const { fontFamily } = require('tailwindcss/defaultTheme')
+const defaultTheme = require('tailwindcss/defaultTheme')
+const colors = require('tailwindcss/colors')
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
-    './pages/**/*.{js,ts,jsx,tsx}',
-    './components/**/*.{js,ts,jsx,tsx}',
-    './src/**/*.{js,jsx,ts,tsx}'
+    './src/pages/**/*.{js,ts,jsx,tsx}',
+    './src/components/**/*.{js,ts,jsx,tsx}'
   ],
   theme: {
     colors: {
@@ -25,15 +25,13 @@ module.exports = {
       applegrey: '#A2AAAD',
       microsoftblue: '#00A4EF',
       yahoopurple: '#430297',
-      // 'zinc-200': '#F8F8F8',
       'zinc-200': '#F2F2F2',
-      // 'zinc-300': '#F5F5F5',
-      "zinc-300": "#D9D9D9",
+      'zinc-300': '#D9D9D9',
       'zinc-50': '#FFFFFF'
     },
     extend: {
       fontFamily: {
-        primary: ['Inter', ...fontFamily.sans]
+        primary: ['Inter']
       },
       animation: {
         text: 'text 5s ease infinite'
