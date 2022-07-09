@@ -26,7 +26,7 @@ function Modal() {
   const [type, setType] = useState("TYPE OF VISIT")
   const [pet, setPet] = useState("SELECT PET")
   const [distance, setDistance] = useState(0)
-  const [optionSelected, setSelected] = useState("")
+  const [optionSelected, setSelected] = useState([])
 
   const pets = [
     { value: 'Willow', label: 'Willow' },
@@ -38,7 +38,6 @@ function Modal() {
   const handleChange = (selected) => {
     setSelected(selected)
   };
-  
   return (
     <div>
       <div className='text-center'>
@@ -67,13 +66,6 @@ function Modal() {
       />
       <br />
       <form style={{ fontSize: 18 }}>
-        {/* <select id='pets' name='pets' onChange={e => setPet(e.target.value)}>
-        <option value='SELECT PET'>SELECT PET</option>
-          <option value='Willow'>Willow</option>
-          <option value='Nala'>Nala</option>
-          <option value='Coco'>Coco</option>
-          <option value='Gigi'>Gigi</option>
-        </select> */}
         <ReactSelect
           options={pets}
           isMulti
@@ -98,7 +90,7 @@ function Modal() {
     </div> 
     <br></br>
     <div className='text-center'>
-    {(((type == "Vet" || type == "Transportation") && optionSelected && distance == 0 && modalIsOpen) || (type == "Walk" && optionSelected && distance > 0 && modalIsOpen)) && (
+    {(((type == "Vet" || type == "Transportation") && optionSelected.length > 0 && distance == 0 && modalIsOpen) || (type == "Walk" && optionSelected.length > 0 && distance > 0 && modalIsOpen)) && (
           <button
             className='relative h-[37px] w-[150px] rounded-lg bg-poops-dark-red text-xl font-semibold text-white'
             onClick={() => {
