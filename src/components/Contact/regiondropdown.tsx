@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction, useState } from 'react'
-import Select from 'react-select'
+import Select, { StylesConfig } from 'react-select'
 const regionOptions = [
   { value: 'Eastern', label: 'Eastern' },
   { value: 'Coastal South', label: 'Coastal South' },
@@ -11,8 +11,12 @@ const regionOptions = [
   { value: 'Southern', label: 'Southern' },
   { value: 'Western', label: 'Western' }
 ]
+type MultiValueProp = {
+  value: string
+  label: string
+}
 
-const customStyles = {
+const customStyles: StylesConfig<MultiValueProp> = {
   input: (provided) => ({
     ...provided,
     'input:focus': {
