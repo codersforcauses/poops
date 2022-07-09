@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Dispatch, SetStateAction, useState } from 'react'
 import Image from 'next/image'
 import { PlusIcon, UserCircleIcon, XIcon } from '@heroicons/react/outline'
@@ -57,18 +57,19 @@ const ContactForm = ({ contact, image, setIsEditing }: ContactInfoProps) => {
         : pet
     )
     setPets(newPets)
-    setContactForm({ ...contactForm, pets: newPets })
   }
 
+  useEffect(() => {
+    setContactForm({ ...contactForm, region: regions, pets: pets })
+  }, [regions, pets])
+
   // TODO: Submit ContactForm to database
-  // Make sure contact info has the updated data
-  const submitForm = () => {
-    //console.log(contactForm)
-    //setIsEditing(false)
+  const submitForm = (e: any) => {
+    e.preventDefault()
   }
 
   return (
-    <form>
+    <form onSubmit={submitForm}>
       <div className='flex flex-col items-center justify-center gap-3'>
         {image === '' ? (
           <UserCircleIcon className='w-32 rounded-full' />
@@ -229,9 +230,8 @@ const ContactForm = ({ contact, image, setIsEditing }: ContactInfoProps) => {
         <div className='mb-3 flex justify-center'>
           <div className='flex flex-col space-y-1'>
             <button
-              type='button'
+              type='submit'
               className='w-80 rounded bg-primary py-1 font-bold text-white hover:bg-dark-red'
-              onClick={submitForm} //setIsEditing(false)}
             >
               Save
             </button>
