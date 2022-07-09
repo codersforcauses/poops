@@ -2,7 +2,7 @@ import React from 'react'
 import { useState } from 'react'
 
 import { User, writeUserData } from '@/../databaseIntigration'
-import { CancelButton } from '@/components/visit/Buttons'
+import { CancelSymbol } from '@/components/visit/Buttons'
 import FormField from '@/components/visit/formField'
 
 interface ModalViewProps {
@@ -25,7 +25,7 @@ const ModalView: React.FC<ModalViewProps> = ({ openFunc }) => {
       <div>
         <div className='fixed right-2 top-2 h-7 w-7 rounded-full bg-primary'>
           <button onClick={openFunc}>
-            <CancelButton />
+            <CancelSymbol />
           </button>
         </div>
 
