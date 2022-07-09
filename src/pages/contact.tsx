@@ -16,7 +16,6 @@ const tags = CONTACT_DATA.map((contact) => {
 const set = new Set(tags)
 const taglist = [...set]
 import NavBar from '@/components/NavBar'
-import { withProtected } from '@/components/PrivateRoute'
 
 const Contact = () => {
   const [filteredContacts, setFilteredContacts] =
@@ -81,4 +80,4 @@ const Contact = () => {
   )
 }
 
-export default withProtected(Contact)
+export default Contact

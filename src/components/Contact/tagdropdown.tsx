@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction, useState } from 'react'
-import Creatable from 'react-select/creatable'
 import { StylesConfig } from 'react-select'
+import Creatable from 'react-select/creatable'
 
 const roles = [
   { value: 'Volunteer', label: 'Volunteer' },

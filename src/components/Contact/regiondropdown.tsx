@@ -11,12 +11,14 @@ const regionOptions = [
   { value: 'Southern', label: 'Southern' },
   { value: 'Western', label: 'Western' }
 ]
-type MultiValueProp = {
-  value: string
-  label: string
-}
 
-const customStyles: StylesConfig<MultiValueProp> = {
+type Props = {
+  regions: Array<string>
+  setRegions: Dispatch<SetStateAction<Array<string>>>
+}
+type MyOption = { label: string; value: string }
+
+const customStyles: StylesConfig<MyOption> = {
   input: (provided) => ({
     ...provided,
     'input:focus': {
@@ -33,30 +35,22 @@ const customStyles: StylesConfig<MultiValueProp> = {
     }
   }
 }
-type Props = {
-  regions: Array<string>
-  setRegions: Dispatch<SetStateAction<Array<string>>>
-}
 
 const RegionSelector = ({ regions, setRegions }: Props) => {
   const [regionValue, setRegionValue] = useState(
     regions.map((r: string) => ({ value: r, label: r }))
   )
-  const handleChange = (field: string, value: []) => {
-    switch (field) {
-      case 'roles':
-        setRegionValue(value)
-        setRegions(value.map((val) => val['value']))
-        break
 
-      default:
-        break
-    }
+  const handleChange = (
+    newValue: SetStateAction<{ value: string; label: string }[]>
+  ) => {
+    setRegionValue(newValue)
+    setRegions(Object.values(newValue).map((val) => val.value))
   }
+
   return (
     <div>
       <Select
-        onChange={(value) => handleChange('roles', value)}
         closeMenuOnSelect={false}
         isMulti
         isClearable={false}
@@ -64,6 +58,7 @@ const RegionSelector = ({ regions, setRegions }: Props) => {
         value={regionValue}
         defaultValue={regions.map((r: string) => ({ value: r, label: r }))}
         styles={customStyles}
+        onChange={handleChange}
       />
     </div>
   )

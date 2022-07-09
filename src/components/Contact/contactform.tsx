@@ -74,6 +74,7 @@ const ContactForm = ({ contact, image, setIsEditing }: ContactInfoProps) => {
     e.preventDefault()
     // TODO: submit to firestore here
     setIsEditing(false)
+
     // TODO: reload page here
   }
 
