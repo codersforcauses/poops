@@ -1,11 +1,14 @@
 import React, { createContext, useContext, useEffect, useState } from 'react'
 import {
   Auth,
+  FacebookAuthProvider,
   getRedirectResult,
   GoogleAuthProvider,
+  OAuthProvider,
   onAuthStateChanged,
   signInWithRedirect,
   signOut,
+  TwitterAuthProvider,
   User
 } from 'firebase/auth'
 
@@ -14,6 +17,9 @@ import { auth } from '../components/Firebase/init'
 interface FirebaseContextProps {
   auth: Auth
   googleSignIn?: (auth: Auth) => void
+  facebookSignIn?: (auth: Auth) => void
+  twitterSignIn?: (auth: Auth) => void
+  microsoftSignIn?: (auth: Auth) => void
   getGoogleResults?: (auth: Auth) => void
   logOut?: () => void
   currentUser?: User | null
@@ -37,6 +43,39 @@ export const AuthContextProvider = ({
   function googleSignIn(auth: Auth) {
     const googleProvider = new GoogleAuthProvider()
     signInWithRedirect(auth, googleProvider) // Not working in chrome incognito?, but signInWithPopup does
+      .then((result) => {
+        return result
+      })
+      .catch((error) => {
+        return error
+      })
+  }
+
+  function facebookSignIn(auth: Auth) {
+    const facebookProvider = new FacebookAuthProvider()
+    signInWithRedirect(auth, facebookProvider)
+      .then((result) => {
+        return result
+      })
+      .catch((error) => {
+        return error
+      })
+  }
+
+  function twitterSignIn(auth: Auth) {
+    const twitterProvider = new TwitterAuthProvider()
+    signInWithRedirect(auth, twitterProvider)
+      .then((result) => {
+        return result
+      })
+      .catch((error) => {
+        return error
+      })
+  }
+
+  function microsoftSignIn(auth: Auth) {
+    const microsoftProvider = new OAuthProvider('microsoft.com')
+    signInWithRedirect(auth, microsoftProvider)
       .then((result) => {
         return result
       })
@@ -89,6 +128,9 @@ export const AuthContextProvider = ({
   const value: FirebaseContextProps = {
     auth,
     googleSignIn,
+    facebookSignIn,
+    twitterSignIn,
+    microsoftSignIn,
     getGoogleResults,
     logOut,
     currentUser

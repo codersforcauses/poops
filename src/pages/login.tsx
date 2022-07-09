@@ -18,7 +18,8 @@ import { auth } from '../components/Firebase/init'
 import { useAuth } from '../context/AuthContext'
 
 const Login: NextPage = () => {
-  const { googleSignIn } = useAuth()
+  const { googleSignIn, facebookSignIn, twitterSignIn, microsoftSignIn } =
+    useAuth()
 
   const googleIcon = <FontAwesomeIcon icon={faGoogle} />
   const facebookIcon = <FontAwesomeIcon icon={faFacebookF} />
@@ -29,6 +30,15 @@ const Login: NextPage = () => {
 
   function handleGoogle(auth: Auth) {
     googleSignIn?.(auth)
+  }
+  function handleFacebook(auth: Auth) {
+    facebookSignIn?.(auth)
+  }
+  function handleTwitter(auth: Auth) {
+    twitterSignIn?.(auth)
+  }
+  function handleMicrosoft(auth: Auth) {
+    microsoftSignIn?.(auth)
   }
 
   return (
@@ -64,7 +74,7 @@ const Login: NextPage = () => {
 
             {/* FaceBook Button */}
             <LoginButton
-              handler={() => undefined}
+              handler={() => handleFacebook(auth)}
               icon={facebookIcon}
               buttonlabel='Continue with Facebook'
               style='group h-12 rounded-full border-4 border-facebook px-6 transition duration-300'
@@ -72,7 +82,7 @@ const Login: NextPage = () => {
 
             {/* Twitter Button */}
             <LoginButton
-              handler={() => undefined}
+              handler={() => handleTwitter(auth)}
               icon={twitterIcon}
               buttonlabel='Continue with Twitter'
               style='group h-12 rounded-full border-4 border-twitter px-6 transition duration-300'
@@ -80,7 +90,7 @@ const Login: NextPage = () => {
 
             {/* Apple Button */}
             <LoginButton
-              handler={() => undefined}
+              handler={() => handleMicrosoft(auth)}
               icon={appleIcon}
               buttonlabel='Continue with Apple'
               style='group h-12 rounded-full border-4 border-applegrey px-6 transition duration-300'
