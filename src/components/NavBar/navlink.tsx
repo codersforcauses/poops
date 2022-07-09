@@ -1,3 +1,4 @@
+import { Dispatch, SetStateAction } from 'react'
 import Link from 'next/link'
 
 type NavLinkProps = {
@@ -5,7 +6,7 @@ type NavLinkProps = {
   name: string
   icon: JSX.Element
   currentPage: boolean
-  setCurrentPage: (name: string) => unknown
+  setCurrentPage: Dispatch<SetStateAction<string>>
 }
 
 export default function NavLink({
