@@ -20,6 +20,32 @@ const ModalView: React.FC<ModalViewProps> = ({ openFunc }) => {
   const [commuteMethod, setCommuteMethod] = useState('')
   const [notes, setNotes] = useState('')
 
+  const onSubmit = () => {
+    const data: User = {
+      firstName: firstName,
+      lastName: lastName,
+      petName: petName,
+      dateTime: dateTime,
+      duration: duration,
+      walkDist: walkDist,
+      commuteDist: commuteDist,
+      commuteMethod: commuteMethod,
+      notes: notes
+    }
+    writeUserData(data)
+  }
+
+  const isSubmitDisabled = () =>
+    firstName &&
+    lastName &&
+    petName &&
+    dateTime &&
+    duration &&
+    walkDist &&
+    commuteDist &&
+    commuteMethod &&
+    true
+
   return (
     <div className='fixed inset-0 z-50 h-screen w-screen rounded-sm bg-white p-4 shadow '>
       <div>
@@ -35,18 +61,7 @@ const ModalView: React.FC<ModalViewProps> = ({ openFunc }) => {
         <form
           className='pt-3'
           onSubmit={() => {
-            const data: User = {
-              firstName: firstName,
-              lastName: lastName,
-              petName: petName,
-              dateTime: dateTime,
-              duration: duration,
-              walkDist: walkDist,
-              commuteDist: commuteDist,
-              commuteMethod: commuteMethod,
-              notes: notes
-            }
-            writeUserData(data)
+            onSubmit
           }}
         >
           <table className='container mx-auto table-fixed'>
@@ -149,20 +164,8 @@ const ModalView: React.FC<ModalViewProps> = ({ openFunc }) => {
           />
           <div className='mx-auto my-2 flex flex-col p-1 '>
             <button
-              className='text-bold rounded bg-primary px-12 py-4 text-white drop-shadow-default'
-              disabled={
-                !(
-                  firstName &&
-                  lastName &&
-                  petName &&
-                  dateTime &&
-                  duration &&
-                  walkDist &&
-                  commuteDist &&
-                  commuteMethod &&
-                  true
-                )
-              }
+              className='text-bold rounded bg-primary px-12 py-4 text-white drop-shadow-default active:bg-dark-red'
+              disabled={!isSubmitDisabled}
             >
               Submit
             </button>
