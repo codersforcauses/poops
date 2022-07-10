@@ -3,7 +3,7 @@ import { useState } from 'react'
 
 import Modal from './modal'
 
-export default function EditButton(prop: { isEdit: boolean }) {
+export const EditButton = (prop: { isEdit: boolean }) => {
   if (prop.isEdit) {
     return <CancelSymbol />
   }
