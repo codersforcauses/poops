@@ -25,8 +25,8 @@ module.exports = {
       applegrey: '#A2AAAD',
       microsoftblue: '#00A4EF',
       yahoopurple: '#430297',
-      'zinc-200': '#F8F8F8',
-      'zinc-300': '#F5F5F5',
+      'zinc-200': '#F2F2F2',
+      'zinc-300': '#D9D9D9',
       'zinc-50': '#FFFFFF'
     },
     extend: {

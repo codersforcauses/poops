@@ -1,6 +1,10 @@
 import Header from '@/components/Header'
+import NavBar from '@/components/NavBar'
+import { withProtected } from '@/components/PrivateRoute'
+import { useAuth } from '@/context/AuthContext'
 
 const Profile = () => {
+  const { logOut } = useAuth()
   return (
     <>
       {/* <Seo /> */}
@@ -8,9 +12,11 @@ const Profile = () => {
 
       <main>
         <p>Profile Page</p>
+        <button onClick={logOut}>logout</button>
       </main>
+      <NavBar />
     </>
   )
 }
 
-export default Profile
+export default withProtected(Profile)
