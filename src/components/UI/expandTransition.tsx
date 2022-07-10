@@ -8,7 +8,7 @@ type TransitionProps = {
 const ExpandTransition: React.FC<TransitionProps> = ({
   isExpanded,
   children,
-  className,
+  className
 }) => {
   return (
     <Transition
