@@ -9,7 +9,13 @@ import {
   faYahoo
 } from '@fortawesome/free-brands-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { Auth } from 'firebase/auth'
+import {
+  Auth,
+  FacebookAuthProvider,
+  GoogleAuthProvider,
+  OAuthProvider,
+  TwitterAuthProvider
+} from 'firebase/auth'
 
 import LoginButton from '@/components/Login/LoginButton'
 import { withPublic } from '@/components/PrivateRoute'
@@ -18,8 +24,7 @@ import { auth } from '../components/Firebase/init'
 import { useAuth } from '../context/AuthContext'
 
 const Login: NextPage = () => {
-  const { googleSignIn, facebookSignIn, twitterSignIn, microsoftSignIn } =
-    useAuth()
+  const { externalAuthSignIn } = useAuth()
 
   const googleIcon = <FontAwesomeIcon icon={faGoogle} />
   const facebookIcon = <FontAwesomeIcon icon={faFacebookF} />
@@ -29,16 +34,20 @@ const Login: NextPage = () => {
   const yahooIcon = <FontAwesomeIcon icon={faYahoo} />
 
   function handleGoogle(auth: Auth) {
-    googleSignIn?.(auth)
+    const googleProvider = new GoogleAuthProvider()
+    externalAuthSignIn?.(auth, googleProvider)
   }
   function handleFacebook(auth: Auth) {
-    facebookSignIn?.(auth)
+    const facebookProvider = new FacebookAuthProvider()
+    externalAuthSignIn?.(auth, facebookProvider)
   }
   function handleTwitter(auth: Auth) {
-    twitterSignIn?.(auth)
+    const twitterProvider = new TwitterAuthProvider()
+    externalAuthSignIn?.(auth, twitterProvider)
   }
   function handleMicrosoft(auth: Auth) {
-    microsoftSignIn?.(auth)
+    const microsoftProvider = new OAuthProvider('microsoft.com')
+    externalAuthSignIn?.(auth, microsoftProvider)
   }
 
   return (

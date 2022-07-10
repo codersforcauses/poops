@@ -47,10 +47,10 @@ module.exports = {
             'background-position': 'right center'
           }
         },
-      white: colors.white,
-      black: colors.black
+        white: colors.white,
+        black: colors.black
+      }
     },
-  },
-  plugins: [require('@tailwindcss/forms')]
-}
+    plugins: [require('@tailwindcss/forms')]
+  }
 }
