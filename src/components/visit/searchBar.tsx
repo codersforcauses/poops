@@ -1,7 +1,7 @@
 import React from 'react'
 import { SearchIcon } from '@heroicons/react/outline'
 
-import { AddButton } from '@/components/visit/buttons'
+import { AddButton } from './buttons'
 
 interface SearchBarProps {
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void

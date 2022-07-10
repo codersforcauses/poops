@@ -2,8 +2,8 @@ import React from 'react'
 import { useState } from 'react'
 import { User, writeUserData } from 'databaseintegration'
 
-import { CancelSymbol } from '@/components/visit/buttons'
-import FormField from '@/components/visit/formfield'
+import { CancelSymbol } from './buttons'
+import FormField from './formfield'
 
 interface ModalViewProps {
   openFunc: () => void
