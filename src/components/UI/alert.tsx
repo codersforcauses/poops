@@ -1,5 +1,5 @@
-import { useState, useRef, useEffect } from 'react'
-import { InformationCircleIcon, ShieldExclamationIcon, ExclamationIcon, AnnotationIcon, XIcon } from '@heroicons/react/outline'
+import { useCallback, useEffect, useRef, useState } from 'react'
+import { AnnotationIcon, ExclamationIcon, InformationCircleIcon, ShieldExclamationIcon, XIcon } from '@heroicons/react/outline'
 
 const iconColor = '#000000'
 const titleColor = '#000000'
@@ -43,24 +43,24 @@ const Alert: React.FC<AlertProps> = ({
     }) => {
     const [visible, setVisible] = useState(false)
     const [currentText, setCurrentText] = useState('')
-    let timerRef = useRef<ReturnType<typeof setTimeout>>()
+    const timerRef = useRef<ReturnType<typeof setTimeout>>()
 
-    const setUpdate = () => {
-      if (text !== null && text !== '') {
-        setCurrentText(text)
+    const setUpdate = useCallback((message: string) => {
+      if (message !== null && message !== '') {
+        setCurrentText(message)
         setVisible(true)
         timerRef.current = setTimeout(() => {
           setVisible(false)
           setText('')
         }, timeout)
       }
-    }
+    }, [setText, timeout])
 
     useEffect(() => {
       if (timerRef.current)
         clearTimeout(timerRef.current)
-      setUpdate()
-    }, [text])
+      setUpdate(text)
+    }, [text, setUpdate])
 
     useEffect(()=> {
       return () => {
@@ -86,7 +86,7 @@ const Alert: React.FC<AlertProps> = ({
           )
         }
         </div>
-        <p className='text-xl font-bold ml-[2rem] leading-4' style={{color: titleColor}}>Title</p>
+        <p className='text-xl font-bold ml-[2rem]' style={{color: titleColor}}>Title</p>
         <p className='self-start grow ml-4 mr-[2rem]' style={{color: textColor}}>{ currentText }</p>
         <button
         className='self-start'

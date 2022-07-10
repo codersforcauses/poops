@@ -1,9 +1,11 @@
-import { useForm } from 'react-hook-form'
 import { useState } from 'react'
-import { IncidentForm } from '@/types'
-import FormInput, { FormInputProps } from './formInput'
-import ExpandTransition from '@/components/UI/expandTransition'
+import { useForm } from 'react-hook-form'
+
 import Alert from '@/components/UI/alert'
+import ExpandTransition from '@/components/UI/expandTransition'
+import { IncidentForm } from '@/types'
+
+import FormInput, { FormInputProps } from './formInput'
 
 type IncidentProps = {
   isExpanded: boolean
@@ -26,7 +28,7 @@ const IncidentForm: React.FC<IncidentProps> = ({
     petName: 'Spot'
   }
 
-  const today = new Date()
+  //const today = new Date()
 
   const [text, setText] = useState('')
   const [variant, setVariant] = useState('info')

@@ -1,6 +1,7 @@
+import { useState } from 'react'
+
 import Header from '@/components/Header'
 import IncidentForm from '@/components/IncidentForm'
-import { useState } from 'react'
 
 const Visit = () => {
   const [isFormExpanded, setIsFormExpanded] = useState(false)

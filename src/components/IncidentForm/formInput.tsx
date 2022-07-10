@@ -1,6 +1,7 @@
-import { IncidentForm } from '@/types'
-import { HTMLInputTypeAttribute, InputHTMLAttributes } from 'react'
+import { HTMLInputTypeAttribute } from 'react'
 import { UseFormRegister } from 'react-hook-form'
+
+import { IncidentForm } from '@/types'
 
 export type FormInputProps = {
   label: string
