@@ -148,7 +148,7 @@ const ModalView: React.FC<ModalViewProps> = ({ openFunc }) => {
           />
           <FormField
             id='durationInput'
-            type='time' // there is no type='duration' so this is a clock time not duration time. will look weird on mobile which usually has nice fancy interfaces. need to write custom component. easiest fix is to use endTime instead
+            type='time'
             placeholder='Duration'
             label='Duration:'
             isRequired={true}
