@@ -13,7 +13,7 @@ export default function VisitList(props: VisitListProps) {
   useEffect(() => {
     const fetchData = () => getVisitData().then(setVisitData)
     fetchData()
-  })
+  }, [])
 
   const matchesFirstName = (post: Visit) =>
     post.firstName.toLowerCase().includes(props.searchQuery.toLowerCase())
