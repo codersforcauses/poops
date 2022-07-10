@@ -38,7 +38,7 @@ export interface Visit extends User {
   id: string
 }
 
-export async function writeUserData(props: User) {
+export const writeUserData = async (props: User) => {
   const data = {
     firstName: props.firstName,
     lastName: props.lastName,
@@ -53,7 +53,7 @@ export async function writeUserData(props: User) {
   await addDoc(poopsRef, data)
 }
 
-export async function getVisitData() {
+export const getVisitData = async () => {
   const querySnapshot = await getDocs(poopsRef)
 
   const visitData: Visit[] = []
@@ -79,6 +79,6 @@ export async function getVisitData() {
   return visitData
 }
 
-export async function updateUserData(id: string, props: User) {
+export const updateUserData = async (id: string, props: User) => {
   await setDoc(doc(poopsRef, id), props)
 }

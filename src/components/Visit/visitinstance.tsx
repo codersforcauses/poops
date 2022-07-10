@@ -13,7 +13,7 @@ function NumberForm(value: string) {
   return parseFloat(value)
 }
 
-function ReadOnlyVisitInstance(props: User) {
+const ReadOnlyVisitInstance = (props: User) => {
   return (
     <>
       <div className='font-bold peer-checked:font-normal'>
@@ -32,7 +32,7 @@ function ReadOnlyVisitInstance(props: User) {
   )
 }
 
-function EditableVisitInstance(props: Visit) {
+const EditableVisitInstance = (props: Visit) => {
   const [firstName, setFirstName] = useState(props.firstName)
   const [lastName, setLastName] = useState(props.lastName)
   const [dateTime, setDateTime] = useState(props.dateTime)
@@ -168,7 +168,7 @@ function EditableVisitInstance(props: Visit) {
   )
 }
 
-export default function VisitInstance(props: VisitInstanceProps) {
+const VisitInstance = (props: VisitInstanceProps) => {
   const [isEditable, setIsEditable] = useState(false)
   const [isOpen, setIsOpen] = useState(false)
 
@@ -238,3 +238,5 @@ export default function VisitInstance(props: VisitInstanceProps) {
     </div>
   )
 }
+
+export default VisitInstance

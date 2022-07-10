@@ -7,7 +7,7 @@ interface VisitListProps {
   searchQuery: string
 }
 
-export default function VisitList(props: VisitListProps) {
+const VisitList = (props: VisitListProps) => {
   const [visitData, setVisitData] = useState<Visit[]>([])
 
   useEffect(() => {
@@ -53,3 +53,5 @@ export default function VisitList(props: VisitListProps) {
     </div>
   )
 }
+
+export default VisitList
