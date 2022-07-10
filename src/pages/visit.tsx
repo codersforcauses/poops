@@ -14,18 +14,26 @@ const Visit = () => {
       <main>
         <p>Visit Page</p>
         <button
-          onClick={() => {
+          onClick={(e) => {
+            e.preventDefault()
+            if (isFormExpanded && !isVetVisit)
+              setIsFormExpanded(false)
+            else
+              setIsFormExpanded(true)
             setIsVetVisit(false)
-            setIsFormExpanded(true)
           }}
           className='mx-auto mt-2 w-fit rounded-lg bg-primary py-1 px-4 text-lg text-white shadow-md focus:outline-primary active:bg-dark-red'
         >
           Create Incident
         </button>
         <button
-          onClick={() => {
+          onClick={(e) => {
+            e.preventDefault()
+            if (isFormExpanded && isVetVisit)
+              setIsFormExpanded(false)
+            else
+              setIsFormExpanded(true)
             setIsVetVisit(true)
-            setIsFormExpanded(true)
           }}
           className='mx-auto mt-2 w-fit rounded-lg bg-primary py-1 px-4 text-lg text-white shadow-md focus:outline-primary active:bg-dark-red'
         >

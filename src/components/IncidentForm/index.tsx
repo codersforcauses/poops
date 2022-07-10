@@ -1,7 +1,9 @@
 import { useForm } from 'react-hook-form'
+import { useState } from 'react'
 import { IncidentForm } from '@/types'
 import FormInput, { FormInputProps } from './formInput'
-import ExpandTransition from './expandTransition'
+import ExpandTransition from '@/components/UI/expandTransition'
+import Alert from '@/components/UI/alert'
 
 type IncidentProps = {
   isExpanded: boolean
@@ -25,6 +27,9 @@ const IncidentForm: React.FC<IncidentProps> = ({
   }
 
   const today = new Date()
+
+  const [text, setText] = useState('')
+  const [variant, setVariant] = useState('info')
 
   const { register, handleSubmit } = useForm<IncidentForm>({
     defaultValues: {
@@ -54,6 +59,16 @@ const IncidentForm: React.FC<IncidentProps> = ({
   })
 
   return (
+    <>
+    <Alert
+    text={text}
+    setText={setText}
+    variant={
+      (variant === 'info' || variant === 'problem' || variant === 'comment')
+        ? variant
+        : 'info'
+    }
+    />
     <ExpandTransition isExpanded={isExpanded}>
       <form className='mt-4 flex flex-col px-2' onSubmit={onSubmit}>
         {formInputs.map((input) => {
@@ -76,20 +91,29 @@ const IncidentForm: React.FC<IncidentProps> = ({
           <button
             type='button'
             className='mx-auto mt-2 w-fit rounded-lg border border-primary  py-1 px-4 text-lg shadow-md focus:outline-primary '
-            onClick={() => setIsExpanded(false)}
+            onClick={() => {
+              setIsExpanded(false)
+              setVariant('problem')
+              setText('cancelled incident')
+            }}
           >
             Cancel
           </button>
           <button
             type='button'
             className='mx-auto mt-2 w-fit rounded-lg bg-primary py-1 px-4 text-lg text-white shadow-md focus:outline-primary '
-            onClick={onSubmit}
+            onClick={() => {
+              onSubmit
+              setVariant('info')
+              setText('In orci velit, gravida eu leo non, convallis semper tellus. Nullam rutrum consequat sapien, et semper sapien tempor sed. Nunc lobortis fringilla nisi, ac auctor enim dictum eu. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos.')
+            }}
           >
             Submit
           </button>
         </span>
       </form>
     </ExpandTransition>
+    </>
   )
 }
 
