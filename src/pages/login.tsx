@@ -11,6 +11,7 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
   Auth,
+  AuthProvider,
   FacebookAuthProvider,
   GoogleAuthProvider,
   OAuthProvider,
@@ -33,21 +34,13 @@ const Login: NextPage = () => {
   const microsoftIcon = <FontAwesomeIcon icon={faMicrosoft} />
   const yahooIcon = <FontAwesomeIcon icon={faYahoo} />
 
-  function handleGoogle(auth: Auth) {
-    const googleProvider = new GoogleAuthProvider()
-    externalAuthSignIn?.(auth, googleProvider)
-  }
-  function handleFacebook(auth: Auth) {
-    const facebookProvider = new FacebookAuthProvider()
-    externalAuthSignIn?.(auth, facebookProvider)
-  }
-  function handleTwitter(auth: Auth) {
-    const twitterProvider = new TwitterAuthProvider()
-    externalAuthSignIn?.(auth, twitterProvider)
-  }
-  function handleMicrosoft(auth: Auth) {
-    const microsoftProvider = new OAuthProvider('microsoft.com')
-    externalAuthSignIn?.(auth, microsoftProvider)
+  const googleProvider = new GoogleAuthProvider()
+  const facebookProvider = new FacebookAuthProvider()
+  const twitterProvider = new TwitterAuthProvider()
+  const microsoftProvider = new OAuthProvider('microsoft.com')
+
+  function handleExternalAuth(auth: Auth, provider: AuthProvider) {
+    externalAuthSignIn?.(auth, provider)
   }
 
   return (
@@ -75,7 +68,7 @@ const Login: NextPage = () => {
           <div className='m-auto grid h-1/3 w-1/2 max-w-xs justify-center space-y-4 p-5'>
             {/* Google Button */}
             <LoginButton
-              handler={() => handleGoogle(auth)}
+              handler={() => handleExternalAuth(auth, googleProvider)}
               icon={googleIcon}
               buttonlabel='Continue with Google'
               style='h-12 rounded-full border-4 border-t-googleblue border-r-googlegreen border-b-googleyellow border-l-googlered px-6 transition duration-300'
@@ -83,7 +76,7 @@ const Login: NextPage = () => {
 
             {/* FaceBook Button */}
             <LoginButton
-              handler={() => handleFacebook(auth)}
+              handler={() => handleExternalAuth(auth, facebookProvider)}
               icon={facebookIcon}
               buttonlabel='Continue with Facebook'
               style='group h-12 rounded-full border-4 border-facebook px-6 transition duration-300'
@@ -91,7 +84,7 @@ const Login: NextPage = () => {
 
             {/* Twitter Button */}
             <LoginButton
-              handler={() => handleTwitter(auth)}
+              handler={() => handleExternalAuth(auth, twitterProvider)}
               icon={twitterIcon}
               buttonlabel='Continue with Twitter'
               style='group h-12 rounded-full border-4 border-twitter px-6 transition duration-300'
@@ -107,7 +100,7 @@ const Login: NextPage = () => {
 
             {/* Microsoft Button */}
             <LoginButton
-              handler={() => handleMicrosoft(auth)}
+              handler={() => handleExternalAuth(auth, microsoftProvider)}
               icon={microsoftIcon}
               buttonlabel='Continue with Microsoft'
               style='group h-12 rounded-full border-4 border-microsoftblue px-6 transition duration-300'
