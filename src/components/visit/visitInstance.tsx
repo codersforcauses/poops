@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 import ChevronDownIcon from '@heroicons/react/outline/ChevronDownIcon'
-import { updateUserData, User, Visit } from 'databaseIntigration'
+import { updateUserData, User, Visit } from 'databaseintegration'
 
-import EditButton from '@/components/visit/Buttons'
+import EditButton from '@/components/visit/buttons'
 
 type VisitInstanceProps = Visit
 

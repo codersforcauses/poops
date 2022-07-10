@@ -1,7 +1,7 @@
 import { useState } from 'react'
 
-import SearchBar from '@/components/visit/searchBar'
-import VisitList from '@/components/visit/visitList'
+import SearchBar from '@/components/visit/searchbar'
+import VisitList from '@/components/visit/visitlist'
 
 const Visit = () => {
   const [searchQuery, setSearchQuery] = useState('')

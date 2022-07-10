@@ -1,7 +1,7 @@
 import React from 'react'
 import { useState } from 'react'
 
-import Modal from './Modal'
+import Modal from './modal'
 
 export default function EditButton(prop: { isEdit: boolean }) {
   if (prop.isEdit) {

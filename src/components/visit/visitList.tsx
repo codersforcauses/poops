@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
-import { getVisitData, Visit } from 'databaseIntigration'
+import { getVisitData, Visit } from 'databaseintegration'
 
-import VisitInstance from './visitInstance'
+import VisitInstance from './visitinstance'
 
 interface VisitListProps {
   searchQuery: string
