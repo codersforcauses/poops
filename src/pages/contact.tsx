@@ -6,7 +6,7 @@ import PROFILE_DATA from '@/../mockData/PROFILE_DATA.json'
 import ContactList from '@/components/Contact/contactlist'
 import ProfileItem from '@/components/Contact/profileitem'
 import Header from '@/components/Header'
-import { withProtected } from '@/components/PrivateRoute'
+// import { withProtected } from '@/components/PrivateRoute'
 import SearchBar from '@/components/SearchBar/searchbar'
 import SearchTag from '@/components/SearchBar/searchtag'
 import type { Contact } from '@/types/types'
@@ -81,4 +81,5 @@ const Contact = () => {
   )
 }
 
-export default withProtected(Contact)
+export default Contact
+// export default withProtected(Contact)

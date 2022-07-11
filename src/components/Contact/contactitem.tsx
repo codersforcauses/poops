@@ -10,30 +10,28 @@ type ContactItemProps = {
 
 const ContactItem = ({ contact, image }: ContactItemProps) => {
   return (
-    <>
-      <li className='border-b border-grey bg-white p-3 px-5 hover:bg-grey focus:bg-grey sm:py-4'>
-        <div className='flex items-center space-x-4'>
-          {/* This is a placeholder image */}
-          {image === '' ? (
-            <UserCircleIcon className='h-10 w-10' />
-          ) : (
-            <Image
-              className='h-2 w-2 rounded-full'
-              src={image}
-              alt='Neil image'
-              width={40}
-              height={40}
-              layout='fixed'
-            />
-          )}
-          <div className='min-w-0 flex-1'>
-            <p className='text-gray-900 truncate text-sm font-medium'>
-              {`${contact.firstName} ${contact.lastName}`}
-            </p>
-          </div>
+    <li className='border-b border-grey bg-white p-3 px-5 hover:bg-grey focus:bg-grey sm:py-4'>
+      <div className='flex items-center space-x-4'>
+        {/* This is a placeholder image */}
+        {image === '' ? (
+          <UserCircleIcon className='h-10 w-10' />
+        ) : (
+          <Image
+            className='h-2 w-2 rounded-full'
+            src={image}
+            alt='Neil image'
+            width={40}
+            height={40}
+            layout='fixed'
+          />
+        )}
+        <div className='min-w-0 flex-1'>
+          <p className='text-gray-900 truncate text-sm font-medium'>
+            {`${contact.firstName} ${contact.lastName}`}
+          </p>
         </div>
-      </li>
-    </>
+      </div>
+    </li>
   )
 }
 

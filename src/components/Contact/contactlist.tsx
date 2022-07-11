@@ -19,11 +19,9 @@ const ContactList = ({ contacts }: ContactsProp) => {
   })
 
   return (
-    <>
-      <div className='mt-1 flex-col'>
-        <ul>{contactItems}</ul>
-      </div>
-    </>
+    <div className='mt-1 flex-col'>
+      <ul>{contactItems}</ul>
+    </div>
   )
 }
 
