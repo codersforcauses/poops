@@ -3,6 +3,7 @@ import { useState } from 'react'
 import { User, writeUserData } from 'databaseintegration'
 
 import { CancelSymbol } from './buttons'
+import CommuteSelector from './commuteselector'
 import FormField from './formfield'
 
 interface ModalViewProps {
@@ -126,13 +127,12 @@ const ModalView: React.FC<ModalViewProps> = ({ openFunc }) => {
                   />
                 </td>
                 <td>
-                  <FormField
-                    id='commuteMethodInput'
-                    type='text'
-                    placeholder='Commute Method'
+                  {/* no validation? */}
+                  <CommuteSelector
                     label='Commute Method:'
+                    setCommuteMethod={setCommuteMethod}
+                    id='commuteMethodInput'
                     isRequired={true}
-                    onChange={(event) => setCommuteMethod(event.target.value)}
                   />
                 </td>
               </tr>
