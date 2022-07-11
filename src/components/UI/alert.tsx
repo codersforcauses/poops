@@ -7,6 +7,7 @@ import {
   XIcon
 } from '@heroicons/react/outline'
 
+// COLORS
 const iconColor = '#000000'
 const titleColor = '#000000'
 const textColor = '#000000'
@@ -16,31 +17,30 @@ const shadow =
                 0 4px 8px rgba(0,0,0,0.1),\
                 0 8px 16px rgba(0,0,0,0.1),\
                 0 16px 32px rgba(0,0,0,0.1),\
-                0 32px 64px rgba(0,0,0,0.1),\
-                0 64px 128px rgba(0,0,0,0.1)'
+                0 32px 64px rgba(0,0,0,0.1)'
 
 const getClasses = (visible: boolean, className: string) => {
   return (
-    'flex items-center fixed top-0 left-0 right-0 z-999 pl-6 pt-4 pr-3 pb-3 mx-[2rem] \
+    'flex items-center fixed top-0 left-0 right-0 z-999 pl-6 pt-4 pr-4 pb-3 mx-[2rem] \
               bg-white rounded-b-md text-black border-x-1 border-b-1 border-[#dddddd] \
-              transition-transform duration-300 delay-150 ' +
-    (visible ? 'translate-y-0 ease-out ' : '-translate-y-[200%] ease-in ') +
-    className
+              transition-transform duration-300 delay-150' +
+    (visible ? ' translate-y-0 ease-out ' : ' -translate-y-[200%] ease-in ') +
+    (typeof className !== 'undefined' && className)
   )
 }
 
-enum ModalType {
-  'info',
-  'security',
-  'problem',
-  'comment'
+export enum AlertIcon {
+  info,
+  security,
+  problem,
+  comment
 }
 
 type AlertProps = {
   text: string
   setText: React.Dispatch<React.SetStateAction<string>>
   showFor?: number
-  variant?: keyof typeof ModalType
+  icon?: AlertIcon
   className?: string
 }
 
@@ -48,14 +48,15 @@ const Alert: React.FC<AlertProps> = ({
   text,
   setText,
   showFor = 5000,
-  variant = 'info',
+  icon = AlertIcon.info,
   className
 }) => {
   const [visible, setVisible] = useState(false)
   const [currentText, setCurrentText] = useState('')
   const timerRef = useRef<ReturnType<typeof setTimeout>>()
 
-  const setUpdate = useCallback(
+  // utility function that sets and then clears a timer to automatically close alert
+  const doUpdate = useCallback(
     (message: string) => {
       if (message !== null && message !== '') {
         setCurrentText(message)
@@ -70,11 +71,13 @@ const Alert: React.FC<AlertProps> = ({
   )
 
   useEffect(() => {
+    // whenever text prop is changed, re-show timer for showFor
     if (timerRef.current) clearTimeout(timerRef.current)
-    setUpdate(text)
-  }, [text, setUpdate])
+    doUpdate(text)
+  }, [text])
 
   useEffect(() => {
+    // cleanup the timer when component unmounts
     return () => {
       if (timerRef.current) clearTimeout(timerRef.current)
     }
@@ -85,18 +88,21 @@ const Alert: React.FC<AlertProps> = ({
       className={getClasses(visible, className ? className : '')}
       style={{ boxShadow: shadow }}
     >
-      <div className='h-6 w-6'>
-        {variant === 'info' ? (
-          <InformationCircleIcon className='h-6 w-6' />
-        ) : variant === 'security' ? (
-          <ShieldExclamationIcon className='h-6 w-6' />
-        ) : variant === 'problem' ? (
-          <ExclamationIcon className='h-6 w-6' />
+      <div className='h-7 w-7'>
+        {icon === AlertIcon.info ? (
+          <InformationCircleIcon className='h-7 w-7' />
+        ) : icon === AlertIcon.security ? (
+          <ShieldExclamationIcon className='h-7 w-7' />
+        ) : icon === AlertIcon.problem ? (
+          <ExclamationIcon className='h-7 w-7' />
         ) : (
-          variant === 'comment' && <AnnotationIcon className='h-6 w-6' />
+          icon === AlertIcon.comment && <AnnotationIcon className='h-7 w-7' />
         )}
       </div>
-      <p className='ml-[2rem] text-xl font-bold' style={{ color: titleColor }}>
+      <p
+        className='ml-[2rem] self-start font-bold'
+        style={{ color: titleColor }}
+      >
         Title
       </p>
       <p

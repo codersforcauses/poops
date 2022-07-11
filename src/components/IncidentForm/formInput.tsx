@@ -1,6 +1,7 @@
 import { HTMLInputTypeAttribute } from 'react'
 import { UseFormRegister } from 'react-hook-form'
 
+import ExpandTransition from '@/components/UI/expandTransition'
 import { IncidentForm } from '@/types'
 
 export type FormInputProps = {
@@ -9,6 +10,7 @@ export type FormInputProps = {
   type: HTMLInputTypeAttribute
   required: boolean
   register: UseFormRegister<IncidentForm>
+  isExpanded?: boolean | null
 }
 
 const FormInput: React.FC<FormInputProps> = ({
@@ -16,20 +18,25 @@ const FormInput: React.FC<FormInputProps> = ({
   field,
   type,
   required,
-  register
+  register,
+  isExpanded
 }) => {
   return (
-    <div className='m-auto mb-3 flex w-full flex-col'>
-      <label className='mx-1 text-sm font-bold'>
-        {required && <span className='text-primary'>*</span>}
-        <span>{label}</span>
-      </label>
-      <input
-        type={type}
-        className='rounded-lg border border-black py-1 px-2 selection:bg-primary/70 selection:text-white focus:outline-primary active:ring active:ring-primary'
-        {...register(field)}
-      />
-    </div>
+    <ExpandTransition
+      isExpanded={typeof isExpanded !== 'undefined' ? isExpanded : null}
+    >
+      <div className='m-auto mb-3 flex w-full flex-col'>
+        <label className='mx-1 text-sm font-bold'>
+          {required && <span className='text-primary'>*</span>}
+          <span>{label}</span>
+        </label>
+        <input
+          type={type}
+          className='rounded-lg border border-black py-1 px-2 selection:bg-primary/70 selection:text-white focus:outline-primary active:ring active:ring-primary'
+          {...register(field)}
+        />
+      </div>
+    </ExpandTransition>
   )
 }
 

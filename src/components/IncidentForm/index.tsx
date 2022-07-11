@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 
-import Alert from '@/components/UI/alert'
+import Alert, { AlertIcon } from '@/components/UI/alert'
 import ExpandTransition from '@/components/UI/expandTransition'
 import { IncidentForm } from '@/types'
 
@@ -31,7 +31,7 @@ const IncidentForm: React.FC<IncidentProps> = ({
   //const today = new Date()
 
   const [text, setText] = useState('')
-  const [variant, setVariant] = useState('info')
+  const [alertIcon, setAlertIcon] = useState(AlertIcon.info)
 
   const { register, handleSubmit } = useForm<IncidentForm>({
     defaultValues: {
@@ -63,30 +63,20 @@ const IncidentForm: React.FC<IncidentProps> = ({
 
   return (
     <>
-      <Alert
-        text={text}
-        setText={setText}
-        variant={
-          variant === 'info' || variant === 'problem' || variant === 'comment'
-            ? variant
-            : 'info'
-        }
-      />
+      <Alert text={text} setText={setText} icon={alertIcon} />
       <ExpandTransition isExpanded={isExpanded}>
         <form className='mt-4 flex flex-col px-2' onSubmit={onSubmit}>
           {formInputs.map((input) => {
             return (
-              // Hide input field when not a vet visit
-              (input.field !== 'vetName' || isVetVisit) && (
-                <FormInput
-                  key={input.field}
-                  label={input.label}
-                  type={input.type}
-                  field={input.field}
-                  required={input.required}
-                  register={register}
-                />
-              )
+              <FormInput
+                key={input.field}
+                label={input.label}
+                type={input.type}
+                field={input.field}
+                required={input.required}
+                register={register}
+                isExpanded={input.field === 'vetName' ? isVetVisit : null}
+              />
             )
           })}
 
@@ -96,7 +86,7 @@ const IncidentForm: React.FC<IncidentProps> = ({
               className='mx-auto mt-2 w-fit rounded-lg border border-primary  py-1 px-4 text-lg shadow-md focus:outline-primary '
               onClick={() => {
                 setIsExpanded(false)
-                setVariant('problem')
+                setAlertIcon(AlertIcon.problem)
                 setText('cancelled incident')
               }}
             >
@@ -106,11 +96,9 @@ const IncidentForm: React.FC<IncidentProps> = ({
               type='button'
               className='mx-auto mt-2 w-fit rounded-lg bg-primary py-1 px-4 text-lg text-white shadow-md focus:outline-primary '
               onClick={() => {
-                onSubmit
-                setVariant('info')
-                setText(
-                  'In orci velit, gravida eu leo non, convallis semper tellus. Nullam rutrum consequat sapien, et semper sapien tempor sed. Nunc lobortis fringilla nisi, ac auctor enim dictum eu. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos.'
-                )
+                onSubmit()
+                setAlertIcon(AlertIcon.comment)
+                setText('In orci velit, gravida eu leo non, convallis semper tellus.')
               }}
             >
               Submit
