@@ -6,17 +6,17 @@ import PROFILE_DATA from '@/../mockData/PROFILE_DATA.json'
 import ContactList from '@/components/Contact/contactlist'
 import ProfileItem from '@/components/Contact/profileitem'
 import Header from '@/components/Header'
+import NavBar from '@/components/NavBar'
 import SearchBar from '@/components/SearchBar/searchbar'
 import SearchTag from '@/components/SearchBar/searchtag'
 import type { Contact } from '@/types/types'
+// import { withProtected } from '@/components/PrivateRoute
 
 const tags = CONTACT_DATA.map((contact) => {
   return contact.tags
 }).flat()
 const set = new Set(tags)
 const taglist = [...set]
-import NavBar from '@/components/NavBar'
-// import { withProtected } from '@/components/PrivateRoute'
 
 const Contact = () => {
   const [filteredContacts, setFilteredContacts] =
@@ -67,8 +67,10 @@ const Contact = () => {
         <div className='m-auto max-w-md'>
           <div className='m-2 flex flex-row rounded-xl border-2 border-grey'>
             <SearchTag options={taglist} onChangehandler={onSearchTagChange} />
-            <SearchBar onChangeHandler={onSearchChange} />
-            <SearchIcon className='my-auto h-6 rounded-full object-right' />
+            <div className='flex w-full justify-between'>
+              <SearchBar onChangeHandler={onSearchChange} />
+              <SearchIcon className='my-auto mx-2 h-6' />
+            </div>
           </div>
           {searchFieldString === '' && selectedOption === '' && (
             <ProfileItem profile={PROFILE_DATA} image='' />
