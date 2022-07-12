@@ -16,7 +16,8 @@ import {
   TwitterAuthProvider
 } from 'firebase/auth'
 
-import LoginButton from './LoginButton'
+import LoginButton from '@/components/Login/LoginButton'
+
 import { auth } from '../../components/Firebase/init'
 import { useAuth } from '../../context/AuthContext'
 
