@@ -1,6 +1,6 @@
 import Header from '@/components/Header'
 import NavBar from '@/components/NavBar'
-import { withProtected } from '@/components/PrivateRoute'
+// import { withProtected } from '@/components/PrivateRoute'
 import { useAuth } from '@/context/AuthContext'
 
 const Profile = () => {
@@ -19,4 +19,5 @@ const Profile = () => {
   )
 }
 
-export default withProtected(Profile)
+export default Profile
+// export default withProtected(Profile)
