@@ -59,7 +59,12 @@ const Contact = () => {
       <Header pageTitle='Contact' />
 
       <main>
-        <h1 className='m-3 text-center text-2xl'>Contacts</h1>
+        <div className='m-auto flex h-14 max-w-md flex-row'>
+          <div className='flex-1'></div>
+          <h1 className='m-3 flex-1 text-center text-2xl'>Contacts</h1>
+          <div className='flex-1'></div>
+        </div>
+
         <div className='m-auto max-w-md'>
           <div className='m-2 flex flex-row rounded-xl border-2 border-grey'>
             <SearchTag options={taglist} onChangehandler={onSearchTagChange} />
