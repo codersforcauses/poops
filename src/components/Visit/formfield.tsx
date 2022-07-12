@@ -1,13 +1,12 @@
-interface FormFieldProps {
+export interface FormFieldProps {
   id: string
   label: string
-  type: string
+  type?: string
   placeholder?: string
-  onChange: (
+  onChange?: (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => void
   isRequired: boolean
-  additionalAttributes?: string[]
 }
 
 const FormField = (props: FormFieldProps) => {
@@ -19,7 +18,7 @@ const FormField = (props: FormFieldProps) => {
       </label>
       {props.type !== 'textarea' ? (
         <input
-          className='form-input rounded text-[#6b7280]'
+          className='placeholder::text-[#6b7280] form-input rounded text-black'
           id={props.id}
           type={props.type}
           step={props.type === 'number' ? '0.001' : undefined}
@@ -29,7 +28,7 @@ const FormField = (props: FormFieldProps) => {
         />
       ) : (
         <textarea
-          className='form-textarea rounded'
+          className='form-textarea rounded text-black'
           id={props.id}
           placeholder={props.placeholder}
           onChange={props.onChange}

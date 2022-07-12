@@ -1,0 +1,44 @@
+import { GroupBase, StylesConfig } from 'react-select'
+
+import { CommuteMethod } from './commuteselector'
+
+const customStyles: StylesConfig<
+  CommuteMethod,
+  false,
+  GroupBase<CommuteMethod>
+> = {
+  control: () => ({
+    display: 'flex',
+    borderRadius: '4px',
+    backgroundColor: '#fff',
+    borderColor: '#6b7280',
+    border: '1px solid #6b7280'
+  }),
+  input: (provided: Record<string, unknown>) => ({
+    ...provided,
+    paddingTop: '0.25em',
+    paddingBottom: '0.25em',
+    color: 'black'
+  }),
+  placeholder: (provided: Record<string, unknown>) => ({
+    ...provided,
+    color: '#6b7280'
+  }),
+  dropdownIndicator: () => ({
+    display: 'flex',
+    transition: '',
+    padding: '8px',
+    color: 'black'
+  }),
+  valueContainer: (provided: Record<string, unknown>) => ({
+    ...provided,
+    border: 'black',
+    transition: ''
+  }),
+  indicatorSeparator: (provided: Record<string, unknown>) => ({
+    ...provided,
+    visibility: 'hidden'
+  })
+}
+
+export default customStyles
