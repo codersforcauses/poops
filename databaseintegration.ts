@@ -67,7 +67,6 @@ export const getVisitData = async () => {
   const visitData: Visit[] = []
   let i = 0
   querySnapshot.forEach((doc) => {
-    console.log(i)
     const data = doc.data()
     const visit: Visit = {
       id: doc.id,
