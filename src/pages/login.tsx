@@ -11,8 +11,7 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Auth } from 'firebase/auth'
 
-import { withPublic } from '@/components/PrivateRoute'
-
+// import { withPublic } from '@/components/PrivateRoute'
 import { auth } from '../components/Firebase/init'
 import { useAuth } from '../context/AuthContext'
 
@@ -123,4 +122,5 @@ const Login: NextPage = () => {
   )
 }
 
-export default withPublic(Login)
+export default Login
+// export default withPublic(Login)
