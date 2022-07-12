@@ -30,7 +30,7 @@ const IncidentForm: React.FC<IncidentProps> = ({
 
   //const today = new Date()
 
-  const [text, setText] = useState('')
+  const [text, setText] = useState(['', ''])
   const [alertIcon, setAlertIcon] = useState(AlertIcon.info)
 
   const { register, handleSubmit } = useForm<IncidentForm>({
@@ -56,15 +56,23 @@ const IncidentForm: React.FC<IncidentProps> = ({
 
   // TODO: Send email / save incident to DB
   const onSubmit = handleSubmit((_data) => {
-    return
+    setAlertIcon(AlertIcon.comment)
+    setText(['Alert Title', 'Sample alert body with comment icon'])
+
     // console.log('SEND EMAIL')
     // console.log(data)
   })
 
+  const onCancel = () => {
+    setIsExpanded(false)
+    setAlertIcon(AlertIcon.problem)
+    setText(['title two', 'Sample'])
+  }
+
   return (
     <>
       <Alert text={text} setText={setText} icon={alertIcon} />
-      <ExpandTransition isExpanded={isExpanded}>
+      <ExpandTransition duration={500} isExpanded={isExpanded}>
         <form className='mt-4 flex flex-col px-2' onSubmit={onSubmit}>
           {formInputs.map((input) => {
             return (
@@ -84,22 +92,14 @@ const IncidentForm: React.FC<IncidentProps> = ({
             <button
               type='button'
               className='mx-auto mt-2 w-fit rounded-lg border border-primary  py-1 px-4 text-lg shadow-md focus:outline-primary '
-              onClick={() => {
-                setIsExpanded(false)
-                setAlertIcon(AlertIcon.problem)
-                setText('cancelled incident')
-              }}
+              onClick={onCancel}
             >
               Cancel
             </button>
             <button
               type='button'
               className='mx-auto mt-2 w-fit rounded-lg bg-primary py-1 px-4 text-lg text-white shadow-md focus:outline-primary '
-              onClick={() => {
-                onSubmit()
-                setAlertIcon(AlertIcon.comment)
-                setText('In orci velit, gravida eu leo non, convallis semper tellus.')
-              }}
+              onClick={onSubmit}
             >
               Submit
             </button>

@@ -7,7 +7,7 @@ import {
   XIcon
 } from '@heroicons/react/outline'
 
-// COLORS
+// STYLING
 const iconColor = '#000000'
 const titleColor = '#000000'
 const textColor = '#000000'
@@ -20,13 +20,15 @@ const shadow =
                 0 32px 64px rgba(0,0,0,0.1)'
 
 const getClasses = (visible: boolean, className: string) => {
-  return (
-    'flex items-center fixed top-0 left-0 right-0 z-999 pl-6 pt-4 pr-4 pb-3 mx-[2rem] \
-              bg-white rounded-b-md text-black border-x-1 border-b-1 border-[#dddddd] \
-              transition-transform duration-300 delay-150' +
-    (visible ? ' translate-y-0 ease-out ' : ' -translate-y-[200%] ease-in ') +
-    (typeof className !== 'undefined' && className)
-  )
+  return `flex items-center fixed top-0 left-0 right-0 z-999 pl-6 pt-4 pr-4 pb-3 mx-[2rem] \
+            bg-white rounded-b-md text-black border-x-1 border-b-1 border-[#dddddd] \
+            transition-transform duration-300 delay-150 \
+            ${
+              visible
+                ? ' translate-y-0 ease-out '
+                : ' -translate-y-[200%] ease-in '
+            } \
+            ${className}`
 }
 
 export enum AlertIcon {
@@ -37,8 +39,8 @@ export enum AlertIcon {
 }
 
 type AlertProps = {
-  text: string
-  setText: React.Dispatch<React.SetStateAction<string>>
+  text: string[]
+  setText: React.Dispatch<React.SetStateAction<string[]>>
   showFor?: number
   icon?: AlertIcon
   className?: string
@@ -51,30 +53,31 @@ const Alert: React.FC<AlertProps> = ({
   icon = AlertIcon.info,
   className
 }) => {
+  // STATE
   const [visible, setVisible] = useState(false)
-  const [currentText, setCurrentText] = useState('')
+  const [currentText, setCurrentText] = useState<string[]>(['', ''])
   const timerRef = useRef<ReturnType<typeof setTimeout>>()
 
   // utility function that sets and then clears a timer to automatically close alert
   const doUpdate = useCallback(
-    (message: string) => {
-      if (message !== null && message !== '') {
+    (message: string[]) => {
+      if (message !== null && !(message[0] === '' && message[1] === '')) {
         setCurrentText(message)
         setVisible(true)
         timerRef.current = setTimeout(() => {
           setVisible(false)
-          setText('')
+          setText(['', ''])
         }, showFor)
       }
     },
     [setText, showFor]
   )
 
+  // whenever text prop is changed, re-show timer for showFor
   useEffect(() => {
-    // whenever text prop is changed, re-show timer for showFor
     if (timerRef.current) clearTimeout(timerRef.current)
     doUpdate(text)
-  }, [text])
+  }, [text, doUpdate])
 
   useEffect(() => {
     // cleanup the timer when component unmounts
@@ -85,7 +88,10 @@ const Alert: React.FC<AlertProps> = ({
 
   return (
     <div
-      className={getClasses(visible, className ? className : '')}
+      className={getClasses(
+        visible,
+        typeof className !== 'undefined' ? className : ''
+      )}
       style={{ boxShadow: shadow }}
     >
       <div className='h-7 w-7'>
@@ -103,19 +109,19 @@ const Alert: React.FC<AlertProps> = ({
         className='ml-[2rem] self-start font-bold'
         style={{ color: titleColor }}
       >
-        Title
+        {currentText[0]}
       </p>
       <p
         className='ml-4 mr-[2rem] grow self-start'
         style={{ color: textColor }}
       >
-        {currentText}
+        {currentText[1]}
       </p>
       <button
         className='self-start'
         onClick={() => {
           setVisible(false)
-          setText('')
+          setText(['', ''])
         }}
       >
         <XIcon className='h-5 w-5' stroke={iconColor} />

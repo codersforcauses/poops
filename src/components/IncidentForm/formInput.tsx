@@ -32,6 +32,7 @@ const FormInput: React.FC<FormInputProps> = ({
         </label>
         <input
           type={type}
+          disabled={isExpanded === false ? true : false} // must use === as we are also wanting else to include null or undefined
           className='rounded-lg border border-black py-1 px-2 selection:bg-primary/70 selection:text-white focus:outline-primary active:ring active:ring-primary'
           {...register(field)}
         />
