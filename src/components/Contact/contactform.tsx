@@ -50,15 +50,14 @@ const ContactForm = ({ contact, image, setIsEditing }: ContactInfoProps) => {
       | React.ChangeEvent<HTMLTextAreaElement>
   ) => {
     const { name, value } = e.target
-    const newPets = pets.map((pet, i) =>
-      i === petIndex
-        ? {
-            ...pet,
-            [name]: value
-          }
-        : pet
-    )
-    setPets(newPets)
+    const updatedPet = pets[petIndex]
+    updatedPet[name as keyof Pet] = value
+    // Only set the updated pet but keep the other existing pets
+    setPets([
+      ...pets.slice(0, petIndex),
+      updatedPet,
+      ...pets.slice(petIndex + 1, pets.length)
+    ])
   }
 
   useEffect(() => {
