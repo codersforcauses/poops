@@ -2,6 +2,7 @@ import { getApp, getApps, initializeApp } from 'firebase/app' // no compat for n
 import {
   addDoc,
   collection,
+  deleteDoc,
   doc,
   getDocs,
   getFirestore,
@@ -89,4 +90,8 @@ export const getVisitData = async () => {
 
 export const updateUserData = async (id: string, props: User) => {
   await setDoc(doc(poopsRef, id), props)
+}
+
+export const deletUserData = async (id: string) => {
+  await deleteDoc(doc(poopsRef, id))
 }

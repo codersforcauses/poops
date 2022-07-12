@@ -21,7 +21,7 @@ const ModalView: React.FC<ModalViewProps> = ({ openFunc }) => {
   const [commuteMethod, setCommuteMethod] = useState('')
   const [notes, setNotes] = useState('')
 
-  const onSubmit = () => {
+  const onSubmit = (click: React.FormEvent<HTMLFormElement>) => {
     const data: User = {
       firstName: firstName,
       lastName: lastName,
@@ -34,6 +34,7 @@ const ModalView: React.FC<ModalViewProps> = ({ openFunc }) => {
       notes: notes
     }
     writeUserData(data)
+    click.preventDefault()
   }
 
   const isSubmitDisabled = () =>
@@ -58,7 +59,7 @@ const ModalView: React.FC<ModalViewProps> = ({ openFunc }) => {
         <h1 className='mx-1 border-b-2 border-primary py-3 pt-10 text-2xl font-bold'>
           Add Your Visit
         </h1>
-        <form className='pt-3' onSubmit={() => onSubmit}>
+        <form className='pt-3' onSubmit={(event) => onSubmit(event)}>
           <table className='container mx-auto table-fixed'>
             <tbody>
               <tr>
@@ -158,6 +159,11 @@ const ModalView: React.FC<ModalViewProps> = ({ openFunc }) => {
           />
           <div className='mx-auto my-2 flex flex-col p-1 '>
             <button
+              onClick={() =>
+                setTimeout(() => {
+                  window.location.reload()
+                }, 125)
+              }
               className='text-bold rounded bg-primary px-12 py-4 text-white drop-shadow-default active:bg-dark-red'
               disabled={!isSubmitDisabled}
             >
