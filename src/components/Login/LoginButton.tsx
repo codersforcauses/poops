@@ -5,9 +5,13 @@ export interface LoginButtonInterface {
   icon: ReactNode
   buttonlabel: string
   style: string
+  display: boolean
 }
 
 const LoginButton = (props: LoginButtonInterface) => {
+  if (!props.display) {
+    return null
+  }
   return (
     <button className={props.style} onClick={props.handler}>
       <div className='relative flex items-center space-x-4'>
