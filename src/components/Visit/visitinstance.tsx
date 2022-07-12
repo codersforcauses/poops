@@ -159,7 +159,7 @@ const EditableVisitInstance = (props: Visit) => {
         onClick={() =>
           setTimeout(() => {
             window.location.reload()
-          }, 500)
+          }, 50)
         }
       >
         Submit

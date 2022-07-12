@@ -43,8 +43,7 @@ const ModalView: React.FC<ModalViewProps> = ({ openFunc }) => {
     duration &&
     walkDist &&
     commuteDist &&
-    commuteMethod &&
-    true
+    commuteMethod
 
   return (
     <div className='fixed inset-0 z-50 h-screen w-screen rounded-sm bg-white p-4 shadow '>
@@ -58,12 +57,7 @@ const ModalView: React.FC<ModalViewProps> = ({ openFunc }) => {
         <h1 className='mx-1 border-b-2 border-primary py-3 pt-10 text-2xl font-bold'>
           Add Your Visit
         </h1>
-        <form
-          className='pt-3'
-          onSubmit={() => {
-            onSubmit
-          }}
-        >
+        <form className='pt-3' onSubmit={() => onSubmit}>
           <table className='container mx-auto table-fixed'>
             <tbody>
               <tr>

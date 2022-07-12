@@ -21,6 +21,14 @@ const app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApp()
 const database = getFirestore(app)
 
 const poopsRef = collection(database, 'Users')
+const visitRef = collection(
+  database,
+  'User',
+  'USERID',
+  'Adam',
+  'Visits',
+  'VisitId'
+)
 
 export interface User {
   firstName: string
@@ -55,10 +63,10 @@ export const writeUserData = async (props: User) => {
 
 export const getVisitData = async () => {
   const querySnapshot = await getDocs(poopsRef)
-
   const visitData: Visit[] = []
   let i = 0
   querySnapshot.forEach((doc) => {
+    console.log(i)
     const data = doc.data()
     const visit: Visit = {
       id: doc.id,
