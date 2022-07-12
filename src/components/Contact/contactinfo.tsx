@@ -1,12 +1,11 @@
-import Image from 'next/image'
 import {
   LocationMarkerIcon,
   MailIcon,
-  PhoneIcon,
-  UserCircleIcon
+  PhoneIcon
 } from '@heroicons/react/outline'
 import tw from 'tailwind-styled-components'
 
+import Avatar from '@/components/Contact/avatar'
 import type { Contact } from '@/types/types'
 
 type ContactInfoProps = {
@@ -17,18 +16,13 @@ type ContactInfoProps = {
 function ContactInfo({ contact, image }: ContactInfoProps) {
   return (
     <div className='flex flex-col items-center justify-center gap-3'>
-      {image === '' ? (
-        <UserCircleIcon className='w-32 rounded-full' />
-      ) : (
-        <Image
-          className='h-2 w-2 rounded-full'
-          src={image}
-          alt='Neil image'
-          width={48}
-          height={48}
-          layout='fixed'
-        />
-      )}
+      {/* USER PROFILE IMAGE */}
+      <Avatar
+        image={image}
+        height={48}
+        width={48}
+        iconClass='w-32 rounded-full'
+      />
       {/* FIRST AND LAST NAME */}
       <h1 className='text-4xl font-normal'>
         {contact.firstName} {contact.lastName}

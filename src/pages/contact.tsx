@@ -12,6 +12,7 @@ import SearchTag from '@/components/SearchBar/searchtag'
 import type { Contact } from '@/types/types'
 // import { withProtected } from '@/components/PrivateRoute
 
+// TODO: Get contact data from server
 const tags = CONTACT_DATA.map((contact) => {
   return contact.tags
 }).flat()
@@ -28,6 +29,7 @@ const Contact = () => {
   const onSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const searchFieldString = event.target.value.toLocaleLowerCase()
     setSearchFieldString(searchFieldString)
+    // TODO: Get contact data from server
     const filteredContacts = CONTACT_DATA.filter((contact) => {
       const full_name = contact.firstName + ' ' + contact.lastName
       if (selectedOption == '') {
@@ -44,6 +46,7 @@ const Contact = () => {
   const onSearchTagChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const option_value = event.target.value
     setSelectedOption(option_value)
+    // TODO: Get contact data from server
     const filteredContacts = CONTACT_DATA.filter((contact) => {
       const full_name = contact.firstName + ' ' + contact.lastName
       if (option_value == '') {

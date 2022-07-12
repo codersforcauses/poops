@@ -31,7 +31,7 @@ const Contact = ({ contact }: ContactProp) => {
           </Link>
           {!isEditing && (
             <PencilIcon
-              className='flex h-7 w-7 justify-end'
+              className='flex h-7 w-7 cursor-pointer justify-end'
               onClick={() => setIsEditing(true)}
             />
           )}
@@ -59,6 +59,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
 export const getStaticProps: GetStaticProps = async (context) => {
   const id = context.params?.id
+  // TODO: Get profile and contact data from server
   const contact = [PROFILE_DATA]
     .concat(CONTACT_DATA)
     .find((contact) => contact.id === id)

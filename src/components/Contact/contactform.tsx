@@ -1,18 +1,19 @@
 import React, { useEffect } from 'react'
 import { Dispatch, SetStateAction, useState } from 'react'
-import Image from 'next/image'
-import { PlusIcon, UserCircleIcon, XIcon } from '@heroicons/react/outline'
+import { PlusIcon, XIcon } from '@heroicons/react/outline'
 import tw from 'tailwind-styled-components'
 import { v4 as uuidv4 } from 'uuid'
 
+import Avatar from '@/components/Contact/avatar'
+import RegionSelector from '@/components/Contact/regiondropdown'
+import TagSelector from '@/components/Contact/tagdropdown'
 import type { Contact, Pet } from '@/types/types'
+
 type ContactInfoProps = {
   contact: Contact
   image: string
   setIsEditing: Dispatch<SetStateAction<boolean>>
 }
-import RegionSelector from '@/components/Contact/regiondropdown'
-import TagSelector from '@/components/Contact/tagdropdown'
 
 const ContactForm = ({ contact, image, setIsEditing }: ContactInfoProps) => {
   const [pets, setPets] = useState<Pet[]>(contact.pets)
@@ -81,18 +82,13 @@ const ContactForm = ({ contact, image, setIsEditing }: ContactInfoProps) => {
   return (
     <form onSubmit={submitForm}>
       <div className='flex flex-col items-center justify-center gap-3'>
-        {image === '' ? (
-          <UserCircleIcon className='w-32 rounded-full' />
-        ) : (
-          <Image
-            className='h-2 w-2 rounded-full'
-            src={image}
-            alt='Neil image'
-            width={48}
-            height={48}
-            layout='fixed'
-          />
-        )}
+        {/* USER PROFILE IMAGE */}
+        <Avatar
+          image={image}
+          height={48}
+          width={48}
+          iconClass='w-32 rounded-full'
+        />
         {/* FIRST AND LAST NAME */}
         <Box>
           <label htmlFor={contact.firstName} className='text-dark-red'>
