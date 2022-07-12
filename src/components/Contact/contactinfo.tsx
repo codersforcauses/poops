@@ -120,6 +120,14 @@ function ContactInfo({ contact, image }: ContactInfoProps) {
         </label>
         <span className='text-xl'> {contact.notes} </span>
       </Box>
+      <div className='mb-2'>
+        <button
+          type='button'
+          className='w-80 rounded bg-primary py-1 font-bold text-white hover:bg-dark-red'
+        >
+          Delete Contact
+        </button>
+      </div>
     </div>
   )
 }
