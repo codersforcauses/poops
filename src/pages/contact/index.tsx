@@ -26,40 +26,33 @@ const Contact = () => {
   const [selectedOption, setSelectedOption] = useState('')
   const [searchFieldString, setSearchFieldString] = useState('')
 
-  const onSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const searchFieldString = event.target.value.toLocaleLowerCase()
-    setSearchFieldString(searchFieldString)
-    // TODO: Get contact data from server
+  function filterContact(includes: string, searchField: string) {
     const filteredContacts = CONTACT_DATA.filter((contact) => {
       const full_name = contact.firstName + ' ' + contact.lastName
-      if (selectedOption == '') {
-        return full_name.toLocaleLowerCase().includes(searchFieldString)
+      if (includes == '') {
+        return full_name.toLocaleLowerCase().includes(searchField)
       }
       const filtered =
-        full_name.toLocaleLowerCase().includes(searchFieldString) &&
-        contact.tags.some((v) => v.includes(selectedOption))
+        full_name.toLocaleLowerCase().includes(searchField) &&
+        contact.tags.some((v) => v.includes(includes))
       return filtered
     })
     setFilteredContacts(filteredContacts)
   }
 
+  const onSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const searchFieldString = event.target.value.toLocaleLowerCase()
+    setSearchFieldString(searchFieldString)
+    // TODO: Get contact data from server
+    filterContact(selectedOption, searchFieldString)
+  }
+
   const onSearchTagChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const option_value = event.target.value
     setSelectedOption(option_value)
-    // TODO: Get contact data from server
-    const filteredContacts = CONTACT_DATA.filter((contact) => {
-      const full_name = contact.firstName + ' ' + contact.lastName
-      if (option_value == '') {
-        return full_name.toLocaleLowerCase().includes(searchFieldString)
-      }
-
-      const filteredwithTag =
-        contact.tags.some((v) => v.includes(option_value)) &&
-        full_name.toLocaleLowerCase().includes(searchFieldString)
-      return filteredwithTag
-    })
-    setFilteredContacts(filteredContacts)
+    filterContact(option_value, searchFieldString)
   }
+
   return (
     <>
       {/* <Seo /> */}
