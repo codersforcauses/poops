@@ -8,20 +8,24 @@ function TopNav() {
         className='fixed inset-x-0 top-0 z-10 block bg-white'
       >
         <div className='flex justify-between'>
-          <Image alt='logo' src='/images/logo.png' width='120px' height='65px' />
+          <Image
+            alt='logo'
+            src='/images/logo.png'
+            width='120px'
+            height='65px'
+          />
         </div>
         <hr
           style={{
             background: '#a52a2a',
             color: '#a52a2a',
             borderColor: '#a52a2a',
-            height: '3px',
+            height: '3px'
           }}
         />
       </nav>
     </div>
-  );
+  )
 }
-
 
 export default TopNav
