@@ -22,14 +22,7 @@ const app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApp()
 const database = getFirestore(app)
 
 const poopsRef = collection(database, 'Users')
-const visitRef = collection(
-  database,
-  'User',
-  'USERID',
-  'Adam',
-  'Visits',
-  'VisitId'
-)
+const adamRef = collection(database, 'TestUsers/Adam/Visits')
 
 export interface User {
   firstName: string
@@ -59,11 +52,11 @@ export const writeUserData = async (props: User) => {
     commuteMethod: props.commuteMethod,
     notes: props.notes
   }
-  await addDoc(poopsRef, data)
+  await addDoc(adamRef, data)
 }
 
 export const getVisitData = async () => {
-  const querySnapshot = await getDocs(poopsRef)
+  const querySnapshot = await getDocs(adamRef)
   const visitData: Visit[] = []
   let i = 0
   querySnapshot.forEach((doc) => {
@@ -88,9 +81,9 @@ export const getVisitData = async () => {
 }
 
 export const updateUserData = async (id: string, props: User) => {
-  await setDoc(doc(poopsRef, id), props)
+  await setDoc(doc(adamRef, id), props)
 }
 
 export const deletUserData = async (id: string) => {
-  await deleteDoc(doc(poopsRef, id))
+  await deleteDoc(doc(adamRef, id))
 }
