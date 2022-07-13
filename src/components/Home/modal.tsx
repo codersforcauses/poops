@@ -3,6 +3,18 @@ import { useState } from 'react'
 import Image from 'next/image'
 import { default as ReactSelect } from 'react-select'
 import { components } from 'react-select'
+// import { doc, setDoc, Timestamp } from 'firebase/firestore'
+
+// const docData = {
+//   startTime: Timestamp.now(),
+//   stopTime: Timestamp.now(),
+//   duration: stopTime - startTime,
+//   pets: petSelected,
+//   typeOfVisit: type,
+//   distanceWalked: distance
+// }
+
+// await setDoc(doc(db,'collectionName','id'), docData);
 
 const Option = (props) => {
   return (
@@ -24,7 +36,7 @@ function Modal() {
   const [type, setType] = useState('TYPE OF VISIT')
   // const [pet, setPet] = useState('SELECT PET')
   const [distance, setDistance] = useState(0)
-  const [optionSelected, setSelected] = useState([])
+  const [petSelected, setSelected] = useState([])
 
   const pets = [
     { value: 'Willow', label: 'Willow' },
@@ -39,11 +51,13 @@ function Modal() {
     { value: 'Transportation', label: 'Transportation' }
   ]
 
-  const handleChange = (selected) => {
+  const handleChange = (selected: React.SetStateAction<never[]>) => {
     setSelected(selected)
   }
 
-  const handleTypeChange = (selected) => {
+  const handleTypeChange = (selected: {
+    value: React.SetStateAction<string>
+  }) => {
     setType(selected.value)
   }
 
@@ -90,7 +104,7 @@ function Modal() {
                   Option
                 }}
                 onChange={handleChange}
-                value={optionSelected}
+                value={petSelected}
               />
               <br />
 
@@ -124,11 +138,11 @@ function Modal() {
       <br />
       <div className='text-center'>
         {(((type == 'Vet' || type == 'Transportation') &&
-          optionSelected.length > 0 &&
+          petSelected.length > 0 &&
           distance == 0 &&
           modalIsOpen) ||
           (type == 'Walk' &&
-            optionSelected.length > 0 &&
+            petSelected.length > 0 &&
             distance > 0 &&
             modalIsOpen)) && (
           <button
