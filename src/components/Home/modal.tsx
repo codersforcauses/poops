@@ -34,7 +34,6 @@ const Option = (props) => {
 function Modal() {
   const [modalIsOpen, setModalOpen] = useState(false)
   const [type, setType] = useState('TYPE OF VISIT')
-  // const [pet, setPet] = useState('SELECT PET')
   const [distance, setDistance] = useState(0)
   const [petSelected, setSelected] = useState([])
 
@@ -66,7 +65,7 @@ function Modal() {
       <div className='text-center'>
         {!modalIsOpen && (
           <button
-            className='relative h-[37px] w-[150px] rounded-lg bg-poops-dark-red text-xl font-semibold text-white'
+            className='relative h-[37px] w-[150px] rounded-lg bg-primary text-xl font-semibold text-white'
             onClick={() => {
               setModalOpen(true)
             }}
@@ -78,7 +77,7 @@ function Modal() {
       <div>
         {modalIsOpen && (
           <div
-            className='rounded-lg bg-grey p-3 py-2 px-5 text-center shadow-lg sm:py-4'
+            className='bg-grey rounded-lg p-3 py-2 px-5 text-center shadow-lg sm:py-4'
             style={{ minWidth: 500, minHeight: 300 }}
           >
             <h1 style={{ fontSize: 25, color: '#a52a2a' }}>
@@ -146,12 +145,9 @@ function Modal() {
             distance > 0 &&
             modalIsOpen)) && (
           <button
-            className='relative h-[37px] w-[150px] rounded-lg bg-poops-dark-red text-xl font-semibold text-white'
+            className='relative h-[37px] w-[150px] rounded-lg bg-primary text-xl font-semibold text-white'
             onClick={() => {
-              setModalOpen(false),
-                setType('TYPE OF VISIT'),
-                // setPet('SELECT PET'),
-                setDistance(0)
+              setModalOpen(false), setType('TYPE OF VISIT'), setDistance(0)
             }}
           >
             STOP VISIT
