@@ -11,7 +11,6 @@ const Visit = () => {
 
       <main>
         <p>Visit Page</p>
-        <AlertExamples />
       </main>
       <NavBar />
     </>

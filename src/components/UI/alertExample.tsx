@@ -62,7 +62,7 @@ const AlertExamples = () => {
           setAlert({
             icon: AlertIcon.comment,
             title: 'Comment Top',
-            text: 'Comment alert, cancel function set to log current time',
+            text: 'Comment alert, cancel function set to log current time'
           })
         }}
       >
