@@ -14,9 +14,10 @@
   "homepage": "https://github.com/codersforcauses/poops#readme",
   "scripts": {
     "dev": "next dev",
-    "https": "next dev -p 3001 | local-ssl-proxy --key localhost-key.pem --cert localhost.pem --source 3000 --target 3001",
+    "dev:sec": "next dev -p 3001 | local-ssl-proxy --key certificates/localhost-key.pem --cert certificates/localhost.pem --source 3000 --target 3001",
     "build": "next build",
     "start": "next start",
+    "start:sec": "next start -p 3001 | local-ssl-proxy --key certificates/localhost-key.pem --cert certificates/localhost.pem --source 3000 --target 3001",
     "lint": "next lint",
     "lint:fix": "eslint src --fix && yarn format",
     "lint:strict": "eslint --max-warnings=0 src",
