@@ -10,10 +10,10 @@ const AlertExamples = () => {
     'mx-auto mt-2 w-fit rounded-lg bg-primary py-1 px-4 text-lg text-white shadow-md focus:outline-primary active:bg-dark-red'
 
   const confirmation = () => {
-    console.log(`ALERT CONFIRMED AT ` + new Date().toTimeString())
+    // console.log(`ALERT CONFIRMED AT ` + new Date().toTimeString())
   }
   const cancelled = () => {
-    console.log(`ALERT CANCELLED AT ` + new Date().toTimeString())
+    // console.log(`ALERT CANCELLED AT ` + new Date().toTimeString())
   }
   return (
     <div className='[&>*]p-2 flex p-5'>
@@ -63,8 +63,6 @@ const AlertExamples = () => {
             icon: AlertIcon.comment,
             title: 'Comment Top',
             text: 'Comment alert, cancel function set to log current time',
-            cancelFunction: () =>
-              console.log('ALERT CANCELLED AT ' + new Date().toTimeString())
           })
         }}
       >

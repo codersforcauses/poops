@@ -49,6 +49,7 @@ type AlertProps = {
 }
 
 const Alert: React.FC<AlertProps> = ({ visible, setVisible, content }) => {
+  const [isMoving, setIsMoving] = useState(false)
   const [contentCache, setContentCache] = useState<AlertContentProps>({
     title: '', // string[2], first element is tile, second is message
     text: '',
@@ -67,7 +68,7 @@ const Alert: React.FC<AlertProps> = ({ visible, setVisible, content }) => {
 
   // utility function that sets and then clears a timer to automatically close alert
   const doUpdate = useCallback(
-    (c: AlertContentProps) => {
+    (c: AlertContentProps, m: boolean) => {
       if (!(c.title === '' && c.title === '')) {
         const nextContent: AlertContentProps = {
           title: c.title,
@@ -78,20 +79,24 @@ const Alert: React.FC<AlertProps> = ({ visible, setVisible, content }) => {
           showFor: c.showFor, // ms alert will stay open, set to -1 to leave open until button click
           icon: c.icon
         }
-        if (visible) {
+        if (m) {
           setVisible(false)
+          setIsMoving(true)
           timerRef.current = setTimeout(() => {
             setContentCache(nextContent)
             setVisible(true)
             timerRef.current = setTimeout(() => {
               setVisible(false)
+              setIsMoving(false)
             }, nextContent.showFor)
           }, 300)
         } else {
           setContentCache(nextContent)
           setVisible(true)
+          setIsMoving(true)
           timerRef.current = setTimeout(() => {
             setVisible(false)
+            setIsMoving(false)
           }, content.showFor)
         }
       }
@@ -101,8 +106,8 @@ const Alert: React.FC<AlertProps> = ({ visible, setVisible, content }) => {
 
   useEffect(() => {
     if (timerRef.current) clearTimeout(timerRef.current)
-    doUpdate(content)
-  }, [content, doUpdate])
+    doUpdate(content, isMoving)
+  }, [content, doUpdate, isMoving])
 
   useEffect(() => {
     return () => {
