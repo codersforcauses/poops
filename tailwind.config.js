@@ -32,7 +32,6 @@ module.exports = {
       'zinc-200': '#F2F2F2',
       'zinc-300': '#D9D9D9',
       'zinc-50': '#FFFFFF'
-
     },
     extend: {
       fontFamily: {
