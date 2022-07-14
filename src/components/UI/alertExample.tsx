@@ -11,9 +11,11 @@ const AlertExamples = () => {
 
   const confirmation = () => {
     // console.log(`ALERT CONFIRMED AT ` + new Date().toTimeString())
+    return
   }
   const cancelled = () => {
     // console.log(`ALERT CANCELLED AT ` + new Date().toTimeString())
+    return
   }
   return (
     <div className='[&>*]p-2 flex p-5'>
