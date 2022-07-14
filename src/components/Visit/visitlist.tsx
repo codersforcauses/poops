@@ -1,5 +1,4 @@
-import { useEffect, useState } from 'react'
-import { getVisitData, Visit } from 'databaseintegration'
+import { Visit } from '@/types/types'
 
 import VisitInstance from './visitinstance'
 
@@ -8,12 +7,20 @@ interface VisitListProps {
 }
 
 const VisitList = (props: VisitListProps) => {
-  const [visitData, setVisitData] = useState<Visit[]>([])
-
-  useEffect(() => {
-    const fetchData = () => getVisitData().then(setVisitData)
-    fetchData()
-  }, [])
+  const visitData: Visit[] = [
+    {
+      id: '123',
+      firstName: 'Yeah',
+      lastName: 'Uhhhhh',
+      petName: 'Dog',
+      dateTime: '12/06/2003',
+      duration: '122',
+      walkDist: 23,
+      commuteDist: 124,
+      commuteMethod: 'Car',
+      notes: 'weeeeee'
+    }
+  ]
 
   const matchesFirstName = (post: Visit) =>
     post.firstName.toLowerCase().includes(props.searchQuery.toLowerCase())

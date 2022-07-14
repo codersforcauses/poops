@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import ChevronDownIcon from '@heroicons/react/outline/ChevronDownIcon'
-import { Visit } from 'databaseintegration'
+
+import { Visit } from '@/types/types'
 
 import { EditButton } from './buttons'
 import EditableVisitInstance from './editvisitinstance'
@@ -34,19 +35,7 @@ const VisitInstance = (props: VisitInstanceProps) => {
             }}
           />
           {isEditable ? (
-            <EditableVisitInstance
-              key={props.id}
-              id={props.id}
-              firstName={props.firstName}
-              lastName={props.lastName}
-              petName={props.petName}
-              duration={props.duration}
-              dateTime={props.dateTime}
-              walkDist={props.walkDist}
-              commuteDist={props.commuteDist}
-              commuteMethod={props.commuteMethod}
-              notes={props.notes}
-            />
+            <EditableVisitInstance />
           ) : (
             <ReadOnlyVisitInstance
               key={props.id}

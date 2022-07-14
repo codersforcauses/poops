@@ -1,6 +1,5 @@
 import React from 'react'
 import { useState } from 'react'
-import { User, writeUserData } from 'databaseintegration'
 
 import { CancelSymbol } from './buttons'
 import CommuteSelector from './commuteselector'
@@ -19,23 +18,6 @@ const ModalView: React.FC<ModalViewProps> = ({ openFunc }) => {
   const [walkDist, setWalkDist] = useState(0)
   const [commuteDist, setCommuteDist] = useState(0)
   const [commuteMethod, setCommuteMethod] = useState('')
-  const [notes, setNotes] = useState('')
-
-  const onSubmit = (click: React.FormEvent<HTMLFormElement>) => {
-    const data: User = {
-      firstName: firstName,
-      lastName: lastName,
-      petName: petName,
-      dateTime: dateTime,
-      duration: duration,
-      walkDist: walkDist,
-      commuteDist: commuteDist,
-      commuteMethod: commuteMethod,
-      notes: notes
-    }
-    writeUserData(data)
-    click.preventDefault()
-  }
 
   const isSubmitDisabled = () =>
     firstName &&
@@ -59,7 +41,7 @@ const ModalView: React.FC<ModalViewProps> = ({ openFunc }) => {
         <h1 className='mx-1 border-b-2 border-primary py-3 pt-10 text-2xl font-bold'>
           Add Your Visit
         </h1>
-        <form className='pt-3' onSubmit={(event) => onSubmit(event)}>
+        <form className='pt-3'>
           <table className='container mx-auto table-fixed'>
             <tbody>
               <tr>
@@ -155,7 +137,6 @@ const ModalView: React.FC<ModalViewProps> = ({ openFunc }) => {
             placeholder='Add notes here'
             label='Notes:'
             isRequired={false}
-            onChange={(event) => setNotes(event.target.value)}
           />
           <div className='mx-auto my-2 flex flex-col p-1 '>
             <button

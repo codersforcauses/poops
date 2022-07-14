@@ -1,4 +1,4 @@
-import { User } from 'databaseintegration'
+import { User } from '@/types/types'
 
 const ReadOnlyVisitInstance = (props: User) => {
   return (
