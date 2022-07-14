@@ -3,18 +3,6 @@ import { useState } from 'react'
 import Image from 'next/image'
 import { default as ReactSelect } from 'react-select'
 import { components } from 'react-select'
-// import { doc, setDoc, Timestamp } from 'firebase/firestore'
-
-// const docData = {
-//   startTime: Timestamp.now(),
-//   stopTime: Timestamp.now(),
-//   duration: stopTime - startTime,
-//   pets: petSelected,
-//   typeOfVisit: type,
-//   distanceWalked: distance
-// }
-
-// await setDoc(doc(db,'collectionName','id'), docData);
 
 const Option = (props) => {
   return (
