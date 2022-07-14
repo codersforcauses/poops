@@ -16,10 +16,10 @@ import {
   TwitterAuthProvider
 } from 'firebase/auth'
 
-import LoginButton from '@/components/Login/LoginButton'
+import LoginButton from '@/components/LoginPanel/button'
 
-import { auth } from '../../components/Firebase/init'
-import { useAuth } from '../../context/AuthContext'
+import { auth } from '../Firebase/init'
+import { useAuth } from '../../context/auth'
 
 export interface LoginPanelInterface {
   displayGoogle: boolean
