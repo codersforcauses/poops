@@ -1,5 +1,6 @@
 import React from 'react'
 import { useRouter } from 'next/router'
+import { getInitialData } from 'databaseintegration'
 
 import { useAuth } from '@/context/AuthContext'
 
@@ -21,6 +22,7 @@ export function withProtected(Component: React.ComponentType) {
     const { auth } = useAuth()
     const user = auth.currentUser
     const router = useRouter()
+    getInitialData(user.uid)
     if (user === null) {
       router.replace('/login')
       return <h1>Loading...</h1> // TODO make a better looking loading screen?

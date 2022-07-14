@@ -4,10 +4,13 @@ import {
   collection,
   deleteDoc,
   doc,
+  getDoc,
   getDocs,
   getFirestore,
   setDoc
 } from 'firebase/firestore'
+
+import { useAuth } from '@/context/AuthContext'
 
 const firebaseConfig = {
   apikey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
@@ -21,8 +24,18 @@ const firebaseConfig = {
 const app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApp()
 const database = getFirestore(app)
 
+let uid = '0'
+
 const poopsRef = collection(database, 'Users')
 const adamRef = collection(database, 'TestUsers/Adam/Visits')
+
+const UpdateUid = async () => {
+  const { auth } = useAuth()
+  const user = auth.currentUser
+  if (user !== null) { uid = user.uid }
+}
+
+
 
 export interface User {
   firstName: string
@@ -40,7 +53,8 @@ export interface Visit extends User {
   id: string
 }
 
-export const writeUserData = async (props: User) => {
+export const WriteUserData = async (props: User) => {
+  const colRef = collection(database, `TestUsers/${uid}/Visits`)
   const data = {
     firstName: props.firstName,
     lastName: props.lastName,
@@ -52,11 +66,12 @@ export const writeUserData = async (props: User) => {
     commuteMethod: props.commuteMethod,
     notes: props.notes
   }
-  await addDoc(adamRef, data)
+  await addDoc(colRef, data)
 }
 
 export const getVisitData = async () => {
-  const querySnapshot = await getDocs(adamRef)
+  const colRef = collection(database, `TestUsers/${uid}/Visits`)
+  const querySnapshot = await getDocs(colRef)
   const visitData: Visit[] = []
   let i = 0
   querySnapshot.forEach((doc) => {
@@ -86,4 +101,17 @@ export const updateUserData = async (id: string, props: User) => {
 
 export const deletUserData = async (id: string) => {
   await deleteDoc(doc(adamRef, id))
+}
+
+export async function getInitialData(uid: string) {
+  UpdateUid()
+  const docRef = doc(database, `TestUsers/${uid}`)
+  const docSnap = await getDoc(docRef)
+
+  if (docSnap.exists()) {
+    console.log('lol')
+  }
+  else {
+    await setDoc(doc(database, 'TestUsers', uid), {})
+  }
 }

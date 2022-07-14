@@ -1,6 +1,6 @@
 import React from 'react'
 import { useState } from 'react'
-import { User, writeUserData } from 'databaseintegration'
+import { User, WriteUserData } from 'databaseintegration'
 
 import { CancelSymbol } from './buttons'
 import CommuteSelector from './commuteselector'
@@ -33,7 +33,7 @@ const ModalView: React.FC<ModalViewProps> = ({ openFunc }) => {
       commuteMethod: commuteMethod,
       notes: notes
     }
-    writeUserData(data)
+    WriteUserData(data)
     click.preventDefault()
   }
 
@@ -159,11 +159,11 @@ const ModalView: React.FC<ModalViewProps> = ({ openFunc }) => {
           />
           <div className='mx-auto my-2 flex flex-col p-1 '>
             <button
-              onClick={() =>
-                setTimeout(() => {
-                  window.location.reload()
-                }, 125)
-              }
+              // onClick={() =>
+              //   setTimeout(() => {
+              //     window.location.reload()
+              //   }, 125)
+              // }
               className='text-bold rounded bg-primary px-12 py-4 text-white drop-shadow-default active:bg-dark-red'
               disabled={!isSubmitDisabled}
             >

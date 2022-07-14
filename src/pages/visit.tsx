@@ -2,9 +2,9 @@ import { useState } from 'react'
 
 import Header from '@/components/Header'
 import NavBar from '@/components/NavBar'
+import { withProtected } from '@/components/PrivateRoute'
 import SearchBar from '@/components/Visit/searchbar'
 import VisitList from '@/components/Visit/visitlist'
-// import { withProtected } from '@/components/PrivateRoute'
 
 const Visit = () => {
   const [searchQuery, setSearchQuery] = useState('')
@@ -22,5 +22,5 @@ const Visit = () => {
   )
 }
 
-// export default withProtected(Visit)
-export default Visit
+export default withProtected(Visit)
+// export default Visit

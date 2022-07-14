@@ -145,9 +145,9 @@ const EditableVisitInstance = (props: Visit) => {
         className='text-bold mt-2 ml-4 rounded-xl bg-primary p-1 text-white drop-shadow-default active:bg-dark-red'
         onClick={() => {
           deletUserData(props.id)
-          setTimeout(() => {
-            window.location.reload()
-          }, 125)
+          //   setTimeout(() => {
+          //     window.location.reload()
+          //   }, 125)
         }}
       >
         Remove
