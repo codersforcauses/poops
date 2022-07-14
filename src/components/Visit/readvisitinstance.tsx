@@ -1,4 +1,4 @@
-import { User } from 'databaseintegration'
+import { User } from '../../interfaces/interfaces'
 
 const ReadOnlyVisitInstance = (props: User) => {
   return (
@@ -8,7 +8,7 @@ const ReadOnlyVisitInstance = (props: User) => {
         <p className='text-sm'>{`${props.lastName}, ${props.firstName}`}</p>
       </div>
       <div className='max-h-0 justify-between overflow-hidden text-sm transition-all duration-300 peer-checked:max-h-40'>
-        <p>Pet/Pets: {props.petName}</p>
+        <p>Pet/Pets: {props.petNames}</p>
         <p>Duration: {props.duration}</p>
         <p>Walk Metres: {props.walkDist.toFixed(3)} km</p>
         <p>Commute Metres: {props.commuteDist.toFixed(1)} km</p>

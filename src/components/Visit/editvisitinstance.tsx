@@ -1,5 +1,11 @@
 import React, { useState } from 'react'
-import { deletUserData, updateUserData, User, Visit } from 'databaseintegration'
+
+import {
+  deletUserData,
+  updateUserData,
+  User,
+  Visit
+} from '@/components/Firebase/init'
 
 function NumberForm(value: string) {
   if (isNaN(parseFloat(value))) {
@@ -12,7 +18,7 @@ const EditableVisitInstance = (props: Visit) => {
   const [firstName, setFirstName] = useState(props.firstName)
   const [lastName, setLastName] = useState(props.lastName)
   const [dateTime, setDateTime] = useState(props.dateTime)
-  const [petName, setPetName] = useState(props.petName)
+  const [petNames, setpetNames] = useState(props.petNames)
   const [walkDist, setWalkDist] = useState(props.walkDist)
   const [duration, setDuration] = useState(props.duration)
   const [commuteDist, setCommuteDist] = useState(props.commuteDist)
@@ -25,7 +31,7 @@ const EditableVisitInstance = (props: Visit) => {
         const userData: User = {
           firstName: firstName,
           lastName: lastName,
-          petName: petName,
+          petNames: petNames,
           dateTime: dateTime,
           duration: duration,
           walkDist: walkDist,
@@ -67,8 +73,8 @@ const EditableVisitInstance = (props: Visit) => {
           size={8}
           className='bg-gray text-primary'
           placeholder='Pet Name(s)'
-          value={petName}
-          onChange={(event) => setPetName(event.target.value)}
+          value={petNames}
+          onChange={(event) => setpetNames(event.target.value)}
         />
       </p>
       <p className='text-sm'>

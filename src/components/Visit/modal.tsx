@@ -1,6 +1,7 @@
 import React from 'react'
 import { useState } from 'react'
-import { User, WriteUserData } from 'databaseintegration'
+
+import { User, WriteUserData } from '@/components/Firebase/init'
 
 import { CancelSymbol } from './buttons'
 import CommuteSelector from './commuteselector'
@@ -13,7 +14,7 @@ interface ModalViewProps {
 const ModalView: React.FC<ModalViewProps> = ({ openFunc }) => {
   const [firstName, setFirstName] = useState('')
   const [lastName, setLastName] = useState('')
-  const [petName, setPetName] = useState('')
+  const [petNames, setpetNames] = useState('')
   const [dateTime, setDateTime] = useState('')
   const [duration, setDuration] = useState('')
   const [walkDist, setWalkDist] = useState(0)
@@ -25,7 +26,7 @@ const ModalView: React.FC<ModalViewProps> = ({ openFunc }) => {
     const data: User = {
       firstName: firstName,
       lastName: lastName,
-      petName: petName,
+      petNames: petNames,
       dateTime: dateTime,
       duration: duration,
       walkDist: walkDist,
@@ -40,7 +41,7 @@ const ModalView: React.FC<ModalViewProps> = ({ openFunc }) => {
   const isSubmitDisabled = () =>
     firstName &&
     lastName &&
-    petName &&
+    petNames &&
     dateTime &&
     duration &&
     walkDist &&
@@ -87,12 +88,12 @@ const ModalView: React.FC<ModalViewProps> = ({ openFunc }) => {
               <tr>
                 <td>
                   <FormField
-                    id='petNameInput'
+                    id='petNamesInput'
                     type='text'
                     placeholder='Pet Name'
                     label='Pet name:'
                     isRequired={true}
-                    onChange={(event) => setPetName(event.target.value)}
+                    onChange={(event) => setpetNames(event.target.value)}
                   />
                 </td>
                 <td>

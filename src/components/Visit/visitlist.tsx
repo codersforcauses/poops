@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
-import { getVisitData, Visit } from 'databaseintegration'
+
+import { VisitData } from '@/interfaces/interfaces.tsx'
 
 import VisitInstance from './visitinstance'
 
@@ -8,40 +9,40 @@ interface VisitListProps {
 }
 
 const VisitList = (props: VisitListProps) => {
-  const [visitData, setVisitData] = useState<Visit[]>([])
+  const [visitData, setVisitData] = useState<VisitData[]>([])
 
   useEffect(() => {
     const fetchData = () => getVisitData().then(setVisitData)
     fetchData()
   }, [])
 
-  const matchesFirstName = (post: Visit) =>
+  const matchesFirstName = (post: VisitData) =>
     post.firstName.toLowerCase().includes(props.searchQuery.toLowerCase())
 
-  const matchesLastName = (post: Visit) =>
+  const matchesLastName = (post: VisitData) =>
     post.lastName.toLowerCase().includes(props.searchQuery.toLowerCase())
 
-  const matchesPetName = (post: Visit) =>
-    post.petName.toLowerCase().includes(props.searchQuery.toLowerCase())
+  const matchespetNames = (post: VisitData) =>
+    post.petNames.toLowerCase().includes(props.searchQuery.toLowerCase())
 
-  const matchesSearchTerms = (post: Visit) =>
-    matchesFirstName(post) || matchesLastName(post) || matchesPetName(post)
+  const matchesSearchTerms = (post: VisitData) =>
+    matchesFirstName(post) || matchesLastName(post) || matchespetNames(post)
 
   return (
     <div className=''>
       {visitData
-        .filter((post: Visit) => {
+        .filter((post: VisitData) => {
           if (props.searchQuery === '' || matchesSearchTerms(post)) {
             return post
           }
         })
-        .map((post) => (
+        .map((post, index) => (
           <VisitInstance
-            key={post.id}
-            id={post.id}
+            key={index}
+            id={index}
             firstName={post.firstName}
             lastName={post.lastName}
-            petName={post.petName}
+            petNames={post.petNames}
             duration={post.duration}
             dateTime={post.dateTime}
             walkDist={post.walkDist}

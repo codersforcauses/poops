@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import ChevronDownIcon from '@heroicons/react/outline/ChevronDownIcon'
-import { Visit } from 'databaseintegration'
 
 import { EditButton } from './buttons'
 import EditableVisitInstance from './editvisitinstance'
@@ -39,7 +38,7 @@ const VisitInstance = (props: VisitInstanceProps) => {
               id={props.id}
               firstName={props.firstName}
               lastName={props.lastName}
-              petName={props.petName}
+              petNames={props.petNames}
               duration={props.duration}
               dateTime={props.dateTime}
               walkDist={props.walkDist}
@@ -52,7 +51,7 @@ const VisitInstance = (props: VisitInstanceProps) => {
               key={props.id}
               firstName={props.firstName}
               lastName={props.lastName}
-              petName={props.petName}
+              petNames={props.petNames}
               duration={props.duration}
               dateTime={props.dateTime}
               walkDist={props.walkDist}

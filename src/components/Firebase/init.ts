@@ -1,6 +1,16 @@
-import { getApp, getApps, initializeApp } from 'firebase/app'
+import { getApp, getApps, initializeApp } from 'firebase/app' // no compat for new SDK
 import { getAuth } from 'firebase/auth'
-import { getFirestore } from 'firebase/firestore'
+import {
+  doc,
+  DocumentData,
+  DocumentReference,
+  getDoc,
+  getFirestore,
+  setDoc,
+  updateDoc
+} from 'firebase/firestore'
+
+import { ContactData, User, VisitData } from '../../interfaces/interfaces'
 
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
@@ -18,6 +28,53 @@ if (!getApps().length) {
   app = getApp() // Uses existing app if app exists
 }
 
-export const auth = getAuth(app)
-export const db = getFirestore(app)
+const auth = getAuth(app)
+const db = getFirestore(app)
+
+let uid = '0'
+let docRef: DocumentReference<DocumentData>
+export let user: User
+
+export const updateVisitData = async (user: User) => {
+  getCurrentUser()
+  await updateDoc(docRef, 'Visits', user.visits)
+}
+
+export const updateContactData = async (user: User) => {
+  getCurrentUser()
+  await updateDoc(docRef, 'Contacts', user.contacts)
+}
+
+const getData = async () => {
+  const userDoc = await getDoc(docRef)
+  const iVisitData: VisitData[] = await userDoc.get('Visits')
+  const iContactData: ContactData[] = await userDoc.get('Contacts')
+
+  user = {
+    uniqueId: uid,
+    contacts: iContactData,
+    visits: iVisitData
+  }
+}
+
+export async function getInitialData(iuid: string) {
+  uid = iuid //incoming uid
+  docRef = doc(db, `TestUsers/${uid}`)
+  const docSnap = await getDoc(docRef)
+
+  if (docSnap.exists()) {
+    getData()
+  } else {
+    await setDoc(doc(db, 'TestUsers', uid), {})
+  }
+}
+
+const getCurrentUser = () => {
+  const currentUser = auth.currentUser
+  if (currentUser === null) {
+    return
+  }
+  return currentUser
+}
+
 export default app
