@@ -24,7 +24,9 @@ export default function NavLink({
     <Link href={href}>
       {name !== 'Visit' ? (
         <a
-          className={`${currentPage ? currentTabClasses : tabClasses} pt-2 pb-1`}
+          className={`${
+            currentPage ? currentTabClasses : tabClasses
+          } pt-2 pb-1`}
           onMouseDown={() => setCurrentPage(name)}
           aria-hidden='true' // TODO: need work on accessibility
         >

@@ -3,10 +3,10 @@
 @tailwind utilities;
 
 // Debug css
-/*{
+* {
   box-sizing: border-box;
   outline: 3px solid limegreen !important;
-}*/
+}
 
 @layer base {
   /* inter var - latin */
