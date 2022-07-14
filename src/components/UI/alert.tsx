@@ -8,7 +8,7 @@ import {
   XIcon
 } from '@heroicons/react/outline'
 
-import {AlertContentProps} from '@/context/AlertContext'
+import { AlertContentProps } from '@/context/AlertContext'
 
 export enum AlertIcon {
   info,
@@ -32,19 +32,12 @@ const getClasses = (vis: boolean, pos: string) => {
   return (
     `flex items-center fixed right-0 left-0 z-999 pl-6 pr-4 mx-[2rem] bg-white text-black border-x-1 border-[#dddddd] transition-transform duration-500` +
     `${
-      (pos === 'top') ? (
-        ' pt-4 pb-3 rounded-b-md border-b-1 -top-[240px]' +
-        ((vis)
-          ? ' translate-y-[240px]'
-          : ' translate-y-[120px]')
-      ) : (
-        (pos === 'bottom') && (
+      pos === 'top'
+        ? ' pt-4 pb-3 rounded-b-md border-b-1 -top-[240px]' +
+          (vis ? ' translate-y-[240px]' : ' translate-y-[120px]')
+        : pos === 'bottom' &&
           ' pb-4 pt-3 rounded-t-md border-t-1 bottom-16' +
-          ((vis)
-            ? ' translate-y-[0]'
-            : ' translate-y-[120px]')
-        )
-      )
+            (vis ? ' translate-y-[0]' : ' translate-y-[120px]')
     }`
   )
 }
@@ -55,17 +48,17 @@ type AlertProps = {
   content: AlertContentProps
 }
 
-const Alert: React.FC<AlertProps> = ({
-  visible,
-  setVisible,
-  content,
-}) => {
+const Alert: React.FC<AlertProps> = ({ visible, setVisible, content }) => {
   const [contentCache, setContentCache] = useState<AlertContentProps>({
     title: '', // string[2], first element is tile, second is message
     text: '',
     position: 'top',
-    confirmFunction: () => {}, // function to execute on confirm, enables the confirm function
-    cancelFunction: () => {},
+    confirmFunction: () => {
+      return
+    }, // function to execute on confirm, enables the confirm function
+    cancelFunction: () => {
+      return
+    },
     showFor: 5000, // ms alert will stay open, set to -1 to leave open until button click
     icon: AlertIcon.info
   })
@@ -76,7 +69,7 @@ const Alert: React.FC<AlertProps> = ({
   const doUpdate = useCallback(
     (c: AlertContentProps) => {
       if (!(c.title === '' && c.title === '')) {
-        setContentCache({
+        const nextContent: AlertContentProps = {
           title: c.title,
           text: c.text, // string[2], first element is tile, second is message
           position: c.position,
@@ -84,29 +77,32 @@ const Alert: React.FC<AlertProps> = ({
           cancelFunction: c.cancelFunction,
           showFor: c.showFor, // ms alert will stay open, set to -1 to leave open until button click
           icon: c.icon
-        })
-        if (timerRef.current) clearTimeout(timerRef.current)
-        setVisible(true)
-        timerRef.current = setTimeout(() => {
+        }
+        if (visible) {
+          setVisible(false)
+          timerRef.current = setTimeout(() => {
+            setContentCache(nextContent)
+            setVisible(true)
+            timerRef.current = setTimeout(() => {
+              setVisible(false)
+            }, nextContent.showFor)
+          }, 300)
+        } else {
+          setContentCache(nextContent)
+          setVisible(true)
+          timerRef.current = setTimeout(() => {
             setVisible(false)
-        }, contentCache.showFor)
+          }, content.showFor)
+        }
       }
     },
     [content, setVisible]
   )
 
   useEffect(() => {
-    if (visible) {
-      if (timerRef.current) clearTimeout(timerRef.current)
-      setVisible(false)
-      timerRef.current = setTimeout(() => {
-        doUpdate(content)
-        setVisible(true)
-      }, 300)
-    } else {
-      doUpdate(content)
-    }
-  }, [content])
+    if (timerRef.current) clearTimeout(timerRef.current)
+    doUpdate(content)
+  }, [content, doUpdate])
 
   useEffect(() => {
     return () => {
@@ -118,7 +114,7 @@ const Alert: React.FC<AlertProps> = ({
     <div
       className={getClasses(
         visible,
-        contentCache.position,
+        contentCache.position ? contentCache.position : 'top'
       )}
       style={{ boxShadow: shadow }}
     >
@@ -152,9 +148,10 @@ const Alert: React.FC<AlertProps> = ({
         <button
           className='pr-4'
           onClick={(e) => {
+            e.preventDefault()
             setVisible(false)
             if (typeof content.confirmFunction !== 'undefined')
-              content.confirmFunction(e)
+              content.confirmFunction()
           }}
         >
           <CheckIcon className='h-5 w-5' stroke={iconColor} />
@@ -162,9 +159,10 @@ const Alert: React.FC<AlertProps> = ({
       )}
       <button
         onClick={(e) => {
+          e.preventDefault()
           setVisible(false)
           if (typeof content.cancelFunction !== 'undefined')
-            content.cancelFunction(e)
+            content.cancelFunction()
         }}
       >
         <XIcon className='h-5 w-5' stroke={iconColor} />

@@ -9,16 +9,14 @@ const AlertExamples = () => {
   const buttonStyles =
     'mx-auto mt-2 w-fit rounded-lg bg-primary py-1 px-4 text-lg text-white shadow-md focus:outline-primary active:bg-dark-red'
 
-  const confirmation = (_e: MouseEvent) => {
+  const confirmation = () => {
     console.log(`ALERT CONFIRMED AT ` + new Date().toTimeString())
   }
-  const cancelled = (_e: MouseEvent) => {
+  const cancelled = () => {
     console.log(`ALERT CANCELLED AT ` + new Date().toTimeString())
   }
   return (
-    <div
-      className='flex [&>*]p-2 p-5'
-    >
+    <div className='[&>*]p-2 flex p-5'>
       <button
         className={buttonStyles}
         onClick={() => {
@@ -27,7 +25,7 @@ const AlertExamples = () => {
             title: 'Info Icon',
             text: 'Confirm or deny this alert',
             confirmFunction: confirmation,
-            cancelFunction: cancelled,
+            cancelFunction: cancelled
           })
         }}
       >
