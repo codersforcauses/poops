@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useEffect, useState } from 'react'
 import {
   Auth,
+  AuthProvider,
   getRedirectResult,
   GoogleAuthProvider,
   onAuthStateChanged,
@@ -13,8 +14,8 @@ import { auth } from '../components/Firebase/init'
 
 interface FirebaseContextProps {
   auth: Auth
-  googleSignIn?: (auth: Auth) => void
   getGoogleResults?: (auth: Auth) => void
+  externalAuthSignIn?: (auth: Auth, provider: AuthProvider) => void
   logOut?: () => void
   currentUser?: User | null
 }
@@ -34,9 +35,8 @@ export const AuthContextProvider = ({
   const [currentUser, setCurrentUser] = useState<User | null>(null)
   const [loading, setLoading] = useState(true)
 
-  function googleSignIn(auth: Auth) {
-    const googleProvider = new GoogleAuthProvider()
-    signInWithRedirect(auth, googleProvider) // Not working in chrome incognito?, but signInWithPopup does
+  function externalAuthSignIn(auth: Auth, provider: AuthProvider) {
+    signInWithRedirect(auth, provider)
       .then((result) => {
         return result
       })
@@ -88,8 +88,8 @@ export const AuthContextProvider = ({
 
   const value: FirebaseContextProps = {
     auth,
-    googleSignIn,
     getGoogleResults,
+    externalAuthSignIn,
     logOut,
     currentUser
   }
