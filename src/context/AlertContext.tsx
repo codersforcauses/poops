@@ -6,7 +6,7 @@ export interface AlertContentProps {
   title: string
   text: string
   icon: AlertIcon
-  position?: string
+  position?: 'top' | 'bottom'
   confirmFunction?: () => void
   cancelFunction?: () => void
   showFor?: number
