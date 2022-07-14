@@ -8,11 +8,15 @@ import {
   useState
 } from 'react'
 import {
+  arrayRemove,
+  arrayUnion,
   doc,
+  FieldValue,
   FirestoreError,
   getDoc,
+  serverTimestamp,
   setDoc,
-  updateDoc
+  writeBatch
 } from 'firebase/firestore'
 
 import { MESSAGES } from '@/components/Firebase/errors'
@@ -21,14 +25,17 @@ import { useAuth } from '@/context/auth'
 
 interface VisitProp {
   visit: string
+  visitTime: FieldValue
 }
 
 interface ContactProp {
   contact: string
+  contactTime: FieldValue
 }
 
 interface UserDocProp {
   name: string
+  time: FieldValue
   visit: VisitProp[]
   contact: ContactProp[]
 }
@@ -39,6 +46,7 @@ interface FirestoreContextProp {
 
 const defaultUserDoc: UserDocProp = {
   name: '',
+  time: serverTimestamp(),
   visit: [],
   contact: []
 }
@@ -92,13 +100,17 @@ const FirestoreProvider = ({ children }: { children: ReactNode }) => {
       // setAchievementsCount((prev) => ({
       //   count: prev.count + newAchievementsEarned
       // }))
-      console.log(oldVisit, newVisit)
       try {
         if (currentUser?.uid) {
           const userDocRef = doc(db, 'users', currentUser.uid)
-          await updateDoc(userDocRef, {
-            // count: achievementsCount.count + newAchievementsEarned
+          const batch = writeBatch(db)
+          batch.update(userDocRef, {
+            visit: arrayRemove(oldVisit)
           })
+          batch.update(userDocRef, {
+            visit: arrayUnion({ ...newVisit, visitTime: serverTimestamp() })
+          })
+          await batch.commit()
         }
       } catch (err: unknown) {
         //#region  //*=========== For logging ===========
@@ -115,13 +127,15 @@ const FirestoreProvider = ({ children }: { children: ReactNode }) => {
       // setAchievementsCount((prev) => ({
       //   count: prev.count + newAchievementsEarned
       // }))
-      console.log(oldContact, newContact)
       try {
         if (currentUser?.uid) {
           const userDocRef = doc(db, 'users', currentUser.uid)
-          await updateDoc(userDocRef, {
-            // count: achievementsCount.count + newAchievementsEarned
+          const batch = writeBatch(db)
+          batch.update(userDocRef, { visit: arrayRemove(oldContact) })
+          batch.update(userDocRef, {
+            visit: arrayUnion({ ...newContact, contactTime: serverTimestamp() })
           })
+          await batch.commit()
         }
       } catch (err: unknown) {
         //#region  //*=========== For logging ===========
