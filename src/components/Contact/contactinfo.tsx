@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import {
   LocationMarkerIcon,
   MailIcon,
@@ -7,7 +6,8 @@ import {
 import tw from 'tailwind-styled-components'
 
 import Avatar from '@/components/Contact/avatar'
-import Dialog from '@/components/Contact/dialog'
+import { AlertIcon } from '@/components/UI/alert'
+import { useAlert } from '@/context/AlertContext'
 import type { Contact } from '@/types/types'
 
 type ContactInfoProps = {
@@ -16,7 +16,11 @@ type ContactInfoProps = {
 }
 
 function ContactInfo({ contact, image }: ContactInfoProps) {
-  const [dialogPrompt, setDialogPrompt] = useState(false)
+  const { setAlert } = useAlert()
+
+  function DeleteContact() {
+    // TODO: Delete Contact from firebase
+  }
   return (
     <div className='flex flex-col items-center justify-center gap-3'>
       {/* USER PROFILE IMAGE */}
@@ -126,14 +130,20 @@ function ContactInfo({ contact, image }: ContactInfoProps) {
       <div className='mb-2'>
         <button
           type='button'
-          onClick={() => setDialogPrompt(true)}
+          onClick={() => {
+            setAlert({
+              icon: AlertIcon.warning,
+              title: 'Delete Contact',
+              text: 'Are you sure?',
+              position: 'bottom', // Slides up from bottom
+              confirmFunction: () => DeleteContact
+            })
+          }}
           className='w-80 rounded bg-primary py-1 font-bold text-white hover:bg-dark-red'
         >
           Delete Contact
         </button>
       </div>
-      {/* DIALOG PROMPT OPENS WHEN DELETE CONTACT IS CLICKED */}
-      {dialogPrompt && <Dialog setDialogPrompt={setDialogPrompt} />}
     </div>
   )
 }
