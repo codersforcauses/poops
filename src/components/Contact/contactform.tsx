@@ -107,7 +107,7 @@ const ContactForm = ({ contact, image, setIsEditing }: ContactInfoProps) => {
           <input
             name='last_name'
             defaultValue={contact.lastName}
-            className='w-80 rounded-lg border border-grey pl-1'
+            className='mb-2 w-80 rounded-lg border border-grey pl-1'
             onChange={handleInputChange}
           />
         </Box>
@@ -131,7 +131,7 @@ const ContactForm = ({ contact, image, setIsEditing }: ContactInfoProps) => {
           <input
             name='phone'
             defaultValue={contact.phone}
-            className='w-full rounded-lg border border-grey pl-1'
+            className='mb-2 w-full rounded-lg border border-grey pl-1'
             onChange={handleInputChange}
           />
         </Box>
@@ -143,7 +143,7 @@ const ContactForm = ({ contact, image, setIsEditing }: ContactInfoProps) => {
           <input
             name='email'
             defaultValue={contact.email}
-            className='w-full rounded-lg border border-grey pl-1'
+            className='mb-2 w-full rounded-lg border border-grey pl-1'
             onChange={handleInputChange}
           />
         </Box>
@@ -155,7 +155,7 @@ const ContactForm = ({ contact, image, setIsEditing }: ContactInfoProps) => {
           <input
             name='street_address'
             defaultValue={contact.streetAddress}
-            className='w-full rounded-lg border border-grey pl-1'
+            className='mb-2 w-full rounded-lg border border-grey pl-1'
             onChange={handleInputChange}
           />
         </Box>
