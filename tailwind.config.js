@@ -7,8 +7,7 @@ module.exports = {
   content: [
     './src/**/*.{html,js,jsx,ts,tsx}',
     './src/pages/**/*.{js,ts,jsx,tsx}',
-    './src/components/**/*.{js,ts,jsx,tsx}',
-    './src/**/*.{js,jsx,ts,tsx}'
+    './src/components/**/*.{js,ts,jsx,tsx}'
   ],
   theme: {
     colors: {
@@ -57,7 +56,11 @@ module.exports = {
         white: colors.white,
         black: colors.black
       }
-    },
-    plugins: [require('@tailwindcss/forms')]
-  }
+    }
+  },
+  plugins: [
+    require('@tailwindcss/forms')({
+      strategy: 'class' // only generate classes
+    })
+  ]
 }
