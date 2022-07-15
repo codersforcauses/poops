@@ -3,7 +3,7 @@ import React, { createContext, useContext, useState } from 'react'
 import Alert, { AlertIcon } from '@/components/UI/alert'
 
 export interface AlertContentProps {
-  title: string
+  title?: string
   text: string
   icon: AlertIcon
   position?: 'top' | 'bottom'
@@ -14,6 +14,7 @@ export interface AlertContentProps {
 interface AlertContextProps {
   setAlert: (content: AlertContentProps) => void
   clearAlert: () => void
+  visible: boolean
 }
 
 const alertContext = createContext<AlertContextProps>({
@@ -22,7 +23,8 @@ const alertContext = createContext<AlertContextProps>({
   },
   clearAlert: () => {
     return
-  }
+  },
+  visible: false,
 })
 
 export const useAlert = () => useContext(alertContext)
@@ -45,9 +47,9 @@ export const AlertContextProvider = ({
 
   const setAlert = (content: AlertContentProps) => {
     setContent({
-      title: content.title,
+      title: content.title ? content.title : '',
       text: content.text,
-      icon: content.icon ? content.icon : AlertIcon.info,
+      icon: content.icon,
       position: content.position ? content.position : 'top',
       confirmFunction: content.confirmFunction
         ? content.confirmFunction
@@ -74,7 +76,8 @@ export const AlertContextProvider = ({
 
   const value: AlertContextProps = {
     setAlert,
-    clearAlert
+    clearAlert,
+    visible,
   }
 
   return (

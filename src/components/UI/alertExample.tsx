@@ -50,9 +50,10 @@ const AlertExamples = () => {
         className={buttonStyles}
         onClick={() => {
           setAlert({
-            icon: AlertIcon.warning,
-            title: 'Warning Icon',
-            text: 'Testing the critical alert'
+            icon: AlertIcon.critical,
+            title: 'Critical Icon',
+            text: 'Testing the critical alert, stays open',
+            showFor: -1,
           })
         }}
       >
@@ -63,8 +64,7 @@ const AlertExamples = () => {
         onClick={() => {
           setAlert({
             icon: AlertIcon.comment,
-            title: 'Comment Top',
-            text: 'Comment alert, cancel function set to log current time'
+            text: 'Comment alert, cancel function set to log current time, no title'
           })
         }}
       >

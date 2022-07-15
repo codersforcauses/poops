@@ -8,12 +8,12 @@ import {
   XIcon
 } from '@heroicons/react/outline'
 
-import { AlertContentProps } from '@/context/AlertContext'
+import { AlertContentProps, useAlert } from '@/context/AlertContext'
 
 export enum AlertIcon {
   info,
   security,
-  warning,
+  critical,
   comment
 }
 
@@ -30,14 +30,14 @@ const shadow =
 
 const getClasses = (vis: boolean, pos: string) => {
   return (
-    `flex items-center fixed right-0 left-0 z-999 pl-6 pr-4 mx-[2rem] bg-white text-black border-x-1 border-[#dddddd] transition-transform duration-500` +
+    `flex items-center fixed right-0 left-0 z-999 pl-5 pr-4 py-3 mx-[1rem] bg-white text-black border-x-1 border-[#dddddd] transition-transform duration-700` +
     `${
       pos === 'top'
-        ? ' pt-4 pb-3 rounded-b-md border-b-1 -top-[240px]' +
-          (vis ? ' translate-y-[240px]' : ' translate-y-[120px]')
+        ? ' rounded-b-md border-b-1 -top-[500px]' +
+          (vis ? ' translate-y-[500px]' : ' translate-y-[250px]')
         : pos === 'bottom' &&
-          ' pb-4 pt-3 rounded-t-md border-t-1 bottom-16' +
-            (vis ? ' translate-y-[0]' : ' translate-y-[120px]')
+          ' rounded-t-md border-t-1 bottom-0' +
+            (vis ? ' translate-y-[0]' : ' translate-y-[250px]')
     }`
   )
 }
@@ -49,7 +49,6 @@ type AlertProps = {
 }
 
 const Alert: React.FC<AlertProps> = ({ visible, setVisible, content }) => {
-  const [isMoving, setIsMoving] = useState(false)
   const [contentCache, setContentCache] = useState<AlertContentProps>({
     title: '', // string[2], first element is tile, second is message
     text: '',
@@ -64,13 +63,15 @@ const Alert: React.FC<AlertProps> = ({ visible, setVisible, content }) => {
     icon: AlertIcon.info
   })
 
+  const { clearAlert } = useAlert()
+
   const timerRef = useRef<ReturnType<typeof setTimeout>>()
 
   // utility function that sets and then clears a timer to automatically close alert
   const doUpdate = useCallback(
-    (c: AlertContentProps, m: boolean) => {
-      if (!(c.title === '' && c.title === '')) {
-        const nextContent: AlertContentProps = {
+    (c: AlertContentProps) => {
+      if (c.text !== '') {
+        setContentCache({
           title: c.title,
           text: c.text, // string[2], first element is tile, second is message
           position: c.position,
@@ -78,25 +79,14 @@ const Alert: React.FC<AlertProps> = ({ visible, setVisible, content }) => {
           cancelFunction: c.cancelFunction,
           showFor: c.showFor, // ms alert will stay open, set to -1 to leave open until button click
           icon: c.icon
-        }
-        if (m) {
-          setVisible(false)
-          setIsMoving(true)
-          timerRef.current = setTimeout(() => {
-            setContentCache(nextContent)
-            setVisible(true)
-            timerRef.current = setTimeout(() => {
-              setVisible(false)
-              setIsMoving(false)
-            }, nextContent.showFor)
-          }, 300)
-        } else {
-          setContentCache(nextContent)
-          setVisible(true)
-          setIsMoving(true)
+        })
+        setVisible(true)
+        if (c.showFor !== -1) {
           timerRef.current = setTimeout(() => {
             setVisible(false)
-            setIsMoving(false)
+            timerRef.current = setTimeout(() => {
+              clearAlert()
+            }, 700)
           }, content.showFor)
         }
       }
@@ -106,8 +96,8 @@ const Alert: React.FC<AlertProps> = ({ visible, setVisible, content }) => {
 
   useEffect(() => {
     if (timerRef.current) clearTimeout(timerRef.current)
-    doUpdate(content, isMoving)
-  }, [content, doUpdate, isMoving])
+    doUpdate(content)
+  }, [content, doUpdate])
 
   useEffect(() => {
     return () => {
@@ -128,7 +118,7 @@ const Alert: React.FC<AlertProps> = ({ visible, setVisible, content }) => {
           <InformationCircleIcon className='h-7 w-7' />
         ) : contentCache.icon === AlertIcon.security ? (
           <ShieldExclamationIcon className='h-7 w-7' />
-        ) : contentCache.icon === AlertIcon.warning ? (
+        ) : contentCache.icon === AlertIcon.critical ? (
           <ExclamationIcon className='h-7 w-7' />
         ) : (
           contentCache.icon === AlertIcon.comment && (
@@ -136,18 +126,21 @@ const Alert: React.FC<AlertProps> = ({ visible, setVisible, content }) => {
           )
         )}
       </div>
+      <div
+        className='mx-[1rem] grow self-start'
+      >
       <p
-        className='ml-[2rem] self-start font-bold'
+        className='font-bold'
         style={{ color: titleColor }}
       >
         {contentCache.title}
       </p>
       <p
-        className='ml-4 mr-[2rem] grow self-start'
         style={{ color: textColor }}
       >
         {contentCache.text}
       </p>
+      </div>
       {typeof contentCache.confirmFunction !== 'undefined' && (
         // if we have a confirmFunction show confirm button
         <button
@@ -155,8 +148,8 @@ const Alert: React.FC<AlertProps> = ({ visible, setVisible, content }) => {
           onClick={(e) => {
             e.preventDefault()
             setVisible(false)
-            if (typeof content.confirmFunction !== 'undefined')
-              content.confirmFunction()
+            if (typeof contentCache.confirmFunction !== 'undefined')
+              contentCache.confirmFunction()
           }}
         >
           <CheckIcon className='h-5 w-5' stroke={iconColor} />
@@ -166,8 +159,8 @@ const Alert: React.FC<AlertProps> = ({ visible, setVisible, content }) => {
         onClick={(e) => {
           e.preventDefault()
           setVisible(false)
-          if (typeof content.cancelFunction !== 'undefined')
-            content.cancelFunction()
+          if (typeof contentCache.cancelFunction !== 'undefined')
+            contentCache.cancelFunction()
         }}
       >
         <XIcon className='h-5 w-5' stroke={iconColor} />
