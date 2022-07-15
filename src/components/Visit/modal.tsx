@@ -6,10 +6,10 @@ import CommuteSelector from './commuteselector'
 import FormField from './formfield'
 
 interface ModalViewProps {
-  openFunc: () => void
+  toggleModal: () => void
 }
 
-const ModalView: React.FC<ModalViewProps> = ({ openFunc }) => {
+const ModalView: React.FC<ModalViewProps> = ({ toggleModal }) => {
   const [firstName, setFirstName] = useState('')
   const [lastName, setLastName] = useState('')
   const [petName, setPetName] = useState('')
@@ -18,6 +18,8 @@ const ModalView: React.FC<ModalViewProps> = ({ openFunc }) => {
   const [walkDist, setWalkDist] = useState(0)
   const [commuteDist, setCommuteDist] = useState(0)
   const [commuteMethod, setCommuteMethod] = useState('')
+  /* eslint-disable unused-imports/no-unused-vars */
+  const [notes, setNotes] = useState('')
 
   const isSubmitDisabled = () =>
     firstName &&
@@ -29,11 +31,15 @@ const ModalView: React.FC<ModalViewProps> = ({ openFunc }) => {
     commuteDist &&
     commuteMethod
 
+  const handleSubmit = () => {
+    // TODO: Make API call
+  }
+
   return (
     <div className='fixed inset-0 z-50 h-screen w-screen rounded-sm bg-white p-4 shadow '>
       <div>
         <div className='fixed right-2 top-2 h-7 w-7 rounded-full bg-primary'>
-          <button onClick={openFunc}>
+          <button onClick={toggleModal}>
             <CancelSymbol />
           </button>
         </div>
@@ -41,7 +47,7 @@ const ModalView: React.FC<ModalViewProps> = ({ openFunc }) => {
         <h1 className='mx-1 border-b-2 border-primary py-3 pt-10 text-2xl font-bold'>
           Add Your Visit
         </h1>
-        <form className='pt-3'>
+        <form className='pt-3' onSubmit={handleSubmit}>
           <table className='container mx-auto table-fixed'>
             <tbody>
               <tr>
@@ -137,22 +143,18 @@ const ModalView: React.FC<ModalViewProps> = ({ openFunc }) => {
             placeholder='Add notes here'
             label='Notes:'
             isRequired={false}
+            onChange={(event) => setNotes(event.target.value)}
           />
           <div className='mx-auto my-2 flex flex-col p-1 '>
             <button
-              onClick={() =>
-                setTimeout(() => {
-                  window.location.reload()
-                }, 125)
-              }
               className='text-bold rounded bg-primary px-12 py-4 text-white drop-shadow-default active:bg-dark-red'
+              type='submit'
               disabled={!isSubmitDisabled}
             >
               Submit
             </button>
           </div>
         </form>
-        <div className=''></div>
       </div>
     </div>
   )

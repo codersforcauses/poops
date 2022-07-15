@@ -12,7 +12,7 @@ export const EditButton = (prop: { isEdit: boolean }) => {
 
 export const AddButton = () => {
   const [openModal, setOpenModal] = useState(false)
-  const opening = () => setOpenModal(!openModal)
+  const toggleModal = () => setOpenModal(!openModal)
 
   return (
     // slightly less awful fix
@@ -29,7 +29,7 @@ export const AddButton = () => {
           </p>
         </div>
       </button>
-      {openModal && <Modal openFunc={opening} />}
+      {openModal && <Modal toggleModal={toggleModal} />}
     </div>
   )
 }
