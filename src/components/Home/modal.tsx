@@ -81,6 +81,7 @@ function Modal() {
             />
             <br />
             <form style={{ fontSize: 18 }}>
+              <label htmlFor='pets'>Select Pets</label>
               <ReactSelect
                 options={pets}
                 name='pets'
@@ -94,7 +95,7 @@ function Modal() {
                 value={petSelected}
               />
               <br />
-
+              <label htmlFor='type'>Type of Visit</label>
               <ReactSelect
                 options={types}
                 name='type'
