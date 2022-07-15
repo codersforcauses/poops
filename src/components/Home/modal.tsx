@@ -53,7 +53,7 @@ function Modal() {
       <div className='text-center'>
         {!modalIsOpen && (
           <button
-            className='relative h-[37px] w-[150px] rounded-lg bg-primary text-xl font-semibold text-white'
+            className='relative h-[37px] w-[150px] rounded-lg bg-dark-red text-xl font-semibold text-white'
             onClick={() => {
               setModalOpen(true)
             }}
@@ -61,12 +61,35 @@ function Modal() {
             START VISIT
           </button>
         )}
+
+        {(((type == 'Vet' || type == 'Transportation') &&
+          petSelected.length > 0 &&
+          distance == 0 &&
+          modalIsOpen) ||
+          (type == 'Walk' &&
+            petSelected.length > 0 &&
+            distance > 0 &&
+            modalIsOpen)) && (
+          <button
+            className='relative h-[37px] w-[150px] rounded-lg bg-dark-red text-xl font-semibold text-white'
+            onClick={() => {
+              setModalOpen(false), setType('TYPE OF VISIT'), setDistance(0)
+            }}
+          >
+            STOP VISIT
+          </button>
+        )}
       </div>
       <div>
         {modalIsOpen && (
           <div
-            className='bg-grey rounded-lg p-3 py-2 px-5 text-center shadow-lg sm:py-4'
-            style={{ minWidth: 500, minHeight: 300 }}
+            className='rounded-lg p-3 py-2 px-5 text-center shadow-lg sm:py-4'
+            style={{
+              minWidth: 500,
+              padding: 40,
+              background: '#F9F9F9',
+              margin: 25
+            }}
           >
             <h1 style={{ fontSize: 25, color: '#a52a2a' }}>
               <b>Visit Details</b>
@@ -124,34 +147,15 @@ function Modal() {
         )}
       </div>
       <br />
-      <div className='text-center'>
-        {(((type == 'Vet' || type == 'Transportation') &&
-          petSelected.length > 0 &&
-          distance == 0 &&
-          modalIsOpen) ||
-          (type == 'Walk' &&
-            petSelected.length > 0 &&
-            distance > 0 &&
-            modalIsOpen)) && (
-          <button
-            className='relative h-[37px] w-[150px] rounded-lg bg-primary text-xl font-semibold text-white'
-            onClick={() => {
-              setModalOpen(false), setType('TYPE OF VISIT'), setDistance(0)
-            }}
-          >
-            STOP VISIT
-          </button>
+      <div>
+        {!modalIsOpen && (
+          <Image
+            alt='logo'
+            src='/images/dog.png'
+            width='350px'
+            height='250px'
+          />
         )}
-        <div>
-          {!modalIsOpen && (
-            <Image
-              alt='logo'
-              src='/images/dog.png'
-              width='350px'
-              height='250px'
-            />
-          )}
-        </div>
       </div>
     </div>
   )
