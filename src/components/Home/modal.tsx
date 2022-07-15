@@ -53,7 +53,7 @@ function Modal() {
       <div className='text-center'>
         {!modalIsOpen && (
           <button
-            className='relative h-[37px] w-[150px] rounded-lg bg-dark-red text-xl font-semibold text-white'
+            className='text-l relative h-[30px] w-[120px] rounded-lg bg-dark-red font-semibold text-white'
             onClick={() => {
               setModalOpen(true)
             }}
@@ -71,7 +71,7 @@ function Modal() {
             distance > 0 &&
             modalIsOpen)) && (
           <button
-            className='relative h-[37px] w-[150px] rounded-lg bg-dark-red text-xl font-semibold text-white'
+            className='text-l relative h-[30px] w-[120px] rounded-lg bg-dark-red font-semibold text-white'
             onClick={() => {
               setModalOpen(false), setType('TYPE OF VISIT'), setDistance(0)
             }}
@@ -88,7 +88,7 @@ function Modal() {
               minWidth: 500,
               padding: 40,
               background: '#F9F9F9',
-              margin: 25
+              margin: 20
             }}
           >
             <h1 style={{ fontSize: 25, color: '#a52a2a' }}>

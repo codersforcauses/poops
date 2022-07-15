@@ -13,7 +13,7 @@ const Home = () => {
       <main>
         <div className='space-between w-100 h-100 flex flex-col'>
           <div className='flex h-screen flex-col px-4'>
-            <h1 style={{ fontSize: 50 }} className='py-2 text-center'>
+            <h1 style={{ fontSize: 40 }} className='py-2 text-center'>
               Welcome, User!
             </h1>
             <Summary />
