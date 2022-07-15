@@ -8,12 +8,12 @@ import '@/styles/main.css'
 const POOPS = ({ Component, pageProps }: AppProps) => {
   return (
     <>
-      <AlertContextProvider>
-        <AuthContextProvider>
+      <AuthContextProvider>
+        <AlertContextProvider>
           <Component {...pageProps} />
           {/* <NavBar /> */}
-        </AuthContextProvider>
-      </AlertContextProvider>
+        </AlertContextProvider>
+      </AuthContextProvider>
     </>
   )
 }

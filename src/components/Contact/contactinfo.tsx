@@ -132,10 +132,11 @@ function ContactInfo({ contact, image }: ContactInfoProps) {
           type='button'
           onClick={() => {
             setAlert({
-              icon: AlertIcon.warning,
+              icon: AlertIcon.critical,
               title: 'Delete Contact',
               text: 'Are you sure?',
               position: 'bottom', // Slides up from bottom
+              showFor: -1,
               confirmFunction: () => DeleteContact
             })
           }}
