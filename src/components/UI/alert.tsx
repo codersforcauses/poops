@@ -8,7 +8,7 @@ import {
   XIcon
 } from '@heroicons/react/outline'
 
-import { AlertContentProps, useAlert } from '@/context/AlertContext'
+import { AlertContentProps } from '@/context/AlertContext'
 
 export enum AlertIcon {
   info,
@@ -63,8 +63,6 @@ const Alert: React.FC<AlertProps> = ({ visible, setVisible, content }) => {
     icon: AlertIcon.info
   })
 
-  const { clearAlert } = useAlert()
-
   const timerRef = useRef<ReturnType<typeof setTimeout>>()
 
   // utility function that sets and then clears a timer to automatically close alert
@@ -84,9 +82,6 @@ const Alert: React.FC<AlertProps> = ({ visible, setVisible, content }) => {
         if (c.showFor !== -1) {
           timerRef.current = setTimeout(() => {
             setVisible(false)
-            timerRef.current = setTimeout(() => {
-              clearAlert()
-            }, 700)
           }, content.showFor)
         }
       }
@@ -126,20 +121,11 @@ const Alert: React.FC<AlertProps> = ({ visible, setVisible, content }) => {
           )
         )}
       </div>
-      <div
-        className='mx-[1rem] grow self-start'
-      >
-      <p
-        className='font-bold'
-        style={{ color: titleColor }}
-      >
-        {contentCache.title}
-      </p>
-      <p
-        style={{ color: textColor }}
-      >
-        {contentCache.text}
-      </p>
+      <div className='mx-[1rem] grow self-start'>
+        <p className='font-bold' style={{ color: titleColor }}>
+          {contentCache.title}
+        </p>
+        <p style={{ color: textColor }}>{contentCache.text}</p>
       </div>
       {typeof contentCache.confirmFunction !== 'undefined' && (
         // if we have a confirmFunction show confirm button
