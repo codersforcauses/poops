@@ -22,7 +22,7 @@ const Profile = () => {
           <p>Profile Page</p>
           <button onClick={logOut}>logout</button>
           <LoginPanel
-            linkAccount={true}
+            linkAccount={true} // Links Auth methods to current logged in user
             displayGoogle={true}
             displayFacebook={true}
             displayTwitter={true}

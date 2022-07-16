@@ -47,12 +47,12 @@ const LoginPanel = (props: LoginPanelInterface) => {
   const twitterProvider = new TwitterAuthProvider()
   const microsoftProvider = new OAuthProvider('microsoft.com')
 
-  function buttonString(provider: string) {
+  function buttonString(providerString: string) {
     let buttonString = ''
     if (!props.linkAccount) {
-      buttonString = 'Continue with ' + provider
+      buttonString = 'Continue with ' + providerString
     } else {
-      buttonString = 'Link ' + provider + ' Account'
+      buttonString = 'Link ' + providerString + ' Account'
     }
     return buttonString
   }

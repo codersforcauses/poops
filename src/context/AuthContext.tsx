@@ -48,20 +48,18 @@ export const AuthContextProvider = ({
   }
 
   function linkAuthProvider(currentUser: User, provider: AuthProvider) {
-    // const googleProvider = new GoogleAuthProvider()
-    // console.log("test")
-    // console.log(currentUser)
-    // console.log(provider)
     linkWithRedirect(currentUser, provider)
       .then((result) => {
         return result
       })
       .catch((error) => {
-        //TODO catch provider-already-linked error, and display a message to the user, currently nothing happens if already logged in
-        // console.log(error)
+        if (error.code === 'auth/provider-already-linked') {
+          // console.log("auth/provider-already-linked")
+          // TODO Send error alert to user
+        }
         return error
       })
-  }
+  } // TODO Success message for user?
 
   function getGoogleResults(auth: Auth) {
     getRedirectResult(auth)
