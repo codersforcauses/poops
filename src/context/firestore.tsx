@@ -12,45 +12,29 @@ import {
   doc,
   FirestoreError,
   getDoc,
-  serverTimestamp,
   setDoc,
-  Timestamp,
   updateDoc
 } from 'firebase/firestore'
 
 import { db } from '@/components/Firebase/init'
 import { useAuth } from '@/context/AuthContext'
-import { Contact } from '@/types/types'
 
-interface VisitProp {
-  visit: string
-  visitTime: Timestamp
-}
-
-interface UserDocProp {
-  name: string
-  time: Timestamp
-  visit: VisitProp[]
-  Contacts: Contact[]
-}
+import { UserData } from '../types/types'
 
 interface FirestoreContextProp {
-  userDoc: UserDocProp
+  userDoc: UserData
 }
 
-const USERSDOC = 'TestUsers'
-
-const defaultUserDoc: UserDocProp = {
-  name: '',
-  time: serverTimestamp() as Timestamp,
-  visit: [],
-  Contacts: []
+const defaultUserDoc: UserData = {
+  displayName: '',
+  visits: [],
+  contacts: []
 }
 //update functions as a context api
 interface FirestoreContextProps {
-  userDoc: UserDocProp
-  updateVisit?: (userDoc: UserDocProp) => void
-  updateContact?: (userDoc: UserDocProp) => void
+  userDoc: UserData
+  updateVisit?: (userDoc: UserData) => void
+  updateContact?: (userDoc: UserData) => void
 }
 
 const FirestoreContext = createContext<FirestoreContextProps>({
@@ -64,19 +48,19 @@ export const useFirestore = () => useContext(FirestoreContext)
 //retreiving firestore data and setting the data to the local variable FireContextProps
 const FirestoreProvider = ({ children }: { children: ReactNode }) => {
   const { currentUser } = useAuth()
-  const [userDoc, setUserDoc] = useState<UserDocProp>(defaultUserDoc)
+  const [userDoc, setUserDoc] = useState<UserData>(defaultUserDoc)
 
   const retrieveData = useCallback(async () => {
     if (currentUser?.uid) {
       //try to get existing doc if the doc does not exist then create a new doc with uid as its ref
       try {
-        const userDocSnap = await getDoc(doc(db, USERSDOC, currentUser.uid))
+        const userDocSnap = await getDoc(doc(db, 'users', currentUser.uid))
         if (userDocSnap.exists()) {
-          const userDocData = userDocSnap.data() as UserDocProp
+          const userDocData = userDocSnap.data() as UserData
           setUserDoc(userDocData)
         } else {
           // doc.data() will be undefined in this case
-          await setDoc(doc(db, USERSDOC, currentUser.uid), defaultUserDoc)
+          await setDoc(doc(db, 'users', currentUser.uid), defaultUserDoc)
         }
       } catch (err: unknown) {
         //#region  //*=========== For logging ===========
@@ -101,14 +85,14 @@ const FirestoreProvider = ({ children }: { children: ReactNode }) => {
     from array and editing the values in the array.
   */
   const updateVisit = useCallback(
-    async (user: UserDocProp) => {
+    async (user: UserData) => {
       // setAchievementsCount((prev) => ({
       //   count: prev.count + newAchievementsEarned
       // }))
       try {
         if (currentUser?.uid) {
           const userDocRef = doc(db, 'users', currentUser.uid)
-          await updateDoc(userDocRef, 'visits', user.visit)
+          await updateDoc(userDocRef, 'Visits', user.visits)
         }
       } catch (err: unknown) {
         //#region  //*=========== For logging ===========
@@ -121,14 +105,14 @@ const FirestoreProvider = ({ children }: { children: ReactNode }) => {
     [currentUser]
   )
   const updateContact = useCallback(
-    async (user: UserDocProp) => {
+    async (user: UserData) => {
       // setAchievementsCount((prev) => ({
       //   count: prev.count + newAchievementsEarned
       // }))
       try {
         if (currentUser?.uid) {
-          const userDocRef = doc(db, USERSDOC, currentUser.uid)
-          await updateDoc(userDocRef, 'Contacts', user.Contacts)
+          const userDocRef = doc(db, 'users', currentUser.uid)
+          await updateDoc(userDocRef, 'contacts', user.contacts)
         }
       } catch (err: unknown) {
         //#region  //*=========== For logging ===========

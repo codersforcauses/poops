@@ -34,7 +34,7 @@ export const ContactContextProvider = ContactContext.Provider
 
 const Contact = () => {
   const { userDoc, updateContact } = useFirestore()
-  const [allContacts, setAllContacts] = useState(userDoc.Contacts)
+  const [allContacts, setAllContacts] = useState(userDoc.contacts)
   const [creatingNewContact, setCreatingNewContact] = useState(false)
   // Get all unique tags to popular dropdown filter
   const tags = allContacts
@@ -89,7 +89,7 @@ const Contact = () => {
 
   // Sends newContacts to Firestore
   const setFirestoreContacts = (newContacts: Contact[]) => {
-    userDoc.Contacts = newContacts
+    userDoc.contacts = newContacts
     updateContact?.(userDoc)
   }
 
@@ -168,7 +168,6 @@ const Contact = () => {
             ) : (
               <ContactDetails firestoreIndex={displayContactIndex} />
             )}
-            {/* {creatingNewContact && <ContactDetails firestoreIndex={-1} />} */}
           </div>
         </main>
       </ContactContext.Provider>
