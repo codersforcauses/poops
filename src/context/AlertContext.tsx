@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState } from 'react'
+import React, { createContext, useContext, useState, useCallback } from 'react'
 
 import Alert, { AlertIcon } from '@/components/UI/alert'
 
@@ -61,20 +61,21 @@ export const AlertContextProvider = ({
     })
   }
 
-  const clearAlert = () => {
-    setVisible(false)
-    setContent({
-      text: '',
-      title: '',
-      position: 'top',
-      confirmFunction: undefined,
-      cancelFunction: undefined,
-      showFor: 5000,
-      icon: AlertIcon.info
-    })
-  }
+  const clearAlert = useCallback(
+    () => {
+      setVisible(false)
+      setContent({
+        text: '',
+        title: '',
+        position: 'top',
+        confirmFunction: undefined,
+        cancelFunction: undefined,
+        showFor: 5000,
+        icon: AlertIcon.info
+      })
+    }, [])
 
-  const value: AlertContextProps = {
+  const value = {
     setAlert,
     clearAlert,
     visible,
