@@ -40,13 +40,14 @@ const auth = useAuth()
 The Auth Context also provides access to a number of methods:
 
 - externalAuthSignIn: Signs in a user using an external provider. Takes an auth object and provider object as inputs. Redirects users to the external provider's login page.
+- linkAuthProvider: Links an external provider to an account. Takes a User object and provider object as inputs. Redirects users to the external provider's login page.
 - logOut: Logs the current user out.
 - getGoogleResults: //MAY BE REMOVED, NOT CURRENTLY IN USE
 
 These methods can be accessed from the useAuth method.
 
 ```typescript
-const { logOut, externalAuthSignIn } = useAuth()
+const { logOut, externalAuthSignIn, linkAuthProvider } = useAuth()
 ```
 
 ---
