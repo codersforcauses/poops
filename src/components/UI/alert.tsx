@@ -8,8 +8,6 @@ import {
   XIcon
 } from '@heroicons/react/outline'
 
-import { AlertContentProps } from '@/context/AlertContext'
-
 export enum AlertIcon {
   info,
   security,
@@ -48,20 +46,28 @@ type AlertProps = {
   content: AlertContentProps
 }
 
-const Alert: React.FC<AlertProps> = ({ visible, setVisible, content }) => {
-  const [contentCache, setContentCache] = useState<AlertContentProps>({
-    title: '', // string[2], first element is tile, second is message
+export interface AlertContentProps {
+  title?: string
+  text: string
+  icon: AlertIcon
+  position?: 'top' | 'bottom'
+  confirmFunction?: () => void
+  cancelFunction?: () => void
+  showFor?: number
+}
+
+const Alert: React.FC<AlertProps> = () => {
+  const [visible, setVisible] = useState(false)
+  const [content, setContent] = useState<AlertContentProps>({
+    title: '',
     text: '',
     position: 'top',
-    confirmFunction: () => {
-      return
-    }, // function to execute on confirm, enables the confirm function
-    cancelFunction: () => {
-      return
-    },
+    confirmFunction: undefined, // function to execute on confirm, enables the confirm function
+    cancelFunction: undefined,
     showFor: 5000, // ms alert will stay open, set to -1 to leave open until button click
     icon: AlertIcon.info
   })
+  const [contentBuffer, setContentBuffer] = useState<AlertContentProps>(content)
 
   const timerRef = useRef<ReturnType<typeof setTimeout>>()
 
@@ -69,7 +75,8 @@ const Alert: React.FC<AlertProps> = ({ visible, setVisible, content }) => {
   const doUpdate = useCallback(
     (c: AlertContentProps) => {
       if (c.text !== '') {
-        setContentCache({
+        setContentBuffer(content)
+        setContent({
           title: c.title,
           text: c.text, // string[2], first element is tile, second is message
           position: c.position,
@@ -100,42 +107,71 @@ const Alert: React.FC<AlertProps> = ({ visible, setVisible, content }) => {
     }
   }, [])
 
+  const setAlert = (content: AlertContentProps) => {
+    setContent({
+      title: content.title ? content.title : '',
+      text: content.text,
+      icon: content.icon,
+      position: content.position ? content.position : 'top',
+      confirmFunction: content.confirmFunction
+        ? content.confirmFunction
+        : undefined,
+      cancelFunction: content.cancelFunction
+        ? content.cancelFunction
+        : undefined,
+      showFor: content.showFor ? content.showFor : 5000
+    })
+  }
+
+  const clearAlert = () => {
+    setVisible(false)
+    setContent({
+      text: '',
+      title: '',
+      position: 'top',
+      confirmFunction: undefined,
+      cancelFunction: undefined,
+      showFor: 5000,
+      icon: AlertIcon.info
+    })
+  }
+
   return (
     <div
       className={getClasses(
         visible,
-        contentCache.position ? contentCache.position : 'top'
+        contentBuffer.position ? contentBuffer.position : 'top'
       )}
       style={{ boxShadow: shadow }}
     >
       <div className='h-7 w-7'>
-        {contentCache.icon === AlertIcon.info ? (
+        {contentBuffer.icon === AlertIcon.info ? (
           <InformationCircleIcon className='h-7 w-7' />
-        ) : contentCache.icon === AlertIcon.security ? (
+        ) : contentBuffer.icon === AlertIcon.security ? (
           <ShieldExclamationIcon className='h-7 w-7' />
-        ) : contentCache.icon === AlertIcon.critical ? (
+        ) : contentBuffer.icon === AlertIcon.critical ? (
           <ExclamationIcon className='h-7 w-7' />
         ) : (
-          contentCache.icon === AlertIcon.comment && (
+          contentBuffer.icon === AlertIcon.comment && (
             <AnnotationIcon className='h-7 w-7' />
           )
         )}
       </div>
       <div className='mx-[1rem] grow self-start'>
         <p className='font-bold' style={{ color: titleColor }}>
-          {contentCache.title}
+          {contentBuffer.title}
         </p>
-        <p style={{ color: textColor }}>{contentCache.text}</p>
+        <p style={{ color: textColor }}>{contentBuffer.text}</p>
       </div>
-      {typeof contentCache.confirmFunction !== 'undefined' && (
+      {typeof contentBuffer.confirmFunction !== 'undefined' && (
         // if we have a confirmFunction show confirm button
         <button
           className='pr-4'
           onClick={(e) => {
             e.preventDefault()
             setVisible(false)
-            if (typeof contentCache.confirmFunction !== 'undefined')
-              contentCache.confirmFunction()
+            if (typeof contentBuffer.confirmFunction !== 'undefined')
+              contentBuffer.confirmFunction()
           }}
         >
           <CheckIcon className='h-5 w-5' stroke={iconColor} />
@@ -145,8 +181,8 @@ const Alert: React.FC<AlertProps> = ({ visible, setVisible, content }) => {
         onClick={(e) => {
           e.preventDefault()
           setVisible(false)
-          if (typeof contentCache.cancelFunction !== 'undefined')
-            contentCache.cancelFunction()
+          if (typeof contentBuffer.cancelFunction !== 'undefined')
+            contentBuffer.cancelFunction()
         }}
       >
         <XIcon className='h-5 w-5' stroke={iconColor} />

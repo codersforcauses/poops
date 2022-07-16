@@ -53,7 +53,7 @@ const AlertExamples = () => {
             icon: AlertIcon.critical,
             title: 'Critical Icon',
             text: 'Testing the critical alert, stays open',
-            showFor: -1,
+            showFor: -1
           })
         }}
       >
