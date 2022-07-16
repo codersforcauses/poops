@@ -1,5 +1,4 @@
 export interface User {
-  uniqueId: string
   contacts: ContactData[]
   visits: VisitData[]
 }

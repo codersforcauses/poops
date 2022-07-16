@@ -1,3 +1,5 @@
+/* eslint-disable no-console */
+import { Context, createContext } from 'react'
 import { getApp, getApps, initializeApp } from 'firebase/app' // no compat for new SDK
 import { getAuth } from 'firebase/auth'
 import {
@@ -10,7 +12,7 @@ import {
   updateDoc
 } from 'firebase/firestore'
 
-import { ContactData, User, VisitData } from '../../interfaces/interfaces'
+import { ContactData, User, VisitData } from '@/interfaces/interfaces'
 
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
@@ -31,9 +33,8 @@ if (!getApps().length) {
 const auth = getAuth(app)
 const db = getFirestore(app)
 
-let uid = '0'
 let docRef: DocumentReference<DocumentData>
-export let user: User // TODO change to useContext hook
+export let UserContext: Context<User>
 
 export const updateVisitData = async (user: User) => {
   getCurrentUser()
@@ -50,22 +51,29 @@ const getData = async () => {
   const iVisitData: VisitData[] = await userDoc.get('Visits')
   const iContactData: ContactData[] = await userDoc.get('Contacts')
 
-  user = {
-    uniqueId: uid,
+  const user: User = {
     contacts: iContactData,
     visits: iVisitData
   }
+  UserContext = createContext(user)
 }
 
-export async function getInitialData(iuid: string) {
-  uid = iuid //incoming uid
-  docRef = doc(db, `TestUsers/${uid}`)
-  const docSnap = await getDoc(docRef)
+export async function getInitialData() {
+  const uid = getCurrentUser()?.uid
+  if (uid) {
+    docRef = doc(db, 'TestUsers', uid)
+  } else console.log('no uid')
 
-  if (docSnap.exists()) {
-    getData()
-  } else {
-    await setDoc(doc(db, 'TestUsers', uid), {})
+  try {
+    const docSnap = await getDoc(docRef)
+
+    if (docSnap.exists()) {
+      getData()
+    } else {
+      await setDoc(docRef, {})
+    }
+  } catch (error) {
+    console.log(error)
   }
 }
 
