@@ -28,7 +28,9 @@ function CommuteSelector({ setCommute }: Props) {
 
   return (
     <div>
-      <label htmlFor='commute'>Commute Method</label>
+      <label htmlFor='commute'>
+        <span className='text-primary'>*</span>Commute Method
+      </label>
       <ReactSelect
         name='commute'
         options={commuteOptions}

@@ -26,7 +26,10 @@ function PetSelector({ setPets }: Props) {
 
   return (
     <div>
-      <label htmlFor='pets'>Select Pets</label>
+      <label htmlFor='pets'>
+        <span className='text-primary'>*</span>
+        Select Pets
+      </label>
       <ReactSelect
         name='pets'
         options={petOptions}

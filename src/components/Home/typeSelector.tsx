@@ -26,7 +26,9 @@ function TypeSelector({ setType }: Props) {
 
   return (
     <div>
-      <label htmlFor='type'>Type of Visit</label>
+      <label htmlFor='type'>
+        <span className='text-primary'>*</span>Type of Visit
+      </label>
       <ReactSelect
         name='type'
         options={typeOptions}

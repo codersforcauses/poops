@@ -3,6 +3,7 @@ import { useState } from 'react'
 
 import CommuteSelector from '@/components/Home/commuteSelector'
 import PetSelector from '@/components/Home/petSelector'
+import TextForm from '@/components/Home/textForm'
 import TypeSelector from '@/components/Home/typeSelector'
 
 function Modal() {
@@ -13,6 +14,20 @@ function Modal() {
   const [walkDistance, setWalkDistance] = useState(0)
   const [other, setOther] = useState('')
   const [commuteDistance, setCommuteDistance] = useState(0)
+
+  function formIsFilled() {
+    return (
+      commuteDistance > 0 &&
+      (commute == 'Walk' ||
+        commute == 'Drive' ||
+        commute == 'Public Transport' ||
+        (commute == 'Other' && other != '')) &&
+      (type == 'Vet' ||
+        type == 'Transportation' ||
+        (type == 'Walk' && walkDistance > 0)) &&
+      pets.length > 0
+    )
+  }
 
   return (
     <div className='text-center'>
@@ -30,33 +45,25 @@ function Modal() {
 
       <div className='text-center'>
         {/* If modal is opened, display stop button */}
-        {commuteDistance > 0 &&
-          (commute == 'Walk' ||
-            commute == 'Drive' ||
-            commute == 'Public Transport' ||
-            (commute == 'Other' && other != '')) &&
-          (type == 'Vet' ||
-            type == 'Transportation' ||
-            (type == 'Walk' && walkDistance > 0)) &&
-          pets.length > 0 && (
-            <button
-              className='text-l relative h-[30px] w-[120px] rounded-lg bg-dark-red font-semibold text-white'
-              onClick={() => {
-                setModalOpen(false),
-                  setWalkDistance(0),
-                  setOther(''),
-                  setCommuteDistance(0)
-              }}
-            >
-              STOP VISIT
-            </button>
-          )}
+        {formIsFilled() && (
+          <button
+            className='text-l relative h-[30px] w-[120px] rounded-lg bg-dark-red font-semibold text-white'
+            onClick={() => {
+              setModalOpen(false),
+                setWalkDistance(0),
+                setOther(''),
+                setCommuteDistance(0)
+            }}
+          >
+            STOP VISIT
+          </button>
+        )}
       </div>
 
       {/* Displays modal */}
       {modalIsOpen && (
         <div
-          className='w-min-100 rounded-lg p-3 py-2 px-5 text-center shadow-lg sm:py-4'
+          className='rounded-lg p-3 py-2 px-5 text-center shadow-lg sm:py-4'
           style={{
             padding: 25,
             background: '#F9F9F9'
@@ -78,13 +85,14 @@ function Modal() {
           {/* Visit Form */}
           <form style={{ fontSize: 16 }}>
             {/* Commute Distance Form */}
-            <label htmlFor='commuteDistance'>Commute Distance (in km) : </label>
-            <input
+            <TextForm
+              id='commuteDistance'
               type='text'
-              name='commuteDistance'
+              placeholder='Enter...'
+              label='Commute Distance (in km)'
+              isRequired={true}
               onChange={(e) => setCommuteDistance(Number(e.target.value))}
             />
-            <br />
             <br />
 
             {/* Commute Selector Form */}
@@ -93,14 +101,14 @@ function Modal() {
 
             {/* Other Form if commute is 'Other' */}
             {commute == 'Other' && (
-              <form>
-                <label htmlFor='other'>Other Commute Method : </label>
-                <input
-                  type='text'
-                  name='other'
-                  onChange={(e) => setOther(String(e.target.value))}
-                />
-              </form>
+              <TextForm
+                id='other'
+                type='text'
+                placeholder='Enter...'
+                label='Other Commute Method'
+                isRequired={true}
+                onChange={(e) => setOther(String(e.target.value))}
+              />
             )}
             <br />
 
@@ -110,18 +118,18 @@ function Modal() {
 
             {/* Type Selector Form */}
             <TypeSelector type={type} setType={setType} />
+            <br />
 
             {/* Distance Form if type is 'Walk' */}
             {type == 'Walk' && (
-              <form>
-                <br />
-                <label htmlFor='walkDistance'>Walk Distance (in km) : </label>
-                <input
-                  type='text'
-                  name='walkDistance'
-                  onChange={(e) => setWalkDistance(Number(e.target.value))}
-                />
-              </form>
+              <TextForm
+                id='walkDistance'
+                type='text'
+                placeholder='Enter...'
+                label='Walk Distance (in km)'
+                isRequired={true}
+                onChange={(e) => setWalkDistance(Number(e.target.value))}
+              />
             )}
           </form>
         </div>
