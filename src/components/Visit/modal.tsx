@@ -10,8 +10,8 @@ interface ModalViewProps {
 }
 
 const ModalView: React.FC<ModalViewProps> = ({ toggleModal }) => {
-  const [firstName, setFirstName] = useState('')
-  const [lastName, setLastName] = useState('')
+  const [visitType, setVisitType] = useState('')
+  const [displayName, setDisplayName] = useState('')
   const [petName, setPetName] = useState('')
   const [dateTime, setDateTime] = useState('')
   const [duration, setDuration] = useState('')
@@ -22,8 +22,8 @@ const ModalView: React.FC<ModalViewProps> = ({ toggleModal }) => {
   const [notes, setNotes] = useState('')
 
   const isSubmitDisabled = () =>
-    firstName &&
-    lastName &&
+    visitType &&
+    displayName &&
     petName &&
     dateTime &&
     duration &&
@@ -53,22 +53,22 @@ const ModalView: React.FC<ModalViewProps> = ({ toggleModal }) => {
               <tr>
                 <td>
                   <FormField
-                    id='firstNameInput'
-                    type='text'
-                    placeholder='First Name'
-                    label='First Name:'
+                    id='visitTypeInput'
+                    type='select'
+                    placeholder='Visit Type'
+                    label='Visit Type:'
                     isRequired={true}
-                    onChange={(event) => setFirstName(event.target.value)}
+                    onChange={(event) => setVisitType(event.target.value)}
                   />
                 </td>
                 <td>
                   <FormField
-                    id='lastNameInput'
+                    id='displayNameInput'
                     type='text'
-                    placeholder='Last Name'
-                    label='Last Name:'
+                    placeholder='Display Name'
+                    label='Display Name:'
                     isRequired={true}
-                    onChange={(event) => setLastName(event.target.value)}
+                    onChange={(event) => setDisplayName(event.target.value)}
                   />
                 </td>
               </tr>

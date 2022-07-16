@@ -21,6 +21,7 @@ const customStyles: StylesConfig<
     color: 'black'
   }),
   placeholder: (provided: Record<string, unknown>) => ({
+    // surely nobody will notice that the select arrow and this icon is different
     ...provided,
     color: '#6b7280'
   }),
@@ -28,7 +29,7 @@ const customStyles: StylesConfig<
     display: 'flex',
     transition: '',
     padding: '8px',
-    color: 'black'
+    color: '#6b7280'
   }),
   valueContainer: (provided: Record<string, unknown>) => ({
     ...provided,
