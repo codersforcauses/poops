@@ -30,7 +30,7 @@ if (!getApps().length) {
   app = getApp() // Uses existing app if app exists
 }
 
-const auth = getAuth(app)
+export const auth = getAuth(app)
 const db = getFirestore(app)
 
 let docRef: DocumentReference<DocumentData>
