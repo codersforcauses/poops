@@ -5,33 +5,28 @@ import NavBar from '@/components/NavBar'
 import { useAuth } from '@/context/AuthContext'
 
 const Profile = () => {
-  const { logOut, currentUser } = useAuth()
+  const { logOut } = useAuth()
   // const googleProvider = new GoogleAuthProvider()
   // const facebookProvider = new FacebookAuthProvider()
   // const user: User | null | undefined = currentUser
-  if (currentUser === null || currentUser === undefined) {
-    // TODO Do this better?
-    return null
-  } else {
-    return (
-      <>
-        {/* <Seo /> */}
-        <Header pageTitle='Profile' />
+  return (
+    <>
+      {/* <Seo /> */}
+      <Header pageTitle='Profile' />
 
-        <main>
-          <p>Profile Page</p>
-          <button onClick={logOut}>logout</button>
-          <LoginPanel
-            linkAccount={true} // Links Auth methods to current logged in user
-            displayGoogle={true}
-            displayFacebook={true}
-            displayMicrosoft={true}
-          />
-        </main>
-        <NavBar />
-      </>
-    )
-  }
+      <main>
+        <p>Profile Page</p>
+        <button onClick={logOut}>logout</button>
+        <LoginPanel
+          linkAccount={true} // Links Auth methods to current logged in user
+          displayGoogle={true}
+          displayFacebook={true}
+          displayMicrosoft={true}
+        />
+      </main>
+      <NavBar />
+    </>
+  )
 }
 
 export default Profile
