@@ -5,8 +5,7 @@ interface Pet {
 }
 interface Contact {
   id: string
-  firstName: string
-  lastName: string
+  displayName: string
   desc: string
   pets: Pet[]
   email: string

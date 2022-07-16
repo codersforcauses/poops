@@ -14,7 +14,7 @@ const ContactItem = ({ contact, image }: ContactItemProps) => {
         <Avatar image={image} height={40} width={40} iconClass='h-10 w-10' />
         <div className='min-w-0 flex-1'>
           <p className='text-gray-900 truncate text-sm font-medium'>
-            {`${contact.firstName} ${contact.lastName}`}
+            {contact.displayName}
           </p>
         </div>
       </div>

@@ -2,15 +2,14 @@ import { useState } from 'react'
 import { SearchIcon } from '@heroicons/react/outline'
 
 import CONTACT_DATA from '@/../mockData/CONTACT_DATA.json'
-import PROFILE_DATA from '@/../mockData/PROFILE_DATA.json'
 import ContactList from '@/components/Contact/contactlist'
-import ProfileItem from '@/components/Contact/profileitem'
 import Header from '@/components/Header'
 import NavBar from '@/components/NavBar'
+import { withProtected } from '@/components/PrivateRoute'
 import SearchBar from '@/components/SearchBar/searchbar'
 import SearchTag from '@/components/SearchBar/searchtag'
+import { useFirestore } from '@/context/firestore'
 import type { Contact } from '@/types/types'
-// import { withProtected } from '@/components/PrivateRoute
 
 // TODO: Get contact data from server
 const tags = CONTACT_DATA.map((contact) => {
@@ -20,15 +19,16 @@ const set = new Set(tags)
 const taglist = [...set]
 
 const Contact = () => {
+  const { userDoc } = useFirestore()
+  const allContacts = userDoc.Contacts
   const [filteredContacts, setFilteredContacts] =
-    useState<Contact[]>(CONTACT_DATA)
-
+    useState<Contact[]>(allContacts)
   const [selectedOption, setSelectedOption] = useState('')
   const [searchFieldString, setSearchFieldString] = useState('')
 
   function filterContact(includes: string, searchField: string) {
-    const filteredContacts = CONTACT_DATA.filter((contact) => {
-      const full_name = contact.firstName + ' ' + contact.lastName
+    const filteredContacts = allContacts.filter((contact) => {
+      const full_name = contact.displayName
       if (includes == '') {
         return full_name.toLocaleLowerCase().includes(searchField)
       }
@@ -73,9 +73,9 @@ const Contact = () => {
               <SearchIcon className='my-auto mx-2 h-6' />
             </div>
           </div>
-          {searchFieldString === '' && selectedOption === '' && (
-            <ProfileItem profile={PROFILE_DATA} image='' />
-          )}
+          {/* {searchFieldString === '' && selectedOption === '' && (
+            <ProfileItem profile={allContacts[0]} image='' />
+          )} */}
           <ContactList contacts={filteredContacts} />
         </div>
       </main>
@@ -84,5 +84,5 @@ const Contact = () => {
   )
 }
 
-export default Contact
-// export default withProtected(Contact)
+// export default Contact
+export default withProtected(Contact)

@@ -18,7 +18,7 @@ const Contact = ({ contact }: ContactProp) => {
   const [isEditing, setIsEditing] = useState(false)
   return (
     <>
-      <Header pageTitle={`${contact.firstName} ${contact.lastName}`} />
+      <Header pageTitle={contact.displayName} />
       <div className='sticky top-0 z-50 w-full bg-white'>
         <div className='m-auto flex h-14 max-w-md flex-row'>
           <div className='m-auto flex-1 text-center'>

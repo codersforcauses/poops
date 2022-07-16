@@ -19,42 +19,39 @@ import {
   writeBatch
 } from 'firebase/firestore'
 
-import { MESSAGES } from '@/components/Firebase/errors'
 import { db } from '@/components/Firebase/init'
 import { useAuth } from '@/context/auth'
+import { Contact } from '@/types/types'
 
 interface VisitProp {
   visit: string
   visitTime: Timestamp
 }
 
-interface ContactProp {
-  contact: string
-  contactTime: Timestamp
-}
-
 interface UserDocProp {
   name: string
   time: Timestamp
   visit: VisitProp[]
-  contact: ContactProp[]
+  Contacts: Contact[]
 }
 
 interface FirestoreContextProp {
   userDoc: UserDocProp
 }
 
+const USERSDOC = 'TestUsers'
+
 const defaultUserDoc: UserDocProp = {
   name: '',
   time: serverTimestamp() as Timestamp,
   visit: [],
-  contact: []
+  Contacts: []
 }
 
 interface FirestoreContextProps {
   userDoc: UserDocProp
   updateVisit?: (oldVisit: VisitProp, newVisit: VisitProp) => void
-  updateContact?: (oldContact: ContactProp, newContact: ContactProp) => void
+  updateContact?: (oldContact: Contact, newContact: Contact) => void
 }
 
 const FirestoreContext = createContext<FirestoreContextProps>({
@@ -64,7 +61,6 @@ const FirestoreContext = createContext<FirestoreContextProps>({
 export const FirestoreContextProvider = FirestoreContext.Provider
 
 export const useFirestore = () => useContext(FirestoreContext)
-
 const FirestoreProvider = ({ children }: { children: ReactNode }) => {
   const { currentUser } = useAuth()
   const [userDoc, setUserDoc] = useState<UserDocProp>(defaultUserDoc)
@@ -72,14 +68,13 @@ const FirestoreProvider = ({ children }: { children: ReactNode }) => {
   const retrieveData = useCallback(async () => {
     if (currentUser?.uid) {
       try {
-        const userDocSnap = await getDoc(doc(db, 'users', currentUser.uid))
+        const userDocSnap = await getDoc(doc(db, USERSDOC, currentUser.uid))
         if (userDocSnap.exists()) {
           const userDocData = userDocSnap.data() as UserDocProp
           setUserDoc(userDocData)
         } else {
           // doc.data() will be undefined in this case
-          console.log(MESSAGES.NO_USER_DOCUMENT)
-          await setDoc(doc(db, 'users', currentUser.uid), defaultUserDoc)
+          await setDoc(doc(db, USERSDOC, currentUser.uid), defaultUserDoc)
         }
       } catch (err: unknown) {
         //#region  //*=========== For logging ===========
@@ -102,7 +97,7 @@ const FirestoreProvider = ({ children }: { children: ReactNode }) => {
       // }))
       try {
         if (currentUser?.uid) {
-          const userDocRef = doc(db, 'users', currentUser.uid)
+          const userDocRef = doc(db, USERSDOC, currentUser.uid)
           const batch = writeBatch(db)
           batch.update(userDocRef, {
             visit: arrayRemove(oldVisit)
@@ -126,13 +121,13 @@ const FirestoreProvider = ({ children }: { children: ReactNode }) => {
     [currentUser]
   )
   const updateContact = useCallback(
-    async (oldContact: ContactProp, newContact: ContactProp) => {
+    async (oldContact: Contact, newContact: Contact) => {
       // setAchievementsCount((prev) => ({
       //   count: prev.count + newAchievementsEarned
       // }))
       try {
         if (currentUser?.uid) {
-          const userDocRef = doc(db, 'users', currentUser.uid)
+          const userDocRef = doc(db, USERSDOC, currentUser.uid)
           const batch = writeBatch(db)
           batch.update(userDocRef, { visit: arrayRemove(oldContact) })
           batch.update(userDocRef, {
