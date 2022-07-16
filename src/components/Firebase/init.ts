@@ -31,7 +31,7 @@ if (!getApps().length) {
 }
 
 export const auth = getAuth(app)
-const db = getFirestore(app)
+export const db = getFirestore(app)
 
 let docRef: DocumentReference<DocumentData>
 export let UserContext: Context<User>
