@@ -1,8 +1,8 @@
 import { NextPage } from 'next'
 import Image from 'next/image'
 
-import LoginPanel from '@/components/Login/LoginPanel'
-import { useAuth } from '@/context/AuthContext'
+import LoginPanel from '@/components/LoginPanel'
+import { useAuth } from '@/context/auth'
 
 const Login: NextPage = () => {
   const { logOut, currentUser } = useAuth()
