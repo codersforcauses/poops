@@ -26,7 +26,7 @@ export function withProtected(Component: React.ComponentType) {
       router.replace('/login')
       return <h1>Loading...</h1> // TODO make a better looking loading screen?
     }
-    getInitialData(user.uid)
+    getInitialData()
     return <Component {...props} />
   }
 }

@@ -7,10 +7,10 @@ import ContactList from '@/components/Contact/contactlist'
 import ProfileItem from '@/components/Contact/profileitem'
 import Header from '@/components/Header'
 import NavBar from '@/components/NavBar'
+import { withProtected } from '@/components/PrivateRoute'
 import SearchBar from '@/components/SearchBar/searchbar'
 import SearchTag from '@/components/SearchBar/searchtag'
 import type { Contact } from '@/types/types'
-// import { withProtected } from '@/components/PrivateRoute
 
 // TODO: Get contact data from server
 const tags = CONTACT_DATA.map((contact) => {
@@ -84,5 +84,5 @@ const Contact = () => {
   )
 }
 
-export default Contact
-// export default withProtected(Contact)
+// export default Contact
+export default withProtected(Contact)
