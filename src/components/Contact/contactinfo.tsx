@@ -24,11 +24,9 @@ function ContactInfo({ contact, image }: ContactInfoProps) {
         iconClass='w-32 rounded-full'
       />
       {/* FIRST AND LAST NAME */}
-      <h1 className='text-4xl font-normal'>
-        {contact.firstName} {contact.lastName}
-      </h1>
+      <h1 className='text-4xl font-normal'>{contact.displayName}</h1>
       {/* DESCRIPTION */}
-      <h3>{contact.notes}</h3>
+      <h3>{contact.desc}</h3>
       {/* PHONE */}
       <Box>
         <div className='flex w-full justify-between'>

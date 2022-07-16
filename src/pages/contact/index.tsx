@@ -25,6 +25,7 @@ const Contact = () => {
     useState<Contact[]>(allContacts)
   const [selectedOption, setSelectedOption] = useState('')
   const [searchFieldString, setSearchFieldString] = useState('')
+  const [displayContact, setDisplayContact] = useState(false)
 
   function filterContact(includes: string, searchField: string) {
     const filteredContacts = allContacts.filter((contact) => {
@@ -57,29 +58,38 @@ const Contact = () => {
     <>
       {/* <Seo /> */}
       <Header pageTitle='Contact' />
-
       <main>
-        <div className='m-auto flex h-14 max-w-md flex-row'>
-          <div className='flex-1'></div>
-          <h1 className='m-3 flex-1 text-center text-2xl'>Contacts</h1>
-          <div className='flex-1'></div>
-        </div>
-
-        <div className='m-auto max-w-md'>
-          <div className='m-2 flex flex-row rounded-xl border-2 border-grey'>
-            <SearchTag options={taglist} onChangehandler={onSearchTagChange} />
-            <div className='flex w-full justify-between'>
-              <SearchBar onChangeHandler={onSearchChange} />
-              <SearchIcon className='my-auto mx-2 h-6' />
-            </div>
+        {!displayContact && (
+          <div className='m-auto flex h-14 max-w-md flex-row'>
+            <div className='flex-1'></div>
+            <h1 className='m-3 flex-1 text-center text-2xl'>Contacts</h1>
+            <div className='flex-1'></div>
           </div>
+        )}
+        <div className='m-auto max-w-md'>
+          {!displayContact && (
+            <div className='m-2 flex flex-row rounded-xl border-2 border-grey'>
+              <SearchTag
+                options={taglist}
+                onChangehandler={onSearchTagChange}
+              />
+              <div className='flex w-full justify-between'>
+                <SearchBar onChangeHandler={onSearchChange} />
+                <SearchIcon className='my-auto mx-2 h-6' />
+              </div>
+            </div>
+          )}
           {/* {searchFieldString === '' && selectedOption === '' && (
             <ProfileItem profile={allContacts[0]} image='' />
           )} */}
-          <ContactList contacts={filteredContacts} />
+          <ContactList
+            contacts={filteredContacts}
+            setDisplayContact={setDisplayContact}
+            displayContact={displayContact}
+          />
         </div>
       </main>
-      <NavBar />
+      {!displayContact && <NavBar />}
     </>
   )
 }

@@ -1,20 +1,28 @@
-import Link from 'next/link'
+import { Dispatch, SetStateAction } from 'react'
 
 import ContactItem from '@/components/Contact/contactitem'
 import type { Contact } from '@/types/types'
 
 type ContactsProp = {
   contacts: Contact[]
+  setDisplayContact: Dispatch<SetStateAction<boolean>>
+  displayContact: boolean
 }
 
-const ContactList = ({ contacts }: ContactsProp) => {
+const ContactList = ({
+  contacts,
+  setDisplayContact,
+  displayContact
+}: ContactsProp) => {
   const contactItems = contacts.map((contact) => {
     return (
-      <Link href={`/contact/${contact.id}`} key={contact.id}>
-        <a>
-          <ContactItem contact={contact} image='' />
-        </a>
-      </Link>
+      <ContactItem
+        contact={contact}
+        image=''
+        key={contact.id}
+        setDisplayContact={setDisplayContact}
+        displayContact={displayContact}
+      />
     )
   })
 
