@@ -22,7 +22,7 @@ function ContactInfo({ contact, image }: ContactInfoProps) {
     // TODO: Delete Contact from firebase
   }
   return (
-    <div className='flex flex-col items-center justify-center gap-3'>
+    <div className='mb-2 flex flex-col items-center justify-center gap-3'>
       {/* USER PROFILE IMAGE */}
       <Avatar
         image={image}
