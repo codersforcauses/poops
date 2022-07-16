@@ -19,7 +19,7 @@ import {
 
 import LoginButton from '@/components/Login/LoginButton'
 
-import { auth } from '../../components/Firebase/init'
+// import { auth } from '../../components/Firebase/init'
 import { useAuth } from '../../context/AuthContext'
 
 export interface LoginPanelInterface {
@@ -33,7 +33,7 @@ export interface LoginPanelInterface {
 }
 
 const LoginPanel = (props: LoginPanelInterface) => {
-  const { externalAuthSignIn, linkAuthProvider, currentUser } = useAuth()
+  const { externalAuthSignIn, linkAuthProvider, currentUser, auth } = useAuth()
 
   const googleIcon = <FontAwesomeIcon icon={faGoogle} />
   const facebookIcon = <FontAwesomeIcon icon={faFacebookF} />
