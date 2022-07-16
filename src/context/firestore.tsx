@@ -11,11 +11,11 @@ import {
   arrayRemove,
   arrayUnion,
   doc,
-  FieldValue,
   FirestoreError,
   getDoc,
   serverTimestamp,
   setDoc,
+  Timestamp,
   writeBatch
 } from 'firebase/firestore'
 
@@ -25,17 +25,17 @@ import { useAuth } from '@/context/auth'
 
 interface VisitProp {
   visit: string
-  visitTime: FieldValue
+  visitTime: Timestamp
 }
 
 interface ContactProp {
   contact: string
-  contactTime: FieldValue
+  contactTime: Timestamp
 }
 
 interface UserDocProp {
   name: string
-  time: FieldValue
+  time: Timestamp
   visit: VisitProp[]
   contact: ContactProp[]
 }
@@ -46,7 +46,7 @@ interface FirestoreContextProp {
 
 const defaultUserDoc: UserDocProp = {
   name: '',
-  time: serverTimestamp(),
+  time: serverTimestamp() as Timestamp,
   visit: [],
   contact: []
 }
@@ -108,7 +108,10 @@ const FirestoreProvider = ({ children }: { children: ReactNode }) => {
             visit: arrayRemove(oldVisit)
           })
           batch.update(userDocRef, {
-            visit: arrayUnion({ ...newVisit, visitTime: serverTimestamp() })
+            visit: arrayUnion({
+              ...newVisit,
+              visitTime: serverTimestamp() as Timestamp
+            })
           })
           await batch.commit()
         }
@@ -133,7 +136,10 @@ const FirestoreProvider = ({ children }: { children: ReactNode }) => {
           const batch = writeBatch(db)
           batch.update(userDocRef, { visit: arrayRemove(oldContact) })
           batch.update(userDocRef, {
-            visit: arrayUnion({ ...newContact, contactTime: serverTimestamp() })
+            visit: arrayUnion({
+              ...newContact,
+              contactTime: serverTimestamp() as Timestamp
+            })
           })
           await batch.commit()
         }
