@@ -16,7 +16,7 @@ function Summary() {
           background: '#a52a2a',
           color: '#a52a2a',
           borderColor: '#a52a2a',
-          height: '2px'
+          height: '1.5px'
         }}
       />
       <div>
