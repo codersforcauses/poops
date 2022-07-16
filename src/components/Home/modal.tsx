@@ -1,56 +1,19 @@
 import React from 'react'
 import { useState } from 'react'
 import Image from 'next/image'
-import { default as ReactSelect } from 'react-select'
-import { components } from 'react-select'
 
-const Option = (props) => {
-  return (
-    <div>
-      <components.Option {...props}>
-        <input
-          type='checkbox'
-          checked={props.isSelected}
-          onChange={() => null}
-        />{' '}
-        <label>{props.label}</label>
-      </components.Option>
-    </div>
-  )
-}
+import PetSelector from '@/components/Home/petSelector'
+import TypeSelector from '@/components/Home/typeSelector'
 
 function Modal() {
   const [modalIsOpen, setModalOpen] = useState(false)
-  const [type, setType] = useState('TYPE OF VISIT')
+  const [pets, setPets] = useState<string[]>([])
+  const [type, setType] = useState('')
   const [distance, setDistance] = useState(0)
-  const [petSelected, setSelected] = useState([])
-
-  const pets = [
-    { value: 'Willow', label: 'Willow' },
-    { value: 'Nala', label: 'Nala' },
-    { value: 'Coco', label: 'Coco' },
-    { value: 'Nigi', label: 'Nigi' }
-  ]
-
-  const types = [
-    { value: 'Vet', label: 'Vet' },
-    { value: 'Walk', label: 'Walk' },
-    { value: 'Transportation', label: 'Transportation' }
-  ]
-
-  const handleChange = (selected: React.SetStateAction<never[]>) => {
-    setSelected(selected)
-  }
-
-  const handleTypeChange = (selected: {
-    value: React.SetStateAction<string>
-  }) => {
-    setType(selected.value)
-  }
-
   return (
     <div>
       <div className='text-center'>
+        {/* If modal is closed, display start button */}
         {!modalIsOpen && (
           <button
             className='text-l relative h-[30px] w-[120px] rounded-lg bg-dark-red font-semibold text-white'
@@ -62,18 +25,19 @@ function Modal() {
           </button>
         )}
 
+        {/* If modal is opened, display stop button */}
         {(((type == 'Vet' || type == 'Transportation') &&
-          petSelected.length > 0 &&
+          pets.length > 0 &&
           distance == 0 &&
           modalIsOpen) ||
           (type == 'Walk' &&
-            petSelected.length > 0 &&
+            pets.length > 0 &&
             distance > 0 &&
             modalIsOpen)) && (
           <button
             className='text-l relative h-[30px] w-[120px] rounded-lg bg-dark-red font-semibold text-white'
             onClick={() => {
-              setModalOpen(false), setType('TYPE OF VISIT'), setDistance(0)
+              setModalOpen(false), setDistance(0)
             }}
           >
             STOP VISIT
@@ -81,6 +45,7 @@ function Modal() {
         )}
       </div>
       <div>
+        {/* Displays modal */}
         {modalIsOpen && (
           <div
             className='rounded-lg p-3 py-2 px-5 text-center shadow-lg sm:py-4'
@@ -103,45 +68,28 @@ function Modal() {
               }}
             />
             <br />
-            <form style={{ fontSize: 18 }}>
-              <label htmlFor='pets'>Select Pets</label>
-              <ReactSelect
-                options={pets}
-                name='pets'
-                isMulti
-                closeMenuOnSelect={false}
-                hideSelectedOptions={false}
-                components={{
-                  Option
-                }}
-                onChange={handleChange}
-                value={petSelected}
-              />
-              <br />
-              <label htmlFor='type'>Type of Visit</label>
-              <ReactSelect
-                options={types}
-                name='type'
-                components={{
-                  Option
-                }}
-                onChange={handleTypeChange}
-                value={type.value}
-              />
 
-              <div>
-                {type == 'Walk' && (
-                  <form>
-                    <br></br>
-                    <label htmlFor='distance'>Distance Walked (in km) : </label>
-                    <input
-                      type='text'
-                      name='distance'
-                      onChange={(e) => setDistance(Number(e.target.value))}
-                    />
-                  </form>
-                )}
-              </div>
+            {/* Visit Form */}
+            <form style={{ fontSize: 18 }}>
+              {/* Pet Selector Form */}
+              <PetSelector pets={pets} setPets={setPets} />
+              <br />
+
+              {/* Type Selector Form */}
+              <TypeSelector type={type} setType={setType} />
+
+              {/* Distance Form if type is 'Walk' */}
+              {type == 'Walk' && (
+                <form>
+                  <br />
+                  <label htmlFor='distance'>Distance Walked (in km) : </label>
+                  <input
+                    type='text'
+                    name='distance'
+                    onChange={(e) => setDistance(Number(e.target.value))}
+                  />
+                </form>
+              )}
             </form>
           </div>
         )}
