@@ -15,7 +15,7 @@ const ContactItem = ({ contact, image }: ContactItemProps) => {
     .join(', ')
 
   return (
-    <li className='hover:bg-grey focus:bg-grey flex items-center justify-between truncate border-b border-gray-300 bg-white p-3 px-5 text-sm sm:py-4'>
+    <li className='flex items-center justify-between truncate border-b border-gray-300 bg-white p-3 px-5 text-sm hover:bg-gray-300 focus:bg-gray-300 sm:py-4'>
       {/* USER PROFILE IMAGE */}
       <span className='flex items-center space-x-4'>
         <Avatar image={image} height={40} width={40} iconClass='h-10 w-10' />
