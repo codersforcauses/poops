@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import ChevronDownIcon from '@heroicons/react/outline/ChevronDownIcon'
 
-import { VisitData } from '@/interfaces/interfaces'
+import { VisitData } from '@/types/types'
 
 import { EditButton } from './buttons'
 import EditableVisitInstance from './editvisitinstance'

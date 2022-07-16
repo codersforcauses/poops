@@ -1,4 +1,4 @@
-import { VisitData } from '../../interfaces/interfaces'
+import { VisitData } from '../../types/types'
 
 const ReadOnlyVisitInstance = (props: VisitData) => {
   return (

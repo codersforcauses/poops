@@ -1,7 +1,7 @@
 import React from 'react'
 import { useState } from 'react'
 
-import { VisitData } from '@/interfaces/interfaces'
+import { VisitData } from '@/types/types'
 
 import { CancelSymbol } from './buttons'
 import CommuteSelector from './commuteselector'

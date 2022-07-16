@@ -12,7 +12,7 @@ import {
   updateDoc
 } from 'firebase/firestore'
 
-import { ContactData, User, VisitData } from '@/interfaces/interfaces'
+import { ContactData, User, VisitData } from '@/types/types'
 
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,

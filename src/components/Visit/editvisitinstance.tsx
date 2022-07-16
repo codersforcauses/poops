@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-import { VisitData } from '@/interfaces/interfaces'
+import { VisitData } from '@/types/types'
 
 function NumberForm(value: string) {
   if (isNaN(parseFloat(value))) {
