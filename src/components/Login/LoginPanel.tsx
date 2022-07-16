@@ -1,10 +1,10 @@
 import {
-  faApple,
+  // faApple,
   faFacebookF,
   faGoogle,
-  faMicrosoft,
-  faTwitter,
-  faYahoo
+  faMicrosoft
+  // faTwitter,
+  // faYahoo
 } from '@fortawesome/free-brands-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
@@ -13,23 +13,19 @@ import {
   FacebookAuthProvider,
   GoogleAuthProvider,
   OAuthProvider,
-  TwitterAuthProvider,
+  // TwitterAuthProvider,
   User
 } from 'firebase/auth'
 
 import LoginButton from '@/components/Login/LoginButton'
 
-// import { auth } from '../../components/Firebase/init'
 import { useAuth } from '../../context/AuthContext'
 
 export interface LoginPanelInterface {
   linkAccount: boolean // if true, will link the account to the logged in user, if false, will sign in with the provider
   displayGoogle: boolean
   displayFacebook: boolean
-  displayTwitter: boolean
   displayMicrosoft: boolean
-  displayYahoo: boolean
-  displayApple: boolean
 }
 
 const LoginPanel = (props: LoginPanelInterface) => {
@@ -37,14 +33,10 @@ const LoginPanel = (props: LoginPanelInterface) => {
 
   const googleIcon = <FontAwesomeIcon icon={faGoogle} />
   const facebookIcon = <FontAwesomeIcon icon={faFacebookF} />
-  const twitterIcon = <FontAwesomeIcon icon={faTwitter} />
-  const appleIcon = <FontAwesomeIcon icon={faApple} />
   const microsoftIcon = <FontAwesomeIcon icon={faMicrosoft} />
-  const yahooIcon = <FontAwesomeIcon icon={faYahoo} />
 
   const googleProvider = new GoogleAuthProvider()
   const facebookProvider = new FacebookAuthProvider()
-  const twitterProvider = new TwitterAuthProvider()
   const microsoftProvider = new OAuthProvider('microsoft.com')
 
   function buttonString(providerString: string) {
@@ -91,15 +83,6 @@ const LoginPanel = (props: LoginPanelInterface) => {
         display={props.displayFacebook}
       />
 
-      {/* Twitter Button */}
-      <LoginButton
-        handler={() => handleButtonPress(auth, currentUser, twitterProvider)}
-        icon={twitterIcon}
-        buttonlabel={buttonString('Twitter')}
-        style='group h-12 rounded-full border-4 border-twitter px-6 transition duration-300'
-        display={props.displayTwitter}
-      />
-
       {/* Microsoft Button */}
       <LoginButton
         handler={() => handleButtonPress(auth, currentUser, microsoftProvider)}
@@ -109,23 +92,7 @@ const LoginPanel = (props: LoginPanelInterface) => {
         display={props.displayMicrosoft}
       />
 
-      {/* Apple Button */}
-      <LoginButton
-        handler={() => undefined}
-        icon={appleIcon}
-        buttonlabel={buttonString('Apple')}
-        style='group h-12 rounded-full border-4 border-applegrey px-6 transition duration-300'
-        display={props.displayApple}
-      />
-
-      {/* Yahoo Button */}
-      <LoginButton
-        handler={() => undefined}
-        icon={yahooIcon}
-        buttonlabel={buttonString('Yahoo')}
-        style='group h-12 rounded-full border-4 border-yahoopurple px-6 transition duration-300'
-        display={props.displayYahoo}
-      />
+      {/* Phone Button //TODO*/}
     </div>
   )
 }

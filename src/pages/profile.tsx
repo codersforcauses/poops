@@ -25,10 +25,7 @@ const Profile = () => {
             linkAccount={true} // Links Auth methods to current logged in user
             displayGoogle={true}
             displayFacebook={true}
-            displayTwitter={true}
             displayMicrosoft={true}
-            displayYahoo={false}
-            displayApple={false}
           />
         </main>
         <NavBar />
