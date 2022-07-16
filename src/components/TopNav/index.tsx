@@ -8,12 +8,7 @@ function TopNav() {
         className='fixed inset-x-0 top-0 z-10 block bg-white'
       >
         <div className='flex justify-between'>
-          <Image
-            alt='logo'
-            src='/images/logo.png'
-            width='100px'
-            height='60px'
-          />
+          <Image alt='logo' src='/images/logo.png' width='100px' height='65x' />
         </div>
         <hr
           style={{

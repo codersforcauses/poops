@@ -3,10 +3,10 @@ import { default as ReactSelect } from 'react-select'
 import { MultiValue } from 'react-select'
 
 const petOptions = [
-  { value: 'Willow', label: 'Willow' },
-  { value: 'Nala', label: 'Nala' },
-  { value: 'Coco', label: 'Coco' },
-  { value: 'Nigi', label: 'Nigi' }
+  { value: 'Willow (Client)', label: 'Willow (Client)' },
+  { value: 'Nala (Client)', label: 'Nala (Client)' },
+  { value: 'Coco (Client)', label: 'Coco (Client)' },
+  { value: 'Nigi (Client)', label: 'Nigi (Client)' }
 ]
 
 type Props = {
