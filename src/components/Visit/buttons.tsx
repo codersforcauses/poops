@@ -1,7 +1,4 @@
 import React from 'react'
-import { useState } from 'react'
-
-import Modal from './modal'
 
 export const EditButton = (prop: { isEdit: boolean }) => {
   if (prop.isEdit) {
@@ -10,17 +7,18 @@ export const EditButton = (prop: { isEdit: boolean }) => {
   return <EditSymbol />
 }
 
-export const AddButton = () => {
-  const [openModal, setOpenModal] = useState(false)
-  const toggleModal = () => setOpenModal(!openModal)
+interface AddButtonProps {
+  toggleModal: () => void
+}
 
+export const AddButton = ({ toggleModal }: AddButtonProps) => {
   return (
     // slightly less awful fix
     <div className='relative top-[3px]'>
       <button
         type='button'
         onClick={() => {
-          setOpenModal(true)
+          toggleModal()
         }}
       >
         <div className='relative h-[37px] w-[37px] rounded-full bg-primary text-xl font-semibold drop-shadow-default'>
@@ -29,7 +27,26 @@ export const AddButton = () => {
           </p>
         </div>
       </button>
-      {openModal && <Modal toggleModal={toggleModal} />}
+    </div>
+  )
+}
+
+export const VetConcernButton = () => {
+  return (
+    <div className='align-center flex flex-row justify-center rounded-md bg-primary p-2 text-center text-xs font-bold text-white drop-shadow-default'>
+      <button>
+        REGISTER <br /> VET CONCERN
+      </button>
+    </div>
+  )
+}
+
+export const ReportButton = () => {
+  return (
+    <div className='align-center flex flex-row justify-center rounded-md bg-primary p-2 text-center text-xs font-bold text-white drop-shadow-default'>
+      <button>
+        REPORT <br /> INCIDENT
+      </button>
     </div>
   )
 }

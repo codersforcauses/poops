@@ -36,7 +36,7 @@ const ModalView: React.FC<ModalViewProps> = ({ toggleModal }) => {
   }
 
   return (
-    <div className='fixed inset-0 z-50 h-screen w-screen rounded-sm bg-white p-4 shadow '>
+    <div className='z-50 bg-white p-4 shadow'>
       <div>
         <div className='fixed right-2 top-2 h-7 w-7 rounded-full bg-primary'>
           <button onClick={toggleModal}>
