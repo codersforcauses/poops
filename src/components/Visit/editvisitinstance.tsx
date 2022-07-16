@@ -1,11 +1,6 @@
 import React, { useState } from 'react'
 
-import {
-  deletUserData,
-  updateUserData,
-  User,
-  Visit
-} from '@/components/Firebase/init'
+import { VisitData } from '@/interfaces/interfaces'
 
 function NumberForm(value: string) {
   if (isNaN(parseFloat(value))) {
@@ -14,9 +9,8 @@ function NumberForm(value: string) {
   return parseFloat(value)
 }
 
-const EditableVisitInstance = (props: Visit) => {
-  const [firstName, setFirstName] = useState(props.firstName)
-  const [lastName, setLastName] = useState(props.lastName)
+const EditableVisitInstance = (props: VisitData) => {
+  const [displayName, setDisplayName] = useState(props.displayName)
   const [dateTime, setDateTime] = useState(props.dateTime)
   const [petNames, setpetNames] = useState(props.petNames)
   const [walkDist, setWalkDist] = useState(props.walkDist)
@@ -28,18 +22,17 @@ const EditableVisitInstance = (props: Visit) => {
   return (
     <form
       onSubmit={(event) => {
-        const userData: User = {
-          firstName: firstName,
-          lastName: lastName,
-          petNames: petNames,
-          dateTime: dateTime,
-          duration: duration,
-          walkDist: walkDist,
-          commuteDist: commuteDist,
-          commuteMethod: commuteMethod,
-          notes: notes
-        }
-        updateUserData(props.id, userData)
+        // const data: VisitData = {
+        //   displayName: displayName,
+        //   petNames: petNames,
+        //   dateTime: dateTime,
+        //   duration: duration,
+        //   walkDist: walkDist,
+        //   commuteDist: commuteDist,
+        //   commuteMethod: commuteMethod,
+        //   notes: notes
+        // }
+        // updateVisitData(data)
         event.preventDefault()
       }}
     >
@@ -54,16 +47,9 @@ const EditableVisitInstance = (props: Visit) => {
           <input
             size={8}
             className='bg-gray text-sm font-normal text-primary'
-            placeholder='Last Name'
-            value={lastName}
-            onChange={(event) => setLastName(event.target.value)}
-          />
-          <input
-            size={8}
-            className='bg-gray text-sm font-normal text-primary'
-            placeholder='First Name'
-            value={firstName}
-            onChange={(event) => setFirstName(event.target.value)}
+            placeholder='Display Name'
+            value={displayName}
+            onChange={(event) => setDisplayName(event.target.value)}
           />
         </div>
       </div>
@@ -74,7 +60,7 @@ const EditableVisitInstance = (props: Visit) => {
           className='bg-gray text-primary'
           placeholder='Pet Name(s)'
           value={petNames}
-          onChange={(event) => setpetNames(event.target.value)}
+          onChange={(event) => setpetNames(event.target.value.split(', '))} // TODO make this more friendly input
         />
       </p>
       <p className='text-sm'>
@@ -150,7 +136,7 @@ const EditableVisitInstance = (props: Visit) => {
         type='button'
         className='text-bold mt-2 ml-4 rounded-xl bg-primary p-1 text-white drop-shadow-default active:bg-dark-red'
         onClick={() => {
-          deletUserData(props.id)
+          // deleteUserData(props.id)
           //   setTimeout(() => {
           //     window.location.reload()
           //   }, 125)

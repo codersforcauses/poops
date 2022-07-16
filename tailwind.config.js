@@ -7,8 +7,7 @@ module.exports = {
   content: [
     './src/**/*.{html,js,jsx,ts,tsx}',
     './src/pages/**/*.{js,ts,jsx,tsx}',
-    './src/components/**/*.{js,ts,jsx,tsx}',
-    './src/**/*.{js,jsx,ts,tsx}'
+    './src/components/**/*.{js,ts,jsx,tsx}'
   ],
   theme: {
     colors: {
@@ -16,8 +15,6 @@ module.exports = {
       'dark-red': '#a52a2a',
       transparent: 'transparent',
       current: 'currentColor',
-      gray: '#f9f9f9',
-      'dark-gray': '#7B7B7B',
       white: '#ffffff',
       black: '#000000',
       facebook: '#4267B2',
@@ -29,6 +26,8 @@ module.exports = {
       applegrey: '#A2AAAD',
       microsoftblue: '#00A4EF',
       yahoopurple: '#430297',
+      gray: '#f9f9f9',
+      'dark-gray': '#7B7B7B',
       'zinc-200': '#F2F2F2',
       'zinc-300': '#D9D9D9',
       'zinc-50': '#FFFFFF'
@@ -57,7 +56,11 @@ module.exports = {
         white: colors.white,
         black: colors.black
       }
-    },
-    plugins: [require('@tailwindcss/forms')]
-  }
+    }
+  },
+  plugins: [
+    require('@tailwindcss/forms')({
+      strategy: 'class' // only generate classes
+    })
+  ]
 }

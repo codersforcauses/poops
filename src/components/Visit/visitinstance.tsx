@@ -1,11 +1,15 @@
 import React, { useState } from 'react'
 import ChevronDownIcon from '@heroicons/react/outline/ChevronDownIcon'
 
+import { VisitData } from '@/interfaces/interfaces'
+
 import { EditButton } from './buttons'
 import EditableVisitInstance from './editvisitinstance'
 import ReadOnlyVisitInstance from './readvisitinstance'
 
-type VisitInstanceProps = Visit
+interface VisitInstanceProps extends VisitData {
+  id: number
+}
 
 const VisitInstance = (props: VisitInstanceProps) => {
   const [isEditable, setIsEditable] = useState(false)
@@ -35,9 +39,7 @@ const VisitInstance = (props: VisitInstanceProps) => {
           {isEditable ? (
             <EditableVisitInstance
               key={props.id}
-              id={props.id}
-              firstName={props.firstName}
-              lastName={props.lastName}
+              displayName={props.displayName}
               petNames={props.petNames}
               duration={props.duration}
               dateTime={props.dateTime}
@@ -49,8 +51,7 @@ const VisitInstance = (props: VisitInstanceProps) => {
           ) : (
             <ReadOnlyVisitInstance
               key={props.id}
-              firstName={props.firstName}
-              lastName={props.lastName}
+              displayName={props.displayName}
               petNames={props.petNames}
               duration={props.duration}
               dateTime={props.dateTime}

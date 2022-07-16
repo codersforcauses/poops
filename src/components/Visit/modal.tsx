@@ -1,31 +1,31 @@
 import React from 'react'
 import { useState } from 'react'
 
-import { User, WriteUserData } from '@/components/Firebase/init'
+import { VisitData } from '@/interfaces/interfaces'
 
 import { CancelSymbol } from './buttons'
 import CommuteSelector from './commuteselector'
 import FormField from './formfield'
 
 interface ModalViewProps {
-  openFunc: () => void
+  toggleModal: () => void
 }
 
-const ModalView: React.FC<ModalViewProps> = ({ openFunc }) => {
+const ModalView: React.FC<ModalViewProps> = ({ toggleModal }) => {
   const [firstName, setFirstName] = useState('')
   const [lastName, setLastName] = useState('')
-  const [petNames, setpetNames] = useState('')
+  const [petNames, setpetNames] = useState<string[]>([])
   const [dateTime, setDateTime] = useState('')
   const [duration, setDuration] = useState('')
   const [walkDist, setWalkDist] = useState(0)
   const [commuteDist, setCommuteDist] = useState(0)
   const [commuteMethod, setCommuteMethod] = useState('')
+  /* eslint-disable unused-imports/no-unused-vars */
   const [notes, setNotes] = useState('')
 
-  const onSubmit = (click: React.FormEvent<HTMLFormElement>) => {
-    const data: User = {
-      firstName: firstName,
-      lastName: lastName,
+  const handleSubmit = (click: React.FormEvent<HTMLFormElement>) => {
+    const data: VisitData = {
+      displayName: `${firstName} ${lastName}`, // TODO change to displayName
       petNames: petNames,
       dateTime: dateTime,
       duration: duration,
@@ -34,7 +34,8 @@ const ModalView: React.FC<ModalViewProps> = ({ openFunc }) => {
       commuteMethod: commuteMethod,
       notes: notes
     }
-    WriteUserData(data)
+    // TODO update visit data
+    // updateUserData(data)
     click.preventDefault()
   }
 
@@ -52,7 +53,7 @@ const ModalView: React.FC<ModalViewProps> = ({ openFunc }) => {
     <div className='fixed inset-0 z-50 h-screen w-screen rounded-sm bg-white p-4 shadow '>
       <div>
         <div className='fixed right-2 top-2 h-7 w-7 rounded-full bg-primary'>
-          <button onClick={openFunc}>
+          <button onClick={toggleModal}>
             <CancelSymbol />
           </button>
         </div>
@@ -60,7 +61,7 @@ const ModalView: React.FC<ModalViewProps> = ({ openFunc }) => {
         <h1 className='mx-1 border-b-2 border-primary py-3 pt-10 text-2xl font-bold'>
           Add Your Visit
         </h1>
-        <form className='pt-3' onSubmit={(event) => onSubmit(event)}>
+        <form className='pt-3' onSubmit={handleSubmit}>
           <table className='container mx-auto table-fixed'>
             <tbody>
               <tr>
@@ -93,7 +94,9 @@ const ModalView: React.FC<ModalViewProps> = ({ openFunc }) => {
                     placeholder='Pet Name'
                     label='Pet name:'
                     isRequired={true}
-                    onChange={(event) => setpetNames(event.target.value)}
+                    onChange={(event) =>
+                      setpetNames(event.target.value.split(', '))
+                    }
                   />
                 </td>
                 <td>
@@ -160,19 +163,14 @@ const ModalView: React.FC<ModalViewProps> = ({ openFunc }) => {
           />
           <div className='mx-auto my-2 flex flex-col p-1 '>
             <button
-              // onClick={() =>
-              //   setTimeout(() => {
-              //     window.location.reload()
-              //   }, 125)
-              // }
               className='text-bold rounded bg-primary px-12 py-4 text-white drop-shadow-default active:bg-dark-red'
+              type='submit'
               disabled={!isSubmitDisabled}
             >
               Submit
             </button>
           </div>
         </form>
-        <div className=''></div>
       </div>
     </div>
   )

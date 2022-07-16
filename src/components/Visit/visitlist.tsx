@@ -1,6 +1,4 @@
-import { useEffect, useState } from 'react'
-
-import { VisitData } from '@/interfaces/interfaces.tsx'
+import { VisitData } from '@/interfaces/interfaces'
 
 import VisitInstance from './visitinstance'
 
@@ -9,24 +7,20 @@ interface VisitListProps {
 }
 
 const VisitList = (props: VisitListProps) => {
-  const [visitData, setVisitData] = useState<VisitData[]>([])
+  // const [visitData, setVisitData] = useState<VisitData[]>([])
+  const visitData: VisitData[] = []
 
-  useEffect(() => {
-    const fetchData = () => getVisitData().then(setVisitData)
-    fetchData()
-  }, [])
-
-  const matchesFirstName = (post: VisitData) =>
-    post.firstName.toLowerCase().includes(props.searchQuery.toLowerCase())
-
-  const matchesLastName = (post: VisitData) =>
-    post.lastName.toLowerCase().includes(props.searchQuery.toLowerCase())
+  // TODO split display name for better searching
+  const matchesDisplayName = (post: VisitData) =>
+    post.displayName.toLowerCase().includes(props.searchQuery.toLowerCase())
 
   const matchespetNames = (post: VisitData) =>
-    post.petNames.toLowerCase().includes(props.searchQuery.toLowerCase())
+    post.petNames.forEach((petName) =>
+      petName.toLowerCase().includes(props.searchQuery.toLowerCase())
+    )
 
   const matchesSearchTerms = (post: VisitData) =>
-    matchesFirstName(post) || matchesLastName(post) || matchespetNames(post)
+    matchesDisplayName(post) || matchespetNames(post)
 
   return (
     <div className=''>
@@ -40,8 +34,7 @@ const VisitList = (props: VisitListProps) => {
           <VisitInstance
             key={index}
             id={index}
-            firstName={post.firstName}
-            lastName={post.lastName}
+            displayName={post.displayName}
             petNames={post.petNames}
             duration={post.duration}
             dateTime={post.dateTime}
