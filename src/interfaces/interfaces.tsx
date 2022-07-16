@@ -5,6 +5,7 @@ export interface User {
 }
 
 export interface VisitData {
+  displayName: string
   petNames: string[]
   dateTime: string
   duration: string

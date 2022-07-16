@@ -33,7 +33,7 @@ const db = getFirestore(app)
 
 let uid = '0'
 let docRef: DocumentReference<DocumentData>
-export let user: User
+export let user: User // TODO change to useContext hook
 
 export const updateVisitData = async (user: User) => {
   getCurrentUser()
