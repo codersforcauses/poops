@@ -13,7 +13,8 @@ import {
   FacebookAuthProvider,
   GoogleAuthProvider,
   OAuthProvider,
-  TwitterAuthProvider
+  TwitterAuthProvider,
+  User
 } from 'firebase/auth'
 
 import LoginButton from '@/components/Login/LoginButton'
@@ -22,6 +23,7 @@ import { auth } from '../../components/Firebase/init'
 import { useAuth } from '../../context/AuthContext'
 
 export interface LoginPanelInterface {
+  linkAccount: boolean // if true, will link the account to the logged in user, if false, will sign in with the provider
   displayGoogle: boolean
   displayFacebook: boolean
   displayTwitter: boolean
@@ -31,7 +33,7 @@ export interface LoginPanelInterface {
 }
 
 const LoginPanel = (props: LoginPanelInterface) => {
-  const { externalAuthSignIn } = useAuth()
+  const { externalAuthSignIn, linkAuthProvider, currentUser } = useAuth()
 
   const googleIcon = <FontAwesomeIcon icon={faGoogle} />
   const facebookIcon = <FontAwesomeIcon icon={faFacebookF} />
@@ -45,44 +47,64 @@ const LoginPanel = (props: LoginPanelInterface) => {
   const twitterProvider = new TwitterAuthProvider()
   const microsoftProvider = new OAuthProvider('microsoft.com')
 
-  function handleExternalAuth(auth: Auth, provider: AuthProvider) {
-    externalAuthSignIn?.(auth, provider)
+  function buttonString(provider: string) {
+    let buttonString = ''
+    if (!props.linkAccount) {
+      buttonString = 'Continue with ' + provider
+    } else {
+      buttonString = 'Link ' + provider + ' Account'
+    }
+    return buttonString
+  }
+
+  function handleButtonPress(
+    auth: Auth,
+    currentUser: User | null,
+    provider: AuthProvider
+  ) {
+    if (!props.linkAccount) {
+      externalAuthSignIn?.(auth, provider)
+    } else {
+      if (currentUser !== null) {
+        linkAuthProvider?.(currentUser, provider)
+      }
+    }
   }
 
   return (
     <div className='m-auto grid h-1/3 w-1/2 max-w-xs justify-center space-y-4 p-5'>
       {/* Google Button */}
       <LoginButton
-        handler={() => handleExternalAuth(auth, googleProvider)}
+        handler={() => handleButtonPress(auth, currentUser, googleProvider)}
         icon={googleIcon}
-        buttonlabel='Continue with Google'
+        buttonlabel={buttonString('Google')}
         style='h-12 rounded-full border-4 border-t-googleblue border-r-googlegreen border-b-googleyellow border-l-googlered px-6 transition duration-300'
         display={props.displayGoogle}
       />
 
       {/* FaceBook Button */}
       <LoginButton
-        handler={() => handleExternalAuth(auth, facebookProvider)}
+        handler={() => handleButtonPress(auth, currentUser, facebookProvider)}
         icon={facebookIcon}
-        buttonlabel='Continue with Facebook'
+        buttonlabel={buttonString('Facebook')}
         style='group h-12 rounded-full border-4 border-facebook px-6 transition duration-300'
         display={props.displayFacebook}
       />
 
       {/* Twitter Button */}
       <LoginButton
-        handler={() => handleExternalAuth(auth, twitterProvider)}
+        handler={() => handleButtonPress(auth, currentUser, twitterProvider)}
         icon={twitterIcon}
-        buttonlabel='Continue with Twitter'
+        buttonlabel={buttonString('Twitter')}
         style='group h-12 rounded-full border-4 border-twitter px-6 transition duration-300'
         display={props.displayTwitter}
       />
 
       {/* Microsoft Button */}
       <LoginButton
-        handler={() => handleExternalAuth(auth, microsoftProvider)}
+        handler={() => handleButtonPress(auth, currentUser, microsoftProvider)}
         icon={microsoftIcon}
-        buttonlabel='Continue with Microsoft'
+        buttonlabel={buttonString('Microsoft')}
         style='group h-12 rounded-full border-4 border-microsoftblue px-6 transition duration-300'
         display={props.displayMicrosoft}
       />
@@ -91,7 +113,7 @@ const LoginPanel = (props: LoginPanelInterface) => {
       <LoginButton
         handler={() => undefined}
         icon={appleIcon}
-        buttonlabel='Continue with Apple'
+        buttonlabel={buttonString('Apple')}
         style='group h-12 rounded-full border-4 border-applegrey px-6 transition duration-300'
         display={props.displayApple}
       />
@@ -100,7 +122,7 @@ const LoginPanel = (props: LoginPanelInterface) => {
       <LoginButton
         handler={() => undefined}
         icon={yahooIcon}
-        buttonlabel='Continue with Yahoo'
+        buttonlabel={buttonString('Yahoo')}
         style='group h-12 rounded-full border-4 border-yahoopurple px-6 transition duration-300'
         display={props.displayYahoo}
       />

@@ -19,7 +19,7 @@ interface FirebaseContextProps {
   linkAuthProvider?: (currentUser: User, provider: AuthProvider) => void
   externalAuthSignIn?: (auth: Auth, provider: AuthProvider) => void
   logOut?: () => void
-  currentUser?: User | null
+  currentUser: User | null
 }
 
 const authContext = createContext<FirebaseContextProps>({
@@ -57,6 +57,8 @@ export const AuthContextProvider = ({
         return result
       })
       .catch((error) => {
+        //TODO catch provider-already-linked error, and display a message to the user, currently nothing happens if already logged in
+        // console.log(error)
         return error
       })
   }

@@ -1,17 +1,16 @@
-import { FacebookAuthProvider } from 'firebase/auth'
-
 import Header from '@/components/Header'
-import LoginButton from '@/components/Login/LoginButton'
+import LoginPanel from '@/components/Login/LoginPanel'
 import NavBar from '@/components/NavBar'
 // import { withProtected } from '@/components/PrivateRoute'
 import { useAuth } from '@/context/AuthContext'
 
 const Profile = () => {
-  const { logOut, linkAuthProvider, currentUser } = useAuth()
+  const { logOut, currentUser } = useAuth()
   // const googleProvider = new GoogleAuthProvider()
-  const facebookProvider = new FacebookAuthProvider()
+  // const facebookProvider = new FacebookAuthProvider()
   // const user: User | null | undefined = currentUser
   if (currentUser === null || currentUser === undefined) {
+    // TODO Do this better?
     return null
   } else {
     return (
@@ -22,12 +21,14 @@ const Profile = () => {
         <main>
           <p>Profile Page</p>
           <button onClick={logOut}>logout</button>
-          <LoginButton
-            handler={() => linkAuthProvider?.(currentUser, facebookProvider)}
-            icon={null}
-            buttonlabel='Continue with Google'
-            style='h-12 rounded-full border-4 border-t-googleblue border-r-googlegreen border-b-googleyellow border-l-googlered px-6 transition duration-300'
-            display={true}
+          <LoginPanel
+            linkAccount={true}
+            displayGoogle={true}
+            displayFacebook={true}
+            displayTwitter={true}
+            displayMicrosoft={true}
+            displayYahoo={false}
+            displayApple={false}
           />
         </main>
         <NavBar />
