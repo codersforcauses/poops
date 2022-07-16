@@ -10,7 +10,15 @@ const Home = () => {
       {/* <Header /> */}
       <Header pageTitle='Home' />
 
-      <main>
+      <main
+        style={{
+          backgroundImage: `url(/images/dog-home.png)`,
+          backgroundPosition: '50% calc(100% - 4rem)',
+          backgroundAttachment: 'fixed',
+          backgroundRepeat: 'no-repeat',
+          backgroundSize: 'contain'
+        }}
+      >
         <div className='space-between w-100 h-100 flex flex-col'>
           <div className='flex h-screen flex-col px-4'>
             <h1 style={{ fontSize: 40 }} className='py-2 text-center'>

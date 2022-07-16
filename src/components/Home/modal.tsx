@@ -1,6 +1,5 @@
 import React from 'react'
 import { useState } from 'react'
-import Image from 'next/image'
 
 import PetSelector from '@/components/Home/petSelector'
 import TypeSelector from '@/components/Home/typeSelector'
@@ -50,7 +49,6 @@ function Modal() {
           <div
             className='rounded-lg p-3 py-2 px-5 text-center shadow-lg sm:py-4'
             style={{
-              minWidth: 500,
               padding: 40,
               background: '#F9F9F9',
               margin: 20
@@ -92,17 +90,6 @@ function Modal() {
               )}
             </form>
           </div>
-        )}
-      </div>
-      <br />
-      <div>
-        {!modalIsOpen && (
-          <Image
-            alt='logo'
-            src='/images/dog.png'
-            width='350px'
-            height='250px'
-          />
         )}
       </div>
     </div>
