@@ -1,7 +1,7 @@
-export interface User {
-  firstName: string
-  lastName: string
-  petName: string
+export interface VisitData {
+  type: string
+  displayName: string
+  petNames: string[]
   dateTime: string
   duration: string
   walkDist: number
@@ -10,9 +10,6 @@ export interface User {
   notes: string
 }
 
-export interface Visit extends User {
-  id: string
-}
 interface Pet {
   id: string
   name: string

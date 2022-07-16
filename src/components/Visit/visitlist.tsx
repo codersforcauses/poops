@@ -1,4 +1,4 @@
-import { Visit } from '@/types/types'
+import { VisitData } from '@/types/types'
 
 import VisitInstance from './visitinstance'
 
@@ -7,12 +7,11 @@ interface VisitListProps {
 }
 
 const VisitList = (props: VisitListProps) => {
-  const visitData: Visit[] = [
+  const visitData: VisitData[] = [
     {
-      id: '123',
-      firstName: 'Yeah',
-      lastName: 'Uhhhhh',
-      petName: 'Dog',
+      type: 'Vet',
+      displayName: 'Henry Smith',
+      petNames: ['Chonk', 'Biscuit'],
       dateTime: '12/06/2003',
       duration: '122',
       walkDist: 23,
@@ -22,33 +21,35 @@ const VisitList = (props: VisitListProps) => {
     }
   ]
 
-  const matchesFirstName = (post: Visit) =>
-    post.firstName.toLowerCase().includes(props.searchQuery.toLowerCase())
+  const query = props.searchQuery.toLowerCase()
 
-  const matchesLastName = (post: Visit) =>
-    post.lastName.toLowerCase().includes(props.searchQuery.toLowerCase())
+  const matchesDisplayName = (visit: VisitData) =>
+    visit.displayName.toLowerCase().includes(query)
 
-  const matchesPetName = (post: Visit) =>
-    post.petName.toLowerCase().includes(props.searchQuery.toLowerCase())
+  const matchesPetNames = (visit: VisitData) =>
+    visit.petNames.some((pet) => {
+      return pet.toLowerCase().includes(query)
+    })
 
-  const matchesSearchTerms = (post: Visit) =>
-    matchesFirstName(post) || matchesLastName(post) || matchesPetName(post)
+  const matchesSearchTerms = (visit: VisitData) => {
+    return matchesDisplayName(visit) || matchesPetNames(visit)
+  }
 
   return (
     <div className=''>
       {visitData
-        .filter((post: Visit) => {
-          if (props.searchQuery === '' || matchesSearchTerms(post)) {
-            return post
+        .filter((visit: VisitData) => {
+          if (props.searchQuery === '' || matchesSearchTerms(visit)) {
+            return visit
           }
         })
-        .map((post) => (
+        .map((post, index) => (
           <VisitInstance
-            key={post.id}
-            id={post.id}
-            firstName={post.firstName}
-            lastName={post.lastName}
-            petName={post.petName}
+            key={index} // temporary
+            id={index}
+            type={post.type}
+            displayName={post.displayName}
+            petNames={post.petNames}
             duration={post.duration}
             dateTime={post.dateTime}
             walkDist={post.walkDist}

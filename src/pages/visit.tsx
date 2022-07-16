@@ -19,7 +19,7 @@ const Visit = () => {
         <>
           {!isModalOpen ? (
             <div className='flex w-screen flex-col p-4'>
-              <div className='flex flex-row justify-around'>
+              <div className='align-center flex flex-row justify-around'>
                 <SearchBar
                   onChange={(event) => setSearchQuery(event.target.value)}
                 />

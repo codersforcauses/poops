@@ -1,13 +1,15 @@
 import React, { useState } from 'react'
 import ChevronDownIcon from '@heroicons/react/outline/ChevronDownIcon'
 
-import { Visit } from '@/types/types'
+import { VisitData } from '@/types/types'
 
 import { EditButton } from './buttons'
 import EditableVisitInstance from './editvisitinstance'
 import ReadOnlyVisitInstance from './readvisitinstance'
 
-type VisitInstanceProps = Visit
+interface VisitInstanceProps extends VisitData {
+  id: number
+}
 
 const VisitInstance = (props: VisitInstanceProps) => {
   const [isEditable, setIsEditable] = useState(false)
@@ -35,13 +37,14 @@ const VisitInstance = (props: VisitInstanceProps) => {
             }}
           />
           {isEditable ? (
+            // option to convert to use modal instead?
             <EditableVisitInstance />
           ) : (
             <ReadOnlyVisitInstance
               key={props.id}
-              firstName={props.firstName}
-              lastName={props.lastName}
-              petName={props.petName}
+              type={props.type}
+              displayName={props.displayName}
+              petNames={props.petNames}
               duration={props.duration}
               dateTime={props.dateTime}
               walkDist={props.walkDist}
@@ -51,17 +54,7 @@ const VisitInstance = (props: VisitInstanceProps) => {
             />
           )}
 
-          {/* Edit button */}
-          <div className='invisible absolute right-4 bottom-1 h-7 w-7 rounded-full bg-primary text-primary drop-shadow-default transition-all peer-checked:visible'>
-            <button
-              type='button'
-              onClick={() => {
-                setIsEditable(!isEditable)
-              }}
-            >
-              <EditButton isEdit={isEditable} />
-            </button>
-          </div>
+          <EditButton isEditable={isEditable} setIsEditable={setIsEditable} />
         </div>
       </div>
     </div>

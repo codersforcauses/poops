@@ -1,7 +1,7 @@
 import React from 'react'
 import { useState } from 'react'
+import { XIcon } from '@heroicons/react/solid'
 
-import { CancelSymbol } from './buttons'
 import CommuteSelector from './commuteselector'
 import FormField from './formfield'
 
@@ -9,7 +9,7 @@ interface ModalViewProps {
   toggleModal: () => void
 }
 
-const ModalView: React.FC<ModalViewProps> = ({ toggleModal }) => {
+const ModalView = ({ toggleModal }: ModalViewProps) => {
   const [visitType, setVisitType] = useState('')
   const [displayName, setDisplayName] = useState('')
   const [petName, setPetName] = useState('')
@@ -21,7 +21,7 @@ const ModalView: React.FC<ModalViewProps> = ({ toggleModal }) => {
   /* eslint-disable unused-imports/no-unused-vars */
   const [notes, setNotes] = useState('')
 
-  const isSubmitDisabled = () =>
+  const isSubmitEnabled = () =>
     visitType &&
     displayName &&
     petName &&
@@ -36,11 +36,11 @@ const ModalView: React.FC<ModalViewProps> = ({ toggleModal }) => {
   }
 
   return (
-    <div className='z-50 bg-white p-4 shadow'>
-      <div>
-        <div className='fixed right-2 top-2 h-7 w-7 rounded-full bg-primary'>
+    <div className='z-50 p-4'>
+      <>
+        <div className='fixed right-5 top-4 h-10 w-10 rounded-full bg-primary p-1 drop-shadow-default'>
           <button onClick={toggleModal}>
-            <CancelSymbol />
+            <XIcon className='h-full w-full text-white' />
           </button>
         </div>
 
@@ -52,6 +52,7 @@ const ModalView: React.FC<ModalViewProps> = ({ toggleModal }) => {
             <tbody>
               <tr>
                 <td>
+                  {/* could rewrite to use awful react-select to make chevron icon consistent */}
                   <FormField
                     id='visitTypeInput'
                     type='select'
@@ -149,13 +150,13 @@ const ModalView: React.FC<ModalViewProps> = ({ toggleModal }) => {
             <button
               className='text-bold rounded bg-primary px-12 py-4 text-white drop-shadow-default active:bg-dark-red'
               type='submit'
-              disabled={!isSubmitDisabled}
+              disabled={!isSubmitEnabled}
             >
               Submit
             </button>
           </div>
         </form>
-      </div>
+      </>
     </div>
   )
 }
