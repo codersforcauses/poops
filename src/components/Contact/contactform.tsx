@@ -96,7 +96,7 @@ const ContactForm = ({ contact, image, setIsEditing }: ContactInfoProps) => {
           <input
             name='first_name'
             defaultValue={contact.firstName}
-            className='border-grey mb-2 w-80 rounded-lg border pl-1'
+            className='mb-2 w-80 rounded-lg border border-gray-300 pl-1'
             onChange={handleInputChange}
           />
         </Box>
@@ -107,7 +107,7 @@ const ContactForm = ({ contact, image, setIsEditing }: ContactInfoProps) => {
           <input
             name='last_name'
             defaultValue={contact.lastName}
-            className='border-grey mb-2 w-80 rounded-lg border pl-1'
+            className='mb-2 w-80 rounded-lg border border-gray-300 pl-1'
             onChange={handleInputChange}
           />
         </Box>
@@ -119,7 +119,7 @@ const ContactForm = ({ contact, image, setIsEditing }: ContactInfoProps) => {
           <textarea
             name='desc'
             defaultValue={contact.desc}
-            className='border-grey w-80 rounded-lg border pl-1'
+            className='w-80 rounded-lg border border-gray-300 pl-1'
             onChange={handleInputChange}
           />
         </Box>
@@ -131,7 +131,7 @@ const ContactForm = ({ contact, image, setIsEditing }: ContactInfoProps) => {
           <input
             name='phone'
             defaultValue={contact.phone}
-            className='border-grey mb-2 w-full rounded-lg border pl-1'
+            className='mb-2 w-full rounded-lg border border-gray-300 pl-1'
             onChange={handleInputChange}
           />
         </Box>
@@ -143,7 +143,7 @@ const ContactForm = ({ contact, image, setIsEditing }: ContactInfoProps) => {
           <input
             name='email'
             defaultValue={contact.email}
-            className='border-grey mb-2 w-full rounded-lg border pl-1'
+            className='mb-2 w-full rounded-lg border border-gray-300 pl-1'
             onChange={handleInputChange}
           />
         </Box>
@@ -155,7 +155,7 @@ const ContactForm = ({ contact, image, setIsEditing }: ContactInfoProps) => {
           <input
             name='street_address'
             defaultValue={contact.streetAddress}
-            className='border-grey mb-2 w-full rounded-lg border pl-1'
+            className='mb-2 w-full rounded-lg border border-gray-300 pl-1'
             onChange={handleInputChange}
           />
         </Box>
@@ -196,7 +196,7 @@ const ContactForm = ({ contact, image, setIsEditing }: ContactInfoProps) => {
                 <input
                   name='name'
                   defaultValue={pet.name}
-                  className='border-grey mb-2 w-full rounded-lg border pl-1'
+                  className='mb-2 w-full rounded-lg border border-gray-300 pl-1'
                   onChange={(e) => handlePetChange(i, e)}
                 />
 
@@ -206,7 +206,7 @@ const ContactForm = ({ contact, image, setIsEditing }: ContactInfoProps) => {
                 <textarea
                   name='notes'
                   defaultValue={pet.notes}
-                  className='border-grey mb-2 w-full rounded-lg border pl-1'
+                  className='mb-2 w-full rounded-lg border border-gray-300 pl-1'
                   onChange={(e) => handlePetChange(i, e)}
                 />
               </PetContainer>
@@ -227,7 +227,7 @@ const ContactForm = ({ contact, image, setIsEditing }: ContactInfoProps) => {
           <textarea
             name='notes'
             defaultValue={contact.notes}
-            className='border-grey w-full rounded-lg border'
+            className='w-full rounded-lg border border-gray-300'
             onChange={handleInputChange}
           />
         </Box>
@@ -242,7 +242,7 @@ const ContactForm = ({ contact, image, setIsEditing }: ContactInfoProps) => {
             </button>
             <button
               type='button'
-              className='bg-grey hover:bg-grey w-80 rounded py-1 font-bold text-black'
+              className='w-80 rounded bg-gray-300 py-1 font-bold text-black hover:bg-gray-300'
               onClick={() => setIsEditing(false)}
             >
               Cancel
@@ -257,7 +257,7 @@ const ContactForm = ({ contact, image, setIsEditing }: ContactInfoProps) => {
 export default ContactForm
 
 const Box = tw.div`
-    bg-grey
+    bg-gray-300
     bg-opacity-20
     box-content
     w-80
