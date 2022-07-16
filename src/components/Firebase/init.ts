@@ -61,7 +61,8 @@ const getData = async () => {
 export async function getInitialData() {
   const uid = getCurrentUser()?.uid
   if (uid) {
-    docRef = doc(db, 'TestUsers', uid)
+    // TODO: Change to uid - Adam is used for testing
+    docRef = doc(db, 'TestUsers', 'Adam')
   } else console.log('no uid')
 
   try {
