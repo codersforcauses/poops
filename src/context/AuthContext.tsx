@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useEffect, useState } from 'react'
 import {
   Auth,
+  AuthProvider,
   getRedirectResult,
   GoogleAuthProvider,
   linkWithRedirect,
@@ -14,9 +15,9 @@ import { auth } from '../components/Firebase/init'
 
 interface FirebaseContextProps {
   auth: Auth
-  googleSignIn?: (auth: Auth) => void
   getGoogleResults?: (auth: Auth) => void
-  linkGoogleAccount?: (currentUser: User) => void
+  linkAuthProvider?: (currentUser: User, provider: AuthProvider) => void
+  externalAuthSignIn?: (auth: Auth, provider: AuthProvider) => void
   logOut?: () => void
   currentUser?: User | null
 }
@@ -36,9 +37,8 @@ export const AuthContextProvider = ({
   const [currentUser, setCurrentUser] = useState<User | null>(null)
   const [loading, setLoading] = useState(true)
 
-  function googleSignIn(auth: Auth) {
-    const googleProvider = new GoogleAuthProvider()
-    signInWithRedirect(auth, googleProvider) // Not working in chrome incognito?, but signInWithPopup does
+  function externalAuthSignIn(auth: Auth, provider: AuthProvider) {
+    signInWithRedirect(auth, provider)
       .then((result) => {
         return result
       })
@@ -47,12 +47,12 @@ export const AuthContextProvider = ({
       })
   }
 
-  function linkGoogleAccount(currentUser: User) {
-    const googleProvider = new GoogleAuthProvider()
-    if (currentUser === null) {
-      return
-    }
-    linkWithRedirect(currentUser, googleProvider)
+  function linkAuthProvider(currentUser: User, provider: AuthProvider) {
+    // const googleProvider = new GoogleAuthProvider()
+    // console.log("test")
+    // console.log(currentUser)
+    // console.log(provider)
+    linkWithRedirect(currentUser, provider)
       .then((result) => {
         return result
       })
@@ -104,9 +104,9 @@ export const AuthContextProvider = ({
 
   const value: FirebaseContextProps = {
     auth,
-    googleSignIn,
     getGoogleResults,
-    linkGoogleAccount,
+    linkAuthProvider,
+    externalAuthSignIn,
     logOut,
     currentUser
   }

@@ -1,6 +1,6 @@
 import Header from '@/components/Header'
 import NavBar from '@/components/NavBar'
-import { withProtected } from '@/components/PrivateRoute'
+// import { withProtected } from '@/components/PrivateRoute'
 
 const Contact = () => {
   return (
@@ -16,4 +16,5 @@ const Contact = () => {
   )
 }
 
-export default withProtected(Contact)
+export default Contact
+// export default withProtected(Contact)
