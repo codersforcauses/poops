@@ -4,7 +4,8 @@ export interface Pet {
   notes: string
 }
 
-export interface User {
+export interface UserData {
+  displayName: string
   contacts: ContactData[]
   visits: VisitData[]
 }

@@ -9,53 +9,33 @@ import {
   useState
 } from 'react'
 import {
-  arrayRemove,
-  arrayUnion,
   doc,
   FirestoreError,
   getDoc,
-  serverTimestamp,
   setDoc,
-  Timestamp,
-  writeBatch
+  updateDoc
 } from 'firebase/firestore'
 
 import { MESSAGES } from '@/components/Firebase/errors'
 import { db } from '@/components/Firebase/init'
 import { useAuth } from '@/context/auth'
 
-interface VisitProp {
-  visit: string
-  visitTime: Timestamp
-}
-
-interface ContactProp {
-  contact: string
-  contactTime: Timestamp
-}
-
-interface UserDocProp {
-  name: string
-  time: Timestamp
-  visit: VisitProp[]
-  contact: ContactProp[]
-}
+import { UserData } from '../types/types'
 
 interface FirestoreContextProp {
-  userDoc: UserDocProp
+  userDoc: UserData
 }
 
-const defaultUserDoc: UserDocProp = {
-  name: '',
-  time: serverTimestamp() as Timestamp,
-  visit: [],
-  contact: []
+const defaultUserDoc: UserData = {
+  displayName: '',
+  visits: [],
+  contacts: []
 }
 
 interface FirestoreContextProps {
-  userDoc: UserDocProp
-  updateVisit?: (oldVisit: VisitProp, newVisit: VisitProp) => void
-  updateContact?: (oldContact: ContactProp, newContact: ContactProp) => void
+  userDoc: UserData
+  updateVisit?: (userDoc: UserData) => void
+  updateContact?: (userDoc: UserData) => void
 }
 
 const FirestoreContext = createContext<FirestoreContextProps>({
@@ -68,14 +48,14 @@ export const useFirestore = () => useContext(FirestoreContext)
 
 const FirestoreProvider = ({ children }: { children: ReactNode }) => {
   const { currentUser } = useAuth()
-  const [userDoc, setUserDoc] = useState<UserDocProp>(defaultUserDoc)
+  const [userDoc, setUserDoc] = useState<UserData>(defaultUserDoc)
 
   const retrieveData = useCallback(async () => {
     if (currentUser?.uid) {
       try {
         const userDocSnap = await getDoc(doc(db, 'users', currentUser.uid))
         if (userDocSnap.exists()) {
-          const userDocData = userDocSnap.data() as UserDocProp
+          const userDocData = userDocSnap.data() as UserData
           setUserDoc(userDocData)
         } else {
           // doc.data() will be undefined in this case
@@ -97,24 +77,14 @@ const FirestoreProvider = ({ children }: { children: ReactNode }) => {
   }, [retrieveData])
 
   const updateVisit = useCallback(
-    async (oldVisit: VisitProp, newVisit: VisitProp) => {
+    async (user: UserData) => {
       // setAchievementsCount((prev) => ({
       //   count: prev.count + newAchievementsEarned
       // }))
       try {
         if (currentUser?.uid) {
           const userDocRef = doc(db, 'users', currentUser.uid)
-          const batch = writeBatch(db)
-          batch.update(userDocRef, {
-            visit: arrayRemove(oldVisit)
-          })
-          batch.update(userDocRef, {
-            visit: arrayUnion({
-              ...newVisit,
-              visitTime: serverTimestamp() as Timestamp
-            })
-          })
-          await batch.commit()
+          await updateDoc(userDocRef, 'Visits', user.visits)
         }
       } catch (err: unknown) {
         //#region  //*=========== For logging ===========
@@ -127,22 +97,14 @@ const FirestoreProvider = ({ children }: { children: ReactNode }) => {
     [currentUser]
   )
   const updateContact = useCallback(
-    async (oldContact: ContactProp, newContact: ContactProp) => {
+    async (user: UserData) => {
       // setAchievementsCount((prev) => ({
       //   count: prev.count + newAchievementsEarned
       // }))
       try {
         if (currentUser?.uid) {
           const userDocRef = doc(db, 'users', currentUser.uid)
-          const batch = writeBatch(db)
-          batch.update(userDocRef, { visit: arrayRemove(oldContact) })
-          batch.update(userDocRef, {
-            visit: arrayUnion({
-              ...newContact,
-              contactTime: serverTimestamp() as Timestamp
-            })
-          })
-          await batch.commit()
+          await updateDoc(userDocRef, 'Contacts', user.contacts)
         }
       } catch (err: unknown) {
         //#region  //*=========== For logging ===========
