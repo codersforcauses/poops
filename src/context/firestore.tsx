@@ -131,7 +131,7 @@ const FirestoreProvider = ({ children }: { children: ReactNode }) => {
           const batch = writeBatch(db)
           batch.update(userDocRef, { Contacts: arrayRemove(oldContact) })
           batch.update(userDocRef, {
-            visit: arrayUnion({
+            Contacts: arrayUnion({
               ...newContact
             })
           })
