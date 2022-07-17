@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { SearchIcon } from '@heroicons/react/outline'
 
 import CONTACT_DATA from '@/../mockData/CONTACT_DATA.json'
+import ContactDetails from '@/components/Contact/contactdetails'
 import ContactList from '@/components/Contact/contactlist'
 import Header from '@/components/Header'
 import NavBar from '@/components/NavBar'
@@ -21,12 +22,12 @@ const taglist = [...set]
 const Contact = () => {
   const { userDoc } = useFirestore()
   const allContacts = userDoc.Contacts
+  console.log(allContacts)
   const [filteredContacts, setFilteredContacts] =
     useState<Contact[]>(allContacts)
   const [selectedOption, setSelectedOption] = useState('')
   const [searchFieldString, setSearchFieldString] = useState('')
-  const [displayContact, setDisplayContact] = useState(false)
-
+  const [displayContact, setDisplayContact] = useState<Contact | null>(null)
   function filterContact(includes: string, searchField: string) {
     const filteredContacts = allContacts.filter((contact) => {
       const full_name = contact.displayName
@@ -59,7 +60,7 @@ const Contact = () => {
       {/* <Seo /> */}
       <Header pageTitle='Contact' />
       <main>
-        {!displayContact && (
+        {displayContact === null && (
           <div className='m-auto flex h-14 max-w-md flex-row'>
             <div className='flex-1'></div>
             <h1 className='m-3 flex-1 text-center text-2xl'>Contacts</h1>
@@ -67,7 +68,7 @@ const Contact = () => {
           </div>
         )}
         <div className='m-auto max-w-md'>
-          {!displayContact && (
+          {displayContact === null && (
             <div className='m-2 flex flex-row rounded-xl border-2 border-grey'>
               <SearchTag
                 options={taglist}
@@ -82,11 +83,18 @@ const Contact = () => {
           {/* {searchFieldString === '' && selectedOption === '' && (
             <ProfileItem profile={allContacts[0]} image='' />
           )} */}
-          <ContactList
-            contacts={filteredContacts}
-            setDisplayContact={setDisplayContact}
-            displayContact={displayContact}
-          />
+          {displayContact === null ? (
+            <ContactList
+              contacts={filteredContacts}
+              setDisplayContact={setDisplayContact}
+              displayContact={displayContact}
+            />
+          ) : (
+            <ContactDetails
+              contact={displayContact}
+              setDisplayContact={setDisplayContact}
+            />
+          )}
         </div>
       </main>
       {!displayContact && <NavBar />}

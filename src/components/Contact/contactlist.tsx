@@ -5,15 +5,11 @@ import type { Contact } from '@/types/types'
 
 type ContactsProp = {
   contacts: Contact[]
-  setDisplayContact: Dispatch<SetStateAction<boolean>>
-  displayContact: boolean
+  setDisplayContact: Dispatch<SetStateAction<Contact | null>>
+  displayContact: Contact | null
 }
 
-const ContactList = ({
-  contacts,
-  setDisplayContact,
-  displayContact
-}: ContactsProp) => {
+const ContactList = ({ contacts, setDisplayContact }: ContactsProp) => {
   const contactItems = contacts.map((contact) => {
     return (
       <ContactItem
@@ -21,7 +17,6 @@ const ContactList = ({
         image=''
         key={contact.id}
         setDisplayContact={setDisplayContact}
-        displayContact={displayContact}
       />
     )
   })

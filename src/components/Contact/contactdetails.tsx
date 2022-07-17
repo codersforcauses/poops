@@ -8,7 +8,7 @@ import type { Contact } from '@/types/types'
 
 type ContactProp = {
   contact: Contact
-  setDisplayContact: Dispatch<SetStateAction<boolean>>
+  setDisplayContact: Dispatch<SetStateAction<Contact | null>>
 }
 
 const ContactDetails = ({ contact, setDisplayContact }: ContactProp) => {
@@ -22,7 +22,7 @@ const ContactDetails = ({ contact, setDisplayContact }: ContactProp) => {
           <button
             type='button'
             className='rounded bg-primary py-1 px-4 font-bold text-white hover:bg-dark-red'
-            onClick={() => setDisplayContact(false)}
+            onClick={() => setDisplayContact(null)}
           >
             Back
           </button>
