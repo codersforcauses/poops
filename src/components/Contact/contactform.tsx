@@ -7,6 +7,7 @@ import { v4 as uuidv4 } from 'uuid'
 import Avatar from '@/components/Contact/avatar'
 import RegionSelector from '@/components/Contact/regiondropdown'
 import TagSelector from '@/components/Contact/tagdropdown'
+import { useFirestore } from '@/context/firestore'
 import type { Contact, Pet } from '@/types/types'
 
 type ContactInfoProps = {
@@ -20,6 +21,8 @@ const ContactForm = ({ contact, image, setIsEditing }: ContactInfoProps) => {
   const [regions, setRegions] = useState(contact.region)
   const [tags, setTags] = useState(contact.tags)
   const [contactForm, setContactForm] = useState(contact)
+
+  const { userDoc, updateContact } = useFirestore()
 
   function addPet() {
     const newPetField = {
@@ -74,6 +77,8 @@ const ContactForm = ({ contact, image, setIsEditing }: ContactInfoProps) => {
     e.preventDefault()
     // TODO: submit to firestore here
     setIsEditing(false)
+    userDoc.Contacts
+    updateContact?.(contact, contactForm)
 
     // TODO: reload page here
   }
@@ -94,7 +99,7 @@ const ContactForm = ({ contact, image, setIsEditing }: ContactInfoProps) => {
             Full Name
           </label>
           <input
-            name='display_name'
+            name='displayName'
             defaultValue={contact.displayName}
             className='mb-2 w-80 rounded-lg border border-grey pl-1'
             onChange={handleInputChange}
@@ -142,7 +147,7 @@ const ContactForm = ({ contact, image, setIsEditing }: ContactInfoProps) => {
             Address
           </label>
           <input
-            name='street_address'
+            name='streetAddress'
             defaultValue={contact.streetAddress}
             className='mb-2 w-full rounded-lg border border-grey pl-1'
             onChange={handleInputChange}

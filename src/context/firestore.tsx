@@ -129,11 +129,10 @@ const FirestoreProvider = ({ children }: { children: ReactNode }) => {
         if (currentUser?.uid) {
           const userDocRef = doc(db, USERSDOC, currentUser.uid)
           const batch = writeBatch(db)
-          batch.update(userDocRef, { visit: arrayRemove(oldContact) })
+          batch.update(userDocRef, { Contacts: arrayRemove(oldContact) })
           batch.update(userDocRef, {
             visit: arrayUnion({
-              ...newContact,
-              contactTime: serverTimestamp() as Timestamp
+              ...newContact
             })
           })
           await batch.commit()
