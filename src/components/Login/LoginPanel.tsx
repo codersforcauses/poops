@@ -28,7 +28,12 @@ export interface LoginPanelInterface {
   displayMicrosoft: boolean
 }
 
-const LoginPanel = (props: LoginPanelInterface) => {
+const LoginPanel = ({
+  linkAccount,
+  displayGoogle,
+  displayFacebook,
+  displayMicrosoft
+}: LoginPanelInterface) => {
   const { externalAuthSignIn, linkAuthProvider, currentUser, auth } = useAuth()
 
   const googleIcon = <FontAwesomeIcon icon={faGoogle} />
@@ -40,7 +45,7 @@ const LoginPanel = (props: LoginPanelInterface) => {
   const microsoftProvider = new OAuthProvider('microsoft.com')
 
   function buttonString(providerString: string) {
-    return !props.linkAccount
+    return !linkAccount
       ? 'Continue with ' + providerString
       : 'Link ' + providerString + ' Account'
   }
@@ -50,7 +55,7 @@ const LoginPanel = (props: LoginPanelInterface) => {
     currentUser: User | null,
     provider: AuthProvider
   ) {
-    if (!props.linkAccount) {
+    if (!linkAccount) {
       externalAuthSignIn?.(auth, provider)
     } else {
       if (currentUser !== null) {
@@ -67,7 +72,7 @@ const LoginPanel = (props: LoginPanelInterface) => {
         icon={googleIcon}
         buttonlabel={buttonString('Google')}
         style='h-12 rounded-full border-4 border-t-googleblue border-r-googlegreen border-b-googleyellow border-l-googlered px-6 transition duration-300'
-        display={props.displayGoogle}
+        display={displayGoogle}
       />
 
       {/* FaceBook Button */}
@@ -76,7 +81,7 @@ const LoginPanel = (props: LoginPanelInterface) => {
         icon={facebookIcon}
         buttonlabel={buttonString('Facebook')}
         style='group h-12 rounded-full border-4 border-facebook px-6 transition duration-300'
-        display={props.displayFacebook}
+        display={displayFacebook}
       />
 
       {/* Microsoft Button */}
@@ -85,7 +90,7 @@ const LoginPanel = (props: LoginPanelInterface) => {
         icon={microsoftIcon}
         buttonlabel={buttonString('Microsoft')}
         style='group h-12 rounded-full border-4 border-microsoftblue px-6 transition duration-300'
-        display={props.displayMicrosoft}
+        display={displayMicrosoft}
       />
 
       {/* Phone Button //TODO*/}
