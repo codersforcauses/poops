@@ -25,7 +25,7 @@ const ModalView = ({ toggleModal }: ModalViewProps) => {
   /* eslint-disable unused-imports/no-unused-vars */
   const [notes, setNotes] = useState('')
 
-  const HandleSubmit = (click: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (click: React.FormEvent<HTMLFormElement>) => {
     click.preventDefault()
     const data: VisitData = {
       type: visitType,
@@ -73,7 +73,7 @@ const ModalView = ({ toggleModal }: ModalViewProps) => {
         <h1 className='mx-1 border-b-2 border-primary py-3 pt-10 text-2xl font-bold'>
           Add Your Visit
         </h1>
-        <form className='pt-3' onSubmit={HandleSubmit}>
+        <form className='pt-3' onSubmit={handleSubmit}>
           <table className='container mx-auto table-fixed'>
             <tbody>
               <tr>
