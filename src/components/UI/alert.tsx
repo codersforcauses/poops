@@ -8,14 +8,7 @@ import {
   XIcon
 } from '@heroicons/react/outline'
 
-import { AlertContentProps } from '@/context/AlertContext'
-
-export enum AlertIcon {
-  info,
-  security,
-  critical,
-  comment
-}
+import { AlertContentProps, AlertVariant } from '@/context/AlertContext'
 
 const iconColor = '#000000'
 const titleColor = '#000000'
@@ -60,7 +53,7 @@ const Alert: React.FC<AlertProps> = ({ visible, setVisible, content }) => {
       return
     },
     showFor: 5000, // ms alert will stay open, set to -1 to leave open until button click
-    icon: AlertIcon.info
+    variant: AlertVariant.info
   })
 
   const timerRef = useRef<ReturnType<typeof setTimeout>>()
@@ -71,12 +64,12 @@ const Alert: React.FC<AlertProps> = ({ visible, setVisible, content }) => {
       if (c.text !== '') {
         setContentCache({
           title: c.title,
-          text: c.text, // string[2], first element is tile, second is message
+          text: c.text,
           position: c.position,
           confirmFunction: c.confirmFunction, // function to execute on confirm, enables the confirm function
           cancelFunction: c.cancelFunction,
           showFor: c.showFor, // ms alert will stay open, set to -1 to leave open until button click
-          icon: c.icon
+          variant: c.variant
         })
         setVisible(true)
         if (c.showFor !== -1) {
@@ -109,14 +102,14 @@ const Alert: React.FC<AlertProps> = ({ visible, setVisible, content }) => {
       style={{ boxShadow: shadow }}
     >
       <div className='h-7 w-7'>
-        {contentCache.icon === AlertIcon.info ? (
+        {contentCache.variant === AlertVariant.info ? (
           <InformationCircleIcon className='h-7 w-7' />
-        ) : contentCache.icon === AlertIcon.security ? (
+        ) : contentCache.variant === AlertVariant.security ? (
           <ShieldExclamationIcon className='h-7 w-7' />
-        ) : contentCache.icon === AlertIcon.critical ? (
+        ) : contentCache.variant === AlertVariant.critical ? (
           <ExclamationIcon className='h-7 w-7' />
         ) : (
-          contentCache.icon === AlertIcon.comment && (
+          contentCache.variant === AlertVariant.comment && (
             <AnnotationIcon className='h-7 w-7' />
           )
         )}
@@ -128,14 +121,12 @@ const Alert: React.FC<AlertProps> = ({ visible, setVisible, content }) => {
         <p style={{ color: textColor }}>{contentCache.text}</p>
       </div>
       {typeof contentCache.confirmFunction !== 'undefined' && (
-        // if we have a confirmFunction show confirm button
         <button
-          className='pr-4'
+          className='mr-4'
           onClick={(e) => {
             e.preventDefault()
             setVisible(false)
-            if (typeof contentCache.confirmFunction !== 'undefined')
-              contentCache.confirmFunction()
+            contentCache.confirmFunction()
           }}
         >
           <CheckIcon className='h-5 w-5' stroke={iconColor} />
