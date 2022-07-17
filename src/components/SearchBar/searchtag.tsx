@@ -1,15 +1,19 @@
 type SearchTagProps = {
+  name: string
   options: string[]
   onChangehandler: (event: React.ChangeEvent<HTMLSelectElement>) => void
 }
 
-const SearchTag = ({ options, onChangehandler }: SearchTagProps) => {
+const SearchTag = ({ name, options, onChangehandler }: SearchTagProps) => {
   return (
     <div>
       <select
         onChange={onChangehandler}
-        className='h-10 border-r border-none bg-transparent pr-5 text-sm focus:outline-none'
+        className='h-10 border-r border-none bg-transparent pr-5 text-sm valid:text-black invalid:text-[#9ca3af] focus:outline-none'
       >
+        <option value='' disabled>
+          {name}
+        </option>
         <option value=''>All</option>
         {options.map((o) => {
           return (

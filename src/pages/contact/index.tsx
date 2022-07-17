@@ -35,15 +35,19 @@ const Contact = () => {
       contact.pets.forEach((pet) => {
         pets += pet.name + ' '
       })
+
       if (tagf == '' && typef == '') {
         return full_name.toLocaleLowerCase().includes(searchField)
       }
+
       if (!contact.tags.some((v) => v.includes(tagf))) return false
+
       if (
         !full_name.toLocaleLowerCase().includes(searchField) &&
         typef.toLocaleLowerCase() === 'people'
       )
         return false
+
       if (
         !pets.toLocaleLowerCase().includes(searchField) &&
         typef.toLocaleLowerCase() === 'pets'
@@ -71,7 +75,6 @@ const Contact = () => {
       filterContact(option_value, selectedType, searchFieldString)
     } else {
       setSelectedType(option_value)
-      filterContact(selectedTag, option_value, searchFieldString)
     }
   }
 
@@ -90,10 +93,12 @@ const Contact = () => {
         <div className='m-auto max-w-md'>
           <div className='m-2 flex flex-row rounded-xl border-2 border-gray-300'>
             <SearchTag
+              name='Filter By'
               options={tagfilter}
               onChangehandler={(e) => onSearchTagChange(e, true)}
             />
             <SearchTag
+              name='Search'
               options={typefilter}
               onChangehandler={(e) => onSearchTagChange(e, false)}
             />
@@ -102,9 +107,11 @@ const Contact = () => {
               <SearchIcon className='my-auto mx-2 h-6' />
             </div>
           </div>
-          {searchFieldString === '' && selectedTag === '' && (
-            <ProfileItem profile={PROFILE_DATA} image='' />
-          )}
+          {searchFieldString === '' &&
+            selectedTag === '' &&
+            selectedType === '' && (
+              <ProfileItem profile={PROFILE_DATA} image='' />
+            )}
           <ContactList contacts={filteredContacts} />
         </div>
       </main>
