@@ -1,7 +1,17 @@
+import moment from 'moment'
+
 import { ReportButton, VetConcernButton } from '@/components/Visit/buttons'
 import { VisitData } from '@/types/types'
 
 const ReadOnlyVisitInstance = (props: VisitData) => {
+  const formatDuration = () => {
+    const start = moment(props.startTime)
+    const diff = moment(props.endTime).diff(start)
+    // does not work for durations more than 24 hours
+    const format = moment.utc(diff).format('H [hrs] m [mins]')
+    return format
+  }
+
   return (
     <>
       <div className='font-bold peer-checked:font-normal'>
@@ -11,7 +21,7 @@ const ReadOnlyVisitInstance = (props: VisitData) => {
       <div className='max-h-0 justify-between overflow-hidden text-sm transition-all duration-300 peer-checked:max-h-screen'>
         <p>Visit Type: {props.type}</p>
         <p>Pet/Pets: {props.petNames.join(', ')}</p>
-        <p>endTime: {props.endTime}</p>
+        <p>Duration: {formatDuration()}</p>
         <p>Walk Metres: {props.walkDist.toFixed(3)} km</p>
         <p>Commute Metres: {props.commuteDist.toFixed(1)} km</p>
         <p>Commute Method: {props.commuteMethod}</p>
