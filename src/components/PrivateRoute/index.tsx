@@ -1,7 +1,6 @@
 import React from 'react'
 import { useRouter } from 'next/router'
 
-import { getInitialData } from '@/components/Firebase/init'
 import { useAuth } from '@/context/auth'
 
 export function withPublic(Component: React.ComponentType) {
@@ -26,7 +25,6 @@ export function withProtected(Component: React.ComponentType) {
       router.replace('/login')
       return <h1>Loading...</h1> // TODO make a better looking loading screen?
     }
-    getInitialData()
     return <Component {...props} />
   }
 }

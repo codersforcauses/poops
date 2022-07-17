@@ -1,6 +1,7 @@
 import React from 'react'
 import { useState } from 'react'
 
+import { useFirestore } from '@/context/firestore'
 import { VisitData } from '@/types/types'
 
 import { CancelSymbol } from './buttons'
@@ -12,6 +13,7 @@ interface ModalViewProps {
 }
 
 const ModalView: React.FC<ModalViewProps> = ({ toggleModal }) => {
+  const { userDoc, updateVisit } = useFirestore()
   const [firstName, setFirstName] = useState('')
   const [lastName, setLastName] = useState('')
   const [petNames, setpetNames] = useState<string[]>([])
@@ -23,7 +25,8 @@ const ModalView: React.FC<ModalViewProps> = ({ toggleModal }) => {
   /* eslint-disable unused-imports/no-unused-vars */
   const [notes, setNotes] = useState('')
 
-  const handleSubmit = (click: React.FormEvent<HTMLFormElement>) => {
+  const HandleSubmit = (click: React.FormEvent<HTMLFormElement>) => {
+    click.preventDefault()
     const data: VisitData = {
       displayName: `${firstName} ${lastName}`, // TODO change to displayName
       petNames: petNames,
@@ -35,8 +38,8 @@ const ModalView: React.FC<ModalViewProps> = ({ toggleModal }) => {
       notes: notes
     }
     // TODO update visit data
-    // updateUserData(data)
-    click.preventDefault()
+    userDoc.visits.push(data)
+    updateVisit?.(userDoc)
   }
 
   const isSubmitDisabled = () =>
@@ -61,7 +64,7 @@ const ModalView: React.FC<ModalViewProps> = ({ toggleModal }) => {
         <h1 className='mx-1 border-b-2 border-primary py-3 pt-10 text-2xl font-bold'>
           Add Your Visit
         </h1>
-        <form className='pt-3' onSubmit={handleSubmit}>
+        <form className='pt-3' onSubmit={HandleSubmit}>
           <table className='container mx-auto table-fixed'>
             <tbody>
               <tr>
