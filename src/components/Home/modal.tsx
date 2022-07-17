@@ -43,31 +43,13 @@ function Modal() {
         </button>
       )}
 
-      <div className='text-center'>
-        {/* If modal is opened, display stop button */}
-        {formIsFilled() && (
-          <button
-            className='text-l relative h-[30px] w-[120px] rounded-lg bg-dark-red font-semibold text-white'
-            onClick={() => {
-              setModalOpen(false),
-                setWalkDistance(0),
-                setOther(''),
-                setCommuteDistance(0)
-            }}
-          >
-            STOP VISIT
-          </button>
-        )}
-      </div>
-
       {/* Displays modal */}
       {modalIsOpen && (
         <div
           className='rounded-lg p-3 py-2 px-5 text-center shadow-lg sm:py-4'
           style={{
             padding: 25,
-            background: '#F9F9F9',
-            width: 500
+            background: '#F9F9F9'
           }}
         >
           <h1 style={{ fontSize: 20, color: '#a52a2a' }}>
@@ -136,6 +118,24 @@ function Modal() {
         </div>
       )}
       <br />
+      <div className='text-center'>
+        {/* If modal is opened, display cancel button. Once all information has been filled display stop button*/}
+        {modalIsOpen && (
+          <button
+            className='text-l relative h-[30px] w-[120px] rounded-lg bg-dark-red font-semibold text-white'
+            onClick={() => {
+              setModalOpen(false),
+                setPets([]),
+                setType(''),
+                setWalkDistance(0),
+                setOther(''),
+                setCommuteDistance(0)
+            }}
+          >
+            {formIsFilled() ? 'STOP VISIT' : 'CANCEL'}
+          </button>
+        )}
+      </div>
     </div>
   )
 }
