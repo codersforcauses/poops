@@ -15,8 +15,8 @@ export interface VisitData {
   type: string
   displayName: string
   petNames: string[]
-  dateTime: string
-  duration: string
+  startTime: string
+  endTime: string
   walkDist: number
   commuteDist: number
   commuteMethod: string

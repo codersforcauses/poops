@@ -6,7 +6,12 @@ import { useFirestore } from '@/context/firestore'
 import { VisitData } from '@/types/types'
 
 import CommuteSelector from './commuteselector'
-import FormField from './formfield'
+import FormField, { SelectOption } from './formfield'
+
+const visitSelectOptions: SelectOption[] = [
+  { label: 'Vet', value: 'Vet' },
+  { label: 'Walk', value: 'Walk' }
+]
 
 interface ModalViewProps {
   toggleModal: () => void
@@ -17,8 +22,8 @@ const ModalView = ({ toggleModal }: ModalViewProps) => {
   const [visitType, setVisitType] = useState('')
   const [displayName, setDisplayName] = useState('')
   const [petNames, setPetNames] = useState<string[]>([])
-  const [dateTime, setDateTime] = useState('')
-  const [duration, setDuration] = useState('')
+  const [startTime, setStartTime] = useState('')
+  const [endTime, setEndTime] = useState('')
   const [walkDist, setWalkDist] = useState(0)
   const [commuteDist, setCommuteDist] = useState(0)
   const [commuteMethod, setCommuteMethod] = useState('')
@@ -31,8 +36,8 @@ const ModalView = ({ toggleModal }: ModalViewProps) => {
       type: visitType,
       displayName: displayName, // TODO change to displayName
       petNames: petNames,
-      dateTime: dateTime,
-      duration: duration,
+      startTime: startTime,
+      endTime: endTime,
       walkDist: walkDist,
       commuteDist: commuteDist,
       commuteMethod: commuteMethod,
@@ -47,8 +52,8 @@ const ModalView = ({ toggleModal }: ModalViewProps) => {
     visitType &&
     displayName &&
     petNames &&
-    dateTime &&
-    duration &&
+    startTime &&
+    endTime &&
     walkDist &&
     commuteDist &&
     commuteMethod
@@ -64,7 +69,7 @@ const ModalView = ({ toggleModal }: ModalViewProps) => {
   return (
     <div className='z-50 p-4'>
       <>
-        <div className='fixed right-5 top-4 h-10 w-10 rounded-full bg-primary p-1 drop-shadow-default'>
+        <div className='fixed right-5 top-4 z-[100] h-10 w-10 rounded-full bg-primary p-1 drop-shadow-default'>
           <button onClick={toggleModal}>
             <XIcon className='h-full w-full text-white' />
           </button>
@@ -82,8 +87,9 @@ const ModalView = ({ toggleModal }: ModalViewProps) => {
                   <FormField
                     id='visitTypeInput'
                     type='select'
-                    placeholder='Visit Type'
+                    placeholder='Select...'
                     label='Visit Type:'
+                    selectOptions={visitSelectOptions}
                     isRequired={true}
                     onChange={(event) => setVisitType(event.target.value)}
                   />
@@ -151,20 +157,20 @@ const ModalView = ({ toggleModal }: ModalViewProps) => {
             </tbody>
           </table>
           <FormField
-            id='dateTimeInput'
-            type='datetime-local'
-            placeholder='Date'
-            label='Date:'
+            id='startTimeInput'
+            type='dateTime-local'
+            placeholder='Start Time'
+            label='Start Time:'
             isRequired={true}
-            onChange={(event) => setDateTime(event.target.value)}
+            onChange={(event) => setStartTime(event.target.value)}
           />
           <FormField
-            id='durationInput'
-            type='time'
-            placeholder='Duration'
-            label='Duration:'
+            id='endTimeInput'
+            type='dateTime-local'
+            placeholder='End Time'
+            label='End Time:'
             isRequired={true}
-            onChange={(event) => setDuration(event.target.value)}
+            onChange={(event) => setEndTime(event.target.value)}
           />
           <FormField
             id='notesInput'

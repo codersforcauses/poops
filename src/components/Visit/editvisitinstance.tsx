@@ -13,10 +13,10 @@ function NumberForm(value: string) {
 const EditableVisitInstance = (props: VisitData) => {
   const { userDoc, updateVisit } = useFirestore()
   const [displayName, setDisplayName] = useState(props.displayName)
-  const [dateTime, setDateTime] = useState(props.dateTime)
   const [petNames, setpetNames] = useState(props.petNames)
+  const [startTime, setStartTime] = useState(props.startTime)
+  const [endTime, setEndTime] = useState(props.endTime)
   const [walkDist, setWalkDist] = useState(props.walkDist)
-  const [duration, setDuration] = useState(props.duration)
   const [commuteDist, setCommuteDist] = useState(props.commuteDist)
   const [commuteMethod, setCommuteMethod] = useState(props.commuteMethod)
   const [notes, setNotes] = useState(props.notes)
@@ -40,9 +40,9 @@ const EditableVisitInstance = (props: VisitData) => {
     >
       <div className='font-bold peer-checked:font-normal'>
         <input
-          placeholder='Date'
-          value={dateTime}
-          onChange={(event) => setDateTime(event.target.value)}
+          placeholder='Start Time'
+          value={startTime}
+          onChange={(event) => setStartTime(event.target.value)}
           className='bg-gray font-normal text-primary'
         />
         <div>
@@ -66,13 +66,13 @@ const EditableVisitInstance = (props: VisitData) => {
         />
       </p>
       <p className='text-sm'>
-        Duration:{' '}
+        End Time:{' '}
         <input
           size={8}
           className='bg-gray text-primary'
           placeholder='Duration'
-          value={duration}
-          onChange={(event) => setDuration(event.target.value)}
+          value={endTime}
+          onChange={(event) => setEndTime(event.target.value)}
         />
       </p>
       <p className='text-sm'>
