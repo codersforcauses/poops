@@ -39,6 +39,7 @@ const VisitInstance = (props: VisitInstanceProps) => {
           />
           {isEditable ? (
             <EditableVisitInstance
+              isEdit={setIsEditable}
               set={props.set}
               id={props.id}
               key={props.id}

@@ -1,8 +1,12 @@
-import React, { useState } from 'react'
+import React, { Dispatch, useState } from 'react'
 
 import { VisitInstanceProps } from '@/components/Visit/visitinstance'
 import { useFirestore } from '@/context/firestore'
 import { VisitData } from '@/types/types'
+
+interface EditVisitInstanceProps extends VisitInstanceProps {
+  isEdit: Dispatch<React.SetStateAction<boolean>>
+}
 
 function NumberForm(value: string) {
   if (isNaN(parseFloat(value))) {
@@ -11,8 +15,9 @@ function NumberForm(value: string) {
   return parseFloat(value)
 }
 
-const EditableVisitInstance = (props: VisitInstanceProps) => {
+const EditableVisitInstance = (props: EditVisitInstanceProps) => {
   const { userDoc, updateVisit } = useFirestore()
+  const [visitType, setVisitType] = useState(props.type)
   const [displayName, setDisplayName] = useState(props.displayName)
   const [petNames, setpetNames] = useState(props.petNames)
   const [startTime, setStartTime] = useState(props.startTime)
@@ -25,18 +30,23 @@ const EditableVisitInstance = (props: VisitInstanceProps) => {
   return (
     <form
       onSubmit={(event) => {
-        // const data: VisitData = {
-        //   displayName: displayName,
-        //   petNames: petNames,
-        //   dateTime: dateTime,
-        //   duration: duration,
-        //   walkDist: walkDist,
-        //   commuteDist: commuteDist,
-        //   commuteMethod: commuteMethod,
-        //   notes: notes
-        // }
-        // updateVisitData(data)
+        const visit: VisitData = {
+          type: visitType,
+          displayName: displayName,
+          petNames: petNames,
+          startTime: startTime,
+          endTime: endTime,
+          walkDist: walkDist,
+          commuteDist: commuteDist,
+          commuteMethod: commuteMethod,
+          notes: notes
+        }
+        userDoc.visits[props.id] = visit
+        const temp: VisitData[] = [...userDoc.visits] //temp needed for react to rerender
+        props.set(temp)
+        updateVisit?.(userDoc)
         event.preventDefault()
+        props.isEdit(false)
       }}
     >
       <div className='font-bold peer-checked:font-normal'>
@@ -56,6 +66,16 @@ const EditableVisitInstance = (props: VisitInstanceProps) => {
           />
         </div>
       </div>
+      <p className='text-sm'>
+        Visit Type:{' '}
+        <input
+          size={8}
+          className='bg-gray text-primary'
+          placeholder='Type'
+          value={visitType}
+          onChange={(event) => setVisitType(event.target.value)} // TODO make this more friendly input
+        />
+      </p>{' '}
       <p className='text-sm'>
         Pet/Pets:{' '}
         <input
@@ -127,11 +147,6 @@ const EditableVisitInstance = (props: VisitInstanceProps) => {
       <button
         type='submit'
         className='text-bold mt-2 rounded-xl bg-primary p-2 text-white drop-shadow-default active:bg-dark-red'
-        onClick={() =>
-          setTimeout(() => {
-            window.location.reload()
-          }, 125)
-        }
       >
         Submit
       </button>
