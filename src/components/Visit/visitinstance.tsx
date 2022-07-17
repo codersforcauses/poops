@@ -45,8 +45,8 @@ const VisitInstance = (props: VisitInstanceProps) => {
               type={props.type}
               displayName={props.displayName}
               petNames={props.petNames}
-              duration={props.duration}
-              dateTime={props.dateTime}
+              endTime={props.endTime}
+              startTime={props.startTime}
               walkDist={props.walkDist}
               commuteDist={props.commuteDist}
               commuteMethod={props.commuteMethod}

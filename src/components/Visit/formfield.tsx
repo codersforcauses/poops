@@ -8,7 +8,13 @@ export interface FormFieldProps {
       HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
     >
   ) => void
+  selectOptions?: SelectOption[]
   isRequired: boolean
+}
+
+export interface SelectOption {
+  label: string
+  value: string
 }
 
 const FormField = (props: FormFieldProps) => {
@@ -42,9 +48,12 @@ const inputSwitch = (props: FormFieldProps) => {
           required={props.isRequired}
           onChange={props.onChange}
         >
-          <option value=''></option> {/* :^) */}
-          <option value='Vet'>Vet</option>
-          <option value='Walk'>Walk</option>
+          <option value=''>{props.placeholder}</option>
+          {props.selectOptions?.map((o, i) => (
+            <option key={i} value={o.value}>
+              {o.label}
+            </option>
+          ))}
         </select>
       )
     default:

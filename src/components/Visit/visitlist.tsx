@@ -12,8 +12,8 @@ const VisitList = (props: VisitListProps) => {
       type: 'Vet',
       displayName: 'Henry Smith',
       petNames: ['Chonk', 'Biscuit'],
-      dateTime: '12/06/2003',
-      duration: '122',
+      startTime: '12/06/2003T12:07',
+      endTime: '13/06/2003T08:02',
       walkDist: 23,
       commuteDist: 124,
       commuteMethod: 'Car',
@@ -50,8 +50,8 @@ const VisitList = (props: VisitListProps) => {
             type={post.type}
             displayName={post.displayName}
             petNames={post.petNames}
-            duration={post.duration}
-            dateTime={post.dateTime}
+            endTime={post.endTime}
+            startTime={post.startTime}
             walkDist={post.walkDist}
             commuteDist={post.commuteDist}
             commuteMethod={post.commuteMethod}
