@@ -7,10 +7,8 @@ import { AddButton } from '@/components/Visit/buttons'
 import Modal from '@/components/Visit/modal'
 import SearchBar from '@/components/Visit/searchbar'
 import VisitList from '@/components/Visit/visitlist'
-import { useFirestore } from '@/context/firestore'
 
 const Visit = () => {
-  const { userDoc } = useFirestore()
   const [searchQuery, setSearchQuery] = useState('')
   const [isModalOpen, setIsModalOpen] = useState(false)
   const toggleModal = () => setIsModalOpen(!isModalOpen)
@@ -28,7 +26,7 @@ const Visit = () => {
                 <AddButton toggleModal={toggleModal} />
               </div>
 
-              <VisitList visits={userDoc.visits} searchQuery={searchQuery} />
+              <VisitList searchQuery={searchQuery} />
             </div>
           ) : (
             <Modal toggleModal={toggleModal} />

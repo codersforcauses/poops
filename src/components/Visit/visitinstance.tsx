@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { Dispatch, SetStateAction, useState } from 'react'
 import ChevronDownIcon from '@heroicons/react/outline/ChevronDownIcon'
 
 import { VisitData } from '@/types/types'
@@ -7,7 +7,8 @@ import { EditButton } from './buttons'
 import EditableVisitInstance from './editvisitinstance'
 import ReadOnlyVisitInstance from './readvisitinstance'
 
-interface VisitInstanceProps extends VisitData {
+export interface VisitInstanceProps extends VisitData {
+  set: Dispatch<SetStateAction<VisitData[]>>
   id: number
 }
 
@@ -38,6 +39,8 @@ const VisitInstance = (props: VisitInstanceProps) => {
           />
           {isEditable ? (
             <EditableVisitInstance
+              set={props.set}
+              id={props.id}
               key={props.id}
               type={props.type}
               displayName={props.displayName}

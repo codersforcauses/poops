@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-import { useFirestore } from '@/context/firestore'
+import { VisitInstanceProps } from '@/components/Visit/visitinstance'
 import { VisitData } from '@/types/types'
 
 function NumberForm(value: string) {
@@ -10,8 +10,7 @@ function NumberForm(value: string) {
   return parseFloat(value)
 }
 
-const EditableVisitInstance = (props: VisitData) => {
-  const { userDoc, updateVisit } = useFirestore()
+const EditableVisitInstance = (props: VisitInstanceProps) => {
   const [displayName, setDisplayName] = useState(props.displayName)
   const [petNames, setpetNames] = useState(props.petNames)
   const [startTime, setStartTime] = useState(props.startTime)
@@ -138,8 +137,9 @@ const EditableVisitInstance = (props: VisitData) => {
         type='button'
         className='text-bold mt-2 ml-4 rounded-xl bg-primary p-1 text-white drop-shadow-default active:bg-dark-red'
         onClick={() => {
-          userDoc.visits.pop() //temp to delete last item
-          updateVisit?.(userDoc)
+          const test: VisitData[] = []
+          props.set(test)
+          // updateVisit?.(userDoc)
         }}
       >
         Remove

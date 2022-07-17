@@ -1,13 +1,21 @@
+import { useEffect, useState } from 'react'
+
+import { useFirestore } from '@/context/firestore'
 import { VisitData } from '@/types/types'
 
 import VisitInstance from './visitinstance'
 
 interface VisitListProps {
-  visits: VisitData[]
   searchQuery: string
 }
 
 export const VisitList = (props: VisitListProps) => {
+  const { userDoc } = useFirestore()
+  const [visits, setVisits] = useState(userDoc.visits)
+  useEffect(() => {
+    setVisits(userDoc.visits)
+  }, [userDoc.visits])
+
   // const [visitData, setVisitData] = useState<VisitData[]>([])
   // TODO split display name for better searching
   const matchesDisplayName = (post: VisitData) =>
@@ -23,7 +31,7 @@ export const VisitList = (props: VisitListProps) => {
 
   return (
     <div className=''>
-      {props.visits
+      {visits
         .filter((post: VisitData) => {
           if (props.searchQuery === '' || matchesSearchTerms(post)) {
             return post
@@ -31,6 +39,7 @@ export const VisitList = (props: VisitListProps) => {
         })
         .map((post, index) => (
           <VisitInstance
+            set={setVisits}
             key={index}
             type={post.type}
             id={index}
