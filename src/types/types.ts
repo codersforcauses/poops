@@ -1,3 +1,4 @@
+//local variables to be passed around the app
 export interface Pet {
   id: string
   name: string

@@ -1,16 +1,14 @@
-import { useFirestore } from '@/context/firestore'
 import { VisitData } from '@/types/types'
 
 import VisitInstance from './visitinstance'
 
 interface VisitListProps {
+  visits: VisitData[]
   searchQuery: string
 }
 
-const VisitList = (props: VisitListProps) => {
+export const VisitList = (props: VisitListProps) => {
   // const [visitData, setVisitData] = useState<VisitData[]>([])
-  const { userDoc } = useFirestore()
-
   // TODO split display name for better searching
   const matchesDisplayName = (post: VisitData) =>
     post.displayName.toLowerCase().includes(props.searchQuery.toLowerCase())
@@ -25,7 +23,7 @@ const VisitList = (props: VisitListProps) => {
 
   return (
     <div className=''>
-      {userDoc.visits
+      {props.visits
         .filter((post: VisitData) => {
           if (props.searchQuery === '' || matchesSearchTerms(post)) {
             return post

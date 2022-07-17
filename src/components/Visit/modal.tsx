@@ -53,6 +53,14 @@ const ModalView = ({ toggleModal }: ModalViewProps) => {
     commuteDist &&
     commuteMethod
 
+  const closeModal = () => {
+    if (isSubmitEnabled()) {
+      setTimeout(() => {
+        toggleModal()
+      }, 10) //ensure form gets completed
+    }
+  }
+
   return (
     <div className='z-50 p-4'>
       <>
@@ -170,6 +178,7 @@ const ModalView = ({ toggleModal }: ModalViewProps) => {
             <button
               className='text-bold rounded bg-primary px-12 py-4 text-white drop-shadow-default active:bg-dark-red'
               type='submit'
+              onClick={closeModal}
               disabled={!isSubmitEnabled}
             >
               Submit

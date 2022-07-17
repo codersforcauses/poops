@@ -19,7 +19,7 @@ interface FirebaseContextProps {
   logOut?: () => void
   currentUser?: User | null
 }
-
+//set auth and current user as a context api to be called by other funcs
 const authContext = createContext<FirebaseContextProps>({
   auth: auth,
   currentUser: null
@@ -44,7 +44,7 @@ export const AuthContextProvider = ({
         return error
       })
   }
-
+  //get the auth results when logging in with google
   function getGoogleResults(auth: Auth) {
     getRedirectResult(auth)
       .then((result) => {
@@ -67,7 +67,7 @@ export const AuthContextProvider = ({
         // const credential = GoogleAuthProvider.credentialFromError(error);
       })
   }
-
+  //to log out curremt user
   function logOut() {
     signOut(auth)
       .then((result) => {
@@ -77,7 +77,7 @@ export const AuthContextProvider = ({
         return error
       })
   }
-
+  //set the current user to the user retrieved from the login
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       setCurrentUser(user)
