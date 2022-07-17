@@ -25,7 +25,7 @@ function PetSelector({ setPets }: Props) {
   }
 
   return (
-    <div>
+    <div className='flex flex-col p-1'>
       <label htmlFor='pets'>
         <span className='text-primary'>*</span>
         Select Pets

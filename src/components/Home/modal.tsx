@@ -63,7 +63,6 @@ function Modal() {
               height: '1.5px'
             }}
           />
-          <br />
 
           {/* Visit Form */}
           <form style={{ fontSize: 16 }}>
@@ -76,11 +75,9 @@ function Modal() {
               isRequired={true}
               onChange={(e) => setCommuteDistance(Number(e.target.value))}
             />
-            <br />
 
             {/* Commute Selector Form */}
             <CommuteSelector commute={commute} setCommute={setCommute} />
-            <br />
 
             {/* Other Form if commute is 'Other' */}
             {commute == 'Other' && (
@@ -93,15 +90,12 @@ function Modal() {
                 onChange={(e) => setOther(String(e.target.value))}
               />
             )}
-            <br />
 
             {/* Pet Selector Form */}
             <PetSelector pets={pets} setPets={setPets} />
-            <br />
 
             {/* Type Selector Form */}
             <TypeSelector type={type} setType={setType} />
-            <br />
 
             {/* Distance Form if type is 'Walk' */}
             {type == 'Walk' && (
@@ -127,6 +121,7 @@ function Modal() {
               setModalOpen(false),
                 setPets([]),
                 setType(''),
+                setCommute(''),
                 setWalkDistance(0),
                 setOther(''),
                 setCommuteDistance(0)

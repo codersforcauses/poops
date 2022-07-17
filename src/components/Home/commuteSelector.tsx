@@ -27,7 +27,7 @@ function CommuteSelector({ setCommute }: Props) {
   }
 
   return (
-    <div>
+    <div className='flex flex-col p-1'>
       <label htmlFor='commute'>
         <span className='text-primary'>*</span>Commute Method
       </label>

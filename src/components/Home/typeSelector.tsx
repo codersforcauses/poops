@@ -25,7 +25,7 @@ function TypeSelector({ setType }: Props) {
   }
 
   return (
-    <div>
+    <div className='flex flex-col p-1'>
       <label htmlFor='type'>
         <span className='text-primary'>*</span>Type of Visit
       </label>

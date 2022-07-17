@@ -23,6 +23,10 @@ function TextForm(props: FormFieldProps) {
         required={props.isRequired}
         placeholder={props.placeholder}
         onChange={props.onChange}
+        style={{
+          height: '35px',
+          textAlign: 'center'
+        }}
       />
     </div>
   )
