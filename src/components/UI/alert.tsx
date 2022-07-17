@@ -126,7 +126,8 @@ const Alert: React.FC<AlertProps> = ({ visible, setVisible, content }) => {
           onClick={(e) => {
             e.preventDefault()
             setVisible(false)
-            contentCache.confirmFunction()
+            if (typeof contentCache.confirmFunction !== 'undefined')
+              contentCache.confirmFunction()
           }}
         >
           <CheckIcon className='h-5 w-5' stroke={iconColor} />
