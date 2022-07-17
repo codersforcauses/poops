@@ -7,7 +7,6 @@ import { v4 as uuidv4 } from 'uuid'
 import Avatar from '@/components/Contact/avatar'
 import RegionSelector from '@/components/Contact/regiondropdown'
 import TagSelector from '@/components/Contact/tagdropdown'
-import { useFirestore } from '@/context/firestore'
 import type { Contact, Pet } from '@/types/types'
 
 type ContactInfoProps = {
@@ -22,7 +21,7 @@ const ContactForm = ({ contact, image, setIsEditing }: ContactInfoProps) => {
   const [tags, setTags] = useState(contact.tags)
   const [contactForm, setContactForm] = useState(contact)
 
-  const { userDoc, updateContact } = useFirestore()
+  //const { userDoc, updateContact } = useFirestore()
 
   function addPet() {
     const newPetField = {
@@ -77,8 +76,8 @@ const ContactForm = ({ contact, image, setIsEditing }: ContactInfoProps) => {
     e.preventDefault()
     // TODO: submit to firestore here
     setIsEditing(false)
-    userDoc.Contacts
-    updateContact?.(contact, contactForm)
+    //userDoc.Contacts
+    //updateContact?.(contactForm)
 
     // TODO: reload page here
   }
@@ -160,14 +159,12 @@ const ContactForm = ({ contact, image, setIsEditing }: ContactInfoProps) => {
           </label>
 
           <TagSelector tags={contact.tags} setTags={setTags} />
-
-          {/* This should be done as a react component i think? */}
           {/* Padding to counter the shadow */}
           <div className='pt-2'></div>
         </Box>
         {/* REGIONS */}
         <Box className='pb-3'>
-          <label htmlFor='regions' className='text-dark-red'>
+          <label htmlFor='region' className='text-dark-red'>
             Region
           </label>
           <RegionSelector regions={contact.region} setRegions={setRegions} />

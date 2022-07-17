@@ -16,6 +16,7 @@ import {
   serverTimestamp,
   setDoc,
   Timestamp,
+  updateDoc,
   writeBatch
 } from 'firebase/firestore'
 
@@ -51,7 +52,7 @@ const defaultUserDoc: UserDocProp = {
 interface FirestoreContextProps {
   userDoc: UserDocProp
   updateVisit?: (oldVisit: VisitProp, newVisit: VisitProp) => void
-  updateContact?: (oldContact: Contact, newContact: Contact) => void
+  updateContact?: (userDoc: UserDocProp) => void
 }
 
 const FirestoreContext = createContext<FirestoreContextProps>({
@@ -121,21 +122,14 @@ const FirestoreProvider = ({ children }: { children: ReactNode }) => {
     [currentUser]
   )
   const updateContact = useCallback(
-    async (oldContact: Contact, newContact: Contact) => {
+    async (user: UserDocProp) => {
       // setAchievementsCount((prev) => ({
       //   count: prev.count + newAchievementsEarned
       // }))
       try {
         if (currentUser?.uid) {
           const userDocRef = doc(db, USERSDOC, currentUser.uid)
-          const batch = writeBatch(db)
-          batch.update(userDocRef, { Contacts: arrayRemove(oldContact) })
-          batch.update(userDocRef, {
-            Contacts: arrayUnion({
-              ...newContact
-            })
-          })
-          await batch.commit()
+          await updateDoc(userDocRef, 'Contacts', user.Contacts)
         }
       } catch (err: unknown) {
         //#region  //*=========== For logging ===========
