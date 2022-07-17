@@ -36,8 +36,8 @@ export const VisitList = (props: VisitListProps) => {
             id={index}
             displayName={post.displayName}
             petNames={post.petNames}
-            duration={post.duration}
-            dateTime={post.dateTime}
+            startTime={post.startTime}
+            endTime={post.endTime}
             walkDist={post.walkDist}
             commuteDist={post.commuteDist}
             commuteMethod={post.commuteMethod}
