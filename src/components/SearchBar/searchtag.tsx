@@ -8,7 +8,7 @@ const SearchTag = ({ options, onChangehandler }: SearchTagProps) => {
     <div>
       <select
         onChange={onChangehandler}
-        className='h-10 border-r border-none bg-transparent pr-10 text-sm focus:outline-none'
+        className='h-10 border-r border-none bg-transparent pr-5 text-sm focus:outline-none'
       >
         <option value=''>All</option>
         {options.map((o) => {
