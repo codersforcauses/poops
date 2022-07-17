@@ -1,71 +1,60 @@
 import React from 'react'
-import { useState } from 'react'
+import { PencilIcon, PlusIcon, XIcon } from '@heroicons/react/solid'
 
-import Modal from './modal'
-
-export const EditButton = (prop: { isEdit: boolean }) => {
-  if (prop.isEdit) {
-    return <CancelSymbol />
-  }
-  return <EditSymbol />
+interface EditButtonProps {
+  isEditable: boolean
+  setIsEditable: (arg: boolean) => void
 }
 
-export const AddButton = () => {
-  const [openModal, setOpenModal] = useState(false)
-  const toggleModal = () => setOpenModal(!openModal)
-
+export const EditButton = (props: EditButtonProps) => {
   return (
-    // slightly less awful fix
-    <div className='relative top-[3px]'>
+    <div className='invisible absolute right-4 bottom-1 h-8 w-8 rounded-full bg-primary p-1 drop-shadow-default transition-all peer-checked:visible'>
       <button
         type='button'
         onClick={() => {
-          setOpenModal(true)
+          props.setIsEditable(!props.isEditable)
         }}
       >
-        <div className='relative h-[37px] w-[37px] rounded-full bg-primary text-xl font-semibold drop-shadow-default'>
-          <p className='absolute left-[6px] bottom-[2.6px] text-4xl font-bold text-white'>
-            +
-          </p>
-        </div>
+        {props.isEditable ? (
+          <XIcon className='h-full w-full text-white' />
+        ) : (
+          <PencilIcon className='h-full w-full text-white' />
+        )}
       </button>
-      {openModal && <Modal toggleModal={toggleModal} />}
     </div>
   )
 }
 
-const EditSymbol = () => {
+interface AddButtonProps {
+  toggleModal: () => void
+}
+
+export const AddButton = ({ toggleModal }: AddButtonProps) => {
   return (
-    <svg
-      xmlns='http://www.w3.org/2000/svg'
-      className='absolute right-0.5 bottom-0.5 h-6 w-6'
-      fill='white'
-      viewBox='0 0 24 24'
-      stroke='currentColor'
-      strokeWidth='1'
-    >
-      <path
-        strokeLinecap='round'
-        strokeLinejoin='round'
-        d='M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z'
-      />
-    </svg>
+    <div className='align-center flex h-10 w-10 place-items-center self-center rounded-full bg-primary p-1 drop-shadow-default'>
+      <button type='button' onClick={() => toggleModal()}>
+        <PlusIcon className='flex h-full w-full self-center text-white' />
+      </button>
+    </div>
   )
 }
 
-export const CancelSymbol = () => {
+export const VetConcernButton = () => {
   return (
-    <svg
-      xmlns='http://www.w3.org/2000/svg'
-      className='absolute right-0.5 bottom-0.5 h-6 w-6'
-      viewBox='0 0 20 20'
-      fill='white'
-    >
-      <path
-        fillRule='evenodd'
-        d='M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z'
-        clipRule='evenodd'
-      />
-    </svg>
+    <div className='align-center flex flex-row justify-center rounded-md bg-primary p-2 text-center text-xs font-bold text-white drop-shadow-default'>
+      <button>
+        REGISTER <br /> VET CONCERN
+      </button>
+    </div>
+  )
+}
+
+export const ReportButton = () => {
+  return (
+    <div className='align-center flex flex-row justify-center rounded-md bg-primary p-2 text-center text-xs font-bold text-white drop-shadow-default'>
+      <button>
+        REPORT <br /> INCIDENT
+      </button>
+    </div>
   )
 }

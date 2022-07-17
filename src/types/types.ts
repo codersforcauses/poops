@@ -11,6 +11,7 @@ export interface UserData {
 }
 
 export interface VisitData {
+  type: string
   displayName: string
   petNames: string[]
   dateTime: string

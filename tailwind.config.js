@@ -5,7 +5,6 @@ const colors = require('tailwindcss/colors')
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
-    './src/**/*.{html,js,jsx,ts,tsx}',
     './src/pages/**/*.{js,ts,jsx,tsx}',
     './src/components/**/*.{js,ts,jsx,tsx}'
   ],
@@ -16,6 +15,7 @@ module.exports = {
       transparent: 'transparent',
       current: 'currentColor',
       gray: colors.gray,
+      cream: '#f9f9f9',
       white: '#ffffff',
       black: '#000000',
       facebook: '#4267B2',
@@ -27,7 +27,6 @@ module.exports = {
       applegrey: '#A2AAAD',
       microsoftblue: '#00A4EF',
       yahoopurple: '#430297',
-      gray: '#f9f9f9',
       'dark-gray': '#7B7B7B',
       'zinc-200': '#F2F2F2',
       'zinc-300': '#D9D9D9',

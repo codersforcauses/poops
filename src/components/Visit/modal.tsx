@@ -1,10 +1,10 @@
 import React from 'react'
 import { useState } from 'react'
+import { XIcon } from '@heroicons/react/solid'
 
 import { useFirestore } from '@/context/firestore'
 import { VisitData } from '@/types/types'
 
-import { CancelSymbol } from './buttons'
 import CommuteSelector from './commuteselector'
 import FormField from './formfield'
 
@@ -12,11 +12,11 @@ interface ModalViewProps {
   toggleModal: () => void
 }
 
-const ModalView: React.FC<ModalViewProps> = ({ toggleModal }) => {
+const ModalView = ({ toggleModal }: ModalViewProps) => {
   const { userDoc, updateVisit } = useFirestore()
-  const [firstName, setFirstName] = useState('')
-  const [lastName, setLastName] = useState('')
-  const [petNames, setpetNames] = useState<string[]>([])
+  const [visitType, setVisitType] = useState('')
+  const [displayName, setDisplayName] = useState('')
+  const [petNames, setPetNames] = useState<string[]>([])
   const [dateTime, setDateTime] = useState('')
   const [duration, setDuration] = useState('')
   const [walkDist, setWalkDist] = useState(0)
@@ -28,7 +28,8 @@ const ModalView: React.FC<ModalViewProps> = ({ toggleModal }) => {
   const HandleSubmit = (click: React.FormEvent<HTMLFormElement>) => {
     click.preventDefault()
     const data: VisitData = {
-      displayName: `${firstName} ${lastName}`, // TODO change to displayName
+      type: visitType,
+      displayName: displayName, // TODO change to displayName
       petNames: petNames,
       dateTime: dateTime,
       duration: duration,
@@ -42,9 +43,9 @@ const ModalView: React.FC<ModalViewProps> = ({ toggleModal }) => {
     updateVisit?.(userDoc)
   }
 
-  const isSubmitDisabled = () =>
-    firstName &&
-    lastName &&
+  const isSubmitEnabled = () =>
+    visitType &&
+    displayName &&
     petNames &&
     dateTime &&
     duration &&
@@ -53,11 +54,11 @@ const ModalView: React.FC<ModalViewProps> = ({ toggleModal }) => {
     commuteMethod
 
   return (
-    <div className='fixed inset-0 z-50 h-screen w-screen rounded-sm bg-white p-4 shadow '>
-      <div>
-        <div className='fixed right-2 top-2 h-7 w-7 rounded-full bg-primary'>
+    <div className='z-50 p-4'>
+      <>
+        <div className='fixed right-5 top-4 h-10 w-10 rounded-full bg-primary p-1 drop-shadow-default'>
           <button onClick={toggleModal}>
-            <CancelSymbol />
+            <XIcon className='h-full w-full text-white' />
           </button>
         </div>
 
@@ -69,23 +70,24 @@ const ModalView: React.FC<ModalViewProps> = ({ toggleModal }) => {
             <tbody>
               <tr>
                 <td>
+                  {/* could rewrite to use awful react-select to make chevron icon consistent */}
                   <FormField
-                    id='firstNameInput'
-                    type='text'
-                    placeholder='First Name'
-                    label='First Name:'
+                    id='visitTypeInput'
+                    type='select'
+                    placeholder='Visit Type'
+                    label='Visit Type:'
                     isRequired={true}
-                    onChange={(event) => setFirstName(event.target.value)}
+                    onChange={(event) => setVisitType(event.target.value)}
                   />
                 </td>
                 <td>
                   <FormField
-                    id='lastNameInput'
+                    id='displayNameInput'
                     type='text'
-                    placeholder='Last Name'
-                    label='Last Name:'
+                    placeholder='Display Name'
+                    label='Display Name:'
                     isRequired={true}
-                    onChange={(event) => setLastName(event.target.value)}
+                    onChange={(event) => setDisplayName(event.target.value)}
                   />
                 </td>
               </tr>
@@ -98,7 +100,7 @@ const ModalView: React.FC<ModalViewProps> = ({ toggleModal }) => {
                     label='Pet name:'
                     isRequired={true}
                     onChange={(event) =>
-                      setpetNames(event.target.value.split(', '))
+                      setPetNames(event.target.value.split(', '))
                     }
                   />
                 </td>
@@ -168,13 +170,13 @@ const ModalView: React.FC<ModalViewProps> = ({ toggleModal }) => {
             <button
               className='text-bold rounded bg-primary px-12 py-4 text-white drop-shadow-default active:bg-dark-red'
               type='submit'
-              disabled={!isSubmitDisabled}
+              disabled={!isSubmitEnabled}
             >
               Submit
             </button>
           </div>
         </form>
-      </div>
+      </>
     </div>
   )
 }

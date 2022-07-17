@@ -4,7 +4,9 @@ export interface FormFieldProps {
   type?: string
   placeholder?: string
   onChange?: (
-    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    event: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >
   ) => void
   isRequired: boolean
 }
@@ -16,7 +18,37 @@ const FormField = (props: FormFieldProps) => {
         <span className='text-primary'>{props.isRequired ? '*' : ''}</span>
         {props.label}
       </label>
-      {props.type !== 'textarea' ? (
+      {inputSwitch(props)}
+    </div>
+  )
+}
+
+const inputSwitch = (props: FormFieldProps) => {
+  switch (props.type) {
+    case 'textarea':
+      return (
+        <textarea
+          className='form-textarea rounded text-black'
+          id={props.id}
+          placeholder={props.placeholder}
+          onChange={props.onChange}
+        ></textarea>
+      )
+    case 'select':
+      return (
+        <select
+          className='form-select rounded'
+          id={props.id}
+          required={props.isRequired}
+          onChange={props.onChange}
+        >
+          <option value=''></option> {/* :^) */}
+          <option value='Vet'>Vet</option>
+          <option value='Walk'>Walk</option>
+        </select>
+      )
+    default:
+      return (
         <input
           className='placeholder::text-[#6b7280] form-input rounded text-black'
           id={props.id}
@@ -26,16 +58,8 @@ const FormField = (props: FormFieldProps) => {
           placeholder={props.placeholder}
           onChange={props.onChange}
         />
-      ) : (
-        <textarea
-          className='form-textarea rounded text-black'
-          id={props.id}
-          placeholder={props.placeholder}
-          onChange={props.onChange}
-        ></textarea>
-      )}
-    </div>
-  )
+      )
+  }
 }
 
 export default FormField

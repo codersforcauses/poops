@@ -34,6 +34,7 @@ const VisitList = (props: VisitListProps) => {
         .map((post, index) => (
           <VisitInstance
             key={index}
+            type={post.type}
             id={index}
             displayName={post.displayName}
             petNames={post.petNames}

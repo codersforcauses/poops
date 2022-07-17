@@ -1,8 +1,6 @@
 import React from 'react'
 import { SearchIcon } from '@heroicons/react/outline'
 
-import { AddButton } from './buttons'
-
 interface SearchBarProps {
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void
 }
@@ -17,21 +15,6 @@ const SearchBar = (props: SearchBarProps) => {
           placeholder='Search...'
           onChange={props.onChange}
         />
-      </div>
-
-      <div className='flex justify-between p-4'>
-        <button>
-          <div className='h-[36px] w-[115px] rounded-md bg-primary p-0.5 text-center text-xs font-bold text-white drop-shadow-default'>
-            <p>REGISTER</p>
-            <p>VET CONCERN</p>
-          </div>
-        </button>
-        <button>
-          <div className='h-[23.48px] w-[78px] rounded-md bg-primary p-0.5 text-center text-xs font-bold text-white drop-shadow-default'>
-            <p>REPORT</p>
-          </div>
-        </button>
-        <AddButton />
       </div>
     </div>
   )

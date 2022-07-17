@@ -18,7 +18,7 @@ const VisitInstance = (props: VisitInstanceProps) => {
   return (
     <div
       key={props.id}
-      className='m-2 flex flex-col space-y-1 rounded-xl bg-gray p-2 drop-shadow-default'
+      className='m-2 flex flex-col space-y-1 rounded-xl bg-cream p-2 drop-shadow-default'
     >
       <div className='flex justify-between'>
         <div className='relative w-full'>
@@ -39,6 +39,7 @@ const VisitInstance = (props: VisitInstanceProps) => {
           {isEditable ? (
             <EditableVisitInstance
               key={props.id}
+              type={props.type}
               displayName={props.displayName}
               petNames={props.petNames}
               duration={props.duration}
@@ -51,6 +52,7 @@ const VisitInstance = (props: VisitInstanceProps) => {
           ) : (
             <ReadOnlyVisitInstance
               key={props.id}
+              type={props.type}
               displayName={props.displayName}
               petNames={props.petNames}
               duration={props.duration}
@@ -62,17 +64,7 @@ const VisitInstance = (props: VisitInstanceProps) => {
             />
           )}
 
-          {/* Edit button */}
-          <div className='invisible absolute right-4 bottom-1 h-7 w-7 rounded-full bg-primary text-primary drop-shadow-default transition-all peer-checked:visible'>
-            <button
-              type='button'
-              onClick={() => {
-                setIsEditable(!isEditable)
-              }}
-            >
-              <EditButton isEdit={isEditable} />
-            </button>
-          </div>
+          <EditButton isEditable={isEditable} setIsEditable={setIsEditable} />
         </div>
       </div>
     </div>
