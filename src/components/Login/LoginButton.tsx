@@ -22,7 +22,7 @@ const LoginButton = ({
     <button className={style} onClick={onClick}>
       <div className='relative flex items-center space-x-4'>
         <div className='w-5'>{icon}</div>
-        <span className='text-gray-700 block w-max text-sm font-semibold tracking-wide transition duration-300 sm:text-base'>
+        <span className='block w-max text-sm font-semibold tracking-wide text-gray-700 transition duration-300 sm:text-base'>
           {buttonlabel}
         </span>
       </div>
