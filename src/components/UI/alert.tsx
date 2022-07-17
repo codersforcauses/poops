@@ -21,7 +21,7 @@ const shadow =
                 0 16px 32px rgba(0,0,0,0.1),\
                 0 32px 64px rgba(0,0,0,0.1)'
 
-const getClasses = (vis: boolean, pos: string) => {
+const getContainerClasses = (vis: boolean, pos: string) => {
   return (
     `flex items-center fixed right-0 left-0 z-999 pl-5 pr-4 py-3 mx-[1rem] bg-white text-black border-x-1 border-[#dddddd] transition-transform duration-700` +
     `${
@@ -95,7 +95,7 @@ const Alert: React.FC<AlertProps> = ({ visible, setVisible, content }) => {
 
   return (
     <div
-      className={getClasses(
+      className={getContainerClasses(
         visible,
         contentCache.position ? contentCache.position : 'top'
       )}

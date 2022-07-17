@@ -61,17 +61,13 @@ export const AlertContextProvider = ({
 
   const setAlert = (content: AlertContentProps) => {
     setContent({
-      title: content.title ? content.title : '',
+      title: content.title ?? '',
       text: content.text,
       variant: content.variant,
-      position: content.position ? content.position : 'top',
-      confirmFunction: content.confirmFunction
-        ? content.confirmFunction
-        : undefined,
-      cancelFunction: content.cancelFunction
-        ? content.cancelFunction
-        : undefined,
-      showFor: content.showFor ? content.showFor : 5000
+      position: content.position ?? 'top',
+      confirmFunction: content.confirmFunction ?? undefined,
+      cancelFunction: content.cancelFunction ?? undefined,
+      showFor: content.showFor ?? 5000
     })
   }
 
