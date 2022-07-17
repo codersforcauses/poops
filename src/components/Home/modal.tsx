@@ -66,7 +66,8 @@ function Modal() {
           className='rounded-lg p-3 py-2 px-5 text-center shadow-lg sm:py-4'
           style={{
             padding: 25,
-            background: '#F9F9F9'
+            background: '#F9F9F9',
+            width: 500
           }}
         >
           <h1 style={{ fontSize: 20, color: '#a52a2a' }}>
