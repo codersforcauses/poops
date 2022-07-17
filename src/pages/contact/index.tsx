@@ -90,12 +90,12 @@ const Contact = () => {
         <div className='m-auto max-w-md'>
           <div className='m-2 flex flex-row rounded-xl border-2 border-gray-300'>
             <SearchTag
-              options={typefilter}
-              onChangehandler={(e) => onSearchTagChange(e, false)}
-            />
-            <SearchTag
               options={tagfilter}
               onChangehandler={(e) => onSearchTagChange(e, true)}
+            />
+            <SearchTag
+              options={typefilter}
+              onChangehandler={(e) => onSearchTagChange(e, false)}
             />
             <div className='flex w-full justify-between'>
               <SearchBar onChangeHandler={onSearchChange} />
