@@ -84,7 +84,7 @@ const FirestoreProvider = ({ children }: { children: ReactNode }) => {
       try {
         if (currentUser?.uid) {
           const userDocRef = doc(db, 'users', currentUser.uid)
-          await updateDoc(userDocRef, 'Visits', user.visits)
+          await updateDoc(userDocRef, 'visits', user.visits)
         }
       } catch (err: unknown) {
         //#region  //*=========== For logging ===========
