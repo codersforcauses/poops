@@ -7,10 +7,10 @@ import { v4 as uuidv4 } from 'uuid'
 import Avatar from '@/components/Contact/avatar'
 import RegionSelector from '@/components/Contact/regiondropdown'
 import TagSelector from '@/components/Contact/tagdropdown'
-import type { Contact, Pet } from '@/types/types'
+import type { ContactData, Pet } from '@/types/types'
 
 type ContactInfoProps = {
-  contact: Contact
+  contact: ContactData
   image: string
   setIsEditing: Dispatch<SetStateAction<boolean>>
 }
@@ -90,23 +90,12 @@ const ContactForm = ({ contact, image, setIsEditing }: ContactInfoProps) => {
         />
         {/* FIRST AND LAST NAME */}
         <Box>
-          <label htmlFor={contact.firstName} className='text-dark-red'>
+          <label htmlFor={contact.displayName} className='text-dark-red'>
             First Name
           </label>
           <input
             name='first_name'
-            defaultValue={contact.firstName}
-            className='mb-2 w-80 rounded-lg border border-gray-300 pl-1'
-            onChange={handleInputChange}
-          />
-        </Box>
-        <Box>
-          <label htmlFor={contact.lastName} className='text-dark-red'>
-            Last Name
-          </label>
-          <input
-            name='last_name'
-            defaultValue={contact.lastName}
+            defaultValue={contact.displayName}
             className='mb-2 w-80 rounded-lg border border-gray-300 pl-1'
             onChange={handleInputChange}
           />

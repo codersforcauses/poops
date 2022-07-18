@@ -6,10 +6,10 @@ import {
 import tw from 'tailwind-styled-components'
 
 import Avatar from '@/components/Contact/avatar'
-import type { Contact } from '@/types/types'
+import type { ContactData } from '@/types/types'
 
 type ContactInfoProps = {
-  contact: Contact
+  contact: ContactData
   image: string
 }
 
@@ -24,9 +24,7 @@ function ContactInfo({ contact, image }: ContactInfoProps) {
         iconClass='w-32 rounded-full'
       />
       {/* FIRST AND LAST NAME */}
-      <h1 className='text-4xl font-normal'>
-        {contact.firstName} {contact.lastName}
-      </h1>
+      <h1 className='text-4xl font-normal'>{contact.displayName}</h1>
       {/* DESCRIPTION */}
       <h3>{contact.notes}</h3>
       {/* PHONE */}
