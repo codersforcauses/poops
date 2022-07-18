@@ -72,7 +72,7 @@ const Contact = () => {
             <SearchTag
               name='Filter By'
               options={tagFilter}
-              onChangehandler={(e) => onSearchTagChange(e, true)}
+              onChangehandler={(e) => onSearchTagChange(e)}
             />
             <div className='flex w-full justify-between'>
               <SearchBar onChangeHandler={onSearchChange} />
