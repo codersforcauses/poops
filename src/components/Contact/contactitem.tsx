@@ -8,12 +8,6 @@ type ContactItemProps = {
 }
 
 const ContactItem = ({ contact, image }: ContactItemProps) => {
-  // const petNames = contact.pets
-  //   .map((pet) => {
-  //     return pet.name
-  //   })
-  //   .join(', ')
-
   return (
     <li className='flex items-center justify-between truncate border-b border-gray-300 bg-white p-3 px-5 text-sm hover:bg-gray-300 focus:bg-gray-300 sm:py-4'>
       {/* USER PROFILE IMAGE */}
