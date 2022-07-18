@@ -37,7 +37,10 @@ const Contact = () => {
       })
 
       if (tagf == '' && typef == '') {
-        return full_name.toLocaleLowerCase().includes(searchField)
+        return (
+          full_name.toLocaleLowerCase().includes(searchField) ||
+          pets.toLocaleLowerCase().includes(searchField)
+        )
       }
 
       if (!contact.tags.some((v) => v.includes(tagf))) return false
