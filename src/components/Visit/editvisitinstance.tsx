@@ -54,12 +54,12 @@ const EditableVisitInstance = (props: EditVisitInstanceProps) => {
           placeholder='Start Time'
           value={startTime}
           onChange={(event) => setStartTime(event.target.value)}
-          className='bg-gray font-normal text-primary'
+          className='bg-cream font-normal text-primary'
         />
         <div>
           <input
-            size={8}
-            className='bg-gray text-sm font-normal text-primary'
+            size={16}
+            className='bg-cream text-sm font-normal text-primary'
             placeholder='Display Name'
             value={displayName}
             onChange={(event) => setDisplayName(event.target.value)}
@@ -70,7 +70,7 @@ const EditableVisitInstance = (props: EditVisitInstanceProps) => {
         Visit Type:{' '}
         <input
           size={8}
-          className='bg-gray text-primary'
+          className='bg-cream text-primary'
           placeholder='Type'
           value={visitType}
           onChange={(event) => setVisitType(event.target.value)} // TODO make this more friendly input
@@ -80,7 +80,7 @@ const EditableVisitInstance = (props: EditVisitInstanceProps) => {
         Pet/Pets:{' '}
         <input
           size={8}
-          className='bg-gray text-primary'
+          className='bg-cream text-primary'
           placeholder='Pet Name(s)'
           value={petNames}
           onChange={(event) => setpetNames(event.target.value.split(', '))} // TODO make this more friendly input
@@ -90,7 +90,7 @@ const EditableVisitInstance = (props: EditVisitInstanceProps) => {
         End Time:{' '}
         <input
           size={8}
-          className='bg-gray text-primary'
+          className='bg-cream text-primary'
           placeholder='Duration'
           value={endTime}
           onChange={(event) => setEndTime(event.target.value)}
@@ -100,7 +100,7 @@ const EditableVisitInstance = (props: EditVisitInstanceProps) => {
         Walk Metres:{' '}
         <input
           size={8}
-          className='bg-gray p-0 text-sm text-primary'
+          className='bg-cream p-0 text-sm text-primary'
           type='number'
           step='0.001'
           placeholder='Distance'
@@ -114,7 +114,7 @@ const EditableVisitInstance = (props: EditVisitInstanceProps) => {
         Commute Metres:{' '}
         <input
           size={8}
-          className='bg-gray text-primary'
+          className='bg-cream text-primary'
           type='number'
           step='0.001'
           placeholder='Distance'
@@ -128,7 +128,7 @@ const EditableVisitInstance = (props: EditVisitInstanceProps) => {
         Commute Method:{' '}
         <input
           size={8}
-          className='bg-gray text-primary'
+          className='bg-cream text-primary'
           placeholder='Method'
           value={commuteMethod}
           onChange={(event) => setCommuteMethod(event.target.value)}
@@ -138,7 +138,7 @@ const EditableVisitInstance = (props: EditVisitInstanceProps) => {
         Notes:{' '}
         <input // maybe use textarea tag instead?
           size={24}
-          className='bg-gray text-primary'
+          className='bg-cream text-primary'
           placeholder='Notes'
           value={notes}
           onChange={(event) => setNotes(event.target.value)}
