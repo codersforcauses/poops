@@ -14,7 +14,7 @@ const ProfileItem = ({ profile, image }: ProfileItemProps) => {
       <a>
         <div className='mt-1 flex-col'>
           <ul>
-            <li className='border-b border-grey bg-white p-3 px-5 hover:bg-grey focus:bg-grey sm:py-4'>
+            <li className='border-b border-gray-300 bg-white p-3 px-5 hover:bg-gray-300 focus:bg-gray-300 sm:py-4'>
               <div className='flex items-center space-x-4'>
                 {/* USER PROFILE IMAGE */}
                 <Avatar
@@ -24,7 +24,7 @@ const ProfileItem = ({ profile, image }: ProfileItemProps) => {
                   iconClass='h-16 w-16'
                 />
                 <div className='min-w-0 flex-1'>
-                  <p className='text-gray-900 truncate text-sm font-medium'>
+                  <p className='truncate text-sm font-medium text-gray-900'>
                     Me
                   </p>
                 </div>
