@@ -99,13 +99,11 @@ function ContactInfo({ contact, image }: ContactInfoProps) {
           ))}
         </TagHolder>
       </Box>
-      <Box>
-        <Box className='flex flex-col'>
-          <label htmlFor={contact.email} className='text-dark-red'>
-            Pets
-          </label>
-          <span className='text-xl'>{contact.pets}</span>
-        </Box>
+      <Box className='flex flex-col'>
+        <label htmlFor={contact.pets} className='text-dark-red'>
+          Pets
+        </label>
+        <span className='text-xl'>{contact.pets}</span>
       </Box>
       {/* NOTES */}
       <Box className='flex flex-col'>
