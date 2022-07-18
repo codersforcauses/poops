@@ -18,45 +18,26 @@ const tags = CONTACT_DATA.map((contact) => {
 }).flat()
 const set = new Set(tags)
 const tagFilter = [...set]
-const typeFilter = ['Person', 'Pet']
 
 const Contact = () => {
   const [filteredContacts, setFilteredContacts] =
     useState<Contact[]>(CONTACT_DATA)
 
   const [selectedTag, setSelectedTag] = useState('')
-  const [selectedType, setSelectedType] = useState('')
   const [searchFieldString, setSearchFieldString] = useState('')
 
-  function filterContact(tagf: string, typef: string, searchField: string) {
+  function filterContact(tagf: string, searchField: string) {
     const filteredContacts = CONTACT_DATA.filter((contact) => {
       const full_name = contact.firstName + ' ' + contact.lastName
-      let pets = ''
-      contact.pets.forEach((pet) => {
-        pets += pet.name + ' '
-      })
 
-      if (tagf == '' && typef == '') {
-        return (
-          full_name.toLocaleLowerCase().includes(searchField) ||
-          pets.toLocaleLowerCase().includes(searchField)
-        )
-      }
-
-      if (!contact.tags.some((v) => v.includes(tagf))) return false
-
-      if (
-        !full_name.toLocaleLowerCase().includes(searchField) &&
-        typef.toLocaleLowerCase() === 'person'
-      )
+      // don't show contacts without selected tag if tag selected
+      if (tagf !== '' && !contact.tags.some((v) => v.includes(tagf)))
         return false
 
-      if (
-        !pets.toLocaleLowerCase().includes(searchField) &&
-        typef.toLocaleLowerCase() === 'pet'
+      return (
+        full_name.toLocaleLowerCase().includes(searchField) ||
+        contact.pets.toLocaleLowerCase().includes(searchField)
       )
-        return false
-      return true
     })
     setFilteredContacts(filteredContacts)
   }
@@ -65,20 +46,13 @@ const Contact = () => {
     const searchFieldString = event.target.value.toLocaleLowerCase()
     setSearchFieldString(searchFieldString)
     // TODO: Get contact data from server
-    filterContact(selectedTag, selectedType, searchFieldString)
+    filterContact(selectedTag, searchFieldString)
   }
 
-  const onSearchTagChange = (
-    event: React.ChangeEvent<HTMLSelectElement>,
-    isTags: boolean
-  ) => {
+  const onSearchTagChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const option_value = event.target.value
-    if (isTags) {
-      setSelectedTag(option_value)
-      filterContact(option_value, selectedType, searchFieldString)
-    } else {
-      setSelectedType(option_value)
-    }
+    setSelectedTag(option_value)
+    filterContact(option_value, searchFieldString)
   }
 
   return (
@@ -100,29 +74,14 @@ const Contact = () => {
               options={tagFilter}
               onChangehandler={(e) => onSearchTagChange(e, true)}
             />
-            <SearchTag
-              name='Search'
-              options={typeFilter}
-              onChangehandler={(e) => onSearchTagChange(e, false)}
-            />
             <div className='flex w-full justify-between'>
-              <SearchBar
-                placeholder={
-                  'Search' +
-                  (selectedType !== '' ? ' ' : '') +
-                  selectedType.toLocaleLowerCase() +
-                  '...'
-                }
-                onChangeHandler={onSearchChange}
-              />
+              <SearchBar onChangeHandler={onSearchChange} />
               <SearchIcon className='my-auto mx-2 h-6' />
             </div>
           </div>
-          {searchFieldString === '' &&
-            selectedTag === '' &&
-            selectedType === '' && (
-              <ProfileItem profile={PROFILE_DATA} image='' />
-            )}
+          {searchFieldString === '' && selectedTag === '' && (
+            <ProfileItem profile={PROFILE_DATA} image='' />
+          )}
           <ContactList contacts={filteredContacts} />
         </div>
       </main>
