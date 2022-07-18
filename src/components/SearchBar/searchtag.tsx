@@ -9,7 +9,7 @@ const SearchTag = ({ name, options, onChangehandler }: SearchTagProps) => {
     <div>
       <select
         onChange={onChangehandler}
-        className='h-10 border-r border-none bg-transparent pr-5 text-sm valid:text-black invalid:text-[#9ca3af] focus:outline-none'
+        className='h-10 border-r border-none bg-transparent pr-10 text-sm valid:text-black invalid:text-[#9ca3af] focus:outline-none'
       >
         <option value='' disabled>
           {name}
