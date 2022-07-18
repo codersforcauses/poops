@@ -17,8 +17,8 @@ const tags = CONTACT_DATA.map((contact) => {
   return contact.tags
 }).flat()
 const set = new Set(tags)
-const tagfilter = [...set]
-const typefilter = ['People', 'Pets']
+const tagFilter = [...set]
+const typeFilter = ['Person', 'Pet']
 
 const Contact = () => {
   const [filteredContacts, setFilteredContacts] =
@@ -44,13 +44,13 @@ const Contact = () => {
 
       if (
         !full_name.toLocaleLowerCase().includes(searchField) &&
-        typef.toLocaleLowerCase() === 'people'
+        typef.toLocaleLowerCase() === 'person'
       )
         return false
 
       if (
         !pets.toLocaleLowerCase().includes(searchField) &&
-        typef.toLocaleLowerCase() === 'pets'
+        typef.toLocaleLowerCase() === 'pet'
       )
         return false
       return true
@@ -94,16 +94,24 @@ const Contact = () => {
           <div className='m-2 flex flex-row rounded-xl border-2 border-gray-300'>
             <SearchTag
               name='Filter By'
-              options={tagfilter}
+              options={tagFilter}
               onChangehandler={(e) => onSearchTagChange(e, true)}
             />
             <SearchTag
               name='Search'
-              options={typefilter}
+              options={typeFilter}
               onChangehandler={(e) => onSearchTagChange(e, false)}
             />
             <div className='flex w-full justify-between'>
-              <SearchBar onChangeHandler={onSearchChange} />
+              <SearchBar
+                placeholder={
+                  'Search' +
+                  (selectedType !== '' ? ' ' : '') +
+                  selectedType.toLocaleLowerCase() +
+                  '...'
+                }
+                onChangeHandler={onSearchChange}
+              />
               <SearchIcon className='my-auto mx-2 h-6' />
             </div>
           </div>
