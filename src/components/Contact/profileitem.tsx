@@ -1,10 +1,10 @@
 import Link from 'next/link'
 
 import Avatar from '@/components/Contact/avatar'
-import type { Contact } from '@/types/types'
+import type { ContactData } from '@/types/types'
 
 type ProfileItemProps = {
-  profile: Contact
+  profile: ContactData
   image: string
 }
 
@@ -14,7 +14,7 @@ const ProfileItem = ({ profile, image }: ProfileItemProps) => {
       <a>
         <div className='mt-1 flex-col'>
           <ul>
-            <li className='hover:bg-grey focus:bg-grey border-b border-gray-300 bg-white p-3 px-5 sm:py-4'>
+            <li className='border-b border-gray-300 bg-white p-3 px-5 hover:bg-gray-300 focus:bg-gray-300 sm:py-4'>
               <div className='flex items-center space-x-4'>
                 {/* USER PROFILE IMAGE */}
                 <Avatar
