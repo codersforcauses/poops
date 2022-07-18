@@ -1,10 +1,10 @@
 import Link from 'next/link'
 
 import ContactItem from '@/components/Contact/contactitem'
-import type { ContactData } from '@/types/types'
+import type { Contact } from '@/types/types'
 
 type ContactsProp = {
-  contacts: ContactData[]
+  contacts: Contact[]
 }
 
 const ContactList = ({ contacts }: ContactsProp) => {

@@ -1,10 +1,10 @@
 import Link from 'next/link'
 
 import Avatar from '@/components/Contact/avatar'
-import type { ContactData } from '@/types/types'
+import type { Contact } from '@/types/types'
 
 type ProfileItemProps = {
-  profile: ContactData
+  profile: Contact
   image: string
 }
 
