@@ -86,11 +86,8 @@ const EditableVisitInstance = (props: EditVisitInstanceProps) => {
           className='bg-cream text-primary'
           placeholder='Pet Name(s)'
           value={petNames}
-          onChange={(event) => setpetNames(event.target.value.split(', '))} // TODO make this more friendly input
+          onChange={(event) => setpetNames(event.target.value)}
         />
-      </p>
-      <p className='text-sm font-bold'>
-        For multiple pets, please seperate with &quot;, &quot;
       </p>
       <p className='text-sm'>
         End Time:{' '}

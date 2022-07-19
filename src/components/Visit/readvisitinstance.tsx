@@ -11,7 +11,7 @@ const ReadOnlyVisitInstance = (props: VisitData) => {
       </div>
       <div className='max-h-0 justify-between overflow-hidden text-sm transition-all duration-300 peer-checked:max-h-screen'>
         <p>Visit Type: {props.type}</p>
-        <p>Pet/Pets: {props.petNames.join(', ')}</p>
+        <p>Pet(s): {props.petNames}</p>
         <p>End Time: {props.endTime}</p>
         <p>Duration: {formatDuration(props)}</p>
         <p>Walk Metres: {props.walkDist.toFixed(3)} km</p>

@@ -21,7 +21,7 @@ const ModalView = ({ toggleModal }: ModalViewProps) => {
   const { userDoc, updateVisit } = useFirestore()
   const [visitType, setVisitType] = useState('')
   const [displayName, setDisplayName] = useState('')
-  const [petNames, setPetNames] = useState<string[]>([])
+  const [petNames, setPetNames] = useState('')
   const [startTime, setStartTime] = useState('')
   const [endTime, setEndTime] = useState('')
   const [walkDist, setWalkDist] = useState(0)
@@ -34,7 +34,7 @@ const ModalView = ({ toggleModal }: ModalViewProps) => {
     click.preventDefault()
     const data: VisitData = {
       type: visitType,
-      displayName: displayName, // TODO change to displayName
+      displayName: displayName,
       petNames: petNames,
       startTime: startTime,
       endTime: endTime,
@@ -43,7 +43,6 @@ const ModalView = ({ toggleModal }: ModalViewProps) => {
       commuteMethod: commuteMethod,
       notes: notes
     }
-    // TODO update visit data
     userDoc.visits.push(data)
     updateVisit?.(userDoc)
   }
@@ -113,9 +112,7 @@ const ModalView = ({ toggleModal }: ModalViewProps) => {
                     placeholder='Pet Name'
                     label='Pet name:'
                     isRequired={true}
-                    onChange={(event) =>
-                      setPetNames(event.target.value.split(', '))
-                    }
+                    onChange={(event) => setPetNames(event.target.value)}
                   />
                 </td>
                 <td>

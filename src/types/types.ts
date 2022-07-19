@@ -14,7 +14,7 @@ export interface UserData {
 export interface VisitData {
   type: string
   displayName: string
-  petNames: string[]
+  petNames: string
   startTime: string
   endTime: string
   walkDist: number
