@@ -1,6 +1,9 @@
 import React, { Dispatch, useState } from 'react'
 
-import { VisitInstanceProps } from '@/components/Visit/visitinstance'
+import {
+  formatDuration,
+  VisitInstanceProps
+} from '@/components/Visit/visitinstance'
 import { useFirestore } from '@/context/firestore'
 import { VisitData } from '@/types/types'
 
@@ -79,23 +82,28 @@ const EditableVisitInstance = (props: EditVisitInstanceProps) => {
       <p className='text-sm'>
         Pet/Pets:{' '}
         <input
-          size={8}
+          size={16}
           className='bg-cream text-primary'
           placeholder='Pet Name(s)'
           value={petNames}
           onChange={(event) => setpetNames(event.target.value.split(', '))} // TODO make this more friendly input
         />
       </p>
+      <p className='text-sm font-bold'>
+        For multiple pets, please seperate with &quot;, &quot;
+      </p>
       <p className='text-sm'>
         End Time:{' '}
         <input
+          type='datetime-local'
           size={8}
           className='bg-cream text-primary'
-          placeholder='Duration'
+          placeholder='End Time'
           value={endTime}
           onChange={(event) => setEndTime(event.target.value)}
         />
       </p>
+      <p className='text-sm'>Duration: {formatDuration(props)}</p>
       <p className='text-sm'>
         Walk Metres:{' '}
         <input

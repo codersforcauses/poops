@@ -1,5 +1,6 @@
 import React, { Dispatch, SetStateAction, useState } from 'react'
 import ChevronDownIcon from '@heroicons/react/outline/ChevronDownIcon'
+import moment from 'moment'
 
 import { VisitData } from '@/types/types'
 
@@ -10,6 +11,14 @@ import ReadOnlyVisitInstance from './readvisitinstance'
 export interface VisitInstanceProps extends VisitData {
   set: Dispatch<SetStateAction<VisitData[]>>
   id: number
+}
+
+export const formatDuration = (props: VisitData) => {
+  const start = moment(props.startTime)
+  const diff = moment(props.endTime).diff(start)
+  // does not work for durations more than 24 hours
+  const format = moment.utc(diff).format('H [hrs] m [mins]')
+  return format
 }
 
 const VisitInstance = (props: VisitInstanceProps) => {
