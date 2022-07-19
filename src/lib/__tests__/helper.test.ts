@@ -1,4 +1,5 @@
 export {} //temp error fixed
+import { expect } from '@jest/globals'
 
 describe('Open Graph function should work correctly', () => {
   it('should not return templateTitle when not specified', () => {
