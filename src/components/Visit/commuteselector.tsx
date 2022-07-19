@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction } from 'react'
+import { Dispatch, SetStateAction, useState } from 'react'
 import { SingleValue } from 'react-select'
 import CreatableSelect from 'react-select/creatable'
 
@@ -14,18 +14,40 @@ interface CommuteSelectorProps extends FormFieldProps {
   setCommuteMethod: Dispatch<SetStateAction<string>>
 }
 
-const commuteMethods: CommuteMethod[] = [
-  { label: 'Bus', value: 'Bus' },
-  { label: 'Train', value: 'Train' },
-  { label: 'Car', value: 'Car' }
-]
+const addToLocalStorage = (value: string) => {
+  let vals = localStorage.getItem('commuteMethods')?.split(',')
+  if (vals === undefined) vals = ['Bus', 'Car', 'Train']
+  if (!vals.includes(value)) {
+    vals.push(value)
+    vals.sort()
+    localStorage.setItem('commuteMethods', vals.join(','))
+  }
+}
+
+const getLocalStorage = () => {
+  let store = localStorage.getItem('commuteMethods')?.split(',')
+  if (store === undefined) store = ['Bus', 'Car', 'Train']
+  return store
+}
+
+const getCommuteMethods = () => {
+  const commuteMethods: CommuteMethod[] = []
+  if (typeof window !== `undefined`) {
+    getLocalStorage().forEach((method) => {
+      commuteMethods.push({ label: method, value: method })
+    })
+  }
+  return commuteMethods
+}
 
 const CommuteSelector = (props: CommuteSelectorProps) => {
+  const [commuteMethods, setCommuteMethods] = useState(getCommuteMethods())
   const handleChange = (newValue: SingleValue<CommuteMethod>) => {
     // fired when user selects an option or creates an option
-    // TODO: add newly created option to the array
     if (newValue === null) return
     props.setCommuteMethod(newValue.value)
+    addToLocalStorage(newValue.value)
+    setCommuteMethods(getCommuteMethods())
   }
 
   return (

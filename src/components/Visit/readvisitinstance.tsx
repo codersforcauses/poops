@@ -20,7 +20,7 @@ const ReadOnlyVisitInstance = (props: VisitData) => {
         <p>Notes: {props.notes}</p>
         <div className='m-2 flex flex-row justify-around'>
           {
-            // TODO: make stylings nice
+            // TODO: make stylings nice (gl James)
           }
           <VetConcernButton />
           <ReportButton />
