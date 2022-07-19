@@ -16,8 +16,6 @@ export const VisitList = (props: VisitListProps) => {
     setVisits(userDoc.visits)
   }, [userDoc.visits])
 
-  // const [visitData, setVisitData] = useState<VisitData[]>([])
-  // TODO split display name for better searching
   const matchesDisplayName = (post: VisitData) =>
     post.displayName.toLowerCase().includes(props.searchQuery.toLowerCase())
 

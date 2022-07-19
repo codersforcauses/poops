@@ -76,7 +76,7 @@ const EditableVisitInstance = (props: EditVisitInstanceProps) => {
           className='bg-cream text-primary'
           placeholder='Type'
           value={visitType}
-          onChange={(event) => setVisitType(event.target.value)} // TODO make this more friendly input
+          onChange={(event) => setVisitType(event.target.value)}
         />
       </p>{' '}
       <p className='text-sm'>
