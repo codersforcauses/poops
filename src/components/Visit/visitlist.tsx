@@ -22,9 +22,7 @@ export const VisitList = (props: VisitListProps) => {
     post.displayName.toLowerCase().includes(props.searchQuery.toLowerCase())
 
   const matchespetNames = (post: VisitData) =>
-    post.petNames.forEach((petName) =>
-      petName.toLowerCase().includes(props.searchQuery.toLowerCase())
-    )
+    post.petNames.toLowerCase().includes(props.searchQuery.toLowerCase())
 
   const matchesSearchTerms = (post: VisitData) =>
     matchesDisplayName(post) || matchespetNames(post)
