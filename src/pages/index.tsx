@@ -11,7 +11,7 @@ const Home = () => {
 
       <main
         style={{
-          backgroundImage: `url(/images/dog-home.png)`,
+          backgroundImage: `url(/images/dog-home.jpeg)`,
           backgroundPosition: '50% calc(100% - 4rem)',
           backgroundAttachment: 'fixed',
           backgroundRepeat: 'no-repeat',
