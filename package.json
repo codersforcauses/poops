@@ -24,7 +24,8 @@
     "test": "jest",
     "format": "prettier -w .",
     "format:check": "prettier -c .",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "cypress:open": "cypress open"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.1.1",

@@ -10,3 +10,5 @@ describe('Contact test', () => {
     cy.url().should('include', '/contact')
   })
 })
+
+export {}
