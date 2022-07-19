@@ -25,8 +25,11 @@ function PetSelector({ setPets }: Props) {
   }
 
   return (
-    <div>
-      <label htmlFor='pets'>Select Pets</label>
+    <div className='flex flex-col p-1'>
+      <label htmlFor='pets'>
+        <span className='text-primary'>*</span>
+        Select Pets
+      </label>
       <ReactSelect
         name='pets'
         options={petOptions}
