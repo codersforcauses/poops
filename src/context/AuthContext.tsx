@@ -4,6 +4,7 @@ import {
   AuthProvider,
   getRedirectResult,
   GoogleAuthProvider,
+  linkWithRedirect,
   onAuthStateChanged,
   signInWithRedirect,
   signOut,
@@ -15,9 +16,10 @@ import { auth } from '../components/Firebase/init'
 interface FirebaseContextProps {
   auth: Auth
   getGoogleResults?: (auth: Auth) => void
+  linkAuthProvider?: (currentUser: User, provider: AuthProvider) => void
   externalAuthSignIn?: (auth: Auth, provider: AuthProvider) => void
   logOut?: () => void
-  currentUser?: User | null
+  currentUser: User | null
 }
 
 const authContext = createContext<FirebaseContextProps>({
@@ -44,6 +46,20 @@ export const AuthContextProvider = ({
         return error
       })
   }
+
+  function linkAuthProvider(currentUser: User, provider: AuthProvider) {
+    linkWithRedirect(currentUser, provider)
+      .then((result) => {
+        return result
+      })
+      .catch((error) => {
+        if (error.code === 'auth/provider-already-linked') {
+          // console.log("auth/provider-already-linked")
+          // TODO Send error alert to user
+        }
+        return error
+      })
+  } // TODO Success message for user?
 
   function getGoogleResults(auth: Auth) {
     getRedirectResult(auth)
@@ -89,6 +105,7 @@ export const AuthContextProvider = ({
   const value: FirebaseContextProps = {
     auth,
     getGoogleResults,
+    linkAuthProvider,
     externalAuthSignIn,
     logOut,
     currentUser
