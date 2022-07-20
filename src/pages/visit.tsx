@@ -7,7 +7,6 @@ const Visit = () => {
     <>
       {/* <Header /> */}
       <Header pageTitle='Visit' />
-
       <main>
         <p>Visit Page</p>
       </main>

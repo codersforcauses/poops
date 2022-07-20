@@ -1,16 +1,30 @@
-import React, { createContext, useContext, useState } from 'react'
+import React, {
+  createContext,
+  useCallback,
+  useContext,
+  useMemo,
+  useState
+} from 'react'
 
-import Alert, { AlertIcon } from '@/components/UI/alert'
+import Alert from '@/components/UI/alert'
 
 export interface AlertContentProps {
   title?: string
   text: string
-  icon: AlertIcon
+  variant: AlertVariant
   position?: 'top' | 'bottom'
   confirmFunction?: () => void
   cancelFunction?: () => void
   showFor?: number
 }
+
+export enum AlertVariant {
+  info,
+  security,
+  critical,
+  comment
+}
+
 interface AlertContextProps {
   setAlert: (content: AlertContentProps) => void
   clearAlert: () => void
@@ -42,26 +56,22 @@ export const AlertContextProvider = ({
     confirmFunction: undefined, // function to execute on confirm, enables the confirm function
     cancelFunction: undefined,
     showFor: 5000, // ms alert will stay open, set to -1 to leave open until button click
-    icon: AlertIcon.info
+    variant: AlertVariant.info
   })
 
   const setAlert = (content: AlertContentProps) => {
     setContent({
-      title: content.title ? content.title : '',
+      title: content.title ?? '',
       text: content.text,
-      icon: content.icon,
-      position: content.position ? content.position : 'top',
-      confirmFunction: content.confirmFunction
-        ? content.confirmFunction
-        : undefined,
-      cancelFunction: content.cancelFunction
-        ? content.cancelFunction
-        : undefined,
-      showFor: content.showFor ? content.showFor : 5000
+      variant: content.variant,
+      position: content.position ?? 'top',
+      confirmFunction: content.confirmFunction ?? undefined,
+      cancelFunction: content.cancelFunction ?? undefined,
+      showFor: content.showFor ?? 5000
     })
   }
 
-  const clearAlert = () => {
+  const clearAlert = useCallback(() => {
     setVisible(false)
     setContent({
       text: '',
@@ -70,15 +80,18 @@ export const AlertContextProvider = ({
       confirmFunction: undefined,
       cancelFunction: undefined,
       showFor: 5000,
-      icon: AlertIcon.info
+      variant: AlertVariant.info
     })
-  }
+  }, [])
 
-  const value: AlertContextProps = {
-    setAlert,
-    clearAlert,
-    visible
-  }
+  const value: AlertContextProps = useMemo(
+    () => ({
+      setAlert,
+      clearAlert,
+      visible
+    }),
+    [clearAlert, visible]
+  )
 
   return (
     <alertContext.Provider value={value}>

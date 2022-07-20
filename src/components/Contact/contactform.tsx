@@ -107,7 +107,7 @@ const ContactForm = ({
           <input
             name='first_name'
             defaultValue={contact.firstName}
-            className='mb-2 w-80 rounded-lg border border-grey pl-1'
+            className='mb-2 w-80 rounded-lg border border-gray-300 pl-1'
             onChange={handleInputChange}
           />
         </Box>
@@ -118,7 +118,7 @@ const ContactForm = ({
           <input
             name='last_name'
             defaultValue={contact.lastName}
-            className='mb-2 w-80 rounded-lg border border-grey pl-1'
+            className='mb-2 w-80 rounded-lg border border-gray-300 pl-1'
             onChange={handleInputChange}
           />
         </Box>
@@ -130,7 +130,7 @@ const ContactForm = ({
           <textarea
             name='desc'
             defaultValue={contact.desc}
-            className='w-80 rounded-lg border border-grey pl-1'
+            className='w-80 rounded-lg border border-gray-300 pl-1'
             onChange={handleInputChange}
           />
         </Box>
@@ -142,7 +142,7 @@ const ContactForm = ({
           <input
             name='phone'
             defaultValue={contact.phone}
-            className='mb-2 w-full rounded-lg border border-grey pl-1'
+            className='mb-2 w-full rounded-lg border border-gray-300 pl-1'
             onChange={handleInputChange}
           />
         </Box>
@@ -154,7 +154,7 @@ const ContactForm = ({
           <input
             name='email'
             defaultValue={contact.email}
-            className='mb-2 w-full rounded-lg border border-grey pl-1'
+            className='mb-2 w-full rounded-lg border border-gray-300 pl-1'
             onChange={handleInputChange}
           />
         </Box>
@@ -166,7 +166,7 @@ const ContactForm = ({
           <input
             name='street_address'
             defaultValue={contact.streetAddress}
-            className='mb-2 w-full rounded-lg border border-grey pl-1'
+            className='mb-2 w-full rounded-lg border border-gray-300 pl-1'
             onChange={handleInputChange}
           />
         </Box>
@@ -207,7 +207,7 @@ const ContactForm = ({
                 <input
                   name='name'
                   defaultValue={pet.name}
-                  className='mb-2 w-full rounded-lg border border-grey pl-1'
+                  className='mb-2 w-full rounded-lg border border-gray-300 pl-1'
                   onChange={(e) => handlePetChange(i, e)}
                 />
 
@@ -217,7 +217,7 @@ const ContactForm = ({
                 <textarea
                   name='notes'
                   defaultValue={pet.notes}
-                  className='mb-2 w-full rounded-lg border border-grey pl-1'
+                  className='mb-2 w-full rounded-lg border border-gray-300 pl-1'
                   onChange={(e) => handlePetChange(i, e)}
                 />
               </PetContainer>
@@ -238,7 +238,7 @@ const ContactForm = ({
           <textarea
             name='notes'
             defaultValue={contact.notes}
-            className='w-full rounded-lg border border-grey'
+            className='w-full rounded-lg border border-gray-300'
             onChange={handleInputChange}
           />
         </Box>
@@ -254,7 +254,7 @@ const ContactForm = ({
             {!isNewContact && (
               <button
                 type='button'
-                className='w-80 rounded bg-grey py-1 font-bold text-black hover:bg-grey'
+                className='bg-grey hover:bg-grey w-80 rounded py-1 font-bold text-black'
                 onClick={() => {
                   if (setIsEditing !== undefined) setIsEditing(false)
                 }}
@@ -272,7 +272,7 @@ const ContactForm = ({
 export default ContactForm
 
 const Box = tw.div`
-    bg-grey
+    bg-gray-300
     bg-opacity-20
     box-content
     w-80

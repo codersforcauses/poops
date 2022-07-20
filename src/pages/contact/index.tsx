@@ -76,7 +76,7 @@ const Contact = () => {
         </div>
 
         <div className='m-auto max-w-md'>
-          <div className='m-2 flex flex-row rounded-xl border-2 border-grey'>
+          <div className='m-2 flex flex-row rounded-xl border-2 border-gray-300'>
             <SearchTag options={taglist} onChangehandler={onSearchTagChange} />
             <div className='flex w-full justify-between'>
               <SearchBar onChangeHandler={onSearchChange} />
