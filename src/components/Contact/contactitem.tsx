@@ -6,14 +6,25 @@ import type { Contact } from '@/types/types'
 type ContactItemProps = {
   contact: Contact
   image: string
-  setDisplayContact: Dispatch<SetStateAction<Contact | null>>
+  firestoreIndex: number
+  setDisplayContact: Dispatch<
+    SetStateAction<null | {
+      firestoreIndex: number
+      contact: Contact
+    }>
+  >
 }
 
 const ContactItem = ({
   contact,
   image,
+  firestoreIndex,
   setDisplayContact
 }: ContactItemProps) => {
+  const displayContact = {
+    firestoreIndex: firestoreIndex,
+    contact: contact
+  }
   return (
     <>
       {/* if a contact item was clicked we want to display the contact data  */}
@@ -21,8 +32,8 @@ const ContactItem = ({
       <li className='border-b border-grey bg-white p-3 px-5 hover:bg-grey focus:bg-grey sm:py-4'>
         <div
           className='flex items-center space-x-4'
-          onClick={() => setDisplayContact(contact)}
-          onKeyDown={() => setDisplayContact(contact)}
+          onClick={() => setDisplayContact(displayContact)}
+          onKeyDown={() => setDisplayContact(displayContact)}
           role='button'
           tabIndex={0}
         >

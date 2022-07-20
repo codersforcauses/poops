@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import { SearchIcon } from '@heroicons/react/outline'
 
-import CONTACT_DATA from '@/../mockData/CONTACT_DATA.json'
 import ContactDetails from '@/components/Contact/contactdetails'
 import ContactList from '@/components/Contact/contactlist'
 import Header from '@/components/Header'
@@ -12,40 +11,54 @@ import SearchTag from '@/components/SearchBar/searchtag'
 import { useFirestore } from '@/context/firestore'
 import type { Contact } from '@/types/types'
 
-// TODO: Get contact data from server
-const tags = CONTACT_DATA.map((contact) => {
-  return contact.tags
-}).flat()
-const set = new Set(tags)
-const taglist = [...set]
-
 const Contact = () => {
-  const { userDoc } = useFirestore()
+  const { userDoc, updateContact } = useFirestore()
   const allContacts = userDoc.Contacts
-  console.log(allContacts)
-  const [filteredContacts, setFilteredContacts] =
-    useState<Contact[]>(allContacts)
+
+  // Get all unique tags to popular dropdown filter
+  const tags = allContacts
+    .map((contact) => {
+      return contact.tags
+    })
+    .flat()
+  const set = new Set(tags)
+  const taglist = [...set]
+
+  // List of firestoreIndexes to that populate visible contacts
+  const [filteredIndexes, setFilteredIndexes] = useState<number[]>([
+    ...allContacts.keys()
+  ])
+
   const [selectedOption, setSelectedOption] = useState('')
   const [searchFieldString, setSearchFieldString] = useState('')
-  const [displayContact, setDisplayContact] = useState<Contact | null>(null)
+  const [displayContact, setDisplayContact] = useState<null | {
+    firestoreIndex: number
+    contact: Contact
+  }>(null)
+
   function filterContact(includes: string, searchField: string) {
-    const filteredContacts = allContacts.filter((contact) => {
-      const full_name = contact.displayName
+    const filteredIndexes: number[] = []
+    allContacts.forEach((contact: Contact, index: number) => {
       if (includes == '') {
-        return full_name.toLocaleLowerCase().includes(searchField)
+        if (contact.displayName.toLocaleLowerCase().includes(searchField)) {
+          filteredIndexes.push(index)
+        }
+      } else {
+        const filtered =
+          contact.displayName.toLocaleLowerCase().includes(searchField) &&
+          contact.tags.some((v) => v.includes(includes))
+
+        if (filtered) {
+          filteredIndexes.push(index)
+        }
       }
-      const filtered =
-        full_name.toLocaleLowerCase().includes(searchField) &&
-        contact.tags.some((v) => v.includes(includes))
-      return filtered
     })
-    setFilteredContacts(filteredContacts)
+    setFilteredIndexes(filteredIndexes)
   }
 
   const onSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const searchFieldString = event.target.value.toLocaleLowerCase()
     setSearchFieldString(searchFieldString)
-    // TODO: Get contact data from server
     filterContact(selectedOption, searchFieldString)
   }
 
@@ -54,6 +67,29 @@ const Contact = () => {
     setSelectedOption(option_value)
     filterContact(option_value, searchFieldString)
   }
+
+  // Sends allContacts to Firestore
+  const setFirestoreContacts = () => {
+    userDoc.Contacts = allContacts
+    if (updateContact !== undefined) updateContact(userDoc)
+  }
+
+  const modifyContact = (index: number, contact: Contact) => {
+    allContacts[index] = contact
+    setFirestoreContacts()
+  }
+
+  // TODO: Hook up following function to add button form
+  // const addContact = (contact: Contact) => {
+  //   allContacts.push(contact)
+  //   setFirestoreContacts()
+  // }
+
+  // TODO: Hook up following function to delete button
+  // const removeContact = (index: number) => {
+  //   allContacts.splice(index)
+  //   setFirestoreContacts()
+  // }
 
   return (
     <>
@@ -80,18 +116,17 @@ const Contact = () => {
               </div>
             </div>
           )}
-          {/* {searchFieldString === '' && selectedOption === '' && (
-            <ProfileItem profile={allContacts[0]} image='' />
-          )} */}
           {displayContact === null ? (
             <ContactList
-              contacts={filteredContacts}
+              allContacts={allContacts}
+              firestoreIndexMap={filteredIndexes}
               setDisplayContact={setDisplayContact}
-              displayContact={displayContact}
             />
           ) : (
             <ContactDetails
-              contact={displayContact}
+              contact={displayContact.contact}
+              firestoreIndex={displayContact.firestoreIndex}
+              modifyContact={modifyContact}
               setDisplayContact={setDisplayContact}
             />
           )}

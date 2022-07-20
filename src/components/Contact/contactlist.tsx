@@ -4,18 +4,28 @@ import ContactItem from '@/components/Contact/contactitem'
 import type { Contact } from '@/types/types'
 
 type ContactsProp = {
-  contacts: Contact[]
-  setDisplayContact: Dispatch<SetStateAction<Contact | null>>
-  displayContact: Contact | null
+  allContacts: Contact[]
+  firestoreIndexMap: number[]
+  setDisplayContact: Dispatch<
+    SetStateAction<null | {
+      firestoreIndex: number
+      contact: Contact
+    }>
+  >
 }
 
-const ContactList = ({ contacts, setDisplayContact }: ContactsProp) => {
-  const contactItems = contacts.map((contact) => {
+const ContactList = ({
+  allContacts,
+  firestoreIndexMap,
+  setDisplayContact
+}: ContactsProp) => {
+  const contactItems = firestoreIndexMap.map((firestoreIndex) => {
     return (
       <ContactItem
-        contact={contact}
+        contact={allContacts[firestoreIndex]}
+        firestoreIndex={firestoreIndex}
         image=''
-        key={contact.id}
+        key={firestoreIndex}
         setDisplayContact={setDisplayContact}
       />
     )

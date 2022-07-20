@@ -8,11 +8,25 @@ import type { Contact } from '@/types/types'
 
 type ContactProp = {
   contact: Contact
-  setDisplayContact: Dispatch<SetStateAction<Contact | null>>
+  firestoreIndex: number
+  modifyContact: (index: number, contact: Contact) => void
+  setDisplayContact: Dispatch<
+    SetStateAction<null | {
+      firestoreIndex: number
+      contact: Contact
+    }>
+  >
 }
 
-const ContactDetails = ({ contact, setDisplayContact }: ContactProp) => {
-  const [isEditing, setIsEditing] = useState(false)
+const ContactDetails = ({
+  contact,
+  firestoreIndex,
+  modifyContact,
+  setDisplayContact
+}: ContactProp) => {
+  const [isEditing, setIsEditing] = useState<boolean>(false)
+  // This exists to show contact changes without page reload
+  const [contactInfo, setContactInfo] = useState<Contact>(contact)
 
   return (
     <>
@@ -38,9 +52,16 @@ const ContactDetails = ({ contact, setDisplayContact }: ContactProp) => {
         </div>
       </div>
       {!isEditing ? (
-        <ContactInfo contact={contact} image='' />
+        <ContactInfo contact={contactInfo} image='' />
       ) : (
-        <ContactForm contact={contact} image='' setIsEditing={setIsEditing} />
+        <ContactForm
+          contact={contactInfo}
+          firestoreIndex={firestoreIndex}
+          setContactInfo={setContactInfo}
+          modifyContact={modifyContact}
+          image=''
+          setIsEditing={setIsEditing}
+        />
       )}
     </>
   )

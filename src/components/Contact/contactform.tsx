@@ -11,17 +11,25 @@ import type { Contact, Pet } from '@/types/types'
 
 type ContactInfoProps = {
   contact: Contact
+  firestoreIndex: number
+  modifyContact: (index: number, contact: Contact) => void
   image: string
+  setContactInfo: Dispatch<SetStateAction<Contact>>
   setIsEditing: Dispatch<SetStateAction<boolean>>
 }
 
-const ContactForm = ({ contact, image, setIsEditing }: ContactInfoProps) => {
+const ContactForm = ({
+  contact,
+  firestoreIndex,
+  setContactInfo,
+  modifyContact,
+  image,
+  setIsEditing
+}: ContactInfoProps) => {
   const [pets, setPets] = useState<Pet[]>(contact.pets)
   const [regions, setRegions] = useState(contact.region)
   const [tags, setTags] = useState(contact.tags)
   const [contactForm, setContactForm] = useState(contact)
-
-  //const { userDoc, updateContact } = useFirestore()
 
   function addPet() {
     const newPetField = {
@@ -75,9 +83,9 @@ const ContactForm = ({ contact, image, setIsEditing }: ContactInfoProps) => {
   const submitForm = (e: React.FormEvent) => {
     e.preventDefault()
     // TODO: submit to firestore here
+    modifyContact(firestoreIndex, contactForm)
+    setContactInfo(contactForm)
     setIsEditing(false)
-    //userDoc.Contacts
-    //updateContact?.(contactForm)
 
     // TODO: reload page here
   }
