@@ -24,7 +24,7 @@ const Home = () => {
             </h1>
             <Summary />
             <br />
-            <div className='flex justify-center '>
+            <div className='flex justify-center'>
               <Modal />
             </div>
             <br />

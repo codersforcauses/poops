@@ -1,15 +1,15 @@
 import React from 'react'
 import { useState } from 'react'
 
+import ClientSelector from '@/components/Home/clientSelector'
 import CommuteSelector from '@/components/Home/commuteSelector'
-import PetSelector from '@/components/Home/petSelector'
 import TextForm from '@/components/Home/textForm'
 import TypeSelector from '@/components/Home/typeSelector'
 
 function Modal() {
   const [modalIsOpen, setModalOpen] = useState(false)
   const [commute, setCommute] = useState('')
-  const [pets, setPets] = useState<string[]>([])
+  const [clients, setClients] = useState<string[]>([])
   const [type, setType] = useState('')
   const [walkDistance, setWalkDistance] = useState(0)
   const [other, setOther] = useState('')
@@ -23,7 +23,7 @@ function Modal() {
         commute == 'Public Transport' ||
         (commute == 'Other' && other != '')) &&
       (type == 'Vet' || (type == 'Walk' && walkDistance > 0)) &&
-      pets.length > 0
+      clients.length > 0
     )
   }
 
@@ -77,7 +77,7 @@ function Modal() {
             )}
 
             {/* Pet Selector Form */}
-            <PetSelector pets={pets} setPets={setPets} />
+            <ClientSelector clients={clients} setClients={setClients} />
 
             {/* Type Selector Form */}
             <TypeSelector type={type} setType={setType} />
@@ -104,7 +104,7 @@ function Modal() {
             className='relative h-[30px] w-[120px] rounded-lg bg-dark-red text-lg font-semibold text-white'
             onClick={() => {
               setModalOpen(false),
-                setPets([]),
+                setClients([]),
                 setType(''),
                 setCommute(''),
                 setWalkDistance(0),
