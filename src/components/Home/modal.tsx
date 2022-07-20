@@ -1,6 +1,7 @@
 import React from 'react'
 import { useState } from 'react'
 
+// import { useFirestore } from '@/context/firestore'
 import ClientSelector from '@/components/Home/clientSelector'
 import CommuteSelector from '@/components/Home/commuteSelector'
 import TextForm from '@/components/Home/textForm'
@@ -14,6 +15,7 @@ function Modal() {
   const [walkDistance, setWalkDistance] = useState(0)
   const [other, setOther] = useState('')
   const [commuteDistance, setCommuteDistance] = useState(0)
+  // const { visitDoc, setDoc } = useFirestore()
 
   function formIsFilled() {
     return (
@@ -50,7 +52,26 @@ function Modal() {
           <hr className='mb-3 h-0.5 border-dark-red bg-dark-red text-dark-red' />
 
           {/* Visit Form */}
-          <form>
+          <form
+          // onSubmit={(event) => {
+          //   const visit: visitData = {
+          //     type: type,
+          //     clients: clients,
+          //     startTime: startTime,
+          //     endTime: endTime,
+          //     duration: endTime - startTime,
+          //     walkDistance: walkDistance,
+          //     commuteDistance: commuteDistance,
+          //     commuteMethod: commute,
+          //   }
+          //   userDoc.visits[props.id] = visit
+          //   const temp: VisitData[] = [...userDoc.visits]
+          //   props.set(temp)
+          //   updateVisit?.(userDoc)
+          //   props.isEditable(false)
+          //   event.preventDefault()
+          // }}
+          >
             {/* Commute Distance Form */}
             <TextForm
               id='commuteDistance'
@@ -101,6 +122,7 @@ function Modal() {
         {/* If modal is opened, display cancel button. Once all information has been filled display stop button*/}
         {modalIsOpen && (
           <button
+            type='submit'
             className='relative h-[30px] w-[120px] rounded-lg bg-dark-red text-lg font-semibold text-white'
             onClick={() => {
               setModalOpen(false),
