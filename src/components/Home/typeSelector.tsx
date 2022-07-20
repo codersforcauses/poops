@@ -6,8 +6,7 @@ import singleStyles from '@/components/Home/singleStyles'
 
 const typeOptions = [
   { value: 'Vet', label: 'Vet' },
-  { value: 'Walk', label: 'Walk' },
-  { value: 'Transportation', label: 'Transportation' }
+  { value: 'Walk', label: 'Walk' }
 ]
 
 type Props = {

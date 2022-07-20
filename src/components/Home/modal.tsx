@@ -22,9 +22,7 @@ function Modal() {
         commute == 'Drive' ||
         commute == 'Public Transport' ||
         (commute == 'Other' && other != '')) &&
-      (type == 'Vet' ||
-        type == 'Transportation' ||
-        (type == 'Walk' && walkDistance > 0)) &&
+      (type == 'Vet' || (type == 'Walk' && walkDistance > 0)) &&
       pets.length > 0
     )
   }
