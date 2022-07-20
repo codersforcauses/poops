@@ -8,10 +8,10 @@ import { useFirestore } from '@/context/firestore'
 import { VisitData } from '@/types/types'
 
 interface EditVisitInstanceProps extends VisitInstanceProps {
-  isEdit: Dispatch<React.SetStateAction<boolean>>
+  isEditable: Dispatch<React.SetStateAction<boolean>>
 }
 
-function NumberForm(value: string) {
+const formatNumber = (value: string) => {
   if (isNaN(parseFloat(value))) {
     return 0
   }
@@ -48,107 +48,110 @@ const EditableVisitInstance = (props: EditVisitInstanceProps) => {
         const temp: VisitData[] = [...userDoc.visits] //temp needed for react to rerender
         props.set(temp)
         updateVisit?.(userDoc)
+        props.isEditable(false)
         event.preventDefault()
-        props.isEdit(false)
       }}
     >
       <div className='font-bold peer-checked:font-normal'>
         <input
           placeholder='Start Time'
+          type='datetime-local'
           value={startTime}
           onChange={(event) => setStartTime(event.target.value)}
           className='bg-cream font-normal text-primary'
+          required
         />
+        <input
+          className='bg-cream text-sm font-normal text-primary'
+          placeholder='Display Name'
+          value={displayName}
+          onChange={(event) => setDisplayName(event.target.value)}
+          required
+        />
+      </div>
+      <div className='text-sm'>
         <div>
+          Visit Type:{' '}
           <input
-            size={16}
-            className='bg-cream text-sm font-normal text-primary'
-            placeholder='Display Name'
-            value={displayName}
-            onChange={(event) => setDisplayName(event.target.value)}
+            className='bg-cream text-primary'
+            placeholder='Type'
+            value={visitType}
+            onChange={(event) => setVisitType(event.target.value)}
+            required
+          />
+        </div>
+        <div>
+          Pet/Pets:{' '}
+          <input
+            className='bg-cream text-primary'
+            placeholder='Pet Name(s)'
+            value={petNames}
+            onChange={(event) => setpetNames(event.target.value)}
+            required
+          />
+        </div>
+        <div>
+          End Time:{' '}
+          <input
+            type='datetime-local'
+            className='bg-cream text-primary'
+            placeholder='End Time'
+            value={endTime}
+            onChange={(event) => setEndTime(event.target.value)}
+            required
+          />
+        </div>
+        <div>Duration: {formatDuration(props.startTime, props.endTime)}</div>
+        <div>
+          Walk Distance:{' '}
+          <input
+            className='bg-cream p-0 text-sm text-primary'
+            type='number'
+            step='0.001'
+            placeholder='Distance'
+            value={walkDist.toString()}
+            onChange={(event) => {
+              setWalkDist(formatNumber(event.target.value))
+            }}
+            required
+          />
+        </div>
+        <div>
+          Commute Distance:{' '}
+          <input
+            className='bg-cream text-primary'
+            type='number'
+            step='0.001'
+            placeholder='Distance'
+            value={commuteDist.toString()}
+            onChange={(event) => {
+              setCommuteDist(formatNumber(event.target.value))
+            }}
+            required
+          />
+        </div>
+        <div>
+          Commute Method:{' '}
+          <input
+            className='bg-cream text-primary'
+            placeholder='Method'
+            value={commuteMethod}
+            onChange={(event) => setCommuteMethod(event.target.value)}
+            required
+          />
+        </div>
+        <div>
+          Notes:
+          <br />
+          <textarea
+            className='w-full bg-cream text-primary'
+            placeholder='Add notes here'
+            value={notes}
+            onChange={(event) => setNotes(event.target.value)}
           />
         </div>
       </div>
-      <p className='text-sm'>
-        Visit Type:{' '}
-        <input
-          size={8}
-          className='bg-cream text-primary'
-          placeholder='Type'
-          value={visitType}
-          onChange={(event) => setVisitType(event.target.value)}
-        />
-      </p>{' '}
-      <p className='text-sm'>
-        Pet/Pets:{' '}
-        <input
-          size={16}
-          className='bg-cream text-primary'
-          placeholder='Pet Name(s)'
-          value={petNames}
-          onChange={(event) => setpetNames(event.target.value)}
-        />
-      </p>
-      <p className='text-sm'>
-        End Time:{' '}
-        <input
-          type='datetime-local'
-          size={8}
-          className='bg-cream text-primary'
-          placeholder='End Time'
-          value={endTime}
-          onChange={(event) => setEndTime(event.target.value)}
-        />
-      </p>
-      <p className='text-sm'>Duration: {formatDuration(props)}</p>
-      <p className='text-sm'>
-        Walk Metres:{' '}
-        <input
-          size={8}
-          className='bg-cream p-0 text-sm text-primary'
-          type='number'
-          step='0.001'
-          placeholder='Distance'
-          value={walkDist.toString()}
-          onChange={(event) => {
-            setWalkDist(NumberForm(event.target.value))
-          }}
-        />
-      </p>
-      <p className='text-sm'>
-        Commute Metres:{' '}
-        <input
-          size={8}
-          className='bg-cream text-primary'
-          type='number'
-          step='0.001'
-          placeholder='Distance'
-          value={commuteDist.toString()}
-          onChange={(event) => {
-            setCommuteDist(NumberForm(event.target.value))
-          }}
-        />
-      </p>
-      <p className='text-sm'>
-        Commute Method:{' '}
-        <input
-          size={8}
-          className='bg-cream text-primary'
-          placeholder='Method'
-          value={commuteMethod}
-          onChange={(event) => setCommuteMethod(event.target.value)}
-        />
-      </p>
-      <p className='text-sm'>
-        Notes:{' '}
-        <input // maybe use textarea tag instead?
-          size={24}
-          className='bg-cream text-primary'
-          placeholder='Notes'
-          value={notes}
-          onChange={(event) => setNotes(event.target.value)}
-        />
-      </p>
+
       <button
         type='submit'
         className='text-bold mt-2 rounded-xl bg-primary p-2 text-white drop-shadow-default active:bg-dark-red'

@@ -16,22 +16,20 @@ const Visit = () => {
     <>
       <Header pageTitle='Visit' />
       <main>
-        <>
-          {!isModalOpen ? (
-            <div className='flex w-screen flex-col p-4'>
-              <div className='align-center flex flex-row justify-around'>
-                <SearchBar
-                  onChange={(event) => setSearchQuery(event.target.value)}
-                />
-                <AddButton toggleModal={toggleModal} />
-              </div>
-
-              <VisitList searchQuery={searchQuery} />
+        {!isModalOpen ? (
+          <div className='flex w-screen flex-col p-4'>
+            <div className='align-center flex flex-row justify-around'>
+              <SearchBar
+                onChange={(event) => setSearchQuery(event.target.value)}
+              />
+              <AddButton toggleModal={toggleModal} />
             </div>
-          ) : (
-            <Modal toggleModal={toggleModal} />
-          )}
-        </>
+
+            <VisitList searchQuery={searchQuery} />
+          </div>
+        ) : (
+          <Modal toggleModal={toggleModal} />
+        )}
       </main>
       <NavBar />
     </>

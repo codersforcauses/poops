@@ -1,6 +1,5 @@
 import React, { Dispatch, SetStateAction, useState } from 'react'
 import ChevronDownIcon from '@heroicons/react/outline/ChevronDownIcon'
-import moment from 'moment'
 
 import { VisitData } from '@/types/types'
 
@@ -13,12 +12,18 @@ export interface VisitInstanceProps extends VisitData {
   id: number
 }
 
-export const formatDuration = (props: VisitData) => {
-  const start = moment(props.startTime)
-  const diff = moment(props.endTime).diff(start)
-  // does not work for durations more than 24 hours
-  const format = moment.utc(diff).format('H [hrs] m [mins]')
-  return format
+// I hate math
+export const formatDuration = (startTime: string, endTime: string) => {
+  const start = new Date(startTime).getTime()
+  const end = new Date(endTime).getTime()
+  const diff = end - start
+
+  if (diff < 0) return 'Start Time is after End Time'
+
+  const hours = diff / 3600000
+  const floorHours = Math.floor(hours)
+  const mins = (hours - floorHours) * 60
+  return `${floorHours} hrs ${Math.round(mins)} mins`
 }
 
 const VisitInstance = (props: VisitInstanceProps) => {
@@ -47,34 +52,9 @@ const VisitInstance = (props: VisitInstanceProps) => {
             }}
           />
           {isEditable ? (
-            <EditableVisitInstance
-              isEdit={setIsEditable}
-              set={props.set}
-              id={props.id}
-              key={props.id}
-              type={props.type}
-              displayName={props.displayName}
-              petNames={props.petNames}
-              startTime={props.startTime}
-              endTime={props.endTime}
-              walkDist={props.walkDist}
-              commuteDist={props.commuteDist}
-              commuteMethod={props.commuteMethod}
-              notes={props.notes}
-            />
+            <EditableVisitInstance isEditable={setIsEditable} {...props} />
           ) : (
-            <ReadOnlyVisitInstance
-              key={props.id}
-              type={props.type}
-              displayName={props.displayName}
-              petNames={props.petNames}
-              endTime={props.endTime}
-              startTime={props.startTime}
-              walkDist={props.walkDist}
-              commuteDist={props.commuteDist}
-              commuteMethod={props.commuteMethod}
-              notes={props.notes}
-            />
+            <ReadOnlyVisitInstance {...props} />
           )}
 
           <EditButton isEditable={isEditable} setIsEditable={setIsEditable} />

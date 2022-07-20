@@ -74,9 +74,10 @@ const ModalView = ({ toggleModal }: ModalViewProps) => {
           </button>
         </div>
 
-        <h1 className='mx-1 border-b-2 border-primary py-3 pt-10 text-2xl font-bold'>
-          Add Your Visit
-        </h1>
+        <div className='border-b-2 border-primary py-3 pt-10'>
+          <h1 className='pl-2 text-2xl font-bold'>Add Your Visit</h1>
+        </div>
+
         <form className='pt-3' onSubmit={handleSubmit}>
           <table className='container mx-auto table-fixed'>
             <tbody>
