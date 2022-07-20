@@ -127,7 +127,7 @@ function ContactInfo({ contact, image }: ContactInfoProps) {
 export default ContactInfo
 
 const Box = tw.div`
-    bg-grey
+    bg-gray-300
     bg-opacity-20
     box-content
     w-80
