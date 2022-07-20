@@ -8,8 +8,8 @@ interface SummaryStatistics {
 function Statistics(props: SummaryStatistics) {
   return (
     <div>
-      <p style={{ fontSize: 16 }}>{props.title}</p>
-      <p style={{ fontSize: 28, color: '#a52a2a' }}>{props.data}</p>
+      <p className='mt-2 text-lg'>{props.title}</p>
+      <p className='text-3xl text-dark-red'>{props.data}</p>
     </div>
   )
 }

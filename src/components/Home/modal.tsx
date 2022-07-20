@@ -34,7 +34,7 @@ function Modal() {
       {/* If modal is closed, display start button */}
       {!modalIsOpen && (
         <button
-          className='text-l relative h-[30px] w-[120px] rounded-lg bg-dark-red font-semibold text-white'
+          className='relative h-[30px] w-[120px] rounded-lg bg-dark-red text-lg font-semibold text-white'
           onClick={() => {
             setModalOpen(true)
           }}
@@ -45,27 +45,14 @@ function Modal() {
 
       {/* Displays modal */}
       {modalIsOpen && (
-        <div
-          className='rounded-lg p-3 py-2 px-5 text-center shadow-lg sm:py-4'
-          style={{
-            padding: 25,
-            background: '#F9F9F9'
-          }}
-        >
-          <h1 style={{ fontSize: 20, color: '#a52a2a' }}>
+        <div className='rounded-lg bg-zinc-200 py-4 px-5 text-center shadow-lg sm:py-4'>
+          <h1 className='mb-2 text-xl text-dark-red'>
             <b>Visit Details</b>
           </h1>
-          <hr
-            style={{
-              background: '#a52a2a',
-              color: '#a52a2a',
-              borderColor: '#a52a2a',
-              height: '1.5px'
-            }}
-          />
+          <hr className='mb-3 h-0.5 border-dark-red bg-dark-red text-dark-red' />
 
           {/* Visit Form */}
-          <form style={{ fontSize: 16 }}>
+          <form>
             {/* Commute Distance Form */}
             <TextForm
               id='commuteDistance'
@@ -116,7 +103,7 @@ function Modal() {
         {/* If modal is opened, display cancel button. Once all information has been filled display stop button*/}
         {modalIsOpen && (
           <button
-            className='text-l relative h-[30px] w-[120px] rounded-lg bg-dark-red font-semibold text-white'
+            className='relative h-[30px] w-[120px] rounded-lg bg-dark-red text-lg font-semibold text-white'
             onClick={() => {
               setModalOpen(false),
                 setPets([]),

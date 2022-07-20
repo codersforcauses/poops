@@ -2,6 +2,8 @@ import { Dispatch, SetStateAction, useState } from 'react'
 import { default as ReactSelect } from 'react-select'
 import { SingleValue } from 'react-select'
 
+import singleStyles from '@/components/Home/singleStyles'
+
 const typeOptions = [
   { value: 'Vet', label: 'Vet' },
   { value: 'Walk', label: 'Walk' },
@@ -27,13 +29,15 @@ function TypeSelector({ setType }: Props) {
   return (
     <div className='flex flex-col p-1'>
       <label htmlFor='type'>
-        <span className='text-primary'>*</span>Type of Visit
+        <span className='text-primary'>*</span>
+        <b>Type of Visit</b>
       </label>
       <ReactSelect
         name='type'
         options={typeOptions}
         value={typeSelected}
         onChange={handleChange}
+        styles={singleStyles}
       />
     </div>
   )

@@ -14,19 +14,15 @@ function TextForm(props: FormFieldProps) {
     <div className='flex flex-col p-1'>
       <label htmlFor={props.id}>
         <span className='text-primary'>{props.isRequired ? '*' : ''}</span>
-        {props.label}
+        <b>{props.label}</b>
       </label>
       <input
-        className='placeholder::text-[#6b7280] form-input ma rounded text-black'
+        className='mt-1 mb-2 flex h-9 rounded border py-0.5 px-4 text-center focus:outline-none'
         id={props.id}
         type={props.type}
         required={props.isRequired}
         placeholder={props.placeholder}
         onChange={props.onChange}
-        style={{
-          height: '35px',
-          textAlign: 'center'
-        }}
       />
     </div>
   )

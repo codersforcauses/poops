@@ -2,6 +2,8 @@ import { Dispatch, SetStateAction, useState } from 'react'
 import { default as ReactSelect } from 'react-select'
 import { MultiValue } from 'react-select'
 
+import multiStyles from '@/components/Home/multiStyles'
+
 const petOptions = [
   { value: 'Willow (Client)', label: 'Willow (Client)' },
   { value: 'Nala (Client)', label: 'Nala (Client)' },
@@ -28,7 +30,7 @@ function PetSelector({ setPets }: Props) {
     <div className='flex flex-col p-1'>
       <label htmlFor='pets'>
         <span className='text-primary'>*</span>
-        Select Pets
+        <b>Select Pets</b>
       </label>
       <ReactSelect
         name='pets'
@@ -38,6 +40,7 @@ function PetSelector({ setPets }: Props) {
         isMulti
         hideSelectedOptions={false}
         onChange={handleChange}
+        styles={multiStyles}
       />
     </div>
   )

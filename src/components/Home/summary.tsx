@@ -2,32 +2,25 @@ import React from 'react'
 
 import Statistics from '@/components/Home/statistics'
 
+const dummyVisitData = '12'
+const dummyDistanceData = '6.5'
+
 function Summary() {
   return (
-    <div
-      className='rounded-lg p-3 py-2 px-5 text-center shadow-lg sm:py-4'
-      style={{ background: '#F9F9F9' }}
-    >
-      <h1 style={{ fontSize: 20, color: '#a52a2a' }}>
+    <div className='rounded-lg bg-zinc-200 py-4 px-5 text-center shadow-lg sm:py-4'>
+      <h1 className='mb-2 text-xl text-dark-red'>
         <b>Summary Dashboard</b>
       </h1>
-      <hr
-        style={{
-          background: '#a52a2a',
-          color: '#a52a2a',
-          borderColor: '#a52a2a',
-          height: '1.5px'
-        }}
-      />
+      <hr className='h-0.5 border-dark-red bg-dark-red text-dark-red' />
       <div>
-        <table style={{ width: '100%' }}>
+        <table className='w-full'>
           <tbody>
             <tr>
               <td>
-                <Statistics title='Number of Visits' data='12' />
+                <Statistics title='Number of Visits' data={dummyVisitData} />
               </td>
               <td>
-                <Statistics title='Distance Walked' data='6.5km' />
+                <Statistics title='Distance Walked' data={dummyDistanceData} />
               </td>
             </tr>
           </tbody>

@@ -2,6 +2,8 @@ import { Dispatch, SetStateAction, useState } from 'react'
 import { default as ReactSelect } from 'react-select'
 import { SingleValue } from 'react-select'
 
+import singleStyles from '@/components/Home/singleStyles'
+
 const commuteOptions = [
   { value: 'Walk', label: 'Walk' },
   { value: 'Drive', label: 'Drive' },
@@ -29,13 +31,15 @@ function CommuteSelector({ setCommute }: Props) {
   return (
     <div className='flex flex-col p-1'>
       <label htmlFor='commute'>
-        <span className='text-primary'>*</span>Commute Method
+        <span className='text-primary'>*</span>
+        <b>Commute Method</b>
       </label>
       <ReactSelect
         name='commute'
         options={commuteOptions}
         value={commuteSelected}
         onChange={handleChange}
+        styles={singleStyles}
       />
     </div>
   )
