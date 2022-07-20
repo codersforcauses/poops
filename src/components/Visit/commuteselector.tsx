@@ -30,7 +30,7 @@ const getLocalStorage = () => {
   return store
 }
 
-const getCommuteMethods = () => {
+export const getCommuteMethods = () => {
   const commuteMethods: CommuteMethod[] = []
   if (typeof window !== `undefined`) {
     getLocalStorage().forEach((method) => {

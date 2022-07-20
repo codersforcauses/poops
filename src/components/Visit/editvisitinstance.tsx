@@ -1,5 +1,6 @@
 import React, { Dispatch, useState } from 'react'
 
+import { getCommuteMethods } from '@/components/Visit/commuteselector'
 import {
   formatDuration,
   VisitInstanceProps
@@ -140,13 +141,19 @@ const EditableVisitInstance = (props: EditVisitInstanceProps) => {
         </div>
         <div>
           Commute Method:{' '}
-          <input
+          <select
             className='bg-cream text-primary'
-            placeholder='Method'
-            value={commuteMethod}
             onChange={(event) => setCommuteMethod(event.target.value)}
+            value={commuteMethod}
             required
-          />
+          >
+            <option value=''>Select...</option>
+            {getCommuteMethods().map((o, i) => (
+              <option key={i} value={o.value}>
+                {o.label}
+              </option>
+            ))}
+          </select>
         </div>
         <div>
           Notes:
