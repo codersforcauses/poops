@@ -7,6 +7,8 @@ import {
 import { useFirestore } from '@/context/firestore'
 import { VisitData } from '@/types/types'
 
+import { visitSelectOptions } from './visitlist'
+
 interface EditVisitInstanceProps extends VisitInstanceProps {
   isEditable: Dispatch<React.SetStateAction<boolean>>
 }
@@ -72,13 +74,19 @@ const EditableVisitInstance = (props: EditVisitInstanceProps) => {
       <div className='text-sm'>
         <div>
           Visit Type:{' '}
-          <input
+          <select
             className='bg-cream text-primary'
-            placeholder='Type'
-            value={visitType}
             onChange={(event) => setVisitType(event.target.value)}
+            value={visitType}
             required
-          />
+          >
+            <option value=''>Select...</option>
+            {visitSelectOptions.map((o, i) => (
+              <option key={i} value={o.value}>
+                {o.label}
+              </option>
+            ))}
+          </select>
         </div>
         <div>
           Pet/Pets:{' '}

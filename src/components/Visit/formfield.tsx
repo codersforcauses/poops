@@ -1,3 +1,5 @@
+import { SelectOption } from '@/types/types'
+
 export interface FormFieldProps {
   id: string
   label: string
@@ -10,11 +12,6 @@ export interface FormFieldProps {
   ) => void
   selectOptions?: SelectOption[]
   isRequired: boolean
-}
-
-export interface SelectOption {
-  label: string
-  value: string
 }
 
 const FormField = (props: FormFieldProps) => {

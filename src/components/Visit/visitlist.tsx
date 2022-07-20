@@ -1,9 +1,14 @@
 import { useEffect, useState } from 'react'
 
 import { useFirestore } from '@/context/firestore'
-import { VisitData } from '@/types/types'
+import { SelectOption, VisitData } from '@/types/types'
 
 import VisitInstance from './visitinstance'
+
+export const visitSelectOptions: SelectOption[] = [
+  { label: 'Vet', value: 'Vet' },
+  { label: 'Walk', value: 'Walk' }
+]
 
 interface VisitListProps {
   searchQuery: string

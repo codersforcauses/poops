@@ -50,3 +50,8 @@ export interface Contact {
   notes: string
   tags: string[]
 }
+
+export interface SelectOption {
+  label: string
+  value: string
+}

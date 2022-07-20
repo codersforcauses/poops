@@ -2,16 +2,12 @@ import React from 'react'
 import { useState } from 'react'
 import { XIcon } from '@heroicons/react/solid'
 
+import { visitSelectOptions } from '@/components/Visit/visitlist'
 import { useFirestore } from '@/context/firestore'
 import { VisitData } from '@/types/types'
 
 import CommuteSelector from './commuteselector'
-import FormField, { SelectOption } from './formfield'
-
-const visitSelectOptions: SelectOption[] = [
-  { label: 'Vet', value: 'Vet' },
-  { label: 'Walk', value: 'Walk' }
-]
+import FormField from './formfield'
 
 interface ModalViewProps {
   toggleModal: () => void
