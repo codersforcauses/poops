@@ -7,8 +7,8 @@ import ContactList from '@/components/Contact/contactlist'
 import ProfileItem from '@/components/Contact/profileitem'
 import Header from '@/components/Header'
 import NavBar from '@/components/NavBar'
-import SearchBar from '@/components/SearchBar/searchbar'
-import SearchTag from '@/components/SearchBar/searchtag'
+import SearchBar from '@/components/SearchBar'
+import SearchTag from '@/components/SearchBar/searchTag'
 import type { Contact } from '@/types/types'
 // import { withProtected } from '@/components/PrivateRoute
 
@@ -23,21 +23,22 @@ const Contact = () => {
   const [filteredContacts, setFilteredContacts] =
     useState<Contact[]>(CONTACT_DATA)
 
-  const [selectedTag, setSelectedTag] = useState('')
-  const [searchFieldString, setSearchFieldString] = useState('')
+  const [selectedTag, setSelectedTag] = useState<string>('')
+  const [searchFieldString, setSearchFieldString] = useState<string>('')
 
   function filterContact(tagf: string, searchField: string) {
     const filteredContacts = CONTACT_DATA.filter((contact) => {
       const full_name = contact.firstName + ' ' + contact.lastName
 
+      // start for string, comma, or whitspace = word start, ignores case
+      const start = /(^|\s|,)/
+      const reg = new RegExp(`${start}${searchField}`, 'gi')
+
       // don't show contacts without selected tag if tag selected
       if (tagf !== '' && !contact.tags.some((v) => v.includes(tagf)))
         return false
 
-      return (
-        full_name.toLocaleLowerCase().includes(searchField) ||
-        contact.pets.toLocaleLowerCase().includes(searchField)
-      )
+      return reg.test(full_name) || reg.test(contact.pets)
     })
     setFilteredContacts(filteredContacts)
   }
