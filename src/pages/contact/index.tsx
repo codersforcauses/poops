@@ -8,7 +8,7 @@ import ProfileItem from '@/components/Contact/profileitem'
 import Header from '@/components/Header'
 import NavBar from '@/components/NavBar'
 import SearchBar from '@/components/SearchBar'
-import SearchTag from '@/components/SearchBar/searchTag'
+import SearchTag from '@/components/SearchBar'
 import type { Contact } from '@/types/types'
 // import { withProtected } from '@/components/PrivateRoute
 
