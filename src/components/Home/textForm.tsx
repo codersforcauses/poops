@@ -17,7 +17,7 @@ function TextForm(props: FormFieldProps) {
         <b>{props.label}</b>
       </label>
       <input
-        className='mt-1 mb-2 flex h-9 rounded border py-0.5 px-4 text-center focus:outline-none'
+        className='mt-1 mb-2 flex h-9 rounded border border-[#6b7280] py-0.5 px-4 text-center focus:outline-none'
         id={props.id}
         type={props.type}
         required={props.isRequired}

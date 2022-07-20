@@ -4,34 +4,27 @@ import Summary from '@/components/Home/summary'
 import NavBar from '@/components/NavBar'
 // import { withProtected } from '@/components/PrivateRoute'
 
+const dummyUsername = 'User'
+
 const Home = () => {
   return (
     <>
       <Header pageTitle='Home' />
-
       <main
+        className='bg-contain bg-fixed bg-no-repeat '
         style={{
           backgroundImage: `url(/images/dog-home.jpeg)`,
-          backgroundPosition: '50% calc(100% - 4rem)',
-          backgroundAttachment: 'fixed',
-          backgroundRepeat: 'no-repeat',
-          backgroundSize: 'contain'
+          backgroundPosition: '50% calc(100% - 4rem)'
         }}
       >
-        <div className='space-between w-100 h-100 flex flex-col'>
+        <div className='m-auto flex w-screen flex-col'>
           <div className='flex h-screen flex-col px-4'>
-            <h1 style={{ fontSize: 30 }} className='py-2 text-center'>
-              Welcome, User!
+            <h1 className='py-3 text-center text-3xl'>
+              Welcome, {dummyUsername}!
             </h1>
             <Summary />
             <br />
-            <div
-              style={{
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center'
-              }}
-            >
+            <div className='flex justify-center'>
               <Modal />
             </div>
           </div>

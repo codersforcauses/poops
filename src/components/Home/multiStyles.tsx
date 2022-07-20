@@ -13,7 +13,7 @@ const singleStyles: StylesConfig<OptionType, true, GroupBase<OptionType>> = {
     borderRadius: '4px',
     backgroundColor: '#fff',
     borderColor: '#6b7280',
-    border: '1px solid black',
+    border: '1px solid #6b7280',
     height: '36px'
   }),
   input: (provided: Record<string, unknown>) => ({
