@@ -73,7 +73,9 @@ const Contact = () => {
             <SearchTag
               name='Filter By'
               options={tagFilter}
-              onChangehandler={(e) => onSearchTagChange(e)}
+              onChangehandler={(e: React.ChangeEvent<HTMLSelectElement>) =>
+                onSearchTagChange(e)
+              }
             />
             <div className='flex w-full justify-between'>
               <SearchBar onChangeHandler={onSearchChange} />
