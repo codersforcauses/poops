@@ -21,14 +21,4 @@ if (!getApps().length) {
 
 export const auth = getAuth(app) //get the current firebase user
 export const db = getFirestore(app) //stores reference of database instance
-
-//check if currentUser is null if not null return the current user
-export const getCurrentUser = () => {
-  const currentUser = auth.currentUser
-  if (currentUser === null) {
-    return
-  }
-  return currentUser
-}
-
 export default app

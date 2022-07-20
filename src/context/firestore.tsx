@@ -18,7 +18,7 @@ import {
 
 import { MESSAGES } from '@/components/Firebase/errors'
 import { db } from '@/components/Firebase/init'
-import { useAuth } from '@/context/auth'
+import { useAuth } from '@/context/AuthContext'
 
 import { UserData } from '../types/types'
 

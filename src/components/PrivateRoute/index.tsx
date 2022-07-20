@@ -1,7 +1,7 @@
 import React from 'react'
 import { useRouter } from 'next/router'
 
-import { useAuth } from '@/context/auth'
+import { useAuth } from '@/context/AuthContext'
 
 export function withPublic(Component: React.ComponentType) {
   return function PublicComponent(props: object) {

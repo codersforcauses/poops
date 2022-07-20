@@ -16,6 +16,10 @@ export const VisitList = (props: VisitListProps) => {
     setVisits(userDoc.visits)
   }, [userDoc.visits])
 
+  if (visits === undefined) {
+    setVisits([])
+  }
+
   const matchesDisplayName = (post: VisitData) =>
     post.displayName.toLowerCase().includes(props.searchQuery.toLowerCase())
 

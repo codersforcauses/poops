@@ -17,7 +17,7 @@ import {
   User
 } from 'firebase/auth'
 
-import LoginButton from '@/components/LoginPanel/button'
+import LoginButton from '@/components/Login/LoginButton'
 
 import { useAuth } from '../../context/AuthContext'
 
