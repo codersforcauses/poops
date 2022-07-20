@@ -81,7 +81,7 @@ const ContactForm = ({
     if (setIsEditing !== undefined) setIsEditing(false)
 
     if (isNewContact) {
-      // TODO: generate UUID for the new contact (or let firestore do it)
+      // TODO: generate UUID (uuid lib or server timestamp)for the new contact (or let firestore do it)
       // TODO: submit to firestore here
     } else {
       // TODO: update firestore entry for existing uuid
