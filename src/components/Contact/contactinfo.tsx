@@ -6,8 +6,7 @@ import {
 import tw from 'tailwind-styled-components'
 
 import Avatar from '@/components/Contact/avatar'
-import { AlertIcon } from '@/components/UI/alert'
-import { useAlert } from '@/context/AlertContext'
+import { AlertVariant, useAlert } from '@/context/AlertContext'
 import type { Contact } from '@/types/types'
 
 type ContactInfoProps = {
@@ -132,11 +131,10 @@ function ContactInfo({ contact, image }: ContactInfoProps) {
           type='button'
           onClick={() => {
             setAlert({
-              icon: AlertIcon.critical,
+              variant: AlertVariant.security,
               title: 'Delete Contact',
               text: 'Are you sure?',
-              position: 'bottom', // Slides up from bottom
-              showFor: -1,
+              position: 'bottom',
               confirmFunction: () => DeleteContact
             })
           }}
