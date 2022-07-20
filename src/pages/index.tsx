@@ -17,8 +17,8 @@ const Home = () => {
           backgroundPosition: '50% calc(100% - 4rem)'
         }}
       >
-        <div className='m-auto flex w-screen flex-col'>
-          <div className='flex h-screen flex-col px-4'>
+        <div className='m-auto flex w-screen flex-col	'>
+          <div className='flex flex-col px-4 '>
             <h1 className='py-3 text-center text-3xl'>
               Welcome, {dummyUsername}!
             </h1>
@@ -27,10 +27,13 @@ const Home = () => {
             <div className='flex justify-center'>
               <Modal />
             </div>
+            <br />
           </div>
         </div>
       </main>
-      <NavBar />
+      <div>
+        <NavBar />
+      </div>
     </>
   )
 }
