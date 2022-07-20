@@ -31,8 +31,7 @@ const Contact = () => {
       const full_name = contact.firstName + ' ' + contact.lastName
 
       // start for string, comma, or whitspace = word start, ignores case
-      const start = /(^|\s|,)/
-      const reg = new RegExp(`${start}${searchField}`, 'gi')
+      const reg = new RegExp(`(^|\\s|,)${searchField}`, 'gi')
 
       // don't show contacts without selected tag if tag selected
       if (tagf !== '' && !contact.tags.some((v) => v.includes(tagf)))
