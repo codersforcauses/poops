@@ -28,12 +28,10 @@ const Login: NextPage = () => {
         </div>
 
         <LoginPanel
+          linkAccount={false}
           displayGoogle={true}
           displayFacebook={true}
-          displayTwitter={true}
           displayMicrosoft={true}
-          displayYahoo={false}
-          displayApple={false}
         />
       </div>
       {/* //! used for testing} */}
