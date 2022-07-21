@@ -1,9 +1,11 @@
+import { Timestamp } from 'firebase/firestore'
+
 import { ReportButton, VetConcernButton } from '@/components/Visit/buttons'
 import { formatDuration } from '@/components/Visit/visitinstance'
 import { VisitData } from '@/types/types'
 
-const formatTime = (time: string) => {
-  return new Date(time).toLocaleString().slice(0, -3)
+const formatTime = (time: Timestamp) => {
+  return time.toDate().toLocaleString().slice(0, -3)
 }
 
 const ReadOnlyVisitInstance = (props: VisitData) => {

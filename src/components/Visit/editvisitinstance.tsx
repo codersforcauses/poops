@@ -1,4 +1,5 @@
 import React, { Dispatch, useState } from 'react'
+import { Timestamp } from 'firebase/firestore'
 
 import { getCommuteMethods } from '@/components/Visit/commuteselector'
 import {
@@ -59,8 +60,10 @@ const EditableVisitInstance = (props: EditVisitInstanceProps) => {
         <input
           placeholder='Start Time'
           type='datetime-local'
-          value={startTime}
-          onChange={(event) => setStartTime(event.target.value)}
+          value={startTime.toDate().toLocaleString()}
+          onChange={(event) =>
+            setStartTime(Timestamp.fromDate(new Date(event.target.value)))
+          }
           className='bg-cream font-normal text-primary'
           required
         />
@@ -105,8 +108,10 @@ const EditableVisitInstance = (props: EditVisitInstanceProps) => {
             type='datetime-local'
             className='bg-cream text-primary'
             placeholder='End Time'
-            value={endTime}
-            onChange={(event) => setEndTime(event.target.value)}
+            value={endTime.toDate().toLocaleString()}
+            onChange={(event) =>
+              setEndTime(Timestamp.fromDate(new Date(event.target.value)))
+            }
             required
           />
         </div>
