@@ -1,5 +1,6 @@
 import React, { Dispatch, SetStateAction, useState } from 'react'
 import ChevronDownIcon from '@heroicons/react/outline/ChevronDownIcon'
+import { Timestamp } from 'firebase/firestore'
 
 import { VisitData } from '@/types/types'
 
@@ -13,9 +14,9 @@ export interface VisitInstanceProps extends VisitData {
 }
 
 // I hate math
-export const formatDuration = (startTime: string, endTime: string) => {
-  const start = new Date(startTime).getTime()
-  const end = new Date(endTime).getTime()
+export const formatDuration = (startTime: Timestamp, endTime: Timestamp) => {
+  const start = startTime.toDate().getTime()
+  const end = endTime.toDate().getTime()
   const diff = end - start
 
   if (diff < 0) return 'Start Time is after End Time'
