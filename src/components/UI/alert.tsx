@@ -97,10 +97,7 @@ const Alert: React.FC<AlertProps> = ({ visible, setVisible, content }) => {
 
   return (
     <div
-      className={getContainerClasses(
-        visible,
-        contentCache.position ? contentCache.position : 'top'
-      )}
+      className={getContainerClasses(visible, contentCache.position ?? 'top')}
       style={{ boxShadow: shadow }}
     >
       <div className='h-7 w-7'>
