@@ -39,6 +39,11 @@ exports.helloWorld = functions
       response.send("Hello from Firebase!");
     });
 
+
+
+// ######################################################################
+// Billing Killswitch
+
 const {CloudBillingClient} = require("@google-cloud/billing");
 const billing = new CloudBillingClient();
 
