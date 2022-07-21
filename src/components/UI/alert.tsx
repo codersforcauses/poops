@@ -21,16 +21,18 @@ const shadow =
                 0 16px 32px rgba(0,0,0,0.1),\
                 0 32px 64px rgba(0,0,0,0.1)'
 
+const buttonClasses =
+  'mx-auto mt-2 w-fit rounded-lg bg-primary py-1 px-4 text-lg text-white shadow-md focus:outline-primary active:bg-dark-red'
 const getContainerClasses = (vis: boolean, pos: string) => {
   return (
-    `flex items-center fixed right-0 left-0 z-999 pl-5 pr-4 py-3 mx-[1rem] bg-white text-black border-x-1 border-[#dddddd] transition-transform duration-700` +
+    `flex items-center fixed right-0 left-0 z-999 pointer-events-auto bg-white text-black border-x-1 border-[#dddddd] transition-transform duration-700` +
     `${
       pos === 'top'
-        ? ' rounded-b-md border-b-1 -top-[500px]' +
-          (vis ? ' translate-y-[500px]' : ' translate-y-[250px]')
+        ? ' rounded-b-md border-b-1 -top-[250px] pl-5 pr-4 py-3 mx-[1rem]' +
+          (vis ? ' translate-y-[250px]' : ' translate-y-[0px]')
         : pos === 'bottom' &&
-          ' rounded-t-md border-t-1 bottom-0' +
-            (vis ? ' translate-y-[0]' : ' translate-y-[250px]')
+          ' rounded-t-md border-t-1 bottom-[-250px] p-5 mx-20 flex-wrap justify-center' +
+            (vis ? ' translate-y-[-250px]' : ' translate-y-[0px]')
     }`
   )
 }
@@ -114,35 +116,59 @@ const Alert: React.FC<AlertProps> = ({ visible, setVisible, content }) => {
           )
         )}
       </div>
-      <div className='mx-[1rem] grow self-start'>
+      <div
+        className={
+          contentCache.position === 'bottom'
+            ? 'mx-[1rem]'
+            : 'mx-[1rem] grow self-start'
+        }
+      >
         <p className='font-bold' style={{ color: titleColor }}>
           {contentCache.title}
         </p>
         <p style={{ color: textColor }}>{contentCache.text}</p>
       </div>
-      {typeof contentCache.confirmFunction !== 'undefined' && (
+      {contentCache.position === 'bottom' ? (
+        <div className='h-0 basis-full'></div>
+      ) : (
+        ''
+      )}
+      <div className={contentCache.position === 'bottom' ? 'pt-5' : 'h-5'}>
+        {typeof contentCache.confirmFunction !== 'undefined' && (
+          <button
+            className={
+              contentCache.position === 'bottom'
+                ? buttonClasses + ' mr-4'
+                : 'mr-4'
+            }
+            onClick={(e) => {
+              e.preventDefault()
+              setVisible(false)
+              if (typeof contentCache.confirmFunction !== 'undefined')
+                contentCache.confirmFunction()
+            }}
+          >
+            <CheckIcon
+              className='h-5 w-5'
+              stroke={contentCache.position === 'bottom' ? 'white' : iconColor}
+            />
+          </button>
+        )}
         <button
-          className='mr-4'
+          className={contentCache.position === 'bottom' ? buttonClasses : ''}
           onClick={(e) => {
             e.preventDefault()
             setVisible(false)
-            if (typeof contentCache.confirmFunction !== 'undefined')
-              contentCache.confirmFunction()
+            if (typeof contentCache.cancelFunction !== 'undefined')
+              contentCache.cancelFunction()
           }}
         >
-          <CheckIcon className='h-5 w-5' stroke={iconColor} />
+          <XIcon
+            className='h-5 w-5'
+            stroke={contentCache.position === 'bottom' ? 'white' : iconColor}
+          />
         </button>
-      )}
-      <button
-        onClick={(e) => {
-          e.preventDefault()
-          setVisible(false)
-          if (typeof contentCache.cancelFunction !== 'undefined')
-            contentCache.cancelFunction()
-        }}
-      >
-        <XIcon className='h-5 w-5' stroke={iconColor} />
-      </button>
+      </div>
     </div>
   )
 }

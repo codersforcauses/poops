@@ -95,8 +95,23 @@ export const AlertContextProvider = ({
 
   return (
     <alertContext.Provider value={value}>
+      <div
+        style={
+          visible && content.position === 'bottom'
+            ? {
+                filter: 'blur(5px)',
+                pointerEvents: 'none'
+              }
+            : {
+                filter: 'blur(0px)',
+                pointerEvents: 'auto'
+              }
+        }
+        className='z-999 fixed top-0 right-0 bottom-0 left-0 transition-all duration-700'
+      >
+        {children}
+      </div>
       <Alert visible={visible} setVisible={setVisible} content={content} />
-      {children}
     </alertContext.Provider>
   )
 }
