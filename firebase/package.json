@@ -20,6 +20,8 @@
   },
   "main": "functions/index.js",
   "dependencies": {
+    "@google-cloud/billing": "^3.1.0",
+    "@google-cloud/pubsub": "^3.1.0",
     "firebase-admin": "^10.0.2",
     "firebase-functions": "^3.18.0"
   },
