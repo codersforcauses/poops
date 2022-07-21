@@ -101,11 +101,11 @@ exports.stopBilling = functions
         return `No action necessary. (Current cost: ${pubsubData.costAmount})`;
       }
 
-      // const billingEnabled = await _isBillingEnabled(PROJECT_NAME);
-      // if (billingEnabled) {
-      //   return _disableBillingForProject(PROJECT_NAME);
-      // } else {
+      const billingEnabled = await _isBillingEnabled(PROJECT_NAME);
+      if (billingEnabled) {
+        return _disableBillingForProject(PROJECT_NAME);
+      } else {
         console.log("Billing already disabled");
         return "Billing already disabled";
-      // }
+      }
     });
