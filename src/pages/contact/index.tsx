@@ -7,8 +7,7 @@ import ContactList from '@/components/Contact/contactlist'
 import ProfileItem from '@/components/Contact/profileitem'
 import Header from '@/components/Header'
 import NavBar from '@/components/NavBar'
-import { withProtected } from '@/components/PrivateRoute'
-import SearchBar from '@/components/SearchBar/searchbar'
+import SearchBar from '@/components/SearchBar'
 import SearchTag from '@/components/SearchBar/searchtag'
 import type { Contact } from '@/types/types'
 
@@ -17,25 +16,28 @@ const tags = CONTACT_DATA.map((contact) => {
   return contact.tags
 }).flat()
 const set = new Set(tags)
-const taglist = [...set]
+const tagFilter = [...set]
 
 const Contact = () => {
   const [filteredContacts, setFilteredContacts] =
+    // eslint-disable-next-line unused-imports/no-unused-vars
     useState<Contact[]>(CONTACT_DATA)
 
-  const [selectedOption, setSelectedOption] = useState('')
-  const [searchFieldString, setSearchFieldString] = useState('')
+  const [selectedTag, setSelectedTag] = useState<string>('')
+  const [searchFieldString, setSearchFieldString] = useState<string>('')
 
-  function filterContact(includes: string, searchField: string) {
+  function filterContact(tagf: string, searchField: string) {
     const filteredContacts = CONTACT_DATA.filter((contact) => {
       const full_name = contact.firstName + ' ' + contact.lastName
-      if (includes == '') {
-        return full_name.toLocaleLowerCase().includes(searchField)
-      }
-      const filtered =
-        full_name.toLocaleLowerCase().includes(searchField) &&
-        contact.tags.some((v) => v.includes(includes))
-      return filtered
+
+      // start for string, comma, or whitspace = word start, ignores case
+      const reg = new RegExp(`(^|\\s|,)${searchField}`, 'gi')
+
+      // don't show contacts without selected tag if tag selected
+      if (tagf !== '' && !contact.tags.some((v) => v.includes(tagf)))
+        return false
+
+      return reg.test(full_name) || reg.test(contact.pets)
     })
     setFilteredContacts(filteredContacts)
   }
@@ -44,12 +46,12 @@ const Contact = () => {
     const searchFieldString = event.target.value.toLocaleLowerCase()
     setSearchFieldString(searchFieldString)
     // TODO: Get contact data from server
-    filterContact(selectedOption, searchFieldString)
+    filterContact(selectedTag, searchFieldString)
   }
 
   const onSearchTagChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const option_value = event.target.value
-    setSelectedOption(option_value)
+    setSelectedTag(option_value)
     filterContact(option_value, searchFieldString)
   }
 
@@ -67,13 +69,19 @@ const Contact = () => {
 
         <div className='m-auto max-w-md'>
           <div className='m-2 flex flex-row rounded-xl border-2 border-gray-300'>
-            <SearchTag options={taglist} onChangehandler={onSearchTagChange} />
+            <SearchTag
+              name='Filter By'
+              options={tagFilter}
+              onChangehandler={(e: React.ChangeEvent<HTMLSelectElement>) =>
+                onSearchTagChange(e)
+              }
+            />
             <div className='flex w-full justify-between'>
               <SearchBar onChangeHandler={onSearchChange} />
               <SearchIcon className='my-auto mx-2 h-6' />
             </div>
           </div>
-          {searchFieldString === '' && selectedOption === '' && (
+          {searchFieldString === '' && selectedTag === '' && (
             <ProfileItem profile={PROFILE_DATA} image='' />
           )}
           <ContactList contacts={filteredContacts} />
@@ -85,4 +93,4 @@ const Contact = () => {
 }
 
 // export default Contact
-export default withProtected(Contact)
+// export default withProtected(Contact)

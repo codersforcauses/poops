@@ -42,7 +42,7 @@ export interface Contact {
   firstName: string
   lastName: string
   desc: string
-  pets: Pet[]
+  pets: string
   email: string
   phone: string
   streetAddress: string
