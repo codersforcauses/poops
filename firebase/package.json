@@ -3,11 +3,11 @@
   "description": "Cloud Functions for Firebase",
   "scripts": {
     "emu": "firebase emulators:start",
+    "emu:stop": "lsof -ti :4400 | xargs kill",
     "lint": "eslint .",
     "serve": "firebase emulators:start --only functions",
     "shell": "firebase functions:shell",
     "start": "npm run shell",
-    "deploy": "firebase deploy --only functions",
     "deploy:functions": "firebase deploy --only functions",
     "deploy:firestore": "firebase deploy --only firestore:rules",
     "deploy:storage": "firebase deploy --only storage:rules",
