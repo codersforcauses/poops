@@ -104,7 +104,7 @@ export const AlertContextProvider = ({
               }
             : {
                 filter: 'blur(0px)',
-                pointerEvents: 'auto'
+                pointerEvents: 'all'
               }
         }
         className='z-999 fixed top-0 right-0 bottom-0 left-0 transition-all duration-700'

@@ -31,8 +31,8 @@ const getContainerClasses = (vis: boolean, pos: string) => {
         ? ' rounded-b-md border-b-1 -top-[250px] pl-5 pr-4 py-3 mx-[1rem]' +
           (vis ? ' translate-y-[250px]' : ' translate-y-[0px]')
         : pos === 'bottom' &&
-          ' rounded-t-md border-t-1 bottom-[-250px] p-5 mx-20 flex-wrap justify-center' +
-            (vis ? ' translate-y-[-250px]' : ' translate-y-[0px]')
+          ' rounded-t-md border-t-1 bottom-[-300px] p-5 mx-[3rem] flex-wrap justify-center' +
+            (vis ? ' translate-y-[-300px]' : ' translate-y-[0px]')
     }`
   )
 }
