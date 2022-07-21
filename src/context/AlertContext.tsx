@@ -31,7 +31,7 @@ interface AlertContextProps {
   visible: boolean
 }
 
-const alertContext = createContext<AlertContextProps>({
+const AlertContext = createContext<AlertContextProps>({
   setAlert: () => {
     return
   },
@@ -41,7 +41,7 @@ const alertContext = createContext<AlertContextProps>({
   visible: false
 })
 
-export const useAlert = () => useContext(alertContext)
+export const useAlert = () => useContext(AlertContext)
 
 export const AlertContextProvider = ({
   children
@@ -94,7 +94,7 @@ export const AlertContextProvider = ({
   )
 
   return (
-    <alertContext.Provider value={value}>
+    <AlertContext.Provider value={value}>
       <div
         style={
           visible && content.position === 'bottom'
@@ -112,6 +112,6 @@ export const AlertContextProvider = ({
         {children}
       </div>
       <Alert visible={visible} setVisible={setVisible} content={content} />
-    </alertContext.Provider>
+    </AlertContext.Provider>
   )
 }
