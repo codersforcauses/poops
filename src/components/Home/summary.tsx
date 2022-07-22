@@ -1,5 +1,3 @@
-import React from 'react'
-
 import Statistics from '@/components/Home/statistics'
 
 const dummyVisitData = '12'

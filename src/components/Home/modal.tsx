@@ -51,6 +51,9 @@ function Modal() {
 
           {/* Visit Form */}
           <form>
+            {/* Commute Selector Form */}
+            <CommuteSelector commute={commute} setCommute={setCommute} />
+
             {/* Commute Distance Form */}
             <TextForm
               id='commuteDistance'
@@ -60,9 +63,6 @@ function Modal() {
               isRequired={true}
               onChange={(e) => setCommuteDistance(Number(e.target.value))}
             />
-
-            {/* Commute Selector Form */}
-            <CommuteSelector commute={commute} setCommute={setCommute} />
 
             {/* Other Form if commute is 'Other' */}
             {commute == 'Other' && (

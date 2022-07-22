@@ -10,14 +10,7 @@ function TopNav() {
         <div className='flex justify-between'>
           <Image alt='logo' src='/images/logo.png' width='100px' height='65x' />
         </div>
-        <hr
-          style={{
-            background: '#a52a2a',
-            color: '#a52a2a',
-            borderColor: '#a52a2a',
-            height: '2px'
-          }}
-        />
+        <hr className='mb-3 h-0.5 border-dark-red bg-dark-red text-dark-red' />
       </nav>
     </div>
   )

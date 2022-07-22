@@ -10,20 +10,8 @@ const Home = () => {
   return (
     <>
       <Header pageTitle='Home' />
-      <main
-        className='absolute overflow-y-scroll bg-contain bg-fixed bg-no-repeat'
-        style={{
-          backgroundImage: `url(/images/dog-home.jpeg)`,
-          backgroundPosition: '50% calc(100% - 4rem)',
-          height: 'calc(100% - 7rem)'
-        }}
-      >
-        <div
-          className='m-auto flex w-screen flex-col'
-          style={{
-            height: 'calc(max-content +4rem)'
-          }}
-        >
+      <main className='absolute h-[calc(100%-7rem)] overflow-y-scroll bg-[url(/images/dog-home.jpeg)] bg-contain bg-fixed bg-[left_50%_top_calc(100%-4rem)] bg-no-repeat'>
+        <div className='h-[calc(max-content +4rem)] m-auto flex w-screen flex-col'>
           <div className='flex flex-col px-4 '>
             <h1 className='py-3 text-center text-3xl'>
               Welcome, {dummyUsername}!
