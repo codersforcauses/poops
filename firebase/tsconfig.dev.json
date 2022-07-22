@@ -1,5 +1,9 @@
 {
-  "include": [
-    ".eslintrc.js"
-  ]
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "removeComments": true,
+    "noEmit": true,
+    "forceConsistentCasingInFileNames": true
+  },
+  "include": [".eslintrc.js"]
 }
