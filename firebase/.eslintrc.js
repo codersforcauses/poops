@@ -29,6 +29,7 @@ module.exports = {
     'comma-dangle': ['error', 'never'],
     'object-curly-spacing': ['error', 'always'],
     'quote-props': ['error', 'as-needed'],
-    'import/no-unresolved': 0
+    'import/no-unresolved': 0,
+    'import/export': 'warn'
   }
 }
