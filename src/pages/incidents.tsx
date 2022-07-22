@@ -1,4 +1,6 @@
 import Header from '@/components/Header'
+import NavBar from '@/components/NavBar'
+// import { withProtected } from '@/components/PrivateRoute'
 
 const Incidents = () => {
   return (
@@ -9,8 +11,11 @@ const Incidents = () => {
       <main>
         <p>Incidents Page</p>
       </main>
+
+      <NavBar />
     </>
   )
 }
 
 export default Incidents
+// export default withProtected(Incidents)

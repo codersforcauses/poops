@@ -1,14 +1,19 @@
 import { AppProps } from 'next/app'
 
-import NavBar from '@/components/NavBar'
+import { AuthContextProvider } from '@/context/AuthContext'
+import FirestoreProvider from '@/context/firestore'
 
 import '@/styles/main.css'
 
 const POOPS = ({ Component, pageProps }: AppProps) => {
   return (
     <>
-      <Component {...pageProps} />
-      <NavBar />
+      <AuthContextProvider>
+        <FirestoreProvider>
+          <Component {...pageProps} />
+          {/* <NavBar /> */}
+        </FirestoreProvider>
+      </AuthContextProvider>
     </>
   )
 }

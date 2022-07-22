@@ -1,0 +1,13 @@
+{
+  "id": "me",
+  "firstName": "John",
+  "lastName": "Doe",
+  "desc": "description",
+  "pets": "Pongo, Casper",
+  "email": "tiamcmahon@kegular.com",
+  "phone": "(886) 578-3300",
+  "streetAddress": "691 Cleveland Street",
+  "region": ["Northern", "Busselton", "Western"],
+  "notes": "Likes to eat chocolate",
+  "tags": ["volunteer", "profile"]
+}
