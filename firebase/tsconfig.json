@@ -12,7 +12,5 @@
     "allowSyntheticDefaultImports": true
   },
   "compileOnSave": true,
-  "include": [
-    "functions/index.ts"
-  ]
+  "include": ["functions/*.ts"]
 }

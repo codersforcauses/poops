@@ -37,3 +37,5 @@ yarn-error.log*
 # changelog
 CHANGELOG.md
 
+# firebase ts build
+/firebase/lib

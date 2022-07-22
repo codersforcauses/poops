@@ -35,11 +35,6 @@ if (clientSide) {
     console.log('Connected to emulator')
   }
 
-  // console.log(
-  //   `Emulator: ${process.env.FUNCTIONS_EMULATOR}, type: ${typeof process.env
-  //     .FUNCTIONS_EMULATOR}`
-  // )
-
   // Enables offline support for firestore
   enableMultiTabIndexedDbPersistence(db).catch((err) => {
     if (err.code == 'failed-precondition') {

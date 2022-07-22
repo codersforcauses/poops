@@ -21,7 +21,7 @@
     "start:ssl": "next start -p 3001 | local-ssl-proxy --key certificates/localhost-key.pem --cert certificates/localhost.pem --source 3000 --target 3001",
     "lint": "next lint",
     "lint:fix": "eslint src --fix && yarn format",
-    "lint:strict": "eslint --max-warnings=0 src",
+    "lint:strict": "eslint src",
     "typecheck": "tsc --noEmit --incremental false",
     "test:watch": "jest --watch",
     "test": "jest",
