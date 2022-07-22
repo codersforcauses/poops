@@ -3,10 +3,12 @@
     "module": "commonjs",
     "noImplicitReturns": true,
     "noUnusedLocals": true,
+    "forceConsistentCasingInFileNames": true,
     "outDir": "lib",
     "sourceMap": true,
     "strict": true,
     "target": "es2017",
+    "removeComments": true,
     "allowSyntheticDefaultImports": true
   },
   "compileOnSave": true,
