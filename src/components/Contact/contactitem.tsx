@@ -13,9 +13,7 @@ const ContactItem = ({ contact, image }: ContactItemProps) => {
       {/* USER PROFILE IMAGE */}
       <span className='flex items-center space-x-4'>
         <Avatar image={image} height={40} width={40} iconClass='h-10 w-10' />
-        <p className='font-medium text-gray-700'>
-          {truncateText(`${contact.firstName} ${contact.lastName}`, 24)}
-        </p>
+        <p className='font-medium text-gray-700'>{contact.firstName}</p>
       </span>
       <p className='text-gray-500'>{truncateText(contact.pets, 16)}</p>
     </li>

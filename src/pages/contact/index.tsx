@@ -10,7 +10,6 @@ import NavBar from '@/components/NavBar'
 import SearchBar from '@/components/SearchBar'
 import SearchTag from '@/components/SearchBar/SearchTag'
 import type { Contact } from '@/types/types'
-// import { withProtected } from '@/components/PrivateRoute
 
 // TODO: Get contact data from server
 const tags = CONTACT_DATA.map((contact) => {
@@ -21,6 +20,7 @@ const tagFilter = [...set]
 
 const Contact = () => {
   const [filteredContacts, setFilteredContacts] =
+    // eslint-disable-next-line unused-imports/no-unused-vars
     useState<Contact[]>(CONTACT_DATA)
 
   const [selectedTag, setSelectedTag] = useState<string>('')
