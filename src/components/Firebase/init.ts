@@ -27,13 +27,6 @@ if (clientSide) {
   app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApp()
   auth = getAuth(app)
   db = getFirestore(app)
-}
-
-// Runs on the client side
-if (clientSide) {
-  app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApp()
-  auth = getAuth(app)
-  db = getFirestore(app)
 
   // Use emulator if running in development and emualtor is running
   if (location?.hostname === 'localhost') {
