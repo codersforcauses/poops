@@ -14,6 +14,7 @@
   "homepage": "https://github.com/codersforcauses/poops#readme",
   "scripts": {
     "dev": "next dev",
+    "dev:emu": "yarn firebase emu & (sleep 15 && yarn dev)",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
@@ -74,7 +75,7 @@
   },
   "lint-staged": {
     "src/**/*.{js,jsx,ts,tsx}": [
-      "eslint --max-warnings=0",
+      "eslint",
       "prettier -w"
     ],
     "src/**/*.{json,css,scss,md}": [
