@@ -15,10 +15,13 @@
   "scripts": {
     "dev": "next dev",
     "dev:emu": "yarn firebase emu & (sleep 15 && yarn dev)",
+    "dev:emu:ssl": "yarn firebase emu & (sleep 15 && yarn dev:ssl)",
     "dev:ssl": "next dev -p 3001 | local-ssl-proxy --key certificates/localhost-key.pem --cert certificates/localhost.pem --source 3000 --target 3001",
     "build": "next build",
     "start": "next start",
     "start:ssl": "next start -p 3001 | local-ssl-proxy --key certificates/localhost-key.pem --cert certificates/localhost.pem --source 3000 --target 3001",
+    "start:emu": "yarn firebase emu & (sleep 15 && yarn start)",
+    "start:emu:ssl": "yarn firebase emu & (sleep 15 && yarn start:ssl)",
     "lint": "next lint",
     "lint:fix": "eslint src --fix && yarn format",
     "lint:strict": "eslint src",
@@ -38,8 +41,6 @@
     "@fortawesome/free-solid-svg-icons": "^6.1.1",
     "@fortawesome/react-fontawesome": "^0.2.0",
     "@heroicons/react": "^1.0.6",
-    "babel-plugin-macros": "^3.1.0",
-    "clsx": "^1.1.1",
     "firebase": "^9.8.4",
     "next": "^12.1.6",
     "react": "^18.1.0",
@@ -47,7 +48,6 @@
     "react-icons": "^4.4.0",
     "react-select": "^5.4.0",
     "sharp": "^0.30.7",
-    "tailwind-merge": "^1.2.1",
     "uuid": "^8.3.2"
   },
   "devDependencies": {
