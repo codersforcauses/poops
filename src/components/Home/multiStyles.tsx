@@ -1,4 +1,4 @@
-import { GroupBase, StylesConfig } from 'react-select'
+import { CSSObjectWithLabel, GroupBase, StylesConfig } from 'react-select'
 
 type OptionType = {
   label: string
@@ -15,13 +15,13 @@ const singleStyles: StylesConfig<OptionType, true, GroupBase<OptionType>> = {
     borderColor: '#6b7280',
     border: '1px solid #6b7280'
   }),
-  input: (provided: Record<string, unknown>) => ({
+  input: (provided: CSSObjectWithLabel) => ({
     ...provided,
     paddingTop: '0.1em',
     paddingBottom: '0.1em',
     color: 'black'
   }),
-  placeholder: (provided: Record<string, unknown>) => ({
+  placeholder: (provided: CSSObjectWithLabel) => ({
     ...provided,
     color: '#6b7280'
   }),
@@ -31,7 +31,7 @@ const singleStyles: StylesConfig<OptionType, true, GroupBase<OptionType>> = {
     padding: '8px',
     color: '#6b7280'
   }),
-  valueContainer: (provided: Record<string, unknown>) => ({
+  valueContainer: (provided: CSSObjectWithLabel) => ({
     ...provided,
     border: 'black',
     transition: ''
