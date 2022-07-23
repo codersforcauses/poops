@@ -4,15 +4,18 @@ function StopWatch() {
   const [time, setTime] = useState(0)
   const [running, setRunning] = useState(false)
   useEffect(() => {
-    let interval
+    let interval: ReturnType<typeof setInterval>
+    interval = setTimeout(() => {
+      null
+    }, 0)
     if (running) {
       interval = setInterval(() => {
         setTime((prevTime) => prevTime + 10)
       }, 10)
     } else if (!running) {
-      clearInterval(interval)
+      window.clearInterval(interval)
     }
-    return () => clearInterval(interval)
+    return () => window.clearInterval(interval)
   }, [running])
   return (
     <div className='stopwatch'>
