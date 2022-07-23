@@ -12,6 +12,13 @@
       "src": "/poops512.png",
       "sizes": "512x512",
       "type": "image/png"
+    },
+
+    {
+      "src": "maskable.png",
+      "sizes": "96x96",      
+      "type": "image/x-icon",
+      "purpose": "maskable"
     }
   ],
   "theme_color": "#FFFFFF",
