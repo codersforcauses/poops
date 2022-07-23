@@ -5,7 +5,7 @@ function TopNav() {
     <div className='h-16 w-full justify-center'>
       <nav
         id='top-navigation'
-        className='fixed inset-x-0 top-0 z-10 block bg-white'
+        className='fixed inset-x-0 top-0 z-10 block h-16 bg-white'
       >
         <div className='flex justify-between'>
           <Image alt='logo' src='/images/logo.png' width='100px' height='65x' />

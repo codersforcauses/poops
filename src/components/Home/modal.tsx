@@ -76,7 +76,7 @@ function Modal() {
               />
             )}
 
-            {/* Pet Selector Form */}
+            {/* Client Selector Form */}
             <ClientSelector clients={clients} setClients={setClients} />
 
             {/* Type Selector Form */}
