@@ -70,7 +70,7 @@ function ContactInfo({ contact, image }: ContactInfoProps) {
         <span className='text-xl'>{contact.streetAddress}</span>
       </Box>
       {/* TAGS */}
-      {contact.id != 'me' ? (
+      {contact.id == 'me' ?? (
         <Box>
           <label htmlFor='tags' className='text-dark-red'>
             Tags
@@ -85,7 +85,7 @@ function ContactInfo({ contact, image }: ContactInfoProps) {
           {/* Padding to counter the shadow */}
           <div className='pt-2'></div>
         </Box>
-      ) : null}
+      )}
       {/* REGIONS */}
       <Box className='pb-3'>
         <label htmlFor='regions' className='text-dark-red'>
