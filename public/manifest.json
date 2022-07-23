@@ -16,7 +16,7 @@
 
     {
       "src": "maskable.png",
-      "sizes": "96x96",      
+      "sizes": "96x96",
       "type": "image/x-icon",
       "purpose": "maskable"
     }
