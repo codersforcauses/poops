@@ -105,19 +105,11 @@ function ContactInfo({ contact, image }: ContactInfoProps) {
           ))}
         </TagHolder>
       </Box>
-      <Box>
-        <label htmlFor='pets' className='text-dark-red'>
+      <Box className='flex flex-col'>
+        <label htmlFor={contact.pets} className='text-dark-red'>
           Pets
         </label>
-        <span className='text-xl'>
-          {contact.pets.map((pet, index) => (
-            <div key={index}>
-              <PetContainer>
-                <p className='text-dark-red'>{pet.name}</p> {pet.notes}
-              </PetContainer>
-            </div>
-          ))}
-        </span>
+        <span className='text-xl'>{contact.pets}</span>
       </Box>
       {/* NOTES */}
       <Box className='flex flex-col'>
@@ -175,12 +167,5 @@ const Tag = tw.div`
   border-2
   bg-primary
   text-white
-  rounded-2xl
-`
-
-const PetContainer = tw.div`
-  px-2
-  my-2
-  bg-white
   rounded-2xl
 `
