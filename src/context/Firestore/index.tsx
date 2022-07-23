@@ -18,9 +18,9 @@ import {
 
 import { MESSAGES } from '@/components/Firebase/errors'
 import { db } from '@/components/Firebase/init'
-import { useAuth } from '@/context/AuthContext'
+import { useAuth } from '@/context/Auth'
 
-import { UserData } from '../types/types'
+import { UserData } from '../../types/types'
 
 interface FirestoreContextProp {
   userDoc: UserData

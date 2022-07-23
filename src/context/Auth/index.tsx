@@ -11,7 +11,7 @@ import {
   User
 } from 'firebase/auth'
 
-import { auth } from '../components/Firebase/init'
+import { auth } from '../../components/Firebase/init'
 
 interface FirebaseContextProps {
   auth: Auth

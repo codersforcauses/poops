@@ -19,7 +19,7 @@ import {
 
 import LoginButton from '@/components/Login/LoginButton'
 
-import { useAuth } from '../../context/AuthContext'
+import { useAuth } from '../../context/Auth'
 
 export interface LoginPanelInterface {
   linkAccount: boolean // if true, will link the account to the logged in user, if false, will sign in with the provider

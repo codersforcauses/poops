@@ -4,7 +4,7 @@ import { XIcon } from '@heroicons/react/solid'
 import { Timestamp } from 'firebase/firestore'
 
 import { visitSelectOptions } from '@/components/Visit/visitlist'
-import { useFirestore } from '@/context/firestore'
+import { useFirestore } from '@/context/Firestore'
 import { VisitData } from '@/types/types'
 
 import CommuteSelector from './commuteselector'
