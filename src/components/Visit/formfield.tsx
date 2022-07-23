@@ -5,6 +5,7 @@ export interface FormFieldProps {
   label: string
   type?: string
   placeholder?: string
+  value?: string
   onChange?: (
     event: React.ChangeEvent<
       HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
@@ -59,6 +60,7 @@ const inputSwitch = (props: FormFieldProps) => {
           className='placeholder::text-[#6b7280] form-input rounded text-black'
           id={props.id}
           type={props.type}
+          value={props.value}
           step={props.type === 'number' ? '0.001' : undefined}
           required={props.isRequired}
           placeholder={props.placeholder}

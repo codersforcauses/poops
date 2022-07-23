@@ -1,7 +1,9 @@
+/* eslint-disable unused-imports/no-unused-vars */
 import React from 'react'
 import { useState } from 'react'
 import { XIcon } from '@heroicons/react/solid'
 import { Timestamp } from 'firebase/firestore'
+import { useForm } from 'react-hook-form'
 
 import { visitSelectOptions } from '@/components/Visit/visitlist'
 import { useFirestore } from '@/context/firestore'
@@ -12,33 +14,34 @@ import FormField from './formfield'
 
 interface ModalViewProps {
   toggleModal: () => void
+  isEdit?: boolean
 }
 
-const ModalView = ({ toggleModal }: ModalViewProps) => {
+const ModalView = ({ toggleModal, isEdit }: ModalViewProps) => {
+  const { register, handleSubmit } = useForm()
   const { userDoc, updateVisit } = useFirestore()
   const [visitType, setVisitType] = useState('')
-  const [displayName, setDisplayName] = useState('')
+  const [clientName, setDisplayName] = useState('')
   const [petNames, setPetNames] = useState('')
   const [startTime, setStartTime] = useState('')
   const [endTime, setEndTime] = useState('')
   const [walkDist, setWalkDist] = useState(0)
   const [commuteDist, setCommuteDist] = useState(0)
   const [commuteMethod, setCommuteMethod] = useState('')
-  /* eslint-disable unused-imports/no-unused-vars */
   const [notes, setNotes] = useState('')
 
-  const handleSubmit = (click: React.FormEvent<HTMLFormElement>) => {
+  const hSubmit = (click: React.FormEvent<HTMLFormElement>) => {
     click.preventDefault()
     const data: VisitData = {
       type: visitType,
-      displayName: displayName,
-      petNames: petNames,
+      clientName: clientName,
       startTime: Timestamp.fromDate(new Date(startTime)),
       endTime: Timestamp.fromDate(new Date(endTime)),
       walkDist: walkDist,
       commuteDist: commuteDist,
       commuteMethod: commuteMethod,
-      notes: notes
+      notes: notes,
+      inProgress: false
     }
     userDoc.visits.push(data)
     updateVisit?.(userDoc)
@@ -46,7 +49,7 @@ const ModalView = ({ toggleModal }: ModalViewProps) => {
 
   const isSubmitEnabled = () =>
     visitType &&
-    displayName &&
+    clientName &&
     petNames &&
     startTime &&
     endTime &&
@@ -75,7 +78,7 @@ const ModalView = ({ toggleModal }: ModalViewProps) => {
           <h1 className='pl-2 text-2xl font-bold'>Add Your Visit</h1>
         </div>
 
-        <form className='pt-3' onSubmit={handleSubmit}>
+        <form className='pt-3' onSubmit={hSubmit}>
           <table className='container mx-auto table-fixed'>
             <tbody>
               <tr>

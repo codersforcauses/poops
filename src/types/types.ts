@@ -15,14 +15,14 @@ export interface UserData {
 
 export interface VisitData {
   type: string
-  displayName: string
-  petNames: string
+  clientName: string
   startTime: Timestamp
   endTime: Timestamp
   walkDist: number
   commuteDist: number
   commuteMethod: string
   notes: string
+  inProgress: boolean
 }
 
 export interface ContactData {

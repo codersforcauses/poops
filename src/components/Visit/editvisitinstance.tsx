@@ -37,8 +37,7 @@ const formatDate = (timestamp: Timestamp) => {
 const EditableVisitInstance = (props: EditVisitInstanceProps) => {
   const { userDoc, updateVisit } = useFirestore()
   const [visitType, setVisitType] = useState(props.type)
-  const [displayName, setDisplayName] = useState(props.displayName)
-  const [petNames, setpetNames] = useState(props.petNames)
+  const [clientName, setClientName] = useState(props.clientName)
   const [startTime, setStartTime] = useState(props.startTime)
   const [endTime, setEndTime] = useState(props.endTime)
   const [walkDist, setWalkDist] = useState(props.walkDist)
@@ -51,14 +50,14 @@ const EditableVisitInstance = (props: EditVisitInstanceProps) => {
       onSubmit={(event) => {
         const visit: VisitData = {
           type: visitType,
-          displayName: displayName,
-          petNames: petNames,
+          clientName: clientName,
           startTime: startTime,
           endTime: endTime,
           walkDist: walkDist,
           commuteDist: commuteDist,
           commuteMethod: commuteMethod,
-          notes: notes
+          notes: notes,
+          inProgress: false
         }
         userDoc.visits[props.id] = visit
         const temp: VisitData[] = [...userDoc.visits] //temp needed for react to rerender
@@ -85,8 +84,8 @@ const EditableVisitInstance = (props: EditVisitInstanceProps) => {
           <input
             className='bg-cream text-sm font-normal text-primary'
             placeholder='Display Name'
-            value={displayName}
-            onChange={(event) => setDisplayName(event.target.value)}
+            value={clientName}
+            onChange={(event) => setClientName(event.target.value)}
             required
           />
         </div>
@@ -107,16 +106,6 @@ const EditableVisitInstance = (props: EditVisitInstanceProps) => {
               </option>
             ))}
           </select>
-        </div>
-        <div>
-          Pet/Pets:{' '}
-          <input
-            className='bg-cream text-primary'
-            placeholder='Pet Name(s)'
-            value={petNames}
-            onChange={(event) => setpetNames(event.target.value)}
-            required
-          />
         </div>
         <div>
           End Time:{' '}
