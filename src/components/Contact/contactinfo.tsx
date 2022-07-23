@@ -17,9 +17,6 @@ type ContactInfoProps = {
 function ContactInfo({ contact, image }: ContactInfoProps) {
   const { setAlert } = useAlert()
 
-  function DeleteContact() {
-    // TODO: Delete Contact from firebase
-  }
   return (
     <div className='mb-2 flex flex-col items-center justify-center gap-3'>
       {/* USER PROFILE IMAGE */}
@@ -127,7 +124,7 @@ function ContactInfo({ contact, image }: ContactInfoProps) {
               title: 'Delete Contact',
               text: 'Are you sure?',
               position: 'bottom',
-              confirmFunction: () => DeleteContact
+              confirmFunction: () => null /* will call firebase function  */
             })
           }}
           className='w-80 rounded bg-primary py-1 font-bold text-white hover:bg-dark-red'
