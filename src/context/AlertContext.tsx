@@ -1,23 +1,31 @@
-import React, { createContext, useContext, useState } from 'react'
+import React, { createContext, useCallback, useContext, useState } from 'react'
 
-import Alert, { AlertIcon } from '@/components/UI/alert'
+import Alert from '@/components/UI/alert'
 
 export interface AlertContentProps {
   title?: string
   text: string
-  icon: AlertIcon
+  variant: AlertVariant
   position?: 'top' | 'bottom'
   confirmFunction?: () => void
   cancelFunction?: () => void
   showFor?: number
 }
+
+export enum AlertVariant {
+  info,
+  security,
+  critical,
+  comment
+}
+
 interface AlertContextProps {
   setAlert: (content: AlertContentProps) => void
   clearAlert: () => void
   visible: boolean
 }
 
-const alertContext = createContext<AlertContextProps>({
+const AlertContext = createContext<AlertContextProps>({
   setAlert: () => {
     return
   },
@@ -27,7 +35,7 @@ const alertContext = createContext<AlertContextProps>({
   visible: false
 })
 
-export const useAlert = () => useContext(alertContext)
+export const useAlert = () => useContext(AlertContext)
 
 export const AlertContextProvider = ({
   children
@@ -42,26 +50,22 @@ export const AlertContextProvider = ({
     confirmFunction: undefined, // function to execute on confirm, enables the confirm function
     cancelFunction: undefined,
     showFor: 5000, // ms alert will stay open, set to -1 to leave open until button click
-    icon: AlertIcon.info
+    variant: AlertVariant.info
   })
 
   const setAlert = (content: AlertContentProps) => {
     setContent({
-      title: content.title ? content.title : '',
+      title: content.title ?? '',
       text: content.text,
-      icon: content.icon,
-      position: content.position ? content.position : 'top',
-      confirmFunction: content.confirmFunction
-        ? content.confirmFunction
-        : undefined,
-      cancelFunction: content.cancelFunction
-        ? content.cancelFunction
-        : undefined,
-      showFor: content.showFor ? content.showFor : 5000
+      variant: content.variant,
+      position: content.position ?? 'top',
+      confirmFunction: content.confirmFunction ?? undefined,
+      cancelFunction: content.cancelFunction ?? undefined,
+      showFor: content.showFor ?? 5000
     })
   }
 
-  const clearAlert = () => {
+  const clearAlert = useCallback(() => {
     setVisible(false)
     setContent({
       text: '',
@@ -70,9 +74,9 @@ export const AlertContextProvider = ({
       confirmFunction: undefined,
       cancelFunction: undefined,
       showFor: 5000,
-      icon: AlertIcon.info
+      variant: AlertVariant.info
     })
-  }
+  }, [])
 
   const value: AlertContextProps = {
     setAlert,
@@ -81,9 +85,28 @@ export const AlertContextProvider = ({
   }
 
   return (
-    <alertContext.Provider value={value}>
-      <Alert visible={visible} setVisible={setVisible} content={content} />
-      {children}
-    </alertContext.Provider>
+    <AlertContext.Provider value={value}>
+      <div
+        style={
+          visible && content.position === 'bottom'
+            ? {
+                filter: 'blur(5px)',
+                pointerEvents: 'none'
+              }
+            : {
+                filter: 'blur(0px)'
+              }
+        }
+        className='z-999 fixed top-0 right-0 bottom-0 left-0 overflow-scroll transition-all duration-700'
+      >
+        {children}
+      </div>
+      <Alert
+        visible={visible}
+        setVisible={setVisible}
+        content={content}
+        clearAlert={clearAlert}
+      />
+    </AlertContext.Provider>
   )
 }

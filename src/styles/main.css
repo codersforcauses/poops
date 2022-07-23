@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 // Debug css
-/*{
+/* {
   box-sizing: border-box;
   outline: 3px solid limegreen !important;
 }*/
@@ -23,4 +23,9 @@
 }
 
 @layer utilities {
+}
+
+main {
+  height: 100vh;
+  overflow-y: auto;
 }

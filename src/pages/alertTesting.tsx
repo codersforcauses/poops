@@ -1,14 +1,13 @@
 import Header from '@/components/Header'
 import NavBar from '@/components/NavBar'
 // import { withProtected } from '@/components/PrivateRoute'
-//
 import AlertExamples from '@/components/UI/alertExample'
 
-const Visit = () => {
+const AlertTesting = () => {
   return (
     <>
       {/* <Header /> */}
-      <Header pageTitle='Visit' />
+      <Header pageTitle='AlertTesting' />
       <AlertExamples />
       <main>
         <p>Visit Page</p>
@@ -19,4 +18,4 @@ const Visit = () => {
 }
 
 // export default withProtected(Visit)
-export default Visit
+export default AlertTesting

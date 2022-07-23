@@ -14,6 +14,7 @@ module.exports = {
       'dark-red': '#a52a2a',
       transparent: 'transparent',
       current: 'currentColor',
+      gray: colors.gray,
       white: '#ffffff',
       black: '#000000',
       facebook: '#4267B2',

@@ -1,5 +1,4 @@
-import { AlertIcon } from '@/components/UI/alert'
-import { useAlert } from '@/context/AlertContext'
+import { AlertVariant, useAlert } from '@/context/AlertContext'
 
 // Sample alert use cases to simplify implementation
 
@@ -23,11 +22,13 @@ const AlertExamples = () => {
         className={buttonStyles}
         onClick={() => {
           setAlert({
-            icon: AlertIcon.info,
+            variant: AlertVariant.info,
             title: 'Info Icon',
-            text: 'Confirm or deny this alert',
+            text: 'Bottom alert that stays open with confirm/deny',
             confirmFunction: confirmation,
-            cancelFunction: cancelled
+            cancelFunction: cancelled,
+            position: 'bottom',
+            showFor: -1
           })
         }}
       >
@@ -37,10 +38,9 @@ const AlertExamples = () => {
         className={buttonStyles}
         onClick={() => {
           setAlert({
-            icon: AlertIcon.security,
-            title: 'Security Icon',
-            text: 'Bottom placed alert',
-            position: 'bottom'
+            variant: AlertVariant.security,
+            text: 'Confirm or deny this alert',
+            confirmFunction: cancelled
           })
         }}
       >
@@ -50,10 +50,9 @@ const AlertExamples = () => {
         className={buttonStyles}
         onClick={() => {
           setAlert({
-            icon: AlertIcon.critical,
+            variant: AlertVariant.critical,
             title: 'Critical Icon',
-            text: 'Testing the critical alert, stays open',
-            showFor: -1
+            text: 'Testing the critical alert'
           })
         }}
       >
@@ -63,7 +62,7 @@ const AlertExamples = () => {
         className={buttonStyles}
         onClick={() => {
           setAlert({
-            icon: AlertIcon.comment,
+            variant: AlertVariant.comment,
             text: 'Comment alert, cancel function set to log current time, no title'
           })
         }}
