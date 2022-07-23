@@ -70,21 +70,22 @@ function ContactInfo({ contact, image }: ContactInfoProps) {
         <span className='text-xl'>{contact.streetAddress}</span>
       </Box>
       {/* TAGS */}
-      <Box>
-        <label htmlFor='tags' className='text-dark-red'>
-          Tags
-        </label>
-        <TagHolder className='mt-1'>
-          {contact.tags.map((tag, index) => (
-            <div key={index}>
-              <Tag>{tag}</Tag>
-            </div>
-          ))}
-        </TagHolder>
-        {/* This should be done as a react component i think? */}
-        {/* Padding to counter the shadow */}
-        <div className='pt-2'></div>
-      </Box>
+      {contact.id != 'me' ? (
+        <Box>
+          <label htmlFor='tags' className='text-dark-red'>
+            Tags
+          </label>
+          <TagHolder className='mt-1'>
+            {contact.tags.map((tag, index) => (
+              <div key={index}>
+                <Tag>{tag}</Tag>
+              </div>
+            ))}
+          </TagHolder>
+          {/* Padding to counter the shadow */}
+          <div className='pt-2'></div>
+        </Box>
+      ) : null}
       {/* REGIONS */}
       <Box className='pb-3'>
         <label htmlFor='regions' className='text-dark-red'>
