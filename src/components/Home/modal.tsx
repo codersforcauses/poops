@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 
 import ClientSelector from '@/components/Home/clientSelector'
 import CommuteSelector from '@/components/Home/commuteSelector'
+import DisabledButton from '@/components/Home/disabledButton'
 import Duration from '@/components/Home/duration'
 import TextForm from '@/components/Home/textForm'
 import TypeSelector from '@/components/Home/typeSelector'
@@ -75,19 +76,13 @@ function Modal() {
               <CommuteSelector commute={commute} setCommute={setCommute} />
               <TextForm
                 id='commuteDistance'
-                type='text'
-                placeholder='Enter...'
                 label='Commute Distance (in km)'
-                isRequired={true}
                 onChange={(e) => setCommuteDistance(Number(e.target.value))}
               />
               {commute == 'Other' && (
                 <TextForm
                   id='other'
-                  type='text'
-                  placeholder='Enter...'
                   label='Other Commute Method'
-                  isRequired={true}
                   onChange={(e) => setOther(String(e.target.value))}
                 />
               )}
@@ -100,10 +95,7 @@ function Modal() {
             <div>
               <TextForm
                 id='walkDistance'
-                type='text'
-                placeholder='Enter...'
                 label='Walk Distance (in km)'
-                isRequired={true}
                 onChange={(e) => setWalkDistance(Number(e.target.value))}
               />
             </div>
@@ -118,11 +110,8 @@ function Modal() {
           <Duration id='duration' type='text' value={timeDisplay} />
         )}
 
-        {!formIsFilled() && (
-          <button className='relative m-2 h-[30px] w-[120px] cursor-default rounded-lg bg-dark-gray text-lg font-semibold text-white'>
-            START VISIT
-          </button>
-        )}
+        {!formIsFilled() && <DisabledButton buttonText='START VISIT' />}
+
         {formIsFilled() && !visitStarted && !final && (
           <button
             className='relative m-2 h-[30px] w-[120px] rounded-lg bg-dark-red text-lg font-semibold text-white'
@@ -133,14 +122,12 @@ function Modal() {
             START VISIT
           </button>
         )}
+
         {formIsFilled() &&
           (walkDistance <= 0 || isNaN(walkDistance)) &&
           type != 'Vet' &&
-          visitStarted && (
-            <button className='relative m-2 h-[30px] w-[120px] cursor-default rounded-lg bg-dark-gray text-lg font-semibold text-white'>
-              STOP VISIT
-            </button>
-          )}
+          visitStarted && <DisabledButton buttonText='STOP VISIT' />}
+
         {formIsFilled() && (walkDistance > 0 || type == 'Vet') && visitStarted && (
           <button
             className='relative m-2 h-[30px] w-[120px] rounded-lg bg-dark-red text-lg font-semibold text-white'
@@ -163,6 +150,7 @@ function Modal() {
                 setWalkDistance(0),
                 setOther(''),
                 setCommuteDistance(0),
+                setTime(0),
                 alertUser('Visit has been recorded')
             }}
           >
