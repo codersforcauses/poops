@@ -44,22 +44,10 @@ const ModalView = ({ toggleModal }: ModalViewProps) => {
     updateVisit?.(userDoc)
   }
 
-  const isSubmitEnabled = () =>
-    visitType &&
-    displayName &&
-    petNames &&
-    startTime &&
-    endTime &&
-    walkDist &&
-    commuteDist &&
-    commuteMethod
-
   const closeModal = () => {
-    if (isSubmitEnabled()) {
-      setTimeout(() => {
-        toggleModal()
-      }, 10) //ensure form gets completed
-    }
+    setTimeout(() => {
+      toggleModal()
+    }, 10) //ensure form gets completed
   }
 
   return (
@@ -177,10 +165,9 @@ const ModalView = ({ toggleModal }: ModalViewProps) => {
           />
           <div className='mx-auto my-2 flex flex-col p-1 '>
             <button
-              className='text-bold rounded bg-primary px-12 py-4 text-white drop-shadow-default active:bg-dark-red'
+              className='text-bold rounded bg-primary px-12 py-4 text-white drop-shadow-default active:bg-dark-red disabled:bg-dark-gray'
               type='submit'
               onClick={closeModal}
-              disabled={!isSubmitEnabled}
             >
               Submit
             </button>

@@ -60,6 +60,7 @@ const inputSwitch = (props: FormFieldProps) => {
           id={props.id}
           type={props.type}
           step={props.type === 'number' ? '0.001' : undefined}
+          min={props.type === 'number' ? '0' : undefined}
           required={props.isRequired}
           placeholder={props.placeholder}
           onChange={props.onChange}
