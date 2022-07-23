@@ -1,10 +1,10 @@
 import {
-  faApple,
+  // faApple,
   faFacebookF,
   faGoogle,
-  faMicrosoft,
-  faTwitter,
-  faYahoo
+  faMicrosoft
+  // faTwitter,
+  // faYahoo
 } from '@fortawesome/free-brands-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
@@ -13,97 +13,87 @@ import {
   FacebookAuthProvider,
   GoogleAuthProvider,
   OAuthProvider,
-  TwitterAuthProvider
+  // TwitterAuthProvider,
+  User
 } from 'firebase/auth'
 
 import LoginButton from '@/components/Login/LoginButton'
 
-import { auth } from '../../components/Firebase/init'
 import { useAuth } from '../../context/AuthContext'
 
 export interface LoginPanelInterface {
+  linkAccount: boolean // if true, will link the account to the logged in user, if false, will sign in with the provider
   displayGoogle: boolean
   displayFacebook: boolean
-  displayTwitter: boolean
   displayMicrosoft: boolean
-  displayYahoo: boolean
-  displayApple: boolean
 }
 
-const LoginPanel = (props: LoginPanelInterface) => {
-  const { externalAuthSignIn } = useAuth()
+const LoginPanel = ({
+  linkAccount,
+  displayGoogle,
+  displayFacebook,
+  displayMicrosoft
+}: LoginPanelInterface) => {
+  const { externalAuthSignIn, linkAuthProvider, currentUser, auth } = useAuth()
 
   const googleIcon = <FontAwesomeIcon icon={faGoogle} />
   const facebookIcon = <FontAwesomeIcon icon={faFacebookF} />
-  const twitterIcon = <FontAwesomeIcon icon={faTwitter} />
-  const appleIcon = <FontAwesomeIcon icon={faApple} />
   const microsoftIcon = <FontAwesomeIcon icon={faMicrosoft} />
-  const yahooIcon = <FontAwesomeIcon icon={faYahoo} />
 
   const googleProvider = new GoogleAuthProvider()
   const facebookProvider = new FacebookAuthProvider()
-  const twitterProvider = new TwitterAuthProvider()
   const microsoftProvider = new OAuthProvider('microsoft.com')
 
-  function handleExternalAuth(auth: Auth, provider: AuthProvider) {
-    externalAuthSignIn?.(auth, provider)
+  function buttonString(providerString: string) {
+    return !linkAccount
+      ? 'Continue with ' + providerString
+      : 'Link ' + providerString + ' Account'
+  }
+
+  function handleExternalAuth(
+    auth: Auth,
+    currentUser: User | null,
+    provider: AuthProvider
+  ) {
+    if (!linkAccount) {
+      externalAuthSignIn?.(auth, provider)
+    } else {
+      if (currentUser !== null) {
+        linkAuthProvider?.(currentUser, provider)
+      }
+    }
   }
 
   return (
     <div className='m-auto grid h-1/3 w-1/2 max-w-xs justify-center space-y-4 p-5'>
       {/* Google Button */}
       <LoginButton
-        handler={() => handleExternalAuth(auth, googleProvider)}
+        onClick={() => handleExternalAuth(auth, currentUser, googleProvider)}
         icon={googleIcon}
-        buttonlabel='Continue with Google'
+        buttonlabel={buttonString('Google')}
         style='h-12 rounded-full border-4 border-t-googleblue border-r-googlegreen border-b-googleyellow border-l-googlered px-6 transition duration-300'
-        display={props.displayGoogle}
+        display={displayGoogle}
       />
 
       {/* FaceBook Button */}
       <LoginButton
-        handler={() => handleExternalAuth(auth, facebookProvider)}
+        onClick={() => handleExternalAuth(auth, currentUser, facebookProvider)}
         icon={facebookIcon}
-        buttonlabel='Continue with Facebook'
+        buttonlabel={buttonString('Facebook')}
         style='group h-12 rounded-full border-4 border-facebook px-6 transition duration-300'
-        display={props.displayFacebook}
-      />
-
-      {/* Twitter Button */}
-      <LoginButton
-        handler={() => handleExternalAuth(auth, twitterProvider)}
-        icon={twitterIcon}
-        buttonlabel='Continue with Twitter'
-        style='group h-12 rounded-full border-4 border-twitter px-6 transition duration-300'
-        display={props.displayTwitter}
+        display={displayFacebook}
       />
 
       {/* Microsoft Button */}
       <LoginButton
-        handler={() => handleExternalAuth(auth, microsoftProvider)}
+        onClick={() => handleExternalAuth(auth, currentUser, microsoftProvider)}
         icon={microsoftIcon}
-        buttonlabel='Continue with Microsoft'
+        buttonlabel={buttonString('Microsoft')}
         style='group h-12 rounded-full border-4 border-microsoftblue px-6 transition duration-300'
-        display={props.displayMicrosoft}
+        display={displayMicrosoft}
       />
 
-      {/* Apple Button */}
-      <LoginButton
-        handler={() => undefined}
-        icon={appleIcon}
-        buttonlabel='Continue with Apple'
-        style='group h-12 rounded-full border-4 border-applegrey px-6 transition duration-300'
-        display={props.displayApple}
-      />
-
-      {/* Yahoo Button */}
-      <LoginButton
-        handler={() => undefined}
-        icon={yahooIcon}
-        buttonlabel='Continue with Yahoo'
-        style='group h-12 rounded-full border-4 border-yahoopurple px-6 transition duration-300'
-        display={props.displayYahoo}
-      />
+      {/* Phone Button //TODO*/}
     </div>
   )
 }
