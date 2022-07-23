@@ -17,7 +17,7 @@ function Modal() {
   const [commuteDistance, setCommuteDistance] = useState(0)
   const { setAlert } = useAlert()
 
-  function alertUser(text) {
+  function alertUser(text: string) {
     setAlert({
       variant: AlertVariant.info,
       text: text,
@@ -111,7 +111,7 @@ function Modal() {
         {/* If modal is opened, display cancel button. Once all information has been filled display stop button*/}
         {modalIsOpen && (
           <button
-            className='relative h-[30px] w-[120px] rounded-lg bg-dark-red text-lg font-semibold text-white'
+            className='relative ml-2 mr-2 h-[30px] w-[120px] rounded-lg bg-dark-red text-lg font-semibold text-white'
             onClick={() => {
               setModalOpen(false),
                 setClients([]),
@@ -119,7 +119,8 @@ function Modal() {
                 setCommute(''),
                 setWalkDistance(0),
                 setOther(''),
-                setCommuteDistance(0)
+                setCommuteDistance(0),
+                alertUser('Your visit has been cancelled')
             }}
           >
             CANCEL
@@ -127,7 +128,7 @@ function Modal() {
         )}
         {modalIsOpen && formIsFilled() && (
           <button
-            className='relative h-[30px] w-[120px] rounded-lg bg-dark-red text-lg font-semibold text-white'
+            className='relative ml-2 mr-2 h-[30px] w-[120px] rounded-lg bg-dark-red text-lg font-semibold text-white'
             onClick={() => {
               setModalOpen(false),
                 setClients([]),
@@ -135,7 +136,8 @@ function Modal() {
                 setCommute(''),
                 setWalkDistance(0),
                 setOther(''),
-                setCommuteDistance(0)
+                setCommuteDistance(0),
+                alertUser('Your visit has been recorded')
             }}
           >
             STOP VISIT
