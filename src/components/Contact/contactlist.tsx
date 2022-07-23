@@ -32,7 +32,7 @@ const ContactList = ({
   })
 
   return (
-    <div className='mt-1 flex-col'>
+    <div className='flex-col'>
       <ul>{contactItems}</ul>
     </div>
   )

@@ -1,4 +1,5 @@
-import { getApp, getApps, initializeApp } from 'firebase/app'
+/* eslint-disable no-console */
+import { getApp, getApps, initializeApp } from 'firebase/app' // no compat for new SDK
 import { getAuth } from 'firebase/auth'
 import { getFirestore } from 'firebase/firestore'
 
@@ -18,6 +19,6 @@ if (!getApps().length) {
   app = getApp() // Uses existing app if app exists
 }
 
-export const auth = getAuth(app)
-export const db = getFirestore(app)
+export const auth = getAuth(app) //get the current firebase user
+export const db = getFirestore(app) //stores reference of database instance
 export default app

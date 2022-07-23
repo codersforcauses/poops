@@ -1,8 +1,8 @@
 import { NextPage } from 'next'
 import Image from 'next/image'
 
-import LoginPanel from '@/components/LoginPanel'
-import { useAuth } from '@/context/auth'
+import LoginPanel from '@/components/Login/LoginPanel'
+import { useAuth } from '@/context/AuthContext'
 
 const Login: NextPage = () => {
   const { logOut, currentUser } = useAuth()
@@ -28,12 +28,10 @@ const Login: NextPage = () => {
         </div>
 
         <LoginPanel
+          linkAccount={false}
           displayGoogle={true}
           displayFacebook={true}
-          displayTwitter={true}
           displayMicrosoft={true}
-          displayYahoo={false}
-          displayApple={false}
         />
       </div>
       {/* //! used for testing} */}

@@ -2,6 +2,7 @@ import { Dispatch, SetStateAction } from 'react'
 
 import Avatar from '@/components/Contact/avatar'
 import type { Contact } from '@/types/types'
+import truncateText from '@/utils/truncateText'
 
 type ContactItemProps = {
   contact: Contact
@@ -26,27 +27,21 @@ const ContactItem = ({
     contact: contact
   }
   return (
-    <>
-      {/* if a contact item was clicked we want to display the contact data  */}
-
-      <li className='border-b border-grey bg-white p-3 px-5 hover:bg-grey focus:bg-grey sm:py-4'>
-        <div
-          className='flex items-center space-x-4'
-          onClick={() => setDisplayContact(displayContact)}
-          onKeyDown={() => setDisplayContact(displayContact)}
-          role='button'
-          tabIndex={0}
-        >
-          {/* USER PROFILE IMAGE */}
+    <div
+      onClick={() => setDisplayContact(displayContact)}
+      onKeyDown={() => setDisplayContact(displayContact)}
+      role='button'
+      tabIndex={0}
+    >
+      <li className='flex items-center justify-between truncate border-b border-gray-300 bg-white p-3 px-5 text-sm hover:bg-gray-300 focus:bg-gray-300 sm:py-4'>
+        {/* USER PROFILE IMAGE */}
+        <span className='flex items-center space-x-4'>
           <Avatar image={image} height={40} width={40} iconClass='h-10 w-10' />
-          <div className='min-w-0 flex-1'>
-            <p className='text-gray-900 truncate text-sm font-medium'>
-              {contact.displayName}
-            </p>
-          </div>
-        </div>
+          <p className='font-medium text-gray-700'>{contact.displayName}</p>
+        </span>
+        <p className='text-gray-500'>{truncateText(contact.pets, 16)}</p>
       </li>
-    </>
+    </div>
   )
 }
 

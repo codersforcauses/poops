@@ -6,7 +6,7 @@ import ContactList from '@/components/Contact/contactlist'
 import Header from '@/components/Header'
 import NavBar from '@/components/NavBar'
 import { withProtected } from '@/components/PrivateRoute'
-import SearchBar from '@/components/SearchBar/searchbar'
+import SearchBar from '@/components/SearchBar'
 import SearchTag from '@/components/SearchBar/searchtag'
 import { useFirestore } from '@/context/firestore'
 import type { Contact } from '@/types/types'
@@ -36,21 +36,18 @@ const Contact = () => {
     contact: Contact
   }>(null)
 
-  function filterContact(includes: string, searchField: string) {
+  function filterContact(tagf: string, searchField: string) {
     const filteredIndexes: number[] = []
     allContacts.forEach((contact: Contact, index: number) => {
-      if (includes == '') {
-        if (contact.displayName.toLocaleLowerCase().includes(searchField)) {
-          filteredIndexes.push(index)
-        }
-      } else {
-        const filtered =
-          contact.displayName.toLocaleLowerCase().includes(searchField) &&
-          contact.tags.some((v) => v.includes(includes))
+      const reg = new RegExp(`(^|\\s|,)${searchField}`, 'gi')
 
-        if (filtered) {
-          filteredIndexes.push(index)
-        }
+      // don't show contacts without selected tag if tag selected
+      if (tagf !== '' && !contact.tags.some((v) => v.includes(tagf))) {
+        return false
+      }
+
+      if (reg.test(contact.displayName) || reg.test(contact.pets)) {
+        filteredIndexes.push(index)
       }
     })
     setFilteredIndexes(filteredIndexes)
@@ -105,10 +102,13 @@ const Contact = () => {
         )}
         <div className='m-auto max-w-md'>
           {displayContact === null && (
-            <div className='m-2 flex flex-row rounded-xl border-2 border-grey'>
+            <div className='border-grey m-2 flex flex-row rounded-xl border-2'>
               <SearchTag
+                name='Filter By'
                 options={taglist}
-                onChangehandler={onSearchTagChange}
+                onChangehandler={(e: React.ChangeEvent<HTMLSelectElement>) =>
+                  onSearchTagChange(e)
+                }
               />
               <div className='flex w-full justify-between'>
                 <SearchBar onChangeHandler={onSearchChange} />

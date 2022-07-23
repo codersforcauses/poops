@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import {
   createContext,
   ReactNode,
@@ -8,20 +9,17 @@ import {
   useState
 } from 'react'
 import {
-  arrayRemove,
-  arrayUnion,
   doc,
   FirestoreError,
   getDoc,
   serverTimestamp,
   setDoc,
   Timestamp,
-  updateDoc,
-  writeBatch
+  updateDoc
 } from 'firebase/firestore'
 
 import { db } from '@/components/Firebase/init'
-import { useAuth } from '@/context/auth'
+import { useAuth } from '@/context/AuthContext'
 import { Contact } from '@/types/types'
 
 interface VisitProp {
@@ -48,10 +46,10 @@ const defaultUserDoc: UserDocProp = {
   visit: [],
   Contacts: []
 }
-
+//update functions as a context api
 interface FirestoreContextProps {
   userDoc: UserDocProp
-  updateVisit?: (oldVisit: VisitProp, newVisit: VisitProp) => void
+  updateVisit?: (userDoc: UserDocProp) => void
   updateContact?: (userDoc: UserDocProp) => void
 }
 
@@ -62,12 +60,15 @@ const FirestoreContext = createContext<FirestoreContextProps>({
 export const FirestoreContextProvider = FirestoreContext.Provider
 
 export const useFirestore = () => useContext(FirestoreContext)
+
+//retreiving firestore data and setting the data to the local variable FireContextProps
 const FirestoreProvider = ({ children }: { children: ReactNode }) => {
   const { currentUser } = useAuth()
   const [userDoc, setUserDoc] = useState<UserDocProp>(defaultUserDoc)
 
   const retrieveData = useCallback(async () => {
     if (currentUser?.uid) {
+      //try to get existing doc if the doc does not exist then create a new doc with uid as its ref
       try {
         const userDocSnap = await getDoc(doc(db, USERSDOC, currentUser.uid))
         if (userDocSnap.exists()) {
@@ -91,25 +92,23 @@ const FirestoreProvider = ({ children }: { children: ReactNode }) => {
     retrieveData()
   }, [retrieveData])
 
+  //updates the whole visit and contact array in the doc
+  /*
+    this functions gets what is in the curent array in local storage
+    then ovewrites the whole array in firestore with the current local array
+
+    delete, add and update works using the same function. done through adding/removing 
+    from array and editing the values in the array.
+  */
   const updateVisit = useCallback(
-    async (oldVisit: VisitProp, newVisit: VisitProp) => {
+    async (user: UserDocProp) => {
       // setAchievementsCount((prev) => ({
       //   count: prev.count + newAchievementsEarned
       // }))
       try {
         if (currentUser?.uid) {
-          const userDocRef = doc(db, USERSDOC, currentUser.uid)
-          const batch = writeBatch(db)
-          batch.update(userDocRef, {
-            visit: arrayRemove(oldVisit)
-          })
-          batch.update(userDocRef, {
-            visit: arrayUnion({
-              ...newVisit,
-              visitTime: serverTimestamp() as Timestamp
-            })
-          })
-          await batch.commit()
+          const userDocRef = doc(db, 'users', currentUser.uid)
+          await updateDoc(userDocRef, 'visits', user.visit)
         }
       } catch (err: unknown) {
         //#region  //*=========== For logging ===========
@@ -142,6 +141,7 @@ const FirestoreProvider = ({ children }: { children: ReactNode }) => {
     [currentUser]
   )
 
+  //changes the default value to the data retreived and saved in state
   const value: FirestoreContextProp = useMemo(
     () => ({
       userDoc: userDoc,

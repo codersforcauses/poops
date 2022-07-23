@@ -1,13 +1,11 @@
 import React, { useEffect } from 'react'
 import { Dispatch, SetStateAction, useState } from 'react'
-import { PlusIcon, XIcon } from '@heroicons/react/outline'
 import tw from 'tailwind-styled-components'
-import { v4 as uuidv4 } from 'uuid'
 
 import Avatar from '@/components/Contact/avatar'
 import RegionSelector from '@/components/Contact/regiondropdown'
 import TagSelector from '@/components/Contact/tagdropdown'
-import type { Contact, Pet } from '@/types/types'
+import type { Contact } from '@/types/types'
 
 type ContactInfoProps = {
   contact: Contact
@@ -26,23 +24,9 @@ const ContactForm = ({
   image,
   setIsEditing
 }: ContactInfoProps) => {
-  const [pets, setPets] = useState<Pet[]>(contact.pets)
   const [regions, setRegions] = useState(contact.region)
   const [tags, setTags] = useState(contact.tags)
   const [contactForm, setContactForm] = useState(contact)
-
-  function addPet() {
-    const newPetField = {
-      id: uuidv4(),
-      name: '',
-      notes: ''
-    }
-    setPets((pets) => [...pets, newPetField])
-  }
-
-  const removePet = (pet: Pet) => {
-    setPets([...pets.filter((p) => p.name !== pet.name)])
-  }
 
   const handleInputChange = (
     e:
@@ -53,31 +37,13 @@ const ContactForm = ({
     setContactForm({ ...contactForm, [name]: value })
   }
 
-  const handlePetChange = (
-    petIndex: number,
-    e:
-      | React.ChangeEvent<HTMLInputElement>
-      | React.ChangeEvent<HTMLTextAreaElement>
-  ) => {
-    const { name, value } = e.target
-    const updatedPet = pets[petIndex]
-    updatedPet[name as keyof Pet] = value
-    // Only set the updated pet but keep the other existing pets
-    setPets([
-      ...pets.slice(0, petIndex),
-      updatedPet,
-      ...pets.slice(petIndex + 1, pets.length)
-    ])
-  }
-
   useEffect(() => {
     setContactForm((contactForm) => ({
       ...contactForm,
       tags: tags,
-      region: regions,
-      pets: pets
+      region: regions
     }))
-  }, [regions, pets, tags])
+  }, [regions, tags])
 
   // TODO: Submit ContactForm to database
   const submitForm = (e: React.FormEvent) => {
@@ -108,7 +74,7 @@ const ContactForm = ({
           <input
             name='displayName'
             defaultValue={contact.displayName}
-            className='mb-2 w-80 rounded-lg border border-grey pl-1'
+            className='border-grey mb-2 w-80 rounded-lg border pl-1'
             onChange={handleInputChange}
           />
         </Box>
@@ -120,7 +86,7 @@ const ContactForm = ({
           <textarea
             name='desc'
             defaultValue={contact.desc}
-            className='w-80 rounded-lg border border-grey pl-1'
+            className='w-80 rounded-lg border border-gray-300 pl-1'
             onChange={handleInputChange}
           />
         </Box>
@@ -132,7 +98,7 @@ const ContactForm = ({
           <input
             name='phone'
             defaultValue={contact.phone}
-            className='mb-2 w-full rounded-lg border border-grey pl-1'
+            className='mb-2 w-full rounded-lg border border-gray-300 pl-1'
             onChange={handleInputChange}
           />
         </Box>
@@ -144,7 +110,7 @@ const ContactForm = ({
           <input
             name='email'
             defaultValue={contact.email}
-            className='mb-2 w-full rounded-lg border border-grey pl-1'
+            className='mb-2 w-full rounded-lg border border-gray-300 pl-1'
             onChange={handleInputChange}
           />
         </Box>
@@ -156,7 +122,7 @@ const ContactForm = ({
           <input
             name='streetAddress'
             defaultValue={contact.streetAddress}
-            className='mb-2 w-full rounded-lg border border-grey pl-1'
+            className='mb-2 w-full rounded-lg border border-gray-300 pl-1'
             onChange={handleInputChange}
           />
         </Box>
@@ -181,42 +147,12 @@ const ContactForm = ({
           <label htmlFor='pets' className='text-dark-red'>
             Pets
           </label>
-          {pets.map((pet, i) => (
-            <div key={pet.id}>
-              <PetContainer className='py-1'>
-                <div className='flex w-full justify-between'>
-                  <label htmlFor={pet.name} className='text-dark-red'>
-                    Name
-                  </label>
-                  <button type='button' onClick={() => removePet(pet)}>
-                    <XIcon className='h-5 w-5 text-dark-red' />
-                  </button>
-                </div>
-                <input
-                  name='name'
-                  defaultValue={pet.name}
-                  className='mb-2 w-full rounded-lg border border-grey pl-1'
-                  onChange={(e) => handlePetChange(i, e)}
-                />
-
-                <label htmlFor={pet.notes} className='text-dark-red'>
-                  Notes
-                </label>
-                <textarea
-                  name='notes'
-                  defaultValue={pet.notes}
-                  className='mb-2 w-full rounded-lg border border-grey pl-1'
-                  onChange={(e) => handlePetChange(i, e)}
-                />
-              </PetContainer>
-            </div>
-          ))}
-          {/* Plus icon that adds a new pet container */}
-          <div className='flex justify-center'>
-            <button type='button' onClick={addPet}>
-              <PlusIcon className='h-7 w-7 rounded-full bg-white p-1 text-dark-red' />
-            </button>
-          </div>
+          <input
+            name='pets'
+            defaultValue={contact.pets}
+            className='mb-2 w-80 rounded-lg border border-gray-300 pl-1'
+            onChange={handleInputChange}
+          />
         </Box>
         {/* NOTES */}
         <Box>
@@ -226,7 +162,7 @@ const ContactForm = ({
           <textarea
             name='notes'
             defaultValue={contact.notes}
-            className='w-full rounded-lg border border-grey'
+            className='w-full rounded-lg border border-gray-300'
             onChange={handleInputChange}
           />
         </Box>
@@ -241,7 +177,7 @@ const ContactForm = ({
             </button>
             <button
               type='button'
-              className='w-80 rounded bg-grey py-1 font-bold text-black hover:bg-grey'
+              className='w-80 rounded bg-gray-300 py-1 font-bold text-black hover:bg-gray-300'
               onClick={() => setIsEditing(false)}
             >
               Cancel
@@ -256,7 +192,7 @@ const ContactForm = ({
 export default ContactForm
 
 const Box = tw.div`
-    bg-grey
+    bg-gray-300
     bg-opacity-20
     box-content
     w-80
@@ -264,11 +200,4 @@ const Box = tw.div`
     px-3
     py-1
     break-words
-`
-
-const PetContainer = tw.div`
-  px-2
-  my-2
-  bg-white
-  rounded-2xl
 `

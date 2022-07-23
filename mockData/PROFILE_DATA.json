@@ -3,16 +3,7 @@
   "firstName": "John",
   "lastName": "Doe",
   "desc": "description",
-  "pets": [
-    { "id": "62c6f9a7a9ff10abfef8f4b0", "name": "Zoe", "notes": "Is Moth" },
-    { "id": "62c6f9a73d8c64def8c87ca7", "name": "Kato", "notes": "Guinea Pig" },
-    { "id": "62c6f9a70b2d3c4868120418", "name": "John", "notes": "Capubara" },
-    {
-      "id": "62c6f9a7762bb5632137013a",
-      "name": "Goggy",
-      "notes": "Praying Mantis"
-    }
-  ],
+  "pets": "Pongo, Casper",
   "email": "tiamcmahon@kegular.com",
   "phone": "(886) 578-3300",
   "streetAddress": "691 Cleveland Street",
