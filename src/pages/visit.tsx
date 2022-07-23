@@ -37,4 +37,3 @@ const Visit = () => {
 }
 
 export default withProtected(Visit)
-// export default Visit
