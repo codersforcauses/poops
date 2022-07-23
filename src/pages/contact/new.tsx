@@ -10,7 +10,7 @@ const Contact = () => {
     firstName: '',
     lastName: '',
     desc: '',
-    pets: [],
+    pets: '',
     email: '',
     phone: '',
     streetAddress: '',
