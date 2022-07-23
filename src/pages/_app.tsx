@@ -2,6 +2,7 @@ import { AppProps } from 'next/app'
 
 import TopNav from '@/components/TopNav'
 import { AuthContextProvider } from '@/context/AuthContext'
+import FirestoreProvider from '@/context/firestore'
 
 import '@/styles/main.css'
 
@@ -10,8 +11,10 @@ const POOPS = ({ Component, pageProps }: AppProps) => {
     <>
       <TopNav />
       <AuthContextProvider>
-        <Component {...pageProps} />
-        {/* <NavBar /> */}
+        <FirestoreProvider>
+          <Component {...pageProps} />
+          {/* <NavBar /> */}
+        </FirestoreProvider>
       </AuthContextProvider>
     </>
   )

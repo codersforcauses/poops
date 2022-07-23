@@ -1,12 +1,33 @@
-interface Pet {
+import { Timestamp } from 'firebase/firestore'
+
+//local variables to be passed around the app
+export interface Pet {
   id: string
   name: string
   notes: string
 }
-interface Contact {
+
+export interface UserData {
+  displayName: string
+  contacts: ContactData[]
+  visits: VisitData[]
+}
+
+export interface VisitData {
+  type: string
+  displayName: string
+  petNames: string
+  startTime: Timestamp
+  endTime: Timestamp
+  walkDist: number
+  commuteDist: number
+  commuteMethod: string
+  notes: string
+}
+
+export interface ContactData {
   id: string
-  firstName: string
-  lastName: string
+  displayName: string
   desc: string
   pets: Pet[]
   email: string
@@ -17,4 +38,22 @@ interface Contact {
   tags: string[]
 }
 
-export type { Contact, Pet }
+export interface Contact {
+  //historic type to deal with type issues with contacts
+  id: string
+  firstName: string
+  lastName: string
+  desc: string
+  pets: string
+  email: string
+  phone: string
+  streetAddress: string
+  region: string[]
+  notes: string
+  tags: string[]
+}
+
+export interface SelectOption {
+  label: string
+  value: string
+}
