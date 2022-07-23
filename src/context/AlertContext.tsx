@@ -92,7 +92,8 @@ export const AlertContextProvider = ({
           visible && content.position === 'bottom'
             ? {
                 filter: 'blur(5px)',
-                pointerEvents: 'none'
+                pointerEvents: 'none',
+                touchAction: 'none'
               }
             : {
                 filter: 'blur(0px)'
