@@ -1,4 +1,3 @@
-
 describe('Launch login page', () => {
   it('check login page elements', () => {
     cy.visit('http://localhost:3000/login')
@@ -14,7 +13,6 @@ describe('Launch login page', () => {
 //   const username = "yodacypresstesting@gmail.com"
 //   const password = "yodaCypressTesting*18"
 
-
 //   it('clicking "Continue with Google" navigates to google auth page', () => {
 //     cy.contains('Continue with Google').click()
 //   })
@@ -25,8 +23,5 @@ describe('Launch login page', () => {
 //     cy.get('title').should('contain', 'Google')
 //   })
 // })
-
-
-
 
 export {}
