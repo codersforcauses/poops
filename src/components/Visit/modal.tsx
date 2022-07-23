@@ -3,7 +3,6 @@ import React from 'react'
 import { useState } from 'react'
 import { XIcon } from '@heroicons/react/solid'
 import { Timestamp } from 'firebase/firestore'
-import { useForm } from 'react-hook-form'
 
 import { visitSelectOptions } from '@/components/Visit/visitlist'
 import { useFirestore } from '@/context/firestore'
@@ -14,11 +13,9 @@ import FormField from './formfield'
 
 interface ModalViewProps {
   toggleModal: () => void
-  isEdit?: boolean
 }
 
-const ModalView = ({ toggleModal, isEdit }: ModalViewProps) => {
-  const { register, handleSubmit } = useForm()
+const ModalView = ({ toggleModal }: ModalViewProps) => {
   const { userDoc, updateVisit } = useFirestore()
   const [visitType, setVisitType] = useState('')
   const [clientName, setDisplayName] = useState('')
@@ -30,7 +27,7 @@ const ModalView = ({ toggleModal, isEdit }: ModalViewProps) => {
   const [commuteMethod, setCommuteMethod] = useState('')
   const [notes, setNotes] = useState('')
 
-  const hSubmit = (click: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (click: React.FormEvent<HTMLFormElement>) => {
     click.preventDefault()
     const data: VisitData = {
       type: visitType,
@@ -45,6 +42,7 @@ const ModalView = ({ toggleModal, isEdit }: ModalViewProps) => {
     }
     userDoc.visits.push(data)
     updateVisit?.(userDoc)
+    closeModal()
   }
 
   const isSubmitEnabled = () =>
@@ -59,9 +57,7 @@ const ModalView = ({ toggleModal, isEdit }: ModalViewProps) => {
 
   const closeModal = () => {
     if (isSubmitEnabled()) {
-      setTimeout(() => {
-        toggleModal()
-      }, 10) //ensure form gets completed
+      toggleModal()
     }
   }
 
@@ -78,7 +74,7 @@ const ModalView = ({ toggleModal, isEdit }: ModalViewProps) => {
           <h1 className='pl-2 text-2xl font-bold'>Add Your Visit</h1>
         </div>
 
-        <form className='pt-3' onSubmit={hSubmit}>
+        <form className='pt-3' onSubmit={handleSubmit}>
           <table className='container mx-auto table-fixed'>
             <tbody>
               <tr>
@@ -182,7 +178,6 @@ const ModalView = ({ toggleModal, isEdit }: ModalViewProps) => {
             <button
               className='text-bold rounded bg-primary px-12 py-4 text-white drop-shadow-default active:bg-dark-red'
               type='submit'
-              onClick={closeModal}
               disabled={!isSubmitEnabled}
             >
               Submit
