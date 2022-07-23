@@ -17,6 +17,20 @@ function Modal() {
   const [other, setOther] = useState('')
   const [commuteDistance, setCommuteDistance] = useState(0)
   const { setAlert } = useAlert()
+  // const { userDoc, updateVisit } = useFirestore()
+
+  // const data: VisitData = {
+  //   type: type,
+  //   displayName: clients.join(','),
+  //   petNames: '', // gonna be removed
+  //   // startTime: Timestamp.fromDate(new Date(startTime)),
+  //   // endTime: Timestamp.fromDate(new Date(endTime)),
+  //   walkDist: walkDistance,
+  //   commuteDist: commuteDistance,
+  //   commuteMethod: commute,
+  //   notes: '', // in progress
+  //   // inProgress: true
+  // }
 
   function alertUser(text: string) {
     setAlert({
@@ -61,7 +75,9 @@ function Modal() {
           <hr className='mb-3 h-0.5 border-dark-red bg-dark-red text-dark-red' />
 
           {/* Visit Form */}
-          <form>
+          <form
+          // onSubmit={}
+          >
             {/* Commute Selector Form */}
             <CommuteSelector commute={commute} setCommute={setCommute} />
 
@@ -130,6 +146,7 @@ function Modal() {
         )}
         {modalIsOpen && formIsFilled() && (
           <button
+            type='submit'
             className='relative ml-2 mr-2 h-[30px] w-[120px] rounded-lg bg-dark-red text-lg font-semibold text-white'
             onClick={() => {
               setModalOpen(false),
