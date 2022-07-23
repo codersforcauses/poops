@@ -5,6 +5,7 @@ import ClientSelector from '@/components/Home/clientSelector'
 import CommuteSelector from '@/components/Home/commuteSelector'
 import TextForm from '@/components/Home/textForm'
 import TypeSelector from '@/components/Home/typeSelector'
+import { AlertVariant, useAlert } from '@/context/AlertContext'
 
 function Modal() {
   const [modalIsOpen, setModalOpen] = useState(false)
@@ -14,7 +15,16 @@ function Modal() {
   const [walkDistance, setWalkDistance] = useState(0)
   const [other, setOther] = useState('')
   const [commuteDistance, setCommuteDistance] = useState(0)
+  const { setAlert } = useAlert()
 
+  function alertUser(text) {
+    setAlert({
+      variant: AlertVariant.info,
+      text: text,
+      position: 'top',
+      showFor: 1500
+    })
+  }
   function formIsFilled() {
     return (
       commuteDistance > 0 &&
@@ -34,7 +44,7 @@ function Modal() {
         <button
           className='relative h-[30px] w-[120px] rounded-lg bg-dark-red text-lg font-semibold text-white'
           onClick={() => {
-            setModalOpen(true)
+            setModalOpen(true), alertUser('Your visit timer has started')
           }}
         >
           START VISIT
@@ -112,7 +122,23 @@ function Modal() {
                 setCommuteDistance(0)
             }}
           >
-            {formIsFilled() ? 'STOP VISIT' : 'CANCEL'}
+            CANCEL
+          </button>
+        )}
+        {modalIsOpen && formIsFilled() && (
+          <button
+            className='relative h-[30px] w-[120px] rounded-lg bg-dark-red text-lg font-semibold text-white'
+            onClick={() => {
+              setModalOpen(false),
+                setClients([]),
+                setType(''),
+                setCommute(''),
+                setWalkDistance(0),
+                setOther(''),
+                setCommuteDistance(0)
+            }}
+          >
+            STOP VISIT
           </button>
         )}
       </div>
