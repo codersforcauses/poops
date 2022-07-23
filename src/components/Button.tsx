@@ -5,18 +5,21 @@ export interface ButtonInterface {
   height: string
   width: string
   buttonlabel: string
-  style: string
-  color: string
 }
 
 const Button = (props: ButtonInterface) => {
   return (
-    <button className={props.style} onClick={props.handler}>
-      <div className='relative flex items-center space-x-4'>
-        <span className='text-white-600 block w-max text-sm font-semibold tracking-wide  sm:text-base'>
-          {props.buttonlabel}
-        </span>
-      </div>
+    <button
+      onClick={props.handler}
+      style={{
+        backgroundColor: ' rgb(206 40 61 )',
+        color: 'white',
+        borderRadius: '2px',
+        height: props.height,
+        width: props.width
+      }}
+    >
+      {props.buttonlabel}
     </button>
   )
 }
