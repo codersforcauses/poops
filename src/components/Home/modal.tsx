@@ -1,8 +1,8 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import ClientSelector from '@/components/Home/clientSelector'
 import CommuteSelector from '@/components/Home/commuteSelector'
-import StopWatch from '@/components/Home/stopWatch'
+import Duration from '@/components/Home/duration'
 import TextForm from '@/components/Home/textForm'
 import TypeSelector from '@/components/Home/typeSelector'
 import { AlertVariant, useAlert } from '@/context/AlertContext'
@@ -16,9 +16,30 @@ function Modal() {
   const [walkDistance, setWalkDistance] = useState(0)
   const [other, setOther] = useState('')
   const [commuteDistance, setCommuteDistance] = useState(0)
+  const [time, setTime] = useState(0)
+  const [running, setRunning] = useState(false)
   // const [startTime, setStartTime] = useState<Timestamp>()
   // const [endTime, setEndTime] = useState<Timestamp>()
   const { setAlert } = useAlert()
+
+  useEffect(() => {
+    let interval: ReturnType<typeof setInterval>
+    interval = setTimeout(() => {
+      null
+    }, 0)
+    if (running) {
+      interval = setInterval(() => {
+        setTime((prevTime) => prevTime + 10)
+      }, 10)
+    } else if (!running) {
+      window.clearInterval(interval)
+    }
+    return () => window.clearInterval(interval)
+  }, [running])
+  const hour = ('0' + Math.floor((time / 60000) % 60)).slice(-2)
+  const minute = ('0' + Math.floor((time / 1000) % 60)).slice(-2)
+  const second = ('0' + ((time / 10) % 100)).slice(-2)
+  const timeDisplay = hour + ':' + minute + ':' + second
 
   function alertUser(text: string) {
     setAlert({
@@ -89,7 +110,13 @@ function Modal() {
           )}
         </form>
 
-        {formIsFilled() && visitStarted && <StopWatch />}
+        {formIsFilled() && visitStarted && (
+          <Duration id='duration' type='text' value={timeDisplay} />
+        )}
+
+        {formIsFilled() && (walkDistance > 0 || type == 'Vet') && final && (
+          <Duration id='duration' type='text' value={timeDisplay} />
+        )}
 
         {!formIsFilled() && (
           <button className='relative m-2 h-[30px] w-[120px] cursor-default rounded-lg bg-dark-gray text-lg font-semibold text-white'>
@@ -100,7 +127,7 @@ function Modal() {
           <button
             className='relative m-2 h-[30px] w-[120px] rounded-lg bg-dark-red text-lg font-semibold text-white'
             onClick={() => {
-              setVisit(true) //setStartTime(Timestamp.now)
+              setVisit(true), setRunning(true) //setStartTime(Timestamp.now)
             }}
           >
             START VISIT
@@ -118,7 +145,7 @@ function Modal() {
           <button
             className='relative m-2 h-[30px] w-[120px] rounded-lg bg-dark-red text-lg font-semibold text-white'
             onClick={() => {
-              setVisit(false), setFinal(true) //setEndTime(Timestamp.now)
+              setVisit(false), setFinal(true), setRunning(false) //setEndTime(Timestamp.now)
             }}
           >
             STOP VISIT
