@@ -2,7 +2,7 @@ import { NextPage } from 'next'
 import Image from 'next/image'
 
 import LoginPanel from '@/components/Login/LoginPanel'
-import { useAuth } from '@/context/Auth'
+import { useAuth } from '@/context/Auth/context'
 
 const Login: NextPage = () => {
   const { logOut, currentUser } = useAuth()

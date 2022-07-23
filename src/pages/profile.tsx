@@ -1,8 +1,8 @@
 import Header from '@/components/Header'
 import LoginPanel from '@/components/Login/LoginPanel'
 import NavBar from '@/components/NavBar'
+import { useAuth } from '@/context/Auth/context'
 // import { withProtected } from '@/components/PrivateRoute'
-import { useAuth } from '@/context/Auth'
 
 const Profile = () => {
   const { logOut } = useAuth()
