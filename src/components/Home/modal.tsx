@@ -6,6 +6,7 @@ import ClientSelector from '@/components/Home/clientSelector'
 import CommuteSelector from '@/components/Home/commuteSelector'
 import TextForm from '@/components/Home/textForm'
 import TypeSelector from '@/components/Home/typeSelector'
+import { AlertVariant, useAlert } from '@/context/AlertContext'
 
 function Modal() {
   const [modalIsOpen, setModalOpen] = useState(false)
@@ -15,8 +16,16 @@ function Modal() {
   const [walkDistance, setWalkDistance] = useState(0)
   const [other, setOther] = useState('')
   const [commuteDistance, setCommuteDistance] = useState(0)
-  // const { visitDoc, setDoc } = useFirestore()
+  const { setAlert } = useAlert()
 
+  function alertUser(text: string) {
+    setAlert({
+      variant: AlertVariant.info,
+      text: text,
+      position: 'top',
+      showFor: 1500
+    })
+  }
   function formIsFilled() {
     return (
       commuteDistance > 0 &&
@@ -36,7 +45,7 @@ function Modal() {
         <button
           className='relative h-[30px] w-[120px] rounded-lg bg-dark-red text-lg font-semibold text-white'
           onClick={() => {
-            setModalOpen(true)
+            setModalOpen(true), alertUser('Your visit timer has started')
           }}
         >
           START VISIT
@@ -52,26 +61,10 @@ function Modal() {
           <hr className='mb-3 h-0.5 border-dark-red bg-dark-red text-dark-red' />
 
           {/* Visit Form */}
-          <form
-          // onSubmit={(event) => {
-          //   const visit: visitData = {
-          //     type: type,
-          //     clients: clients,
-          //     startTime: startTime,
-          //     endTime: endTime,
-          //     duration: endTime - startTime,
-          //     walkDistance: walkDistance,
-          //     commuteDistance: commuteDistance,
-          //     commuteMethod: commute,
-          //   }
-          //   userDoc.visits[props.id] = visit
-          //   const temp: VisitData[] = [...userDoc.visits]
-          //   props.set(temp)
-          //   updateVisit?.(userDoc)
-          //   props.isEditable(false)
-          //   event.preventDefault()
-          // }}
-          >
+          <form>
+            {/* Commute Selector Form */}
+            <CommuteSelector commute={commute} setCommute={setCommute} />
+
             {/* Commute Distance Form */}
             <TextForm
               id='commuteDistance'
@@ -81,9 +74,6 @@ function Modal() {
               isRequired={true}
               onChange={(e) => setCommuteDistance(Number(e.target.value))}
             />
-
-            {/* Commute Selector Form */}
-            <CommuteSelector commute={commute} setCommute={setCommute} />
 
             {/* Other Form if commute is 'Other' */}
             {commute == 'Other' && (
@@ -97,7 +87,7 @@ function Modal() {
               />
             )}
 
-            {/* Pet Selector Form */}
+            {/* Client Selector Form */}
             <ClientSelector clients={clients} setClients={setClients} />
 
             {/* Type Selector Form */}
@@ -123,7 +113,7 @@ function Modal() {
         {modalIsOpen && (
           <button
             type='submit'
-            className='relative h-[30px] w-[120px] rounded-lg bg-dark-red text-lg font-semibold text-white'
+            className='relative ml-2 mr-2 h-[30px] w-[120px] rounded-lg bg-dark-red text-lg font-semibold text-white'
             onClick={() => {
               setModalOpen(false),
                 setClients([]),
@@ -131,10 +121,28 @@ function Modal() {
                 setCommute(''),
                 setWalkDistance(0),
                 setOther(''),
-                setCommuteDistance(0)
+                setCommuteDistance(0),
+                alertUser('Your visit has been cancelled')
             }}
           >
-            {formIsFilled() ? 'STOP VISIT' : 'CANCEL'}
+            CANCEL
+          </button>
+        )}
+        {modalIsOpen && formIsFilled() && (
+          <button
+            className='relative ml-2 mr-2 h-[30px] w-[120px] rounded-lg bg-dark-red text-lg font-semibold text-white'
+            onClick={() => {
+              setModalOpen(false),
+                setClients([]),
+                setType(''),
+                setCommute(''),
+                setWalkDistance(0),
+                setOther(''),
+                setCommuteDistance(0),
+                alertUser('Your visit has been recorded')
+            }}
+          >
+            STOP VISIT
           </button>
         )}
       </div>

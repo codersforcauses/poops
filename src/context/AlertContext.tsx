@@ -1,0 +1,117 @@
+import React, {
+  createContext,
+  useCallback,
+  useContext,
+  useMemo,
+  useState
+} from 'react'
+
+import Alert from '@/components/UI/alert'
+
+export interface AlertContentProps {
+  title?: string
+  text: string
+  variant: AlertVariant
+  position?: 'top' | 'bottom'
+  confirmFunction?: () => void
+  cancelFunction?: () => void
+  showFor?: number
+}
+
+export enum AlertVariant {
+  info,
+  security,
+  critical,
+  comment
+}
+
+interface AlertContextProps {
+  setAlert: (content: AlertContentProps) => void
+  clearAlert: () => void
+  visible: boolean
+}
+
+const AlertContext = createContext<AlertContextProps>({
+  setAlert: () => {
+    return
+  },
+  clearAlert: () => {
+    return
+  },
+  visible: false
+})
+
+export const useAlert = () => useContext(AlertContext)
+
+export const AlertContextProvider = ({
+  children
+}: {
+  children: React.ReactNode
+}) => {
+  const [visible, setVisible] = useState(false)
+  const [content, setContent] = useState<AlertContentProps>({
+    title: '',
+    text: '',
+    position: 'top',
+    confirmFunction: undefined, // function to execute on confirm, enables the confirm function
+    cancelFunction: undefined,
+    showFor: 5000, // ms alert will stay open, set to -1 to leave open until button click
+    variant: AlertVariant.info
+  })
+
+  const setAlert = (content: AlertContentProps) => {
+    setContent({
+      title: content.title ?? '',
+      text: content.text,
+      variant: content.variant,
+      position: content.position ?? 'top',
+      confirmFunction: content.confirmFunction ?? undefined,
+      cancelFunction: content.cancelFunction ?? undefined,
+      showFor: content.showFor ?? 5000
+    })
+  }
+
+  const clearAlert = useCallback(() => {
+    setVisible(false)
+    setContent({
+      text: '',
+      title: '',
+      position: 'top',
+      confirmFunction: undefined,
+      cancelFunction: undefined,
+      showFor: 5000,
+      variant: AlertVariant.info
+    })
+  }, [])
+
+  const value: AlertContextProps = useMemo(
+    () => ({
+      setAlert,
+      clearAlert,
+      visible
+    }),
+    [clearAlert, visible]
+  )
+
+  return (
+    <AlertContext.Provider value={value}>
+      <div
+        style={
+          visible && content.position === 'bottom'
+            ? {
+                filter: 'blur(5px)',
+                pointerEvents: 'none'
+              }
+            : {
+                filter: 'blur(0px)',
+                pointerEvents: 'all'
+              }
+        }
+        className='z-999 fixed top-0 right-0 bottom-0 left-0 transition-all duration-700'
+      >
+        {children}
+      </div>
+      <Alert visible={visible} setVisible={setVisible} content={content} />
+    </AlertContext.Provider>
+  )
+}

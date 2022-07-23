@@ -2,7 +2,9 @@ import { useState } from 'react'
 
 import Header from '@/components/Header'
 import NavBar from '@/components/NavBar'
-import { withProtected } from '@/components/PrivateRoute'
+//
+import AlertExamples from '@/components/UI/alertExample'
+// import { withProtected } from '@/components/PrivateRoute'
 import { AddButton } from '@/components/Visit/buttons'
 import Modal from '@/components/Visit/modal'
 import SearchBar from '@/components/Visit/searchbar'
@@ -15,6 +17,7 @@ const Visit = () => {
   return (
     <>
       <Header pageTitle='Visit' />
+      <AlertExamples />
       <main>
         {!isModalOpen ? (
           <div className='flex w-screen flex-col p-4'>
@@ -36,5 +39,5 @@ const Visit = () => {
   )
 }
 
-export default withProtected(Visit)
-// export default Visit
+// export default withProtected(Visit)
+export default Visit

@@ -16,13 +16,13 @@ const singleStyles: StylesConfig<OptionType, false, GroupBase<OptionType>> = {
     border: '1px solid #6b7280',
     height: '36px'
   }),
-  input: (provided: Record<string, unknown>) => ({
+  input: (provided) => ({
     ...provided,
     paddingTop: '0.1em',
     paddingBottom: '0.1em',
     color: 'black'
   }),
-  placeholder: (provided: Record<string, unknown>) => ({
+  placeholder: (provided) => ({
     ...provided,
     color: '#6b7280'
   }),
@@ -32,7 +32,7 @@ const singleStyles: StylesConfig<OptionType, false, GroupBase<OptionType>> = {
     padding: '8px',
     color: '#6b7280'
   }),
-  valueContainer: (provided: Record<string, unknown>) => ({
+  valueContainer: (provided) => ({
     ...provided,
     border: 'black',
     transition: ''
