@@ -17,7 +17,7 @@ function Modal() {
   const [commuteDistance, setCommuteDistance] = useState(0)
   const { setAlert } = useAlert()
 
-  function alertUser(text) {
+  function alertUser(text: string) {
     setAlert({
       variant: AlertVariant.info,
       text: text,
