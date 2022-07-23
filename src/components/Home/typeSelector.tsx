@@ -3,11 +3,7 @@ import { default as ReactSelect } from 'react-select'
 import { SingleValue } from 'react-select'
 
 import singleStyles from '@/components/Home/singleStyles'
-
-const typeOptions = [
-  { value: 'Vet', label: 'Vet' },
-  { value: 'Walk', label: 'Walk' }
-]
+import { visitSelectOptions } from '@/components/Visit/visitlist'
 
 type Props = {
   type: string
@@ -33,7 +29,7 @@ function TypeSelector({ setType }: Props) {
       </label>
       <ReactSelect
         name='type'
-        options={typeOptions}
+        options={visitSelectOptions}
         value={typeSelected}
         onChange={handleChange}
         styles={singleStyles}
