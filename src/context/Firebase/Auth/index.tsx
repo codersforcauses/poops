@@ -11,9 +11,12 @@ import {
   User
 } from 'firebase/auth'
 
-import { AuthContext, FirebaseContextProps } from '@/context/Auth/context'
+import {
+  AuthContext,
+  FirebaseContextProps
+} from '@/context/Firebase/Auth/context'
 
-import { auth } from '../../components/Firebase/init'
+import { auth } from '../../../components/Firebase/init'
 
 export const AuthContextProvider = ({
   children

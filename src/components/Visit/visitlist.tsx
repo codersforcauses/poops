@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 
-import { useFirestore } from '@/context/Firestore/context'
+import { useFirestore } from '@/context/Firebase/Firestore/context'
 import { SelectOption, VisitData } from '@/types/types'
 
 import VisitInstance from './visitinstance'

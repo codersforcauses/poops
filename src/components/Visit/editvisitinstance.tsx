@@ -6,7 +6,7 @@ import {
   formatDuration,
   VisitInstanceProps
 } from '@/components/Visit/visitinstance'
-import { useFirestore } from '@/context/Firestore/context'
+import { useFirestore } from '@/context/Firebase/Firestore/context'
 import { VisitData } from '@/types/types'
 
 import { visitSelectOptions } from './visitlist'
