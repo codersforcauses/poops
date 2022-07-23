@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import Link from 'next/link'
 import { SearchIcon } from '@heroicons/react/outline'
 
 import CONTACT_DATA from '@/../mockData/CONTACT_DATA.json'
@@ -64,7 +65,16 @@ const Contact = () => {
         <div className='m-auto flex h-14 max-w-md flex-row'>
           <div className='flex-1'></div>
           <h1 className='m-3 flex-1 text-center text-2xl'>Contacts</h1>
-          <div className='flex-1'></div>
+          <div className='m-auto flex-1 text-center'>
+            <Link href='/contact/new'>
+              <button
+                type='button'
+                className='rounded bg-primary py-1 px-4 font-bold text-white hover:bg-dark-red'
+              >
+                Add
+              </button>
+            </Link>
+          </div>
         </div>
 
         <div className='m-auto max-w-md'>
