@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import {
   AnnotationIcon,
   CheckIcon,
@@ -50,11 +50,34 @@ const Alert: React.FC<AlertProps> = ({
   content,
   clearAlert
 }) => {
+  const [contentCache, setContentCache] = useState<AlertContentProps>({
+    title: '', // string[2], first element is tile, second is message
+    text: '',
+    position: 'top',
+    confirmFunction: () => {
+      return
+    }, // function to execute on confirm, enables the confirm function
+    cancelFunction: () => {
+      return
+    },
+    showFor: 5000, // ms alert will stay open, set to -1 to leave open until button click
+    variant: AlertVariant.info
+  })
+
   const timerRef = useRef<ReturnType<typeof setTimeout>>()
 
   useEffect(() => {
     if (timerRef.current) clearTimeout(timerRef.current)
     if (content.text !== '') {
+      setContentCache({
+        title: content.title,
+        text: content.text,
+        position: content.position,
+        confirmFunction: content.confirmFunction, // function to execute on confirm, enables the confirm function
+        cancelFunction: content.cancelFunction,
+        showFor: content.showFor, // ms alert will stay open, set to -1 to leave open until button click
+        variant: content.variant
+      })
       setVisible(true)
       if (content.showFor !== -1) {
         timerRef.current = setTimeout(() => {
@@ -72,70 +95,72 @@ const Alert: React.FC<AlertProps> = ({
 
   return (
     <div
-      className={getContainerClasses(visible, content.position ?? 'top')}
+      className={getContainerClasses(visible, contentCache.position ?? 'top')}
       style={{ boxShadow: shadow }}
     >
       <div className='h-7 w-7'>
-        {content.variant === AlertVariant.info ? (
+        {contentCache.variant === AlertVariant.info ? (
           <InformationCircleIcon className='h-7 w-7' />
-        ) : content.variant === AlertVariant.security ? (
+        ) : contentCache.variant === AlertVariant.security ? (
           <ShieldExclamationIcon className='h-7 w-7' />
-        ) : content.variant === AlertVariant.critical ? (
+        ) : contentCache.variant === AlertVariant.critical ? (
           <ExclamationIcon className='h-7 w-7' />
         ) : (
-          content.variant === AlertVariant.comment && (
+          contentCache.variant === AlertVariant.comment && (
             <AnnotationIcon className='h-7 w-7' />
           )
         )}
       </div>
       <div
         className={
-          content.position === 'bottom'
+          contentCache.position === 'bottom'
             ? 'mx-[1rem]'
             : 'mx-[1rem] grow self-start'
         }
       >
         <p className='font-bold' style={{ color: titleColor }}>
-          {content.title}
+          {contentCache.title}
         </p>
-        <p style={{ color: textColor }}>{content.text}</p>
+        <p style={{ color: textColor }}>{contentCache.text}</p>
       </div>
-      {content.position === 'bottom' ? (
+      {contentCache.position === 'bottom' ? (
         <div className='h-0 basis-full'></div>
       ) : (
         ''
       )}
-      <div className={content.position === 'bottom' ? 'pt-5' : 'h-5'}>
-        {typeof content.confirmFunction !== 'undefined' && (
+      <div className={contentCache.position === 'bottom' ? 'pt-5' : 'h-5'}>
+        {typeof contentCache.confirmFunction !== 'undefined' && (
           <button
             className={
-              content.position === 'bottom' ? buttonClasses + ' mr-4' : 'mr-4'
+              contentCache.position === 'bottom'
+                ? buttonClasses + ' mr-4'
+                : 'mr-4'
             }
             onClick={(e) => {
               e.preventDefault()
               setVisible(false)
-              if (typeof content.confirmFunction !== 'undefined')
-                content.confirmFunction()
+              if (typeof contentCache.confirmFunction !== 'undefined')
+                contentCache.confirmFunction()
             }}
           >
             <CheckIcon
               className='h-5 w-5'
-              stroke={content.position === 'bottom' ? 'white' : iconColor}
+              stroke={contentCache.position === 'bottom' ? 'white' : iconColor}
             />
           </button>
         )}
         <button
-          className={content.position === 'bottom' ? buttonClasses : ''}
+          className={contentCache.position === 'bottom' ? buttonClasses : ''}
           onClick={(e) => {
             e.preventDefault()
             setVisible(false)
-            if (typeof content.cancelFunction !== 'undefined')
-              content.cancelFunction()
+            if (typeof contentCache.cancelFunction !== 'undefined')
+              contentCache.cancelFunction()
           }}
         >
           <XIcon
             className='h-5 w-5'
-            stroke={content.position === 'bottom' ? 'white' : iconColor}
+            stroke={contentCache.position === 'bottom' ? 'white' : iconColor}
           />
         </button>
       </div>
