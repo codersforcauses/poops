@@ -105,11 +105,9 @@ const Alert: React.FC<AlertProps> = ({ visible, content, clearAlert }) => {
         )}
       </div>
       <div
-        className={
-          contentCache.position === 'bottom'
-            ? 'mx-[1rem]'
-            : 'mx-[1rem] grow self-start'
-        }
+        className={`mx-[1rem] ${
+          contentCache.position === 'top' ? 'mx-[1rem] grow self-start' : ''
+        }`}
       >
         <p className='font-bold' style={{ color: titleColor }}>
           {contentCache.title}
