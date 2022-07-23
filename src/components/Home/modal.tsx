@@ -10,7 +10,7 @@ import { AlertVariant, useAlert } from '@/context/AlertContext'
 
 function Modal() {
   const [visitStarted, setVisit] = useState(false)
-  const [final, setFinal] = useState(false)
+  const [confirmation, setConfirmation] = useState(false)
   const [commute, setCommute] = useState('')
   const [clients, setClients] = useState<string[]>([])
   const [type, setType] = useState('')
@@ -37,6 +37,7 @@ function Modal() {
     }
     return () => window.clearInterval(interval)
   }, [running])
+
   const hour = ('0' + Math.floor((time / 60000) % 60)).slice(-2)
   const minute = ('0' + Math.floor((time / 1000) % 60)).slice(-2)
   const second = ('0' + ((time / 10) % 100)).slice(-2)
@@ -51,23 +52,40 @@ function Modal() {
     })
   }
 
-  function formIsFilled() {
+  function halfFilled() {
     return (
-      commuteDistance > 0 &&
       (commute == 'Walk' ||
         commute == 'Drive' ||
         commute == 'Public Transport' ||
         (commute == 'Other' && other != '')) &&
-      (type == 'Vet' || type == 'Walk') &&
-      clients.length > 0
+      commuteDistance > 0 &&
+      clients.length > 0 &&
+      (type == 'Vet' || type == 'Walk')
     )
+  }
+
+  function fullyFilled() {
+    return (
+      (commute == 'Walk' ||
+        commute == 'Drive' ||
+        commute == 'Public Transport' ||
+        (commute == 'Other' && other != '')) &&
+      commuteDistance > 0 &&
+      clients.length > 0 &&
+      (type == 'Vet' ||
+        (type == 'Walk' && walkDistance > 0 && !isNaN(walkDistance)))
+    )
+  }
+
+  function showWalkDist() {
+    return (visitStarted || confirmation) && type == 'Walk'
   }
 
   return (
     <div className='text-center'>
       <div className='rounded-lg bg-zinc-200 py-4 px-5 text-center shadow-lg sm:py-4'>
         <h1 className='mb-2 text-xl text-dark-red'>
-          {final ? <b>Confirm Details</b> : <b>Visit Details</b>}
+          {confirmation ? <b>Confirm Details</b> : <b>Visit Details</b>}
         </h1>
         <hr className='mb-3 h-0.5 border-dark-red bg-dark-red text-dark-red' />
         <form>
@@ -91,59 +109,57 @@ function Modal() {
             </div>
           )}
 
-          {(visitStarted || final) && type == 'Walk' && (
-            <div>
-              <TextForm
-                id='walkDistance'
-                label='Walk Distance (in km)'
-                onChange={(e) => setWalkDistance(Number(e.target.value))}
-              />
-            </div>
+          {halfFilled() && showWalkDist() && (
+            <TextForm
+              id='walkDistance'
+              label='Walk Distance (in km)'
+              onChange={(e) => setWalkDistance(Number(e.target.value))}
+            />
           )}
         </form>
 
-        {formIsFilled() && visitStarted && (
+        {halfFilled() && visitStarted && (
           <Duration id='duration' type='text' value={timeDisplay} />
         )}
 
-        {formIsFilled() && (walkDistance > 0 || type == 'Vet') && final && (
+        {halfFilled() && confirmation && (
           <Duration id='duration' type='text' value={timeDisplay} />
         )}
 
-        {!formIsFilled() && <DisabledButton buttonText='START VISIT' />}
+        {!halfFilled() && <DisabledButton buttonText='START VISIT' />}
 
-        {formIsFilled() && !visitStarted && !final && (
+        {halfFilled() && !visitStarted && !confirmation && (
           <button
             className='relative m-2 h-[30px] w-[120px] rounded-lg bg-dark-red text-lg font-semibold text-white'
             onClick={() => {
-              setVisit(true), setRunning(true) //setStartTime(Timestamp.now)
+              setVisit(true), setRunning(true)
+              //setStartTime(Timestamp.now)
             }}
           >
             START VISIT
           </button>
         )}
 
-        {formIsFilled() &&
-          (walkDistance <= 0 || isNaN(walkDistance)) &&
-          type != 'Vet' &&
-          visitStarted && <DisabledButton buttonText='STOP VISIT' />}
+        {!fullyFilled() && visitStarted && (
+          <DisabledButton buttonText='STOP VISIT' />
+        )}
 
-        {formIsFilled() && (walkDistance > 0 || type == 'Vet') && visitStarted && (
+        {fullyFilled() && visitStarted && (
           <button
             className='relative m-2 h-[30px] w-[120px] rounded-lg bg-dark-red text-lg font-semibold text-white'
             onClick={() => {
-              setVisit(false), setFinal(true), setRunning(false) //setEndTime(Timestamp.now)
+              setVisit(false), setConfirmation(true), setRunning(false) //setEndTime(Timestamp.now)
             }}
           >
             STOP VISIT
           </button>
         )}
 
-        {formIsFilled() && (walkDistance > 0 || type == 'Vet') && final && (
+        {fullyFilled() && confirmation && (
           <button
             className='relative m-2 h-[30px] w-[120px] rounded-lg bg-dark-red text-lg font-semibold text-white'
             onClick={() => {
-              setFinal(false),
+              setConfirmation(false),
                 setClients([]),
                 setType(''),
                 setCommute(''),
@@ -156,6 +172,9 @@ function Modal() {
           >
             SUBMIT
           </button>
+        )}
+        {!fullyFilled() && confirmation && (
+          <DisabledButton buttonText='SUBMIT' />
         )}
       </div>
     </div>
