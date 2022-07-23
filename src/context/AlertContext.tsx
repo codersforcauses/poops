@@ -54,6 +54,7 @@ export const AlertContextProvider = ({
   })
 
   const setAlert = (content: AlertContentProps) => {
+    setVisible(true)
     setContent({
       title: content.title ?? '',
       text: content.text,
@@ -101,12 +102,7 @@ export const AlertContextProvider = ({
       >
         {children}
       </div>
-      <Alert
-        visible={visible}
-        setVisible={setVisible}
-        content={content}
-        clearAlert={clearAlert}
-      />
+      <Alert visible={visible} content={content} clearAlert={clearAlert} />
     </AlertContext.Provider>
   )
 }

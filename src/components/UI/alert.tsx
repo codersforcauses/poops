@@ -39,17 +39,11 @@ const getContainerClasses = (vis: boolean, pos: string) => {
 
 type AlertProps = {
   visible: boolean
-  setVisible: (visible: boolean) => void
   content: AlertContentProps
   clearAlert: () => void
 }
 
-const Alert: React.FC<AlertProps> = ({
-  visible,
-  setVisible,
-  content,
-  clearAlert
-}) => {
+const Alert: React.FC<AlertProps> = ({ visible, content, clearAlert }) => {
   const [contentCache, setContentCache] = useState<AlertContentProps>({
     title: '', // string[2], first element is tile, second is message
     text: '',
@@ -78,14 +72,13 @@ const Alert: React.FC<AlertProps> = ({
         showFor: content.showFor, // ms alert will stay open, set to -1 to leave open until button click
         variant: content.variant
       })
-      setVisible(true)
       if (content.showFor !== -1) {
         timerRef.current = setTimeout(() => {
           clearAlert()
         }, content.showFor)
       }
     }
-  }, [content, setVisible, clearAlert])
+  }, [content, clearAlert])
 
   useEffect(() => {
     return () => {
@@ -138,7 +131,7 @@ const Alert: React.FC<AlertProps> = ({
             }
             onClick={(e) => {
               e.preventDefault()
-              setVisible(false)
+              clearAlert()
               if (typeof contentCache.confirmFunction !== 'undefined')
                 contentCache.confirmFunction()
             }}
@@ -153,7 +146,7 @@ const Alert: React.FC<AlertProps> = ({
           className={contentCache.position === 'bottom' ? buttonClasses : ''}
           onClick={(e) => {
             e.preventDefault()
-            setVisible(false)
+            clearAlert()
             if (typeof contentCache.cancelFunction !== 'undefined')
               contentCache.cancelFunction()
           }}
