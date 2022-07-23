@@ -2,26 +2,27 @@ import React from 'react'
 import { PencilIcon, PlusIcon, XIcon } from '@heroicons/react/solid'
 
 interface EditButtonProps {
+  disabled: boolean
   isEditable: boolean
-  setIsEditable: (arg: boolean) => void
+  setIsEditable: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-export const EditButton = (props: EditButtonProps) => {
+export const EditButton = ({
+  disabled,
+  isEditable,
+  setIsEditable
+}: EditButtonProps) => {
   return (
-    <div className='invisible absolute right-4 bottom-1 h-8 w-8 rounded-full bg-primary p-1 drop-shadow-default transition-all peer-checked:visible'>
-      <button
-        type='button'
-        onClick={() => {
-          props.setIsEditable(!props.isEditable)
-        }}
-      >
-        {props.isEditable ? (
-          <XIcon className='h-full w-full text-white' />
-        ) : (
-          <PencilIcon className='h-full w-full text-white' />
-        )}
-      </button>
-    </div>
+    <button
+      type='button'
+      disabled={disabled}
+      className='my-auto h-8 w-8 rounded-full bg-primary p-1 text-white shadow-md transition-colors disabled:bg-gray-400'
+      onClick={() => {
+        setIsEditable(!isEditable)
+      }}
+    >
+      {isEditable ? <XIcon /> : <PencilIcon />}
+    </button>
   )
 }
 

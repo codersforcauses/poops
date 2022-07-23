@@ -12,7 +12,7 @@ import { VisitData } from '@/types/types'
 import { visitSelectOptions } from './visitlist'
 
 interface EditVisitInstanceProps extends VisitInstanceProps {
-  isEditable: Dispatch<React.SetStateAction<boolean>>
+  setIsEditable: Dispatch<React.SetStateAction<boolean>>
 }
 
 const formatNumber = (value: string) => {
@@ -22,7 +22,10 @@ const formatNumber = (value: string) => {
   return parseFloat(value)
 }
 
-const EditableVisitInstance = (props: EditVisitInstanceProps) => {
+const EditableVisitInstance = ({
+  setIsEditable,
+  ...props
+}: EditVisitInstanceProps) => {
   const { userDoc, updateVisit } = useFirestore()
   const [visitType, setVisitType] = useState(props.type)
   const [displayName, setDisplayName] = useState(props.displayName)
@@ -52,7 +55,7 @@ const EditableVisitInstance = (props: EditVisitInstanceProps) => {
         const temp: VisitData[] = [...userDoc.visits] //temp needed for react to rerender
         props.set(temp)
         updateVisit?.(userDoc)
-        props.isEditable(false)
+        setIsEditable(false)
         event.preventDefault()
       }}
     >

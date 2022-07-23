@@ -2,11 +2,15 @@ import React, { Dispatch, SetStateAction, useState } from 'react'
 import ChevronDownIcon from '@heroicons/react/outline/ChevronDownIcon'
 import { Timestamp } from 'firebase/firestore'
 
+import IncidentForm from '@/components/IncidentForm'
 import { VisitData } from '@/types/types'
 
 import { EditButton } from './buttons'
-import EditableVisitInstance from './editvisitinstance'
-import ReadOnlyVisitInstance from './readvisitinstance'
+import ExpandTransition from '../UI/expandTransition'
+
+const formatTime = (time: Timestamp) => {
+  return time.toDate().toLocaleString().slice(0, -3)
+}
 
 export interface VisitInstanceProps extends VisitData {
   set: Dispatch<SetStateAction<VisitData[]>>
@@ -30,37 +34,110 @@ export const formatDuration = (startTime: Timestamp, endTime: Timestamp) => {
 const VisitInstance = (props: VisitInstanceProps) => {
   const [isEditable, setIsEditable] = useState(false)
   const [isOpen, setIsOpen] = useState(false)
+  const [isFormExpanded, setIsFormExpanded] = useState(false)
+  const [isVetVisit, setIsVetVisit] = useState(false)
 
   return (
     <div
       key={props.id}
       className='m-2 flex flex-col space-y-1 rounded-xl bg-cream p-2 drop-shadow-default'
     >
-      <div className='flex justify-between'>
-        <div className='relative w-full'>
-          <input
-            type='checkbox'
-            checked={isOpen}
-            readOnly={true}
-            className='peer absolute h-0 w-0 cursor-pointer opacity-0'
-          />
-
-          <ChevronDownIcon
-            className='absolute top-3 right-5 h-6 w-6 cursor-pointer text-primary transition-transform duration-500 peer-checked:rotate-180'
-            onClick={() => {
-              setIsOpen(!isOpen)
-              setIsEditable(false)
-            }}
-          />
-          {isEditable ? (
-            <EditableVisitInstance isEditable={setIsEditable} {...props} />
-          ) : (
-            <ReadOnlyVisitInstance {...props} />
-          )}
-
-          <EditButton isEditable={isEditable} setIsEditable={setIsEditable} />
-        </div>
+      <input
+        type='checkbox'
+        checked={isOpen}
+        readOnly={true}
+        className='peer invisible absolute h-0 w-0 cursor-pointer'
+      />
+      <ChevronDownIcon
+        className='absolute top-3 right-5 h-6 w-6 cursor-pointer text-primary transition-transform duration-500 peer-checked:rotate-180'
+        onClick={() => {
+          setIsOpen(!isOpen)
+          setIsEditable(false)
+        }}
+      />
+      <div className='font-bold'>
+        <p className='font-bold text-primary'>{formatTime(props.startTime)}</p>
+        <p className='text-sm'>{props.displayName}</p>
       </div>
+      {isEditable ? (
+        <p>Use the modal to edit this instead</p>
+      ) : (
+        <ExpandTransition isExpanded={isOpen}>
+          <>
+            <div>
+              <span className='font-bold'>Visit Type:</span> {props.type}
+            </div>
+            <div>
+              <span className='font-bold'>Pet(s):</span> {props.petNames}
+            </div>
+            <div>
+              <span className='font-bold'>End Time:</span>{' '}
+              {formatTime(props.endTime)}
+            </div>
+            <div>
+              <span className='font-bold'>Duration:</span>{' '}
+              {formatDuration(props.startTime, props.endTime)}
+            </div>
+            <div>
+              <span className='font-bold'>Walk Distance:</span>{' '}
+              {props.walkDist.toFixed(3)} km
+            </div>
+            <div>
+              <span className='font-bold'>Commute Distance:</span>{' '}
+              {props.commuteDist.toFixed(1)} km
+            </div>
+            <div>
+              <span className='font-bold'>Commute Method:</span>{' '}
+              {props.commuteMethod}
+            </div>
+            <div>
+              <span className='font-bold'>Notes:</span> {props.notes}
+            </div>
+            <hr className='my-4' />
+            <div className='flex justify-center space-x-2'>
+              <button
+                onClick={(e) => {
+                  e.preventDefault()
+                  setIsVetVisit(false)
+                  if (isFormExpanded && !isVetVisit) {
+                    setIsFormExpanded(false)
+                  } else {
+                    setIsFormExpanded(true)
+                  }
+                }}
+                className='w-fit rounded-lg bg-primary py-1 px-4 text-lg text-white shadow-md focus:outline-primary active:bg-dark-red'
+              >
+                Report Incident
+              </button>
+              <button
+                onClick={(e) => {
+                  e.preventDefault()
+                  setIsVetVisit(true)
+                  if (isFormExpanded && isVetVisit) {
+                    setIsFormExpanded(false)
+                    setIsVetVisit(false)
+                  } else {
+                    setIsFormExpanded(true)
+                  }
+                }}
+                className='w-fit rounded-lg bg-primary py-1 px-4 text-lg text-white shadow-md focus:outline-primary active:bg-dark-red'
+              >
+                Vet Visit
+              </button>
+              <EditButton
+                disabled={isFormExpanded}
+                isEditable={isEditable}
+                setIsEditable={setIsEditable}
+              />
+            </div>
+            <IncidentForm
+              isExpanded={isFormExpanded}
+              isVetVisit={isVetVisit}
+              setIsExpanded={setIsFormExpanded}
+            />
+          </>
+        </ExpandTransition>
+      )}
     </div>
   )
 }

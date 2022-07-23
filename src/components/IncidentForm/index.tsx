@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 
-import Alert, { AlertIcon } from '@/components/UI/alert'
+import { AlertIcon } from '@/components/UI/alert'
 import ExpandTransition from '@/components/UI/expandTransition'
 import { IncidentForm } from '@/types'
 
@@ -30,8 +30,8 @@ const IncidentForm: React.FC<IncidentProps> = ({
 
   //const today = new Date()
 
-  const [text, setText] = useState(['', ''])
-  const [alertIcon, setAlertIcon] = useState(AlertIcon.info)
+  const [_text, setText] = useState(['', ''])
+  const [_alertIcon, setAlertIcon] = useState(AlertIcon.info)
 
   const { register, handleSubmit } = useForm<IncidentForm>({
     defaultValues: {
@@ -71,7 +71,7 @@ const IncidentForm: React.FC<IncidentProps> = ({
 
   return (
     <>
-      <Alert text={text} setText={setText} icon={alertIcon} />
+      {/* <Alert text={text} setText={setText} icon={alertIcon} /> */}
       <ExpandTransition duration={500} isExpanded={isExpanded}>
         <form className='mt-4 flex flex-col px-2' onSubmit={onSubmit}>
           {formInputs.map((input) => {
