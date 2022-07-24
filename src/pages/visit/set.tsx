@@ -1,34 +1,47 @@
-/* eslint-disable unused-imports/no-unused-vars */
-import React from 'react'
 import { useState } from 'react'
-import { XIcon } from '@heroicons/react/solid'
+import Link from 'next/link'
+import { useRouter } from 'next/router'
+import { XIcon } from '@heroicons/react/outline'
 import { Timestamp } from 'firebase/firestore'
 
+import { withProtected } from '@/components/PrivateRoute'
+import CommuteSelector from '@/components/Visit/commuteselector'
+import FormField from '@/components/Visit/formfield'
 import { visitSelectOptions } from '@/components/Visit/visitlist'
 import { useFirestore } from '@/context/firestore'
 import { VisitData } from '@/types/types'
 
-import CommuteSelector from './commuteselector'
-import FormField from './formfield'
-
-interface ModalViewProps {
-  toggleModal: () => void
+interface SetVisitProps {
+  index?: number
 }
 
-const ModalView = ({ toggleModal }: ModalViewProps) => {
+const Visit = (props: SetVisitProps) => {
+  const router = useRouter()
   const { userDoc, updateVisit } = useFirestore()
   const [visitType, setVisitType] = useState('')
-  const [clientName, setDisplayName] = useState('')
+  const [clientName, setClientName] = useState('')
   const [petNames, setPetNames] = useState('')
   const [startTime, setStartTime] = useState('')
   const [endTime, setEndTime] = useState('')
-  const [walkDist, setWalkDist] = useState(0)
-  const [commuteDist, setCommuteDist] = useState(0)
+  const [walkDist, setWalkDist] = useState(NaN)
+  const [commuteDist, setCommuteDist] = useState(NaN)
   const [commuteMethod, setCommuteMethod] = useState('')
   const [notes, setNotes] = useState('')
 
+  if (props.index) {
+    setVisitType(userDoc.visits[props.index].type)
+    setClientName(userDoc.visits[props.index].clientName)
+    setStartTime(String(userDoc.visits[props.index].startTime))
+    setEndTime(String(userDoc.visits[props.index].endTime))
+    setWalkDist(userDoc.visits[props.index].walkDist)
+    setCommuteDist(userDoc.visits[props.index].commuteDist)
+    setCommuteMethod(userDoc.visits[props.index].commuteMethod)
+    setNotes(userDoc.visits[props.index].notes)
+  }
+
   const handleSubmit = (click: React.FormEvent<HTMLFormElement>) => {
     click.preventDefault()
+
     const data: VisitData = {
       type: visitType,
       clientName: clientName,
@@ -40,9 +53,13 @@ const ModalView = ({ toggleModal }: ModalViewProps) => {
       notes: notes,
       inProgress: false
     }
-    userDoc.visits.push(data)
+    if (props.index) {
+      userDoc.visits[props.index] = data
+    } else {
+      userDoc.visits.push(data)
+    }
     updateVisit?.(userDoc)
-    closeModal()
+    router.push('/visit')
   }
 
   const isSubmitEnabled = () =>
@@ -51,27 +68,27 @@ const ModalView = ({ toggleModal }: ModalViewProps) => {
     petNames &&
     startTime &&
     endTime &&
-    walkDist &&
-    commuteDist &&
+    walkDist >= 0 &&
+    commuteDist >= 0 &&
     commuteMethod
-
-  const closeModal = () => {
-    if (isSubmitEnabled()) {
-      toggleModal()
-    }
-  }
 
   return (
     <div className='z-50 p-4'>
       <>
         <div className='fixed right-5 top-4 z-[100] h-10 w-10 rounded-full bg-primary p-1 drop-shadow-default'>
-          <button onClick={toggleModal}>
-            <XIcon className='h-full w-full text-white' />
-          </button>
+          <Link href='/visit'>
+            <button>
+              <XIcon className='h-full w-full text-white' />
+            </button>
+          </Link>
         </div>
 
         <div className='border-b-2 border-primary py-3 pt-10'>
-          <h1 className='pl-2 text-2xl font-bold'>Add Your Visit</h1>
+          {props.index ? (
+            <h1 className='pl-2 text-2xl font-bold'>Edit Your Visit</h1>
+          ) : (
+            <h1 className='pl-2 text-2xl font-bold'>Add Your Visit</h1>
+          )}
         </div>
 
         <form className='pt-3' onSubmit={handleSubmit}>
@@ -92,12 +109,12 @@ const ModalView = ({ toggleModal }: ModalViewProps) => {
                 </td>
                 <td>
                   <FormField
-                    id='displayNameInput'
+                    id='clientName'
                     type='text'
-                    placeholder='Display Name'
-                    label='Display Name:'
+                    placeholder='Client Name'
+                    label='Client Name:'
                     isRequired={true}
-                    onChange={(event) => setDisplayName(event.target.value)}
+                    onChange={(event) => setClientName(event.target.value)}
                   />
                 </td>
               </tr>
@@ -176,12 +193,28 @@ const ModalView = ({ toggleModal }: ModalViewProps) => {
           />
           <div className='mx-auto my-2 flex flex-col p-1 '>
             <button
-              className='text-bold rounded bg-primary px-12 py-4 text-white drop-shadow-default active:bg-dark-red'
+              className={`text-bold rounded px-12 py-4 text-white drop-shadow-default ${
+                isSubmitEnabled()
+                  ? 'bg-primary active:bg-dark-red'
+                  : 'bg-dark-gray'
+              }`}
+              disabled={!isSubmitEnabled()}
               type='submit'
-              disabled={!isSubmitEnabled}
             >
               Submit
             </button>
+            {props.index && (
+              <button
+                type='button'
+                className='text-bold mt-2 ml-4 rounded-xl bg-primary p-1 text-white drop-shadow-default active:bg-dark-red'
+                onClick={() => {
+                  userDoc.visits.splice(Number(props.index), 1)
+                  updateVisit?.(userDoc)
+                }}
+              >
+                Remove
+              </button>
+            )}
           </div>
         </form>
       </>
@@ -189,4 +222,6 @@ const ModalView = ({ toggleModal }: ModalViewProps) => {
   )
 }
 
-export default ModalView
+Visit.getInitialProps = { query: {} }
+
+export default withProtected(Visit)

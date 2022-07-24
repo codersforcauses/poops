@@ -35,6 +35,7 @@ const inputSwitch = (props: FormFieldProps) => {
           className='form-textarea rounded text-black'
           id={props.id}
           placeholder={props.placeholder}
+          value={props.value}
           onChange={props.onChange}
         ></textarea>
       )
@@ -43,6 +44,7 @@ const inputSwitch = (props: FormFieldProps) => {
         <select
           className='form-select rounded'
           id={props.id}
+          value={props.value}
           required={props.isRequired}
           onChange={props.onChange}
         >
