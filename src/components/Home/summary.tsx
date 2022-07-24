@@ -18,7 +18,10 @@ function Summary() {
                 <Statistics title='Number of Visits' data={dummyVisitData} />
               </td>
               <td>
-                <Statistics title='Distance Walked' data={dummyDistanceData} />
+                <Statistics
+                  title='Distance Walked'
+                  data={dummyDistanceData + ' km'}
+                />
               </td>
             </tr>
           </tbody>

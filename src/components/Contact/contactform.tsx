@@ -10,10 +10,16 @@ import type { Contact } from '@/types/types'
 type ContactInfoProps = {
   contact: Contact
   image: string
-  setIsEditing: Dispatch<SetStateAction<boolean>>
+  setIsEditing?: Dispatch<SetStateAction<boolean>>
+  isNewContact: boolean
 }
 
-const ContactForm = ({ contact, image, setIsEditing }: ContactInfoProps) => {
+const ContactForm = ({
+  contact,
+  image,
+  setIsEditing,
+  isNewContact
+}: ContactInfoProps) => {
   const [regions, setRegions] = useState(contact.region)
   const [tags, setTags] = useState(contact.tags)
   const [contactForm, setContactForm] = useState(contact)
@@ -38,10 +44,15 @@ const ContactForm = ({ contact, image, setIsEditing }: ContactInfoProps) => {
   // TODO: Submit ContactForm to database
   const submitForm = (e: React.FormEvent) => {
     e.preventDefault()
-    // TODO: submit to firestore here
-    setIsEditing(false)
+    if (setIsEditing !== undefined) setIsEditing(false)
 
-    // TODO: reload page here
+    if (isNewContact) {
+      // TODO: generate UUID (uuid lib or server timestamp)for the new contact (or let firestore do it)
+      // TODO: submit to firestore here
+    } else {
+      // TODO: update firestore entry for existing uuid
+    }
+    // TODO: go to /contact/[UUID]
   }
 
   return (
@@ -176,13 +187,17 @@ const ContactForm = ({ contact, image, setIsEditing }: ContactInfoProps) => {
             >
               Save
             </button>
-            <button
-              type='button'
-              className='w-80 rounded bg-gray-300 py-1 font-bold text-black hover:bg-gray-300'
-              onClick={() => setIsEditing(false)}
-            >
-              Cancel
-            </button>
+            {!isNewContact && (
+              <button
+                type='button'
+                className='bg-grey hover:bg-grey w-80 rounded py-1 font-bold text-black'
+                onClick={() => {
+                  if (setIsEditing !== undefined) setIsEditing(false)
+                }}
+              >
+                Cancel
+              </button>
+            )}
           </div>
         </div>
       </div>

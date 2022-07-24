@@ -107,8 +107,8 @@ const ModalView = ({ toggleModal }: ModalViewProps) => {
                   <FormField
                     id='petNamesInput'
                     type='text'
-                    placeholder='Pet Name'
-                    label='Pet name:'
+                    placeholder='Pet Name(s)'
+                    label='Pet name(s):'
                     isRequired={true}
                     onChange={(event) => setPetNames(event.target.value)}
                   />
