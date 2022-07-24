@@ -1,7 +1,7 @@
 import Header from '@/components/Header'
 import LoginPanel from '@/components/Login/LoginPanel'
 import NavBar from '@/components/NavBar'
-// import { withProtected } from '@/components/PrivateRoute'
+import { withProtected } from '@/components/PrivateRoute'
 import { useAuth } from '@/context/AuthContext'
 
 const Profile = () => {
@@ -29,5 +29,4 @@ const Profile = () => {
   )
 }
 
-export default Profile
-// export default withProtected(Profile)
+export default withProtected(Profile)

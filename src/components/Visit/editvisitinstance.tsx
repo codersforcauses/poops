@@ -22,6 +22,18 @@ const formatNumber = (value: string) => {
   return parseFloat(value)
 }
 
+const padNumber = (value: number) => {
+  return value.toString().padStart(2, '0')
+}
+
+// YYYY-MM-DDTHH:mm
+const formatDate = (timestamp: Timestamp) => {
+  const date = timestamp.toDate()
+  return `${date.getFullYear()}-${padNumber(date.getMonth() + 1)}-${padNumber(
+    date.getDate()
+  )}T${padNumber(date.getHours())}:${padNumber(date.getMinutes())}`
+}
+
 const EditableVisitInstance = (props: EditVisitInstanceProps) => {
   const { userDoc, updateVisit } = useFirestore()
   const [visitType, setVisitType] = useState(props.type)
@@ -57,23 +69,27 @@ const EditableVisitInstance = (props: EditVisitInstanceProps) => {
       }}
     >
       <div className='font-bold peer-checked:font-normal'>
-        <input
-          placeholder='Start Time'
-          type='datetime-local'
-          value={startTime.toDate().toLocaleString()}
-          onChange={(event) =>
-            setStartTime(Timestamp.fromDate(new Date(event.target.value)))
-          }
-          className='bg-cream font-normal text-primary'
-          required
-        />
-        <input
-          className='bg-cream text-sm font-normal text-primary'
-          placeholder='Display Name'
-          value={displayName}
-          onChange={(event) => setDisplayName(event.target.value)}
-          required
-        />
+        <div>
+          <input
+            placeholder='Start Time'
+            type='datetime-local'
+            value={formatDate(startTime)}
+            onChange={(event) =>
+              setStartTime(Timestamp.fromDate(new Date(event.target.value)))
+            }
+            className='bg-cream font-normal text-primary'
+            required
+          />
+        </div>
+        <div>
+          <input
+            className='bg-cream text-sm font-normal text-primary'
+            placeholder='Display Name'
+            value={displayName}
+            onChange={(event) => setDisplayName(event.target.value)}
+            required
+          />
+        </div>
       </div>
       <div className='text-sm'>
         <div>
@@ -108,7 +124,7 @@ const EditableVisitInstance = (props: EditVisitInstanceProps) => {
             type='datetime-local'
             className='bg-cream text-primary'
             placeholder='End Time'
-            value={endTime.toDate().toLocaleString()}
+            value={formatDate(endTime)}
             onChange={(event) =>
               setEndTime(Timestamp.fromDate(new Date(event.target.value)))
             }

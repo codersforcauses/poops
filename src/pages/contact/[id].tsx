@@ -19,6 +19,7 @@ const Contact = ({ contact }: ContactProp) => {
   return (
     <>
       <Header pageTitle={`${contact.firstName} ${contact.lastName}`} />
+
       <div className='sticky top-0 z-50 w-full bg-white'>
         <div className='m-auto flex h-14 max-w-md flex-row'>
           <div className='m-auto flex-1 text-center'>
@@ -46,7 +47,12 @@ const Contact = ({ contact }: ContactProp) => {
       {!isEditing ? (
         <ContactInfo contact={contact} image='' />
       ) : (
-        <ContactForm contact={contact} image='' setIsEditing={setIsEditing} />
+        <ContactForm
+          contact={contact}
+          image=''
+          setIsEditing={setIsEditing}
+          isNewContact={false}
+        />
       )}
     </>
   )

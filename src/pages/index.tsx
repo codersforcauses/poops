@@ -2,7 +2,7 @@ import Header from '@/components/Header'
 import Modal from '@/components/Home/modal'
 import Summary from '@/components/Home/summary'
 import NavBar from '@/components/NavBar'
-// import { withProtected } from '@/components/PrivateRoute'
+import { withProtected } from '@/components/PrivateRoute'
 
 const dummyUsername = 'User'
 
@@ -31,5 +31,4 @@ const Home = () => {
   )
 }
 
-export default Home
-// export default withProtected(Home)
+export default withProtected(Home)

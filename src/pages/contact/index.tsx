@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import Link from 'next/link'
 import { SearchIcon } from '@heroicons/react/outline'
 
 import CONTACT_DATA from '@/../mockData/CONTACT_DATA.json'
@@ -7,6 +8,7 @@ import ContactList from '@/components/Contact/contactlist'
 import ProfileItem from '@/components/Contact/profileitem'
 import Header from '@/components/Header'
 import NavBar from '@/components/NavBar'
+import { withProtected } from '@/components/PrivateRoute'
 import SearchBar from '@/components/SearchBar'
 import SearchTag from '@/components/SearchBar/SearchTag'
 import type { Contact } from '@/types/types'
@@ -64,7 +66,16 @@ const Contact = () => {
         <div className='m-auto flex h-14 max-w-md flex-row'>
           <div className='flex-1'></div>
           <h1 className='m-3 flex-1 text-center text-2xl'>Contacts</h1>
-          <div className='flex-1'></div>
+          <div className='m-auto flex-1 text-center'>
+            <Link href='/contact/new'>
+              <button
+                type='button'
+                className='rounded bg-primary py-1 px-4 font-bold text-white hover:bg-dark-red'
+              >
+                Add
+              </button>
+            </Link>
+          </div>
         </div>
 
         <div className='m-auto max-w-md'>
@@ -92,5 +103,4 @@ const Contact = () => {
   )
 }
 
-export default Contact
-// export default withProtected(Contact)
+export default withProtected(Contact)
