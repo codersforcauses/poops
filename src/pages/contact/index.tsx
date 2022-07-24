@@ -8,6 +8,7 @@ import ContactList from '@/components/Contact/contactlist'
 import ProfileItem from '@/components/Contact/profileitem'
 import Header from '@/components/Header'
 import NavBar from '@/components/NavBar'
+import { withProtected } from '@/components/PrivateRoute'
 import SearchBar from '@/components/SearchBar'
 import SearchTag from '@/components/SearchBar/SearchTag'
 import type { Contact } from '@/types/types'
@@ -102,5 +103,4 @@ const Contact = () => {
   )
 }
 
-export default Contact
-// export default withProtected(Contact)
+export default withProtected(Contact)
