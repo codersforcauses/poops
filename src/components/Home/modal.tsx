@@ -77,7 +77,7 @@ function Modal() {
     <div className='text-center'>
       <div className='rounded-lg bg-zinc-200 py-4 px-5 text-center shadow-lg sm:py-4'>
         <h1 className='mb-2 text-xl text-dark-red'>
-          {confirmation ? <b>Confirm Details</b> : <b>Visit Details</b>}
+          {confirmation ? <b>Your Visit Details</b> : <b>Visit Details</b>}
         </h1>
         <hr className='mb-3 h-0.5 border-dark-red bg-dark-red text-dark-red' />
         <form>
