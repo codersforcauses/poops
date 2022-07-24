@@ -137,19 +137,17 @@ const ContactForm = ({
           />
         </Box>
         {/* TAGS */}
-        {contact.id !== 'me' && (
-          <Box>
-            <label htmlFor='tags' className='text-dark-red'>
-              Tags
-            </label>
+        <Box>
+          <label htmlFor='tags' className='text-dark-red'>
+            Tags
+          </label>
 
-            <TagSelector tags={contact.tags} setTags={setTags} />
+          <TagSelector tags={contact.tags} setTags={setTags} />
 
-            {/* This should be done as a react component i think? */}
-            {/* Padding to counter the shadow */}
-            <div className='pt-2'></div>
-          </Box>
-        )}
+          {/* This should be done as a react component i think? */}
+          {/* Padding to counter the shadow */}
+          <div className='pt-2'></div>
+        </Box>
         {/* REGIONS */}
         <Box className='pb-3'>
           <label htmlFor='regions' className='text-dark-red'>

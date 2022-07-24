@@ -13,6 +13,9 @@ const Document = () => {
           type='font/woff2'
           crossOrigin='anonymous'
         />
+        <link rel='manifest' href='/favicon/app.webmanifest' />
+        <link rel='apple-touch-icon' href='/favicon/maskable_icon_x192.png' />
+        <meta name='theme-color' content='#fff' />
         <Favicon />
       </Head>
       <body>

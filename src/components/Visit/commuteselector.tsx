@@ -16,7 +16,7 @@ interface CommuteSelectorProps extends FormFieldProps {
 
 const addToLocalStorage = (value: string) => {
   let vals = localStorage.getItem('commuteMethods')?.split(',')
-  if (vals === undefined) vals = ['Drive', 'Walk', 'Public Transport', 'Other']
+  if (vals === undefined) vals = ['Bus', 'Car', 'Train']
   if (!vals.includes(value)) {
     vals.push(value)
     vals.sort()
@@ -26,8 +26,7 @@ const addToLocalStorage = (value: string) => {
 
 const getLocalStorage = () => {
   let store = localStorage.getItem('commuteMethods')?.split(',')
-  if (store === undefined)
-    store = ['Drive', 'Walk', 'Public Transport', 'Other']
+  if (store === undefined) store = ['Bus', 'Car', 'Train']
   return store
 }
 
