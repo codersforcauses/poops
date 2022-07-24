@@ -21,10 +21,9 @@ const ModalView = ({ toggleModal }: ModalViewProps) => {
   const [petNames, setPetNames] = useState('')
   const [startTime, setStartTime] = useState('')
   const [endTime, setEndTime] = useState('')
-  const [walkDist, setWalkDist] = useState(0)
-  const [commuteDist, setCommuteDist] = useState(0)
+  const [walkDist, setWalkDist] = useState(NaN)
+  const [commuteDist, setCommuteDist] = useState(NaN)
   const [commuteMethod, setCommuteMethod] = useState('')
-  /* eslint-disable unused-imports/no-unused-vars */
   const [notes, setNotes] = useState('')
 
   const handleSubmit = (click: React.FormEvent<HTMLFormElement>) => {
@@ -42,12 +41,20 @@ const ModalView = ({ toggleModal }: ModalViewProps) => {
     }
     userDoc.visits.push(data)
     updateVisit?.(userDoc)
+    toggleModal()
   }
 
-  const closeModal = () => {
-    setTimeout(() => {
-      toggleModal()
-    }, 10) //ensure form gets completed
+  const isSubmitEnabled = () => {
+    return (
+      visitType &&
+      displayName &&
+      petNames &&
+      startTime &&
+      endTime &&
+      walkDist &&
+      commuteDist &&
+      commuteMethod
+    )
   }
 
   return (
@@ -68,7 +75,6 @@ const ModalView = ({ toggleModal }: ModalViewProps) => {
             <tbody>
               <tr>
                 <td>
-                  {/* could rewrite to use awful react-select to make chevron icon consistent */}
                   <FormField
                     id='visitTypeInput'
                     type='select'
@@ -128,7 +134,7 @@ const ModalView = ({ toggleModal }: ModalViewProps) => {
                   />
                 </td>
                 <td>
-                  {/* no validation? */}
+                  {/* react-select does not support required prop for Select components */}
                   <CommuteSelector
                     label='Commute Method:'
                     setCommuteMethod={setCommuteMethod}
@@ -165,9 +171,13 @@ const ModalView = ({ toggleModal }: ModalViewProps) => {
           />
           <div className='mx-auto my-2 flex flex-col p-1 '>
             <button
-              className='text-bold rounded bg-primary px-12 py-4 text-white drop-shadow-default active:bg-dark-red disabled:bg-dark-gray'
+              className={`text-bold rounded px-12 py-4 text-white drop-shadow-default ${
+                isSubmitEnabled()
+                  ? 'bg-primary active:bg-dark-red'
+                  : 'bg-dark-gray'
+              }`}
+              disabled={!isSubmitEnabled()}
               type='submit'
-              onClick={closeModal}
             >
               Submit
             </button>
