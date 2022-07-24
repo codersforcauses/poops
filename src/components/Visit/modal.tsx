@@ -51,8 +51,8 @@ const ModalView = ({ toggleModal }: ModalViewProps) => {
       petNames &&
       startTime &&
       endTime &&
-      walkDist &&
-      commuteDist &&
+      walkDist >= 0 &&
+      commuteDist >= 0 &&
       commuteMethod
     )
   }
