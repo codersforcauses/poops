@@ -4,7 +4,6 @@ import { useEffect, useState } from 'react'
 import ClientSelector from '@/components/Home/clientSelector'
 import CommuteSelector from '@/components/Home/commuteSelector'
 import Confirmation from '@/components/Home/confirmation'
-import DisabledButton from '@/components/Home/disabledButton'
 import DisplayForm from '@/components/Home/displayForm'
 import TextForm from '@/components/Home/textForm'
 import TypeSelector from '@/components/Home/typeSelector'
@@ -46,17 +45,17 @@ function Modal() {
     }, 0)
     if (running) {
       interval = setInterval(() => {
-        setTime((prevTime) => prevTime + 10)
-      }, 10)
+        setTime((prevTime) => prevTime + 1000)
+      }, 1000)
     } else if (!running) {
       window.clearInterval(interval)
     }
     return () => window.clearInterval(interval)
   }, [running])
 
-  const hour = ('0' + Math.floor((time / 60000) % 60)).slice(-2)
-  const minute = ('0' + Math.floor((time / 1000) % 60)).slice(-2)
-  const second = ('0' + ((time / 10) % 100)).slice(-2)
+  const hour = ('0' + Math.floor(time / 3600000)).slice(-2)
+  const minute = ('0' + Math.floor((time / 60000) % 60)).slice(-2)
+  const second = ('0' + ((time / 1000) % 60)).slice(-2)
   const timeDisplay = hour + ':' + minute + ':' + second
 
   function halfFilled() {
@@ -147,11 +146,10 @@ function Modal() {
           />
         )}
 
-        {!halfFilled() && <DisabledButton buttonText='START VISIT' />}
-
-        {halfFilled() && !visitStarted && !confirmation && (
+        {!visitStarted && !confirmation && (
           <button
-            className='relative m-2 h-[30px] w-[120px] rounded-lg bg-dark-red text-lg font-semibold text-white'
+            className='m-2 h-[30px] w-[120px] rounded-lg bg-dark-red text-lg font-semibold text-white marker:relative disabled:bg-dark-gray'
+            disabled={!halfFilled()}
             onClick={() => {
               setVisit(true), setRunning(true)
               //setStartTime(Timestamp.now)
@@ -161,13 +159,10 @@ function Modal() {
           </button>
         )}
 
-        {!fullyFilled() && visitStarted && (
-          <DisabledButton buttonText='STOP VISIT' />
-        )}
-
-        {fullyFilled() && visitStarted && (
+        {visitStarted && (
           <button
-            className='relative m-2 h-[30px] w-[120px] rounded-lg bg-dark-red text-lg font-semibold text-white'
+            className='relative m-2 h-[30px] w-[120px] rounded-lg bg-dark-red text-lg font-semibold text-white disabled:bg-dark-gray'
+            disabled={!fullyFilled()}
             onClick={() => {
               setVisit(false), setConfirmation(true), setRunning(false) //setEndTime(Timestamp.now)
             }}
@@ -176,7 +171,7 @@ function Modal() {
           </button>
         )}
 
-        {fullyFilled() && confirmation && (
+        {confirmation && (
           <button
             className='relative m-2 h-[30px] w-[120px] rounded-lg bg-dark-red text-lg font-semibold text-white'
             onClick={() => {
@@ -199,9 +194,6 @@ function Modal() {
           >
             SUBMIT
           </button>
-        )}
-        {!fullyFilled() && confirmation && (
-          <DisabledButton buttonText='SUBMIT' />
         )}
       </div>
     </div>
