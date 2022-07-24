@@ -3,7 +3,6 @@ import { useEffect, useState } from 'react'
 import ClientSelector from '@/components/Home/clientSelector'
 import CommuteSelector from '@/components/Home/commuteSelector'
 import Confirmation from '@/components/Home/confirmation'
-import DisabledButton from '@/components/Home/disabledButton'
 import DisplayForm from '@/components/Home/displayForm'
 import TextForm from '@/components/Home/textForm'
 import TypeSelector from '@/components/Home/typeSelector'
@@ -132,11 +131,10 @@ function Modal() {
           />
         )}
 
-        {!halfFilled() && <DisabledButton buttonText='START VISIT' />}
-
-        {halfFilled() && !visitStarted && !confirmation && (
+        {!visitStarted && !confirmation && (
           <button
-            className='relative m-2 h-[30px] w-[120px] rounded-lg bg-dark-red text-lg font-semibold text-white'
+            className='m-2 h-[30px] w-[120px] rounded-lg bg-dark-red text-lg font-semibold text-white marker:relative disabled:bg-dark-gray'
+            disabled={!halfFilled()}
             onClick={() => {
               setVisit(true), setRunning(true)
               //setStartTime(Timestamp.now)
@@ -146,13 +144,10 @@ function Modal() {
           </button>
         )}
 
-        {!fullyFilled() && visitStarted && (
-          <DisabledButton buttonText='STOP VISIT' />
-        )}
-
-        {fullyFilled() && visitStarted && (
+        {visitStarted && (
           <button
-            className='relative m-2 h-[30px] w-[120px] rounded-lg bg-dark-red text-lg font-semibold text-white'
+            className='relative m-2 h-[30px] w-[120px] rounded-lg bg-dark-red text-lg font-semibold text-white disabled:bg-dark-gray'
+            disabled={!fullyFilled()}
             onClick={() => {
               setVisit(false), setConfirmation(true), setRunning(false) //setEndTime(Timestamp.now)
             }}
@@ -161,7 +156,7 @@ function Modal() {
           </button>
         )}
 
-        {fullyFilled() && confirmation && (
+        {confirmation && (
           <button
             className='relative m-2 h-[30px] w-[120px] rounded-lg bg-dark-red text-lg font-semibold text-white'
             onClick={() => {
@@ -184,9 +179,6 @@ function Modal() {
           >
             SUBMIT
           </button>
-        )}
-        {!fullyFilled() && confirmation && (
-          <DisabledButton buttonText='SUBMIT' />
         )}
       </div>
     </div>
