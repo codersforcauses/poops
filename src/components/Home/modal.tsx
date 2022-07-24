@@ -30,17 +30,17 @@ function Modal() {
     }, 0)
     if (running) {
       interval = setInterval(() => {
-        setTime((prevTime) => prevTime + 10)
-      }, 10)
+        setTime((prevTime) => prevTime + 1000)
+      }, 1000)
     } else if (!running) {
       window.clearInterval(interval)
     }
     return () => window.clearInterval(interval)
   }, [running])
 
-  const hour = ('0' + Math.floor((time / 60000) % 60)).slice(-2)
-  const minute = ('0' + Math.floor((time / 1000) % 60)).slice(-2)
-  const second = ('0' + ((time / 10) % 100)).slice(-2)
+  const hour = ('0' + Math.floor(time / 3600000)).slice(-2)
+  const minute = ('0' + Math.floor((time / 60000) % 60)).slice(-2)
+  const second = ('0' + ((time / 1000) % 60)).slice(-2)
   const timeDisplay = hour + ':' + minute + ':' + second
 
   function halfFilled() {
