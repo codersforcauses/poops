@@ -1,5 +1,3 @@
-import React from 'react'
-
 interface SummaryStatistics {
   title: string
   data: string
