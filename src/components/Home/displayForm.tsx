@@ -1,19 +1,19 @@
-export interface durationProps {
+export interface FormFieldProps {
   id: string
-  type: string
-  value: string
+  label: string
+  value: string | number
 }
 
-function Duration(props: durationProps) {
+function DisplayForm(props: FormFieldProps) {
   return (
     <div className='flex flex-col p-1'>
       <label htmlFor={props.id}>
-        <b>Visit Duration</b>
+        <b>{props.label}</b>
       </label>
       <input
         className='mt-1 mb-2 flex h-9 rounded border border-[#6b7280] py-0.5 px-4 text-center focus:outline-none'
         id={props.id}
-        type={props.type}
+        type='text'
         value={props.value}
         readOnly
       />
@@ -21,4 +21,4 @@ function Duration(props: durationProps) {
   )
 }
 
-export default Duration
+export default DisplayForm

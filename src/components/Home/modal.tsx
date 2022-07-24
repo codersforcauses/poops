@@ -2,8 +2,9 @@ import { useEffect, useState } from 'react'
 
 import ClientSelector from '@/components/Home/clientSelector'
 import CommuteSelector from '@/components/Home/commuteSelector'
+import Confirmation from '@/components/Home/confirmation'
 import DisabledButton from '@/components/Home/disabledButton'
-import Duration from '@/components/Home/duration'
+import DisplayForm from '@/components/Home/displayForm'
 import TextForm from '@/components/Home/textForm'
 import TypeSelector from '@/components/Home/typeSelector'
 import { AlertVariant, useAlert } from '@/context/AlertContext'
@@ -43,15 +44,6 @@ function Modal() {
   const second = ('0' + ((time / 10) % 100)).slice(-2)
   const timeDisplay = hour + ':' + minute + ':' + second
 
-  function alertUser(text: string) {
-    setAlert({
-      variant: AlertVariant.info,
-      text: text,
-      position: 'top',
-      showFor: 1500
-    })
-  }
-
   function halfFilled() {
     return (
       (commute == 'Walk' ||
@@ -78,7 +70,7 @@ function Modal() {
   }
 
   function showWalkDist() {
-    return (visitStarted || confirmation) && type == 'Walk'
+    return visitStarted && type == 'Walk'
   }
 
   return (
@@ -89,14 +81,9 @@ function Modal() {
         </h1>
         <hr className='mb-3 h-0.5 border-dark-red bg-dark-red text-dark-red' />
         <form>
-          {!visitStarted && (
+          {!visitStarted && !confirmation && (
             <div>
               <CommuteSelector commute={commute} setCommute={setCommute} />
-              <TextForm
-                id='commuteDistance'
-                label='Commute Distance (in km)'
-                onChange={(e) => setCommuteDistance(Number(e.target.value))}
-              />
               {commute == 'Other' && (
                 <TextForm
                   id='other'
@@ -104,6 +91,11 @@ function Modal() {
                   onChange={(e) => setOther(String(e.target.value))}
                 />
               )}
+              <TextForm
+                id='commuteDistance'
+                label='Commute Distance (in km)'
+                onChange={(e) => setCommuteDistance(Number(e.target.value))}
+              />
               <ClientSelector clients={clients} setClients={setClients} />
               <TypeSelector type={type} setType={setType} />
             </div>
@@ -118,12 +110,26 @@ function Modal() {
           )}
         </form>
 
-        {halfFilled() && visitStarted && (
-          <Duration id='duration' type='text' value={timeDisplay} />
+        {confirmation && (
+          <Confirmation
+            commute={commute}
+            isOther={commute == 'Other'}
+            other={other}
+            commuteDistance={commuteDistance}
+            clients={clients.join(', ')}
+            type={type}
+            isWalk={type == 'Walk'}
+            walkDistance={walkDistance}
+            duration={timeDisplay}
+          />
         )}
 
-        {halfFilled() && confirmation && (
-          <Duration id='duration' type='text' value={timeDisplay} />
+        {halfFilled() && visitStarted && (
+          <DisplayForm
+            id='duration'
+            label='Visit Duration'
+            value={timeDisplay}
+          />
         )}
 
         {!halfFilled() && <DisabledButton buttonText='START VISIT' />}
@@ -167,7 +173,13 @@ function Modal() {
                 setOther(''),
                 setCommuteDistance(0),
                 setTime(0),
-                alertUser('Visit has been recorded')
+                setAlert({
+                  variant: AlertVariant.info,
+                  title: 'Visit has been recorded',
+                  text: 'Any changes can be made in Visit Page',
+                  position: 'top',
+                  showFor: 2500
+                })
             }}
           >
             SUBMIT
