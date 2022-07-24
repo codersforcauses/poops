@@ -14,7 +14,7 @@ const Document = () => {
           crossOrigin='anonymous'
         />
         <link rel='manifest' href='/app.webmanifest' />
-        {/*<link rel='apple-touch-icon' href='/icon.png' />*/}
+        <link rel='apple-touch-icon' href='/maskable_icon_x192.png' />
         <meta name='theme-color' content='#fff' />
         <Favicon />
       </Head>
