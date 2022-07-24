@@ -15,8 +15,8 @@
     },
 
     {
-      "src": "maskable.png",
-      "sizes": "96x96",
+      "src": "dog-icon.png",
+      "sizes": "512x512",
       "type": "image/x-icon",
       "purpose": "maskable"
     }

@@ -13,8 +13,8 @@ const Document = () => {
           type='font/woff2'
           crossOrigin='anonymous'
         />
-        <link rel='manifest' href='/manifest.json' />
-        <link rel='apple-touch-icon' href='/icon.png' />
+        <link rel='manifest' href='/app.webmanifest' />
+        {/*<link rel='apple-touch-icon' href='/icon.png' />*/}
         <meta name='theme-color' content='#fff' />
         <Favicon />
       </Head>
