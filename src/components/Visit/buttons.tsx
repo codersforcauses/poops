@@ -3,17 +3,17 @@ import Link from 'next/link'
 import { PencilIcon, PlusIcon } from '@heroicons/react/solid'
 
 interface EditButtonProps {
-  index: number
+  id: number
 }
 
-export const EditButton = ({ index }: EditButtonProps) => {
+export const EditButton = ({ id }: EditButtonProps) => {
   return (
     <div className='invisible absolute right-4 bottom-1 h-8 w-8 rounded-full bg-primary p-1 drop-shadow-default transition-all peer-checked:visible'>
       <Link
         href={{
           pathname: '/visit/set',
           query: {
-            index: index
+            id: id
           }
         }}
       >

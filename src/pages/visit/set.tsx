@@ -7,37 +7,34 @@ import { Timestamp } from 'firebase/firestore'
 import { withProtected } from '@/components/PrivateRoute'
 import CommuteSelector from '@/components/Visit/commuteselector'
 import FormField from '@/components/Visit/formfield'
+import { formatTimestamp } from '@/components/Visit/utils'
 import { visitSelectOptions } from '@/components/Visit/visitlist'
 import { useFirestore } from '@/context/firestore'
 import { VisitData } from '@/types/types'
 
-interface SetVisitProps {
-  index?: number
-}
-
-const Visit = (props: SetVisitProps) => {
-  const router = useRouter()
+const Visit = () => {
+  // BUG: when reloading this page whilst editing, all the fields are removed. userDoc is undefined?
   const { userDoc, updateVisit } = useFirestore()
-  const [visitType, setVisitType] = useState('')
-  const [clientName, setClientName] = useState('')
-  const [petNames, setPetNames] = useState('')
-  const [startTime, setStartTime] = useState('')
-  const [endTime, setEndTime] = useState('')
-  const [walkDist, setWalkDist] = useState(NaN)
-  const [commuteDist, setCommuteDist] = useState(NaN)
-  const [commuteMethod, setCommuteMethod] = useState('')
-  const [notes, setNotes] = useState('')
-
-  if (props.index) {
-    setVisitType(userDoc.visits[props.index].type)
-    setClientName(userDoc.visits[props.index].clientName)
-    setStartTime(String(userDoc.visits[props.index].startTime))
-    setEndTime(String(userDoc.visits[props.index].endTime))
-    setWalkDist(userDoc.visits[props.index].walkDist)
-    setCommuteDist(userDoc.visits[props.index].commuteDist)
-    setCommuteMethod(userDoc.visits[props.index].commuteMethod)
-    setNotes(userDoc.visits[props.index].notes)
+  const router = useRouter()
+  const i: string | string[] | undefined = router.query.id
+  let id: number | null = null
+  let visit: VisitData | null = null
+  if (i) {
+    id = parseInt(i + '')
+    visit = userDoc.visits[id]
   }
+
+  const [visitType, setVisitType] = useState(visit?.type || '')
+  const [clientName, setClientName] = useState(visit?.clientName || '')
+  const [petNames, setPetNames] = useState('')
+  const [startTime, setStartTime] = useState(
+    formatTimestamp(visit?.startTime) || ''
+  )
+  const [endTime, setEndTime] = useState(formatTimestamp(visit?.endTime) || '')
+  const [walkDist, setWalkDist] = useState(visit?.walkDist || NaN)
+  const [commuteDist, setCommuteDist] = useState(visit?.commuteDist || NaN)
+  const [commuteMethod, setCommuteMethod] = useState(visit?.commuteMethod || '')
+  const [notes, setNotes] = useState(visit?.notes || '')
 
   const handleSubmit = (click: React.FormEvent<HTMLFormElement>) => {
     click.preventDefault()
@@ -53,8 +50,12 @@ const Visit = (props: SetVisitProps) => {
       notes: notes,
       inProgress: false
     }
-    if (props.index) {
-      userDoc.visits[props.index] = data
+    // eslint-disable-next-line no-console
+    console.log(id)
+    // when id = 0, since 0 is falsey, it creates a new visit. seems to work for others
+    // TODO: stop using indexes and use actual ids?
+    if (id) {
+      userDoc.visits[id] = data
     } else {
       userDoc.visits.push(data)
     }
@@ -84,11 +85,9 @@ const Visit = (props: SetVisitProps) => {
         </div>
 
         <div className='border-b-2 border-primary py-3 pt-10'>
-          {props.index ? (
-            <h1 className='pl-2 text-2xl font-bold'>Edit Your Visit</h1>
-          ) : (
-            <h1 className='pl-2 text-2xl font-bold'>Add Your Visit</h1>
-          )}
+          <h1 className='pl-2 text-2xl font-bold'>
+            {id ? 'Edit' : 'Add'} Your Visit
+          </h1>
         </div>
 
         <form className='pt-3' onSubmit={handleSubmit}>
@@ -101,6 +100,7 @@ const Visit = (props: SetVisitProps) => {
                     id='visitTypeInput'
                     type='select'
                     placeholder='Select...'
+                    value={visitType}
                     label='Visit Type:'
                     selectOptions={visitSelectOptions}
                     isRequired={true}
@@ -112,6 +112,7 @@ const Visit = (props: SetVisitProps) => {
                     id='clientName'
                     type='text'
                     placeholder='Client Name'
+                    value={clientName}
                     label='Client Name:'
                     isRequired={true}
                     onChange={(event) => setClientName(event.target.value)}
@@ -124,6 +125,7 @@ const Visit = (props: SetVisitProps) => {
                     id='petNamesInput'
                     type='text'
                     placeholder='Pet Name(s)'
+                    value={petNames}
                     label='Pet name(s):'
                     isRequired={true}
                     onChange={(event) => setPetNames(event.target.value)}
@@ -134,6 +136,7 @@ const Visit = (props: SetVisitProps) => {
                     id='walkDistInput'
                     type='number'
                     placeholder='Distance (km)'
+                    value={walkDist.toString()}
                     label='Walk Distance:'
                     isRequired={true}
                     onChange={(event) =>
@@ -148,6 +151,7 @@ const Visit = (props: SetVisitProps) => {
                     id='commuteDistInput'
                     type='number'
                     placeholder='Distance (km)'
+                    value={commuteDist.toString()}
                     label='Commute Distance:'
                     isRequired={true}
                     onChange={(event) =>
@@ -171,6 +175,7 @@ const Visit = (props: SetVisitProps) => {
             id='startTimeInput'
             type='dateTime-local'
             placeholder='Start Time'
+            value={startTime}
             label='Start Time:'
             isRequired={true}
             onChange={(event) => setStartTime(event.target.value)}
@@ -179,6 +184,7 @@ const Visit = (props: SetVisitProps) => {
             id='endTimeInput'
             type='dateTime-local'
             placeholder='End Time'
+            value={endTime}
             label='End Time:'
             isRequired={true}
             onChange={(event) => setEndTime(event.target.value)}
@@ -187,6 +193,7 @@ const Visit = (props: SetVisitProps) => {
             id='notesInput'
             type='textarea'
             placeholder='Add notes here'
+            value={notes}
             label='Notes:'
             isRequired={false}
             onChange={(event) => setNotes(event.target.value)}
@@ -203,25 +210,24 @@ const Visit = (props: SetVisitProps) => {
             >
               Submit
             </button>
-            {props.index && (
+            <Link href='/visit'>
               <button
                 type='button'
-                className='text-bold mt-2 ml-4 rounded-xl bg-primary p-1 text-white drop-shadow-default active:bg-dark-red'
+                className='text-bold mt-2 rounded bg-primary p-1 text-white drop-shadow-default active:bg-dark-red'
                 onClick={() => {
-                  userDoc.visits.splice(Number(props.index), 1)
+                  userDoc.visits.splice(id, 1)
                   updateVisit?.(userDoc)
                 }}
+                hidden={false} // button should be hidden if no id
               >
                 Remove
               </button>
-            )}
+            </Link>
           </div>
         </form>
       </>
     </div>
   )
 }
-
-Visit.getInitialProps = { query: {} }
 
 export default withProtected(Visit)

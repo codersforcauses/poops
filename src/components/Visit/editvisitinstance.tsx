@@ -15,25 +15,6 @@ interface EditVisitInstanceProps extends VisitInstanceProps {
   isEditable: Dispatch<React.SetStateAction<boolean>>
 }
 
-const formatNumber = (value: string) => {
-  if (isNaN(parseFloat(value))) {
-    return 0
-  }
-  return parseFloat(value)
-}
-
-const padNumber = (value: number) => {
-  return value.toString().padStart(2, '0')
-}
-
-// YYYY-MM-DDTHH:mm
-const formatDate = (timestamp: Timestamp) => {
-  const date = timestamp.toDate()
-  return `${date.getFullYear()}-${padNumber(date.getMonth() + 1)}-${padNumber(
-    date.getDate()
-  )}T${padNumber(date.getHours())}:${padNumber(date.getMinutes())}`
-}
-
 const EditableVisitInstance = (props: EditVisitInstanceProps) => {
   const { userDoc, updateVisit } = useFirestore()
   const [visitType, setVisitType] = useState(props.type)
