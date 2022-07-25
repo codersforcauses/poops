@@ -14,9 +14,9 @@
     },
 
     {
-      "src": "/favicon/safari-pinned-tab.svg",
-      "color": "#5bbad5",
-      "sizes": "683x683",
+      "src": "/favicon/android-chrome-512x512.png",
+      "color": "#000000",
+      "sizes": "512x512",
       "type": "image/x-icon",
       "purpose": "maskable"
     }
