@@ -171,11 +171,7 @@ const ModalView = ({ toggleModal }: ModalViewProps) => {
           />
           <div className='mx-auto my-2 flex flex-col p-1 '>
             <button
-              className={`text-bold rounded px-12 py-4 text-white drop-shadow-default ${
-                isSubmitEnabled()
-                  ? 'bg-primary active:bg-dark-red'
-                  : 'bg-dark-gray'
-              }`}
+              className='text-bold rounded bg-primary px-12 py-4 text-white drop-shadow-default active:bg-dark-red disabled:bg-dark-gray'
               disabled={!isSubmitEnabled()}
               type='submit'
             >
