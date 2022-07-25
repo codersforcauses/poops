@@ -3,7 +3,11 @@ import { humanizeTimestamp } from '@/components/Visit/utils'
 import { formatDuration } from '@/components/Visit/visitinstance'
 import { VisitData } from '@/types/types'
 
-const ReadOnlyVisitInstance = (props: VisitData) => {
+interface VisitInfoProps extends VisitData {
+  pets: string
+}
+
+const VisitInfo = (props: VisitInfoProps) => {
   return (
     <>
       <div className='font-bold peer-checked:font-normal'>
@@ -33,4 +37,4 @@ const ReadOnlyVisitInstance = (props: VisitData) => {
   )
 }
 
-export default ReadOnlyVisitInstance
+export default VisitInfo

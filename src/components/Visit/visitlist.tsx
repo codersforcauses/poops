@@ -56,14 +56,14 @@ export const VisitList = (props: VisitListProps) => {
           .map(
             (post, index) => (
               <VisitInstance
-                set={setVisits}
+                setVisits={setVisits}
                 key={post.startTime + post.clientName + post.endTime} // <-- dumb? or genius?
                 type={post.type}
                 id={index}
                 pets={
                   userDoc.contacts[
                     findAllContactIndex(post.clientName)[indexCounter]
-                  ].pets
+                  ]?.pets
                 }
                 clientName={post.clientName}
                 startTime={post.startTime}

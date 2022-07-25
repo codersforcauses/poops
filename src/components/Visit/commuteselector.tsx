@@ -50,6 +50,11 @@ const CommuteSelector = (props: CommuteSelectorProps) => {
     setCommuteMethods(getCommuteMethods())
   }
 
+  const defaultValue: CommuteMethod = {
+    label: props.value || '',
+    value: props.value || ''
+  }
+
   return (
     <div className='flex flex-col p-1'>
       <label htmlFor={props.id} className='font-bold'>
@@ -59,7 +64,9 @@ const CommuteSelector = (props: CommuteSelectorProps) => {
       <CreatableSelect
         onChange={handleChange}
         options={commuteMethods}
+        placeholder={props.placeholder}
         styles={customStyles}
+        defaultValue={defaultValue}
       />
     </div>
   )
