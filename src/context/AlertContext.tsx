@@ -93,11 +93,22 @@ export const AlertContextProvider = ({
             ? {
                 filter: 'blur(5px)',
                 pointerEvents: 'none',
+                userSelect: 'none',
                 touchAction: 'none'
               }
             : {
                 filter: 'blur(0px)'
               }
+        }
+        onClick={
+          visible && content.position === 'bottom'
+            ? (e) => e.preventDefault()
+            : undefined
+        }
+        onKeyDown={
+          visible && content.position === 'bottom'
+            ? (e) => e.preventDefault()
+            : undefined
         }
         className='z-999 fixed top-0 right-0 bottom-0 left-0 overflow-scroll transition-all duration-700'
       >
