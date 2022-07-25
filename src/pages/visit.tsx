@@ -9,9 +9,9 @@ const Visit = () => {
     <>
       {/* <Header /> */}
       <Header pageTitle='Visit' />
-      <AlertExamples />
       <main>
         <p>Visit Page</p>
+        <AlertExamples />
       </main>
       <NavBar />
     </>

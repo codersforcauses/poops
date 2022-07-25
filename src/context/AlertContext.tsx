@@ -91,26 +91,21 @@ export const AlertContextProvider = ({
         style={
           visible && content.position === 'bottom'
             ? {
-                filter: 'blur(5px)',
-                pointerEvents: 'none',
-                userSelect: 'none',
-                touchAction: 'none'
+                filter: 'blur(5px)'
               }
             : {
                 filter: 'blur(0px)'
               }
         }
-        onClick={
-          visible && content.position === 'bottom'
-            ? (e) => e.preventDefault()
-            : undefined
+        className={
+          'z-999 pointer-events-none fixed top-0 right-0 bottom-0 left-0 overflow-scroll transition-all duration-700' +
+          ' after:fixed after:top-0 after:right-0 after:bottom-0 after:left-0' +
+          `${
+            content.position === 'bottom' && visible
+              ? ' after:pointer-events-auto'
+              : ' after:pointer-events-none'
+          }`
         }
-        onKeyDown={
-          visible && content.position === 'bottom'
-            ? (e) => e.preventDefault()
-            : undefined
-        }
-        className='z-999 fixed top-0 right-0 bottom-0 left-0 overflow-scroll transition-all duration-700'
       >
         {children}
       </div>
