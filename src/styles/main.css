@@ -26,7 +26,8 @@
 }
 
 main {
-  height: calc(100vh - 4rem); /* 4rem is bottom nav height */
-  overflow-y: auto;
+  height: calc(100vh); /* 4rem is bottom nav height */
+  padding-bottom: 4rem;
+  overflow-y: scroll;
   overflow-x: hidden;
 }
