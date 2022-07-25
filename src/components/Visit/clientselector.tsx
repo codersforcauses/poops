@@ -24,7 +24,7 @@ const ClientSelector = (props: ClientSelectorProps) => {
     return contacts.map((contact) => {
       const clientName: ClientName = {
         label: contact.displayName,
-        value: contact.displayName
+        value: contact.id
       }
       return clientName
     })
