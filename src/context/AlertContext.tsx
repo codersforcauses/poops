@@ -88,27 +88,19 @@ export const AlertContextProvider = ({
   return (
     <AlertContext.Provider value={value}>
       <div
-        role='none'
         style={
           visible && content.position === 'bottom'
             ? {
-                filter: 'blur(5px)'
+                filter: 'blur(5px)',
+                pointerEvents: 'none',
+                touchAction: 'none',
+                backgroundColor: 'transparent'
               }
             : {
                 filter: 'blur(0px)'
               }
         }
-        className={
-          'z-999 pointer-events-none fixed top-0 right-0 bottom-0 left-0 overflow-scroll transition-all duration-700' +
-          `${
-            content.position === 'bottom' && visible
-              ? ' pointer-events-all touch-action-all'
-              : ' touch-action-none pointer-events-none'
-          }`
-        }
-        onClick={(e) => e.preventDefault()}
-        onTouchStart={(e) => e.preventDefault()}
-        onKeyDown={(e) => e.preventDefault()}
+        className='z-999 fixed top-0 right-0 bottom-0 left-0 overflow-scroll transition-all duration-700'
       >
         {children}
       </div>
