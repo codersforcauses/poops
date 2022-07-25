@@ -115,10 +115,8 @@ const Alert: React.FC<AlertProps> = ({ visible, content, clearAlert }) => {
         </p>
         <p style={{ color: textColor }}>{contentCache.text}</p>
       </div>
-      {contentCache.position === 'bottom' ? (
+      {contentCache.position === 'bottom' && (
         <div className='h-0 basis-full'></div>
-      ) : (
-        ''
       )}
       <div
         className={
