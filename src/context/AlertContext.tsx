@@ -91,17 +91,27 @@ export const AlertContextProvider = ({
         style={
           visible && content.position === 'bottom'
             ? {
-                filter: 'blur(5px)',
-                pointerEvents: 'none',
-                touchAction: 'none',
-                backgroundColor: 'transparent'
+                filter: 'blur(5px)'
               }
             : {
                 filter: 'blur(0px)'
               }
         }
-        className='z-999 fixed top-0 right-0 bottom-0 left-0 overflow-scroll transition-[filter] duration-700'
+        className='z-999 fixed top-0 right-0 bottom-0 left-0 transition-[filter] duration-700'
       >
+        {visible && content.position === 'bottom' && (
+          <div
+            style={{
+              pointerEvents: 'all',
+              position: 'fixed',
+              top: 0,
+              right: 0,
+              bottom: 0,
+              left: 0,
+              zIndex: 999
+            }}
+          ></div>
+        )}
         {children}
       </div>
       <Alert visible={visible} content={content} clearAlert={clearAlert} />

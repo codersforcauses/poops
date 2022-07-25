@@ -25,7 +25,7 @@ const buttonClasses =
   'mx-auto mt-2 w-fit rounded-lg bg-primary py-1 px-4 text-lg text-white shadow-md focus:outline-primary active:bg-dark-red'
 const getContainerClasses = (vis: boolean, pos: string) => {
   return (
-    `flex items-center fixed right-0 left-0 z-999 bg-white text-black border-x-1 border-[#dddddd] transition-transform duration-700` +
+    `flex items-center fixed right-0 left-0 z-9999 bg-white text-black border-x-1 border-[#dddddd] transition-transform duration-700` +
     `${
       pos === 'top'
         ? ' rounded-b-md border-b-1 -top-[250px] pl-5 pr-4 py-3 mx-[1rem]' +
