@@ -12,7 +12,7 @@ function Modal() {
   const [visitStarted, setVisit] = useState(false)
   const [confirmation, setConfirmation] = useState(false)
   const [commute, setCommute] = useState('')
-  const [clients, setClients] = useState<string[]>([])
+  const [client, setClient] = useState('')
   const [type, setType] = useState('')
   const [walkDistance, setWalkDistance] = useState(0)
   const [other, setOther] = useState('')
@@ -50,7 +50,7 @@ function Modal() {
         commute == 'Public Transport' ||
         (commute == 'Other' && other != '')) &&
       commuteDistance > 0 &&
-      clients.length > 0 &&
+      client.length > 0 &&
       (type == 'Vet' || type == 'Walk')
     )
   }
@@ -62,7 +62,7 @@ function Modal() {
         commute == 'Public Transport' ||
         (commute == 'Other' && other != '')) &&
       commuteDistance > 0 &&
-      clients.length > 0 &&
+      client.length > 0 &&
       (type == 'Vet' ||
         (type == 'Walk' && walkDistance > 0 && !isNaN(walkDistance)))
     )
@@ -95,7 +95,7 @@ function Modal() {
                 label='Commute Distance (in km)'
                 onChange={(e) => setCommuteDistance(Number(e.target.value))}
               />
-              <ClientSelector clients={clients} setClients={setClients} />
+              <ClientSelector client={client} setClient={setClient} />
               <TypeSelector type={type} setType={setType} />
             </div>
           )}
@@ -115,7 +115,7 @@ function Modal() {
             isOther={commute == 'Other'}
             other={other}
             commuteDistance={commuteDistance}
-            clients={clients.join(', ')}
+            client={client}
             type={type}
             isWalk={type == 'Walk'}
             walkDistance={walkDistance}
@@ -161,7 +161,7 @@ function Modal() {
             className='relative m-2 h-[30px] w-[120px] rounded-lg bg-dark-red text-lg font-semibold text-white'
             onClick={() => {
               setConfirmation(false),
-                setClients([]),
+                setClient(''),
                 setType(''),
                 setCommute(''),
                 setWalkDistance(0),
@@ -172,7 +172,7 @@ function Modal() {
                   variant: AlertVariant.info,
                   title: 'Visit has been recorded',
                   text: 'Any changes can be made in Visit Page',
-                  position: 'top',
+                  position: 'bottom',
                   showFor: 2500
                 })
             }}

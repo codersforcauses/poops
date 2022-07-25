@@ -5,7 +5,7 @@ export interface FormFieldProps {
   isOther: boolean
   other: string
   commuteDistance: number
-  clients: string
+  client: string
   type: string
   isWalk: boolean
   walkDistance: number
@@ -28,11 +28,7 @@ function Confirmation(props: FormFieldProps) {
         label='Commute Distance'
         value={props.commuteDistance}
       />
-      <DisplayForm
-        id='clients'
-        label='Clients Selected'
-        value={props.clients}
-      />
+      <DisplayForm id='clients' label='Clients Selected' value={props.client} />
       <DisplayForm id='type' label='Type of Visit' value={props.type} />
       {props.isWalk && (
         <DisplayForm

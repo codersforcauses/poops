@@ -1,8 +1,8 @@
 import { Dispatch, SetStateAction, useState } from 'react'
 import { default as ReactSelect } from 'react-select'
-import { MultiValue } from 'react-select'
+import { SingleValue } from 'react-select'
 
-import multiStyles from '@/components/Home/multiStyles'
+import singleStyles from '@/components/Home/singleStyles'
 
 const clientOptions = [
   { value: 'Jeffrey', label: 'Jeffrey' },
@@ -12,35 +12,33 @@ const clientOptions = [
 ]
 
 type Props = {
-  clients: Array<string>
-  setClients: Dispatch<SetStateAction<Array<string>>>
+  client: string
+  setClient: Dispatch<SetStateAction<string>>
 }
 
 type MyOption = { value: string; label: string }
 
-function ClientSelector({ setClients }: Props) {
-  const [clientSelected, setClientSelected] = useState<MultiValue<MyOption>>()
+function ClientSelector({ setClient }: Props) {
+  const [clientSelected, setClientSelected] = useState<SingleValue<MyOption>>()
 
-  const handleChange = (selected: MultiValue<MyOption>) => {
+  const handleChange = (selected: SingleValue<MyOption>) => {
     setClientSelected(selected)
-    setClients(Object.values(selected).map((val) => val.value))
+    if (selected == null) return
+    setClient(selected.value)
   }
 
   return (
     <div className='flex flex-col p-1'>
-      <label htmlFor='clients'>
+      <label htmlFor='client'>
         <span className='text-primary'>*</span>
         <b>Select Clients</b>
       </label>
       <ReactSelect
-        name='clients'
+        name='client'
         options={clientOptions}
-        closeMenuOnSelect={false}
         value={clientSelected}
-        isMulti
-        hideSelectedOptions={false}
         onChange={handleChange}
-        styles={multiStyles}
+        styles={singleStyles}
       />
     </div>
   )
