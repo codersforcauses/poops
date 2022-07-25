@@ -102,8 +102,8 @@ export const AlertContextProvider = ({
           ' after:fixed after:top-0 after:right-0 after:bottom-0 after:left-0' +
           `${
             content.position === 'bottom' && visible
-              ? ' after:pointer-events-auto'
-              : ' after:pointer-events-none'
+              ? ' after:pointer-events-all after:touch-action-all'
+              : ' after:touch-action-none after:pointer-events-none'
           }`
         }
       >
