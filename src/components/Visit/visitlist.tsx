@@ -60,7 +60,9 @@ export const VisitList = (props: VisitListProps) => {
                 key={post.startTime + post.clientId + post.endTime} // <-- dumb? or genius?
                 type={post.type}
                 id={index}
-                pets={userDoc.contacts[findAllContactIndex(post.clientId)].pets}
+                pets={
+                  userDoc.contacts[findAllContactIndex(post.clientId)]?.pets
+                }
                 clientId={post.clientId}
                 startTime={post.startTime}
                 endTime={post.endTime}

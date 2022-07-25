@@ -1,14 +1,12 @@
-/* eslint-disable */
 import { Dispatch, SetStateAction } from 'react'
-import { SingleValue } from 'react-select'
-import CreatableSelect from 'react-select/creatable'
+import Select, { SingleValue } from 'react-select'
 
-import customStyles from '@/components/Visit/commuteselectorstyles'
 import { FormFieldProps } from '@/components/Visit/formfield'
+import customStyles from '@/components/Visit/selectorstyles'
 import { useFirestore } from '@/context/firestore'
 
 interface ClientSelectorProps extends FormFieldProps {
-  setClientName: Dispatch<SetStateAction<Array<string>>>
+  setClientName: Dispatch<SetStateAction<string>>
 }
 
 interface ClientName {
@@ -23,7 +21,7 @@ const ClientSelector = (props: ClientSelectorProps) => {
   } = useFirestore()
 
   const getClientList = () => {
-    contacts.map((contact) => {
+    return contacts.map((contact) => {
       const clientName: ClientName = {
         label: contact.displayName,
         value: contact.displayName
@@ -48,9 +46,9 @@ const ClientSelector = (props: ClientSelectorProps) => {
         <span className='text-primary'>{props.isRequired ? '*' : ''}</span>
         {props.label}
       </label>
-      <CreatableSelect
+      <Select
         onChange={handleChange}
-        options={clientList}
+        options={getClientList()}
         placeholder={props.placeholder}
         styles={customStyles}
         defaultValue={defaultValue}

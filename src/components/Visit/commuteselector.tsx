@@ -2,8 +2,8 @@ import { Dispatch, SetStateAction, useState } from 'react'
 import { SingleValue } from 'react-select'
 import CreatableSelect from 'react-select/creatable'
 
-import customStyles from './commuteselectorstyles'
 import { FormFieldProps } from './formfield'
+import customStyles from './selectorstyles'
 
 export interface CommuteMethod {
   label: string
