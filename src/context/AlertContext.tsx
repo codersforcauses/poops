@@ -100,7 +100,7 @@ export const AlertContextProvider = ({
                 filter: 'blur(0px)'
               }
         }
-        className='z-999 fixed top-0 right-0 bottom-0 left-0 overflow-scroll transition-all duration-700'
+        className='z-999 fixed top-0 right-0 bottom-0 left-0 overflow-scroll transition-[filter] duration-700'
       >
         {children}
       </div>
