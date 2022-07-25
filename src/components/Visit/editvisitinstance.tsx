@@ -38,7 +38,7 @@ const EditableVisitInstance = (props: EditVisitInstanceProps) => {
   const { userDoc, updateVisit } = useFirestore()
   const [visitType, setVisitType] = useState(props.type)
   const [displayName, setDisplayName] = useState(props.displayName)
-  const [petNames, setpetNames] = useState(props.petNames)
+  const [petNames, setPetNames] = useState(props.petNames)
   const [startTime, setStartTime] = useState(props.startTime)
   const [endTime, setEndTime] = useState(props.endTime)
   const [walkDist, setWalkDist] = useState(props.walkDist)
@@ -114,7 +114,7 @@ const EditableVisitInstance = (props: EditVisitInstanceProps) => {
             className='bg-cream text-primary'
             placeholder='Pet Name(s)'
             value={petNames}
-            onChange={(event) => setpetNames(event.target.value)}
+            onChange={(event) => setPetNames(event.target.value)}
             required
           />
         </div>
@@ -135,9 +135,10 @@ const EditableVisitInstance = (props: EditVisitInstanceProps) => {
         <div>
           Walk Distance:{' '}
           <input
-            className='bg-cream p-0 text-sm text-primary'
+            className='bg-cream text-primary'
             type='number'
             step='0.001'
+            min='0'
             placeholder='Distance'
             value={walkDist.toString()}
             onChange={(event) => {
@@ -152,6 +153,7 @@ const EditableVisitInstance = (props: EditVisitInstanceProps) => {
             className='bg-cream text-primary'
             type='number'
             step='0.001'
+            min='0'
             placeholder='Distance'
             value={commuteDist.toString()}
             onChange={(event) => {
