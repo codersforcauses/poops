@@ -88,6 +88,7 @@ const Alert: React.FC<AlertProps> = ({ visible, content, clearAlert }) => {
 
   return (
     <div
+      role='alert'
       className={getContainerClasses(visible, contentCache.position ?? 'top')}
       style={{ boxShadow: shadow }}
     >
@@ -119,7 +120,11 @@ const Alert: React.FC<AlertProps> = ({ visible, content, clearAlert }) => {
       ) : (
         ''
       )}
-      <div className={contentCache.position === 'bottom' ? 'pt-5' : 'h-5'}>
+      <div
+        className={
+          contentCache.position === 'bottom' ? 'pt-5' : 'inline-flex h-5'
+        }
+      >
         {typeof contentCache.confirmFunction !== 'undefined' && (
           <button
             className={
