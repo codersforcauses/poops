@@ -25,7 +25,7 @@ const Visit = () => {
   }
 
   const [visitType, setVisitType] = useState(visit?.type || '')
-  const [clientName, setClientName] = useState(visit?.clientName || '')
+  const [clientName, setClientName] = useState(visit?.clientId || '')
   const [petNames, setPetNames] = useState('')
   const [startTime, setStartTime] = useState(
     formatTimestamp(visit?.startTime) || ''
@@ -41,7 +41,7 @@ const Visit = () => {
 
     const data: VisitData = {
       type: visitType,
-      clientName: clientName,
+      clientId: clientId,
       startTime: Timestamp.fromDate(new Date(startTime)),
       endTime: Timestamp.fromDate(new Date(endTime)),
       walkDist: walkDist,

@@ -17,27 +17,27 @@ interface VisitListProps {
 export const VisitList = (props: VisitListProps) => {
   const { userDoc } = useFirestore()
   const [visits, setVisits] = useState(userDoc.visits || [])
-  const indexCounter = 0
   useEffect(() => {
     setVisits(userDoc.visits)
   }, [userDoc.visits])
 
-  const findAllContactIndex = (name: string) => {
-    const indexes = []
+  const findAllContactIndex = (id: string) => {
     for (let i = 0; i < userDoc.contacts.length; i++) {
-      if (userDoc.contacts[i].displayName === name) {
-        indexes.push(i)
+      if (userDoc.contacts[i].id === id) {
+        return i
       }
     }
-    return indexes
+    return 0
   }
 
   const matchesDisplayName = (post: VisitData) =>
-    post.clientName.toLowerCase().includes(props.searchQuery.toLowerCase())
+    userDoc.contacts[findAllContactIndex(post.clientId)].displayName
+      .toLowerCase()
+      .includes(props.searchQuery.toLowerCase())
 
   //get pets from contact name
   const matchespetNames = (post: VisitData) =>
-    userDoc.contacts[findAllContactIndex(post.clientName)[0]].pets.includes(
+    userDoc.contacts[findAllContactIndex(post.clientId)].pets.includes(
       props.searchQuery.toLowerCase()
     )
 
@@ -57,15 +57,11 @@ export const VisitList = (props: VisitListProps) => {
             (post, index) => (
               <VisitInstance
                 setVisits={setVisits}
-                key={post.startTime + post.clientName + post.endTime} // <-- dumb? or genius?
+                key={post.startTime + post.clientId + post.endTime} // <-- dumb? or genius?
                 type={post.type}
                 id={index}
-                pets={
-                  userDoc.contacts[
-                    findAllContactIndex(post.clientName)[indexCounter]
-                  ]?.pets
-                }
-                clientName={post.clientName}
+                pets={userDoc.contacts[findAllContactIndex(post.clientId)].pets}
+                clientId={post.clientId}
                 startTime={post.startTime}
                 endTime={post.endTime}
                 walkDist={post.walkDist}

@@ -14,7 +14,7 @@ const VisitInfo = (props: VisitInfoProps) => {
         <p className='font-bold text-primary'>
           {humanizeTimestamp(props.startTime)}
         </p>
-        <p className='text-sm'>{props.clientName}</p>
+        <p className='text-sm'>{props.clientId}</p>
       </div>
       <div className='max-h-0 justify-between overflow-hidden text-sm transition-all duration-300 peer-checked:max-h-screen'>
         <p>Visit Type: {props.type}</p>
@@ -26,9 +26,6 @@ const VisitInfo = (props: VisitInfoProps) => {
         <p>Commute Method: {props.commuteMethod}</p>
         <p>Notes: {props.notes}</p>
         <div className='m-2 flex flex-row justify-around'>
-          {
-            // TODO: make stylings nice (gl James)
-          }
           <VetConcernButton />
           <ReportButton />
         </div>
