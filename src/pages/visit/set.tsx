@@ -8,7 +8,10 @@ import { withProtected } from '@/components/PrivateRoute'
 import CommuteSelector from '@/components/Visit/commuteselector'
 import FormField from '@/components/Visit/formfield'
 import { formatTimestamp } from '@/components/Visit/utils'
-import { visitSelectOptions } from '@/components/Visit/visitlist'
+import {
+  findContactIndex,
+  visitSelectOptions
+} from '@/components/Visit/visitlist'
 import { useFirestore } from '@/context/firestore'
 import { VisitData } from '@/types/types'
 
@@ -26,13 +29,11 @@ const Visit = () => {
 
   const [visitType, setVisitType] = useState(visit?.type || '')
   const [clientName, setClientName] = useState(visit?.clientId || '')
-  const [petNames, setPetNames] = useState('')
   const [startTime, setStartTime] = useState(
     formatTimestamp(visit?.startTime) || ''
   )
   const [endTime, setEndTime] = useState(formatTimestamp(visit?.endTime) || '')
   const [walkDist, setWalkDist] = useState(visit?.walkDist || NaN)
-  const [pets, setpets] = useState('')
   const [commuteDist, setCommuteDist] = useState(visit?.commuteDist || NaN)
   const [commuteMethod, setCommuteMethod] = useState(visit?.commuteMethod || '')
   const [notes, setNotes] = useState(visit?.notes || '')
@@ -45,7 +46,7 @@ const Visit = () => {
       clientId: clientName,
       startTime: Timestamp.fromDate(new Date(startTime)),
       endTime: Timestamp.fromDate(new Date(endTime)),
-      pets: pets,
+      petNames: userDoc.contacts[findContactIndex(clientName, userDoc)].pets,
       walkDist: walkDist,
       commuteDist: commuteDist,
       commuteMethod: commuteMethod,
@@ -54,7 +55,6 @@ const Visit = () => {
     }
     // when id = 0, since 0 is falsey, it creates a new visit. seems to work for others
     // TODO: stop using indexes and use actual ids?
-    setpets('') //let me push
     // tee hee i worked round it
     if (id) {
       userDoc.visits[id - 1] = data // added 1 when sending to pass check
@@ -68,7 +68,6 @@ const Visit = () => {
   const isSubmitEnabled = () =>
     visitType &&
     clientName &&
-    petNames &&
     startTime &&
     endTime &&
     walkDist >= 0 &&
@@ -122,17 +121,6 @@ const Visit = () => {
                 </td>
               </tr>
               <tr>
-                <td>
-                  <FormField
-                    id='petNamesInput'
-                    type='text'
-                    placeholder='Pet Name(s)'
-                    value={petNames}
-                    label='Pet name(s):'
-                    isRequired={true}
-                    onChange={(event) => setPetNames(event.target.value)}
-                  />
-                </td>
                 <td>
                   <FormField
                     id='walkDistInput'
