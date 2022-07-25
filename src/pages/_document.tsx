@@ -19,7 +19,10 @@ const Document = () => {
           type='image/svg+xml'
         ></link>
         <link rel='manifest' href='/favicon/app.webmanifest' />
-        <link rel='apple-touch-icon' href='/favicon/maskable_icon_x192.png' />
+        <link
+          rel='apple-touch-icon'
+          href='/favicon/android-chrome-512x512.png'
+        />
         <meta name='theme-color' content='#fff' />
         <Favicon />
       </Head>
