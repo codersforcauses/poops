@@ -91,13 +91,14 @@ export const AlertContextProvider = ({
         style={
           visible && content.position === 'bottom'
             ? {
-                filter: 'blur(5px)'
+                filter: 'blur(3px) brightness(0.85) grayscale(0.6)',
+                backgroundColor: 'white'
               }
             : {
-                filter: 'blur(0px)'
+                filter: 'blur(0px) brightness(1.0) grayscale(0.0)'
               }
         }
-        className='z-999 fixed top-0 right-0 bottom-0 left-0 transition-[filter] duration-700'
+        className='z-999 fixed top-0 right-0 bottom-0 left-0 -m-10 transition-[filter] duration-700'
       >
         {visible && content.position === 'bottom' && (
           <div
@@ -109,7 +110,7 @@ export const AlertContextProvider = ({
               bottom: 0,
               left: 0,
               zIndex: 999
-            }}
+            }} // consume all clicks if alert is visible and bottom
           ></div>
         )}
         {children}
