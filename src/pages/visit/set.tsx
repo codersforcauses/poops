@@ -25,7 +25,7 @@ const Visit = () => {
   }
 
   const [visitType, setVisitType] = useState(visit?.type || '')
-  const [clientName, setClientName] = useState(visit?.clientName || '')
+  const [clientName, setClientName] = useState(visit?.clientId || '')
   const [petNames, setPetNames] = useState('')
   const [startTime, setStartTime] = useState(
     formatTimestamp(visit?.startTime) || ''
@@ -42,7 +42,7 @@ const Visit = () => {
 
     const data: VisitData = {
       type: visitType,
-      clientName: clientName,
+      clientId: clientName,
       startTime: Timestamp.fromDate(new Date(startTime)),
       endTime: Timestamp.fromDate(new Date(endTime)),
       pets: pets,
@@ -54,7 +54,7 @@ const Visit = () => {
     }
     // when id = 0, since 0 is falsey, it creates a new visit. seems to work for others
     // TODO: stop using indexes and use actual ids?
-    setpets('')
+    setpets('') //let me push
     // tee hee i worked round it
     if (id) {
       userDoc.visits[id - 1] = data // added 1 when sending to pass check

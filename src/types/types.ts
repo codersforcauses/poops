@@ -15,7 +15,8 @@ export interface UserData {
 
 export interface VisitData {
   type: string
-  clientName: string
+  clientId: string
+  pets: string
   startTime: Timestamp
   endTime: Timestamp
   walkDist: number
