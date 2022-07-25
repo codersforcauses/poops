@@ -35,6 +35,7 @@ const EditableVisitInstance = (props: EditVisitInstanceProps) => {
           startTime: startTime,
           endTime: endTime,
           walkDist: walkDist,
+          pets: '',
           commuteDist: commuteDist,
           commuteMethod: commuteMethod,
           notes: notes,

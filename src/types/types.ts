@@ -29,7 +29,7 @@ export interface ContactData {
   id: string
   displayName: string
   desc: string
-  pets: Pet[]
+  pets: string
   email: string
   phone: string
   streetAddress: string
