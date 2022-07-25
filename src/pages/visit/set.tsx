@@ -21,7 +21,7 @@ const Visit = () => {
   let visit: VisitData | null = null
   if (i) {
     id = parseInt(i + '')
-    visit = userDoc.visits[id]
+    visit = userDoc.visits[id - 1]
   }
 
   const [visitType, setVisitType] = useState(visit?.type || '')
@@ -50,12 +50,11 @@ const Visit = () => {
       notes: notes,
       inProgress: false
     }
-    // eslint-disable-next-line no-console
-    console.log(id)
     // when id = 0, since 0 is falsey, it creates a new visit. seems to work for others
     // TODO: stop using indexes and use actual ids?
+    // tee hee i worked round it
     if (id) {
-      userDoc.visits[id] = data
+      userDoc.visits[id - 1] = data // added 1 when sending to pass check
     } else {
       userDoc.visits.push(data)
     }
@@ -215,7 +214,7 @@ const Visit = () => {
                 type='button'
                 className='text-bold mt-2 rounded bg-primary p-1 text-white drop-shadow-default active:bg-dark-red'
                 onClick={() => {
-                  userDoc.visits.splice(id, 1)
+                  userDoc.visits.splice(Number(id), 1)
                   updateVisit?.(userDoc)
                 }}
                 hidden={false} // button should be hidden if no id
