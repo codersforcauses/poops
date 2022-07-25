@@ -5,7 +5,7 @@ import { findContactIndex } from '@/components/Visit/visitlist'
 import { useFirestore } from '@/context/firestore'
 import { VisitData } from '@/types/types'
 
-const ReadOnlyVisitInstance = (props: VisitData) => {
+const VisitInfo = (props: VisitData) => {
   const { userDoc } = useFirestore()
   return (
     <>
@@ -38,4 +38,4 @@ const ReadOnlyVisitInstance = (props: VisitData) => {
   )
 }
 
-export default ReadOnlyVisitInstance
+export default VisitInfo

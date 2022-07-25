@@ -11,7 +11,7 @@ export const padNumber = (value: number) => {
   return value.toString().padStart(2, '0')
 }
 
-// YYYY-MM-DDTHH:mm
+// Returns YYYY-MM-DDTHH:mm for input value
 export const formatTimestamp = (timestamp?: Timestamp) => {
   if (!timestamp) return null
   const date = timestamp.toDate()

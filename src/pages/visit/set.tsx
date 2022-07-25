@@ -5,6 +5,7 @@ import { XIcon } from '@heroicons/react/outline'
 import { Timestamp } from 'firebase/firestore'
 
 import { withProtected } from '@/components/PrivateRoute'
+import ClientSelector from '@/components/Visit/clientselector'
 import CommuteSelector from '@/components/Visit/commuteselector'
 import FormField from '@/components/Visit/formfield'
 import { formatTimestamp } from '@/components/Visit/utils'
@@ -109,14 +110,14 @@ const Visit = () => {
                   />
                 </td>
                 <td>
-                  <FormField
-                    id='clientName'
+                  <ClientSelector
+                    id='clientNameInput'
                     type='text'
                     placeholder='Client Name'
                     value={clientName}
                     label='Client Name:'
                     isRequired={true}
-                    onChange={(event) => setClientName(event.target.value)}
+                    setClientName={setClientName}
                   />
                 </td>
               </tr>
@@ -152,9 +153,11 @@ const Visit = () => {
                 <td>
                   {/* no validation? */}
                   <CommuteSelector
+                    id='commuteMethodInput'
+                    placeholder='Commute Method'
+                    value={commuteMethod}
                     label='Commute Method:'
                     setCommuteMethod={setCommuteMethod}
-                    id='commuteMethodInput'
                     isRequired={true}
                   />
                 </td>
@@ -190,11 +193,7 @@ const Visit = () => {
           />
           <div className='mx-auto my-2 flex flex-col p-1 '>
             <button
-              className={`text-bold rounded px-12 py-4 text-white drop-shadow-default ${
-                isSubmitEnabled()
-                  ? 'bg-primary active:bg-dark-red'
-                  : 'bg-dark-gray'
-              }`}
+              className='text-bold rounded bg-primary px-12 py-4 text-white drop-shadow-default active:bg-dark-red disabled:bg-dark-gray'
               disabled={!isSubmitEnabled()}
               type='submit'
             >

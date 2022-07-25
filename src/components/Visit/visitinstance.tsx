@@ -5,10 +5,10 @@ import { Timestamp } from 'firebase/firestore'
 import { VisitData } from '@/types/types'
 
 import { EditButton } from './buttons'
-import ReadOnlyVisitInstance from './readvisitinstance'
+import VisitInfo from './readvisitinstance'
 
 export interface VisitInstanceProps extends VisitData {
-  set: Dispatch<SetStateAction<VisitData[]>>
+  setVisits: Dispatch<SetStateAction<VisitData[]>>
   id: number
 }
 
@@ -48,7 +48,7 @@ const VisitInstance = (props: VisitInstanceProps) => {
               setIsOpen(!isOpen)
             }}
           />
-          <ReadOnlyVisitInstance {...props} />
+          <VisitInfo {...props} />
           <EditButton id={props.id + 1} />
         </div>
       </div>
