@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
+import { Timestamp } from 'firebase/firestore'
 
-// import { useFirestore } from '@/context/firestore'
 import ClientSelector from '@/components/Home/clientSelector'
 import CommuteSelector from '@/components/Home/commuteSelector'
 import Confirmation from '@/components/Home/confirmation'
@@ -8,6 +8,8 @@ import DisplayForm from '@/components/Home/displayForm'
 import TextForm from '@/components/Home/textForm'
 import TypeSelector from '@/components/Home/typeSelector'
 import { AlertVariant, useAlert } from '@/context/AlertContext'
+import { useFirestore } from '@/context/firestore'
+import type { VisitData } from '@/types/types'
 
 function Modal() {
   const [visitStarted, setVisit] = useState(false)
@@ -20,22 +22,25 @@ function Modal() {
   const [commuteDistance, setCommuteDistance] = useState(0)
   const [time, setTime] = useState(0)
   const [running, setRunning] = useState(false)
-  // const [startTime, setStartTime] = useState<Timestamp>()
-  // const [endTime, setEndTime] = useState<Timestamp>()
-  const { setAlert } = useAlert()
-  // const { userDoc, updateVisit } = useFirestore()
+  const [startTime, setStartTime] = useState(new Date())
+  const [endTime, setEndTime] = useState(new Date(startTime))
 
-  // const data: VisitData = {
-  //   type: type,
-  //   displayName: clients.join(','),
-  //   petNames: '', // gonna be removed
-  //   // startTime: Timestamp.fromDate(new Date(startTime)),
-  //   // endTime: Timestamp.fromDate(new Date(endTime)),
-  //   walkDist: walkDistance,
-  //   commuteDist: commuteDistance,
-  //   commuteMethod: commute,
-  //   notes: '', // in progress
-  //   // inProgress: true
+  const { setAlert } = useAlert()
+
+  const { userDoc, updateVisit } = useFirestore()
+
+  // for (let visit of allVisits) {
+  //   console.log("test")
+  //   if (visit.inProgress) {
+  //     setVisit(true)
+  //     setRunning(true)
+  //     setType(visit.type)
+  //     setClients(visit.clientName)
+  //     setStartTime(new Date(visit.startTime.toDate()))
+  //     setCommuteDistance(visit.commuteDist)
+  //     setCommute(visit.commuteMethod)
+  //     break
+  //   }
   // }
 
   useEffect(() => {
@@ -53,9 +58,20 @@ function Modal() {
     return () => window.clearInterval(interval)
   }, [running])
 
-  const hour = ('0' + Math.floor(time / 3600000)).slice(-2)
-  const minute = ('0' + Math.floor((time / 60000) % 60)).slice(-2)
-  const second = ('0' + ((time / 1000) % 60)).slice(-2)
+  const duration = endTime.getTime() - startTime.getTime()
+
+  const hour = (
+    '0' +
+    (Math.floor(duration / 3600000) + Math.floor(time / 3600000))
+  ).slice(-2)
+  const minute = (
+    '0' +
+    (Math.floor((duration / 60000) % 60) + Math.floor((time / 60000) % 60))
+  ).slice(-2)
+  const second = (
+    '0' +
+    (Math.floor((duration / 1000) % 60) + ((time / 1000) % 60))
+  ).slice(-2)
   const timeDisplay = hour + ':' + minute + ':' + second
 
   function halfFilled() {
@@ -151,8 +167,25 @@ function Modal() {
             className='m-2 h-[30px] w-[120px] rounded-lg bg-dark-red text-lg font-semibold text-white marker:relative disabled:bg-dark-gray'
             disabled={!halfFilled()}
             onClick={() => {
-              setVisit(true), setRunning(true)
-              //setStartTime(Timestamp.now)
+              const d = new Date()
+              setStartTime(d)
+              setEndTime(d)
+              setVisit(true)
+              setRunning(true)
+              const dataStart: VisitData = {
+                type: type,
+                clientName: clients,
+                startTime: Timestamp.fromDate(startTime),
+                endTime: Timestamp.fromDate(endTime),
+                walkDist: 0,
+                commuteDist: commuteDistance,
+                commuteMethod: commute,
+                notes: '', // in progress
+                inProgress: true
+              }
+              userDoc.visits.push(dataStart)
+              //console.log(userDoc.visits)
+              updateVisit?.(userDoc)
             }}
           >
             START VISIT
@@ -164,7 +197,30 @@ function Modal() {
             className='relative m-2 h-[30px] w-[120px] rounded-lg bg-dark-red text-lg font-semibold text-white disabled:bg-dark-gray'
             disabled={!fullyFilled()}
             onClick={() => {
-              setVisit(false), setConfirmation(true), setRunning(false) //setEndTime(Timestamp.now)
+              setVisit(false)
+              setConfirmation(true)
+              setRunning(false)
+              const d = new Date()
+              setEndTime(d)
+              const dataStop: VisitData = {
+                type: type,
+                clientName: clients,
+                startTime: Timestamp.fromDate(startTime),
+                endTime: Timestamp.fromDate(d),
+                walkDist: walkDistance,
+                commuteDist: commuteDistance,
+                commuteMethod: commute,
+                notes: '', // in progress
+                inProgress: false
+              }
+              for (let i = 0; i < userDoc.visits.length; i++) {
+                if (userDoc.visits[i].inProgress) {
+                  userDoc.visits[i] = dataStop
+                  break
+                }
+              }
+              //console.log(userDoc.visits)
+              updateVisit?.(userDoc)
             }}
           >
             STOP VISIT
