@@ -41,7 +41,7 @@ const Visit = () => {
 
     const data: VisitData = {
       type: visitType,
-      clientId: clientId,
+      clientId: clientName,
       startTime: Timestamp.fromDate(new Date(startTime)),
       endTime: Timestamp.fromDate(new Date(endTime)),
       walkDist: walkDist,
