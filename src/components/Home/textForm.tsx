@@ -9,9 +9,9 @@ export interface FormFieldProps {
 function TextForm(props: FormFieldProps) {
   return (
     <div className='flex flex-col p-1'>
-      <label htmlFor={props.id}>
+      <label htmlFor={props.id} className='font-bold'>
         <span className='text-primary'>*</span>
-        <b>{props.label}</b>
+        {props.label}
       </label>
       <input
         className='mt-1 mb-2 flex h-9 rounded border border-[#6b7280] py-0.5 px-4 text-center focus:outline-none'

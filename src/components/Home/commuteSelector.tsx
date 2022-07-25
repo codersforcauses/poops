@@ -30,9 +30,9 @@ function CommuteSelector({ setCommute }: Props) {
 
   return (
     <div className='flex flex-col p-1'>
-      <label htmlFor='commute'>
+      <label htmlFor='commute' className='font-bold'>
         <span className='text-primary'>*</span>
-        <b>Commute Method</b>
+        Commute Method
       </label>
       <ReactSelect
         name='commute'

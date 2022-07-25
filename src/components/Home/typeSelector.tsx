@@ -23,9 +23,9 @@ function TypeSelector({ setType }: Props) {
 
   return (
     <div className='flex flex-col p-1'>
-      <label htmlFor='type'>
+      <label htmlFor='type' className='font-bold'>
         <span className='text-primary'>*</span>
-        <b>Type of Visit</b>
+        Type of Visit
       </label>
       <ReactSelect
         name='type'

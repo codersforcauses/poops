@@ -2,6 +2,8 @@ import { useState } from 'react'
 
 import ClientSelector from '@/components/Home/clientSelector'
 import CommuteSelector from '@/components/Home/commuteSelector'
+import DurationSelector from '@/components/Home/durationSelector'
+import { Duration } from '@/components/Home/durationSelector'
 import TextForm from '@/components/Home/textForm'
 import TypeSelector from '@/components/Home/typeSelector'
 import FormField from '@/components/Visit/formfield'
@@ -15,11 +17,13 @@ function Modal() {
   const [startTime, setStartTime] = useState('')
   const [other, setOther] = useState('')
   const [commuteDistance, setCommuteDistance] = useState(0)
-  // const [startTime, setStartTime] = useState<Timestamp>()
-  // const [endTime, setEndTime] = useState<Timestamp>()
+  const [duration, setDuration] = useState<Duration>({
+    hours: 0,
+    minutes: 0
+  })
   const { setAlert } = useAlert()
 
-  function fullyFilled() {
+  function formFilled() {
     return (
       (commute == 'Walk' ||
         commute == 'Drive' ||
@@ -29,7 +33,8 @@ function Modal() {
       client.length > 0 &&
       (type == 'Vet' ||
         (type == 'Walk' && walkDistance > 0 && !isNaN(walkDistance))) &&
-      startTime != ''
+      startTime != '' &&
+      duration != { hours: 0, minutes: 0 }
     )
   }
 
@@ -41,6 +46,10 @@ function Modal() {
     setOther('')
     setCommuteDistance(0)
     setStartTime('')
+    setDuration({
+      hours: 0,
+      minutes: 0
+    })
     setAlert({
       variant: AlertVariant.info,
       title: 'Visit has been recorded',
@@ -57,7 +66,7 @@ function Modal() {
           <b>Visit Details</b>
         </h1>
         <hr className='mb-3 h-0.5 border-dark-red bg-dark-red text-dark-red' />
-        <form>
+        <form onSubmit={handleSubmit}>
           <div>
             <CommuteSelector commute={commute} setCommute={setCommute} />
             {commute == 'Other' && (
@@ -92,12 +101,27 @@ function Modal() {
             onChange={(event) => setStartTime(event.target.value)}
           />
 
+          <DurationSelector
+            id='duration'
+            label='Duration'
+            onHourChange={(event) =>
+              setDuration((duration) => ({
+                ...duration,
+                hours: Number(event.target.value)
+              }))
+            }
+            onMinuteChange={(event) =>
+              setDuration((duration) => ({
+                ...duration,
+                minutes: Number(event.target.value)
+              }))
+            }
+          />
+
           <button
-            className='relative m-2 h-[30px] w-[120px] rounded-lg bg-dark-red text-lg font-semibold text-white disabled:bg-dark-gray'
-            disabled={!fullyFilled()}
-            onClick={() => {
-              handleSubmit()
-            }}
+            type='submit'
+            className='relative mt-4 mb-2 h-[30px] w-[120px] rounded-lg bg-dark-red text-lg font-semibold text-white disabled:bg-dark-gray'
+            disabled={!formFilled()}
           >
             SUBMIT
           </button>
