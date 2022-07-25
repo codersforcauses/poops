@@ -4,6 +4,7 @@ import ClientSelector from '@/components/Home/clientSelector'
 import CommuteSelector from '@/components/Home/commuteSelector'
 import TextForm from '@/components/Home/textForm'
 import TypeSelector from '@/components/Home/typeSelector'
+import FormField from '@/components/Visit/formfield'
 import { AlertVariant, useAlert } from '@/context/AlertContext'
 
 function Modal() {
@@ -11,6 +12,7 @@ function Modal() {
   const [client, setClient] = useState('')
   const [type, setType] = useState('')
   const [walkDistance, setWalkDistance] = useState(0)
+  const [startTime, setStartTime] = useState('')
   const [other, setOther] = useState('')
   const [commuteDistance, setCommuteDistance] = useState(0)
   // const [startTime, setStartTime] = useState<Timestamp>()
@@ -26,7 +28,8 @@ function Modal() {
       commuteDistance > 0 &&
       client.length > 0 &&
       (type == 'Vet' ||
-        (type == 'Walk' && walkDistance > 0 && !isNaN(walkDistance)))
+        (type == 'Walk' && walkDistance > 0 && !isNaN(walkDistance))) &&
+      startTime != ''
     )
   }
 
@@ -37,6 +40,7 @@ function Modal() {
     setWalkDistance(0)
     setOther('')
     setCommuteDistance(0)
+    setStartTime('')
     setAlert({
       variant: AlertVariant.info,
       title: 'Visit has been recorded',
@@ -78,6 +82,15 @@ function Modal() {
               onChange={(e) => setWalkDistance(Number(e.target.value))}
             />
           )}
+
+          <FormField
+            id='startTimeInput'
+            type='dateTime-local'
+            placeholder='Start Time'
+            label='Start Time:'
+            isRequired={true}
+            onChange={(event) => setStartTime(event.target.value)}
+          />
 
           <button
             className='relative m-2 h-[30px] w-[120px] rounded-lg bg-dark-red text-lg font-semibold text-white disabled:bg-dark-gray'
