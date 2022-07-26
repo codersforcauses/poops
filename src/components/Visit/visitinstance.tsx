@@ -37,6 +37,18 @@ const VisitInstance = (props: VisitInstanceProps) => {
   const [isFormExpanded, setIsFormExpanded] = useState(false)
   const [isVetVisit, setIsVetVisit] = useState(false)
 
+  const [incidentDetails, setIncidentDetails] = useState('')
+
+  const recipient = 'poops@test.com'
+  const subject = `Incident Alert - ${props.startTime
+    .toDate()
+    .toLocaleString()}`
+  const body = `Incident Report, time: ${props.startTime
+    .toDate()
+    .toLocaleString()}, client: ${props.displayName}, pet(s): ${
+    props.petNames
+  }, details: ${incidentDetails}`
+
   return (
     <div
       key={props.id}
@@ -59,6 +71,19 @@ const VisitInstance = (props: VisitInstanceProps) => {
         <p className='font-bold text-primary'>{formatTime(props.startTime)}</p>
         <p className='text-sm'>{props.displayName}</p>
       </div>
+      <input
+        className='h-32 rounded-lg bg-gray-300'
+        name='incidentDetails'
+        value={incidentDetails}
+        onChange={(event) => {
+          setIncidentDetails(event.target.value)
+        }}
+      />
+      <button>
+        <a href={`mailto:${recipient}?subject=${subject}&body=${body}`}>
+          Create Incident Alert
+        </a>
+      </button>
       {isEditable ? (
         <p>Use the modal to edit this instead</p>
       ) : (
