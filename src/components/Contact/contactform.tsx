@@ -36,7 +36,7 @@ const ContactForm = ({
         notes: '',
         tags: []
       }
-    : context.getContacts()[firestoreIndex]
+    : context.allContacts[firestoreIndex]
 
   const [regions, setRegions] = useState(contact.region)
   const [tags, setTags] = useState(contact.tags)
@@ -66,12 +66,6 @@ const ContactForm = ({
     if (isNewContact) {
       firestoreIndex = context.insertContact(contactForm)
       context.setDisplayContactIndex(firestoreIndex)
-      console.log(
-        'context.getDisplayContactIndex():',
-        context.getDisplayContactIndex(),
-        '\nfirestoreIndex:',
-        firestoreIndex
-      )
     } else {
       context.insertContact(contactForm, firestoreIndex)
       context.setDisplayContactIndex(firestoreIndex)

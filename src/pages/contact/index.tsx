@@ -1,6 +1,5 @@
 import { Dispatch, SetStateAction, useState } from 'react'
 import { createContext } from 'react'
-import { useEffect } from 'react'
 import { SearchIcon } from '@heroicons/react/outline'
 
 import ContactDetails from '@/components/Contact/contactdetails'
@@ -14,7 +13,7 @@ import { useFirestore } from '@/context/firestore'
 import type { Contact } from '@/types/types'
 
 type ContactContextProps = {
-  getContacts: () => Contact[]
+  allContacts: Contact[]
   insertContact: (contact: Contact, index?: number) => number
   removeContact: (index: number) => void
   setDisplayContactIndex: Dispatch<SetStateAction<number>>
@@ -23,7 +22,7 @@ type ContactContextProps = {
 }
 
 export const ContactContext = createContext<ContactContextProps>({
-  getContacts: () => new Array<Contact>(),
+  allContacts: Array<Contact>(),
   insertContact: () => -2,
   removeContact: () => undefined,
   setDisplayContactIndex: () => undefined,
@@ -35,7 +34,6 @@ export const ContactContextProvider = ContactContext.Provider
 
 const Contact = () => {
   const { userDoc, updateContact } = useFirestore()
-  console.log('initial userDoc.Contacts:', userDoc.Contacts)
   const [allContacts, setAllContacts] = useState(userDoc.Contacts)
   const [creatingNewContact, setCreatingNewContact] = useState(false)
   // Get all unique tags to popular dropdown filter
@@ -56,10 +54,13 @@ const Contact = () => {
   const [searchFieldString, setSearchFieldString] = useState('')
   const [displayContactIndex, setDisplayContactIndex] = useState<number>(-1)
 
-  function filterContact(tagf: string, searchField: string) {
-    console.log('Filtering contacts')
-    const filteredIndexes: number[] = []
-    allContacts.forEach((contact: Contact, index: number) => {
+  function filterContact(
+    tagf: string,
+    searchField: string,
+    contacts: Contact[]
+  ) {
+    const newFilteredIndexes: number[] = []
+    contacts.forEach((contact: Contact, index: number) => {
       const reg = new RegExp(`(^|\\s|,)${searchField}`, 'gi')
 
       // don't show contacts without selected tag if tag selected
@@ -68,72 +69,56 @@ const Contact = () => {
       }
 
       if (reg.test(contact.displayName) || reg.test(contact.pets)) {
-        filteredIndexes.push(index)
+        newFilteredIndexes.push(index)
       }
     })
-    setFilteredIndexes(filteredIndexes)
+    setFilteredIndexes(newFilteredIndexes)
   }
 
   const onSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const searchFieldString = event.target.value.toLocaleLowerCase()
     setSearchFieldString(searchFieldString)
-    filterContact(selectedOption, searchFieldString)
+    filterContact(selectedOption, searchFieldString, allContacts)
   }
 
   const onSearchTagChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const option_value = event.target.value
     setSelectedOption(option_value)
-    filterContact(option_value, searchFieldString)
+    filterContact(option_value, searchFieldString, allContacts)
   }
 
-  useEffect(() => {
-    console.log('allContacts in useEffect:', allContacts)
-    // setFirestoreContacts()
-  }, [allContacts])
-
-  // Sends allContacts to Firestore
+  // Sends newContacts to Firestore
   const setFirestoreContacts = (newContacts: Contact[]) => {
-    // if statement is here because useeffect gets triggered too often for some reason
-    // on initial pageload there are no contacts loaded, useEffect is triggered and all contacts get deleted
-    if (newContacts.length > 0) {
-      userDoc.Contacts = newContacts
-      console.log('WOULD HAVE CHANGED userDoc.Contacts TO:', allContacts)
-      updateContact?.(userDoc)
-      setFilteredIndexes([...allContacts.keys()])
-    }
+    userDoc.Contacts = newContacts
+    updateContact?.(userDoc)
   }
 
   const contextValues = {
-    getContacts: () => allContacts,
+    allContacts: allContacts,
 
     insertContact: (contact: Contact, index?: number) => {
-      console.log('inserting contact:', contact, ' ', index)
+      let newArray: Contact[]
       if (index !== undefined) {
-        const newArray = [...allContacts]
+        newArray = [...allContacts]
         newArray[index] = contact
-        setFirestoreContacts(newArray)
-        setAllContacts(newArray)
       } else {
-        console.log(contact)
-        const newArray = [...allContacts, contact]
-        console.log('[...allContacts, contact]', [...allContacts, contact])
-        setFirestoreContacts(newArray)
-        setAllContacts(newArray)
-
-        // allContacts.push(contact)
+        newArray = [...allContacts, contact]
       }
-      // setFirestoreContacts()
+      filterContact('', '', newArray) // reset filter with new contacts
+      setFirestoreContacts(newArray)
+      setAllContacts(newArray)
       return index ? index : allContacts.length
     },
 
     removeContact: (index: number) => {
+      if (index === 0) return // can't delete users own profile
+
       const newArray = [...allContacts]
       newArray.splice(index)
-      setFirestoreContacts(newArray)
-      setAllContacts(newArray)
 
-      // allContacts.splice(index)
-      // setFirestoreContacts()
+      filterContact('', '', newArray) // reset filter with new contacts
+      setAllContacts(newArray)
+      setFirestoreContacts(newArray)
     },
 
     setDisplayContactIndex: setDisplayContactIndex,

@@ -11,10 +11,8 @@ type ContactProp = {
 }
 
 const ContactDetails = ({ firestoreIndex }: ContactProp) => {
-  console.log('contactdetails:firestoreIndex:', firestoreIndex)
   const context = useContext(ContactContext)
-  const contacts = context.getContacts()
-  console.log('contactdetails:numofcontacts:', contacts.length)
+  const contacts = context.allContacts
   const isNewContact = firestoreIndex === -1
   const [isEditing, setIsEditing] = useState<boolean>(isNewContact)
 

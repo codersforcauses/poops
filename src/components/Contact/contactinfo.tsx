@@ -17,7 +17,7 @@ type ContactInfoProps = {
 
 function ContactInfo({ firestoreIndex, image }: ContactInfoProps) {
   const context = useContext(ContactContext)
-  const contact = context.getContacts()[firestoreIndex]
+  const contact = context.allContacts[firestoreIndex]
   const { setAlert } = useAlert()
 
   return (
@@ -117,24 +117,28 @@ function ContactInfo({ firestoreIndex, image }: ContactInfoProps) {
         <span className='text-xl'> {contact.notes} </span>
       </Box>
       <div className='mb-2'>
-        <button
-          type='button'
-          onClick={() => {
-            setAlert({
-              variant: AlertVariant.security,
-              title: 'Delete Contact',
-              text: 'Are you sure?',
-              position: 'bottom',
-              confirmFunction: () => {
-                context.removeContact(firestoreIndex)
-                context.setDisplayContactIndex(-1)
-              }
-            })
-          }}
-          className='w-80 rounded bg-primary py-1 font-bold text-white hover:bg-dark-red'
-        >
-          Delete Contact
-        </button>
+        {/* can't delete users profile */}
+        {firestoreIndex !== 0 && (
+          <button
+            type='button'
+            onClick={() => {
+              setAlert({
+                variant: AlertVariant.security,
+                title: 'Delete Contact',
+                text: 'Are you sure?',
+                position: 'bottom',
+                confirmFunction: () => {
+                  context.setCreatingNewContact(false)
+                  context.removeContact(firestoreIndex)
+                  context.setDisplayContactIndex(-1)
+                }
+              })
+            }}
+            className='w-80 rounded bg-primary py-1 font-bold text-white hover:bg-dark-red'
+          >
+            Delete Contact
+          </button>
+        )}
       </div>
     </div>
   )
