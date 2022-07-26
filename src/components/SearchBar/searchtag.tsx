@@ -1,7 +1,9 @@
+import { ChangeEvent } from 'react'
+
 type SearchTagProps = {
   name: string
   options: string[]
-  onChangehandler: (event: React.ChangeEvent<HTMLSelectElement>) => void
+  onChangehandler: (event: ChangeEvent<HTMLSelectElement>) => void
 }
 
 const SearchTag = ({ name, options, onChangehandler }: SearchTagProps) => {

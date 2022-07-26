@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react'
+import React, { ChangeEvent, FormEvent, useContext, useEffect } from 'react'
 import { Dispatch, SetStateAction, useState } from 'react'
 import tw from 'tailwind-styled-components'
 
@@ -43,9 +43,7 @@ const ContactForm = ({
   const [contactForm, setContactForm] = useState(contact)
 
   const handleInputChange = (
-    e:
-      | React.ChangeEvent<HTMLInputElement>
-      | React.ChangeEvent<HTMLTextAreaElement>
+    e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>
   ) => {
     const { name, value } = e.target
     setContactForm({ ...contactForm, [name]: value })
@@ -60,7 +58,7 @@ const ContactForm = ({
   }, [regions, tags])
 
   // TODO: Submit ContactForm to database
-  const submitForm = (e: React.FormEvent) => {
+  const submitForm = (e: FormEvent) => {
     e.preventDefault()
     // TODO: submit to firestore here
     if (isNewContact) {

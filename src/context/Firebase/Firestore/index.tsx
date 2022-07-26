@@ -1,13 +1,4 @@
-/* eslint-disable no-console */
-import {
-  createContext,
-  ReactNode,
-  useCallback,
-  useContext,
-  useEffect,
-  useMemo,
-  useState
-} from 'react'
+import { ReactNode, useCallback, useEffect, useMemo, useState } from 'react'
 import {
   doc,
   FirestoreError,
@@ -17,33 +8,13 @@ import {
 } from 'firebase/firestore'
 
 import { db } from '@/components/Firebase/init'
-import { useAuth } from '@/context/AuthContext'
-
-import { UserData } from '../types/types'
-
-interface FirestoreContextProp {
-  userDoc: UserData
-}
-
-const defaultUserDoc: UserData = {
-  displayName: '',
-  visits: [],
-  contacts: []
-}
-//update functions as a context api
-interface FirestoreContextProps {
-  userDoc: UserData
-  updateVisit?: (userDoc: UserData) => void
-  updateContact?: (userDoc: UserData) => void
-}
-
-const FirestoreContext = createContext<FirestoreContextProps>({
-  userDoc: defaultUserDoc
-})
-
-export const FirestoreContextProvider = FirestoreContext.Provider
-
-export const useFirestore = () => useContext(FirestoreContext)
+import { useAuth } from '@/context/Firebase/Auth/context'
+import {
+  defaultUserDoc,
+  FirestoreContextProps,
+  FirestoreContextProvider
+} from '@/context/Firebase/Firestore/context'
+import { UserData } from '@/types/types'
 
 //retreiving firestore data and setting the data to the local variable FireContextProps
 const FirestoreProvider = ({ children }: { children: ReactNode }) => {
@@ -126,7 +97,7 @@ const FirestoreProvider = ({ children }: { children: ReactNode }) => {
   )
 
   //changes the default value to the data retreived and saved in state
-  const value: FirestoreContextProp = useMemo(
+  const value: FirestoreContextProps = useMemo(
     () => ({
       userDoc: userDoc,
       updateVisit: updateVisit,

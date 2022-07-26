@@ -1,5 +1,11 @@
-import { Dispatch, SetStateAction, useState } from 'react'
-import { createContext } from 'react'
+import {
+  ChangeEvent,
+  createContext,
+  Dispatch,
+  SetStateAction,
+  useState
+} from 'react'
+import Link from 'next/link'
 import { SearchIcon } from '@heroicons/react/outline'
 
 import ContactDetails from '@/components/Contact/contactdetails'
@@ -9,8 +15,8 @@ import NavBar from '@/components/NavBar'
 import { withProtected } from '@/components/PrivateRoute'
 import SearchBar from '@/components/SearchBar'
 import SearchTag from '@/components/SearchBar/searchtag'
-import { useFirestore } from '@/context/firestore'
 import type { Contact } from '@/types/types'
+import { useFirestore } from '@/context/Firebase/Firestore/context'
 
 type ContactContextProps = {
   allContacts: Contact[]
@@ -75,13 +81,13 @@ const Contact = () => {
     setFilteredIndexes(newFilteredIndexes)
   }
 
-  const onSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const onSearchChange = (event: ChangeEvent<HTMLInputElement>) => {
     const searchFieldString = event.target.value.toLocaleLowerCase()
     setSearchFieldString(searchFieldString)
     filterContact(selectedOption, searchFieldString, allContacts)
   }
 
-  const onSearchTagChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+  const onSearchTagChange = (event: ChangeEvent<HTMLSelectElement>) => {
     const option_value = event.target.value
     setSelectedOption(option_value)
     filterContact(option_value, searchFieldString, allContacts)

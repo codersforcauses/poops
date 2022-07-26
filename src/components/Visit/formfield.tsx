@@ -1,3 +1,5 @@
+import { ChangeEvent } from 'react'
+
 import { SelectOption } from '@/types/types'
 
 export interface FormFieldProps {
@@ -6,7 +8,7 @@ export interface FormFieldProps {
   type?: string
   placeholder?: string
   onChange?: (
-    event: React.ChangeEvent<
+    event: ChangeEvent<
       HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
     >
   ) => void

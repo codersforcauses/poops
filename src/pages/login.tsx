@@ -3,7 +3,7 @@ import Image from 'next/image'
 
 import LoginPanel from '@/components/Login/LoginPanel'
 import { withPublic } from '@/components/PrivateRoute'
-import { useAuth } from '@/context/AuthContext'
+import { useAuth } from '@/context/Firebase/Auth/context'
 
 const Login: NextPage = () => {
   const { logOut, currentUser } = useAuth()
