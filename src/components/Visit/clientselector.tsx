@@ -31,7 +31,7 @@ const ClientSelector = (props: ClientSelectorProps) => {
   }
 
   const defaultValue: SelectOption = {
-    label: props.value || '',
+    label: props.value || 'Select...',
     value: props.value || ''
   }
 
