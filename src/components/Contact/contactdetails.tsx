@@ -1,42 +1,41 @@
-import { Dispatch, SetStateAction, useState } from 'react'
+import { useContext, useState } from 'react'
 import { PencilIcon } from '@heroicons/react/outline'
 
 import ContactForm from '@/components/Contact/contactform'
 import ContactInfo from '@/components/Contact/contactinfo'
 import Header from '@/components/Header'
-import type { Contact } from '@/types/types'
+import { ContactContext } from '@/pages/contact'
 
 type ContactProp = {
-  contact: Contact
   firestoreIndex: number
-  modifyContact: (index: number, contact: Contact) => void
-  setDisplayContact: Dispatch<
-    SetStateAction<null | {
-      firestoreIndex: number
-      contact: Contact
-    }>
-  >
 }
 
-const ContactDetails = ({
-  contact,
-  firestoreIndex,
-  modifyContact,
-  setDisplayContact
-}: ContactProp) => {
-  const [isEditing, setIsEditing] = useState<boolean>(false)
-  // This exists to show contact changes without page reload
-  const [contactInfo, setContactInfo] = useState<Contact>(contact)
+const ContactDetails = ({ firestoreIndex }: ContactProp) => {
+  console.log('contactdetails:firestoreIndex:', firestoreIndex)
+  const context = useContext(ContactContext)
+  const contacts = context.getContacts()
+  console.log('contactdetails:numofcontacts:', contacts.length)
+  const isNewContact = firestoreIndex === -1
+  const [isEditing, setIsEditing] = useState<boolean>(isNewContact)
 
   return (
     <>
-      <Header pageTitle={contact.displayName} />
+      <Header
+        pageTitle={
+          firestoreIndex >= 0
+            ? contacts[firestoreIndex].displayName
+            : 'New Contact'
+        }
+      />
       <div className='m-auto flex h-14 max-w-md flex-row'>
         <div className='m-auto flex-1 text-center'>
           <button
             type='button'
             className='rounded bg-primary py-1 px-4 font-bold text-white hover:bg-dark-red'
-            onClick={() => setDisplayContact(null)}
+            onClick={() => {
+              context.setCreatingNewContact(false)
+              context.setDisplayContactIndex(-1)
+            }}
           >
             Back
           </button>
@@ -52,13 +51,10 @@ const ContactDetails = ({
         </div>
       </div>
       {!isEditing ? (
-        <ContactInfo contact={contactInfo} image='' />
+        <ContactInfo firestoreIndex={firestoreIndex} image='' />
       ) : (
         <ContactForm
-          contact={contactInfo}
           firestoreIndex={firestoreIndex}
-          setContactInfo={setContactInfo}
-          modifyContact={modifyContact}
           image=''
           setIsEditing={setIsEditing}
         />

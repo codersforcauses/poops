@@ -1,29 +1,43 @@
-import React, { useEffect } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { Dispatch, SetStateAction, useState } from 'react'
 import tw from 'tailwind-styled-components'
 
 import Avatar from '@/components/Contact/avatar'
 import RegionSelector from '@/components/Contact/regiondropdown'
 import TagSelector from '@/components/Contact/tagdropdown'
+import { ContactContext } from '@/pages/contact'
 import type { Contact } from '@/types/types'
 
 type ContactInfoProps = {
-  contact: Contact
   firestoreIndex: number
-  modifyContact: (index: number, contact: Contact) => void
   image: string
-  setContactInfo: Dispatch<SetStateAction<Contact>>
   setIsEditing: Dispatch<SetStateAction<boolean>>
 }
 
 const ContactForm = ({
-  contact,
   firestoreIndex,
-  setContactInfo,
-  modifyContact,
   image,
   setIsEditing
 }: ContactInfoProps) => {
+  const context = useContext(ContactContext)
+
+  const isNewContact = firestoreIndex === -1
+
+  const contact: Contact = isNewContact
+    ? {
+        id: '',
+        displayName: '',
+        desc: '',
+        pets: '',
+        email: '',
+        phone: '',
+        streetAddress: '',
+        region: [],
+        notes: '',
+        tags: []
+      }
+    : context.getContacts()[firestoreIndex]
+
   const [regions, setRegions] = useState(contact.region)
   const [tags, setTags] = useState(contact.tags)
   const [contactForm, setContactForm] = useState(contact)
@@ -49,11 +63,20 @@ const ContactForm = ({
   const submitForm = (e: React.FormEvent) => {
     e.preventDefault()
     // TODO: submit to firestore here
-    modifyContact(firestoreIndex, contactForm)
-    setContactInfo(contactForm)
+    if (isNewContact) {
+      firestoreIndex = context.insertContact(contactForm)
+      context.setDisplayContactIndex(firestoreIndex)
+      console.log(
+        'context.getDisplayContactIndex():',
+        context.getDisplayContactIndex(),
+        '\nfirestoreIndex:',
+        firestoreIndex
+      )
+    } else {
+      context.insertContact(contactForm, firestoreIndex)
+      context.setDisplayContactIndex(firestoreIndex)
+    }
     setIsEditing(false)
-
-    // TODO: reload page here
   }
 
   return (
@@ -175,13 +198,17 @@ const ContactForm = ({
             >
               Save
             </button>
-            <button
-              type='button'
-              className='w-80 rounded bg-gray-300 py-1 font-bold text-black hover:bg-gray-300'
-              onClick={() => setIsEditing(false)}
-            >
-              Cancel
-            </button>
+            {!isNewContact && (
+              <button
+                type='button'
+                className='bg-grey hover:bg-grey w-80 rounded py-1 font-bold text-black'
+                onClick={() => {
+                  if (setIsEditing !== undefined) setIsEditing(false)
+                }}
+              >
+                Cancel
+              </button>
+            )}
           </div>
         </div>
       </div>

@@ -1,3 +1,4 @@
+import { useContext } from 'react'
 import {
   LocationMarkerIcon,
   MailIcon,
@@ -6,14 +7,19 @@ import {
 import tw from 'tailwind-styled-components'
 
 import Avatar from '@/components/Contact/avatar'
-import type { Contact } from '@/types/types'
+import { AlertVariant, useAlert } from '@/context/AlertContext'
+import { ContactContext } from '@/pages/contact'
 
 type ContactInfoProps = {
-  contact: Contact
+  firestoreIndex: number
   image: string
 }
 
-function ContactInfo({ contact, image }: ContactInfoProps) {
+function ContactInfo({ firestoreIndex, image }: ContactInfoProps) {
+  const context = useContext(ContactContext)
+  const contact = context.getContacts()[firestoreIndex]
+  const { setAlert } = useAlert()
+
   return (
     <div className='mb-2 flex flex-col items-center justify-center gap-3'>
       {/* USER PROFILE IMAGE */}
@@ -110,6 +116,26 @@ function ContactInfo({ contact, image }: ContactInfoProps) {
         </label>
         <span className='text-xl'> {contact.notes} </span>
       </Box>
+      <div className='mb-2'>
+        <button
+          type='button'
+          onClick={() => {
+            setAlert({
+              variant: AlertVariant.security,
+              title: 'Delete Contact',
+              text: 'Are you sure?',
+              position: 'bottom',
+              confirmFunction: () => {
+                context.removeContact(firestoreIndex)
+                context.setDisplayContactIndex(-1)
+              }
+            })
+          }}
+          className='w-80 rounded bg-primary py-1 font-bold text-white hover:bg-dark-red'
+        >
+          Delete Contact
+        </button>
+      </div>
     </div>
   )
 }

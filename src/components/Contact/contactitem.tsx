@@ -1,35 +1,26 @@
-import { Dispatch, SetStateAction } from 'react'
+import { useContext } from 'react'
 
 import Avatar from '@/components/Contact/avatar'
-import type { Contact } from '@/types/types'
+import { ContactContext } from '@/pages/contact'
 import truncateText from '@/utils/truncateText'
 
 type ContactItemProps = {
-  contact: Contact
   image: string
   firestoreIndex: number
-  setDisplayContact: Dispatch<
-    SetStateAction<null | {
-      firestoreIndex: number
-      contact: Contact
-    }>
-  >
 }
 
 const ContactItem = ({
-  contact,
+  // contact,
   image,
-  firestoreIndex,
-  setDisplayContact
+  firestoreIndex
 }: ContactItemProps) => {
-  const displayContact = {
-    firestoreIndex: firestoreIndex,
-    contact: contact
-  }
+  const context = useContext(ContactContext)
+  const contacts = context.getContacts()
+  console.log('contactitem:firestoreIndex: ', firestoreIndex)
   return (
     <div
-      onClick={() => setDisplayContact(displayContact)}
-      onKeyDown={() => setDisplayContact(displayContact)}
+      onClick={() => context.setDisplayContactIndex(firestoreIndex)}
+      onKeyDown={() => context.setDisplayContactIndex(firestoreIndex)}
       role='button'
       tabIndex={0}
     >
@@ -37,9 +28,13 @@ const ContactItem = ({
         {/* USER PROFILE IMAGE */}
         <span className='flex items-center space-x-4'>
           <Avatar image={image} height={40} width={40} iconClass='h-10 w-10' />
-          <p className='font-medium text-gray-700'>{contact.displayName}</p>
+          <p className='font-medium text-gray-700'>
+            {contacts[firestoreIndex].displayName}
+          </p>
         </span>
-        <p className='text-gray-500'>{truncateText(contact.pets, 16)}</p>
+        <p className='text-gray-500'>
+          {truncateText(contacts[firestoreIndex].pets, 16)}
+        </p>
       </li>
     </div>
   )

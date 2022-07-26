@@ -7,12 +7,6 @@ export interface Pet {
   notes: string
 }
 
-export interface UserData {
-  displayName: string
-  Contacts: Contact[]
-  visits: VisitData[]
-}
-
 export interface VisitData {
   type: string
   displayName: string
