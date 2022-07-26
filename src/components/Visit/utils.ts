@@ -24,7 +24,17 @@ export const formatTimestamp = (timestamp?: Timestamp) => {
 
 export const humanizeTimestamp = (timestamp?: Timestamp) => {
   if (!timestamp) return null
-  return timestamp.toDate().toLocaleString().slice(0, -3)
+  const days = [
+    'Sunday',
+    'Monday',
+    'Tuesday',
+    'Wednesday',
+    'Thursday',
+    'Friday',
+    'Saturday'
+  ]
+  const date = timestamp.toDate()
+  return `${days[date.getDay()]}, ${date.toLocaleString().slice(0, -3)}`
 }
 
 export const findContactIndex = (id: string, userDoc: UserData) => {

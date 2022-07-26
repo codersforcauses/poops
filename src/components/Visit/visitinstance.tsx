@@ -1,6 +1,5 @@
 import React, { Dispatch, SetStateAction, useState } from 'react'
 import ChevronDownIcon from '@heroicons/react/outline/ChevronDownIcon'
-import { Timestamp } from 'firebase/firestore'
 
 import { VisitData } from '@/types/types'
 
@@ -10,20 +9,6 @@ import VisitInfo from './readvisitinstance'
 export interface VisitInstanceProps extends VisitData {
   setVisits: Dispatch<SetStateAction<VisitData[]>>
   id: number
-}
-
-// I hate math
-export const formatDuration = (startTime: Timestamp, endTime: Timestamp) => {
-  const start = startTime.toDate().getTime()
-  const end = endTime.toDate().getTime()
-  const diff = end - start
-
-  if (diff < 0) return 'Start Time is after End Time'
-
-  const hours = diff / 3600000
-  const floorHours = Math.floor(hours)
-  const mins = (hours - floorHours) * 60
-  return `${floorHours} hrs ${Math.round(mins)} mins`
 }
 
 const VisitInstance = (props: VisitInstanceProps) => {

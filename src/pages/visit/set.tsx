@@ -35,8 +35,8 @@ const Visit = () => {
     formatTimestamp(visit?.startTime) || ''
   )
   const [duration, setDuration] = useState<Duration>({
-    hours: 0,
-    minutes: 0
+    hours: visit?.duration.hours || 0,
+    minutes: visit?.duration.minutes || 0
   })
   const [walkDist, setWalkDist] = useState(visit?.walkDist || NaN)
   const [commuteDist, setCommuteDist] = useState(visit?.commuteDist || NaN)
@@ -141,6 +141,7 @@ const Visit = () => {
                   <DurationSelector
                     id='durationInput'
                     label='Duration:'
+                    value={duration}
                     onHourChange={(event) =>
                       setDuration((duration) => ({
                         ...duration,
