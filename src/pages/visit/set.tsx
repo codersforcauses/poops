@@ -141,7 +141,7 @@ const Visit = () => {
                   <DurationSelector
                     id='durationInput'
                     label='Duration:'
-                    value={duration}
+                    defaultValue={duration}
                     onHourChange={(event) =>
                       setDuration((duration) => ({
                         ...duration,

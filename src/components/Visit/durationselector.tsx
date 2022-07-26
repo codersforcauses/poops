@@ -3,7 +3,7 @@ import { Duration } from '@/types/types'
 export interface DurationProps {
   id: string
   label: string
-  value?: Duration
+  defaultValue?: Duration
   onHourChange: (event: React.ChangeEvent<HTMLInputElement>) => void
   onMinuteChange: (event: React.ChangeEvent<HTMLInputElement>) => void
 }
@@ -22,7 +22,7 @@ const DurationSelector = (props: DurationProps) => {
           id='hours'
           type='number'
           step='1'
-          value={props.value?.hours}
+          defaultValue={props.value?.hours}
           min={0}
           max={24}
           onChange={props.onHourChange}
@@ -33,7 +33,7 @@ const DurationSelector = (props: DurationProps) => {
           id='minutes'
           type='number'
           step='15'
-          value={props.value?.minutes}
+          defaultValue={props.value?.minutes}
           min={0}
           max={45}
           onChange={props.onMinuteChange}
