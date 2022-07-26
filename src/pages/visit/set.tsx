@@ -29,7 +29,7 @@ const Visit = () => {
   }
 
   const [visitType, setVisitType] = useState(visit?.type || '')
-  const [clientName, setClientName] = useState(visit?.clientId || '')
+  const [clientId, setClientId] = useState(visit?.clientId || '')
   const [startTime, setStartTime] = useState(
     formatTimestamp(visit?.startTime) || ''
   )
@@ -44,10 +44,12 @@ const Visit = () => {
 
     const data: VisitData = {
       type: visitType,
-      clientId: clientName,
+      clientId: clientId,
+      clientName:
+        userDoc.contacts[findContactIndex(clientId, userDoc)].displayName,
       startTime: Timestamp.fromDate(new Date(startTime)),
       endTime: Timestamp.fromDate(new Date(endTime)),
-      petNames: userDoc.contacts[findContactIndex(clientName, userDoc)].pets,
+      petNames: userDoc.contacts[findContactIndex(clientId, userDoc)].pets,
       walkDist: walkDist,
       commuteDist: commuteDist,
       commuteMethod: commuteMethod,
@@ -65,7 +67,7 @@ const Visit = () => {
 
   const isSubmitEnabled = () =>
     visitType &&
-    clientName &&
+    clientId &&
     startTime &&
     endTime &&
     walkDist >= 0 &&
@@ -111,10 +113,13 @@ const Visit = () => {
                     id='clientNameInput'
                     type='text'
                     placeholder='Client Name'
-                    value={clientName}
+                    value={
+                      userDoc.contacts[findContactIndex(clientId, userDoc)]
+                        .displayName
+                    }
                     label='Client Name:'
                     isRequired={true}
-                    setClientName={setClientName}
+                    setClientName={setClientId}
                   />
                 </td>
               </tr>

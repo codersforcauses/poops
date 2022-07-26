@@ -60,6 +60,7 @@ export const VisitList = (props: VisitListProps) => {
               id={index}
               petNames={post.petNames}
               clientId={post.clientId}
+              clientName={post.clientName}
               startTime={post.startTime}
               endTime={post.endTime}
               walkDist={post.walkDist}

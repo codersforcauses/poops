@@ -16,6 +16,7 @@ export interface UserData {
 export interface VisitData {
   type: string
   clientId: string
+  clientName: string
   petNames: string
   startTime: Timestamp
   endTime: Timestamp
