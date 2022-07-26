@@ -1,7 +1,6 @@
 import { ReportButton, VetConcernButton } from '@/components/Visit/buttons'
-import { humanizeTimestamp } from '@/components/Visit/utils'
+import { findContactIndex, humanizeTimestamp } from '@/components/Visit/utils'
 import { formatDuration } from '@/components/Visit/visitinstance'
-import { findContactIndex } from '@/components/Visit/visitlist'
 import { useFirestore } from '@/context/firestore'
 import { VisitData } from '@/types/types'
 
@@ -11,7 +10,7 @@ const VisitInfo = (props: VisitData) => {
     <>
       <div className='font-bold peer-checked:font-normal'>
         <p className='font-bold text-primary'>
-          {humanizeTimestamp(props.startTime)}
+          {props.day} {humanizeTimestamp(props.startTime)}
         </p>
         <p className='text-sm'>
           {

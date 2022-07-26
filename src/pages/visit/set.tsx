@@ -8,11 +8,12 @@ import { withProtected } from '@/components/PrivateRoute'
 import ClientSelector from '@/components/Visit/clientselector'
 import CommuteSelector from '@/components/Visit/commuteselector'
 import FormField from '@/components/Visit/formfield'
-import { formatTimestamp } from '@/components/Visit/utils'
 import {
-  findContactIndex,
+  daySelectOptions,
+  formatTimestamp,
   visitSelectOptions
-} from '@/components/Visit/visitlist'
+} from '@/components/Visit/utils'
+import { findContactIndex } from '@/components/Visit/utils'
 import { useFirestore } from '@/context/firestore'
 import { VisitData } from '@/types/types'
 
@@ -30,6 +31,7 @@ const Visit = () => {
 
   const [visitType, setVisitType] = useState(visit?.type || '')
   const [clientName, setClientName] = useState(visit?.clientId || '')
+  const [day, setDay] = useState(visit?.day || '')
   const [startTime, setStartTime] = useState(
     formatTimestamp(visit?.startTime) || ''
   )
@@ -45,6 +47,7 @@ const Visit = () => {
     const data: VisitData = {
       type: visitType,
       clientId: clientName,
+      day: day,
       startTime: Timestamp.fromDate(new Date(startTime)),
       endTime: Timestamp.fromDate(new Date(endTime)),
       petNames: userDoc.contacts[findContactIndex(clientName, userDoc)].pets,
@@ -69,6 +72,7 @@ const Visit = () => {
   const isSubmitEnabled = () =>
     visitType &&
     clientName &&
+    day &&
     startTime &&
     endTime &&
     walkDist >= 0 &&
@@ -135,8 +139,6 @@ const Visit = () => {
                     }
                   />
                 </td>
-              </tr>
-              <tr>
                 <td>
                   <FormField
                     id='commuteDistInput'
@@ -150,6 +152,8 @@ const Visit = () => {
                     }
                   />
                 </td>
+              </tr>
+              <tr>
                 <td>
                   {/* no validation? */}
                   <CommuteSelector
@@ -159,6 +163,18 @@ const Visit = () => {
                     label='Commute Method:'
                     setCommuteMethod={setCommuteMethod}
                     isRequired={true}
+                  />
+                </td>
+                <td>
+                  <FormField
+                    id='dayInput'
+                    type='select'
+                    placeholder='Select...'
+                    value={day}
+                    label='Day:'
+                    selectOptions={daySelectOptions}
+                    isRequired={true}
+                    onChange={(event) => setDay(event.target.value)}
                   />
                 </td>
               </tr>
