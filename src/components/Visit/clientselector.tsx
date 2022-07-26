@@ -7,7 +7,12 @@ import { useFirestore } from '@/context/firestore'
 import { SelectOption } from '@/types/types'
 
 interface ClientSelectorProps extends FormFieldProps {
-  setClientName: Dispatch<SetStateAction<string>>
+  setClient: Dispatch<
+    SetStateAction<{
+      clientId: string
+      clientName: string
+    }>
+  >
 }
 
 const ClientSelector = (props: ClientSelectorProps) => {
@@ -17,17 +22,17 @@ const ClientSelector = (props: ClientSelectorProps) => {
 
   const getClientList = () => {
     return contacts.map((contact) => {
-      const clientName: SelectOption = {
+      const client: SelectOption = {
         label: contact.displayName,
         value: contact.id
       }
-      return clientName
+      return client
     })
   }
   const handleChange = (newValue: SingleValue<SelectOption>) => {
     // fired when user selects an option or creates an option
     if (newValue === null) return
-    props.setClientName(newValue.value)
+    props.setClient({ clientId: newValue.value, clientName: newValue.label })
   }
 
   const defaultValue: SelectOption = {

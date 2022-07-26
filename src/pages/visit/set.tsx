@@ -7,15 +7,12 @@ import { Timestamp } from 'firebase/firestore'
 import { withProtected } from '@/components/PrivateRoute'
 import ClientSelector from '@/components/Visit/clientselector'
 import CommuteSelector from '@/components/Visit/commuteselector'
+import DurationSelector from '@/components/Visit/durationselector'
 import FormField from '@/components/Visit/formfield'
-import {
-  daySelectOptions,
-  formatTimestamp,
-  visitSelectOptions
-} from '@/components/Visit/utils'
+import { formatTimestamp, visitSelectOptions } from '@/components/Visit/utils'
 import { findContactIndex } from '@/components/Visit/utils'
 import { useFirestore } from '@/context/firestore'
-import { VisitData } from '@/types/types'
+import { Duration, VisitData } from '@/types/types'
 
 const Visit = () => {
   // BUG: when reloading this page whilst editing, all the fields are removed. userDoc is undefined?
@@ -30,12 +27,17 @@ const Visit = () => {
   }
 
   const [visitType, setVisitType] = useState(visit?.type || '')
-  const [clientName, setClientName] = useState(visit?.clientId || '')
-  const [day, setDay] = useState(visit?.day || '')
+  const [{ clientId, clientName }, setClient] = useState({
+    clientId: visit?.clientId || '',
+    clientName: visit?.clientName || ''
+  })
   const [startTime, setStartTime] = useState(
     formatTimestamp(visit?.startTime) || ''
   )
-  const [endTime, setEndTime] = useState(formatTimestamp(visit?.endTime) || '')
+  const [duration, setDuration] = useState<Duration>({
+    hours: 0,
+    minutes: 0
+  })
   const [walkDist, setWalkDist] = useState(visit?.walkDist || NaN)
   const [commuteDist, setCommuteDist] = useState(visit?.commuteDist || NaN)
   const [commuteMethod, setCommuteMethod] = useState(visit?.commuteMethod || '')
@@ -46,11 +48,11 @@ const Visit = () => {
 
     const data: VisitData = {
       type: visitType,
-      clientId: clientName,
-      day: day,
+      clientId: clientId, // possible refac: push a client object
+      clientName: clientName,
       startTime: Timestamp.fromDate(new Date(startTime)),
-      endTime: Timestamp.fromDate(new Date(endTime)),
-      petNames: userDoc.contacts[findContactIndex(clientName, userDoc)].pets,
+      duration: duration,
+      petNames: userDoc.contacts[findContactIndex(clientName, userDoc)].pets, // TODO: find contact by id instead?
       walkDist: walkDist,
       commuteDist: commuteDist,
       commuteMethod: commuteMethod,
@@ -71,13 +73,11 @@ const Visit = () => {
 
   const isSubmitEnabled = () =>
     visitType &&
-    clientName &&
-    day &&
+    clientId &&
     startTime &&
-    endTime &&
-    walkDist >= 0 &&
-    commuteDist >= 0 &&
-    commuteMethod
+    duration.hours >= 0 &&
+    duration.minutes >= 0
+  walkDist >= 0 && commuteDist >= 0 && commuteMethod
 
   return (
     <div className='z-50 p-4'>
@@ -121,7 +121,64 @@ const Visit = () => {
                     value={clientName}
                     label='Client Name:'
                     isRequired={true}
-                    setClientName={setClientName}
+                    setClient={setClient}
+                  />
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <FormField
+                    id='startTimeInput'
+                    type='dateTime-local'
+                    placeholder='Start Time'
+                    value={startTime}
+                    label='Start Time:'
+                    isRequired={true}
+                    onChange={(event) => setStartTime(event.target.value)}
+                  />
+                </td>
+                <td>
+                  <DurationSelector
+                    id='durationInput'
+                    label='Duration:'
+                    onHourChange={(event) =>
+                      setDuration((duration) => ({
+                        ...duration,
+                        hours: Number(event.target.value)
+                      }))
+                    }
+                    onMinuteChange={(event) =>
+                      setDuration((duration) => ({
+                        ...duration,
+                        minutes: Number(event.target.value)
+                      }))
+                    }
+                  />
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <FormField
+                    id='commuteDistInput'
+                    type='number'
+                    placeholder='Distance (km)'
+                    value={commuteDist.toString()}
+                    label='Commute Distance:'
+                    isRequired={true}
+                    onChange={(event) =>
+                      setCommuteDist(parseFloat(event.target.value))
+                    }
+                  />
+                </td>
+                <td>
+                  {/* react-select components have no native form validation but what we can do is disable the submit button if the input is empty */}
+                  <CommuteSelector
+                    id='commuteMethodInput'
+                    placeholder='Commute Method'
+                    value={commuteMethod}
+                    label='Commute Method:'
+                    setCommuteMethod={setCommuteMethod}
+                    isRequired={true}
                   />
                 </td>
               </tr>
@@ -139,65 +196,10 @@ const Visit = () => {
                     }
                   />
                 </td>
-                <td>
-                  <FormField
-                    id='commuteDistInput'
-                    type='number'
-                    placeholder='Distance (km)'
-                    value={commuteDist.toString()}
-                    label='Commute Distance:'
-                    isRequired={true}
-                    onChange={(event) =>
-                      setCommuteDist(parseFloat(event.target.value))
-                    }
-                  />
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  {/* no validation? */}
-                  <CommuteSelector
-                    id='commuteMethodInput'
-                    placeholder='Commute Method'
-                    value={commuteMethod}
-                    label='Commute Method:'
-                    setCommuteMethod={setCommuteMethod}
-                    isRequired={true}
-                  />
-                </td>
-                <td>
-                  <FormField
-                    id='dayInput'
-                    type='select'
-                    placeholder='Select...'
-                    value={day}
-                    label='Day:'
-                    selectOptions={daySelectOptions}
-                    isRequired={true}
-                    onChange={(event) => setDay(event.target.value)}
-                  />
-                </td>
               </tr>
             </tbody>
           </table>
-          <FormField
-            id='startTimeInput'
-            type='dateTime-local'
-            placeholder='Start Time'
-            value={startTime}
-            label='Start Time:'
-            isRequired={true}
-            onChange={(event) => setStartTime(event.target.value)}
-          />
-          <FormField
-            id='endTimeInput'
-            type='dateTime-local'
-            placeholder='End Time'
-            value={endTime}
-            label='End Time:'
-            isRequired={true}
-            onChange={(event) => setEndTime(event.target.value)}
-          />
+
           <FormField
             id='notesInput'
             type='textarea'

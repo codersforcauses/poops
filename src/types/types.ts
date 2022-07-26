@@ -25,10 +25,10 @@ export interface UserData {
 export interface VisitData {
   type: string
   clientId: string
+  clientName: string
   petNames: string
-  day: string
   startTime: Timestamp
-  endTime: Timestamp
+  duration: Duration
   walkDist: number
   commuteDist: number
   commuteMethod: string
@@ -67,4 +67,9 @@ export interface Contact {
 export interface SelectOption {
   label: string
   value: string
+}
+
+export type Duration = {
+  hours: number
+  minutes: number
 }
