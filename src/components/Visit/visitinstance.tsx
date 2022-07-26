@@ -49,7 +49,7 @@ const VisitInstance = (props: VisitInstanceProps) => {
             }}
           />
           <VisitInfo {...props} />
-          <EditButton id={props.id + 1} />
+          <EditButton id={props.id} />
         </div>
       </div>
     </div>
