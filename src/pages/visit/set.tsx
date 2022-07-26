@@ -23,9 +23,9 @@ const Visit = () => {
   const i: string | string[] | undefined = router.query.id
   let id: number | null = null
   let visit: VisitData | null = null
-  if (i) {
+  if (i !== undefined) {
     id = parseInt(i + '')
-    visit = userDoc.visits[id - 1]
+    visit = userDoc.visits[id]
   }
 
   const [visitType, setVisitType] = useState(visit?.type || '')
@@ -54,11 +54,8 @@ const Visit = () => {
       notes: notes,
       inProgress: false
     }
-    // when id = 0, since 0 is falsey, it creates a new visit. seems to work for others
-    // TODO: stop using indexes and use actual ids?
-    // tee hee i worked round it
-    if (id) {
-      userDoc.visits[id - 1] = data // added 1 when sending to pass check
+    if (id !== null) {
+      userDoc.visits[id] = data
     } else {
       userDoc.visits.push(data)
     }
@@ -88,7 +85,7 @@ const Visit = () => {
 
         <div className='border-b-2 border-primary py-3 pt-10'>
           <h1 className='pl-2 text-2xl font-bold'>
-            {id ? 'Edit' : 'Add'} Your Visit
+            {id !== null ? 'Edit' : 'Add'} Your Visit
           </h1>
         </div>
 
