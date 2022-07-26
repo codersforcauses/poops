@@ -41,7 +41,7 @@ function DurationSelector(props: DurationProps) {
             step='15'
             defaultValue={0}
             min={0}
-            max={60}
+            max={45}
             onChange={props.onMinuteChange}
           />
         </div>
