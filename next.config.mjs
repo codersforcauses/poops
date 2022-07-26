@@ -29,4 +29,7 @@ const nextConfig = withPWA({
   // },
 })
 
+// ! Temp fix for next-pwa throwing invalid next.config.js warning message
+delete nextConfig.pwa
+
 export default nextConfig
