@@ -1,0 +1,40 @@
+{
+  "name": "poops",
+  "description": "Cloud Functions for POOPS",
+  "scripts": {
+    "emu": "yarn build && firebase emulators:start",
+    "emu:stop": "lsof -ti :4400 -ti :4000 -ti :5001 -ti :8080 -ti :8085 -ti :9099 -ti :9199 | xargs kill",
+    "lint": "eslint --ext .js,.ts .",
+    "build": "tsc",
+    "build:watch": "tsc --watch",
+    "serve": "yarn build && firebase emulators:start --only functions",
+    "shell": "yarn build && firebase functions:shell",
+    "start": "yarn shell",
+    "deploy:functions": "yarn build && firebase deploy --only functions",
+    "deploy:firestore": "firebase deploy --only firestore:rules",
+    "deploy:storage": "firebase deploy --only storage:rules",
+    "ext:email": "firebase ext:install firebase/firestore-send-email --project=poops-9dbf6",
+    "ext:email:local": "firebase ext:install firebase/firestore-send-email --local",
+    "logs": "firebase functions:log"
+  },
+  "engines": {
+    "node": "16"
+  },
+  "main": "lib/index.js",
+  "dependencies": {
+    "@google-cloud/billing": "^3.1.0",
+    "@google-cloud/pubsub": "^3.1.0",
+    "firebase-admin": "^10.0.2",
+    "firebase-functions": "^3.22.0"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.12.0",
+    "@typescript-eslint/parser": "^5.12.0",
+    "eslint": "^8.9.0",
+    "eslint-config-google": "^0.14.0",
+    "eslint-plugin-import": "^2.25.4",
+    "firebase-functions-test": "^0.2.0",
+    "typescript": "^4.5.4"
+  },
+  "private": true
+}

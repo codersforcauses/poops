@@ -1,8 +1,8 @@
-import React from 'react'
+import { ChangeEvent } from 'react'
 import { SearchIcon } from '@heroicons/react/outline'
 
 interface SearchBarProps {
-  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void
+  onChange: (event: ChangeEvent<HTMLInputElement>) => void
 }
 
 const SearchBar = (props: SearchBarProps) => {

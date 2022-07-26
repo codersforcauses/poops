@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useEffect, useState } from 'react'
+import { ReactNode, useEffect, useState } from 'react'
 import {
   Auth,
   AuthProvider,
@@ -11,29 +11,14 @@ import {
   User
 } from 'firebase/auth'
 
-import { auth } from '../components/Firebase/init'
+import {
+  AuthContext,
+  FirebaseContextProps
+} from '@/context/Firebase/Auth/context'
 
-interface FirebaseContextProps {
-  auth: Auth
-  getGoogleResults?: (auth: Auth) => void
-  linkAuthProvider?: (currentUser: User, provider: AuthProvider) => void
-  externalAuthSignIn?: (auth: Auth, provider: AuthProvider) => void
-  logOut?: () => void
-  currentUser: User | null
-}
-//set auth and current user as a context api to be called by other funcs
-const authContext = createContext<FirebaseContextProps>({
-  auth: auth,
-  currentUser: null
-})
+import { auth } from '../../../components/Firebase/init'
 
-export const useAuth = () => useContext(authContext)
-
-export const AuthContextProvider = ({
-  children
-}: {
-  children: React.ReactNode
-}) => {
+export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
   const [currentUser, setCurrentUser] = useState<User | null>(null)
   const [loading, setLoading] = useState(true)
 
@@ -112,8 +97,8 @@ export const AuthContextProvider = ({
   }
 
   return (
-    <authContext.Provider value={value}>
+    <AuthContext.Provider value={value}>
       {!loading && children}
-    </authContext.Provider>
+    </AuthContext.Provider>
   )
 }

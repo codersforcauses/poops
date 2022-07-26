@@ -1,10 +1,9 @@
-import React from 'react'
-import { useState } from 'react'
+import { FormEvent, useState } from 'react'
 import { XIcon } from '@heroicons/react/solid'
 import { Timestamp } from 'firebase/firestore'
 
 import { visitSelectOptions } from '@/components/Visit/visitlist'
-import { useFirestore } from '@/context/firestore'
+import { useFirestore } from '@/context/Firebase/Firestore/context'
 import { VisitData } from '@/types/types'
 
 import CommuteSelector from './commuteselector'
@@ -26,7 +25,7 @@ const ModalView = ({ toggleModal }: ModalViewProps) => {
   const [commuteMethod, setCommuteMethod] = useState('')
   const [notes, setNotes] = useState('')
 
-  const handleSubmit = (click: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (click: FormEvent<HTMLFormElement>) => {
     click.preventDefault()
     const data: VisitData = {
       type: visitType,

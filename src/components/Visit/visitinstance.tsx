@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction, useState } from 'react'
+import { Dispatch, SetStateAction, useState } from 'react'
 import ChevronDownIcon from '@heroicons/react/outline/ChevronDownIcon'
 import { Timestamp } from 'firebase/firestore'
 
