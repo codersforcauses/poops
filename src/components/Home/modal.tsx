@@ -1,6 +1,7 @@
 import { useState } from 'react'
 
 import ClientSelector from '@/components/Home/clientSelector'
+//import selectInputRef from '@/components/Home/clientSelector'
 import CommuteSelector from '@/components/Home/commuteSelector'
 import DurationSelector from '@/components/Home/durationSelector'
 import { Duration } from '@/components/Home/durationSelector'
@@ -38,7 +39,9 @@ function Modal() {
     )
   }
 
-  function handleSubmit() {
+  function handleSubmit(event) {
+    event.preventDefault()
+    event.target.reset()
     setClient('')
     setType('')
     setCommute('')
