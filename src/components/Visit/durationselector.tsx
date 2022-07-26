@@ -22,7 +22,7 @@ const DurationSelector = (props: DurationProps) => {
           id='hours'
           type='number'
           step='1'
-          defaultValue={props.value?.hours}
+          defaultValue={props.defaultValue?.hours}
           min={0}
           max={24}
           onChange={props.onHourChange}
@@ -33,7 +33,7 @@ const DurationSelector = (props: DurationProps) => {
           id='minutes'
           type='number'
           step='15'
-          defaultValue={props.value?.minutes}
+          defaultValue={props.defaultValue?.minutes}
           min={0}
           max={45}
           onChange={props.onMinuteChange}
