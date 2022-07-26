@@ -34,7 +34,7 @@ function Modal() {
       (type == 'Vet' ||
         (type == 'Walk' && walkDistance > 0 && !isNaN(walkDistance))) &&
       startTime != '' &&
-      duration != { hours: 0, minutes: 0 }
+      (duration.hours != 0 || duration.minutes != 0)
     )
   }
 
