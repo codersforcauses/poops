@@ -1,27 +1,13 @@
 import { useEffect, useState } from 'react'
 
+import { findContactIndex } from '@/components/Visit/utils'
 import { useFirestore } from '@/context/firestore'
-import { SelectOption, UserData, VisitData } from '@/types/types'
+import { VisitData } from '@/types/types'
 
 import VisitInstance from './visitinstance'
 
-export const visitSelectOptions: SelectOption[] = [
-  { label: 'Vet', value: 'Vet' },
-  { label: 'Walk', value: 'Walk' }
-]
-
 interface VisitListProps {
   searchQuery: string
-}
-
-export const findContactIndex = (id: string, userDoc: UserData) => {
-  //TODO: find better spot
-  for (let i = 0; i < userDoc.contacts.length; i++) {
-    if (userDoc.contacts[i].id === id) {
-      return i
-    }
-  }
-  return 0
 }
 
 export const VisitList = (props: VisitListProps) => {
@@ -38,13 +24,13 @@ export const VisitList = (props: VisitListProps) => {
 
   //get pets from contact name
   const matchespetNames = (post: VisitData) =>
-    post.petNames.includes(props.searchQuery.toLowerCase())
+    post.petNames?.includes(props.searchQuery.toLowerCase())
 
   const matchesSearchTerms = (post: VisitData) =>
     matchesDisplayName(post) || matchespetNames(post)
 
   return (
-    <div className=''>
+    <div>
       {visits &&
         visits
           .filter((post: VisitData) => {
@@ -56,18 +42,8 @@ export const VisitList = (props: VisitListProps) => {
             <VisitInstance
               setVisits={setVisits}
               key={post.startTime + post.clientId + post.endTime} // <-- dumb? or genius?
-              type={post.type}
               id={index}
-              petNames={post.petNames}
-              clientId={post.clientId}
-              clientName={post.clientName}
-              startTime={post.startTime}
-              endTime={post.endTime}
-              walkDist={post.walkDist}
-              commuteDist={post.commuteDist}
-              commuteMethod={post.commuteMethod}
-              notes={post.notes}
-              inProgress={post.inProgress}
+              {...post}
             />
           ))}
     </div>

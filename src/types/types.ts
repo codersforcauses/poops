@@ -1,5 +1,14 @@
 import { Timestamp } from 'firebase/firestore'
 
+// export type Day =
+//   | 'Monday'
+//   | 'Tuesday'
+//   | 'Wednesday'
+//   | 'Thursday'
+//   | 'Friday'
+//   | 'Saturday'
+//   | 'Sunday'
+
 //local variables to be passed around the app
 export interface Pet {
   id: string
@@ -18,6 +27,7 @@ export interface VisitData {
   clientId: string
   clientName: string
   petNames: string
+  day: string
   startTime: Timestamp
   endTime: Timestamp
   walkDist: number

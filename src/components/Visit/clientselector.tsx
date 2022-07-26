@@ -4,15 +4,10 @@ import Select, { SingleValue } from 'react-select'
 import { FormFieldProps } from '@/components/Visit/formfield'
 import customStyles from '@/components/Visit/selectorstyles'
 import { useFirestore } from '@/context/firestore'
+import { SelectOption } from '@/types/types'
 
 interface ClientSelectorProps extends FormFieldProps {
   setClientName: Dispatch<SetStateAction<string>>
-}
-
-interface ClientName {
-  // combine with CommuteMethod
-  label: string
-  value: string
 }
 
 const ClientSelector = (props: ClientSelectorProps) => {
@@ -22,21 +17,21 @@ const ClientSelector = (props: ClientSelectorProps) => {
 
   const getClientList = () => {
     return contacts.map((contact) => {
-      const clientName: ClientName = {
+      const clientName: SelectOption = {
         label: contact.displayName,
         value: contact.id
       }
       return clientName
     })
   }
-  const handleChange = (newValue: SingleValue<ClientName>) => {
+  const handleChange = (newValue: SingleValue<SelectOption>) => {
     // fired when user selects an option or creates an option
     if (newValue === null) return
     props.setClientName(newValue.value)
   }
 
-  const defaultValue: ClientName = {
-    label: props.value || '',
+  const defaultValue: SelectOption = {
+    label: props.value || 'Select...',
     value: props.value || ''
   }
 
