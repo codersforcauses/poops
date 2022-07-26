@@ -1,5 +1,6 @@
-import React, {
+import {
   createContext,
+  ReactNode,
   useCallback,
   useContext,
   useMemo,
@@ -43,11 +44,7 @@ const alertContext = createContext<AlertContextProps>({
 
 export const useAlert = () => useContext(alertContext)
 
-export const AlertContextProvider = ({
-  children
-}: {
-  children: React.ReactNode
-}) => {
+export const AlertContextProvider = ({ children }: { children: ReactNode }) => {
   const [visible, setVisible] = useState(false)
   const [content, setContent] = useState<AlertContentProps>({
     title: '',

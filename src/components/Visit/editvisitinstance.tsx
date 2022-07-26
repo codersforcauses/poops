@@ -1,4 +1,4 @@
-import React, { Dispatch, useState } from 'react'
+import { Dispatch, SetStateAction, useState } from 'react'
 import { Timestamp } from 'firebase/firestore'
 
 import { getCommuteMethods } from '@/components/Visit/commuteselector'
@@ -12,7 +12,7 @@ import { VisitData } from '@/types/types'
 import { visitSelectOptions } from './visitlist'
 
 interface EditVisitInstanceProps extends VisitInstanceProps {
-  isEditable: Dispatch<React.SetStateAction<boolean>>
+  isEditable: Dispatch<SetStateAction<boolean>>
 }
 
 const formatNumber = (value: string) => {

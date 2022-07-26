@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { ReactNode, useEffect, useState } from 'react'
 import {
   Auth,
   AuthProvider,
@@ -18,11 +18,7 @@ import {
 
 import { auth } from '../../../components/Firebase/init'
 
-export const AuthContextProvider = ({
-  children
-}: {
-  children: React.ReactNode
-}) => {
+export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
   const [currentUser, setCurrentUser] = useState<User | null>(null)
   const [loading, setLoading] = useState(true)
 

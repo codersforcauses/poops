@@ -1,9 +1,9 @@
-import React from 'react'
+import { ComponentType } from 'react'
 import { useRouter } from 'next/router'
 
 import { useAuth } from '@/context/Firebase/Auth/context'
 
-export function withPublic(Component: React.ComponentType) {
+export function withPublic(Component: ComponentType) {
   return function PublicComponent(props: object) {
     const { auth } = useAuth()
     const user = auth.currentUser
@@ -16,7 +16,7 @@ export function withPublic(Component: React.ComponentType) {
   }
 }
 
-export function withProtected(Component: React.ComponentType) {
+export function withProtected(Component: ComponentType) {
   return function PrivateComponent(props: object) {
     const { auth } = useAuth()
     const user = auth.currentUser
