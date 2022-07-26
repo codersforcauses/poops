@@ -1,13 +1,14 @@
 import { useState } from 'react'
 
-import ClientSelector from '@/components/Home/clientSelector'
-//import selectInputRef from '@/components/Home/clientSelector'
-import CommuteSelector from '@/components/Home/commuteSelector'
+import {
+  clientSelectOptions,
+  commuteSelectOptions
+} from '@/components/Home/dummyOptions'
 import DurationSelector from '@/components/Home/durationSelector'
 import { Duration } from '@/components/Home/durationSelector'
-import TextForm from '@/components/Home/textForm'
-import TypeSelector from '@/components/Home/typeSelector'
+import Form from '@/components/Home/form'
 import FormField from '@/components/Visit/formfield'
+import { visitSelectOptions } from '@/components/Visit/visitlist'
 import { AlertVariant, useAlert } from '@/context/AlertContext'
 
 function Modal() {
@@ -39,7 +40,7 @@ function Modal() {
     )
   }
 
-  function handleSubmit(event) {
+  function handleSubmit(event: React.ChangeEvent<HTMLFormElement>) {
     event.preventDefault()
     event.target.reset()
     setClient('')
@@ -71,26 +72,59 @@ function Modal() {
         <hr className='mb-3 h-0.5 border-dark-red bg-dark-red text-dark-red' />
         <form onSubmit={handleSubmit}>
           <div>
-            <CommuteSelector commute={commute} setCommute={setCommute} />
+            <Form
+              id='commuteMethod'
+              label='Commute Method'
+              type='select'
+              placeholder='Select...'
+              isRequired={true}
+              selectOptions={commuteSelectOptions}
+              onChange={(e) => setCommute(String(e.target.value))}
+            />
             {commute == 'Other' && (
-              <TextForm
+              <Form
                 id='other'
                 label='Other Commute Method'
+                type='text'
+                placeholder='Enter...'
+                isRequired={true}
                 onChange={(e) => setOther(String(e.target.value))}
               />
             )}
-            <TextForm
+            <Form
               id='commuteDistance'
               label='Commute Distance (in km)'
+              type='text'
+              placeholder='Enter...'
+              isRequired={true}
               onChange={(e) => setCommuteDistance(Number(e.target.value))}
             />
-            <ClientSelector client={client} setClient={setClient} />
-            <TypeSelector type={type} setType={setType} />
+            <Form
+              id='client'
+              label='Select Client'
+              type='select'
+              placeholder='Select...'
+              isRequired={true}
+              selectOptions={clientSelectOptions}
+              onChange={(e) => setClient(String(e.target.value))}
+            />
+            <Form
+              id='type'
+              label='Type of Visit'
+              type='select'
+              placeholder='Select...'
+              isRequired={true}
+              selectOptions={visitSelectOptions}
+              onChange={(e) => setType(String(e.target.value))}
+            />
           </div>
           {type == 'Walk' && (
-            <TextForm
+            <Form
               id='walkDistance'
               label='Walk Distance (in km)'
+              type='text'
+              placeholder='Enter...'
+              isRequired={true}
               onChange={(e) => setWalkDistance(Number(e.target.value))}
             />
           )}
