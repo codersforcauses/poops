@@ -43,7 +43,7 @@ type AlertProps = {
   content: AlertContentProps
 }
 
-const Alert: React.FC<AlertProps> = ({ visible, setVisible, content }) => {
+const Alert = ({ visible, setVisible, content }: AlertProps) => {
   const [contentCache, setContentCache] = useState<AlertContentProps>({
     title: '', // string[2], first element is tile, second is message
     text: '',

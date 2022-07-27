@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { ChangeEvent, useState } from 'react'
 import Link from 'next/link'
 import { SearchIcon } from '@heroicons/react/outline'
 
@@ -44,14 +44,14 @@ const Contact = () => {
     setFilteredContacts(filteredContacts)
   }
 
-  const onSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const onSearchChange = (event: ChangeEvent<HTMLInputElement>) => {
     const searchFieldString = event.target.value.toLocaleLowerCase()
     setSearchFieldString(searchFieldString)
     // TODO: Get contact data from server
     filterContact(selectedTag, searchFieldString)
   }
 
-  const onSearchTagChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+  const onSearchTagChange = (event: ChangeEvent<HTMLSelectElement>) => {
     const option_value = event.target.value
     setSelectedTag(option_value)
     filterContact(option_value, searchFieldString)
@@ -83,7 +83,7 @@ const Contact = () => {
             <SearchTag
               name='Filter By'
               options={tagFilter}
-              onChangehandler={(e: React.ChangeEvent<HTMLSelectElement>) =>
+              onChangehandler={(e: ChangeEvent<HTMLSelectElement>) =>
                 onSearchTagChange(e)
               }
             />

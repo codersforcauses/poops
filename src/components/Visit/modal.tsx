@@ -1,10 +1,9 @@
-import React from 'react'
-import { useState } from 'react'
+import { FormEvent, useState } from 'react'
 import { XIcon } from '@heroicons/react/solid'
 import { Timestamp } from 'firebase/firestore'
 
 import { visitSelectOptions } from '@/components/Visit/visitlist'
-import { useFirestore } from '@/context/firestore'
+import { useFirestore } from '@/context/Firebase/Firestore/context'
 import { VisitData } from '@/types/types'
 
 import CommuteSelector from './commuteselector'
@@ -21,13 +20,12 @@ const ModalView = ({ toggleModal }: ModalViewProps) => {
   const [petNames, setPetNames] = useState('')
   const [startTime, setStartTime] = useState('')
   const [endTime, setEndTime] = useState('')
-  const [walkDist, setWalkDist] = useState(0)
-  const [commuteDist, setCommuteDist] = useState(0)
+  const [walkDist, setWalkDist] = useState(NaN)
+  const [commuteDist, setCommuteDist] = useState(NaN)
   const [commuteMethod, setCommuteMethod] = useState('')
-  /* eslint-disable unused-imports/no-unused-vars */
   const [notes, setNotes] = useState('')
 
-  const handleSubmit = (click: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (click: FormEvent<HTMLFormElement>) => {
     click.preventDefault()
     const data: VisitData = {
       type: visitType,
@@ -42,24 +40,20 @@ const ModalView = ({ toggleModal }: ModalViewProps) => {
     }
     userDoc.visits.push(data)
     updateVisit?.(userDoc)
+    toggleModal()
   }
 
-  const isSubmitEnabled = () =>
-    visitType &&
-    displayName &&
-    petNames &&
-    startTime &&
-    endTime &&
-    walkDist &&
-    commuteDist &&
-    commuteMethod
-
-  const closeModal = () => {
-    if (isSubmitEnabled()) {
-      setTimeout(() => {
-        toggleModal()
-      }, 10) //ensure form gets completed
-    }
+  const isSubmitEnabled = () => {
+    return (
+      visitType &&
+      displayName &&
+      petNames &&
+      startTime &&
+      endTime &&
+      walkDist >= 0 &&
+      commuteDist >= 0 &&
+      commuteMethod
+    )
   }
 
   return (
@@ -80,7 +74,6 @@ const ModalView = ({ toggleModal }: ModalViewProps) => {
             <tbody>
               <tr>
                 <td>
-                  {/* could rewrite to use awful react-select to make chevron icon consistent */}
                   <FormField
                     id='visitTypeInput'
                     type='select'
@@ -140,7 +133,7 @@ const ModalView = ({ toggleModal }: ModalViewProps) => {
                   />
                 </td>
                 <td>
-                  {/* no validation? */}
+                  {/* react-select does not support required prop for Select components */}
                   <CommuteSelector
                     label='Commute Method:'
                     setCommuteMethod={setCommuteMethod}
@@ -177,10 +170,9 @@ const ModalView = ({ toggleModal }: ModalViewProps) => {
           />
           <div className='mx-auto my-2 flex flex-col p-1 '>
             <button
-              className='text-bold rounded bg-primary px-12 py-4 text-white drop-shadow-default active:bg-dark-red'
+              className='text-bold rounded bg-primary px-12 py-4 text-white drop-shadow-default active:bg-dark-red disabled:bg-dark-gray'
+              disabled={!isSubmitEnabled()}
               type='submit'
-              onClick={closeModal}
-              disabled={!isSubmitEnabled}
             >
               Submit
             </button>
