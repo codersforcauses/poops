@@ -114,45 +114,10 @@ const Visit = () => {
                     id='clientNameInput'
                     type='text'
                     placeholder='Client Name'
-                    value={
-                      userDoc.contacts[findContactIndex(clientId, userDoc)]
-                        .displayName
-                    }
+                    value={clientName}
                     label='Client Name:'
                     isRequired={true}
                     setClient={setClient}
-                  />
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <FormField
-                    id='startTimeInput'
-                    type='dateTime-local'
-                    placeholder='Start Time'
-                    value={startTime}
-                    label='Start Time:'
-                    isRequired={true}
-                    onChange={(event) => setStartTime(event.target.value)}
-                  />
-                </td>
-                <td>
-                  <DurationSelector
-                    id='durationInput'
-                    label='Duration:'
-                    defaultValue={duration}
-                    onHourChange={(event) =>
-                      setDuration((duration) => ({
-                        ...duration,
-                        hours: Number(event.target.value)
-                      }))
-                    }
-                    onMinuteChange={(event) =>
-                      setDuration((duration) => ({
-                        ...duration,
-                        minutes: Number(event.target.value)
-                      }))
-                    }
                   />
                 </td>
               </tr>
@@ -183,6 +148,41 @@ const Visit = () => {
                 </td>
               </tr>
               <tr>
+                <td colSpan={2}>
+                  <FormField
+                    id='startTimeInput'
+                    type='dateTime-local'
+                    placeholder='Start Time'
+                    value={startTime}
+                    label='Start Time:'
+                    isRequired={true}
+                    onChange={(event) => {
+                      event.target.value = event.target.value.substring(0, 16) // fixes invalid input on ios safari? can't test
+                      setStartTime(event.target.value)
+                    }}
+                  />
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <DurationSelector
+                    id='durationInput'
+                    label='Duration:'
+                    defaultValue={duration}
+                    onHourChange={(event) =>
+                      setDuration((duration) => ({
+                        ...duration,
+                        hours: Number(event.target.value)
+                      }))
+                    }
+                    onMinuteChange={(event) =>
+                      setDuration((duration) => ({
+                        ...duration,
+                        minutes: Number(event.target.value)
+                      }))
+                    }
+                  />
+                </td>
                 <td>
                   <FormField
                     id='walkDistInput'
@@ -225,7 +225,7 @@ const Visit = () => {
                   userDoc.visits.splice(Number(id), 1)
                   updateVisit?.(userDoc)
                 }}
-                hidden={false} // button should be hidden if no id
+                hidden={id === null} // button should be hidden if no id
               >
                 Remove
               </button>
