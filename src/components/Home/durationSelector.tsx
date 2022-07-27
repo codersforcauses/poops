@@ -22,7 +22,7 @@ function DurationSelector(props: DurationProps) {
         <div>
           <label htmlFor='hours'>Hours</label>
           <input
-            className='mx-2 mt-1 mb-2 flex h-9 rounded border border-[#6b7280] py-0.5 px-4 text-center focus:outline-none'
+            className='mx-2 mt-1 mb-2 flex h-9 rounded border border-[#6b7280] py-0.5 px-4 text-center focus:border-[#0066ff] focus:outline-none'
             id='hours'
             type='number'
             step='1'
@@ -35,7 +35,7 @@ function DurationSelector(props: DurationProps) {
         <div>
           <label htmlFor='minutes'>Minutes</label>
           <input
-            className='mx-2 mt-1 mb-2 flex h-9 w-auto rounded border border-[#6b7280] py-0.5 px-4 text-center focus:outline-none'
+            className='mx-2 mt-1 mb-2 flex h-9 w-auto rounded border border-[#6b7280] py-0.5 px-4 text-center focus:border-[#0066ff] focus:outline-none'
             id='minutes'
             type='number'
             step='15'

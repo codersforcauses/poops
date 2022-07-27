@@ -46,7 +46,8 @@ function inputType(props: FormProps) {
     case 'text':
       return (
         <input
-          className='mt-1 mb-2 flex h-9 rounded border border-[#6b7280] py-0.5 px-4 text-center placeholder:text-black focus:outline-none'
+          className='mt-1 mb-2 flex h-9 rounded border border-[#6b7280] py-0.5 px-4 text-center placeholder:text-black
+            focus:outline-[#0066ff]'
           id={props.id}
           type='text'
           required={props.isRequired}
