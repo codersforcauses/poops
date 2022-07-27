@@ -41,7 +41,7 @@ export const VisitList = (props: VisitListProps) => {
           .map((post, index) => (
             <VisitInstance
               setVisits={setVisits}
-              key={post.startTime + post.clientId + post.duration} // <-- dumb? or genius?
+              key={post.startTime + post.clientId + post.duration} // <-- dumb? or genius? (adam)
               id={index}
               {...post}
             />

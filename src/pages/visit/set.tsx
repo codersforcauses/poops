@@ -65,6 +65,7 @@ const Visit = () => {
     }
     updateVisit?.(userDoc)
     router.push('/visit')
+    // TODO: add alert?
   }
 
   const isSubmitEnabled = () =>
