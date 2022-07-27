@@ -1,9 +1,7 @@
 import { ReportButton, VetConcernButton } from '@/components/Visit/buttons'
-import { findContactIndex, humanizeTimestamp } from '@/components/Visit/utils'
-import { useFirestore } from '@/context/firestore'
+import { humanizeTimestamp } from '@/components/Visit/utils'
 import { Duration, VisitData } from '@/types/types'
 
-// I hate math
 export const formatDuration = (duration: Duration) => {
   const d = `${duration.hours} ${duration.hours === 1 ? 'hr' : 'hrs'} ${
     duration.minutes
@@ -12,19 +10,13 @@ export const formatDuration = (duration: Duration) => {
 }
 
 const VisitInfo = (props: VisitData) => {
-  const { userDoc } = useFirestore()
   return (
     <>
       <div className='font-bold peer-checked:font-normal'>
         <p className='font-bold text-primary'>
           {humanizeTimestamp(props.startTime)}
         </p>
-        <p className='text-sm'>
-          {
-            userDoc.contacts[findContactIndex(props.clientId, userDoc)]
-              .displayName
-          }
-        </p>
+        <p className='text-sm'>{props.clientName}</p>
       </div>
       <div className='max-h-0 justify-between overflow-hidden text-sm transition-all duration-300 peer-checked:max-h-screen'>
         <p>Visit Type: {props.type}</p>

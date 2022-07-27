@@ -38,7 +38,6 @@ export const humanizeTimestamp = (timestamp?: Timestamp) => {
 }
 
 export const findContactIndex = (id: string, userDoc: UserData) => {
-  //TODO: find better spot
   for (let i = 0; i < userDoc.contacts.length; i++) {
     if (userDoc.contacts[i].id === id) {
       return i

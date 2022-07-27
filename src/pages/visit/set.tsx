@@ -52,7 +52,7 @@ const Visit = () => {
       clientName: clientName,
       startTime: Timestamp.fromDate(new Date(startTime)),
       duration: duration,
-      petNames: userDoc.contacts[findContactIndex(clientName, userDoc)].pets, // TODO: find contact by id instead?
+      petNames: userDoc.contacts[findContactIndex(clientName, userDoc)].pets, // TODO?: find contact by id instead
       walkDist: walkDist,
       commuteDist: commuteDist,
       commuteMethod: commuteMethod,
