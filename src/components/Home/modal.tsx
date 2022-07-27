@@ -5,11 +5,11 @@ import {
   commuteSelectOptions
 } from '@/components/Home/dummyOptions'
 import DurationSelector from '@/components/Home/durationSelector'
-import { Duration } from '@/components/Home/durationSelector'
 import Form from '@/components/Home/form'
 import FormField from '@/components/Visit/formfield'
 import { visitSelectOptions } from '@/components/Visit/visitlist'
 import { AlertVariant, useAlert } from '@/context/AlertContext'
+import { Duration } from '@/types/types'
 
 function Modal() {
   const [commute, setCommute] = useState('')
