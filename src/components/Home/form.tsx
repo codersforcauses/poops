@@ -53,6 +53,7 @@ function inputType(props: FormProps) {
           required={props.isRequired}
           placeholder={props.placeholder}
           onChange={props.onChange}
+          pattern='\d*'
         />
       )
   }
