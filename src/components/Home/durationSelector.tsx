@@ -78,7 +78,7 @@ function DurationSelector(props: DurationProps) {
               min={0}
               max={24}
             />
-            <div className='flex w-5 flex-col text-sm'>
+            <div className='flex w-7 flex-col text-lg'>
               <button
                 type='button'
                 className='my-0.5 rounded bg-zinc-300'
@@ -109,7 +109,7 @@ function DurationSelector(props: DurationProps) {
               min={0}
               max={45}
             />
-            <div className='flex w-5 flex-col text-sm'>
+            <div className='flex w-7 flex-col text-lg'>
               <button
                 type='button'
                 className='my-0.5 rounded bg-zinc-300'
