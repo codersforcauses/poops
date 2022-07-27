@@ -33,7 +33,6 @@ export interface VisitData {
   commuteDist: number
   commuteMethod: string
   notes: string
-  inProgress: boolean
 }
 
 export interface ContactData {

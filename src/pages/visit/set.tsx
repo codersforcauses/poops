@@ -56,8 +56,7 @@ const Visit = () => {
       walkDist: walkDist,
       commuteDist: commuteDist,
       commuteMethod: commuteMethod,
-      notes: notes,
-      inProgress: false
+      notes: notes
     }
     if (id !== null) {
       userDoc.visits[id] = data
