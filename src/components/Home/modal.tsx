@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { Timestamp } from 'firebase/firestore'
 
 import {
   clientSelectOptions,
@@ -9,6 +10,8 @@ import Form from '@/components/Home/form'
 import FormField from '@/components/Visit/formfield'
 import { visitSelectOptions } from '@/components/Visit/visitlist'
 import { AlertVariant, useAlert } from '@/context/AlertContext'
+import { useFirestore } from '@/context/firestore'
+import type { VisitData } from '@/types/types'
 import { Duration } from '@/types/types'
 
 function Modal() {
@@ -24,6 +27,7 @@ function Modal() {
     minutes: 0
   })
   const { setAlert } = useAlert()
+  const { userDoc, updateVisit } = useFirestore()
 
   function formFilled() {
     return (
@@ -41,6 +45,21 @@ function Modal() {
   }
 
   function handleSubmit(event: React.ChangeEvent<HTMLFormElement>) {
+    const data: VisitData = {
+      type: type,
+      clientId: '',
+      clientName: client,
+      petNames: '',
+      startTime: Timestamp.fromDate(new Date(startTime)),
+      duration: duration,
+      walkDist: walkDistance,
+      commuteDist: commuteDistance,
+      commuteMethod: commute,
+      notes: ''
+    }
+    userDoc.visits.push(data)
+    updateVisit?.(userDoc)
+
     event.preventDefault()
     event.target.reset()
     setClient('')
@@ -62,7 +81,6 @@ function Modal() {
       showFor: 2500
     })
   }
-
   return (
     <div className='text-center'>
       <div className='rounded-lg bg-zinc-200 py-4 px-5 text-center shadow-lg sm:py-4'>
