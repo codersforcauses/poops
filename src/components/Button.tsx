@@ -10,14 +10,8 @@ export interface ButtonInterface {
 const Button = (props: ButtonInterface) => {
   return (
     <button
+      className='w-fit rounded-lg bg-primary py-1 px-4 text-lg text-white shadow-md focus:outline-primary active:bg-dark-red'
       onClick={props.handler}
-      style={{
-        backgroundColor: ' rgb(206 40 61 )',
-        color: 'white',
-        borderRadius: '2px',
-        height: props.height,
-        width: props.width
-      }}
     >
       {props.buttonlabel}
     </button>
