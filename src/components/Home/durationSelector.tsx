@@ -10,39 +10,39 @@ export interface DurationProps {
 
 function DurationSelector(props: DurationProps) {
   function handleHourUp() {
-    const hours = document.getElementById('hours')
+    const hours = document.getElementById('hours') as HTMLInputElement
     if (hours == null) return
     const updated = Number(hours.value) + 1
     if (updated > 24) {
-      hours.value = Number(0)
+      hours.value = '0'
     } else {
-      hours.value = updated
+      hours.value = updated.toString()
     }
   }
   function handleHourDown() {
-    const hours = document.getElementById('hours')
+    const hours = document.getElementById('hours') as HTMLInputElement
     if (hours == null) return
     const updated = Number(hours.value) - 1
     if (updated >= 0) {
-      hours.value = updated
+      hours.value = updated.toString()
     }
   }
   function handleMinUp() {
-    const mins = document.getElementById('minutes')
+    const mins = document.getElementById('minutes') as HTMLInputElement
     if (mins == null) return
     const updated = Number(mins.value) + 15
     if (updated > 45) {
-      mins.value = Number(0)
+      mins.value = '0'
     } else {
-      mins.value = updated
+      mins.value = updated.toString()
     }
   }
   function handleMinDown() {
-    const mins = document.getElementById('minutes')
+    const mins = document.getElementById('minutes') as HTMLInputElement
     if (mins == null) return
     const updated = Number(mins.value) - 1
     if (updated >= 0) {
-      mins.value = updated
+      mins.value = updated.toString()
     }
   }
 
