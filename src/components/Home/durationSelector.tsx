@@ -1,11 +1,9 @@
-export type Duration = {
-  hours: number
-  minutes: number
-}
+import { Duration } from '@/types/types'
 
 export interface DurationProps {
   id: string
   label: string
+  defaultValue?: Duration
   onHourChange: (event: React.ChangeEvent<HTMLInputElement>) => void
   onMinuteChange: (event: React.ChangeEvent<HTMLInputElement>) => void
 }
