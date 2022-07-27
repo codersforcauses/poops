@@ -68,9 +68,9 @@ function DurationSelector(props: DurationProps) {
       <div className='flex flex-row justify-center'>
         <div>
           <label htmlFor='hours'>Hours</label>
-          <div className='flex flex-row justify-center'>
+          <div className='mr-1 flex flex-row justify-center'>
             <input
-              className='mx-2 my-auto flex h-9 rounded border border-[#6b7280] py-0.5 px-4 text-center focus:border-[#0066ff] focus:outline-none'
+              className='my-auto mr-2 flex h-9 rounded border border-[#6b7280] py-0.5 px-4 text-center focus:border-[#0066ff] focus:outline-none'
               id='hours'
               type='number'
               step='1'
@@ -78,7 +78,7 @@ function DurationSelector(props: DurationProps) {
               min={0}
               max={24}
             />
-            <div className='flex w-5 flex-col text-sm'>
+            <div className='flex w-7 flex-col text-lg'>
               <button
                 type='button'
                 className='my-0.5 rounded bg-zinc-300'
@@ -99,9 +99,9 @@ function DurationSelector(props: DurationProps) {
 
         <div>
           <label htmlFor='minutes'>Minutes</label>
-          <div className='flex flex-row justify-center'>
+          <div className='ml-1 flex flex-row justify-center'>
             <input
-              className='mx-2 my-auto flex h-9 w-auto rounded border border-[#6b7280] py-0.5 px-4 text-center focus:border-[#0066ff] focus:outline-none'
+              className='my-auto mr-2 flex h-9 w-auto rounded border border-[#6b7280] py-0.5 px-4 text-center focus:border-[#0066ff] focus:outline-none'
               id='minutes'
               type='number'
               step='15'
@@ -109,7 +109,7 @@ function DurationSelector(props: DurationProps) {
               min={0}
               max={45}
             />
-            <div className='flex w-5 flex-col text-sm'>
+            <div className='flex w-7 flex-col text-lg'>
               <button
                 type='button'
                 className='my-0.5 rounded bg-zinc-300'
