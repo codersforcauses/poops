@@ -2,10 +2,18 @@ import Header from '@/components/Header'
 import Modal from '@/components/Home/modal'
 import Summary from '@/components/Home/summary'
 import NavBar from '@/components/NavBar'
-
-const dummyUsername = 'User'
+import { useFirestore } from '@/context/firestore'
 
 const Home = () => {
+  const { userDoc } = useFirestore()
+  const dummyUsername = userDoc.displayName ? ', ' + userDoc.displayName : ''
+  const allVisits = userDoc.visits
+  const numVisits = allVisits.length.toString()
+  let distanceWalked = 0
+  for (const visit of allVisits) {
+    distanceWalked += visit.walkDist
+  }
+  const distWalked = distanceWalked.toString()
   return (
     <>
       <Header pageTitle='Home' />
@@ -13,9 +21,9 @@ const Home = () => {
         <div className='h-[calc(max-content +4rem)] m-auto flex w-screen flex-col'>
           <div className='flex flex-col px-4 '>
             <h1 className='py-3 text-center text-3xl'>
-              Welcome, {dummyUsername}!
+              Welcome{dummyUsername}!
             </h1>
-            <Summary />
+            <Summary numVisits={numVisits} distWalked={distWalked} />
             <br />
             <div className='flex justify-center overscroll-none'>
               <Modal />
