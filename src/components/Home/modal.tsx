@@ -1,10 +1,8 @@
 import { useState } from 'react'
 import { Timestamp } from 'firebase/firestore'
 
-import {
-  clientSelectOptions,
-  commuteSelectOptions
-} from '@/components/Home/dummyOptions'
+import type { ClientOption } from '@/components/Home/commuteOptions'
+import { commuteSelectOptions } from '@/components/Home/commuteOptions'
 import DurationSelector from '@/components/Home/durationSelector'
 import Form from '@/components/Home/form'
 import FormField from '@/components/Visit/formfield'
@@ -17,6 +15,8 @@ import { Duration } from '@/types/types'
 function Modal() {
   const [commute, setCommute] = useState('')
   const [client, setClient] = useState('')
+  const [clientId, setClientId] = useState('')
+  const [pets, setPets] = useState('')
   const [type, setType] = useState('')
   const [walkDistance, setWalkDistance] = useState(0)
   const [startTime, setStartTime] = useState('')
@@ -28,6 +28,17 @@ function Modal() {
   })
   const { setAlert } = useAlert()
   const { userDoc, updateVisit } = useFirestore()
+  const allContacts = userDoc.contacts
+  const clientSelectOptions: ClientOption[] = []
+  for (const c of allContacts) {
+    clientSelectOptions.push({
+      value: c.id,
+      label: c.displayName,
+      pets: c.pets
+    })
+  }
+  clientSelectOptions.push({ value: '023', label: 'lulu', pets: 'wakka' })
+  clientSelectOptions.push({ value: '024', label: 'yuna', pets: 'valefor' })
 
   function formFilled() {
     return (
@@ -47,9 +58,9 @@ function Modal() {
   function handleSubmit(event: React.ChangeEvent<HTMLFormElement>) {
     const data: VisitData = {
       type: type,
-      clientId: '',
+      clientId: clientId,
       clientName: client,
-      petNames: '',
+      petNames: pets,
       startTime: Timestamp.fromDate(new Date(startTime)),
       duration: duration,
       walkDist: walkDistance,
@@ -58,6 +69,7 @@ function Modal() {
       notes: ''
     }
     userDoc.visits.push(data)
+    //console.log(data)
     updateVisit?.(userDoc)
 
     event.preventDefault()
@@ -124,7 +136,16 @@ function Modal() {
               placeholder='Select...'
               isRequired={true}
               selectOptions={clientSelectOptions}
-              onChange={(e) => setClient(String(e.target.value))}
+              onChange={(e) => {
+                setClientId(String(e.target.value))
+                const clientRow = clientSelectOptions.find(
+                  (c) => c.value == String(e.target.value)
+                )
+                if (clientRow) {
+                  setClient(clientRow.label)
+                  setPets(clientRow.pets)
+                }
+              }}
             />
             <Form
               id='type'
