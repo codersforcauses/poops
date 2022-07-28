@@ -37,8 +37,6 @@ function Modal() {
       pets: c.pets
     })
   }
-  clientSelectOptions.push({ value: '023', label: 'lulu', pets: 'wakka' })
-  clientSelectOptions.push({ value: '024', label: 'yuna', pets: 'valefor' })
 
   function formFilled() {
     return (
