@@ -13,6 +13,13 @@ const Document = () => {
           type='font/woff2'
           crossOrigin='anonymous'
         />
+        <link rel='icon' href='/favicon/favicon.svg' type='image/svg+xml' />
+        <link rel='manifest' href='/favicon/app.webmanifest' />
+        <link
+          rel='apple-touch-icon'
+          href='/favicon/android-chrome-512x512.png'
+        />
+        <meta name='theme-color' content='#fff' />
         <Favicon />
       </Head>
       <body>

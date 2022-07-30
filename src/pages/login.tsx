@@ -2,7 +2,8 @@ import { NextPage } from 'next'
 import Image from 'next/image'
 
 import LoginPanel from '@/components/Login/LoginPanel'
-import { useAuth } from '@/context/AuthContext'
+import { withPublic } from '@/components/PrivateRoute'
+import { useAuth } from '@/context/Firebase/Auth/context'
 
 const Login: NextPage = () => {
   const { logOut, currentUser } = useAuth()
@@ -28,12 +29,10 @@ const Login: NextPage = () => {
         </div>
 
         <LoginPanel
+          linkAccount={false}
           displayGoogle={true}
           displayFacebook={true}
-          displayTwitter={true}
           displayMicrosoft={true}
-          displayYahoo={false}
-          displayApple={false}
         />
       </div>
       {/* //! used for testing} */}
@@ -49,5 +48,4 @@ const Login: NextPage = () => {
   )
 }
 
-export default Login
-// export default withPublic(Login)
+export default withPublic(Login)

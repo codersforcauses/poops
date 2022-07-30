@@ -47,7 +47,12 @@ const Contact = ({ contact }: ContactProp) => {
         {!isEditing ? (
           <ContactInfo contact={contact} image='' />
         ) : (
-          <ContactForm contact={contact} image='' setIsEditing={setIsEditing} />
+          <ContactForm
+            contact={contact}
+            image=''
+            setIsEditing={setIsEditing}
+            isNewContact={false}
+          />
         )}
       </main>
     </>

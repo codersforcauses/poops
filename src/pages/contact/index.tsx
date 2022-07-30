@@ -1,4 +1,5 @@
-import { useState } from 'react'
+import { ChangeEvent, useState } from 'react'
+import Link from 'next/link'
 import { SearchIcon } from '@heroicons/react/outline'
 
 import CONTACT_DATA from '@/../mockData/CONTACT_DATA.json'
@@ -7,49 +8,52 @@ import ContactList from '@/components/Contact/contactlist'
 import ProfileItem from '@/components/Contact/profileitem'
 import Header from '@/components/Header'
 import NavBar from '@/components/NavBar'
-import SearchBar from '@/components/SearchBar/searchbar'
-import SearchTag from '@/components/SearchBar/searchtag'
+import { withProtected } from '@/components/PrivateRoute'
+import SearchBar from '@/components/SearchBar'
+import SearchTag from '@/components/SearchBar/SearchTag'
 import type { Contact } from '@/types/types'
-// import { withProtected } from '@/components/PrivateRoute
 
 // TODO: Get contact data from server
 const tags = CONTACT_DATA.map((contact) => {
   return contact.tags
 }).flat()
 const set = new Set(tags)
-const taglist = [...set]
+const tagFilter = [...set]
 
 const Contact = () => {
   const [filteredContacts, setFilteredContacts] =
+    // eslint-disable-next-line unused-imports/no-unused-vars
     useState<Contact[]>(CONTACT_DATA)
 
-  const [selectedOption, setSelectedOption] = useState('')
-  const [searchFieldString, setSearchFieldString] = useState('')
+  const [selectedTag, setSelectedTag] = useState<string>('')
+  const [searchFieldString, setSearchFieldString] = useState<string>('')
 
-  function filterContact(includes: string, searchField: string) {
+  function filterContact(tagf: string, searchField: string) {
     const filteredContacts = CONTACT_DATA.filter((contact) => {
       const full_name = contact.firstName + ' ' + contact.lastName
-      if (includes == '') {
-        return full_name.toLocaleLowerCase().includes(searchField)
-      }
-      const filtered =
-        full_name.toLocaleLowerCase().includes(searchField) &&
-        contact.tags.some((v) => v.includes(includes))
-      return filtered
+
+      // start for string, comma, or whitspace = word start, ignores case
+      const reg = new RegExp(`(^|\\s|,)${searchField}`, 'gi')
+
+      // don't show contacts without selected tag if tag selected
+      if (tagf !== '' && !contact.tags.some((v) => v.includes(tagf)))
+        return false
+
+      return reg.test(full_name) || reg.test(contact.pets)
     })
     setFilteredContacts(filteredContacts)
   }
 
-  const onSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const onSearchChange = (event: ChangeEvent<HTMLInputElement>) => {
     const searchFieldString = event.target.value.toLocaleLowerCase()
     setSearchFieldString(searchFieldString)
     // TODO: Get contact data from server
-    filterContact(selectedOption, searchFieldString)
+    filterContact(selectedTag, searchFieldString)
   }
 
-  const onSearchTagChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+  const onSearchTagChange = (event: ChangeEvent<HTMLSelectElement>) => {
     const option_value = event.target.value
-    setSelectedOption(option_value)
+    setSelectedTag(option_value)
     filterContact(option_value, searchFieldString)
   }
 
@@ -62,18 +66,33 @@ const Contact = () => {
         <div className='m-auto flex h-14 max-w-md flex-row'>
           <div className='flex-1'></div>
           <h1 className='m-3 flex-1 text-center text-2xl'>Contacts</h1>
-          <div className='flex-1'></div>
+          <div className='m-auto flex-1 text-center'>
+            <Link href='/contact/new'>
+              <button
+                type='button'
+                className='rounded bg-primary py-1 px-4 font-bold text-white hover:bg-dark-red'
+              >
+                Add
+              </button>
+            </Link>
+          </div>
         </div>
 
         <div className='m-auto max-w-md'>
           <div className='m-2 flex flex-row rounded-xl border-2 border-gray-300'>
-            <SearchTag options={taglist} onChangehandler={onSearchTagChange} />
+            <SearchTag
+              name='Filter By'
+              options={tagFilter}
+              onChangehandler={(e: ChangeEvent<HTMLSelectElement>) =>
+                onSearchTagChange(e)
+              }
+            />
             <div className='flex w-full justify-between'>
               <SearchBar onChangeHandler={onSearchChange} />
               <SearchIcon className='my-auto mx-2 h-6' />
             </div>
           </div>
-          {searchFieldString === '' && selectedOption === '' && (
+          {searchFieldString === '' && selectedTag === '' && (
             <ProfileItem profile={PROFILE_DATA} image='' />
           )}
           <ContactList contacts={filteredContacts} />
@@ -84,5 +103,4 @@ const Contact = () => {
   )
 }
 
-export default Contact
-// export default withProtected(Contact)
+export default withProtected(Contact)
