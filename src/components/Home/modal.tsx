@@ -30,12 +30,16 @@ function Modal() {
   const { userDoc, updateVisit } = useFirestore()
   const allContacts = userDoc.contacts
   const clientSelectOptions: ClientOption[] = []
-  for (const c of allContacts) {
-    clientSelectOptions.push({
-      value: c.id,
-      label: c.displayName,
-      pets: c.pets
-    })
+
+  for (let c = 0; c < allContacts.length; c++) {
+    if (c != 0) {
+      // not the user's contact
+      clientSelectOptions.push({
+        value: allContacts[c].id,
+        label: allContacts[c].displayName,
+        pets: allContacts[c].pets
+      })
+    }
   }
 
   function formFilled() {
