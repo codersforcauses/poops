@@ -3,7 +3,7 @@ import Select, { SingleValue } from 'react-select'
 
 import { FormFieldProps } from '@/components/Visit/formfield'
 import customStyles from '@/components/Visit/selectorstyles'
-import { useFirestore } from '@/context/firestore'
+import { useFirestore } from '@/context/Firebase/Firestore/context'
 import { SelectOption } from '@/types/types'
 
 interface ClientSelectorProps extends FormFieldProps {
