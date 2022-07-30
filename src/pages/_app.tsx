@@ -13,7 +13,6 @@ const POOPS = ({ Component, pageProps }: AppProps) => {
         <FirestoreProvider>
           <AlertContextProvider>
             <Component {...pageProps} />
-            {/* <NavBar /> */}
           </AlertContextProvider>
         </FirestoreProvider>
       </AuthContextProvider>

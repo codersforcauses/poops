@@ -11,6 +11,7 @@ import NavBar from '@/components/NavBar'
 import { withProtected } from '@/components/PrivateRoute'
 import SearchBar from '@/components/SearchBar'
 import SearchTag from '@/components/SearchBar/SearchTag'
+import TopNav from '@/components/TopNav'
 import type { Contact } from '@/types/types'
 
 // TODO: Get contact data from server
@@ -61,8 +62,8 @@ const Contact = () => {
     <>
       {/* <Seo /> */}
       <Header pageTitle='Contact' />
-
-      <main>
+      <TopNav />
+      <main className='h-[calc(100%-7rem)]'>
         <div className='m-auto flex h-14 max-w-md flex-row'>
           <div className='flex-1'></div>
           <h1 className='m-3 flex-1 text-center text-2xl'>Contacts</h1>
