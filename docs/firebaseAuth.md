@@ -111,3 +111,11 @@ const Login = () => {
 }
 export default withPublic(Profile)
 ```
+
+---
+
+## User Log-in Flow
+
+If a user is not logged in, they are redirected to the login page. The user then selects a login method. If they select a social media account, they are redirected to that site to log into their account, they are then redirected back to the homepage, with firebase handling authentication between the external service and the POOPS account.
+
+When a user logs into the POOPS website for the first time, they are redirected to enter more information about themselves to set up their account. On subsequent log-ins, they are redirected to the homepage.
