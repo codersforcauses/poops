@@ -5,6 +5,8 @@ import LoginPanel from '@/components/Login/LoginPanel'
 import { withPublic } from '@/components/PrivateRoute'
 import { useAuth } from '@/context/Firebase/Auth/context'
 
+import Button from '../components/Button/Button_component'
+
 const Login: NextPage = () => {
   const { logOut, currentUser } = useAuth()
   return (
@@ -41,7 +43,7 @@ const Login: NextPage = () => {
       {currentUser && (
         <div className='text-center'>
           <p>{currentUser?.displayName}</p>
-          <button onClick={() => logOut?.()}>logout</button>
+          <Button handler={() => logOut?.()} buttonlabel='logout' />
         </div>
       )}
     </main>

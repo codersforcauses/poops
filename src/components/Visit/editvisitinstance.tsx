@@ -1,6 +1,7 @@
 import { Dispatch, SetStateAction, useState } from 'react'
 import { Timestamp } from 'firebase/firestore'
 
+import Button from '@/components/Button/Button_component'
 import { getCommuteMethods } from '@/components/Visit/commuteselector'
 import {
   formatDuration,
@@ -190,24 +191,23 @@ const EditableVisitInstance = (props: EditVisitInstanceProps) => {
         </div>
       </div>
 
-      <button
-        type='submit'
-        className='text-bold mt-2 rounded-xl bg-primary p-2 text-white drop-shadow-default active:bg-dark-red'
-      >
-        Submit
-      </button>
-      <button
-        type='button'
-        className='text-bold mt-2 ml-4 rounded-xl bg-primary p-1 text-white drop-shadow-default active:bg-dark-red'
-        onClick={() => {
+      <Button
+        buttonlabel='Submit'
+        buttontype='submit'
+        attribute='text-bold mt-2 rounded-xl bg-primary p-2 text-white drop-shadow-default active:bg-dark-red'
+      />
+
+      <Button
+        buttontype='button'
+        buttonlabel='Remove'
+        attribute='text-bold mt-2 ml-4 rounded-xl bg-primary p-1 text-white drop-shadow-default active:bg-dark-red'
+        handler={() => {
           userDoc.visits.splice(props.id, 1)
           const temp: VisitData[] = [...userDoc.visits] //temp needed for react to rerender
           props.set(temp)
           updateVisit?.(userDoc)
         }}
-      >
-        Remove
-      </button>
+      />
     </form>
   )
 }

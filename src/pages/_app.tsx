@@ -1,4 +1,5 @@
 import { AppProps } from 'next/app'
+import { BrowserRouter } from 'react-router-dom'
 
 import { AlertContextProvider } from '@/context/AlertContext'
 import { AuthContextProvider } from '@/context/Firebase/Auth'
@@ -12,8 +13,10 @@ const POOPS = ({ Component, pageProps }: AppProps) => {
       <AuthContextProvider>
         <FirestoreProvider>
           <AlertContextProvider>
-            <Component {...pageProps} />
-            {/* <NavBar /> */}
+            <BrowserRouter>
+              <Component {...pageProps} />
+              {/* <NavBar /> */}
+            </BrowserRouter>
           </AlertContextProvider>
         </FirestoreProvider>
       </AuthContextProvider>

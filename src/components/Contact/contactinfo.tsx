@@ -9,6 +9,8 @@ import Avatar from '@/components/Contact/avatar'
 import { AlertVariant, useAlert } from '@/context/AlertContext'
 import type { Contact } from '@/types/types'
 
+import Button from '../Button/Button_component'
+
 type ContactInfoProps = {
   contact: Contact
   image: string
@@ -117,9 +119,8 @@ function ContactInfo({ contact, image }: ContactInfoProps) {
         <span className='text-xl'> {contact.notes} </span>
       </Box>
       <div className='mb-2'>
-        <button
-          type='button'
-          onClick={() => {
+        <Button
+          handler={() => {
             setAlert({
               variant: AlertVariant.security,
               title: 'Delete Contact',
@@ -128,10 +129,9 @@ function ContactInfo({ contact, image }: ContactInfoProps) {
               confirmFunction: () => null /* will call firebase function  */
             })
           }}
-          className='w-80 rounded bg-primary py-1 font-bold text-white hover:bg-dark-red'
-        >
-          Delete Contact
-        </button>
+          buttonlabel='Delete Contact'
+          attribute='w-80 rounded bg-primary py-1 font-bold text-white hover:bg-dark-red'
+        />
       </div>
     </div>
   )

@@ -1,5 +1,6 @@
 import Image from 'next/image'
 
+import Button from '../Button/Button_component'
 type CurrentPageProp = {
   currentPage: string
 }
@@ -11,13 +12,12 @@ export const NavIcon = ({ currentPage }: CurrentPageProp) => {
 
   return (
     <div className='flex justify-center'>
-      <button
-        className={
+      <Button
+        attribute={
           currentPage === 'Visit' ? activeButtonStyle : inactiveButtonStyle
         }
-      >
-        <Image alt='dog-icon' src='/images/dog-icon.png' layout='fill' />
-      </button>
+        icon={<Image alt='dog-icon' src='/images/dog-icon.png' layout='fill' />}
+      />
     </div>
   )
 }

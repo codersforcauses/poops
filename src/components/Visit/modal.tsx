@@ -2,6 +2,7 @@ import { FormEvent, useState } from 'react'
 import { XIcon } from '@heroicons/react/solid'
 import { Timestamp } from 'firebase/firestore'
 
+import Button from '@/components/Button/Button_component'
 import { visitSelectOptions } from '@/components/Visit/visitlist'
 import { useFirestore } from '@/context/Firebase/Firestore/context'
 import { VisitData } from '@/types/types'
@@ -60,9 +61,10 @@ const ModalView = ({ toggleModal }: ModalViewProps) => {
     <div className='z-50 p-4'>
       <>
         <div className='fixed right-5 top-4 z-[100] h-10 w-10 rounded-full bg-primary p-1 drop-shadow-default'>
-          <button onClick={toggleModal}>
-            <XIcon className='h-full w-full text-white' />
-          </button>
+          <Button
+            icon={<XIcon className='h-full w-full text-white' />}
+            handler={toggleModal}
+          />
         </div>
 
         <div className='border-b-2 border-primary py-3 pt-10'>
@@ -169,13 +171,12 @@ const ModalView = ({ toggleModal }: ModalViewProps) => {
             onChange={(event) => setNotes(event.target.value)}
           />
           <div className='mx-auto my-2 flex flex-col p-1 '>
-            <button
-              className='text-bold rounded bg-primary px-12 py-4 text-white drop-shadow-default active:bg-dark-red disabled:bg-dark-gray'
-              disabled={!isSubmitEnabled()}
-              type='submit'
-            >
-              Submit
-            </button>
+            <Button
+              buttontype='submit'
+              buttonlabel='Submit'
+              attribute='text-bold rounded bg-primary px-12 py-4 text-white drop-shadow-default active:bg-dark-red disabled:bg-dark-gray'
+              disabled_function={!isSubmitEnabled()}
+            />
           </div>
         </form>
       </>

@@ -7,6 +7,8 @@ import RegionSelector from '@/components/Contact/regiondropdown'
 import TagSelector from '@/components/Contact/tagdropdown'
 import type { Contact } from '@/types/types'
 
+import Button from '../Button/Button_component'
+
 type ContactInfoProps = {
   contact: Contact
   image: string
@@ -179,22 +181,19 @@ const ContactForm = ({
         {/* FORM BUTTONS */}
         <div className='mb-3 flex justify-center'>
           <div className='flex flex-col space-y-1'>
-            <button
-              type='submit'
-              className='w-80 rounded bg-primary py-1 font-bold text-white hover:bg-dark-red'
-            >
-              Save
-            </button>
+            <Button
+              handler={() => submitForm}
+              buttonlabel='Save'
+              attribute='w-80 rounded bg-primary py-1 font-bold text-white hover:bg-dark-red'
+            />
             {!isNewContact && (
-              <button
-                type='button'
-                className='bg-grey hover:bg-grey w-80 rounded py-1 font-bold text-black'
-                onClick={() => {
+              <Button
+                handler={() => {
                   if (setIsEditing !== undefined) setIsEditing(false)
                 }}
-              >
-                Cancel
-              </button>
+                buttonlabel='Cancel'
+                attribute='bg-grey hover:bg-grey w-80 rounded py-1 font-bold text-black'
+              />
             )}
           </div>
         </div>

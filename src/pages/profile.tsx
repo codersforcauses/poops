@@ -1,9 +1,9 @@
+import Button from '@/components/Button/Button_component'
 import Header from '@/components/Header'
 import LoginPanel from '@/components/Login/LoginPanel'
 import NavBar from '@/components/NavBar'
 import { withProtected } from '@/components/PrivateRoute'
 import { useAuth } from '@/context/Firebase/Auth/context'
-
 const Profile = () => {
   const { logOut } = useAuth()
   // const googleProvider = new GoogleAuthProvider()
@@ -16,7 +16,8 @@ const Profile = () => {
 
       <main>
         <p>Profile Page</p>
-        <button onClick={logOut}>logout</button>
+        <Button handler={() => logOut} buttonlabel='logout' />
+
         <LoginPanel
           linkAccount={true} // Links Auth methods to current logged in user
           displayGoogle={true}

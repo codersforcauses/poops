@@ -1,6 +1,6 @@
 import { ChangeEvent, useState } from 'react'
-import Link from 'next/link'
 import { SearchIcon } from '@heroicons/react/outline'
+import { useNavigate } from 'react-router-dom'
 
 import CONTACT_DATA from '@/../mockData/CONTACT_DATA.json'
 import PROFILE_DATA from '@/../mockData/PROFILE_DATA.json'
@@ -12,6 +12,8 @@ import { withProtected } from '@/components/PrivateRoute'
 import SearchBar from '@/components/SearchBar'
 import SearchTag from '@/components/SearchBar/SearchTag'
 import type { Contact } from '@/types/types'
+
+import Button from '../../components/Button/Button_component'
 
 // TODO: Get contact data from server
 const tags = CONTACT_DATA.map((contact) => {
@@ -57,6 +59,13 @@ const Contact = () => {
     filterContact(option_value, searchFieldString)
   }
 
+  const navigate = useNavigate()
+  const routeChange = () => {
+    const path = `contact/new`
+    navigate(path)
+    window.location.reload()
+  }
+
   return (
     <>
       {/* <Seo /> */}
@@ -67,14 +76,11 @@ const Contact = () => {
           <div className='flex-1'></div>
           <h1 className='m-3 flex-1 text-center text-2xl'>Contacts</h1>
           <div className='m-auto flex-1 text-center'>
-            <Link href='/contact/new'>
-              <button
-                type='button'
-                className='rounded bg-primary py-1 px-4 font-bold text-white hover:bg-dark-red'
-              >
-                Add
-              </button>
-            </Link>
+            <Button
+              handler={routeChange}
+              attribute='rounded bg-primary py-1 px-4 font-bold text-white hover:bg-dark-red'
+              buttonlabel='Add'
+            />
           </div>
         </div>
 
