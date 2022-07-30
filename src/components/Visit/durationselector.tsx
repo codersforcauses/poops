@@ -41,7 +41,7 @@ const DurationSelector = (props: DurationProps) => {
           defaultValue={props.defaultValue?.minutes}
           onChange={props.onMinuteChange}
         >
-          <option value={0}>0</option>
+          <option value={0}>00</option>
           <option value={15}>15</option>
           <option value={30}>30</option>
           <option value={45}>45</option>
