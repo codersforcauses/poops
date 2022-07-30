@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 
 import { findContactIndex } from '@/components/Visit/utils'
-import { useFirestore } from '@/context/firestore'
+import { useFirestore } from '@/context/Firebase/Firestore/context'
 import { VisitData } from '@/types/types'
 
 import VisitInstance from './visitinstance'

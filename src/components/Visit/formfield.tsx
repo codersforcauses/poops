@@ -1,3 +1,5 @@
+import { ChangeEvent } from 'react'
+
 import { SelectOption } from '@/types/types'
 
 export interface FormFieldProps {
@@ -7,7 +9,7 @@ export interface FormFieldProps {
   placeholder?: string
   value?: string
   onChange?: (
-    event: React.ChangeEvent<
+    event: ChangeEvent<
       HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
     >
   ) => void
@@ -64,6 +66,7 @@ const inputSwitch = (props: FormFieldProps) => {
           type={props.type}
           value={props.value}
           step={props.type === 'number' ? '0.001' : undefined}
+          min={props.type === 'number' ? '0' : undefined}
           required={props.isRequired}
           placeholder={props.placeholder}
           onChange={props.onChange}

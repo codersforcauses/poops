@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import { ChangeEvent, FormEvent, useEffect } from 'react'
 import { Dispatch, SetStateAction, useState } from 'react'
 import tw from 'tailwind-styled-components'
 
@@ -25,9 +25,7 @@ const ContactForm = ({
   const [contactForm, setContactForm] = useState(contact)
 
   const handleInputChange = (
-    e:
-      | React.ChangeEvent<HTMLInputElement>
-      | React.ChangeEvent<HTMLTextAreaElement>
+    e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>
   ) => {
     const { name, value } = e.target
     setContactForm({ ...contactForm, [name]: value })
@@ -42,7 +40,7 @@ const ContactForm = ({
   }, [regions, tags])
 
   // TODO: Submit ContactForm to database
-  const submitForm = (e: React.FormEvent) => {
+  const submitForm = (e: FormEvent) => {
     e.preventDefault()
     if (setIsEditing !== undefined) setIsEditing(false)
 
@@ -137,17 +135,17 @@ const ContactForm = ({
           />
         </Box>
         {/* TAGS */}
-        <Box>
-          <label htmlFor='tags' className='text-dark-red'>
-            Tags
-          </label>
-
-          <TagSelector tags={contact.tags} setTags={setTags} />
-
-          {/* This should be done as a react component i think? */}
-          {/* Padding to counter the shadow */}
-          <div className='pt-2'></div>
-        </Box>
+        {contact.id !== 'me' && (
+          <Box>
+            <label htmlFor='tags' className='text-dark-red'>
+              Tags
+            </label>
+            <TagSelector tags={contact.tags} setTags={setTags} />
+            {/* This should be done as a react component i think? */}
+            {/* Padding to counter the shadow */}
+            <div className='pt-2'></div>
+          </Box>
+        )}
         {/* REGIONS */}
         <Box className='pb-3'>
           <label htmlFor='regions' className='text-dark-red'>

@@ -12,7 +12,7 @@ import DurationSelector from '@/components/Visit/durationselector'
 import FormField from '@/components/Visit/formfield'
 import { formatTimestamp, visitSelectOptions } from '@/components/Visit/utils'
 import { findContactIndex } from '@/components/Visit/utils'
-import { useFirestore } from '@/context/firestore'
+import { useFirestore } from '@/context/Firebase/Firestore/context'
 import { Duration, VisitData } from '@/types/types'
 
 const Visit = () => {
