@@ -1,11 +1,4 @@
-import {
-  createContext,
-  ReactNode,
-  useCallback,
-  useContext,
-  useMemo,
-  useState
-} from 'react'
+import React, { createContext, useCallback, useContext, useState } from 'react'
 
 import Alert from '@/components/UI/alert'
 
@@ -57,6 +50,7 @@ export const AlertContextProvider = ({ children }: { children: ReactNode }) => {
   })
 
   const setAlert = (content: AlertContentProps) => {
+    setVisible(true)
     setContent({
       title: content.title ?? '',
       text: content.text,
@@ -81,14 +75,11 @@ export const AlertContextProvider = ({ children }: { children: ReactNode }) => {
     })
   }, [])
 
-  const value: AlertContextProps = useMemo(
-    () => ({
-      setAlert,
-      clearAlert,
-      visible
-    }),
-    [clearAlert, visible]
-  )
+  const value: AlertContextProps = {
+    setAlert,
+    clearAlert,
+    visible
+  }
 
   return (
     <AlertContext.Provider value={value}>
@@ -96,19 +87,31 @@ export const AlertContextProvider = ({ children }: { children: ReactNode }) => {
         style={
           visible && content.position === 'bottom'
             ? {
-                filter: 'blur(5px)',
-                pointerEvents: 'none'
+                filter: 'blur(3px) brightness(0.85) grayscale(0.6)',
+                backgroundColor: 'white'
               }
             : {
-                filter: 'blur(0px)',
-                pointerEvents: 'all'
+                filter: 'blur(0px) brightness(1.0) grayscale(0.0)'
               }
         }
-        className='z-999 fixed top-0 right-0 bottom-0 left-0 transition-all duration-700'
+        className='z-999 fixed top-0 right-0 bottom-0 left-0 -m-10 transition-[filter] duration-700'
       >
+        {visible && content.position === 'bottom' && (
+          <div
+            style={{
+              pointerEvents: 'all',
+              position: 'fixed',
+              top: 0,
+              right: 0,
+              bottom: 0,
+              left: 0,
+              zIndex: 999
+            }} // consume all clicks if alert is visible and bottom
+          ></div>
+        )}
         {children}
       </div>
-      <Alert visible={visible} setVisible={setVisible} content={content} />
+      <Alert visible={visible} content={content} clearAlert={clearAlert} />
     </AlertContext.Provider>
   )
 }

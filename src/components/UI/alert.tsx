@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import {
   AnnotationIcon,
   CheckIcon,
@@ -25,7 +25,7 @@ const buttonClasses =
   'mx-auto mt-2 w-fit rounded-lg bg-primary py-1 px-4 text-lg text-white shadow-md focus:outline-primary active:bg-dark-red'
 const getContainerClasses = (vis: boolean, pos: string) => {
   return (
-    `flex items-center fixed right-0 left-0 z-999 pointer-events-auto bg-white text-black border-x-1 border-[#dddddd] transition-transform duration-700` +
+    `flex items-center fixed right-0 left-0 z-9999 bg-white text-black border-x-1 border-[#dddddd] transition-transform duration-700 ease-in-out` +
     `${
       pos === 'top'
         ? ' rounded-b-md border-b-1 -top-[250px] pl-5 pr-4 py-3 mx-[1rem]' +
@@ -39,11 +39,11 @@ const getContainerClasses = (vis: boolean, pos: string) => {
 
 type AlertProps = {
   visible: boolean
-  setVisible: (visible: boolean) => void
   content: AlertContentProps
+  clearAlert: () => void
 }
 
-const Alert = ({ visible, setVisible, content }: AlertProps) => {
+const Alert: React.FC<AlertProps> = ({ visible, content, clearAlert }) => {
   const [contentCache, setContentCache] = useState<AlertContentProps>({
     title: '', // string[2], first element is tile, second is message
     text: '',
@@ -60,34 +60,25 @@ const Alert = ({ visible, setVisible, content }: AlertProps) => {
 
   const timerRef = useRef<ReturnType<typeof setTimeout>>()
 
-  // utility function that sets and then clears a timer to automatically close alert
-  const doUpdate = useCallback(
-    (c: AlertContentProps) => {
-      if (c.text !== '') {
-        setContentCache({
-          title: c.title,
-          text: c.text,
-          position: c.position,
-          confirmFunction: c.confirmFunction, // function to execute on confirm, enables the confirm function
-          cancelFunction: c.cancelFunction,
-          showFor: c.showFor, // ms alert will stay open, set to -1 to leave open until button click
-          variant: c.variant
-        })
-        setVisible(true)
-        if (c.showFor !== -1) {
-          timerRef.current = setTimeout(() => {
-            setVisible(false)
-          }, content.showFor)
-        }
-      }
-    },
-    [content, setVisible]
-  )
-
   useEffect(() => {
     if (timerRef.current) clearTimeout(timerRef.current)
-    doUpdate(content)
-  }, [content, doUpdate])
+    if (content.text !== '') {
+      setContentCache({
+        title: content.title,
+        text: content.text,
+        position: content.position,
+        confirmFunction: content.confirmFunction, // function to execute on confirm, enables the confirm function
+        cancelFunction: content.cancelFunction,
+        showFor: content.showFor, // ms alert will stay open, set to -1 to leave open until button click
+        variant: content.variant
+      })
+      if (content.showFor !== -1) {
+        timerRef.current = setTimeout(() => {
+          clearAlert()
+        }, content.showFor)
+      }
+    }
+  }, [content, clearAlert])
 
   useEffect(() => {
     return () => {
@@ -97,6 +88,7 @@ const Alert = ({ visible, setVisible, content }: AlertProps) => {
 
   return (
     <div
+      role='alert'
       className={getContainerClasses(visible, contentCache.position ?? 'top')}
       style={{ boxShadow: shadow }}
     >
@@ -114,23 +106,23 @@ const Alert = ({ visible, setVisible, content }: AlertProps) => {
         )}
       </div>
       <div
-        className={
-          contentCache.position === 'bottom'
-            ? 'mx-[1rem]'
-            : 'mx-[1rem] grow self-start'
-        }
+        className={`mx-[1rem] ${
+          contentCache.position === 'top' ? 'mx-[1rem] grow self-start' : ''
+        }`}
       >
         <p className='font-bold' style={{ color: titleColor }}>
           {contentCache.title}
         </p>
         <p style={{ color: textColor }}>{contentCache.text}</p>
       </div>
-      {contentCache.position === 'bottom' ? (
+      {contentCache.position === 'bottom' && (
         <div className='h-0 basis-full'></div>
-      ) : (
-        ''
       )}
-      <div className={contentCache.position === 'bottom' ? 'pt-5' : 'h-5'}>
+      <div
+        className={
+          contentCache.position === 'bottom' ? 'pt-5' : 'inline-flex h-5'
+        }
+      >
         {typeof contentCache.confirmFunction !== 'undefined' && (
           <button
             className={
@@ -140,7 +132,7 @@ const Alert = ({ visible, setVisible, content }: AlertProps) => {
             }
             onClick={(e) => {
               e.preventDefault()
-              setVisible(false)
+              clearAlert()
               if (typeof contentCache.confirmFunction !== 'undefined')
                 contentCache.confirmFunction()
             }}
@@ -155,7 +147,7 @@ const Alert = ({ visible, setVisible, content }: AlertProps) => {
           className={contentCache.position === 'bottom' ? buttonClasses : ''}
           onClick={(e) => {
             e.preventDefault()
-            setVisible(false)
+            clearAlert()
             if (typeof contentCache.cancelFunction !== 'undefined')
               contentCache.cancelFunction()
           }}

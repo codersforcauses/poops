@@ -24,3 +24,10 @@
 
 @layer utilities {
 }
+
+main {
+  height: 100vh; /* 4rem is bottom nav height */
+  padding-bottom: 4rem;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
