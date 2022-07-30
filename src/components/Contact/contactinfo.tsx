@@ -74,7 +74,7 @@ function ContactInfo({ firestoreIndex, image }: ContactInfoProps) {
         <span className='text-xl'>{contact.streetAddress}</span>
       </Box>
       {/* TAGS */}
-      {contact.id != 'me' ?? (
+      {contact.id !== 'me' && (
         <Box>
           <label htmlFor='tags' className='text-dark-red'>
             Tags
