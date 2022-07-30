@@ -3,7 +3,6 @@ import {
   Auth,
   AuthProvider,
   getRedirectResult,
-  GoogleAuthProvider,
   linkWithRedirect,
   onAuthStateChanged,
   signInWithRedirect,
@@ -25,9 +24,25 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
   function externalAuthSignIn(auth: Auth, provider: AuthProvider) {
     signInWithRedirect(auth, provider)
       .then((result) => {
+        // console.log(result)
+        getRedirectResult(auth).then(function (result) {
+          // console.log(result)
+          if (result) {
+            const user = result.user
+            if (
+              user.email == null ||
+              user.displayName == null ||
+              user.phoneNumber == null
+            ) {
+              // console.log('User is not completely signed in')
+              // TODO redirect user to complete sign up
+            }
+          }
+        })
         return result
       })
       .catch((error) => {
+        // console.log("ERRORRRRRRRRRRRRRRRRRRRRRRRRRr")
         return error
       })
   }
@@ -46,28 +61,6 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
       })
   } // TODO Success message for user?
 
-  function getGoogleResults(auth: Auth) {
-    getRedirectResult(auth)
-      .then((result) => {
-        if (result !== null) {
-          const credential = GoogleAuthProvider.credentialFromResult(result)
-          if (credential !== null) {
-            // const token = credential.accessToken;
-          }
-          const user = result.user
-          return user
-        }
-      })
-      .catch((error) => {
-        return error
-        // const errorCode = error.code;
-        // const errorMessage = error.message;
-        // The email of the user's account used.
-        // const email = error.customData.email;
-        // The AuthCredential type that was used.
-        // const credential = GoogleAuthProvider.credentialFromError(error);
-      })
-  }
   //to log out curremt user
   function logOut() {
     signOut(auth)
@@ -89,7 +82,6 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
 
   const value: FirebaseContextProps = {
     auth,
-    getGoogleResults,
     linkAuthProvider,
     externalAuthSignIn,
     logOut,

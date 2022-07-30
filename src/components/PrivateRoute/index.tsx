@@ -21,6 +21,7 @@ export function withProtected(Component: ComponentType) {
     const { auth } = useAuth()
     const user = auth.currentUser
     const router = useRouter()
+    // console.log(user)
     if (user === null) {
       router.replace('/login')
       return <h1>Loading...</h1> // TODO make a better looking loading screen?
