@@ -40,7 +40,7 @@ const Login: NextPage = () => {
       <br />
       {currentUser && (
         <div className='text-center'>
-          <p>{currentUser?.clientName}</p>
+          <p>{currentUser?.displayName}</p>
           <button onClick={() => logOut?.()}>logout</button>
         </div>
       )}

@@ -5,7 +5,6 @@ import {
   SetStateAction,
   useState
 } from 'react'
-import Link from 'next/link'
 import { SearchIcon } from '@heroicons/react/outline'
 
 import ContactDetails from '@/components/Contact/contactdetails'
@@ -15,8 +14,8 @@ import NavBar from '@/components/NavBar'
 import { withProtected } from '@/components/PrivateRoute'
 import SearchBar from '@/components/SearchBar'
 import SearchTag from '@/components/SearchBar/searchtag'
-import type { Contact } from '@/types/types'
 import { useFirestore } from '@/context/Firebase/Firestore/context'
+import type { Contact } from '@/types/types'
 
 type ContactContextProps = {
   allContacts: Contact[]
