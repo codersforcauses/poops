@@ -19,41 +19,42 @@ const Contact = ({ contact }: ContactProp) => {
   return (
     <>
       <Header pageTitle={`${contact.firstName} ${contact.lastName}`} />
-
-      <div className='sticky top-0 z-50 w-full bg-white'>
-        <div className='m-auto flex h-14 max-w-md flex-row'>
-          <div className='m-auto flex-1 text-center'>
-            <Link href='/contact'>
-              <button
-                type='button'
-                className='rounded bg-primary py-1 px-4 font-bold text-white hover:bg-dark-red'
-              >
-                Back
-              </button>
-            </Link>
-          </div>
-          <div className='flex-1'></div>
-          <div className='m-auto flex-1'>
-            {!isEditing && (
-              <PencilIcon
-                className='m-auto flex h-7 w-7 cursor-pointer'
-                onClick={() => setIsEditing(true)}
-              />
-            )}
+      <main>
+        <div className='sticky top-0 z-50 w-full bg-white'>
+          <div className='m-auto flex h-14 max-w-md flex-row'>
+            <div className='m-auto flex-1 text-center'>
+              <Link href='/contact'>
+                <button
+                  type='button'
+                  className='rounded bg-primary py-1 px-4 font-bold text-white hover:bg-dark-red'
+                >
+                  Back
+                </button>
+              </Link>
+            </div>
+            <div className='flex-1'></div>
+            <div className='m-auto flex-1'>
+              {!isEditing && (
+                <PencilIcon
+                  className='m-auto flex h-7 w-7 cursor-pointer'
+                  onClick={() => setIsEditing(true)}
+                />
+              )}
+            </div>
           </div>
         </div>
-      </div>
 
-      {!isEditing ? (
-        <ContactInfo contact={contact} image='' />
-      ) : (
-        <ContactForm
-          contact={contact}
-          image=''
-          setIsEditing={setIsEditing}
-          isNewContact={false}
-        />
-      )}
+        {!isEditing ? (
+          <ContactInfo contact={contact} image='' />
+        ) : (
+          <ContactForm
+            contact={contact}
+            image=''
+            setIsEditing={setIsEditing}
+            isNewContact={false}
+          />
+        )}
+      </main>
     </>
   )
 }
