@@ -8,7 +8,7 @@ import Form from '@/components/Home/form'
 import FormField from '@/components/Visit/formfield'
 import { visitSelectOptions } from '@/components/Visit/visitlist'
 import { AlertVariant, useAlert } from '@/context/AlertContext'
-import { useFirestore } from '@/context/firestore'
+import { useFirestore } from '@/context/Firebase/Firestore/context'
 import type { VisitData } from '@/types/types'
 import { Duration } from '@/types/types'
 
@@ -108,6 +108,7 @@ function Modal() {
               id='commuteMethod'
               label='Commute Method'
               type='select'
+              isNumPad={false}
               placeholder='Select...'
               isRequired={true}
               selectOptions={commuteSelectOptions}
@@ -118,6 +119,7 @@ function Modal() {
                 id='other'
                 label='Other Commute Method'
                 type='text'
+                isNumPad={false}
                 placeholder='Enter...'
                 isRequired={true}
                 onChange={(e) => setOther(String(e.target.value))}
@@ -127,6 +129,7 @@ function Modal() {
               id='commuteDistance'
               label='Commute Distance (in km)'
               type='text'
+              isNumPad={true}
               placeholder='Enter...'
               isRequired={true}
               onChange={(e) => setCommuteDistance(Number(e.target.value))}
@@ -135,6 +138,7 @@ function Modal() {
               id='client'
               label='Select Client'
               type='select'
+              isNumPad={false}
               placeholder='Select...'
               isRequired={true}
               selectOptions={clientSelectOptions}
@@ -153,6 +157,7 @@ function Modal() {
               id='type'
               label='Type of Visit'
               type='select'
+              isNumPad={false}
               placeholder='Select...'
               isRequired={true}
               selectOptions={visitSelectOptions}
@@ -164,6 +169,7 @@ function Modal() {
               id='walkDistance'
               label='Walk Distance (in km)'
               type='text'
+              isNumPad={true}
               placeholder='Enter...'
               isRequired={true}
               onChange={(e) => setWalkDistance(Number(e.target.value))}

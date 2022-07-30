@@ -4,45 +4,48 @@ export interface DurationProps {
   id: string
   label: string
   defaultValue?: Duration
-  onHourChange: (event: React.ChangeEvent<HTMLInputElement>) => void
-  onMinuteChange: (event: React.ChangeEvent<HTMLInputElement>) => void
+  onHourChange: (event: React.ChangeEvent<HTMLSelectElement>) => void
+  onMinuteChange: (event: React.ChangeEvent<HTMLSelectElement>) => void
 }
 
-function DurationSelector(props: DurationProps) {
+const DurationSelector = (props: DurationProps) => {
   return (
-    <div className='flex flex-col p-1'>
-      <p className='font-bold'>
+    <div className='p-1'>
+      <label className='font-bold'>
         <span className='text-primary'>*</span>
         {props.label}
-      </p>
+      </label>
 
-      <div className='flex flex-row justify-center'>
-        <div>
-          <label htmlFor='hours'>Hours</label>
-          <input
-            className='mx-2 mt-1 mb-2 flex h-9 rounded border border-[#6b7280] py-0.5 px-4 text-center focus:border-[#0066ff] focus:outline-none'
-            id='hours'
-            type='number'
-            step='1'
-            defaultValue={0}
-            min={0}
-            max={24}
-            onChange={props.onHourChange}
-          />
-        </div>
-        <div>
-          <label htmlFor='minutes'>Minutes</label>
-          <input
-            className='mx-2 mt-1 mb-2 flex h-9 w-auto rounded border border-[#6b7280] py-0.5 px-4 text-center focus:border-[#0066ff] focus:outline-none'
-            id='minutes'
-            type='number'
-            step='15'
-            defaultValue={0}
-            min={0}
-            max={45}
-            onChange={props.onMinuteChange}
-          />
-        </div>
+      <div className='flex w-full flex-row justify-center rounded border border-dark-gray'>
+        <select
+          className='form-input flex h-9 w-full overflow-scroll rounded border-none text-center focus:outline-none'
+          id='hours'
+          defaultValue={props.defaultValue?.hours}
+          onChange={props.onHourChange}
+        >
+          <option value={0}>0</option>
+          <option value={1}>1</option>
+          <option value={2}>2</option>
+          <option value={3}>3</option>
+          <option value={4}>4</option>
+          <option value={5}>5</option>
+          <option value={6}>6</option>
+          <option value={7}>7</option>
+          <option value={8}>8</option>
+          <option value={9}>9</option>
+        </select>
+        <div className='flex self-center'>:</div>
+        <select
+          className='form-input flex h-9 w-full rounded border-none text-center focus:outline-none'
+          id='minutes'
+          defaultValue={props.defaultValue?.minutes}
+          onChange={props.onMinuteChange}
+        >
+          <option value={0}>0</option>
+          <option value={15}>15</option>
+          <option value={30}>30</option>
+          <option value={45}>45</option>
+        </select>
       </div>
     </div>
   )

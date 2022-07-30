@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { ChangeEvent, useState } from 'react'
 import Link from 'next/link'
 import { SearchIcon } from '@heroicons/react/outline'
 
@@ -11,6 +11,7 @@ import NavBar from '@/components/NavBar'
 import { withProtected } from '@/components/PrivateRoute'
 import SearchBar from '@/components/SearchBar'
 import SearchTag from '@/components/SearchBar/SearchTag'
+import TopNav from '@/components/TopNav'
 import type { Contact } from '@/types/types'
 
 // TODO: Get contact data from server
@@ -44,14 +45,14 @@ const Contact = () => {
     setFilteredContacts(filteredContacts)
   }
 
-  const onSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const onSearchChange = (event: ChangeEvent<HTMLInputElement>) => {
     const searchFieldString = event.target.value.toLocaleLowerCase()
     setSearchFieldString(searchFieldString)
     // TODO: Get contact data from server
     filterContact(selectedTag, searchFieldString)
   }
 
-  const onSearchTagChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+  const onSearchTagChange = (event: ChangeEvent<HTMLSelectElement>) => {
     const option_value = event.target.value
     setSelectedTag(option_value)
     filterContact(option_value, searchFieldString)
@@ -61,8 +62,8 @@ const Contact = () => {
     <>
       {/* <Seo /> */}
       <Header pageTitle='Contact' />
-
-      <main>
+      <TopNav />
+      <main className='h-[calc(100%-7rem)]'>
         <div className='m-auto flex h-14 max-w-md flex-row'>
           <div className='flex-1'></div>
           <h1 className='m-3 flex-1 text-center text-2xl'>Contacts</h1>
@@ -83,7 +84,7 @@ const Contact = () => {
             <SearchTag
               name='Filter By'
               options={tagFilter}
-              onChangehandler={(e: React.ChangeEvent<HTMLSelectElement>) =>
+              onChangehandler={(e: ChangeEvent<HTMLSelectElement>) =>
                 onSearchTagChange(e)
               }
             />

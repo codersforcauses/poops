@@ -1,5 +1,7 @@
+import { ChangeEvent } from 'react'
+
 type ContactBoxProps = {
-  onChangeHandler: (event: React.ChangeEvent<HTMLInputElement>) => void
+  onChangeHandler: (event: ChangeEvent<HTMLInputElement>) => void
 }
 
 function SearchBar({ onChangeHandler }: ContactBoxProps) {

@@ -4,6 +4,7 @@ export interface FormProps {
   id: string
   label: string
   type: string
+  isNumPad: boolean
   placeholder: string
   isRequired: boolean
   selectOptions?: SelectOption[]
@@ -44,17 +45,32 @@ function inputType(props: FormProps) {
         </select>
       )
     case 'text':
-      return (
-        <input
-          className='mt-1 mb-2 flex h-9 rounded border border-[#6b7280] py-0.5 px-4 text-center placeholder:text-black
-            focus:outline-[#0066ff]'
-          id={props.id}
-          type='text'
-          required={props.isRequired}
-          placeholder={props.placeholder}
-          onChange={props.onChange}
-        />
-      )
+      if (props.isNumPad) {
+        return (
+          <input
+            className='mt-1 mb-2 flex h-9 rounded border border-[#6b7280] py-0.5 px-4 text-center placeholder:text-black
+          focus:outline-[#0066ff]'
+            id={props.id}
+            type='text'
+            required={props.isRequired}
+            placeholder={props.placeholder}
+            onChange={props.onChange}
+            pattern='\d*'
+          />
+        )
+      } else {
+        return (
+          <input
+            className='mt-1 mb-2 flex h-9 rounded border border-[#6b7280] py-0.5 px-4 text-center placeholder:text-black
+          focus:outline-[#0066ff]'
+            id={props.id}
+            type='text'
+            required={props.isRequired}
+            placeholder={props.placeholder}
+            onChange={props.onChange}
+          />
+        )
+      }
   }
 }
 
