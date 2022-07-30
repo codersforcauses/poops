@@ -4,129 +4,48 @@ export interface DurationProps {
   id: string
   label: string
   defaultValue?: Duration
-  onHourChange: (event: string) => void
-  onMinuteChange: (event: string) => void
+  onHourChange: (event: React.ChangeEvent<HTMLSelectElement>) => void
+  onMinuteChange: (event: React.ChangeEvent<HTMLSelectElement>) => void
 }
 
-function DurationSelector(props: DurationProps) {
-  function handleHourUp() {
-    const hours = document.getElementById('hours') as HTMLInputElement
-    if (hours == null) return
-    let updated = Number(hours.value) + 1
-    if (updated > 24) {
-      updated = 0
-      hours.value = '0'
-    } else {
-      hours.value = updated.toString()
-    }
-    props.onHourChange(updated.toString())
-  }
-  function handleHourDown() {
-    const hours = document.getElementById('hours') as HTMLInputElement
-    if (hours == null) return
-    let updated = Number(hours.value)
-    if (Number(updated) != 0) {
-      updated -= 1
-    }
-    if (updated >= 0) {
-      hours.value = updated.toString()
-    }
-    props.onHourChange(updated.toString())
-  }
-  function handleMinUp() {
-    const mins = document.getElementById('minutes') as HTMLInputElement
-    if (mins == null) return
-    let updated = Number(mins.value) + 15
-    if (updated > 45) {
-      updated = 0
-      mins.value = '0'
-    } else {
-      mins.value = updated.toString()
-    }
-    props.onMinuteChange(updated.toString())
-  }
-  function handleMinDown() {
-    const mins = document.getElementById('minutes') as HTMLInputElement
-    if (mins == null) return
-    let updated = Number(mins.value)
-    if (Number(updated) != 0) {
-      updated -= 15
-    }
-    if (updated >= 0) {
-      mins.value = updated.toString()
-    }
-    props.onMinuteChange(updated.toString())
-  }
-
+const DurationSelector = (props: DurationProps) => {
   return (
-    <div className='flex flex-col p-1'>
-      <p className='font-bold'>
+    <div className='p-1'>
+      <label className='font-bold'>
         <span className='text-primary'>*</span>
         {props.label}
-      </p>
+      </label>
 
-      <div className='flex flex-row justify-center'>
-        <div className='mr-2'>
-          <label htmlFor='hours'>Hours</label>
-          <div className='flex flex-row justify-center'>
-            <input
-              className='my-auto mr-2 flex h-9 rounded border border-[#6b7280] py-0.5 px-4 text-center focus:border-[#0066ff] focus:outline-none'
-              id='hours'
-              type='number'
-              step='1'
-              defaultValue={0}
-              min={0}
-              max={24}
-            />
-            <div className='flex w-7 flex-col text-lg'>
-              <button
-                type='button'
-                className='my-0.5 rounded bg-zinc-300'
-                onClick={handleHourUp}
-              >
-                &#9650;
-              </button>
-              <button
-                type='button'
-                className='my-0.5 rounded bg-zinc-300'
-                onClick={handleHourDown}
-              >
-                &#9660;
-              </button>
-            </div>
-          </div>
-        </div>
-
-        <div className='ml-2'>
-          <label htmlFor='minutes'>Minutes</label>
-          <div className='flex flex-row justify-center'>
-            <input
-              className='my-auto mr-2 flex h-9 w-auto rounded border border-[#6b7280] py-0.5 px-4 text-center focus:border-[#0066ff] focus:outline-none'
-              id='minutes'
-              type='number'
-              step='15'
-              defaultValue={0}
-              min={0}
-              max={45}
-            />
-            <div className='flex w-7 flex-col text-lg'>
-              <button
-                type='button'
-                className='my-0.5 rounded bg-zinc-300'
-                onClick={handleMinUp}
-              >
-                &#9650;
-              </button>
-              <button
-                type='button'
-                className='my-0.5 rounded bg-zinc-300'
-                onClick={handleMinDown}
-              >
-                &#9660;
-              </button>
-            </div>
-          </div>
-        </div>
+      <div className='flex w-full flex-row justify-center rounded border border-dark-gray'>
+        <select
+          className='form-input flex h-9 w-full overflow-scroll rounded border-none text-center focus:outline-none'
+          id='hours'
+          defaultValue={props.defaultValue?.hours}
+          onChange={props.onHourChange}
+        >
+          <option value={0}>0</option>
+          <option value={1}>1</option>
+          <option value={2}>2</option>
+          <option value={3}>3</option>
+          <option value={4}>4</option>
+          <option value={5}>5</option>
+          <option value={6}>6</option>
+          <option value={7}>7</option>
+          <option value={8}>8</option>
+          <option value={9}>9</option>
+        </select>
+        <div className='flex self-center'>:</div>
+        <select
+          className='form-input flex h-9 w-full rounded border-none text-center focus:outline-none'
+          id='minutes'
+          defaultValue={props.defaultValue?.minutes}
+          onChange={props.onMinuteChange}
+        >
+          <option value={0}>0</option>
+          <option value={15}>15</option>
+          <option value={30}>30</option>
+          <option value={45}>45</option>
+        </select>
       </div>
     </div>
   )

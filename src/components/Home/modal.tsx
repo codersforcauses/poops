@@ -147,16 +147,16 @@ function Modal() {
           <DurationSelector
             id='duration'
             label='Duration'
-            onHourChange={(num) =>
+            onHourChange={(event) =>
               setDuration((duration) => ({
                 ...duration,
-                hours: Number(num)
+                hours: Number(event.target.value)
               }))
             }
-            onMinuteChange={(num) =>
+            onMinuteChange={(event) =>
               setDuration((duration) => ({
                 ...duration,
-                minutes: Number(num)
+                minutes: Number(event.target.value)
               }))
             }
           />
