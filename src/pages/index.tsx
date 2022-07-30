@@ -3,7 +3,6 @@ import Modal from '@/components/Home/modal'
 import Summary from '@/components/Home/summary'
 import NavBar from '@/components/NavBar'
 import TopNav from '@/components/TopNav'
-
 const dummyUsername = 'User'
 
 const Home = () => {

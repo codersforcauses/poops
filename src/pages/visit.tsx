@@ -17,7 +17,7 @@ const Visit = () => {
     <>
       <Header pageTitle='Visit' />
       <TopNav />
-      <main>
+      <main className='h-[calc(100%-7rem)]'>
         {!isModalOpen ? (
           <div className='flex w-screen flex-col p-4'>
             <div className='align-center flex flex-row justify-around'>
