@@ -1,3 +1,4 @@
+import { useContext } from 'react'
 import {
   LocationMarkerIcon,
   MailIcon,
@@ -7,14 +8,16 @@ import tw from 'tailwind-styled-components'
 
 import Avatar from '@/components/Contact/avatar'
 import { AlertVariant, useAlert } from '@/context/AlertContext'
-import type { Contact } from '@/types/types'
+import { ContactContext } from '@/pages/contact'
 
 type ContactInfoProps = {
-  contact: Contact
+  firestoreIndex: number
   image: string
 }
 
-function ContactInfo({ contact, image }: ContactInfoProps) {
+function ContactInfo({ firestoreIndex, image }: ContactInfoProps) {
+  const context = useContext(ContactContext)
+  const contact = context.allContacts[firestoreIndex]
   const { setAlert } = useAlert()
 
   return (
@@ -27,11 +30,9 @@ function ContactInfo({ contact, image }: ContactInfoProps) {
         iconClass='w-32 rounded-full'
       />
       {/* FIRST AND LAST NAME */}
-      <h1 className='text-4xl font-normal'>
-        {contact.firstName} {contact.lastName}
-      </h1>
+      <h1 className='text-4xl font-normal'>{contact.clientName}</h1>
       {/* DESCRIPTION */}
-      <h3>{contact.notes}</h3>
+      <h3>{contact.desc}</h3>
       {/* PHONE */}
       <Box>
         <div className='flex w-full justify-between'>
@@ -117,21 +118,28 @@ function ContactInfo({ contact, image }: ContactInfoProps) {
         <span className='text-xl'> {contact.notes} </span>
       </Box>
       <div className='mb-2'>
-        <button
-          type='button'
-          onClick={() => {
-            setAlert({
-              variant: AlertVariant.security,
-              title: 'Delete Contact',
-              text: 'Are you sure?',
-              position: 'bottom',
-              confirmFunction: () => null /* will call firebase function  */
-            })
-          }}
-          className='w-80 rounded bg-primary py-1 font-bold text-white hover:bg-dark-red'
-        >
-          Delete Contact
-        </button>
+        {/* can't delete users profile */}
+        {firestoreIndex !== 0 && (
+          <button
+            type='button'
+            onClick={() => {
+              setAlert({
+                variant: AlertVariant.security,
+                title: 'Delete Contact',
+                text: 'Are you sure?',
+                position: 'bottom',
+                confirmFunction: () => {
+                  context.setCreatingNewContact(false)
+                  context.removeContact(firestoreIndex)
+                  context.setDisplayContactIndex(-1)
+                }
+              })
+            }}
+            className='w-80 rounded bg-primary py-1 font-bold text-white hover:bg-dark-red'
+          >
+            Delete Contact
+          </button>
+        )}
       </div>
     </div>
   )

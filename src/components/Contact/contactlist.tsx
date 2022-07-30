@@ -1,20 +1,22 @@
-import Link from 'next/link'
+import { useContext } from 'react'
 
 import ContactItem from '@/components/Contact/contactitem'
-import type { Contact } from '@/types/types'
+import { ContactContext } from '@/pages/contact'
 
 type ContactsProp = {
-  contacts: Contact[]
+  firestoreIndexMap: number[]
 }
 
-const ContactList = ({ contacts }: ContactsProp) => {
-  const contactItems = contacts.map((contact) => {
+const ContactList = ({ firestoreIndexMap }: ContactsProp) => {
+  const allContacts = useContext(ContactContext).allContacts
+  const contactItems = firestoreIndexMap.map((firestoreIndex) => {
     return (
-      <Link href={`/contact/${contact.id}`} key={contact.id}>
-        <a>
-          <ContactItem contact={contact} image='' />
-        </a>
-      </Link>
+      <ContactItem
+        firestoreIndex={firestoreIndex}
+        contact={allContacts[firestoreIndex]}
+        image=''
+        key={firestoreIndex}
+      />
     )
   })
 

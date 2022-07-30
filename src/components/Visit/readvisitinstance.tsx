@@ -13,7 +13,7 @@ const ReadOnlyVisitInstance = (props: VisitData) => {
     <>
       <div className='font-bold peer-checked:font-normal'>
         <p className='font-bold text-primary'>{formatTime(props.startTime)}</p>
-        <p className='text-sm'>{props.displayName}</p>
+        <p className='text-sm'>{props.clientName}</p>
       </div>
       <div className='max-h-0 justify-between overflow-hidden text-sm transition-all duration-300 peer-checked:max-h-screen'>
         <p>Visit Type: {props.type}</p>

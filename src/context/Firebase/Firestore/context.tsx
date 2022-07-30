@@ -4,7 +4,7 @@ import { UserData } from '@/types/types'
 
 //set the default data for new logins in firestore
 export const defaultUserDoc: UserData = {
-  displayName: '',
+  clientName: '',
   visits: [],
   contacts: []
 }

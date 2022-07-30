@@ -1,25 +1,43 @@
-import { ChangeEvent, FormEvent, useEffect } from 'react'
+import React, { ChangeEvent, FormEvent, useContext, useEffect } from 'react'
 import { Dispatch, SetStateAction, useState } from 'react'
 import tw from 'tailwind-styled-components'
 
 import Avatar from '@/components/Contact/avatar'
 import RegionSelector from '@/components/Contact/regiondropdown'
 import TagSelector from '@/components/Contact/tagdropdown'
+import { ContactContext } from '@/pages/contact'
 import type { Contact } from '@/types/types'
 
 type ContactInfoProps = {
-  contact: Contact
+  firestoreIndex: number
   image: string
-  setIsEditing?: Dispatch<SetStateAction<boolean>>
-  isNewContact: boolean
+  setIsEditing: Dispatch<SetStateAction<boolean>>
 }
 
 const ContactForm = ({
-  contact,
+  firestoreIndex,
   image,
-  setIsEditing,
-  isNewContact
+  setIsEditing
 }: ContactInfoProps) => {
+  const context = useContext(ContactContext)
+
+  const isNewContact = firestoreIndex === -1
+
+  const contact: Contact = isNewContact
+    ? {
+        id: '',
+        clientName: '',
+        desc: '',
+        pets: '',
+        email: '',
+        phone: '',
+        streetAddress: '',
+        region: [],
+        notes: '',
+        tags: []
+      }
+    : context.allContacts[firestoreIndex]
+
   const [regions, setRegions] = useState(contact.region)
   const [tags, setTags] = useState(contact.tags)
   const [contactForm, setContactForm] = useState(contact)
@@ -42,15 +60,15 @@ const ContactForm = ({
   // TODO: Submit ContactForm to database
   const submitForm = (e: FormEvent) => {
     e.preventDefault()
-    if (setIsEditing !== undefined) setIsEditing(false)
-
+    // TODO: submit to firestore here
     if (isNewContact) {
-      // TODO: generate UUID (uuid lib or server timestamp)for the new contact (or let firestore do it)
-      // TODO: submit to firestore here
+      firestoreIndex = context.insertContact(contactForm)
+      context.setDisplayContactIndex(firestoreIndex)
     } else {
-      // TODO: update firestore entry for existing uuid
+      context.insertContact(contactForm, firestoreIndex)
+      context.setDisplayContactIndex(firestoreIndex)
     }
-    // TODO: go to /contact/[UUID]
+    setIsEditing(false)
   }
 
   return (
@@ -65,24 +83,13 @@ const ContactForm = ({
         />
         {/* FIRST AND LAST NAME */}
         <Box>
-          <label htmlFor={contact.firstName} className='text-dark-red'>
-            First Name
+          <label htmlFor={contact.clientName} className='text-dark-red'>
+            Full Name
           </label>
           <input
-            name='first_name'
-            defaultValue={contact.firstName}
-            className='mb-2 w-80 rounded-lg border border-gray-300 pl-1'
-            onChange={handleInputChange}
-          />
-        </Box>
-        <Box>
-          <label htmlFor={contact.lastName} className='text-dark-red'>
-            Last Name
-          </label>
-          <input
-            name='last_name'
-            defaultValue={contact.lastName}
-            className='mb-2 w-80 rounded-lg border border-gray-300 pl-1'
+            name='clientName'
+            defaultValue={contact.clientName}
+            className='border-grey mb-2 w-80 rounded-lg border pl-1'
             onChange={handleInputChange}
           />
         </Box>
@@ -128,7 +135,7 @@ const ContactForm = ({
             Address
           </label>
           <input
-            name='street_address'
+            name='streetAddress'
             defaultValue={contact.streetAddress}
             className='mb-2 w-full rounded-lg border border-gray-300 pl-1'
             onChange={handleInputChange}
@@ -141,14 +148,12 @@ const ContactForm = ({
           </label>
 
           <TagSelector tags={contact.tags} setTags={setTags} />
-
-          {/* This should be done as a react component i think? */}
           {/* Padding to counter the shadow */}
           <div className='pt-2'></div>
         </Box>
         {/* REGIONS */}
         <Box className='pb-3'>
-          <label htmlFor='regions' className='text-dark-red'>
+          <label htmlFor='region' className='text-dark-red'>
             Region
           </label>
           <RegionSelector regions={contact.region} setRegions={setRegions} />
