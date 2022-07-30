@@ -1,14 +1,10 @@
 import { useEffect, useState } from 'react'
 
+import { findContactIndex } from '@/components/Visit/utils'
 import { useFirestore } from '@/context/firestore'
-import { SelectOption, VisitData } from '@/types/types'
+import { VisitData } from '@/types/types'
 
 import VisitInstance from './visitinstance'
-
-export const visitSelectOptions: SelectOption[] = [
-  { label: 'Vet', value: 'Vet' },
-  { label: 'Walk', value: 'Walk' }
-]
 
 interface VisitListProps {
   searchQuery: string
@@ -22,16 +18,19 @@ export const VisitList = (props: VisitListProps) => {
   }, [userDoc.visits])
 
   const matchesDisplayName = (post: VisitData) =>
-    post.displayName.toLowerCase().includes(props.searchQuery.toLowerCase())
+    userDoc.contacts[findContactIndex(post.clientId, userDoc)].displayName
+      .toLowerCase()
+      .includes(props.searchQuery.toLowerCase())
 
+  //get pets from contact name
   const matchespetNames = (post: VisitData) =>
-    post.petNames.toLowerCase().includes(props.searchQuery.toLowerCase())
+    post.petNames?.includes(props.searchQuery.toLowerCase())
 
   const matchesSearchTerms = (post: VisitData) =>
     matchesDisplayName(post) || matchespetNames(post)
 
   return (
-    <div className=''>
+    <div>
       {visits &&
         visits
           .filter((post: VisitData) => {
@@ -41,18 +40,10 @@ export const VisitList = (props: VisitListProps) => {
           })
           .map((post, index) => (
             <VisitInstance
-              set={setVisits}
-              key={post.startTime + post.displayName + post.petNames} // <-- dumb? or genius?
-              type={post.type}
+              setVisits={setVisits}
+              key={post.startTime + post.clientId + post.duration} // <-- dumb? or genius? (adam)
               id={index}
-              displayName={post.displayName}
-              petNames={post.petNames}
-              startTime={post.startTime}
-              endTime={post.endTime}
-              walkDist={post.walkDist}
-              commuteDist={post.commuteDist}
-              commuteMethod={post.commuteMethod}
-              notes={post.notes}
+              {...post}
             />
           ))}
     </div>

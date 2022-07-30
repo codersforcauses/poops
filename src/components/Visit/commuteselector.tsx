@@ -2,21 +2,20 @@ import { Dispatch, SetStateAction, useState } from 'react'
 import { SingleValue } from 'react-select'
 import CreatableSelect from 'react-select/creatable'
 
-import customStyles from './commuteselectorstyles'
-import { FormFieldProps } from './formfield'
+import { SelectOption } from '@/types/types'
 
-export interface CommuteMethod {
-  label: string
-  value: string
-}
+import { FormFieldProps } from './formfield'
+import customStyles from './selectorstyles'
 
 interface CommuteSelectorProps extends FormFieldProps {
   setCommuteMethod: Dispatch<SetStateAction<string>>
 }
 
+const defaultCommuteMethods = ['Bus', 'Car', 'Train']
+
 const addToLocalStorage = (value: string) => {
   let vals = localStorage.getItem('commuteMethods')?.split(',')
-  if (vals === undefined) vals = ['Bus', 'Car', 'Train']
+  if (vals === undefined) vals = defaultCommuteMethods
   if (!vals.includes(value)) {
     vals.push(value)
     vals.sort()
@@ -26,13 +25,13 @@ const addToLocalStorage = (value: string) => {
 
 const getLocalStorage = () => {
   let store = localStorage.getItem('commuteMethods')?.split(',')
-  if (store === undefined) store = ['Bus', 'Car', 'Train']
+  if (store === undefined) store = defaultCommuteMethods
   return store
 }
 
 export const getCommuteMethods = () => {
-  const commuteMethods: CommuteMethod[] = []
-  if (typeof window !== `undefined`) {
+  const commuteMethods: SelectOption[] = []
+  if (typeof window !== 'undefined') {
     getLocalStorage().forEach((method) => {
       commuteMethods.push({ label: method, value: method })
     })
@@ -42,12 +41,17 @@ export const getCommuteMethods = () => {
 
 const CommuteSelector = (props: CommuteSelectorProps) => {
   const [commuteMethods, setCommuteMethods] = useState(getCommuteMethods())
-  const handleChange = (newValue: SingleValue<CommuteMethod>) => {
+  const handleChange = (newValue: SingleValue<SelectOption>) => {
     // fired when user selects an option or creates an option
     if (newValue === null) return
     props.setCommuteMethod(newValue.value)
     addToLocalStorage(newValue.value)
     setCommuteMethods(getCommuteMethods())
+  }
+
+  const defaultValue: SelectOption = {
+    label: props.value || 'Select...',
+    value: props.value || ''
   }
 
   return (
@@ -59,7 +63,9 @@ const CommuteSelector = (props: CommuteSelectorProps) => {
       <CreatableSelect
         onChange={handleChange}
         options={commuteMethods}
+        placeholder={props.placeholder}
         styles={customStyles}
+        defaultValue={defaultValue}
       />
     </div>
   )

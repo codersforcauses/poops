@@ -5,6 +5,7 @@ export interface FormFieldProps {
   label: string
   type?: string
   placeholder?: string
+  value?: string
   onChange?: (
     event: React.ChangeEvent<
       HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
@@ -34,6 +35,7 @@ const inputSwitch = (props: FormFieldProps) => {
           className='form-textarea rounded text-black'
           id={props.id}
           placeholder={props.placeholder}
+          value={props.value}
           onChange={props.onChange}
         ></textarea>
       )
@@ -42,6 +44,7 @@ const inputSwitch = (props: FormFieldProps) => {
         <select
           className='form-select rounded'
           id={props.id}
+          value={props.value}
           required={props.isRequired}
           onChange={props.onChange}
         >
@@ -59,6 +62,7 @@ const inputSwitch = (props: FormFieldProps) => {
           className='placeholder::text-[#6b7280] form-input rounded text-black'
           id={props.id}
           type={props.type}
+          value={props.value}
           step={props.type === 'number' ? '0.001' : undefined}
           required={props.isRequired}
           placeholder={props.placeholder}

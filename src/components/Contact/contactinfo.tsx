@@ -6,6 +6,7 @@ import {
 import tw from 'tailwind-styled-components'
 
 import Avatar from '@/components/Contact/avatar'
+import { AlertVariant, useAlert } from '@/context/AlertContext'
 import type { Contact } from '@/types/types'
 
 type ContactInfoProps = {
@@ -14,6 +15,8 @@ type ContactInfoProps = {
 }
 
 function ContactInfo({ contact, image }: ContactInfoProps) {
+  const { setAlert } = useAlert()
+
   return (
     <div className='mb-2 flex flex-col items-center justify-center gap-3'>
       {/* USER PROFILE IMAGE */}
@@ -70,21 +73,22 @@ function ContactInfo({ contact, image }: ContactInfoProps) {
         <span className='text-xl'>{contact.streetAddress}</span>
       </Box>
       {/* TAGS */}
-      <Box>
-        <label htmlFor='tags' className='text-dark-red'>
-          Tags
-        </label>
-        <TagHolder className='mt-1'>
-          {contact.tags.map((tag, index) => (
-            <div key={index}>
-              <Tag>{tag}</Tag>
-            </div>
-          ))}
-        </TagHolder>
-        {/* This should be done as a react component i think? */}
-        {/* Padding to counter the shadow */}
-        <div className='pt-2'></div>
-      </Box>
+      {contact.id != 'me' ?? (
+        <Box>
+          <label htmlFor='tags' className='text-dark-red'>
+            Tags
+          </label>
+          <TagHolder className='mt-1'>
+            {contact.tags.map((tag, index) => (
+              <div key={index}>
+                <Tag>{tag}</Tag>
+              </div>
+            ))}
+          </TagHolder>
+          {/* Padding to counter the shadow */}
+          <div className='pt-2'></div>
+        </Box>
+      )}
       {/* REGIONS */}
       <Box className='pb-3'>
         <label htmlFor='regions' className='text-dark-red'>
@@ -112,6 +116,23 @@ function ContactInfo({ contact, image }: ContactInfoProps) {
         </label>
         <span className='text-xl'> {contact.notes} </span>
       </Box>
+      <div className='mb-2'>
+        <button
+          type='button'
+          onClick={() => {
+            setAlert({
+              variant: AlertVariant.security,
+              title: 'Delete Contact',
+              text: 'Are you sure?',
+              position: 'bottom',
+              confirmFunction: () => null /* will call firebase function  */
+            })
+          }}
+          className='w-80 rounded bg-primary py-1 font-bold text-white hover:bg-dark-red'
+        >
+          Delete Contact
+        </button>
+      </div>
     </div>
   )
 }

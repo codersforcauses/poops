@@ -2,6 +2,7 @@ import { NextPage } from 'next'
 import Image from 'next/image'
 
 import LoginPanel from '@/components/Login/LoginPanel'
+import { withPublic } from '@/components/PrivateRoute'
 import { useAuth } from '@/context/AuthContext'
 
 const Login: NextPage = () => {
@@ -47,5 +48,4 @@ const Login: NextPage = () => {
   )
 }
 
-export default Login
-// export default withPublic(Login)
+export default withPublic(Login)
