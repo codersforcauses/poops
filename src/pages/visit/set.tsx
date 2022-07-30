@@ -179,7 +179,8 @@ const Visit = () => {
                     onMinuteChange={(event) =>
                       setDuration((duration) => ({
                         ...duration,
-                        minutes: Number(event.target.value)
+                        minutes:
+                          Math.round(Number(event.target.value) / 15) * 15
                       }))
                     }
                   />
