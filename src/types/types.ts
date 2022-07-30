@@ -17,7 +17,7 @@ export interface Pet {
 }
 
 export interface UserData {
-  displayName: string
+  clientName: string
   contacts: ContactData[]
   visits: VisitData[]
 }
@@ -37,7 +37,7 @@ export interface VisitData {
 
 export interface ContactData {
   id: string
-  displayName: string
+  clientName: string
   desc: string
   pets: string
   email: string

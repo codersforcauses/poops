@@ -23,7 +23,7 @@ const ClientSelector = (props: ClientSelectorProps) => {
   const getClientList = () => {
     return contacts.map((contact) => {
       const client: SelectOption = {
-        label: contact.displayName,
+        label: contact.clientName,
         value: contact.id
       }
       return client
