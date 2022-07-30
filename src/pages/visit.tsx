@@ -2,8 +2,8 @@ import { useState } from 'react'
 
 import Header from '@/components/Header'
 import NavBar from '@/components/NavBar'
+import { withProtected } from '@/components/PrivateRoute'
 import TopNav from '@/components/TopNav'
-// import { withProtected } from '@/components/PrivateRoute'
 import { AddButton } from '@/components/Visit/buttons'
 import Modal from '@/components/Visit/modal'
 import SearchBar from '@/components/Visit/searchbar'
@@ -38,5 +38,4 @@ const Visit = () => {
   )
 }
 
-// export default withProtected(Visit)
-export default Visit
+export default withProtected(Visit)
