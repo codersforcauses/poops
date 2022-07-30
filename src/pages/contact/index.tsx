@@ -3,6 +3,8 @@ import {
   createContext,
   Dispatch,
   SetStateAction,
+  useEffect,
+  useMemo,
   useState
 } from 'react'
 import { SearchIcon } from '@heroicons/react/outline'
@@ -39,21 +41,33 @@ export const ContactContextProvider = ContactContext.Provider
 
 const Contact = () => {
   const { userDoc, updateContact } = useFirestore()
-  const [allContacts, setAllContacts] = useState(userDoc.contacts)
+  console.log(userDoc.contacts)
+  const [allContacts, setAllContacts] = useState(userDoc.contacts || [])
+
+  useEffect(() => {
+    setAllContacts(userDoc.contacts)
+  }, [userDoc.contacts])
+
   const [creatingNewContact, setCreatingNewContact] = useState(false)
   // Get all unique tags to popular dropdown filter
-  const tags = allContacts
-    .map((contact) => {
-      return contact.tags
-    })
-    .flat()
-  const set = new Set(tags)
-  const taglist = [...set]
+  const taglist = useMemo(() => {
+    const tags = allContacts
+      .map((contact) => {
+        return contact.tags
+      })
+      .flat()
+    const set = new Set(tags)
+    return [...set]
+  }, [allContacts])
 
   // List of firestoreIndexes to that populate visible contacts
   const [filteredIndexes, setFilteredIndexes] = useState<number[]>([
     ...allContacts.keys()
   ])
+
+  useEffect(() => {
+    setFilteredIndexes([...allContacts.keys()])
+  }, [allContacts])
 
   const [selectedOption, setSelectedOption] = useState('')
   const [searchFieldString, setSearchFieldString] = useState('')
