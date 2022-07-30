@@ -5,6 +5,7 @@ import { XIcon } from '@heroicons/react/outline'
 import { Timestamp } from 'firebase/firestore'
 
 import { withProtected } from '@/components/PrivateRoute'
+import { ReportButton, VetConcernButton } from '@/components/Visit/buttons'
 import ClientSelector from '@/components/Visit/clientselector'
 import CommuteSelector from '@/components/Visit/commuteselector'
 import DurationSelector from '@/components/Visit/durationselector'
@@ -158,7 +159,7 @@ const Visit = () => {
                     label='Start Time:'
                     isRequired={true}
                     onChange={(event) => {
-                      event.target.value = event.target.value.substring(0, 16) // fixes invalid input on ios safari? can't test
+                      // event.target.value = event.target.value.substring(0, 16) // fixes invalid input on ios safari? can't test
                       setStartTime(event.target.value)
                     }}
                   />
@@ -211,7 +212,7 @@ const Visit = () => {
             isRequired={false}
             onChange={(event) => setNotes(event.target.value)}
           />
-          <div className='mx-auto my-2 flex flex-col p-1 '>
+          <div className='p- mx-auto my-2 flex flex-col '>
             <button
               className='text-bold rounded bg-primary px-12 py-4 text-white drop-shadow-default active:bg-dark-red disabled:bg-dark-gray'
               disabled={!isSubmitEnabled()}
@@ -222,7 +223,7 @@ const Visit = () => {
             <Link href='/visit'>
               <button
                 type='button'
-                className='text-bold mt-2 rounded bg-primary p-1 text-white drop-shadow-default active:bg-dark-red'
+                className='text-bold mt-2 rounded bg-primary p-1 px-12 py-4 text-white drop-shadow-default active:bg-dark-red'
                 onClick={() => {
                   userDoc.visits.splice(Number(id), 1)
                   updateVisit?.(userDoc)
@@ -234,6 +235,12 @@ const Visit = () => {
             </Link>
           </div>
         </form>
+        <div hidden={id === null}>
+          <VetConcernButton />
+        </div>
+        <div className='py-2' hidden={id === null}>
+          <ReportButton />
+        </div>
       </>
     </div>
   )

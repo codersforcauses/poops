@@ -39,20 +39,16 @@ export const AddButton = () => {
 
 export const VetConcernButton = () => {
   return (
-    <div className='align-center flex flex-row justify-center rounded-md bg-primary p-2 text-center text-xs font-bold text-white drop-shadow-default'>
-      <button>
-        REGISTER <br /> VET CONCERN
-      </button>
+    <div className='text-bold rounded bg-primary px-12 py-4 text-center text-white drop-shadow-default'>
+      <button>REGISTER VET CONCERN</button>
     </div>
   )
 }
 
 export const ReportButton = () => {
   return (
-    <div className='align-center flex flex-row justify-center rounded-md bg-primary p-2 text-center text-xs font-bold text-white drop-shadow-default'>
-      <button>
-        REPORT <br /> INCIDENT
-      </button>
+    <div className='text-bold rounded bg-primary px-12 py-4 text-center text-white drop-shadow-default'>
+      <button>REPORT INCIDENT</button>
     </div>
   )
 }
