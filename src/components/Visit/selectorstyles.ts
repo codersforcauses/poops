@@ -1,11 +1,11 @@
 import { GroupBase, StylesConfig } from 'react-select'
 
-import { CommuteMethod } from './commuteselector'
+import { SelectOption } from '@/types/types'
 
 const customStyles: StylesConfig<
-  CommuteMethod,
+  SelectOption,
   false,
-  GroupBase<CommuteMethod>
+  GroupBase<SelectOption>
 > = {
   control: () => ({
     display: 'flex',
