@@ -74,7 +74,7 @@ const Contact = () => {
         return false
       }
 
-      if (reg.test(contact.displayName) || reg.test(contact.pets)) {
+      if (reg.test(contact.clientName) || reg.test(contact.pets)) {
         newFilteredIndexes.push(index)
       }
     })

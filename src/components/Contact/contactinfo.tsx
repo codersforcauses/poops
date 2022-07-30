@@ -30,7 +30,7 @@ function ContactInfo({ firestoreIndex, image }: ContactInfoProps) {
         iconClass='w-32 rounded-full'
       />
       {/* FIRST AND LAST NAME */}
-      <h1 className='text-4xl font-normal'>{contact.displayName}</h1>
+      <h1 className='text-4xl font-normal'>{contact.clientName}</h1>
       {/* DESCRIPTION */}
       <h3>{contact.desc}</h3>
       {/* PHONE */}

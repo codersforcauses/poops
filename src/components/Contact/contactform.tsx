@@ -26,7 +26,7 @@ const ContactForm = ({
   const contact: Contact = isNewContact
     ? {
         id: '',
-        displayName: '',
+        clientName: '',
         desc: '',
         pets: '',
         email: '',
@@ -83,12 +83,12 @@ const ContactForm = ({
         />
         {/* FIRST AND LAST NAME */}
         <Box>
-          <label htmlFor={contact.displayName} className='text-dark-red'>
+          <label htmlFor={contact.clientName} className='text-dark-red'>
             Full Name
           </label>
           <input
-            name='displayName'
-            defaultValue={contact.displayName}
+            name='clientName'
+            defaultValue={contact.clientName}
             className='border-grey mb-2 w-80 rounded-lg border pl-1'
             onChange={handleInputChange}
           />

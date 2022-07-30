@@ -21,14 +21,14 @@ export const VisitList = (props: VisitListProps) => {
     setVisits(userDoc.visits)
   }, [userDoc.visits])
 
-  const matchesDisplayName = (post: VisitData) =>
-    post.displayName.toLowerCase().includes(props.searchQuery.toLowerCase())
+  const matchesClientName = (post: VisitData) =>
+    post.clientName.toLowerCase().includes(props.searchQuery.toLowerCase())
 
   const matchespetNames = (post: VisitData) =>
     post.petNames.toLowerCase().includes(props.searchQuery.toLowerCase())
 
   const matchesSearchTerms = (post: VisitData) =>
-    matchesDisplayName(post) || matchespetNames(post)
+    matchesClientName(post) || matchespetNames(post)
 
   return (
     <div className=''>
@@ -42,10 +42,10 @@ export const VisitList = (props: VisitListProps) => {
           .map((post, index) => (
             <VisitInstance
               set={setVisits}
-              key={post.startTime + post.displayName + post.petNames} // <-- dumb? or genius?
+              key={post.startTime + post.clientName + post.petNames} // <-- dumb? or genius?
               type={post.type}
               id={index}
-              displayName={post.displayName}
+              clientName={post.clientName}
               petNames={post.petNames}
               startTime={post.startTime}
               endTime={post.endTime}

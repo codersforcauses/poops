@@ -21,7 +21,7 @@ const ContactDetails = ({ firestoreIndex }: ContactProp) => {
       <Header
         pageTitle={
           firestoreIndex >= 0
-            ? contacts[firestoreIndex].displayName
+            ? contacts[firestoreIndex].clientName
             : 'New Contact'
         }
       />

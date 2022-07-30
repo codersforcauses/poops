@@ -25,8 +25,8 @@ const ContactItem = ({ contact, image, firestoreIndex }: ContactItemProps) => {
         <span className='flex items-center space-x-4'>
           <Avatar image={image} height={40} width={40} iconClass='h-10 w-10' />
           <p className='font-medium text-gray-700'>
-            {contact.displayName}
-            {/* {contacts[firestoreIndex].displayName} */}
+            {contact.clientName}
+            {/* {contacts[firestoreIndex].clientName} */}
           </p>
         </span>
         <p className='text-gray-500'>{truncateText(contact.pets, 16)}</p>
