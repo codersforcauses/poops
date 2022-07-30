@@ -2,7 +2,7 @@ import Image from 'next/image'
 
 function TopNav() {
   return (
-    <div className='h-16 w-full justify-center'>
+    <div className='h-16 w-full'>
       <nav
         id='top-navigation'
         className='fixed inset-x-0 top-0 z-10 block h-16 bg-white'
