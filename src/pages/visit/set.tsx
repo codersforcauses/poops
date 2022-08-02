@@ -5,6 +5,7 @@ import { XIcon } from '@heroicons/react/outline'
 import { Timestamp } from 'firebase/firestore'
 
 import { withProtected } from '@/components/PrivateRoute'
+import ExpandTransition from '@/components/UI/expandTransition'
 import ClientSelector from '@/components/Visit/clientselector'
 import CommuteSelector from '@/components/Visit/commuteselector'
 import DurationSelector from '@/components/Visit/durationselector'
@@ -26,6 +27,8 @@ const Visit = () => {
     visit = userDoc.visits[id]
   }
 
+  const [isIncidentForm, setIsIncidentForm] = useState(false)
+
   const [visitType, setVisitType] = useState(visit?.type || '')
   const [{ clientId, clientName }, setClient] = useState({
     clientId: visit?.clientId || '',
@@ -42,6 +45,8 @@ const Visit = () => {
   const [commuteDist, setCommuteDist] = useState(visit?.commuteDist || NaN)
   const [commuteMethod, setCommuteMethod] = useState(visit?.commuteMethod || '')
   const [notes, setNotes] = useState(visit?.notes || '')
+  const [incidentNotes, setIncidentNotes] = useState(visit?.incidentNotes || '')
+  const [vetClinic, setVetClinic] = useState(visit?.vetClinic || '')
 
   const handleSubmit = (click: React.FormEvent<HTMLFormElement>) => {
     click.preventDefault()
@@ -56,7 +61,9 @@ const Visit = () => {
       walkDist: walkDist,
       commuteDist: commuteDist,
       commuteMethod: commuteMethod,
-      notes: notes
+      notes: notes,
+      incidentNotes: incidentNotes,
+      vetClinic: vetClinic
     }
     if (id !== null) {
       userDoc.visits[id] = data
@@ -94,143 +101,200 @@ const Visit = () => {
         </div>
 
         <form className='pt-3' onSubmit={handleSubmit}>
-          <table className='container mx-auto table-fixed'>
-            <tbody>
-              <tr>
-                <td>
-                  {/* could rewrite to use awful react-select to make chevron icon consistent */}
-                  <FormField
-                    id='visitTypeInput'
-                    type='select'
-                    placeholder='Select...'
-                    value={visitType}
-                    label='Visit Type:'
-                    selectOptions={visitSelectOptions}
-                    isRequired={true}
-                    onChange={(event) => setVisitType(event.target.value)}
-                  />
-                </td>
-                <td>
-                  <ClientSelector
-                    id='clientNameInput'
-                    type='text'
-                    placeholder='Client Name'
-                    value={clientName}
-                    label='Client Name:'
-                    isRequired={true}
-                    setClient={setClient}
-                  />
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <FormField
-                    id='commuteDistInput'
-                    type='number'
-                    placeholder='Distance (km)'
-                    value={commuteDist.toString()}
-                    label='Commute Distance:'
-                    isRequired={true}
-                    onChange={(event) =>
-                      setCommuteDist(parseFloat(event.target.value))
-                    }
-                  />
-                </td>
-                <td>
-                  {/* react-select components have no native form validation but what we can do is disable the submit button if the input is empty */}
-                  <CommuteSelector
-                    id='commuteMethodInput'
-                    placeholder='Commute Method'
-                    value={commuteMethod}
-                    label='Commute Method:'
-                    setCommuteMethod={setCommuteMethod}
-                    isRequired={true}
-                  />
-                </td>
-              </tr>
-              <tr>
-                <td colSpan={2}>
-                  <FormField
-                    id='startTimeInput'
-                    type='dateTime-local'
-                    placeholder='Start Time'
-                    value={startTime}
-                    label='Start Time:'
-                    isRequired={true}
-                    onChange={(event) => {
-                      event.target.value = event.target.value.substring(0, 16) // fixes invalid input on ios safari? can't test
-                      setStartTime(event.target.value)
-                    }}
-                  />
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <DurationSelector
-                    id='durationInput'
-                    label='Duration:'
-                    defaultValue={duration}
-                    onHourChange={(event) =>
-                      setDuration((duration) => ({
-                        ...duration,
-                        hours: Number(event.target.value)
-                      }))
-                    }
-                    onMinuteChange={(event) =>
-                      setDuration((duration) => ({
-                        ...duration,
-                        minutes: Number(event.target.value)
-                      }))
-                    }
-                  />
-                </td>
-                <td>
-                  <FormField
-                    id='walkDistInput'
-                    type='number'
-                    placeholder='Distance (km)'
-                    value={walkDist.toString()}
-                    label='Walk Distance:'
-                    isRequired={true}
-                    onChange={(event) =>
-                      setWalkDist(parseFloat(event.target.value))
-                    }
-                  />
-                </td>
-              </tr>
-            </tbody>
-          </table>
+          <ExpandTransition isExpanded={!isIncidentForm}>
+            <>
+              <table className='container mx-auto table-fixed'>
+                <tbody>
+                  <tr>
+                    <td>
+                      {/* could rewrite to use awful react-select to make chevron icon consistent */}
+                      <FormField
+                        id='visitTypeInput'
+                        type='select'
+                        placeholder='Select...'
+                        value={visitType}
+                        label='Visit Type:'
+                        selectOptions={visitSelectOptions}
+                        isRequired={true}
+                        onChange={(event) => setVisitType(event.target.value)}
+                      />
+                    </td>
+                    <td>
+                      <ClientSelector
+                        id='clientNameInput'
+                        type='text'
+                        placeholder='Client Name'
+                        value={clientName}
+                        label='Client Name:'
+                        isRequired={true}
+                        setClient={setClient}
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <FormField
+                        id='commuteDistInput'
+                        type='number'
+                        placeholder='Distance (km)'
+                        value={commuteDist.toString()}
+                        label='Commute Distance:'
+                        isRequired={true}
+                        onChange={(event) =>
+                          setCommuteDist(parseFloat(event.target.value))
+                        }
+                      />
+                    </td>
+                    <td>
+                      {/* react-select components have no native form validation but what we can do is disable the submit button if the input is empty */}
+                      <CommuteSelector
+                        id='commuteMethodInput'
+                        placeholder='Commute Method'
+                        value={commuteMethod}
+                        label='Commute Method:'
+                        setCommuteMethod={setCommuteMethod}
+                        isRequired={true}
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td colSpan={2}>
+                      <FormField
+                        id='startTimeInput'
+                        type='dateTime-local'
+                        placeholder='Start Time'
+                        value={startTime}
+                        label='Start Time:'
+                        isRequired={true}
+                        onChange={(event) => {
+                          event.target.value = event.target.value.substring(
+                            0,
+                            16
+                          ) // fixes invalid input on ios safari? can't test
+                          setStartTime(event.target.value)
+                        }}
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <DurationSelector
+                        id='durationInput'
+                        label='Duration:'
+                        defaultValue={duration}
+                        onHourChange={(event) =>
+                          setDuration((duration) => ({
+                            ...duration,
+                            hours: Number(event.target.value)
+                          }))
+                        }
+                        onMinuteChange={(event) =>
+                          setDuration((duration) => ({
+                            ...duration,
+                            minutes: Number(event.target.value)
+                          }))
+                        }
+                      />
+                    </td>
+                    <td>
+                      <FormField
+                        id='walkDistInput'
+                        type='number'
+                        placeholder='Distance (km)'
+                        value={walkDist.toString()}
+                        label='Walk Distance:'
+                        isRequired={true}
+                        onChange={(event) =>
+                          setWalkDist(parseFloat(event.target.value))
+                        }
+                      />
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <FormField
+                id='notesInput'
+                type='textarea'
+                placeholder='Add notes here'
+                value={notes}
+                label='Notes:'
+                isRequired={false}
+                onChange={(event) => setNotes(event.target.value)}
+              />
+            </>
+          </ExpandTransition>
 
-          <FormField
-            id='notesInput'
-            type='textarea'
-            placeholder='Add notes here'
-            value={notes}
-            label='Notes:'
-            isRequired={false}
-            onChange={(event) => setNotes(event.target.value)}
-          />
-          <div className='mx-auto my-2 flex flex-col p-1 '>
+          <ExpandTransition isExpanded={isIncidentForm}>
+            <>
+              <FormField
+                id='incidentNotes'
+                type='textarea'
+                placeholder='Describe incident here'
+                value={incidentNotes}
+                label='Incident Details:'
+                isRequired={true}
+                onChange={(event) => setIncidentNotes(event.target.value)}
+              />
+              <FormField
+                id='vetClinic'
+                type='text'
+                placeholder='Vet clinic information'
+                value={vetClinic}
+                label='Vet'
+                isRequired={false}
+                onChange={(event) => setVetClinic(event.target.value)}
+              />
+            </>
+          </ExpandTransition>
+          <div className='mx-auto my-2 flex flex-col p-1'>
             <button
-              className='text-bold rounded bg-primary px-12 py-4 text-white drop-shadow-default active:bg-dark-red disabled:bg-dark-gray'
+              className='text-bold mb-2 rounded bg-primary px-12 py-4 text-white drop-shadow-default active:bg-dark-red disabled:bg-dark-gray'
               disabled={!isSubmitEnabled()}
               type='submit'
             >
               Submit
             </button>
-            <Link href='/visit'>
-              <button
-                type='button'
-                className='text-bold mt-2 rounded bg-primary p-1 text-white drop-shadow-default active:bg-dark-red'
-                onClick={() => {
-                  userDoc.visits.splice(Number(id), 1)
-                  updateVisit?.(userDoc)
-                }}
-                hidden={id === null} // button should be hidden if no id
-              >
-                Remove
-              </button>
-            </Link>
+            {id !== null && (
+              <>
+                <hr className='border-primary' />
+                {isIncidentForm ? (
+                  <button
+                    className='text-bold mt-2 rounded border border-primary bg-cream p-1 text-primary drop-shadow-default active:bg-dark-red'
+                    onClick={() => {
+                      setIsIncidentForm(false)
+                    }}
+                    type='button'
+                  >
+                    Cancel Incident Report
+                  </button>
+                ) : (
+                  <button
+                    className='text-bold mt-2 w-full rounded bg-primary p-1 text-white drop-shadow-default active:bg-dark-red'
+                    onClick={() => {
+                      setIsIncidentForm(true)
+                    }}
+                    type='button'
+                  >
+                    Lodge Incident
+                  </button>
+                )}
+              </>
+            )}
+            <ExpandTransition isExpanded={!isIncidentForm}>
+              <Link href='/visit'>
+                <button
+                  type='button'
+                  className='text-bold mt-2 mb-4 w-full rounded border border-primary bg-cream p-1 text-primary drop-shadow-default active:bg-dark-red'
+                  onClick={() => {
+                    userDoc.visits.splice(Number(id), 1)
+                    updateVisit?.(userDoc)
+                  }}
+                  hidden={id === null} // button should be hidden if no id
+                >
+                  Remove
+                </button>
+              </Link>
+            </ExpandTransition>
           </div>
         </form>
       </>

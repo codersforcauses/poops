@@ -33,6 +33,8 @@ export interface VisitData {
   commuteDist: number
   commuteMethod: string
   notes: string
+  incidentNotes?: string
+  vetClinic?: string
 }
 
 export interface ContactData {
