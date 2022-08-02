@@ -2,8 +2,6 @@ import React from 'react'
 
 export interface ButtonInterface {
   handler: () => void
-  height: string
-  width: string
   buttonlabel: string
 }
 
