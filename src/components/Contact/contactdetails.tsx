@@ -11,8 +11,9 @@ type ContactProp = {
 }
 
 const ContactDetails = ({ firestoreIndex }: ContactProp) => {
-  const context = useContext(ContactContext)
-  const contacts = context.allContacts
+  const { allContacts, setCreatingNewContact, setDisplayContactIndex } =
+    useContext(ContactContext)
+  const contacts = allContacts
   const isNewContact = firestoreIndex === -1
   const [isEditing, setIsEditing] = useState<boolean>(isNewContact)
 
@@ -31,8 +32,8 @@ const ContactDetails = ({ firestoreIndex }: ContactProp) => {
             type='button'
             className='rounded bg-primary py-1 px-4 font-bold text-white hover:bg-dark-red'
             onClick={() => {
-              context.setCreatingNewContact(false)
-              context.setDisplayContactIndex(-1)
+              setCreatingNewContact(false)
+              setDisplayContactIndex(-1)
             }}
           >
             Back

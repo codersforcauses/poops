@@ -12,11 +12,11 @@ type ContactItemProps = {
 }
 
 const ContactItem = ({ contact, image, firestoreIndex }: ContactItemProps) => {
-  const context = useContext(ContactContext)
+  const { setDisplayContactIndex } = useContext(ContactContext)
   return (
     <div
-      onClick={() => context.setDisplayContactIndex(firestoreIndex)}
-      onKeyDown={() => context.setDisplayContactIndex(firestoreIndex)}
+      onClick={() => setDisplayContactIndex(firestoreIndex)}
+      onKeyDown={() => setDisplayContactIndex(firestoreIndex)}
       role='button'
       tabIndex={0}
     >

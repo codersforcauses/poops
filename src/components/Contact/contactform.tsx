@@ -19,7 +19,8 @@ const ContactForm = ({
   image,
   setIsEditing
 }: ContactInfoProps) => {
-  const context = useContext(ContactContext)
+  const { allContacts, insertContact, setDisplayContactIndex } =
+    useContext(ContactContext)
 
   const isNewContact = firestoreIndex === -1
 
@@ -36,7 +37,7 @@ const ContactForm = ({
         notes: '',
         tags: []
       }
-    : context.allContacts[firestoreIndex]
+    : allContacts[firestoreIndex]
 
   const [regions, setRegions] = useState(contact.region)
   const [tags, setTags] = useState(contact.tags)
@@ -62,11 +63,11 @@ const ContactForm = ({
     e.preventDefault()
     // TODO: submit to firestore here
     if (isNewContact) {
-      firestoreIndex = context.insertContact(contactForm)
-      context.setDisplayContactIndex(firestoreIndex)
+      firestoreIndex = insertContact(contactForm)
+      setDisplayContactIndex(firestoreIndex)
     } else {
-      context.insertContact(contactForm, firestoreIndex)
-      context.setDisplayContactIndex(firestoreIndex)
+      insertContact(contactForm, firestoreIndex)
+      setDisplayContactIndex(firestoreIndex)
     }
     setIsEditing(false)
   }

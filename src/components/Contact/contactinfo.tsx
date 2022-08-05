@@ -16,8 +16,13 @@ type ContactInfoProps = {
 }
 
 function ContactInfo({ firestoreIndex, image }: ContactInfoProps) {
-  const context = useContext(ContactContext)
-  const contact = context.allContacts[firestoreIndex]
+  const {
+    allContacts,
+    setCreatingNewContact,
+    removeContact,
+    setDisplayContactIndex
+  } = useContext(ContactContext)
+  const contact = allContacts[firestoreIndex]
   const { setAlert } = useAlert()
 
   return (
@@ -129,9 +134,9 @@ function ContactInfo({ firestoreIndex, image }: ContactInfoProps) {
                 text: 'Are you sure?',
                 position: 'bottom',
                 confirmFunction: () => {
-                  context.setCreatingNewContact(false)
-                  context.removeContact(firestoreIndex)
-                  context.setDisplayContactIndex(-1)
+                  setCreatingNewContact(false)
+                  removeContact(firestoreIndex)
+                  setDisplayContactIndex(-1)
                 }
               })
             }}
