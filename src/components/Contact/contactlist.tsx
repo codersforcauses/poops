@@ -1,25 +1,50 @@
-import Link from 'next/link'
-
 import ContactItem from '@/components/Contact/contactitem'
-import type { Contact } from '@/types/types'
+import { useContact } from '@/context/ContactContext/context'
 
 type ContactsProp = {
-  contacts: Contact[]
+  firestoreIndexMap: number[]
 }
 
-const ContactList = ({ contacts }: ContactsProp) => {
-  const contactItems = contacts.map((contact) => {
+const ContactList = ({ firestoreIndexMap }: ContactsProp) => {
+  const { allContacts } = useContact()
+
+  firestoreIndexMap.sort((a: number, b: number) => {
+    const nameA = allContacts[a].clientName.toUpperCase() // ignore upper and lowercase
+    const nameB = allContacts[b].clientName.toUpperCase() // ignore upper and lowercase
+    if (nameA < nameB) {
+      return -1
+    }
+    if (nameA > nameB) {
+      return 1
+    }
+    // names must be equal
+    return 0
+  })
+
+  const contactItems = firestoreIndexMap.map((firestoreIndex) => {
+    if (firestoreIndex === 0) return
     return (
-      <Link href={`/contact/${contact.id}`} key={contact.id}>
-        <a>
-          <ContactItem contact={contact} image='' />
-        </a>
-      </Link>
+      <ContactItem
+        firestoreIndex={firestoreIndex}
+        contact={allContacts[firestoreIndex]}
+        image=''
+        key={firestoreIndex}
+      />
     )
   })
 
   return (
     <div className='flex-col'>
+      {firestoreIndexMap.includes(0) && (
+        <ul>
+          <ContactItem
+            firestoreIndex={0}
+            contact={allContacts[0]}
+            image=''
+            key={0}
+          />
+        </ul>
+      )}
       <ul>{contactItems}</ul>
     </div>
   )

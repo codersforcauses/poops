@@ -26,7 +26,8 @@
 }
 
 main {
-  height: 100vh; /* 4rem is bottom nav height */
+  /* 4rem is bottom nav height */
+  height: calc(100vh - 4rem);
   padding-bottom: 4rem;
   overflow-y: scroll;
   overflow-x: hidden;

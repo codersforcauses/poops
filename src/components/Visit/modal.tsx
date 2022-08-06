@@ -16,7 +16,7 @@ interface ModalViewProps {
 const ModalView = ({ toggleModal }: ModalViewProps) => {
   const { userDoc, updateVisit } = useFirestore()
   const [visitType, setVisitType] = useState('')
-  const [displayName, setDisplayName] = useState('')
+  const [clientName, setClientName] = useState('')
   const [petNames, setPetNames] = useState('')
   const [startTime, setStartTime] = useState('')
   const [endTime, setEndTime] = useState('')
@@ -29,7 +29,7 @@ const ModalView = ({ toggleModal }: ModalViewProps) => {
     click.preventDefault()
     const data: VisitData = {
       type: visitType,
-      displayName: displayName,
+      clientName: clientName,
       petNames: petNames,
       startTime: Timestamp.fromDate(new Date(startTime)),
       endTime: Timestamp.fromDate(new Date(endTime)),
@@ -46,7 +46,7 @@ const ModalView = ({ toggleModal }: ModalViewProps) => {
   const isSubmitEnabled = () => {
     return (
       visitType &&
-      displayName &&
+      clientName &&
       petNames &&
       startTime &&
       endTime &&
@@ -86,12 +86,12 @@ const ModalView = ({ toggleModal }: ModalViewProps) => {
                 </td>
                 <td>
                   <FormField
-                    id='displayNameInput'
+                    id='clientNameInput'
                     type='text'
                     placeholder='Display Name'
                     label='Display Name:'
                     isRequired={true}
-                    onChange={(event) => setDisplayName(event.target.value)}
+                    onChange={(event) => setClientName(event.target.value)}
                   />
                 </td>
               </tr>
