@@ -1,11 +1,11 @@
-import { ChangeEvent, FormEvent, useContext, useEffect } from 'react'
+import { ChangeEvent, FormEvent, useEffect } from 'react'
 import { Dispatch, SetStateAction, useState } from 'react'
 import tw from 'tailwind-styled-components'
 
 import Avatar from '@/components/Contact/avatar'
 import RegionSelector from '@/components/Contact/regiondropdown'
 import TagSelector from '@/components/Contact/tagdropdown'
-import { ContactContext } from '@/pages/contact'
+import { useContact } from '@/context/ContactContext/context'
 import type { Contact } from '@/types/types'
 
 type ContactInfoProps = {
@@ -19,8 +19,7 @@ const ContactForm = ({
   image,
   setIsEditing
 }: ContactInfoProps) => {
-  const { allContacts, insertContact, setDisplayContactIndex } =
-    useContext(ContactContext)
+  const { allContacts, insertContact, setDisplayContactIndex } = useContact()
 
   const isNewContact = firestoreIndex === -1
 

@@ -1,14 +1,12 @@
-import { useContext } from 'react'
-
 import ContactItem from '@/components/Contact/contactitem'
-import { ContactContext } from '@/pages/contact'
+import { useContact } from '@/context/ContactContext/context'
 
 type ContactsProp = {
   firestoreIndexMap: number[]
 }
 
 const ContactList = ({ firestoreIndexMap }: ContactsProp) => {
-  const { allContacts } = useContext(ContactContext)
+  const { allContacts } = useContact()
 
   firestoreIndexMap.sort((a: number, b: number) => {
     const nameA = allContacts[a].clientName.toUpperCase() // ignore upper and lowercase

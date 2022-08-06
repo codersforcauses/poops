@@ -1,4 +1,3 @@
-import { useContext } from 'react'
 import {
   LocationMarkerIcon,
   MailIcon,
@@ -8,7 +7,7 @@ import tw from 'tailwind-styled-components'
 
 import Avatar from '@/components/Contact/avatar'
 import { AlertVariant, useAlert } from '@/context/AlertContext'
-import { ContactContext } from '@/pages/contact'
+import { useContact } from '@/context/ContactContext/context'
 
 type ContactInfoProps = {
   firestoreIndex: number
@@ -21,7 +20,7 @@ function ContactInfo({ firestoreIndex, image }: ContactInfoProps) {
     setCreatingNewContact,
     removeContact,
     setDisplayContactIndex
-  } = useContext(ContactContext)
+  } = useContact()
   const contact = allContacts[firestoreIndex]
   const { setAlert } = useAlert()
 

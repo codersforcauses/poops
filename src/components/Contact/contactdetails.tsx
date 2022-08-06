@@ -1,10 +1,10 @@
-import { useContext, useState } from 'react'
+import { useState } from 'react'
 import { PencilIcon } from '@heroicons/react/outline'
 
 import ContactForm from '@/components/Contact/contactform'
 import ContactInfo from '@/components/Contact/contactinfo'
 import Header from '@/components/Header'
-import { ContactContext } from '@/pages/contact'
+import { useContact } from '@/context/ContactContext/context'
 
 type ContactProp = {
   firestoreIndex: number
@@ -12,7 +12,7 @@ type ContactProp = {
 
 const ContactDetails = ({ firestoreIndex }: ContactProp) => {
   const { allContacts, setCreatingNewContact, setDisplayContactIndex } =
-    useContext(ContactContext)
+    useContact()
   const contacts = allContacts
   const isNewContact = firestoreIndex === -1
   const [isEditing, setIsEditing] = useState<boolean>(isNewContact)

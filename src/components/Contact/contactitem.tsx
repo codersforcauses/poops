@@ -1,7 +1,5 @@
-import { useContext } from 'react'
-
 import Avatar from '@/components/Contact/avatar'
-import { ContactContext } from '@/pages/contact'
+import { useContact } from '@/context/ContactContext/context'
 import { Contact } from '@/types/types'
 import truncateText from '@/utils/truncateText'
 
@@ -12,7 +10,7 @@ type ContactItemProps = {
 }
 
 const ContactItem = ({ contact, image, firestoreIndex }: ContactItemProps) => {
-  const { setDisplayContactIndex } = useContext(ContactContext)
+  const { setDisplayContactIndex } = useContact()
   return (
     <div
       onClick={() => setDisplayContactIndex(firestoreIndex)}
