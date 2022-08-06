@@ -1,4 +1,11 @@
-import { ChangeEvent, ReactNode, useEffect, useState } from 'react'
+import {
+  ChangeEvent,
+  ReactNode,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState
+} from 'react'
 
 import {
   ContactContextProps,
@@ -26,82 +33,110 @@ const ContactProvider = ({ children }: { children: ReactNode }) => {
   useEffect(() => {
     setFilteredIndexes([...allContacts.keys()])
   }, [allContacts])
-  const filterContact = (
-    tagf: string,
-    searchField: string,
-    contacts: Contact[]
-  ) => {
-    const newFilteredIndexes: number[] = []
-    contacts.forEach((contact: Contact, index: number) => {
-      const reg = new RegExp(`(^|\\s|,)${searchField}`, 'gi')
 
-      // don't show contacts without selected tag if tag selected
-      if (tagf !== '' && !contact.tags.some((v) => v.includes(tagf))) {
-        return false
-      }
+  const filterContact = useCallback(
+    (tagf: string, searchField: string, contacts: Contact[]) => {
+      const newFilteredIndexes: number[] = []
+      contacts.forEach((contact: Contact, index: number) => {
+        const reg = new RegExp(`(^|\\s|,)${searchField}`, 'gi')
 
-      if (reg.test(contact.clientName) || reg.test(contact.pets)) {
-        newFilteredIndexes.push(index)
-      }
-    })
-    setFilteredIndexes(newFilteredIndexes)
-  }
+        // don't show contacts without selected tag if tag selected
+        if (tagf !== '' && !contact.tags.some((v) => v.includes(tagf))) {
+          return false
+        }
+
+        if (reg.test(contact.clientName) || reg.test(contact.pets)) {
+          newFilteredIndexes.push(index)
+        }
+      })
+      setFilteredIndexes(newFilteredIndexes)
+    },
+    []
+  )
 
   // Sends newContacts to Firestore
-  const setFirestoreContacts = (newContacts: Contact[]) => {
-    userDoc.contacts = newContacts
-    updateContact?.(userDoc)
-  }
+  const setFirestoreContacts = useCallback(
+    (newContacts: Contact[]) => {
+      userDoc.contacts = newContacts
+      updateContact?.(userDoc)
+    },
+    [updateContact, userDoc]
+  )
 
-  const insertContact = (contact: Contact, index?: number) => {
-    let newArray: Contact[]
-    if (index !== undefined) {
-      newArray = [...allContacts]
-      newArray[index] = contact
-    } else {
-      newArray = [...allContacts, contact]
-    }
-    filterContact('', '', newArray) // reset filter with new contacts
-    setFirestoreContacts(newArray)
-    setAllContacts(newArray)
-    return index ? index : allContacts.length
-  }
+  const insertContact = useCallback(
+    (contact: Contact, index?: number) => {
+      let newArray: Contact[]
+      if (index !== undefined) {
+        newArray = [...allContacts]
+        newArray[index] = contact
+      } else {
+        newArray = [...allContacts, contact]
+      }
+      filterContact('', '', newArray) // reset filter with new contacts
+      setFirestoreContacts(newArray)
+      setAllContacts(newArray)
+      return index ? index : allContacts.length
+    },
+    [allContacts, filterContact, setFirestoreContacts]
+  )
 
-  const removeContact = (index: number) => {
-    if (index === 0) return // can't delete users own profile
+  const removeContact = useCallback(
+    (index: number) => {
+      if (index === 0) return // can't delete users own profile
 
-    const newArray = [...allContacts]
-    newArray.splice(index)
+      const newArray = [...allContacts]
+      newArray.splice(index)
 
-    filterContact('', '', newArray) // reset filter with new contacts
-    setAllContacts(newArray)
-    setFirestoreContacts(newArray)
-  }
+      filterContact('', '', newArray) // reset filter with new contacts
+      setAllContacts(newArray)
+      setFirestoreContacts(newArray)
+    },
+    [allContacts, filterContact, setFirestoreContacts]
+  )
 
-  const onSearchChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const searchFieldString = event.target.value.toLocaleLowerCase()
-    setSearchFieldString(searchFieldString)
-    filterContact(selectedOption, searchFieldString, allContacts)
-  }
+  const onSearchChange = useCallback(
+    (event: ChangeEvent<HTMLInputElement>) => {
+      const searchFieldString = event.target.value.toLocaleLowerCase()
+      setSearchFieldString(searchFieldString)
+      filterContact(selectedOption, searchFieldString, allContacts)
+    },
+    [allContacts, filterContact, selectedOption]
+  )
 
-  const onSearchTagChange = (event: ChangeEvent<HTMLSelectElement>) => {
-    const option_value = event.target.value
-    setSelectedOption(option_value)
-    filterContact(option_value, searchFieldString, allContacts)
-  }
+  const onSearchTagChange = useCallback(
+    (event: ChangeEvent<HTMLSelectElement>) => {
+      const option_value = event.target.value
+      setSelectedOption(option_value)
+      filterContact(option_value, searchFieldString, allContacts)
+    },
+    [allContacts, filterContact, searchFieldString]
+  )
 
-  const value: ContactContextProps = {
-    allContacts: allContacts,
-    insertContact: insertContact,
-    removeContact: removeContact,
-    onSearchChange: onSearchChange,
-    onSearchTagChange: onSearchTagChange,
-    setDisplayContactIndex: setDisplayContactIndex,
-    getDisplayContactIndex: () => displayContactIndex,
-    setCreatingNewContact: setCreatingNewContact,
-    getCreatingNewContact: () => creatingNewContact,
-    getFilteredIndexes: () => filteredIndexes
-  }
+  const value: ContactContextProps = useMemo(
+    () => ({
+      allContacts: allContacts,
+      insertContact: insertContact,
+      removeContact: removeContact,
+      onSearchChange: onSearchChange,
+      onSearchTagChange: onSearchTagChange,
+      setDisplayContactIndex: setDisplayContactIndex,
+      getDisplayContactIndex: () => displayContactIndex,
+      setCreatingNewContact: setCreatingNewContact,
+      getCreatingNewContact: () => creatingNewContact,
+      getFilteredIndexes: () => filteredIndexes
+    }),
+    [
+      allContacts,
+      creatingNewContact,
+      displayContactIndex,
+      filteredIndexes,
+      insertContact,
+      onSearchChange,
+      onSearchTagChange,
+      removeContact
+    ]
+  )
+
   return (
     <ContactContextProvider value={value}>{children}</ContactContextProvider>
   )
