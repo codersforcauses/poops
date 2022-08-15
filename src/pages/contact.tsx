@@ -8,6 +8,7 @@ import NavBar from '@/components/NavBar'
 import { withProtected } from '@/components/PrivateRoute'
 import SearchBar from '@/components/SearchBar'
 import SearchTag from '@/components/SearchBar/searchtag'
+import TopNav from '@/components/TopNav'
 import { useContact } from '@/context/ContactContext/context'
 import type { Contact } from '@/types/types'
 
@@ -37,7 +38,8 @@ const Contact = () => {
     <>
       {/* <Seo /> */}
       <Header pageTitle='Contact' />
-      <main>
+      <TopNav />
+      <main className='h-[calc(100%-7rem)]'>
         {getDisplayContactIndex() === -1 && !getCreatingNewContact() && (
           <div className='m-auto flex h-14 max-w-md flex-row'>
             <div className='flex-1'></div>
