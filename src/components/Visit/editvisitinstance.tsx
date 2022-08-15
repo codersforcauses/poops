@@ -37,7 +37,7 @@ const formatDate = (timestamp: Timestamp) => {
 const EditableVisitInstance = (props: EditVisitInstanceProps) => {
   const { userDoc, updateVisit } = useFirestore()
   const [visitType, setVisitType] = useState(props.type)
-  const [displayName, setDisplayName] = useState(props.displayName)
+  const [clientName, setClientName] = useState(props.clientName)
   const [petNames, setPetNames] = useState(props.petNames)
   const [startTime, setStartTime] = useState(props.startTime)
   const [endTime, setEndTime] = useState(props.endTime)
@@ -51,7 +51,7 @@ const EditableVisitInstance = (props: EditVisitInstanceProps) => {
       onSubmit={(event) => {
         const visit: VisitData = {
           type: visitType,
-          displayName: displayName,
+          clientName: clientName,
           petNames: petNames,
           startTime: startTime,
           endTime: endTime,
@@ -85,8 +85,8 @@ const EditableVisitInstance = (props: EditVisitInstanceProps) => {
           <input
             className='bg-cream text-sm font-normal text-primary'
             placeholder='Display Name'
-            value={displayName}
-            onChange={(event) => setDisplayName(event.target.value)}
+            value={clientName}
+            onChange={(event) => setClientName(event.target.value)}
             required
           />
         </div>
