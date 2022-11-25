@@ -1,5 +1,5 @@
 import { NextPage } from 'next'
-import Image from 'next/image'
+import Image from "next/legacy/image";
 
 import LoginPanel from '@/components/Login/LoginPanel'
 import { withPublic } from '@/components/PrivateRoute'
