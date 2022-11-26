@@ -1,5 +1,5 @@
 import { FormEvent, useState } from 'react'
-import { XMarkIcon } from '@heroicons/react/24/solid'
+import { XIcon } from '@heroicons/react/solid'
 import { Timestamp } from 'firebase/firestore'
 
 import { visitSelectOptions } from '@/components/Visit/visitlist'
@@ -61,7 +61,7 @@ const ModalView = ({ toggleModal }: ModalViewProps) => {
       <>
         <div className='fixed right-5 top-4 z-[100] h-10 w-10 rounded-full bg-primary p-1 drop-shadow-default'>
           <button onClick={toggleModal}>
-            <XMarkIcon className='h-full w-full text-white' />
+            <XIcon className='h-full w-full text-white' />
           </button>
         </div>
 

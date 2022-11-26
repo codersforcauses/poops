@@ -1,8 +1,8 @@
 import {
-  EnvelopeIcon,
-  MapPinIcon,
+  LocationMarkerIcon,
+  MailIcon,
   PhoneIcon
-} from '@heroicons/react/24/outline'
+} from '@heroicons/react/outline'
 import tw from 'tailwind-styled-components'
 
 import Avatar from '@/components/Contact/avatar'
@@ -56,7 +56,7 @@ function ContactInfo({ firestoreIndex, image }: ContactInfoProps) {
             Email
           </label>
           <a href={`mailto:${contact.email}`} target='_blank' rel='noreferrer'>
-            <EnvelopeIcon className='h-5 w-5' />
+            <MailIcon className='h-5 w-5' />
           </a>
         </div>
         <span className='text-xl'>{contact.email}</span>
@@ -72,7 +72,7 @@ function ContactInfo({ firestoreIndex, image }: ContactInfoProps) {
             target='_blank'
             rel='noreferrer'
           >
-            <MapPinIcon className='h-5 w-5' />
+            <LocationMarkerIcon className='h-5 w-5' />
           </a>
         </div>
         <span className='text-xl'>{contact.streetAddress}</span>

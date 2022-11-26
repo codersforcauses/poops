@@ -1,9 +1,6 @@
 import { useState } from 'react'
 import { useRouter } from 'next/router'
-import {
-  ChatBubbleLeftEllipsisIcon,
-  HomeIcon
-} from '@heroicons/react/24/outline'
+import { ChatAltIcon, HomeIcon } from '@heroicons/react/outline'
 
 import { NavIcon } from '@/components/NavBar/navicon'
 import NavLink from '@/components/NavBar/navlink'
@@ -28,7 +25,7 @@ export default function NavBar() {
     {
       name: 'Contact',
       route: '/contact',
-      icon: <ChatBubbleLeftEllipsisIcon className={iconClasses} />
+      icon: <ChatAltIcon className={iconClasses} />
     }
   ]
 

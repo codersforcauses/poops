@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { PencilIcon } from '@heroicons/react/24/outline'
+import { PencilIcon } from '@heroicons/react/outline'
 
 import ContactForm from '@/components/Contact/contactform'
 import ContactInfo from '@/components/Contact/contactinfo'

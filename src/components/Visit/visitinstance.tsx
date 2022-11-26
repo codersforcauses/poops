@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction, useState } from 'react'
-import { ChevronDownIcon } from '@heroicons/react/24/outline'
+import { ChevronDownIcon } from '@heroicons/react/outline'
 import { Timestamp } from 'firebase/firestore'
 
 import { VisitData } from '@/types/types'
