@@ -38,7 +38,7 @@ sitemap.xml
 sitemap-*.xml
 
 # environmonet
-.env
+# .env
 .env.local
 .env.development
 .env.production
