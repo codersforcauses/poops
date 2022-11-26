@@ -1,3 +1,6 @@
+import { useState } from 'react'
+
+import Button from '@/components/Button/Button'
 import Header from '@/components/Header'
 import Modal from '@/components/Home/modal'
 import Summary from '@/components/Home/summary'
@@ -6,6 +9,11 @@ import TopNav from '@/components/TopNav'
 const dummyUsername = 'User'
 
 const Home = () => {
+  const [buttonState, setButtonState] = useState<boolean>(false)
+
+  const handleButtonStateChange = () => {
+    setButtonState(!buttonState)
+  }
   return (
     <>
       <Header pageTitle='Home' />
@@ -15,6 +23,12 @@ const Home = () => {
           <div className='flex flex-col px-4 '>
             <h1 className='py-3 text-center text-3xl'>
               Welcome, {dummyUsername}!
+              <div>
+                <Button
+                  handler={handleButtonStateChange}
+                  buttonLabel={String(buttonState)}
+                ></Button>
+              </div>
             </h1>
             <Summary />
             <br />
