@@ -1,4 +1,4 @@
-import Image from 'next/legacy/image'
+import Image from 'next/image'
 import { UserCircleIcon } from '@heroicons/react/24/outline'
 
 type AvatarProps = {

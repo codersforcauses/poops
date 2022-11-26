@@ -21,10 +21,9 @@ export default function NavLink({
   const currentTabClasses = tabClasses + ' border-t-2 border-t-primary'
 
   return (
-    <>
+    <Link href={href}>
       {name !== 'Visit' ? (
-        <Link
-          href={href}
+        <a
           className={`${
             currentPage ? currentTabClasses : tabClasses
           } pt-2 pb-1`}
@@ -33,16 +32,16 @@ export default function NavLink({
         >
           {icon}
           <span className='tab tab-home block text-xs'>{name}</span>
-        </Link>
+        </a>
       ) : (
-        <Link
+        <a
           href={href}
           onMouseDown={() => setCurrentPage(name)}
           aria-hidden='true' // TODO: need work on accessibility
         >
           {icon}
-        </Link>
+        </a>
       )}
-    </>
+    </Link>
   )
 }
