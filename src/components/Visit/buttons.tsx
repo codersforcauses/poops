@@ -1,4 +1,4 @@
-import { PencilIcon, PlusIcon, XIcon } from '@heroicons/react/solid'
+import { PencilIcon, PlusIcon, XMarkIcon } from '@heroicons/react/24/solid'
 
 interface EditButtonProps {
   isEditable: boolean
@@ -15,7 +15,7 @@ export const EditButton = (props: EditButtonProps) => {
         }}
       >
         {props.isEditable ? (
-          <XIcon className='h-full w-full text-white' />
+          <XMarkIcon className='h-full w-full text-white' />
         ) : (
           <PencilIcon className='h-full w-full text-white' />
         )}
