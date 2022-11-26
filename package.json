@@ -18,6 +18,7 @@
     "build": "next build",
     "start": "next start",
     "start:emu": "yarn firebase emu & (sleep 15 && yarn start)",
+    "analyse": "ANALYZE=true next build",
     "lint": "next lint",
     "lint:fix": "eslint src --fix && yarn format",
     "lint:strict": "eslint src",
