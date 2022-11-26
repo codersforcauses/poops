@@ -35,7 +35,6 @@ export default function NavLink({
         </a>
       ) : (
         <a
-          href={href}
           onMouseDown={() => setCurrentPage(name)}
           aria-hidden='true' // TODO: need work on accessibility
         >
