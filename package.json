@@ -26,8 +26,7 @@
     "format": "prettier -w .",
     "format:check": "prettier -c .",
     "prepare": "husky install",
-    "firebase": "cd firebase && yarn",
-    "postinstall": "cd firebase && yarn install"
+    "firebase": "cd firebase && yarn"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.2.1",
