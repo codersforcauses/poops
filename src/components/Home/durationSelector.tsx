@@ -18,7 +18,7 @@ const DurationSelector = (props: DurationProps) => {
 
       <div className='flex w-full flex-row justify-center rounded border border-dark-gray'>
         <select
-          className='form-input flex h-9 w-full overflow-scroll rounded border-none text-center focus:outline-none'
+          className='form-input flex h-full w-full overflow-scroll rounded border-none text-center focus:outline-none'
           id='hours'
           defaultValue={props.defaultValue?.hours}
           onChange={props.onHourChange}
@@ -36,7 +36,7 @@ const DurationSelector = (props: DurationProps) => {
         </select>
         <div className='flex self-center'>:</div>
         <select
-          className='form-input flex h-9 w-full rounded border-none text-center focus:outline-none'
+          className='form-input flex h-full w-full rounded border-none text-center focus:outline-none'
           id='minutes'
           defaultValue={props.defaultValue?.minutes}
           onChange={props.onMinuteChange}
