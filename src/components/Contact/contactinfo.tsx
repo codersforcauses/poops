@@ -8,6 +8,7 @@ import tw from 'tailwind-styled-components'
 import Avatar from '@/components/Contact/avatar'
 import { AlertVariant, useAlert } from '@/context/AlertContext'
 import { useContact } from '@/context/ContactContext/context'
+import Button from '../UI/button'
 
 type ContactInfoProps = {
   firestoreIndex: number
@@ -124,7 +125,7 @@ function ContactInfo({ firestoreIndex, image }: ContactInfoProps) {
       <div className='mb-2'>
         {/* can't delete users profile */}
         {firestoreIndex !== 0 && (
-          <button
+          <Button
             type='button'
             onClick={() => {
               setAlert({
@@ -139,10 +140,9 @@ function ContactInfo({ firestoreIndex, image }: ContactInfoProps) {
                 }
               })
             }}
-            className='w-80 rounded bg-primary py-1 font-bold text-white hover:bg-dark-red'
           >
             Delete Contact
-          </button>
+          </Button>
         )}
       </div>
     </div>
