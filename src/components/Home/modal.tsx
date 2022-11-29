@@ -43,24 +43,6 @@ function Modal() {
 
   function handleSubmit(event: React.ChangeEvent<HTMLFormElement>) {
     event.preventDefault()
-    event.target.reset()
-    setClient('')
-    setType('')
-    setCommute('')
-    setWalkDistance(0)
-    setCommuteDistance(0)
-    setStartTime('')
-    setDuration({
-      hours: 0,
-      minutes: 0
-    })
-    setAlert({
-      variant: AlertVariant.info,
-      title: 'Visit has been recorded',
-      text: 'Any changes can be made in Visit Page',
-      position: 'bottom',
-      showFor: 2500
-    })
 
     // adding duration to start time to get end date
     const endDate: Date = new Date(startTime)
@@ -81,6 +63,26 @@ function Modal() {
     }
     userDoc.visits.push(data)
     updateVisit?.(userDoc)
+
+    // reset form fields
+    event.target.reset()
+    setClient('')
+    setType('')
+    setCommute('')
+    setWalkDistance(0)
+    setCommuteDistance(0)
+    setStartTime('')
+    setDuration({
+      hours: 0,
+      minutes: 0
+    })
+    setAlert({
+      variant: AlertVariant.info,
+      title: 'Visit has been recorded',
+      text: 'Any changes can be made in Visit Page',
+      position: 'bottom',
+      showFor: 2500
+    })
   }
 
   return (
