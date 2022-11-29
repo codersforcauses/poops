@@ -1,6 +1,5 @@
 import { Timestamp } from 'firebase/firestore'
 
-import { ReportButton, VetConcernButton } from '@/components/Visit/buttons'
 import { formatDuration } from '@/components/Visit/visitinstance'
 import { VisitData } from '@/types/types'
 import Button from '../UI/button'
