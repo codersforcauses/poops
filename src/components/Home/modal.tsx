@@ -33,6 +33,7 @@ function Modal() {
       commute &&
       commuteDistance > 0 &&
       client.length > 0 &&
+      petNames &&
       (type == 'Vet' ||
         (type == 'Walk' && walkDistance > 0 && !isNaN(walkDistance))) &&
       startTime != '' &&
