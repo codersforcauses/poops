@@ -6,12 +6,10 @@ import CommuteSelector from '@/components/Visit/commuteselector'
 import FormField from '@/components/Visit/formfield'
 import { visitSelectOptions } from '@/components/Visit/visitlist'
 import { AlertVariant, useAlert } from '@/context/AlertContext'
-<<<<<<< HEAD
-import { Duration, VisitData} from '@/types/types'
-import Button from '../UI/button'
-=======
 import { useFirestore } from '@/context/Firebase/Firestore/context'
->>>>>>> 37d42e3 (Add firestore integration to push visit data)
+import { Duration, VisitData} from '@/types/types'
+
+import Button from '../UI/button'
 
 function Modal() {
   const { userDoc, updateVisit } = useFirestore()
