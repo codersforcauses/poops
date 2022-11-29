@@ -1,35 +1,37 @@
-/** @type {import('next').NextConfig} */
-// const withPWA = require('next-pwa')
 import withPWA from 'next-pwa'
+import withBundleAnalyzer from '@next/bundle-analyzer'
 
-// module.exports = withPWA({
-const nextConfig = withPWA({
-  pwa: {
-    dest: 'public',
-    register: true,
-    skipWaiting: true
-  },
-
+/** @type {import('next').NextConfig} */
+const nextConfig = {
   eslint: {
     dirs: ['src']
   },
-
   reactStrictMode: true,
-
   swcMinify: true,
   experimental: {
-    optimizeCss: true
+    optimizeCss: true,
+    appDir: false
   }
+}
 
-  // Uncoment to add domain whitelist
-  // images: {
-  //   domains: [
-  //     'res.cloudinary.com',
-  //   ],
-  // },
+const PWAConfig = withPWA({
+  dest: 'public',
+  register: true,
+  skipWaiting: true,
+  disable: process.env.NODE_ENV === 'development'
 })
 
-// ! Temp fix for next-pwa throwing invalid next.config.js warning message
-delete nextConfig.pwa
+const bundleAnalyzerConfig = withBundleAnalyzer({
+  enabled: process.env.ANALYZE === 'true',
+  openAnalyzer: false
+})
 
-export default nextConfig
+const config = async ({ defaultConfig }) => {
+  const plugins = [PWAConfig, bundleAnalyzerConfig]
+  return plugins.reduce((acc, plugin) => plugin(acc), {
+    ...defaultConfig,
+    ...nextConfig
+  })
+}
+
+export default config
