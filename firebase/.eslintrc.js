@@ -30,6 +30,10 @@ module.exports = {
     'object-curly-spacing': ['error', 'always'],
     'quote-props': ['error', 'as-needed'],
     'import/no-unresolved': 0,
-    'import/export': 'warn'
+    'import/export': 'warn',
+    'linebreak-style': [
+      'error',
+      process.platform === 'win32' ? 'windows' : 'unix'
+    ]
   }
 }

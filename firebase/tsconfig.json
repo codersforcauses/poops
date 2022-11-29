@@ -9,8 +9,10 @@
     "strict": true,
     "target": "es2017",
     "removeComments": true,
-    "allowSyntheticDefaultImports": true
+    "allowSyntheticDefaultImports": true,
+    "typeRoots": ["./node_modules/@types"]
   },
   "compileOnSave": true,
-  "include": ["functions/*.ts"]
+  "include": ["functions/*.ts"],
+  "exclude": ["node_modules", "../node_modules"]
 }
