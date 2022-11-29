@@ -1,11 +1,7 @@
 import { useState } from 'react'
 
-import {
-  clientSelectOptions,
-  commuteSelectOptions
-} from '@/components/Home/dummyOptions'
 import DurationSelector from '@/components/Home/durationSelector'
-import Form from '@/components/Home/form'
+import CommuteSelector from '@/components/Visit/commuteselector'
 import FormField from '@/components/Visit/formfield'
 import { visitSelectOptions } from '@/components/Visit/visitlist'
 import { AlertVariant, useAlert } from '@/context/AlertContext'
@@ -15,10 +11,10 @@ import Button from '../UI/button'
 function Modal() {
   const [commute, setCommute] = useState('')
   const [client, setClient] = useState('')
+  const [petNames, setPetNames] = useState('')
   const [type, setType] = useState('')
   const [walkDistance, setWalkDistance] = useState(0)
   const [startTime, setStartTime] = useState('')
-  const [other, setOther] = useState('')
   const [commuteDistance, setCommuteDistance] = useState(0)
   const [duration, setDuration] = useState<Duration>({
     hours: 0,
@@ -28,10 +24,7 @@ function Modal() {
 
   function formFilled() {
     return (
-      (commute == 'Walk' ||
-        commute == 'Drive' ||
-        commute == 'Public Transport' ||
-        (commute == 'Other' && other != '')) &&
+      commute &&
       commuteDistance > 0 &&
       client.length > 0 &&
       (type == 'Vet' ||
@@ -48,7 +41,6 @@ function Modal() {
     setType('')
     setCommute('')
     setWalkDistance(0)
-    setOther('')
     setCommuteDistance(0)
     setStartTime('')
     setDuration({
@@ -73,66 +65,58 @@ function Modal() {
         <hr className='mb-3 h-0.5 border-dark-red bg-dark-red text-dark-red' />
         <form onSubmit={handleSubmit}>
           <div>
-            <Form
-              id='commuteMethod'
-              label='Commute Method'
-              type='select'
-              isNumPad={false}
-              placeholder='Select...'
+            <CommuteSelector
+              label='Commute Method:'
+              setCommuteMethod={setCommute}
+              id='commuteMethodInput'
               isRequired={true}
-              selectOptions={commuteSelectOptions}
-              onChange={(e) => setCommute(String(e.target.value))}
             />
-            {commute == 'Other' && (
-              <Form
-                id='other'
-                label='Other Commute Method'
-                type='text'
-                isNumPad={false}
-                placeholder='Enter...'
-                isRequired={true}
-                onChange={(e) => setOther(String(e.target.value))}
-              />
-            )}
-            <Form
-              id='commuteDistance'
-              label='Commute Distance (in km)'
+            <FormField
+              id='commuteDistInput'
+              type='number'
+              placeholder='Distance (km)'
+              label='Commute Distance:'
+              isRequired={true}
+              onChange={(event) =>
+                setCommuteDistance(parseFloat(event.target.value))
+              }
+            />
+            <FormField
+              id='clientNameInput'
               type='text'
-              isNumPad={true}
-              placeholder='Enter...'
+              placeholder='Display Name'
+              label='Display Name:'
               isRequired={true}
-              onChange={(e) => setCommuteDistance(Number(e.target.value))}
+              onChange={(event) => setClient(event.target.value)}
             />
-            <Form
-              id='client'
-              label='Select Client'
-              type='select'
-              isNumPad={false}
-              placeholder='Select...'
+            <FormField
+              id='petNamesInput'
+              type='text'
+              placeholder='Pet Name(s)'
+              label='Pet name(s):'
               isRequired={true}
-              selectOptions={clientSelectOptions}
-              onChange={(e) => setClient(String(e.target.value))}
+              onChange={(event) => setPetNames(event.target.value)}
             />
-            <Form
-              id='type'
-              label='Type of Visit'
+            <FormField
+              id='visitTypeInput'
               type='select'
-              isNumPad={false}
               placeholder='Select...'
-              isRequired={true}
+              label='Visit Type:'
               selectOptions={visitSelectOptions}
-              onChange={(e) => setType(String(e.target.value))}
+              isRequired={true}
+              onChange={(event) => setType(event.target.value)}
             />
           </div>
           {type == 'Walk' && (
-            <Form
-              id='walkDistance'
-              label='Walk Distance (in km)'
-              type='text'
-              isNumPad={true}
-              placeholder='Enter...'
+            <FormField
+              id='walkDistInput'
+              type='number'
+              placeholder='Distance (km)'
+              label='Walk Distance:'
               isRequired={true}
-              onChange={(e) => setWalkDistance(Number(e.target.value))}
+              onChange={(event) =>
+                setWalkDistance(parseFloat(event.target.value))
+              }
             />
           )}
 
