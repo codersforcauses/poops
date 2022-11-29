@@ -37,23 +37,3 @@ export const AddButton = ({ toggleModal }: AddButtonProps) => {
     </div>
   )
 }
-
-export const VetConcernButton = () => {
-  return (
-    <div className='align-center flex flex-row justify-center rounded-md bg-primary p-2 text-center text-xs font-bold text-white drop-shadow-default'>
-      <button>
-        REGISTER <br /> VET CONCERN
-      </button>
-    </div>
-  )
-}
-
-export const ReportButton = () => {
-  return (
-    <div className='align-center flex flex-row justify-center rounded-md bg-primary p-2 text-center text-xs font-bold text-white drop-shadow-default'>
-      <button>
-        REPORT <br /> INCIDENT
-      </button>
-    </div>
-  )
-}

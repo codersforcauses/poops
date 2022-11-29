@@ -1,8 +1,8 @@
 import { Timestamp } from 'firebase/firestore'
 
-import { ReportButton, VetConcernButton } from '@/components/Visit/buttons'
 import { formatDuration } from '@/components/Visit/visitinstance'
 import { VisitData } from '@/types/types'
+import Button from '../UI/button'
 
 const formatTime = (time: Timestamp) => {
   return time.toDate().toLocaleString().slice(0, -3)
@@ -24,12 +24,9 @@ const ReadOnlyVisitInstance = (props: VisitData) => {
         <p>Commute Distance: {props.commuteDist.toFixed(1)} km</p>
         <p>Commute Method: {props.commuteMethod}</p>
         <p>Notes: {props.notes}</p>
-        <div className='m-2 flex flex-row justify-around'>
-          {
-            // TODO: make stylings nice (gl James)
-          }
-          <VetConcernButton />
-          <ReportButton />
+        <div className='my-2 flex justify-center gap-2'>
+          <Button size='medium'>Register vet concern </Button>
+          <Button size='medium'>Report incident</Button>
         </div>
       </div>
     </>

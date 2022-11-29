@@ -8,6 +8,7 @@ import { VisitData } from '@/types/types'
 
 import CommuteSelector from './commuteselector'
 import FormField from './formfield'
+import Button from '../UI/button'
 
 interface ModalViewProps {
   toggleModal: () => void
@@ -169,13 +170,9 @@ const ModalView = ({ toggleModal }: ModalViewProps) => {
             onChange={(event) => setNotes(event.target.value)}
           />
           <div className='mx-auto my-2 flex flex-col p-1 '>
-            <button
-              className='text-bold rounded bg-primary px-12 py-4 text-white drop-shadow-default active:bg-dark-red disabled:bg-dark-gray'
-              disabled={!isSubmitEnabled()}
-              type='submit'
-            >
+            <Button type='submit' disabled={!isSubmitEnabled()}>
               Submit
-            </button>
+            </Button>
           </div>
         </form>
       </>

@@ -10,6 +10,7 @@ import { useFirestore } from '@/context/Firebase/Firestore/context'
 import { VisitData } from '@/types/types'
 
 import { visitSelectOptions } from './visitlist'
+import Button from '../UI/button'
 
 interface EditVisitInstanceProps extends VisitInstanceProps {
   isEditable: Dispatch<SetStateAction<boolean>>
@@ -190,24 +191,22 @@ const EditableVisitInstance = (props: EditVisitInstanceProps) => {
         </div>
       </div>
 
-      <button
-        type='submit'
-        className='text-bold mt-2 rounded-xl bg-primary p-2 text-white drop-shadow-default active:bg-dark-red'
-      >
-        Submit
-      </button>
-      <button
-        type='button'
-        className='text-bold mt-2 ml-4 rounded-xl bg-primary p-1 text-white drop-shadow-default active:bg-dark-red'
-        onClick={() => {
-          userDoc.visits.splice(props.id, 1)
-          const temp: VisitData[] = [...userDoc.visits] //temp needed for react to rerender
-          props.set(temp)
-          updateVisit?.(userDoc)
-        }}
-      >
-        Remove
-      </button>
+      <div className='flex justify-center gap-2'>
+        <Button size='medium' type='submit'>
+          Submit
+        </Button>
+        <Button
+          size='medium'
+          onClick={() => {
+            userDoc.visits.splice(props.id, 1)
+            const temp: VisitData[] = [...userDoc.visits] //temp needed for react to rerender
+            props.set(temp)
+            updateVisit?.(userDoc)
+          }}
+        >
+          Remove
+        </Button>
+      </div>
     </form>
   )
 }

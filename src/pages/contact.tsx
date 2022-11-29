@@ -11,6 +11,7 @@ import SearchTag from '@/components/SearchBar/searchtag'
 import TopNav from '@/components/TopNav'
 import { useContact } from '@/context/ContactContext/context'
 import type { Contact } from '@/types/types'
+import Button from '@/components/UI/button'
 
 const Contact = () => {
   const {
@@ -45,13 +46,7 @@ const Contact = () => {
             <div className='flex-1'></div>
             <h1 className='m-3 flex-1 text-center text-2xl'>Contacts</h1>
             <div className='m-auto flex-1 text-center'>
-              <button
-                onClick={() => setCreatingNewContact(true)}
-                type='button'
-                className='rounded bg-primary py-1 px-4 font-bold text-white hover:bg-dark-red'
-              >
-                Add
-              </button>
+              <Button onClick={() => setCreatingNewContact(true)}>Add</Button>
             </div>
           </div>
         )}

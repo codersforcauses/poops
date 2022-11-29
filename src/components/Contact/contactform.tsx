@@ -7,6 +7,7 @@ import RegionSelector from '@/components/Contact/regiondropdown'
 import TagSelector from '@/components/Contact/tagdropdown'
 import { useContact } from '@/context/ContactContext/context'
 import type { Contact } from '@/types/types'
+import Button from '../UI/button'
 
 type ContactInfoProps = {
   firestoreIndex: number
@@ -183,23 +184,20 @@ const ContactForm = ({
         </Box>
         {/* FORM BUTTONS */}
         <div className='mb-3 flex justify-center'>
-          <div className='flex flex-col space-y-1'>
-            <button
-              type='submit'
-              className='w-80 rounded bg-primary py-1 font-bold text-white hover:bg-dark-red'
-            >
+          <div className='space-y-2'>
+            <Button type='submit' fullwidth>
               Save
-            </button>
+            </Button>
             {!isNewContact && (
-              <button
-                type='button'
-                className='bg-grey hover:bg-grey w-80 rounded py-1 font-bold text-black'
+              <Button
+                intent='secondary'
+                fullwidth
                 onClick={() => {
                   if (setIsEditing !== undefined) setIsEditing(false)
                 }}
               >
                 Cancel
-              </button>
+              </Button>
             )}
           </div>
         </div>
