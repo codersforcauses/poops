@@ -1,14 +1,20 @@
 import { useState } from 'react'
+import { Timestamp } from 'firebase/firestore'
 
 import DurationSelector from '@/components/Home/durationSelector'
 import CommuteSelector from '@/components/Visit/commuteselector'
 import FormField from '@/components/Visit/formfield'
 import { visitSelectOptions } from '@/components/Visit/visitlist'
 import { AlertVariant, useAlert } from '@/context/AlertContext'
-import { Duration } from '@/types/types'
+<<<<<<< HEAD
+import { Duration, VisitData} from '@/types/types'
 import Button from '../UI/button'
+=======
+import { useFirestore } from '@/context/Firebase/Firestore/context'
+>>>>>>> 37d42e3 (Add firestore integration to push visit data)
 
 function Modal() {
+  const { userDoc, updateVisit } = useFirestore()
   const [commute, setCommute] = useState('')
   const [client, setClient] = useState('')
   const [petNames, setPetNames] = useState('')
@@ -54,6 +60,26 @@ function Modal() {
       position: 'bottom',
       showFor: 2500
     })
+
+    // adding duration to start time to get end date
+    const endDate: Date = new Date(startTime)
+    endDate.setHours(endDate.getHours() + duration.hours)
+    endDate.setMinutes(endDate.getMinutes() + duration.minutes)
+
+    // pushing data to firebase store
+    const data: VisitData = {
+      type: type,
+      clientName: client,
+      petNames: petNames,
+      startTime: Timestamp.fromDate(new Date(startTime)),
+      endTime: Timestamp.fromDate(endDate),
+      walkDist: walkDistance,
+      commuteDist: commuteDistance,
+      commuteMethod: commute,
+      notes: ''
+    }
+    userDoc.visits.push(data)
+    updateVisit?.(userDoc)
   }
 
   return (
