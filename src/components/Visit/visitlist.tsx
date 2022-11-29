@@ -17,7 +17,7 @@ export const VisitList = (props: VisitListProps) => {
     setVisits(userDoc.visits)
   }, [userDoc.visits])
 
-  const matchesClientName = (post: VisitData) =>
+  const matchesDisplayName = (post: VisitData) =>
     userDoc.contacts[findContactIndex(post.clientId, userDoc)].clientName
       .toLowerCase()
       .includes(props.searchQuery.toLowerCase())
@@ -27,7 +27,7 @@ export const VisitList = (props: VisitListProps) => {
     post.petNames?.includes(props.searchQuery.toLowerCase())
 
   const matchesSearchTerms = (post: VisitData) =>
-    matchesClientName(post) || matchespetNames(post)
+    matchesDisplayName(post) || matchespetNames(post)
 
   return (
     <div>
@@ -41,9 +41,18 @@ export const VisitList = (props: VisitListProps) => {
           .map((post, index) => (
             <VisitInstance
               setVisits={setVisits}
-              key={post.startTime + post.clientId + post.duration} // <-- dumb? or genius? (adam)
+              key={post.startTime + post.clientName + post.petNames} // <-- dumb? or genius?
+              type={post.type}
               id={index}
-              {...post}
+              clientId={post.clientId}
+              clientName={post.clientName}
+              petNames={post.petNames}
+              startTime={post.startTime}
+              duration={post.duration}
+              walkDist={post.walkDist}
+              commuteDist={post.commuteDist}
+              commuteMethod={post.commuteMethod}
+              notes={post.notes}
             />
           ))}
     </div>

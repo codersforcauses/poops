@@ -71,7 +71,7 @@ const Visit = () => {
 
   const isSubmitEnabled = () =>
     visitType &&
-    clientId &&
+    clientName &&
     startTime &&
     duration.hours >= 0 &&
     duration.minutes >= 0

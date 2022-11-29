@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import {
   AnnotationIcon,
   CheckIcon,
@@ -21,27 +21,29 @@ const shadow =
                 0 16px 32px rgba(0,0,0,0.1),\
                 0 32px 64px rgba(0,0,0,0.1)'
 
+const buttonClasses =
+  'mx-auto mt-2 w-fit rounded-lg bg-primary py-1 px-4 text-lg text-white shadow-md focus:outline-primary active:bg-dark-red'
 const getContainerClasses = (vis: boolean, pos: string) => {
   return (
-    `flex items-center fixed right-0 left-0 z-999 pl-5 pr-4 py-3 mx-[1rem] bg-white text-black border-x-1 border-[#dddddd] transition-transform duration-700` +
+    `flex items-center fixed right-0 left-0 z-9999 bg-white text-black border-x-1 border-[#dddddd] transition-transform duration-700 ease-in-out` +
     `${
       pos === 'top'
-        ? ' rounded-b-md border-b-1 -top-[500px]' +
-          (vis ? ' translate-y-[500px]' : ' translate-y-[250px]')
+        ? ' rounded-b-md border-b-1 -top-[250px] pl-5 pr-4 py-3 mx-[1rem]' +
+          (vis ? ' translate-y-[250px]' : ' translate-y-[0px]')
         : pos === 'bottom' &&
-          ' rounded-t-md border-t-1 bottom-0' +
-            (vis ? ' translate-y-[0]' : ' translate-y-[250px]')
+          ' rounded-t-md border-t-1 bottom-[-300px] p-5 mx-[3rem] flex-wrap justify-center' +
+            (vis ? ' translate-y-[-300px]' : ' translate-y-[0px]')
     }`
   )
 }
 
 type AlertProps = {
   visible: boolean
-  setVisible: (visible: boolean) => void
   content: AlertContentProps
+  clearAlert: () => void
 }
 
-const Alert = ({ visible, setVisible, content }: AlertProps) => {
+const Alert = ({ visible, content, clearAlert }: AlertProps) => {
   const [contentCache, setContentCache] = useState<AlertContentProps>({
     title: '', // string[2], first element is tile, second is message
     text: '',
@@ -58,34 +60,25 @@ const Alert = ({ visible, setVisible, content }: AlertProps) => {
 
   const timerRef = useRef<ReturnType<typeof setTimeout>>()
 
-  // utility function that sets and then clears a timer to automatically close alert
-  const doUpdate = useCallback(
-    (c: AlertContentProps) => {
-      if (c.text !== '') {
-        setContentCache({
-          title: c.title,
-          text: c.text,
-          position: c.position,
-          confirmFunction: c.confirmFunction, // function to execute on confirm, enables the confirm function
-          cancelFunction: c.cancelFunction,
-          showFor: c.showFor, // ms alert will stay open, set to -1 to leave open until button click
-          variant: c.variant
-        })
-        setVisible(true)
-        if (c.showFor !== -1) {
-          timerRef.current = setTimeout(() => {
-            setVisible(false)
-          }, content.showFor)
-        }
-      }
-    },
-    [content, setVisible]
-  )
-
   useEffect(() => {
     if (timerRef.current) clearTimeout(timerRef.current)
-    doUpdate(content)
-  }, [content, doUpdate])
+    if (content.text !== '') {
+      setContentCache({
+        title: content.title,
+        text: content.text,
+        position: content.position,
+        confirmFunction: content.confirmFunction, // function to execute on confirm, enables the confirm function
+        cancelFunction: content.cancelFunction,
+        showFor: content.showFor, // ms alert will stay open, set to -1 to leave open until button click
+        variant: content.variant
+      })
+      if (content.showFor !== -1) {
+        timerRef.current = setTimeout(() => {
+          clearAlert()
+        }, content.showFor)
+      }
+    }
+  }, [content, clearAlert])
 
   useEffect(() => {
     return () => {
@@ -95,10 +88,8 @@ const Alert = ({ visible, setVisible, content }: AlertProps) => {
 
   return (
     <div
-      className={getContainerClasses(
-        visible,
-        contentCache.position ? contentCache.position : 'top'
-      )}
+      role='alert'
+      className={getContainerClasses(visible, contentCache.position ?? 'top')}
       style={{ boxShadow: shadow }}
     >
       <div className='h-7 w-7'>
@@ -114,35 +105,59 @@ const Alert = ({ visible, setVisible, content }: AlertProps) => {
           )
         )}
       </div>
-      <div className='mx-[1rem] grow self-start'>
+      <div
+        className={`mx-[1rem] ${
+          contentCache.position === 'top' ? 'mx-[1rem] grow self-start' : ''
+        }`}
+      >
         <p className='font-bold' style={{ color: titleColor }}>
           {contentCache.title}
         </p>
         <p style={{ color: textColor }}>{contentCache.text}</p>
       </div>
-      {typeof contentCache.confirmFunction !== 'undefined' && (
+      {contentCache.position === 'bottom' && (
+        <div className='h-0 basis-full'></div>
+      )}
+      <div
+        className={
+          contentCache.position === 'bottom' ? 'pt-5' : 'inline-flex h-5'
+        }
+      >
+        {typeof contentCache.confirmFunction !== 'undefined' && (
+          <button
+            className={
+              contentCache.position === 'bottom'
+                ? buttonClasses + ' mr-4'
+                : 'mr-4'
+            }
+            onClick={(e) => {
+              e.preventDefault()
+              clearAlert()
+              if (typeof contentCache.confirmFunction !== 'undefined')
+                contentCache.confirmFunction()
+            }}
+          >
+            <CheckIcon
+              className='h-5 w-5'
+              stroke={contentCache.position === 'bottom' ? 'white' : iconColor}
+            />
+          </button>
+        )}
         <button
-          className='mr-4'
+          className={contentCache.position === 'bottom' ? buttonClasses : ''}
           onClick={(e) => {
             e.preventDefault()
-            setVisible(false)
-            if (typeof contentCache.confirmFunction !== 'undefined')
-              contentCache.confirmFunction()
+            clearAlert()
+            if (typeof contentCache.cancelFunction !== 'undefined')
+              contentCache.cancelFunction()
           }}
         >
-          <CheckIcon className='h-5 w-5' stroke={iconColor} />
+          <XIcon
+            className='h-5 w-5'
+            stroke={contentCache.position === 'bottom' ? 'white' : iconColor}
+          />
         </button>
-      )}
-      <button
-        onClick={(e) => {
-          e.preventDefault()
-          setVisible(false)
-          if (typeof contentCache.cancelFunction !== 'undefined')
-            contentCache.cancelFunction()
-        }}
-      >
-        <XIcon className='h-5 w-5' stroke={iconColor} />
-      </button>
+      </div>
     </div>
   )
 }

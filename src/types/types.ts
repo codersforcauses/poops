@@ -18,7 +18,7 @@ export interface Pet {
 
 export interface UserData {
   clientName: string
-  contacts: ContactData[]
+  contacts: Contact[]
   visits: VisitData[]
 }
 
@@ -35,24 +35,10 @@ export interface VisitData {
   notes: string
 }
 
-export interface ContactData {
-  id: string
-  clientName: string
-  desc: string
-  pets: string
-  email: string
-  phone: string
-  streetAddress: string
-  region: string[]
-  notes: string
-  tags: string[]
-}
-
 export interface Contact {
   //historic type to deal with type issues with contacts
   id: string
-  firstName: string
-  lastName: string
+  clientName: string
   desc: string
   pets: string
   email: string

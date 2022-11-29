@@ -7,7 +7,6 @@ import {
   updateDoc
 } from 'firebase/firestore'
 
-import { MESSAGES } from '@/components/Firebase/errors'
 import { db } from '@/components/Firebase/init'
 import { useAuth } from '@/context/Firebase/Auth/context'
 import {
@@ -32,7 +31,6 @@ const FirestoreProvider = ({ children }: { children: ReactNode }) => {
           setUserDoc(userDocData)
         } else {
           // doc.data() will be undefined in this case
-          console.log(MESSAGES.NO_USER_DOCUMENT)
           await setDoc(doc(db, 'users', currentUser.uid), defaultUserDoc)
         }
       } catch (err: unknown) {
