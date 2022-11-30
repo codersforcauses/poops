@@ -1,3 +1,5 @@
+import { XCircleIcon } from '@heroicons/react/outline'
+
 import ContactItem from '@/components/Contact/contactitem'
 import { useContact } from '@/context/ContactContext/context'
 
@@ -34,7 +36,7 @@ const ContactList = ({ firestoreIndexMap }: ContactsProp) => {
   })
 
   return (
-    <div className='flex-col'>
+    <div className='h-full flex-col'>
       {firestoreIndexMap.includes(0) && (
         <ul>
           <ContactItem
@@ -45,7 +47,14 @@ const ContactList = ({ firestoreIndexMap }: ContactsProp) => {
           />
         </ul>
       )}
-      <ul>{contactItems}</ul>
+      {contactItems.length > 0 ? (
+        <ul>{contactItems}</ul>
+      ) : (
+        <div className='flex h-full flex-col items-center justify-center'>
+          <XCircleIcon className='h-16 w-16 content-center' />
+          <p>You have no contacts</p>
+        </div>
+      )}
     </div>
   )
 }

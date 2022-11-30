@@ -9,9 +9,9 @@ import { withProtected } from '@/components/PrivateRoute'
 import SearchBar from '@/components/SearchBar'
 import SearchTag from '@/components/SearchBar/searchtag'
 import TopNav from '@/components/TopNav'
+import Button from '@/components/UI/button'
 import { useContact } from '@/context/ContactContext/context'
 import type { Contact } from '@/types/types'
-import Button from '@/components/UI/button'
 
 const Contact = () => {
   const {
@@ -50,7 +50,7 @@ const Contact = () => {
             </div>
           </div>
         )}
-        <div className='m-auto max-w-md'>
+        <div className='m-auto max-w-md h-full'>
           {getDisplayContactIndex() === -1 && !getCreatingNewContact() && (
             <div className='border-grey m-2 flex flex-row rounded-xl border-2'>
               <SearchTag
