@@ -59,7 +59,7 @@ export const VisitList = (props: VisitListProps) => {
       ) : (
         <div className='flex h-full flex-col items-center justify-center'>
           <XCircleIcon className='h-16 w-16 content-center' />
-          <p>It's empty here. Add a visit! </p>
+          <p>It&apos;s empty here. Add a visit! </p>
         </div>
       )}
     </div>
