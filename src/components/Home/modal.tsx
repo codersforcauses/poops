@@ -4,12 +4,13 @@ import {
   clientSelectOptions,
   commuteSelectOptions
 } from '@/components/Home/dummyOptions'
-import DurationSelector from '@/components/Home/durationSelector'
 import Form from '@/components/Home/form'
+import DurationSelector from '@/components/Visit/durationselector'
 import FormField from '@/components/Visit/formfield'
 import { visitSelectOptions } from '@/components/Visit/utils'
 import { AlertVariant, useAlert } from '@/context/AlertContext'
 import { Duration } from '@/types/types'
+
 import Button from '../UI/button'
 
 function Modal() {
