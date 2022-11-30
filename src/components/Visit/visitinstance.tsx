@@ -17,7 +17,7 @@ const VisitInstance = (props: VisitInstanceProps) => {
   return (
     <div
       key={props.id}
-      className='m-2 flex flex-col space-y-1 rounded-xl bg-cream p-2 drop-shadow-default'
+      className='flex flex-col rounded-xl bg-cream p-4 drop-shadow-default'
     >
       <div className='flex justify-between'>
         <div className='relative w-full'>

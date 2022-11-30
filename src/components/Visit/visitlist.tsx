@@ -30,7 +30,7 @@ export const VisitList = (props: VisitListProps) => {
     matchesDisplayName(post) || matchespetNames(post)
 
   return (
-    <div>
+    <div className='m-2'>
       {visits &&
         visits
           .filter((post: VisitData) => {
