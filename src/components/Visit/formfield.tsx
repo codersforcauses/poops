@@ -1,8 +1,9 @@
-import { ChangeEvent } from 'react'
+import React, { ChangeEvent } from 'react'
 
 import { SelectOption } from '@/types/types'
 
 export interface FormFieldProps {
+  className?: string
   id: string
   label: string
   type?: string
@@ -19,12 +20,14 @@ export interface FormFieldProps {
 
 const FormField = (props: FormFieldProps) => {
   return (
-    <div className='flex flex-col p-1'>
-      <label htmlFor={props.id} className='font-bold'>
-        <span className='text-primary'>{props.isRequired ? '*' : ''}</span>
-        {props.label}
-      </label>
-      {inputSwitch(props)}
+    <div className={props.className}>
+      <div className='flex flex-col'>
+        <label htmlFor={props.id} className='font-bold'>
+          <span className='text-primary'>{props.isRequired ? '*' : ''}</span>
+          {props.label}
+        </label>
+        {inputSwitch(props)}
+      </div>
     </div>
   )
 }

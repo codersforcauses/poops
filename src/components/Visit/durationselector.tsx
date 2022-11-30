@@ -10,7 +10,7 @@ export interface DurationProps {
 
 const DurationSelector = (props: DurationProps) => {
   return (
-    <div className='p-1'>
+    <div className='flex flex-col'>
       <label className='font-bold'>
         <span className='text-primary'>*</span>
         {props.label}

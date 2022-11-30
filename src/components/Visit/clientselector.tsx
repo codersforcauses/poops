@@ -41,18 +41,20 @@ const ClientSelector = (props: ClientSelectorProps) => {
   }
 
   return (
-    <div className='flex flex-col p-1'>
-      <label htmlFor={props.id} className='font-bold'>
-        <span className='text-primary'>{props.isRequired ? '*' : ''}</span>
-        {props.label}
-      </label>
-      <Select
-        onChange={handleChange}
-        options={getClientList()}
-        placeholder={props.placeholder}
-        styles={customStyles}
-        defaultValue={defaultValue}
-      />
+    <div className={props.className}>
+      <div className='flex flex-col'>
+        <label htmlFor={props.id} className='font-bold'>
+          <span className='text-primary'>{props.isRequired ? '*' : ''}</span>
+          {props.label}
+        </label>
+        <Select
+          onChange={handleChange}
+          options={getClientList()}
+          placeholder={props.placeholder}
+          styles={customStyles}
+          defaultValue={defaultValue}
+        />
+      </div>
     </div>
   )
 }

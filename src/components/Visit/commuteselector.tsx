@@ -55,7 +55,7 @@ const CommuteSelector = (props: CommuteSelectorProps) => {
   }
 
   return (
-    <div className='flex flex-col p-1'>
+    <div className='flex flex-col'>
       <label htmlFor={props.id} className='font-bold'>
         <span className='text-primary'>{props.isRequired ? '*' : ''}</span>
         {props.label}
