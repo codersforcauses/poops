@@ -1,3 +1,4 @@
+import Button from '@/components/UI/button'
 import { humanizeTimestamp } from '@/components/Visit/utils'
 import { Duration, VisitData } from '@/types/types'
 
@@ -25,6 +26,10 @@ const VisitInfo = (props: VisitData) => {
         <p>Commute Distance: {props.commuteDist.toFixed(1)} km</p>
         <p>Commute Method: {props.commuteMethod}</p>
         <p>Notes: {props.notes}</p>
+        <div className='my-2 flex justify-center gap-2'>
+          <Button size='medium'>Register vet concern </Button>
+          <Button size='medium'>Report incident</Button>
+        </div>
       </div>
     </>
   )

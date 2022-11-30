@@ -10,6 +10,7 @@ import FormField from '@/components/Visit/formfield'
 import { visitSelectOptions } from '@/components/Visit/utils'
 import { AlertVariant, useAlert } from '@/context/AlertContext'
 import { Duration } from '@/types/types'
+import Button from '../UI/button'
 
 function Modal() {
   const [commute, setCommute] = useState('')
@@ -161,13 +162,14 @@ function Modal() {
             }
           />
 
-          <button
+          <Button
+            className='mt-4 mb-2'
+            size='medium'
             type='submit'
-            className='relative mt-4 mb-2 h-[30px] w-[120px] rounded-lg bg-dark-red text-lg font-semibold text-white disabled:bg-dark-gray'
             disabled={!formFilled()}
           >
-            SUBMIT
-          </button>
+            Submit
+          </Button>
         </form>
       </div>
     </div>

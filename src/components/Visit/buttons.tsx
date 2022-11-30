@@ -36,19 +36,3 @@ export const AddButton = () => {
     </div>
   )
 }
-
-export const VetConcernButton = () => {
-  return (
-    <div className='text-bold rounded bg-primary px-12 py-4 text-center text-white drop-shadow-default'>
-      <button>REGISTER VET CONCERN</button>
-    </div>
-  )
-}
-
-export const ReportButton = () => {
-  return (
-    <div className='text-bold rounded bg-primary px-12 py-4 text-center text-white drop-shadow-default'>
-      <button>REPORT INCIDENT</button>
-    </div>
-  )
-}

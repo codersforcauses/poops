@@ -5,6 +5,7 @@ import ContactForm from '@/components/Contact/contactform'
 import ContactInfo from '@/components/Contact/contactinfo'
 import Header from '@/components/Header'
 import { useContact } from '@/context/ContactContext/context'
+import Button from '../UI/button'
 
 type ContactProp = {
   firestoreIndex: number
@@ -28,16 +29,16 @@ const ContactDetails = ({ firestoreIndex }: ContactProp) => {
       />
       <div className='m-auto flex h-14 max-w-md flex-row'>
         <div className='m-auto flex-1 text-center'>
-          <button
+          <Button
             type='button'
-            className='rounded bg-primary py-1 px-4 font-bold text-white hover:bg-dark-red'
+            size='medium'
             onClick={() => {
               setCreatingNewContact(false)
               setDisplayContactIndex(-1)
             }}
           >
             Back
-          </button>
+          </Button>
         </div>
         <div className='flex-1'></div>
         <div className='m-auto flex-1'>
