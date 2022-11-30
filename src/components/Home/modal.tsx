@@ -1,13 +1,13 @@
 import { useState } from 'react'
 import { Timestamp } from 'firebase/firestore'
 
+import CommuteSelector from '@/components/Form/commuteselector'
+import FormField from '@/components/Form/formfield'
 import DurationSelector from '@/components/Home/durationSelector'
-import CommuteSelector from '@/components/Visit/commuteselector'
-import FormField from '@/components/Visit/formfield'
 import { visitSelectOptions } from '@/components/Visit/visitlist'
 import { AlertVariant, useAlert } from '@/context/AlertContext'
 import { useFirestore } from '@/context/Firebase/Firestore/context'
-import { Duration, VisitData} from '@/types/types'
+import { Duration, VisitData } from '@/types/types'
 
 import Button from '../UI/button'
 
@@ -54,7 +54,7 @@ function Modal() {
       petNames: petNames,
       startTime: Timestamp.fromDate(new Date(startTime)),
       endTime: Timestamp.fromDate(endDate),
-      walkDist: walkDistance,
+      walkDist: type == 'Walk' ? walkDistance : 0,
       commuteDist: commuteDistance,
       commuteMethod: commute,
       notes: ''

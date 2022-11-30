@@ -6,8 +6,8 @@ import { visitSelectOptions } from '@/components/Visit/visitlist'
 import { useFirestore } from '@/context/Firebase/Firestore/context'
 import { VisitData } from '@/types/types'
 
-import CommuteSelector from './commuteselector'
-import FormField from './formfield'
+import CommuteSelector from '../Form/commuteselector'
+import FormField from '../Form/formfield'
 import Button from '../UI/button'
 
 interface ModalViewProps {

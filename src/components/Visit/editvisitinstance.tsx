@@ -1,7 +1,7 @@
 import { Dispatch, SetStateAction, useState } from 'react'
 import { Timestamp } from 'firebase/firestore'
 
-import { getCommuteMethods } from '@/components/Visit/commuteselector'
+import { getCommuteMethods } from '@/components/Form/commuteselector'
 import {
   formatDuration,
   VisitInstanceProps
