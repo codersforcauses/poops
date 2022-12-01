@@ -50,7 +50,7 @@ const Contact = () => {
             </div>
           </div>
         )}
-        <div className='m-auto max-w-md h-full'>
+        <div className='m-auto h-full max-w-md'>
           {getDisplayContactIndex() === -1 && !getCreatingNewContact() && (
             <div className='border-grey m-2 flex flex-row rounded-xl border-2'>
               <SearchTag
