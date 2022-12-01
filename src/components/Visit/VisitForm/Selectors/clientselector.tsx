@@ -1,8 +1,8 @@
 import { Dispatch, SetStateAction } from 'react'
 import Select, { SingleValue } from 'react-select'
 
+import customStyles from '@/components/UI/FormComponents/Selectors/styles'
 import { FormFieldProps } from '@/components/Visit/formfield'
-import customStyles from '@/components/Visit/selectorstyles'
 import { useFirestore } from '@/context/Firebase/Firestore/context'
 import { SelectOption } from '@/types/types'
 

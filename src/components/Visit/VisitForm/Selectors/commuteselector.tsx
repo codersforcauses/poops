@@ -2,10 +2,9 @@ import { Dispatch, SetStateAction, useState } from 'react'
 import { SingleValue } from 'react-select'
 import CreatableSelect from 'react-select/creatable'
 
+import customStyles from '@/components/UI/FormComponents/Selectors/styles'
+import { FormFieldProps } from '@/components/Visit/formfield'
 import { SelectOption } from '@/types/types'
-
-import { FormFieldProps } from './formfield'
-import customStyles from './selectorstyles'
 
 interface CommuteSelectorProps extends FormFieldProps {
   setCommuteMethod: Dispatch<SetStateAction<string>>
