@@ -1,8 +1,11 @@
 import { GroupBase, StylesConfig } from 'react-select'
 
-import { SelectOption } from '@/types/types'
+export interface SelectOption {
+  label: string
+  value: string
+}
 
-const customStyles: StylesConfig<
+export const customStyles: StylesConfig<
   SelectOption,
   false,
   GroupBase<SelectOption>
@@ -41,5 +44,3 @@ const customStyles: StylesConfig<
     visibility: 'hidden'
   })
 }
-
-export default customStyles

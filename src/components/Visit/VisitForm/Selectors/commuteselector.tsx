@@ -2,7 +2,7 @@ import { Dispatch, SetStateAction, useState } from 'react'
 import { SingleValue } from 'react-select'
 import CreatableSelect from 'react-select/creatable'
 
-import customStyles from '@/components/UI/FormComponents/Selectors/styles'
+import customStyles from '@/components/UI/FormComponents/SelectFields/utils'
 import { FormFieldProps } from '@/components/Visit/formfield'
 import { SelectOption } from '@/types/types'
 

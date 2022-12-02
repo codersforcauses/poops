@@ -1,10 +1,12 @@
 import { Dispatch, SetStateAction } from 'react'
 import Select, { SingleValue } from 'react-select'
 
-import customStyles from '@/components/UI/FormComponents/Selectors/styles'
+import {
+  customStyles,
+  SelectOption
+} from '@/components/UI/FormComponents/SelectFields/utils'
 import { FormFieldProps } from '@/components/Visit/formfield'
 import { useFirestore } from '@/context/Firebase/Firestore/context'
-import { SelectOption } from '@/types/types'
 
 interface ClientSelectorProps extends FormFieldProps {
   setClient: Dispatch<

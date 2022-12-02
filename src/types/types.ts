@@ -49,11 +49,6 @@ export interface Contact {
   tags: string[]
 }
 
-export interface SelectOption {
-  label: string
-  value: string
-}
-
 export type Duration = {
   hours: number
   minutes: number
