@@ -41,16 +41,17 @@ const Contact = () => {
       <Header pageTitle='Contact' />
       <TopNav />
       <main className='h-[calc(100%-7rem)]'>
-        {getDisplayContactIndex() === -1 && !getCreatingNewContact() && (
-          <div className='m-auto flex h-14 max-w-md flex-row'>
-            <div className='flex-1'></div>
-            <h1 className='m-3 flex-1 text-center text-2xl'>Contacts</h1>
-            <div className='m-auto flex-1 text-center'>
-              <Button onClick={() => setCreatingNewContact(true)}>Add</Button>
+        <div className='flex h-full flex-col p-4'>
+          {/* <div className='mx-auto '> */}
+          {getDisplayContactIndex() === -1 && !getCreatingNewContact() && (
+            <div className='m-auto flex h-14 w-full flex-row'>
+              <div className='flex-1'></div>
+              <h1 className='m-3 flex-1 text-center text-2xl'>Contacts</h1>
+              <div className='m-auto flex-1 text-center'>
+                <Button onClick={() => setCreatingNewContact(true)}>Add</Button>
+              </div>
             </div>
-          </div>
-        )}
-        <div className='m-auto h-full max-w-md'>
+          )}
           {getDisplayContactIndex() === -1 && !getCreatingNewContact() && (
             <div className='border-grey m-2 flex flex-row rounded-xl border-2'>
               <SearchTag
@@ -66,11 +67,13 @@ const Contact = () => {
               </div>
             </div>
           )}
+
           {getDisplayContactIndex() === -1 && !getCreatingNewContact() ? (
             <ContactList firestoreIndexMap={getFilteredIndexes()} />
           ) : (
             <ContactDetails firestoreIndex={getDisplayContactIndex()} />
           )}
+          {/* </div> */}
         </div>
       </main>
       {getDisplayContactIndex() === -1 && <NavBar />}

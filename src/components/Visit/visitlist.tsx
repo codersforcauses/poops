@@ -32,7 +32,7 @@ export const VisitList = (props: VisitListProps) => {
     matchesClientName(post) || matchespetNames(post)
 
   return (
-    <div className='h-full'>
+    <div className='h-full flex-col'>
       {visits && visits.length !== 0 ? (
         visits
           .filter((post: VisitData) => {
