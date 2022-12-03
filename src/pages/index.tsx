@@ -1,8 +1,11 @@
+import Link from 'next/link'
+
 import Header from '@/components/Header'
-import Modal from '@/components/Home/modal'
 import Summary from '@/components/Home/summary'
 import NavBar from '@/components/NavBar'
 import TopNav from '@/components/TopNav'
+import Button from '@/components/UI/button'
+
 const dummyUsername = 'User'
 
 const Home = () => {
@@ -18,8 +21,10 @@ const Home = () => {
             </h1>
             <Summary />
             <br />
-            <div className='flex justify-center overscroll-none'>
-              <Modal />
+            <div className='flex justify-center'>
+              <Link href='visit/set'>
+                <Button size='large'>START VISIT</Button>
+              </Link>
             </div>
             <br />
             <br />
