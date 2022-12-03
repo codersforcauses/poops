@@ -21,30 +21,17 @@ const ContactList = ({ firestoreIndexMap }: ContactsProp) => {
     return 0
   })
 
-  const contactItems = firestoreIndexMap.map((firestoreIndex) => {
-    if (firestoreIndex === 0) return
-    return (
-      <ContactItem
-        firestoreIndex={firestoreIndex}
-        contact={allContacts[firestoreIndex]}
-        image=''
-        key={firestoreIndex}
-      />
-    )
-  })
+  const contactItems = firestoreIndexMap.map((firestoreIndex) => (
+    <ContactItem
+      firestoreIndex={firestoreIndex}
+      contact={allContacts[firestoreIndex]}
+      image=''
+      key={firestoreIndex}
+    />
+  ))
 
   return (
     <div className='flex-col'>
-      {firestoreIndexMap.includes(0) && (
-        <ul>
-          <ContactItem
-            firestoreIndex={0}
-            contact={allContacts[0]}
-            image=''
-            key={0}
-          />
-        </ul>
-      )}
       <ul>{contactItems}</ul>
     </div>
   )

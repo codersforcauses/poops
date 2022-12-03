@@ -5,25 +5,29 @@ import ContactForm from '@/components/Contact/contactform'
 import ContactInfo from '@/components/Contact/contactinfo'
 import Header from '@/components/Header'
 import { useContact } from '@/context/ContactContext/context'
+import { useFirestore } from '@/context/Firebase/Firestore/context'
+
 import Button from '../UI/button'
 
 type ContactProp = {
-  firestoreIndex: number
+  firestoreIndex: number | null
 }
 
 const ContactDetails = ({ firestoreIndex }: ContactProp) => {
+  const { userDoc } = useFirestore()
   const { allContacts, setCreatingNewContact, setDisplayContactIndex } =
     useContact()
-  const contacts = allContacts
-  const isNewContact = firestoreIndex === -1
+  const isNewContact = firestoreIndex === null
   const [isEditing, setIsEditing] = useState<boolean>(isNewContact)
 
   return (
     <>
       <Header
         pageTitle={
-          firestoreIndex >= 0
-            ? contacts[firestoreIndex].clientName
+          firestoreIndex
+            ? firestoreIndex === -1
+              ? userDoc.info.clientName
+              : allContacts[firestoreIndex as number].clientName
             : 'New Contact'
         }
       />
@@ -34,7 +38,7 @@ const ContactDetails = ({ firestoreIndex }: ContactProp) => {
             size='medium'
             onClick={() => {
               setCreatingNewContact(false)
-              setDisplayContactIndex(-1)
+              setDisplayContactIndex(null)
             }}
           >
             Back
@@ -51,7 +55,7 @@ const ContactDetails = ({ firestoreIndex }: ContactProp) => {
         </div>
       </div>
       {!isEditing ? (
-        <ContactInfo firestoreIndex={firestoreIndex} image='' />
+        <ContactInfo firestoreIndex={firestoreIndex as number} image='' />
       ) : (
         <ContactForm
           firestoreIndex={firestoreIndex}

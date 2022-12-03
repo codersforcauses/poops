@@ -2,6 +2,7 @@ import { Timestamp } from 'firebase/firestore'
 
 import { formatDuration } from '@/components/Visit/visitinstance'
 import { VisitData } from '@/types/types'
+
 import Button from '../UI/button'
 
 const formatTime = (time: Timestamp) => {

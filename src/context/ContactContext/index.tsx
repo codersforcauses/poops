@@ -18,7 +18,9 @@ const ContactProvider = ({ children }: { children: ReactNode }) => {
   const { userDoc, updateContact } = useFirestore()
   const [allContacts, setAllContacts] = useState(userDoc.contacts || [])
   const [creatingNewContact, setCreatingNewContact] = useState(false)
-  const [displayContactIndex, setDisplayContactIndex] = useState<number>(-1)
+  const [displayContactIndex, setDisplayContactIndex] = useState<number | null>(
+    null
+  )
   // List of firestoreIndexes to that populate visible contacts
   const [filteredIndexes, setFilteredIndexes] = useState<number[]>([
     ...allContacts.keys()

@@ -10,16 +10,17 @@ import {
 import { db } from '@/components/Firebase/init'
 import { useAuth } from '@/context/Firebase/Auth/context'
 import {
-  defaultUserDoc,
+  emptyUserDoc,
   FirestoreContextProps,
-  FirestoreContextProvider
+  FirestoreContextProvider,
+  newUser
 } from '@/context/Firebase/Firestore/context'
 import { UserData } from '@/types/types'
 
 //retreiving firestore data and setting the data to the local variable FireContextProps
 const FirestoreProvider = ({ children }: { children: ReactNode }) => {
   const { currentUser } = useAuth()
-  const [userDoc, setUserDoc] = useState<UserData>(defaultUserDoc)
+  const [userDoc, setUserDoc] = useState<UserData>(emptyUserDoc)
 
   const retrieveData = useCallback(async () => {
     if (currentUser?.uid) {
@@ -31,7 +32,7 @@ const FirestoreProvider = ({ children }: { children: ReactNode }) => {
           setUserDoc(userDocData)
         } else {
           // doc.data() will be undefined in this case
-          await setDoc(doc(db, 'users', currentUser.uid), defaultUserDoc)
+          await setDoc(doc(db, 'users', currentUser.uid), newUser(currentUser))
         }
       } catch (err: unknown) {
         //#region  //*=========== For logging ===========

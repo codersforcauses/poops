@@ -1,12 +1,12 @@
 import Avatar from '@/components/Contact/avatar'
 import { useContact } from '@/context/ContactContext/context'
-import { Contact } from '@/types/types'
+import { Contact, Person } from '@/types/types'
 import truncateText from '@/utils/truncateText'
 
 type ContactItemProps = {
   image: string
   firestoreIndex: number
-  contact: Contact
+  contact: Person & Partial<Contact>
 }
 
 const ContactItem = ({ contact, image, firestoreIndex }: ContactItemProps) => {
@@ -27,7 +27,9 @@ const ContactItem = ({ contact, image, firestoreIndex }: ContactItemProps) => {
             {/* {contacts[firestoreIndex].clientName} */}
           </p>
         </span>
-        <p className='text-gray-500'>{truncateText(contact.pets, 16)}</p>
+        {contact.pets && (
+          <p className='text-gray-500'>{truncateText(contact.pets, 16)}</p>
+        )}
       </li>
     </div>
   )

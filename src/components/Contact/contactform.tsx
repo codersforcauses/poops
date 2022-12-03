@@ -7,10 +7,11 @@ import RegionSelector from '@/components/Contact/regiondropdown'
 import TagSelector from '@/components/Contact/tagdropdown'
 import { useContact } from '@/context/ContactContext/context'
 import type { Contact } from '@/types/types'
+
 import Button from '../UI/button'
 
 type ContactInfoProps = {
-  firestoreIndex: number
+  firestoreIndex: number | null
   image: string
   setIsEditing: Dispatch<SetStateAction<boolean>>
 }
@@ -22,7 +23,7 @@ const ContactForm = ({
 }: ContactInfoProps) => {
   const { allContacts, insertContact, setDisplayContactIndex } = useContact()
 
-  const isNewContact = firestoreIndex === -1
+  const isNewContact = firestoreIndex === null
 
   const contact: Contact = isNewContact
     ? {
@@ -37,7 +38,7 @@ const ContactForm = ({
         notes: '',
         tags: []
       }
-    : allContacts[firestoreIndex]
+    : allContacts[firestoreIndex as number]
 
   const [regions, setRegions] = useState(contact.region)
   const [tags, setTags] = useState(contact.tags)
@@ -58,15 +59,13 @@ const ContactForm = ({
     }))
   }, [regions, tags])
 
-  // TODO: Submit ContactForm to database
   const submitForm = (e: FormEvent) => {
     e.preventDefault()
-    // TODO: submit to firestore here
     if (isNewContact) {
       firestoreIndex = insertContact(contactForm)
       setDisplayContactIndex(firestoreIndex)
     } else {
-      insertContact(contactForm, firestoreIndex)
+      insertContact(contactForm, firestoreIndex as number)
       setDisplayContactIndex(firestoreIndex)
     }
     setIsEditing(false)
