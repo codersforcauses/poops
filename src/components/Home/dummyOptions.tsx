@@ -1,4 +1,4 @@
-import { SelectOption } from '@/types/types'
+import { SelectOption } from '@/components/UI/FormComponents/SelectFields/utils'
 
 export const commuteSelectOptions: SelectOption[] = [
   { value: 'Walk', label: 'Walk' },

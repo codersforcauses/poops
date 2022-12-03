@@ -1,6 +1,7 @@
 import { Timestamp } from 'firebase/firestore'
 
-import { SelectOption, UserData } from '@/types/types'
+import { SelectOption } from '@/components/UI/FormComponents/SelectFields/utils'
+import { UserData } from '@/types/types'
 
 export const formatNumber = (value: string) => {
   if (isNaN(parseFloat(value))) {

@@ -1,5 +1,6 @@
 import { PropsWithChildren, useMemo } from 'react'
 import {
+  FieldValues,
   FormProvider as HookFormProvider,
   SubmitHandler,
   useForm,
@@ -8,7 +9,7 @@ import {
 
 import { FormProps, FormProvider } from './context'
 
-const Form = <T,>({
+const Form = <T extends FieldValues>({
   disabled,
   defaultValues,
   children,
@@ -32,7 +33,7 @@ const Form = <T,>({
   return (
     <HookFormProvider {...methods}>
       <form
-        onSubmit={methods.handleSubmit(onSubmit)}
+        onSubmit={methods.handleSubmit((data) => onSubmit(data as T))} // :(
         className={['flex flex-col space-y-4', className || 'mt-4'].join(' ')}
       >
         <FormProvider value={value}>{children}</FormProvider>
@@ -43,7 +44,7 @@ const Form = <T,>({
 
 export default Form
 
-interface HookFormProps<T> extends UseFormProps {
+interface HookFormProps<T extends FieldValues> extends UseFormProps {
   disabled?: boolean
   className?: string
   onSubmit: SubmitHandler<T>

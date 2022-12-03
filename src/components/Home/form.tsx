@@ -1,4 +1,4 @@
-import { SelectOption } from '@/types/types'
+import { SelectOption } from '@/components/UI/FormComponents/SelectFields/utils'
 
 export interface FormProps {
   id: string

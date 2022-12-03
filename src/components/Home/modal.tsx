@@ -7,7 +7,7 @@ import {
 import Form from '@/components/Home/form'
 import FormField from '@/components/Visit/formfield'
 import { visitSelectOptions } from '@/components/Visit/utils'
-import DurationSelector from '@/components/Visit/VisitForm/durationselector'
+import DurationSelector from '@/components/Visit/VisitForm/Selectors/durationselector'
 import { AlertVariant, useAlert } from '@/context/AlertContext'
 import { Duration } from '@/types/types'
 
