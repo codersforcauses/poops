@@ -41,10 +41,12 @@ export const VisitForm = () => {
   return (
     <Form<FormValues> onSubmit={handleSubmit}>
       <TextField label='Text Field:' type='text' name='textField' setFocused />
-      <SingleSelect
+      <SingleSelect<SelectOption>
         label='Visit Type:'
         name='visitType'
         options={visitTypes}
+        isClearable
+        isSearchable
         rules={validationSchema.visitType}
       />
       <Button type='submit'>Submit</Button>
