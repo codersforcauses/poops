@@ -5,6 +5,7 @@ import ContactForm from '@/components/Contact/contactform'
 import ContactInfo from '@/components/Contact/contactinfo'
 import Header from '@/components/Header'
 import { useContact } from '@/context/ContactContext/context'
+
 import Button from '../UI/button'
 
 type ContactProp = {
@@ -27,7 +28,7 @@ const ContactDetails = ({ firestoreIndex }: ContactProp) => {
             : 'New Contact'
         }
       />
-      <div className='m-auto flex h-14 max-w-md flex-row'>
+      <div className='m-auto flex h-14 w-full flex-row'>
         <div className='m-auto flex-1 text-center'>
           <Button
             type='button'
