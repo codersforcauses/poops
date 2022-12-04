@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { XCircleIcon } from '@heroicons/react/outline'
 
 import { findContactIndex } from '@/components/Visit/utils'
 import { useFirestore } from '@/context/Firebase/Firestore/context'
@@ -54,7 +55,13 @@ export const VisitList = (props: VisitListProps) => {
               commuteMethod={post.commuteMethod}
               notes={post.notes}
             />
-          ))}
+          ))
+      ) : (
+        <div className='flex h-full flex-col items-center justify-center'>
+          <XCircleIcon className='h-16 w-16 content-center' />
+          <p>It&apos;s empty here. Add a visit! </p>
+        </div>
+      )}
     </div>
   )
 }
