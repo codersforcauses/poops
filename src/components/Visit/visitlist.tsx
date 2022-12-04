@@ -31,8 +31,8 @@ export const VisitList = (props: VisitListProps) => {
     matchesDisplayName(post) || matchespetNames(post)
 
   return (
-    <div className='m-2'>
-      {visits &&
+    <div className='h-full flex-col'>
+      {visits && visits.length !== 0 ? (
         visits
           .filter((post: VisitData) => {
             if (props.searchQuery === '' || matchesSearchTerms(post)) {
