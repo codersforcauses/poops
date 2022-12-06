@@ -126,6 +126,7 @@ export const createUser = region('australia-southeast1').https.onCall(
       return { result: 'The new user has been successfully created.' }
     } catch (error) {
       // ! Region is not set as it does not have HttpsError
+      // https://github.com/firebase/firebase-functions/issues/942
       if (error instanceof UnauthenticatedError) {
         throw new https.HttpsError('unauthenticated', error.message)
       }
