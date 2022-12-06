@@ -1,6 +1,7 @@
 import { config } from 'firebase-functions/v1'
-import { initializeApp } from 'firebase-admin/app'
+import { initializeApp, App } from 'firebase-admin/app'
 
-initializeApp(config().firebase)
+const app: App = initializeApp(config().firebase)
 
+export default app
 export * from 'firebase-functions/v1'
