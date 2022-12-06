@@ -1,5 +1,5 @@
 import { CloudBillingClient } from '@google-cloud/billing'
-import { region } from './main'
+import { region } from '../main'
 
 const billing = new CloudBillingClient()
 

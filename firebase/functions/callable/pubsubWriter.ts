@@ -1,5 +1,5 @@
 import { PubSub } from '@google-cloud/pubsub'
-import { region } from './main'
+import { region } from '../main'
 
 const pubsub = new PubSub()
 

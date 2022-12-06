@@ -1,4 +1,4 @@
-import { logger, region } from './main'
+import { logger, region } from '../main'
 
 export const helloWorld = region('australia-southeast1').https.onRequest(
   (request, response) => {
