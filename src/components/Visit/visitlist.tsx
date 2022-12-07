@@ -31,7 +31,7 @@ export const VisitList = (props: VisitListProps) => {
     matchesDisplayName(post) || matchespetNames(post)
 
   return (
-    <div className='h-full flex-col'>
+    <div className='m-2 h-full flex-col'>
       {visits && visits.length !== 0 ? (
         visits
           .filter((post: VisitData) => {
