@@ -1,36 +1,46 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
-    match /users/{userId} {
-      function isSignIn(){
+    function isSignIn(){
         return request.auth != null;
       }
 
-      function isOwner(){
-        return request.auth.uid == userId;
-      }
-
-      function hasVerifiedEmail(){
-        return request.auth.token.email_verified;
-      }
-
-      allow read, write: if isSignIn() && isOwner();
+    function isOwner(){
+      return request.auth.uid == userId;
     }
+
+    function hasVerifiedEmail(){
+      return request.auth.token.email_verified;
+    }
+
+    function hasUnrevokedIDToken(){
+      return request.auth.token.auth_time > get(/databases/$(database)/documents/revoked_tokens/$(userId)).data.revokeTime;
+    }
+
+    function isUser(){
+      return request.auth.token.user == true;
+    }
+
+    function isAdmin(){
+      return request.auth.token.admin == true;
+    }
+
+    match /users/{userId} {
+      allow read, write: if isSignIn() && isOwner() && hasUnrevokedIDToken() && isUser();
+    }
+
+    match /roles/{email} {
+      allow read, write: if isSignIn() && isOwner() && hasUnrevokedIDToken() && isAdmin();
+    }
+
+    match /revoked_tokens/{userId} {
+      allow read, write: if false;
+    }
+
+
 
     // TODO: Remove this after firestore has integrated into the contact page
     match /TestUsers/{userId} {
-      function isSignIn(){
-        return request.auth != null;
-      }
-
-      function isOwner(){
-        return request.auth.uid == userId;
-      }
-
-      function hasVerifiedEmail(){
-        return request.auth.token.email_verified;
-      }
-
       allow read, write: if isSignIn() && isOwner();
     }
   }
