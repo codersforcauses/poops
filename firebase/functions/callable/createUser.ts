@@ -1,9 +1,9 @@
-import app, { region, https } from '../main'
+import { functions } from '../main'
 import { getAuth, Auth, UserRecord } from 'firebase-admin/auth'
 import { getFirestore, Firestore, FieldValue } from 'firebase-admin/firestore'
 
-const auth: Auth = getAuth(app)
-const firestore: Firestore = getFirestore(app)
+const auth: Auth = getAuth()
+const firestore: Firestore = getFirestore()
 
 /**
  * Error message thrown when user is not authenticated
@@ -60,8 +60,9 @@ const roleIsValid = (role: string) => {
   return validRoles.includes(role)
 }
 
-export const createUser = region('australia-southeast1').https.onCall(
-  async (data, context) => {
+export const createUser = functions
+  .region('australia-southeast1')
+  .https.onCall(async (data, context) => {
     try {
       // Checking that the user calling the Cloud Function is authenticated
       if (!context.auth) {
@@ -115,7 +116,6 @@ export const createUser = region('australia-southeast1').https.onCall(
 
       const claims: Record<string, boolean> = {}
       claims[role] = true
-      claims['xyzCompanyUser'] = true
 
       await auth.setCustomUserClaims(userId, claims)
 
@@ -128,18 +128,20 @@ export const createUser = region('australia-southeast1').https.onCall(
       // ! Region is not set as it does not have HttpsError
       // https://github.com/firebase/firebase-functions/issues/942
       if (error instanceof UnauthenticatedError) {
-        throw new https.HttpsError('unauthenticated', error.message)
+        throw new functions.https.HttpsError('unauthenticated', error.message)
       }
       if (error instanceof UnauthenticatedError) {
-        throw new https.HttpsError('unauthenticated', error.message)
+        throw new functions.https.HttpsError('unauthenticated', error.message)
       } else if (
         error instanceof NotAnAdminError ||
         error instanceof InvalidRoleError
       ) {
-        throw new https.HttpsError('failed-precondition', error.message)
+        throw new functions.https.HttpsError(
+          'failed-precondition',
+          error.message
+        )
       } else {
-        throw new https.HttpsError('internal', JSON.stringify(error))
+        throw new functions.https.HttpsError('internal', JSON.stringify(error))
       }
     }
-  }
-)
+  })
