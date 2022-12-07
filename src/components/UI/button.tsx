@@ -13,6 +13,7 @@ const variants = cva(['rounded-lg', 'font-semibold', 'drop-shadow-default'], {
       secondary: [
         'bg-white',
         'text-gray-800',
+        'border',
         'border-gray-400',
         'hover:bg-gray-100'
       ]
