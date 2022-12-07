@@ -6,7 +6,6 @@ const auth: Auth = getAuth()
 const db: Firestore = getFirestore()
 
 const roleIsValid = (role: string) => {
-  // To be adapted with your own list of roles
   const validRoles = ['user', 'admin']
   return validRoles.includes(role)
 }
@@ -21,6 +20,14 @@ export const setUser = functions.auth
       const userDoc = await db.collection('roles').doc(user.email).get()
       if (!userDoc.exists) {
         await auth.revokeRefreshTokens(user.uid)
+        const userRecord = await auth.getUser(user.uid)
+        if (!userRecord.tokensValidAfterTime) {
+          throw new Error('User has no tokensValidAfterTime')
+        }
+        const utcRevocationTimeSecs =
+          new Date(userRecord.tokensValidAfterTime).getTime() / 1000
+        const tokenRef = db.collection('revoked_tokens').doc(user.uid)
+        await tokenRef.set({ revokeTime: utcRevocationTimeSecs })
         await auth.deleteUser(user.uid)
         throw new Error('User has no role')
       }
