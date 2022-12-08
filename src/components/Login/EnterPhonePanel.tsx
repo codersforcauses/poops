@@ -1,10 +1,14 @@
 import { useState } from 'react'
 
-import Form from '@/components/Home/form'
+import Form from '@/components/Login/LoginForm'
 import Button from '@/components/UI/button'
 import { SelectOption } from '@/types/types'
 
-const EnterPhonePanel = () => {
+export interface EnterPhonePanelInterface {
+  togglePanel: () => void
+}
+
+const EnterPhonePanel = ({ togglePanel }: EnterPhonePanelInterface) => {
   const [phonenumber, setphonenumber] = useState(0)
   const [countrycode, setcountrycode] = useState('')
 
@@ -13,6 +17,7 @@ const EnterPhonePanel = () => {
   ]
 
   function handleSubmit(event: React.ChangeEvent<HTMLFormElement>) {
+    togglePanel()
     event.preventDefault()
     event.target.reset()
     setphonenumber(0)
@@ -21,10 +26,11 @@ const EnterPhonePanel = () => {
   function formFilled() {
     return phonenumber != 0
   }
+
   return (
     <div className='m-auto grid h-1/3 justify-center space-y-4 p-5'>
       <form onSubmit={handleSubmit}>
-        <div className='justify-content-center flex'>
+        <div className='flex justify-center'>
           {/* <label htmlFor='countrycode' className='font-bold'>
         <div className='justify-content-center flex'>
           {/* <label htmlFor='countrycode' className='font-bold'>
