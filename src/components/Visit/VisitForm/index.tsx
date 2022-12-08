@@ -3,6 +3,7 @@ import { SubmitHandler } from 'react-hook-form'
 import Button from '@/components/UI/button'
 import Form from '@/components/UI/FormComponents/Form'
 import CustomSelect from '@/components/UI/FormComponents/SelectFields/CustomSelect'
+import DurationSelect from '@/components/UI/FormComponents/SelectFields/DurationSelect'
 import SingleSelect from '@/components/UI/FormComponents/SelectFields/SingleSelect'
 import { SelectOption } from '@/components/UI/FormComponents/SelectFields/utils'
 import TextField from '@/components/UI/FormComponents/TextField'
@@ -83,6 +84,15 @@ export const VisitForm = () => {
         isClearable
         isSearchable
         rules={validationSchema.visitType}
+      />
+      <DurationSelect
+        defaultValue={{
+          hours: 0,
+          minutes: 0
+        }}
+        name='duration'
+        label='Duration:'
+        rules={validationSchema.duration}
       />
       <Button type='submit'>Submit</Button>
     </Form>

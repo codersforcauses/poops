@@ -12,7 +12,9 @@ import {
   FieldMessage
 } from '@/components/UI/FormComponents/utils'
 
-export interface SingleSelectProps<T> extends FormFieldProps, Props {
+export interface SingleSelectProps<T>
+  extends FormFieldProps,
+    Omit<Props, 'name'> {
   options: T[]
 }
 

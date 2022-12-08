@@ -1,6 +1,7 @@
 import { RegisterOptions } from 'react-hook-form'
 
 import { VisitFormValues } from '@/components/Visit/VisitForm'
+import { Duration } from '@/types/types'
 
 const requiredMessage = 'This field is required'
 
@@ -25,9 +26,13 @@ const validationSchema: Record<VisitFormValues, RegisterOptions> = {
     valueAsDate: true
   },
   duration: {
-    required: {
-      value: true,
-      message: requiredMessage
+    required: true,
+    validate: {
+      value: ({ hours, minutes }: Duration) => {
+        return (
+          (hours === 0 && minutes === 0) || 'Duration must be greater than 0'
+        )
+      }
     }
   },
   walkDist: {

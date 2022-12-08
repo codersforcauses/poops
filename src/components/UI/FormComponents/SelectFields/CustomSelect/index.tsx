@@ -14,7 +14,9 @@ import {
 } from '@/components/UI/FormComponents/utils'
 import usePersistentState from '@/utils/hooks/usepersistentstate'
 
-export interface CustomSelectProps<T> extends FormFieldProps, Props {
+export interface CustomSelectProps<T>
+  extends FormFieldProps,
+    Omit<Props, 'name'> {
   defaultOptions: T[]
 }
 

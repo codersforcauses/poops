@@ -1,18 +1,10 @@
 import { InputHTMLAttributes, useContext, useEffect } from 'react'
-import { RegisterOptions } from 'react-hook-form'
 
-import { FormContext } from '../Form/context'
+import { FormContext, FormFieldProps } from '../Form/context'
 import { FieldControl, FieldLabel, FieldMessage } from '../utils'
 
-export interface TextFieldProps
-  extends InputHTMLAttributes<HTMLInputElement | HTMLTextAreaElement> {
-  // hehehe ha
-  label: string
-  name: string
-  description?: string
-  rules?: RegisterOptions
-  setFocused?: boolean
-}
+export type TextFieldProps = FormFieldProps &
+  InputHTMLAttributes<HTMLInputElement | HTMLTextAreaElement>
 
 const TextField = ({
   color,

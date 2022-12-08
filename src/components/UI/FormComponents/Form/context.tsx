@@ -16,8 +16,11 @@ export interface FormProps
 }
 
 export interface FormFieldProps {
-  // name: string // identifier for react-hook-form
+  color?: string
+  name: string // identifier for react-hook-form
   label: string // label
+  disabled?: boolean
+  required?: boolean
   description?: string
   rules?: RegisterOptions
   setFocused?: boolean
