@@ -17,8 +17,8 @@ function Form(props: FormProps) {
   return (
     <div className='flex flex-col p-1'>
       <label htmlFor={props.id} className='font-bold'>
-        <span className='text-primary'>*</span>
         {props.label}
+        <span className='text-primary'>*</span>
       </label>
       {inputType(props)}
     </div>
