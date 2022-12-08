@@ -11,9 +11,6 @@ type ContactItemProps = {
 
 const ContactItem = ({ contact, image, firestoreIndex }: ContactItemProps) => {
   const { setDisplayContactIndex } = useContact()
-  if (firestoreIndex === -1) {
-    console.log(contact)
-  }
 
   return (
     <div

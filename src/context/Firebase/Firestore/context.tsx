@@ -28,7 +28,7 @@ export const newUser = (currentUser: User): UserData => ({
     phone: currentUser.phoneNumber ?? '',
     streetAddress: '',
     region: [],
-    tags: []
+    tags: ['Volunteer']
   },
   visits: [],
   contacts: []
