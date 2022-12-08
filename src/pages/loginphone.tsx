@@ -66,7 +66,9 @@ const Login: NextPage = () => {
                   isNumPad={true}
                   placeholder='  '
                   isRequired={true}
-                  onChange={(event) => setphonenumber(Number(event.target.value))}
+                  onChange={(event) =>
+                    setphonenumber(Number(event.target.value))
+                  }
                 />
               </div>
             </td>
