@@ -1,5 +1,6 @@
-import Image from 'next/image'
+import { NextPage } from 'next'
 
+import LoginHeader from '@/components/Login/LoginHeader'
 import LoginPanel from '@/components/Login/LoginPanel'
 import { withPublic } from '@/components/PrivateRoute'
 import { useAuth } from '@/context/Firebase/Auth/context'
@@ -8,27 +9,18 @@ import { NextPageWithLayout } from './_app'
 
 const Login: NextPageWithLayout = () => {
   const { logOut, currentUser } = useAuth()
+
+  const pageTitle = 'Login'
+  const primaryMessage = 'Sign In'
+  const secondaryMessage = 'Use any one of your profiles'
+
   return (
-    <div className='h-screen w-screen'>
-      <title>Login</title>
-      <div className='animate-text bg-white'>
-        <div className='m-auto max-w-sm p-10'>
-          <Image
-            src='/images/poops-logo-transparent.png'
-            width={36}
-            height={36}
-            layout='responsive'
-            alt='POOPS logo'
-            className='rounded-full'
-          ></Image>
-        </div>
-
-        <div className='p-3 text-center text-xl font-bold'>Sign In</div>
-
-        <div className='text-x1 text-center font-sans'>
-          Use any one of your profiles
-        </div>
-
+    <main>
+      <LoginHeader
+        pageTitle={pageTitle}
+        primaryMessage={primaryMessage}
+        secondaryMessage={secondaryMessage}
+      >
         <LoginPanel
           linkAccount={false}
           displayGoogle={true}
@@ -36,8 +28,8 @@ const Login: NextPageWithLayout = () => {
           displayMicrosoft={true}
           displayPhone={true}
         />
-      </div>
-      {/*! used for testing} */}
+      </LoginHeader>
+      {/* //! used for testing} */}
       <br />
       <br />
       {currentUser && (
