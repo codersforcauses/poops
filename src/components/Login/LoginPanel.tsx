@@ -1,3 +1,14 @@
+import { useRouter } from 'next/router'
+import {
+  // faApple,
+  faFacebookF,
+  faGoogle,
+  faMicrosoft
+  // faTwitter,
+  // faYahoo
+} from '@fortawesome/free-brands-svg-icons'
+import { faPhone } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
   Auth,
   AuthProvider,
@@ -9,7 +20,6 @@ import {
 } from 'firebase/auth'
 
 import LoginButton from '@/components/Login/LoginButton'
-import Logo from '@/components/UI/logoSvg'
 import { useAuth } from '@/context/Firebase/Auth/context'
 
 export interface LoginPanelInterface {
@@ -17,23 +27,27 @@ export interface LoginPanelInterface {
   displayGoogle: boolean
   displayFacebook: boolean
   displayMicrosoft: boolean
+  displayPhone: boolean
 }
 
 const LoginPanel = ({
   linkAccount,
   displayGoogle,
   displayFacebook,
-  displayMicrosoft
+  displayMicrosoft,
+  displayPhone
 }: LoginPanelInterface) => {
   const { externalAuthSignIn, linkAuthProvider, currentUser, auth } = useAuth()
 
-  const googleIcon = <Logo name='Google' viewBox='0 0 24 24' />
-  const facebookIcon = <Logo name='Facebook' viewBox='0 0 24 24' />
-  const microsoftIcon = <Logo name='Microsoft' viewBox='0 0 24 24' />
+  const googleIcon = <FontAwesomeIcon icon={faGoogle} />
+  const facebookIcon = <FontAwesomeIcon icon={faFacebookF} />
+  const microsoftIcon = <FontAwesomeIcon icon={faMicrosoft} />
+  const phoneIcon = <FontAwesomeIcon icon={faPhone} />
 
   const googleProvider = new GoogleAuthProvider()
   const facebookProvider = new FacebookAuthProvider()
   const microsoftProvider = new OAuthProvider('microsoft.com')
+  const router = useRouter()
 
   function buttonString(providerString: string) {
     return !linkAccount
@@ -84,7 +98,14 @@ const LoginPanel = ({
         display={displayMicrosoft}
       />
 
-      {/* Phone Button /TODO*/}
+      {/* Phone Button //TODO*/}
+      <LoginButton
+        onClick={() => router.push('/loginphone')}
+        icon={phoneIcon}
+        buttonlabel={buttonString('Phone')}
+        style='group h-12 rounded-full border-4 border-phonegreen px-6 transition duration-300'
+        display={displayPhone}
+      />
     </div>
   )
 }
