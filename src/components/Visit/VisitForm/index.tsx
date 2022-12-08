@@ -56,7 +56,18 @@ export const VisitForm = () => {
 
   return (
     <Form<FormValues> onSubmit={handleSubmit}>
-      <TextField label='Text Field:' type='text' name='textField' setFocused />
+      <TextField
+        label='Text Field:'
+        type='text'
+        name='textField'
+        placeholder='hello'
+      />
+      <TextField
+        label='Text Field:'
+        type='textarea'
+        name='textField'
+        placeholder='hello'
+      />
       <SingleSelect<SelectOption>
         label='Visit Type:'
         name='visitType'

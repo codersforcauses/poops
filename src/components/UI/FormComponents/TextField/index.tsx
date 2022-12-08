@@ -4,7 +4,9 @@ import { RegisterOptions } from 'react-hook-form'
 import { FormContext } from '../Form/context'
 import { FieldControl, FieldLabel, FieldMessage } from '../utils'
 
-export interface TextFieldProps extends InputHTMLAttributes<HTMLInputElement> {
+export interface TextFieldProps
+  extends InputHTMLAttributes<HTMLInputElement | HTMLTextAreaElement> {
+  // hehehe ha
   label: string
   name: string
   description?: string
@@ -44,16 +46,26 @@ const TextField = ({
     >
       <div className='flex w-full flex-col'>
         <FieldLabel>{label}</FieldLabel>
-        <input
-          {...props}
-          aria-describedby={`${props.name}-label`}
-          aria-invalid={!!error}
-          id={props.name}
-          className={['input rounded-2xl px-4 py-2 font-sans text-lg']
-            .join(' ')
-            .trim()}
-          {...register?.(props.name, rules)}
-        />
+        {props.type === 'textarea' ? (
+          <textarea
+            {...props}
+            aria-describedby={`${props.name}-label`}
+            aria-invalid={!!error}
+            id={props.name}
+            className={['form-textarea rounded text-black'].join(' ').trim()}
+            {...register?.(props.name, rules)}
+          />
+        ) : (
+          <input
+            {...props}
+            aria-describedby={`${props.name}-label`}
+            aria-invalid={!!error}
+            id={props.name}
+            className={['form-input rounded text-black'].join(' ').trim()}
+            {...register?.(props.name, rules)}
+          />
+        )}
+
         {error ? (
           <FieldMessage>{error}</FieldMessage>
         ) : (
