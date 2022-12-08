@@ -7,7 +7,7 @@ import { SelectOption } from '@/types/types'
 const EnterPhonePanel = () => {
   const [phonenumber, setphonenumber] = useState(0)
   const [countrycode, setcountrycode] = useState('')
-  
+
   const countryCodeSelectOptions: SelectOption[] = [
     { value: '+61', label: 'Australia (+61)' }
   ]
@@ -24,8 +24,8 @@ const EnterPhonePanel = () => {
   return (
     <div className='m-auto grid h-1/3 justify-center space-y-4 p-5'>
       <form onSubmit={handleSubmit}>
-        <div className='flex justify-content-center'>
-              {/* <label htmlFor='countrycode' className='font-bold'>
+        <div className='justify-content-center flex'>
+          {/* <label htmlFor='countrycode' className='font-bold'>
                 Country Code
               </label>
               <div
@@ -35,26 +35,26 @@ const EnterPhonePanel = () => {
               >
                 {countryCode}
               </div> */}
-              <Form
-                id='countrycode'
-                label='Country Code'
-                type='select'
-                isNumPad={false}
-                placeholder=''
-                isRequired={true}
-                onChange={(event) => setcountrycode(event.target.value) }
-                selectOptions={countryCodeSelectOptions}
-                />
-              <Form
-                id='phonenumber'
-                label='Phone Number'
-                type='text'
-                isNumPad={true}
-                placeholder='  '
-                isRequired={true}
-                onChange={(event) => setphonenumber(Number(event.target.value))}
-              />
-          </div>
+          <Form
+            id='countrycode'
+            label='Country Code'
+            type='select'
+            isNumPad={false}
+            placeholder={countrycode}
+            isRequired={true}
+            onChange={(event) => setcountrycode(event.target.value)}
+            selectOptions={countryCodeSelectOptions}
+          />
+          <Form
+            id='phonenumber'
+            label='Phone Number'
+            type='text'
+            isNumPad={true}
+            placeholder='  '
+            isRequired={true}
+            onChange={(event) => setphonenumber(Number(event.target.value))}
+          />
+        </div>
         <table align='center'>
           <Button
             className='mt-8 mb-2'
