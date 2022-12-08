@@ -26,6 +26,8 @@ const EnterPhonePanel = () => {
       <form onSubmit={handleSubmit}>
         <div className='justify-content-center flex'>
           {/* <label htmlFor='countrycode' className='font-bold'>
+        <div className='justify-content-center flex'>
+          {/* <label htmlFor='countrycode' className='font-bold'>
                 Country Code
               </label>
               <div
@@ -40,7 +42,7 @@ const EnterPhonePanel = () => {
             label='Country Code'
             type='select'
             isNumPad={false}
-            placeholder=''
+            placeholder={countrycode}
             isRequired={true}
             onChange={(event) => setcountrycode(event.target.value)}
             selectOptions={countryCodeSelectOptions}
