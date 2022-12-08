@@ -6,10 +6,10 @@ import Avatar from '@/components/Contact/avatar'
 import RegionSelector from '@/components/Contact/regiondropdown'
 import TagSelector from '@/components/Contact/tagdropdown'
 import { useContact } from '@/context/ContactContext/context'
+import { useFirestore } from '@/context/Firebase/Firestore/context'
 import type { Contact } from '@/types/types'
 
 import Button from '../UI/button'
-import { useFirestore } from '@/context/Firebase/Firestore/context'
 
 type ContactInfoProps = {
   firestoreIndex: number | null

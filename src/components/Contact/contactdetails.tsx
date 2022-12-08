@@ -31,7 +31,7 @@ const ContactDetails = ({ firestoreIndex }: ContactProp) => {
             : 'New Contact'
         }
       />
-      <div className='m-auto flex h-14 max-w-md flex-row'>
+      <div className='m-auto flex h-14 w-full flex-row'>
         <div className='m-auto flex-1 text-center'>
           <Button
             type='button'

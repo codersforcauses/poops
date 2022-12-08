@@ -1,7 +1,7 @@
-import { createContext, Dispatch, SetStateAction, useContext } from 'react'
+import { createContext, useContext } from 'react'
 import { User } from 'firebase/auth'
 
-import { Contact, UserData } from '@/types/types'
+import { UserData } from '@/types/types'
 
 //set the default data for new logins in firestore
 export const emptyUserDoc: UserData = {

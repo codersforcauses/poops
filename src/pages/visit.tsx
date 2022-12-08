@@ -19,7 +19,7 @@ const Visit = () => {
       <TopNav />
       <main className='h-[calc(100%-7rem)]'>
         {!isModalOpen ? (
-          <div className='flex w-screen flex-col p-4'>
+          <div className='flex h-full w-screen flex-col p-4'>
             <div className='align-center flex flex-row justify-around'>
               <SearchBar
                 onChange={(event) => setSearchQuery(event.target.value)}
