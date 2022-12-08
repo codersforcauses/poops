@@ -22,6 +22,7 @@ const Profile = () => {
           displayGoogle={true}
           displayFacebook={true}
           displayMicrosoft={true}
+          displayPhone={true}
         />
       </main>
       <NavBar />

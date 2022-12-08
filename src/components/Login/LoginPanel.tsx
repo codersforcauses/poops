@@ -3,7 +3,7 @@ import {
   // faApple,
   faFacebookF,
   faGoogle,
-  faMicrosoft,
+  faMicrosoft
   // faTwitter,
   // faYahoo
 } from '@fortawesome/free-brands-svg-icons'
