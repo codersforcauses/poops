@@ -2,10 +2,10 @@ import { ReactNode } from 'react'
 import Image from 'next/image'
 
 export interface LoginHeaderInterface {
-  pageTitle: string
+  pageTitle: string // Main Page Title Displayed at top of the page
   primaryMessage: string
   secondaryMessage: string
-  children?: ReactNode
+  children?: ReactNode // The set of buttons or form that the user is to interact with
 }
 
 const LoginHeader = ({

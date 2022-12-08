@@ -1,33 +1,72 @@
-import React, { useState } from 'react'
-import PhoneInput from 'react-phone-number-input'
+import { useState } from 'react'
 
+import Form from '@/components/Home/form'
 import Button from '@/components/UI/button'
-
-import 'react-phone-number-input/style.css'
-
-export interface EnterPhonePanelInterface {
-  onClick: (phoneNumber: string) => void
-}
+import { SelectOption } from '@/types/types'
 
 const EnterPhonePanel = () => {
-  const [value, setValue] = useState<string>()
+  const [phonenumber, setphonenumber] = useState(0)
+  const [countrycode, setcountrycode] = useState('')
 
-  /* TODO: add 'auth update' functionality */
+  const countryCodeSelectOptions: SelectOption[] = [
+    { value: '+61', label: 'Australia (+61)' }
+  ]
 
-  console.log(value)
+  function handleSubmit(event: React.ChangeEvent<HTMLFormElement>) {
+    event.preventDefault()
+    event.target.reset()
+    setphonenumber(0)
+  }
 
+  function formFilled() {
+    return phonenumber != 0
+  }
   return (
-    <form className='m-5 flex h-full flex-auto flex-col items-center justify-around'>
-      <PhoneInput
-        defaultCountry='AU'
-        placeholder='Enter phone number'
-        value={value}
-        onChange={setValue}
-      />
-      <Button className='w-fit' type='submit' disabled={value === undefined}>
-        CONTINUE
-      </Button>
-    </form>
+    <div className='m-auto grid h-1/3 justify-center space-y-4 p-5'>
+      <form onSubmit={handleSubmit}>
+        <div className='justify-content-center flex'>
+          {/* <label htmlFor='countrycode' className='font-bold'>
+                Country Code
+              </label>
+              <div
+                className='mt-1 mb-2 mr-10 flex h-9 rounded border border-[#6b7280] py-0.5 px-4 text-center
+                className='px-auto form-select mt-1 mb-2 flex h-9 rounded border border-[#6b7280] py-0.5 text-center focus:outline-none'
+        shadow-lg focus:outline-[#0066ff]'
+              >
+                {countryCode}
+              </div> */}
+          <Form
+            id='countrycode'
+            label='Country Code'
+            type='select'
+            isNumPad={false}
+            placeholder=''
+            isRequired={true}
+            onChange={(event) => setcountrycode(event.target.value)}
+            selectOptions={countryCodeSelectOptions}
+          />
+          <Form
+            id='phonenumber'
+            label='Phone Number'
+            type='text'
+            isNumPad={true}
+            placeholder='  '
+            isRequired={true}
+            onChange={(event) => setphonenumber(Number(event.target.value))}
+          />
+        </div>
+        <table align='center'>
+          <Button
+            className='mt-8 mb-2'
+            size='large'
+            type='submit'
+            disabled={!formFilled()}
+          >
+            CONTINUE
+          </Button>
+        </table>
+      </form>
+    </div>
   )
 }
 
