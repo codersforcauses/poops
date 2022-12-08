@@ -9,7 +9,7 @@ import Avatar from '@/components/Contact/avatar'
 import { AlertVariant, useAlert } from '@/context/AlertContext'
 import { useContact } from '@/context/ContactContext/context'
 import { useFirestore } from '@/context/Firebase/Firestore/context'
-import { Contact, Person } from '@/types/types'
+import { Contact } from '@/types/types'
 
 import Button from '../UI/button'
 
@@ -26,7 +26,7 @@ function ContactInfo({ firestoreIndex, image }: ContactInfoProps) {
     removeContact,
     setDisplayContactIndex
   } = useContact()
-  const contact: Person & Partial<Contact> =
+  const contact: Contact =
     firestoreIndex === -1 ? userDoc.info : allContacts[firestoreIndex as number]
   const { setAlert } = useAlert()
 

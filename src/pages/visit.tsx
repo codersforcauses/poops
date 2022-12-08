@@ -8,7 +8,6 @@ import { AddButton } from '@/components/Visit/buttons'
 import Modal from '@/components/Visit/modal'
 import SearchBar from '@/components/Visit/searchbar'
 import VisitList from '@/components/Visit/visitlist'
-import Button from '@/components/UI/button'
 
 const Visit = () => {
   const [searchQuery, setSearchQuery] = useState('')

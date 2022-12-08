@@ -9,6 +9,7 @@ import { useContact } from '@/context/ContactContext/context'
 import type { Contact } from '@/types/types'
 
 import Button from '../UI/button'
+import { useFirestore } from '@/context/Firebase/Firestore/context'
 
 type ContactInfoProps = {
   firestoreIndex: number | null
@@ -21,9 +22,11 @@ const ContactForm = ({
   image,
   setIsEditing
 }: ContactInfoProps) => {
+  const { userDoc, updateUserInfo } = useFirestore()
   const { allContacts, insertContact, setDisplayContactIndex } = useContact()
 
   const isNewContact = firestoreIndex === null
+  const isUser = firestoreIndex === -1
 
   const contact: Contact = isNewContact
     ? {
@@ -38,6 +41,8 @@ const ContactForm = ({
         notes: '',
         tags: []
       }
+    : isUser
+    ? userDoc.info
     : allContacts[firestoreIndex as number]
 
   const [regions, setRegions] = useState(contact.region)
@@ -63,6 +68,9 @@ const ContactForm = ({
     e.preventDefault()
     if (isNewContact) {
       firestoreIndex = insertContact(contactForm)
+      setDisplayContactIndex(firestoreIndex)
+    } else if (isUser) {
+      updateUserInfo?.({ ...userDoc, info: contactForm })
       setDisplayContactIndex(firestoreIndex)
     } else {
       insertContact(contactForm, firestoreIndex as number)

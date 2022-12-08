@@ -1,12 +1,12 @@
 import Avatar from '@/components/Contact/avatar'
 import { useContact } from '@/context/ContactContext/context'
-import { Contact, Person } from '@/types/types'
+import { Contact } from '@/types/types'
 import truncateText from '@/utils/truncateText'
 
 type ContactItemProps = {
   image: string
   firestoreIndex: number
-  contact: Person & Partial<Contact>
+  contact: Contact
 }
 
 const ContactItem = ({ contact, image, firestoreIndex }: ContactItemProps) => {

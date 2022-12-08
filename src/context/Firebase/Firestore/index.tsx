@@ -48,7 +48,7 @@ const FirestoreProvider = ({ children }: { children: ReactNode }) => {
     retrieveData()
   }, [retrieveData])
 
-  //updates the whole visit and contact array in the doc
+  //updates the user info or whole visit and contact array in the doc
   /*
     this functions gets what is in the curent array in local storage
     then ovewrites the whole array in firestore with the current local array
@@ -56,6 +56,24 @@ const FirestoreProvider = ({ children }: { children: ReactNode }) => {
     delete, add and update works using the same function. done through adding/removing 
     from array and editing the values in the array.
   */
+  const updateUserInfo = useCallback(
+    async (user: UserData) => {
+      try {
+        if (currentUser?.uid) {
+          const userDocRef = doc(db, 'users', currentUser.uid)
+          await updateDoc(userDocRef, 'info', user.info)
+        }
+      } catch (err: unknown) {
+        //#region  //*=========== For logging ===========
+        if (err instanceof FirestoreError) {
+          console.error(err.message)
+        } else console.error(err)
+        //#endregion  //*======== For logging ===========
+      }
+    },
+    [currentUser]
+  )
+
   const updateVisit = useCallback(
     async (user: UserData) => {
       // setAchievementsCount((prev) => ({
@@ -100,11 +118,12 @@ const FirestoreProvider = ({ children }: { children: ReactNode }) => {
   //changes the default value to the data retreived and saved in state
   const value: FirestoreContextProps = useMemo(
     () => ({
-      userDoc: userDoc,
-      updateVisit: updateVisit,
-      updateContact: updateContact
+      userDoc,
+      updateUserInfo,
+      updateVisit,
+      updateContact
     }),
-    [userDoc, updateVisit, updateContact]
+    [userDoc, setUserDoc, updateVisit, updateContact]
   )
 
   return (

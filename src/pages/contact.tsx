@@ -1,4 +1,4 @@
-import { useMemo } from 'react'
+import { useEffect, useMemo } from 'react'
 import { SearchIcon } from '@heroicons/react/outline'
 
 import ContactDetails from '@/components/Contact/contactdetails'
