@@ -15,7 +15,7 @@ import {
   FirestoreContextProvider,
   newUser
 } from '@/context/Firebase/Firestore/context'
-import { UserData } from '@/types/types'
+import { Contact, UserData } from '@/types/types'
 
 //retreiving firestore data and setting the data to the local variable FireContextProps
 const FirestoreProvider = ({ children }: { children: ReactNode }) => {
@@ -57,11 +57,12 @@ const FirestoreProvider = ({ children }: { children: ReactNode }) => {
     from array and editing the values in the array.
   */
   const updateUserInfo = useCallback(
-    async (user: UserData) => {
+    async (info: Contact) => {
       try {
         if (currentUser?.uid) {
           const userDocRef = doc(db, 'users', currentUser.uid)
-          await updateDoc(userDocRef, 'info', user.info)
+          await updateDoc(userDocRef, 'info', info)
+          setUserDoc({ ...userDoc, info: info })
         }
       } catch (err: unknown) {
         //#region  //*=========== For logging ===========
@@ -123,7 +124,7 @@ const FirestoreProvider = ({ children }: { children: ReactNode }) => {
       updateVisit,
       updateContact
     }),
-    [userDoc, setUserDoc, updateVisit, updateContact]
+    [userDoc, setUserDoc, updateUserInfo, updateVisit, updateContact]
   )
 
   return (

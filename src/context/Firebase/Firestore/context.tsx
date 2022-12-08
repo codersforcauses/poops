@@ -1,7 +1,7 @@
 import { createContext, useContext } from 'react'
 import { User } from 'firebase/auth'
 
-import { UserData } from '@/types/types'
+import { Contact, UserData } from '@/types/types'
 
 //set the default data for new logins in firestore
 export const emptyUserDoc: UserData = {
@@ -36,7 +36,7 @@ export const newUser = (currentUser: User): UserData => ({
 //update functions as a context api
 export interface FirestoreContextProps {
   userDoc: UserData
-  updateUserInfo?: (userDoc: UserData) => void
+  updateUserInfo?: (info: Contact) => void
   updateVisit?: (userDoc: UserData) => void
   updateContact?: (userDoc: UserData) => void
 }

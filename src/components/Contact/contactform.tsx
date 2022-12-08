@@ -70,7 +70,7 @@ const ContactForm = ({
       firestoreIndex = insertContact(contactForm)
       setDisplayContactIndex(firestoreIndex)
     } else if (isUser) {
-      updateUserInfo?.({ ...userDoc, info: contactForm })
+      updateUserInfo?.(contactForm)
       setDisplayContactIndex(firestoreIndex)
     } else {
       insertContact(contactForm, firestoreIndex as number)

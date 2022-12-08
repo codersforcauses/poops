@@ -32,8 +32,6 @@ function ContactInfo({ firestoreIndex, image }: ContactInfoProps) {
     ? allContacts[firestoreIndex as number]
     : userDoc.info
 
-  console.log(firestoreIndex)
-
   const { setAlert } = useAlert()
 
   return (

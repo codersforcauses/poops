@@ -37,7 +37,7 @@ const ContactList = ({ firestoreIndexMap }: ContactsProp) => {
       {contactItems.length > 0 ? (
         <ul>{contactItems}</ul>
       ) : (
-        <div className='flex flex-col items-center gap-2 mt-12'>
+        <div className='mt-12 flex flex-col items-center gap-2'>
           <XCircleIcon className='h-16 w-16' />
           <p>You don&apos;t have any contacts yet. Add some!</p>
         </div>

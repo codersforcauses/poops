@@ -11,6 +11,10 @@ type ContactItemProps = {
 
 const ContactItem = ({ contact, image, firestoreIndex }: ContactItemProps) => {
   const { setDisplayContactIndex } = useContact()
+  if (firestoreIndex === -1) {
+    console.log(contact)
+  }
+
   return (
     <div
       onClick={() => setDisplayContactIndex(firestoreIndex)}
@@ -22,9 +26,7 @@ const ContactItem = ({ contact, image, firestoreIndex }: ContactItemProps) => {
         {/* USER PROFILE IMAGE */}
         <span className='flex items-center space-x-4'>
           <Avatar image={image} height={40} width={40} iconClass='h-10 w-10' />
-          <p className='font-medium text-gray-700'>
-            {contact.clientName}
-          </p>
+          <p className='font-medium text-gray-700'>{contact.clientName}</p>
         </span>
         {contact.pets && (
           <p className='text-gray-500'>{truncateText(contact.pets, 16)}</p>
