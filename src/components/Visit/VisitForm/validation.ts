@@ -2,32 +2,55 @@ import { RegisterOptions } from 'react-hook-form'
 
 import { VisitFormValues } from '@/components/Visit/VisitForm'
 
+const requiredMessage = 'This field is required'
+
 const validationSchema: Record<VisitFormValues, RegisterOptions> = {
   visitType: {
-    required: true
+    required: {
+      value: true,
+      message: requiredMessage
+    }
   },
   clientName: {
-    required: true
+    required: {
+      value: true,
+      message: requiredMessage
+    }
   },
   startTime: {
-    required: true,
+    required: {
+      value: true,
+      message: requiredMessage
+    },
     valueAsDate: true
   },
   duration: {
-    required: true
+    required: {
+      value: true,
+      message: requiredMessage
+    }
   },
   walkDist: {
-    required: true,
+    required: {
+      value: true,
+      message: requiredMessage
+    },
     valueAsNumber: true,
-    min: 0
+    min: { value: 0, message: 'Min. length is 0' }
   },
   commuteDist: {
-    required: true,
+    required: {
+      value: true,
+      message: requiredMessage
+    },
     valueAsNumber: true,
-    min: 0
+    min: { value: 0, message: 'Min. length is 0' }
   },
   commuteMethod: {
-    required: true
+    required: {
+      value: true,
+      message: requiredMessage
+    }
   },
   notes: {
     required: false
