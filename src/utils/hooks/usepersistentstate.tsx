@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react'
 
-const usePersistedState = (
+const usePersistentState = <T,>(
   key: string,
-  defaultValue: Record<string, unknown>
+  defaultValue: Record<string, unknown> | T[]
 ) => {
   const [state, setState] = useState(() => {
     const value = localStorage.getItem(key)
@@ -16,4 +16,4 @@ const usePersistedState = (
   return [state, setState]
 }
 
-export default usePersistedState
+export default usePersistentState

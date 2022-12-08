@@ -2,6 +2,7 @@ import { SubmitHandler } from 'react-hook-form'
 
 import Button from '@/components/UI/button'
 import Form from '@/components/UI/FormComponents/Form'
+import CustomSelect from '@/components/UI/FormComponents/SelectFields/CustomSelect'
 import SingleSelect from '@/components/UI/FormComponents/SelectFields/SingleSelect'
 import { SelectOption } from '@/components/UI/FormComponents/SelectFields/utils'
 import TextField from '@/components/UI/FormComponents/TextField'
@@ -31,6 +32,21 @@ const visitTypes: SelectOption[] = [
   }
 ]
 
+const defaultCommuteMethods: SelectOption[] = [
+  {
+    label: 'Bus',
+    value: 'Bus'
+  },
+  {
+    label: 'Car',
+    value: 'Car'
+  },
+  {
+    label: 'Train',
+    value: 'Train'
+  }
+]
+
 export const VisitForm = () => {
   const { userDoc, updateVisit } = useFirestore()
 
@@ -45,6 +61,14 @@ export const VisitForm = () => {
         label='Visit Type:'
         name='visitType'
         options={visitTypes}
+        isClearable
+        isSearchable
+        rules={validationSchema.visitType}
+      />
+      <CustomSelect<SelectOption>
+        label='Commute Method:'
+        name='commuteMethod'
+        defaultOptions={defaultCommuteMethods}
         isClearable
         isSearchable
         rules={validationSchema.visitType}
