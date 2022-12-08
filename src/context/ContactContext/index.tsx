@@ -84,8 +84,6 @@ const ContactProvider = ({ children }: { children: ReactNode }) => {
 
   const removeContact = useCallback(
     (index: number) => {
-      if (index === 0) return // can't delete users own profile
-
       const newArray = [...allContacts]
       newArray.splice(index)
 

@@ -26,8 +26,14 @@ function ContactInfo({ firestoreIndex, image }: ContactInfoProps) {
     removeContact,
     setDisplayContactIndex
   } = useContact()
-  const contact: Contact =
-    firestoreIndex === -1 ? userDoc.info : allContacts[firestoreIndex as number]
+
+  const isContact = firestoreIndex !== -1
+  const contact: Contact = isContact
+    ? allContacts[firestoreIndex as number]
+    : userDoc.info
+
+  console.log(firestoreIndex)
+
   const { setAlert } = useAlert()
 
   return (
@@ -42,7 +48,7 @@ function ContactInfo({ firestoreIndex, image }: ContactInfoProps) {
       {/* FIRST AND LAST NAME */}
       <h1 className='text-4xl font-normal'>{contact.clientName}</h1>
       {/* DESCRIPTION */}
-      {contact.desc && <h3>{contact.desc}</h3>}
+      {isContact && <h3>{contact.desc}</h3>}
       {/* PHONE */}
       <Box>
         <div className='flex w-full justify-between'>
@@ -68,40 +74,36 @@ function ContactInfo({ firestoreIndex, image }: ContactInfoProps) {
         <span className='text-xl'>{contact.email}</span>
       </Box>
       {/* ADDRESS */}
-      {contact.streetAddress && (
-        <Box>
-          <div className='flex w-full justify-between'>
-            <label htmlFor={contact.streetAddress} className='text-dark-red'>
-              Address
-            </label>
-            <a
-              href={`http://maps.google.com/?q=${contact.streetAddress}`}
-              target='_blank'
-              rel='noreferrer'
-            >
-              <LocationMarkerIcon className='h-5 w-5' />
-            </a>
-          </div>
-          <span className='text-xl'>{contact.streetAddress}</span>
-        </Box>
-      )}
-      {/* TAGS */}
-      {contact.tags && (
-        <Box>
-          <label htmlFor='tags' className='text-dark-red'>
-            Tags
+      <Box>
+        <div className='flex w-full justify-between'>
+          <label htmlFor={contact.streetAddress} className='text-dark-red'>
+            Address
           </label>
-          <TagHolder className='mt-1'>
-            {contact.tags.map((tag, index) => (
-              <div key={index}>
-                <Tag>{tag}</Tag>
-              </div>
-            ))}
-          </TagHolder>
-          {/* Padding to counter the shadow */}
-          <div className='pt-2'></div>
-        </Box>
-      )}
+          <a
+            href={`http://maps.google.com/?q=${contact.streetAddress}`}
+            target='_blank'
+            rel='noreferrer'
+          >
+            <LocationMarkerIcon className='h-5 w-5' />
+          </a>
+        </div>
+        <span className='text-xl'>{contact.streetAddress}</span>
+      </Box>
+      {/* TAGS */}
+      <Box>
+        <label htmlFor='tags' className='text-dark-red'>
+          Tags
+        </label>
+        <TagHolder className='mt-1'>
+          {contact.tags.map((tag, index) => (
+            <div key={index}>
+              <Tag>{tag}</Tag>
+            </div>
+          ))}
+        </TagHolder>
+        {/* Padding to counter the shadow */}
+        <div className='pt-2'></div>
+      </Box>
       {/* REGIONS */}
       {contact.region && (
         <Box className='pb-3'>
@@ -118,7 +120,8 @@ function ContactInfo({ firestoreIndex, image }: ContactInfoProps) {
           </TagHolder>
         </Box>
       )}
-      {contact.pets && (
+      {/* PETS */}
+      {isContact && (
         <Box className='flex flex-col'>
           <label htmlFor={contact.pets} className='text-dark-red'>
             Pets
@@ -127,7 +130,7 @@ function ContactInfo({ firestoreIndex, image }: ContactInfoProps) {
         </Box>
       )}
       {/* NOTES */}
-      {contact.notes && (
+      {isContact && (
         <Box className='flex flex-col'>
           <label htmlFor={contact.notes} className='text-dark-red'>
             Notes
@@ -137,7 +140,7 @@ function ContactInfo({ firestoreIndex, image }: ContactInfoProps) {
       )}
       <div className='mb-2'>
         {/* can't delete users profile */}
-        {firestoreIndex !== -1 && (
+        {isContact && (
           <Button
             type='button'
             onClick={() => {

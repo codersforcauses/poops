@@ -24,7 +24,6 @@ const ContactItem = ({ contact, image, firestoreIndex }: ContactItemProps) => {
           <Avatar image={image} height={40} width={40} iconClass='h-10 w-10' />
           <p className='font-medium text-gray-700'>
             {contact.clientName}
-            {/* {contacts[firestoreIndex].clientName} */}
           </p>
         </span>
         {contact.pets && (
