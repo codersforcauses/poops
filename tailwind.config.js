@@ -26,6 +26,7 @@ module.exports = {
       googlered: '#EA4335',
       applegrey: '#A2AAAD',
       microsoftblue: '#00A4EF',
+      phonegreen: '#68CC6A',
       yahoopurple: '#430297',
       'dark-gray': '#7B7B7B',
       'zinc-200': '#F2F2F2',

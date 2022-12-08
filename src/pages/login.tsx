@@ -33,6 +33,7 @@ const Login: NextPage = () => {
           displayGoogle={true}
           displayFacebook={true}
           displayMicrosoft={true}
+          displayPhone={true}
         />
       </div>
       {/* //! used for testing} */}
