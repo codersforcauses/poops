@@ -25,13 +25,13 @@ export const EditButton = (props: EditButtonProps) => {
 }
 
 interface AddButtonProps {
-  toggleModal: () => void
+  toggleVisitForm: () => void
 }
 
-export const AddButton = ({ toggleModal }: AddButtonProps) => {
+export const AddButton = ({ toggleVisitForm }: AddButtonProps) => {
   return (
     <div className='align-center flex h-10 w-10 place-items-center self-center rounded-full bg-primary p-1 drop-shadow-default'>
-      <button type='button' onClick={() => toggleModal()}>
+      <button type='button' onClick={() => toggleVisitForm()}>
         <PlusIcon className='flex h-full w-full self-center text-white' />
       </button>
     </div>

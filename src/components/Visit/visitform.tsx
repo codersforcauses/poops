@@ -11,10 +11,10 @@ import FormField from './formfield'
 import Button from '../UI/button'
 
 interface ModalViewProps {
-  toggleModal: () => void
+  toggleVisitForm: () => void
 }
 
-const ModalView = ({ toggleModal }: ModalViewProps) => {
+const ModalView = ({ toggleVisitForm }: ModalViewProps) => {
   const { userDoc, updateVisit } = useFirestore()
   const [visitType, setVisitType] = useState('')
   const [clientName, setClientName] = useState('')
@@ -41,7 +41,7 @@ const ModalView = ({ toggleModal }: ModalViewProps) => {
     }
     userDoc.visits.push(data)
     updateVisit?.(userDoc)
-    toggleModal()
+    toggleVisitForm()
   }
 
   const isSubmitEnabled = () => {
@@ -61,7 +61,7 @@ const ModalView = ({ toggleModal }: ModalViewProps) => {
     <div className='z-50 p-4'>
       <>
         <div className='fixed right-5 top-4 z-[100] h-10 w-10 rounded-full bg-primary p-1 drop-shadow-default'>
-          <button onClick={toggleModal}>
+          <button onClick={toggleVisitForm}>
             <XIcon className='h-full w-full text-white' />
           </button>
         </div>
