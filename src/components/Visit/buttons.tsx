@@ -25,13 +25,13 @@ export const EditButton = (props: EditButtonProps) => {
 }
 
 interface AddButtonProps {
-  toggleVisitForm: () => void
+  setVisitForm: (isActive: boolean) => void
 }
 
-export const AddButton = ({ toggleVisitForm }: AddButtonProps) => {
+export const AddButton = ({ setVisitForm }: AddButtonProps) => {
   return (
     <div className='align-center flex h-10 w-10 place-items-center self-center rounded-full bg-primary p-1 drop-shadow-default'>
-      <button type='button' onClick={() => toggleVisitForm()}>
+      <button type='button' onClick={() => setVisitForm(true)}>
         <PlusIcon className='flex h-full w-full self-center text-white' />
       </button>
     </div>

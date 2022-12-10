@@ -14,21 +14,15 @@ const Visit = () => {
   const [currentForm, setCurrentForm] = useState<null | JSX.Element>(null)
   const [isFormActive, setIsFormActive] = useState(false)
 
-  const toggleVisitForm = () => {
-    if (isFormActive) {
-      setCurrentForm(null)
+  const setVisitForm = (isActive: boolean) => {
+    setIsFormActive(isActive)
+
+    if (isActive) {
+      setCurrentForm(<VisitForm setVisitForm={setVisitForm} />)
     } else {
-      setCurrentForm(<VisitForm toggleVisitForm={toggleVisitForm} />)
+      setCurrentForm(null)
     }
   }
-
-  useEffect(() => {
-    if (currentForm === null) {
-      setIsFormActive(false)
-    } else {
-      setIsFormActive(true)
-    }
-  }, [currentForm])
 
   return (
     <>
@@ -43,7 +37,7 @@ const Visit = () => {
               <SearchBar
                 onChange={(event) => setSearchQuery(event.target.value)}
               />
-              <AddButton toggleVisitForm={toggleVisitForm} />
+              <AddButton setVisitForm={setVisitForm} />
             </div>
 
             <VisitList searchQuery={searchQuery} />
