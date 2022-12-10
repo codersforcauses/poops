@@ -29,7 +29,7 @@ function inputType(props: FormProps) {
     case 'select':
       return (
         <select
-          className='px-auto form-select mt-1 mb-2 flex h-9 rounded border border-[#6b7280] py-0.5 text-center focus:outline-none'
+          className='px-auto mt-1 mb-2 flex h-9 border-b border-[#6b7280] py-0.5 text-center focus:border-b-2 focus:border-dark-red focus:outline-none'
           id={props.id}
           required={props.isRequired}
           onChange={props.onChange}
@@ -42,6 +42,18 @@ function inputType(props: FormProps) {
             </option>
           ))}
         </select>
+      )
+    case 'password':
+      return (
+        <input
+          className='mt-1 mb-2 flex h-9 border-b border-[#6b7280] py-0.5 px-4 text-left placeholder:text-black
+          focus:border-b-2 focus:border-dark-red focus:outline-none'
+          id={props.id}
+          type='password'
+          required={props.isRequired}
+          placeholder={props.placeholder}
+          onChange={props.onChange}
+        />
       )
     case 'text':
       if (props.isNumPad) {

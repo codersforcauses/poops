@@ -11,25 +11,46 @@ const Login: NextPage = () => {
   const primaryMessage = 'Enter your phone number'
   const secondaryMessage = 'Please enter your phone number'
 
+  const [phonenumber, setphonenumber] = useState<string>('')
+  // const [password, setpassword] = useState<string>('')
   const [panel, setpanel] = useState('phone')
 
-  function handlePhoneSubmit() {
+  function handlePhoneSubmit(phoneNumber: string) {
+    setphonenumber(phoneNumber)
     setpanel('password')
   }
 
-  return (
-    <main>
-      <LoginHeader
+  function togglePanel() {
+    setpanel('phone')
+  }
+
+  function renderPanel(state: string) {
+    if (state === 'phone') {
+      return (
+        <LoginHeader
+          pageTitle={pageTitle}
+          primaryMessage={primaryMessage}
+          secondaryMessage={secondaryMessage}
+        >
+          <EnterPhonePanel onClick={handlePhoneSubmit} />
+        </LoginHeader>
+      )}
+    else {
+      return (
+        <LoginHeader
         pageTitle={pageTitle}
         primaryMessage={primaryMessage}
         secondaryMessage={secondaryMessage}
       >
-        {panel == 'phone' ? (
-          <EnterPhonePanel togglePanel={handlePhoneSubmit} />
-        ) : (
-          <EnterPasswordPanel />
-        )}
+        <EnterPasswordPanel phoneNumber={phonenumber} togglePanel={togglePanel} />
       </LoginHeader>
+      )
+    }
+  }
+
+  return (
+    <main>
+      {renderPanel(panel)}
     </main>
   )
 }

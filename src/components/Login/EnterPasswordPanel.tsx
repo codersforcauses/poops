@@ -1,9 +1,13 @@
 import React, { useState } from 'react'
+import Link from 'next/link'
 
 import Form from '@/components/Login/LoginForm'
 import Button from '@/components/UI/button'
 
-const EnterPasswordPanel = () => {
+const EnterPasswordPanel = (props: {
+  phoneNumber: string, 
+  togglePanel?: () => void
+}) => {
   const [password, setpassword] = useState('')
 
   function handleSubmit(event: React.ChangeEvent<HTMLFormElement>) {
@@ -17,29 +21,47 @@ const EnterPasswordPanel = () => {
   }
 
   return (
-    <div className='m-auto grid h-1/3 justify-center space-y-4 p-5'>
+    <div className='flex flex-col m-auto h-1/3 w-1/4 justify-center align-center space-y-4 p-5'>
+      <p className='text-sm text-dark-gray'>
+        Phone Number
+      </p>
+      <div className='flex flex-row justify-between'>
+        <p>
+          {props.phoneNumber}
+        </p>
+
+        <button className='text-sm italic underline text-dark-red' onClick={props.togglePanel} >
+          change
+        </button>
+      </div>
       <form onSubmit={handleSubmit}>
-        <div className='justify-left flex'>
+        <div className='justify-center flex'>
           <Form
             id='password'
             label='Password'
-            type='text'
+            type='password'
             isNumPad={false}
             placeholder=''
             isRequired={true}
             onChange={(event) => setpassword(event.target.value)}
           />
         </div>
-        <table align='center'>
+        <Link
+          className='text-xs italic underline text-[#828282] cursor-pointer hover:text-dark-red'
+          href='/index'
+        >
+          Forgot your password?
+        </Link>
+        <div className='flex justify-center self-end'>
           <Button
             className='mt-8 mb-2'
             size='large'
             type='submit'
             disabled={!formFilled()}
           >
-            CONTINUE
+            SIGN-IN
           </Button>
-        </table>
+        </div>
       </form>
     </div>
   )

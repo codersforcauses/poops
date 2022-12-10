@@ -5,26 +5,26 @@ import Button from '@/components/UI/button'
 import { SelectOption } from '@/types/types'
 
 export interface EnterPhonePanelInterface {
-  togglePanel: () => void
+  onClick: (phoneNumber: string) => void
 }
 
-const EnterPhonePanel = ({ togglePanel }: EnterPhonePanelInterface) => {
-  const [phonenumber, setphonenumber] = useState(0)
+const EnterPhonePanel = ({ onClick }: EnterPhonePanelInterface) => {
+  const [displaynumber, setdisplaynumber] = useState('')
   const [countrycode, setcountrycode] = useState('')
 
   const countryCodeSelectOptions: SelectOption[] = [
-    { value: '+61', label: 'Australia (+61)' }
+    { value: '+61', label: 'Australia (+61)' },
+    { value: '+06', label: 'Malaysia (+06)'}
   ]
 
   function handleSubmit(event: React.ChangeEvent<HTMLFormElement>) {
-    togglePanel()
+    onClick(countrycode + displaynumber)
     event.preventDefault()
     event.target.reset()
-    setphonenumber(0)
   }
 
   function formFilled() {
-    return phonenumber != 0
+    return displaynumber !== ''
   }
 
   return (
@@ -58,7 +58,7 @@ const EnterPhonePanel = ({ togglePanel }: EnterPhonePanelInterface) => {
             isNumPad={true}
             placeholder='  '
             isRequired={true}
-            onChange={(event) => setphonenumber(Number(event.target.value))}
+            onChange={(event) => setdisplaynumber(event.target.value)}
           />
         </div>
         <table align='center'>
