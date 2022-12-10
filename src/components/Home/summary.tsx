@@ -24,6 +24,15 @@ function Summary() {
                 />
               </td>
             </tr>
+            <tr>
+              <td>
+                <Statistics title='Number of Hours' data="3"/>
+              </td>
+              <td>
+                <Statistics
+                  title='Distance Commuted' data="20.5 km"/>
+              </td>
+            </tr>
           </tbody>
         </table>
       </div>
