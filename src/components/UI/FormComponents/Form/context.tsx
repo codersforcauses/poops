@@ -6,10 +6,7 @@ export const FormProvider = FormContext.Provider
 
 export interface FormProps
   extends Partial<
-    Pick<
-      UseFormReturn,
-      'register' | 'formState' | 'setFocus' | 'watch' | 'setValue'
-    >
+    Pick<UseFormReturn, 'register' | 'formState' | 'setFocus' | 'setValue'>
   > {
   dark?: boolean
   disabled?: boolean

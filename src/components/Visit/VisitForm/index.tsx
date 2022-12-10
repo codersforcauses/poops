@@ -2,9 +2,9 @@ import { SubmitHandler } from 'react-hook-form'
 
 import Button from '@/components/UI/button'
 import Form from '@/components/UI/FormComponents/Form'
+import CreateSelect from '@/components/UI/FormComponents/SelectFields/CreateSelect'
 import CustomSelect from '@/components/UI/FormComponents/SelectFields/CustomSelect'
 import DurationSelect from '@/components/UI/FormComponents/SelectFields/DurationSelect'
-import SingleSelect from '@/components/UI/FormComponents/SelectFields/SingleSelect'
 import { SelectOption } from '@/components/UI/FormComponents/SelectFields/utils'
 import TextField from '@/components/UI/FormComponents/TextField'
 import validationSchema from '@/components/Visit/VisitForm/validation'
@@ -69,7 +69,7 @@ export const VisitForm = () => {
         name='textField'
         placeholder='hello'
       />
-      <SingleSelect<SelectOption>
+      <CustomSelect<SelectOption, false>
         label='Visit Type:'
         name='visitType'
         options={visitTypes}
@@ -77,10 +77,10 @@ export const VisitForm = () => {
         isSearchable
         rules={validationSchema.visitType}
       />
-      <CustomSelect<SelectOption>
+      <CreateSelect<SelectOption, false>
         label='Commute Method:'
         name='commuteMethod'
-        defaultOptions={defaultCommuteMethods}
+        options={defaultCommuteMethods}
         isClearable
         isSearchable
         rules={validationSchema.visitType}

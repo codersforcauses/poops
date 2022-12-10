@@ -1,6 +1,10 @@
 import { useContext, useEffect } from 'react'
-import { Props, SingleValue } from 'react-select'
-import CreatableSelect from 'react-select/creatable'
+import Select, {
+  GroupBase,
+  OnChangeValue,
+  Props,
+  StylesConfig
+} from 'react-select'
 
 import {
   FormContext,
@@ -12,15 +16,15 @@ import {
   FieldLabel,
   FieldMessage
 } from '@/components/UI/FormComponents/utils'
-import usePersistentState from '@/utils/hooks/usepersistentstate'
 
-export interface CustomSelectProps<T>
-  extends FormFieldProps,
-    Omit<Props, 'name'> {
-  defaultOptions: T[]
-}
+export type CustomSelectProps = FormFieldProps
 
-const CustomSelect = <T,>({
+// If IsMulti is true, need to also supply isMulti attrib
+const CustomSelect = <
+  Option,
+  IsMulti extends boolean,
+  Group extends GroupBase<Option> = GroupBase<Option>
+>({
   name = '',
   label,
   description,
@@ -28,24 +32,21 @@ const CustomSelect = <T,>({
   required = false,
   isSearchable = false,
   isClearable = false,
+  isMulti,
   rules = {},
   setFocused,
-  defaultOptions = []
-}: CustomSelectProps<T>) => {
+  options,
+  ...props
+}: CustomSelectProps & Omit<Props<Option, IsMulti, Group>, 'name'>) => {
   const {
     formState,
     disabled: formDisabled,
     register,
-    watch,
     setValue,
     setFocus
   } = useContext(FormContext)
   const error: string | undefined =
     formState?.errors?.[name]?.message?.toString() || undefined
-
-  const [options, setOptions] = usePersistentState(name, defaultOptions)
-
-  const selectValue = watch?.(name)
 
   useEffect(() => {
     setFocused && setFocus?.(name)
@@ -55,17 +56,9 @@ const CustomSelect = <T,>({
     register?.(name)
   }, [register, name])
 
-  const handleCreate = (value: string) => {
-    console.log(`New option created ${value}`)
-    const newOption = { label: value, value }
-    setOptions((prev: T[]) => [...prev, newOption])
-    setValue?.(name, newOption)
-  }
-
-  // TODO: add check for array to support isMulti attribute
-  const handleChange = (data: SingleValue<T>) => {
-    console.log(data)
+  const handleChange = (data: OnChangeValue<Option, IsMulti>) => {
     setValue?.(name, data)
+    console.log(data)
   }
 
   return (
@@ -77,17 +70,17 @@ const CustomSelect = <T,>({
     >
       <div className='flex w-full flex-col'>
         <FieldLabel>{label}</FieldLabel>
-        <CreatableSelect
+        <Select
           {...register?.(name, rules)}
+          {...props}
           isDisabled={isDisabled}
           isSearchable={isSearchable}
           isClearable={isClearable}
-          value={selectValue}
+          isMulti={isMulti}
           options={options}
           onChange={handleChange}
-          onCreateOption={handleCreate}
           placeholder='Select...'
-          styles={customStyles}
+          styles={customStyles() as StylesConfig<Option, IsMulti, Group>}
         />
         {error ? (
           <FieldMessage>{error}</FieldMessage>

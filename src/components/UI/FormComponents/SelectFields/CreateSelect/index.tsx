@@ -1,5 +1,12 @@
 import { useContext, useEffect } from 'react'
-import Select, { Props, SingleValue } from 'react-select'
+import {
+  GroupBase,
+  OnChangeValue,
+  OptionsOrGroups,
+  Props,
+  StylesConfig
+} from 'react-select'
+import CreatableSelect from 'react-select/creatable'
 
 import {
   FormContext,
@@ -11,14 +18,16 @@ import {
   FieldLabel,
   FieldMessage
 } from '@/components/UI/FormComponents/utils'
+import usePersistentState from '@/utils/hooks/usepersistentstate'
 
-export interface SingleSelectProps<T>
-  extends FormFieldProps,
-    Omit<Props, 'name'> {
-  options: T[]
-}
+export type CreateSelectProps = FormFieldProps
 
-const SingleSelect = <T,>({
+// If IsMulti is true, need to also supply isMulti attrib
+const CreateSelect = <
+  Option,
+  IsMulti extends boolean,
+  Group extends GroupBase<Option> = GroupBase<Option>
+>({
   name = '',
   label,
   description,
@@ -26,22 +35,24 @@ const SingleSelect = <T,>({
   required = false,
   isSearchable = false,
   isClearable = false,
+  isMulti,
   rules = {},
   setFocused,
-  options
-}: SingleSelectProps<T>) => {
+  ...props
+}: CreateSelectProps & Omit<Props<Option, IsMulti, Group>, 'name'>) => {
   const {
     formState,
     disabled: formDisabled,
     register,
-    watch,
     setValue,
     setFocus
   } = useContext(FormContext)
   const error: string | undefined =
     formState?.errors?.[name]?.message?.toString() || undefined
 
-  const selectValue = watch?.(name)
+  const [options, setOptions] = usePersistentState<
+    OptionsOrGroups<Option, Group>
+  >(name, props.options || [])
 
   useEffect(() => {
     setFocused && setFocus?.(name)
@@ -51,7 +62,18 @@ const SingleSelect = <T,>({
     register?.(name)
   }, [register, name])
 
-  const handleChange = (data: SingleValue<T>) => setValue?.(name, data)
+  const handleCreate = (value: string) => {
+    console.log(`New option created ${value}`)
+    const newOption = { label: value, value }
+    setOptions((prev: Option[]) => [...prev, newOption])
+    setValue?.(name, newOption)
+  }
+
+  // TODO: add check for array to support isMulti attribute
+  const handleChange = (data: OnChangeValue<Option, IsMulti>) => {
+    console.log(data)
+    setValue?.(name, data)
+  }
 
   return (
     <FieldControl
@@ -62,16 +84,18 @@ const SingleSelect = <T,>({
     >
       <div className='flex w-full flex-col'>
         <FieldLabel>{label}</FieldLabel>
-        <Select
+        <CreatableSelect
           {...register?.(name, rules)}
+          {...props}
           isDisabled={isDisabled}
           isSearchable={isSearchable}
           isClearable={isClearable}
-          value={selectValue}
+          isMulti={isMulti}
           options={options}
           onChange={handleChange}
+          onCreateOption={handleCreate}
           placeholder='Select...'
-          styles={customStyles}
+          styles={customStyles() as StylesConfig<Option, IsMulti, Group>}
         />
         {error ? (
           <FieldMessage>{error}</FieldMessage>
@@ -83,4 +107,4 @@ const SingleSelect = <T,>({
   )
 }
 
-export default SingleSelect
+export default CreateSelect
