@@ -7,7 +7,7 @@ export interface FormProps {
   isNumPad: boolean
   placeholder: string
   isRequired: boolean
-  selectOptions?: SelectOption[]
+  selectOptions?: SelectOption<string>[]
   onChange?: (
     event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => void

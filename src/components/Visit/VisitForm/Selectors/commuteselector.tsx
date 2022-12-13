@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction, useState } from 'react'
-import { SingleValue } from 'react-select'
+import { SingleValue, StylesConfig } from 'react-select'
 import CreatableSelect from 'react-select/creatable'
 
 import {
@@ -31,7 +31,7 @@ const getLocalStorage = () => {
 }
 
 export const getCommuteMethods = () => {
-  const commuteMethods: SelectOption[] = []
+  const commuteMethods: SelectOption<string>[] = []
   if (typeof window !== 'undefined') {
     getLocalStorage().forEach((method) => {
       commuteMethods.push({ label: method, value: method })
@@ -42,7 +42,7 @@ export const getCommuteMethods = () => {
 
 const CommuteSelector = (props: CommuteSelectorProps) => {
   const [commuteMethods, setCommuteMethods] = useState(getCommuteMethods())
-  const handleChange = (newValue: SingleValue<SelectOption>) => {
+  const handleChange = (newValue: SingleValue<SelectOption<string>>) => {
     // fired when user selects an option or creates an option
     if (newValue === null) return
     props.setCommuteMethod(newValue.value)
@@ -50,7 +50,7 @@ const CommuteSelector = (props: CommuteSelectorProps) => {
     setCommuteMethods(getCommuteMethods())
   }
 
-  const defaultValue: SelectOption = {
+  const defaultValue: SelectOption<string> = {
     label: props.value || 'Select...',
     value: props.value || ''
   }
@@ -62,10 +62,11 @@ const CommuteSelector = (props: CommuteSelectorProps) => {
         {props.label}
       </label>
       <CreatableSelect
+        // @ts-expect-error: legacy code
         onChange={handleChange}
         options={commuteMethods}
         placeholder={props.placeholder}
-        styles={customStyles}
+        styles={customStyles as StylesConfig}
         defaultValue={defaultValue}
       />
     </div>

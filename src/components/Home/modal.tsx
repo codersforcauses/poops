@@ -6,7 +6,7 @@ import {
 } from '@/components/Home/dummyOptions'
 import Form from '@/components/Home/form'
 import FormField from '@/components/Visit/formfield'
-import { visitSelectOptions } from '@/components/Visit/utils'
+import { visitTypes } from '@/components/Visit/utils'
 import DurationSelector from '@/components/Visit/VisitForm/Selectors/durationselector'
 import { AlertVariant, useAlert } from '@/context/AlertContext'
 import { Duration } from '@/types/types'
@@ -121,7 +121,7 @@ function Modal() {
               isNumPad={false}
               placeholder='Select...'
               isRequired={true}
-              selectOptions={visitSelectOptions}
+              selectOptions={visitTypes}
               onChange={(e) => setType(String(e.target.value))}
             />
           </div>

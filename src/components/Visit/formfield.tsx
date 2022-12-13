@@ -14,7 +14,7 @@ export interface FormFieldProps {
       HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
     >
   ) => void
-  selectOptions?: SelectOption[]
+  selectOptions?: SelectOption<string>[]
   isRequired: boolean
 }
 

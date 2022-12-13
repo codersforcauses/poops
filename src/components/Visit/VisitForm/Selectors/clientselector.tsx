@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction } from 'react'
-import Select, { SingleValue } from 'react-select'
+import Select, { SingleValue, StylesConfig } from 'react-select'
 
 import {
   customStyles,
@@ -24,20 +24,20 @@ const ClientSelector = (props: ClientSelectorProps) => {
 
   const getClientList = () => {
     return contacts.map((contact) => {
-      const client: SelectOption = {
+      const client: SelectOption<string> = {
         label: contact.clientName,
         value: contact.id
       }
       return client
     })
   }
-  const handleChange = (newValue: SingleValue<SelectOption>) => {
+  const handleChange = (newValue: SingleValue<SelectOption<string>>) => {
     // fired when user selects an option or creates an option
     if (newValue === null) return
     props.setClient({ clientId: newValue.value, clientName: newValue.label })
   }
 
-  const defaultValue: SelectOption = {
+  const defaultValue: SelectOption<string> = {
     label: props.value || 'Select...',
     value: props.value || ''
   }
@@ -50,10 +50,11 @@ const ClientSelector = (props: ClientSelectorProps) => {
           {props.label}
         </label>
         <Select
+          // @ts-expect-error: legacy code
           onChange={handleChange}
           options={getClientList()}
           placeholder={props.placeholder}
-          styles={customStyles}
+          styles={customStyles as StylesConfig}
           defaultValue={defaultValue}
         />
       </div>
