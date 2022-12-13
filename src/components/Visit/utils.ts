@@ -47,17 +47,32 @@ export const findContactIndex = (id: string, userDoc: UserData) => {
   return 0
 }
 
-export const daySelectOptions: SelectOption[] = [
-  { label: 'Monday', value: 'Monday' },
-  { label: 'Tuesday', value: 'Tuesday' },
-  { label: 'Wednesday', value: 'Wednesday' },
-  { label: 'Thursday', value: 'Thursday' },
-  { label: 'Friday', value: 'Friday' },
-  { label: 'Saturday', value: 'Saturday' },
-  { label: 'Sunday', value: 'Sunday' }
-]
+// export const daySelectOptions: SelectOption<string>[] = [
+//   { label: 'Monday', value: 'Monday' },
+//   { label: 'Tuesday', value: 'Tuesday' },
+//   { label: 'Wednesday', value: 'Wednesday' },
+//   { label: 'Thursday', value: 'Thursday' },
+//   { label: 'Friday', value: 'Friday' },
+//   { label: 'Saturday', value: 'Saturday' },
+//   { label: 'Sunday', value: 'Sunday' }
+// ]
 
-export const visitSelectOptions: SelectOption[] = [
+export const visitTypes: SelectOption<string>[] = [
   { label: 'Vet', value: 'Vet' },
   { label: 'Walk', value: 'Walk' }
+]
+
+export const defaultCommuteMethods: SelectOption<string>[] = [
+  {
+    label: 'Bus',
+    value: 'Bus'
+  },
+  {
+    label: 'Car',
+    value: 'Car'
+  },
+  {
+    label: 'Train',
+    value: 'Train'
+  }
 ]

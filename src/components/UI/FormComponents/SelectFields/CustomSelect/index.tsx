@@ -42,11 +42,14 @@ const CustomSelect = <
     formState,
     disabled: formDisabled,
     register,
+    watch,
     setValue,
     setFocus
   } = useContext(FormContext)
   const error: string | undefined =
     formState?.errors?.[name]?.message?.toString() || undefined
+
+  const value = watch?.(name)
 
   useEffect(() => {
     setFocused && setFocus?.(name)
@@ -58,7 +61,7 @@ const CustomSelect = <
 
   const handleChange = (data: OnChangeValue<Option, IsMulti>) => {
     setValue?.(name, data)
-    console.log(data)
+    // console.log(data)
   }
 
   return (
@@ -68,7 +71,9 @@ const CustomSelect = <
       required={'required' in rules || required}
       disabled={formDisabled || isDisabled}
     >
-      <div className='flex w-full flex-col'>
+      <div
+        className={['flex w-full flex-col', props.className].join(' ').trim()}
+      >
         <FieldLabel>{label}</FieldLabel>
         <Select
           {...register?.(name, rules)}
@@ -78,6 +83,7 @@ const CustomSelect = <
           isClearable={isClearable}
           isMulti={isMulti}
           options={options}
+          value={value}
           onChange={handleChange}
           placeholder='Select...'
           styles={customStyles() as StylesConfig<Option, IsMulti, Group>}

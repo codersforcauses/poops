@@ -7,7 +7,6 @@ export type TextFieldProps = FormFieldProps &
   InputHTMLAttributes<HTMLInputElement | HTMLTextAreaElement>
 
 const TextField = ({
-  color,
   description,
   disabled = false,
   label,
@@ -36,7 +35,9 @@ const TextField = ({
       required={'required' in rules || required}
       disabled={formDisabled || disabled}
     >
-      <div className='flex w-full flex-col'>
+      <div
+        className={['flex w-full flex-col', props.className].join(' ').trim()}
+      >
         <FieldLabel>{label}</FieldLabel>
         {props.type === 'textarea' ? (
           <textarea

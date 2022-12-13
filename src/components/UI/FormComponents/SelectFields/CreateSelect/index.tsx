@@ -44,11 +44,13 @@ const CreateSelect = <
     formState,
     disabled: formDisabled,
     register,
+    watch,
     setValue,
     setFocus
   } = useContext(FormContext)
   const error: string | undefined =
     formState?.errors?.[name]?.message?.toString() || undefined
+  const value: Option | undefined = watch?.(name)
 
   const [options, setOptions] = usePersistentState<
     OptionsOrGroups<Option, Group>
@@ -63,15 +65,14 @@ const CreateSelect = <
   }, [register, name])
 
   const handleCreate = (value: string) => {
-    console.log(`New option created ${value}`)
+    // console.log(`New option created ${value}`)
     const newOption = { label: value, value }
     setOptions((prev: Option[]) => [...prev, newOption])
     setValue?.(name, newOption)
   }
 
-  // TODO: add check for array to support isMulti attribute
   const handleChange = (data: OnChangeValue<Option, IsMulti>) => {
-    console.log(data)
+    // console.log(data)
     setValue?.(name, data)
   }
 
@@ -82,7 +83,9 @@ const CreateSelect = <
       required={'required' in rules || required}
       disabled={formDisabled || isDisabled}
     >
-      <div className='flex w-full flex-col'>
+      <div
+        className={['flex w-full flex-col', props.className].join(' ').trim()}
+      >
         <FieldLabel>{label}</FieldLabel>
         <CreatableSelect
           {...register?.(name, rules)}
@@ -92,6 +95,7 @@ const CreateSelect = <
           isClearable={isClearable}
           isMulti={isMulti}
           options={options}
+          value={value}
           onChange={handleChange}
           onCreateOption={handleCreate}
           placeholder='Select...'

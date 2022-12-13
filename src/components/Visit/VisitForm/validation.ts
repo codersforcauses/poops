@@ -23,6 +23,15 @@ const validationSchema: Record<VisitFormValues, RegisterOptions> = {
       value: true,
       message: requiredMessage
     },
+    validate: {
+      value: (value: string) => {
+        // ? need to test on non-english locales
+        const date = new Date(value)
+        return (
+          (date instanceof Date && !isNaN(date.valueOf())) || requiredMessage
+        )
+      }
+    },
     valueAsDate: true
   },
   duration: {

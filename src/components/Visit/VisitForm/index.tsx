@@ -1,100 +1,208 @@
+import { useContext, useMemo } from 'react'
+import { useRouter } from 'next/router'
+import { Timestamp } from 'firebase/firestore'
 import { SubmitHandler } from 'react-hook-form'
 
 import Button from '@/components/UI/button'
 import Form from '@/components/UI/FormComponents/Form'
-import CreateSelect from '@/components/UI/FormComponents/SelectFields/CreateSelect'
-import CustomSelect from '@/components/UI/FormComponents/SelectFields/CustomSelect'
-import DurationSelect from '@/components/UI/FormComponents/SelectFields/DurationSelect'
+import { FormContext } from '@/components/UI/FormComponents/Form/context'
+import {
+  CreateSelect,
+  CustomSelect,
+  DurationSelect
+} from '@/components/UI/FormComponents/SelectFields'
 import { SelectOption } from '@/components/UI/FormComponents/SelectFields/utils'
 import TextField from '@/components/UI/FormComponents/TextField'
+import {
+  defaultCommuteMethods,
+  formatTimestamp,
+  visitTypes
+} from '@/components/Visit/utils'
 import validationSchema from '@/components/Visit/VisitForm/validation'
 import { useFirestore } from '@/context/Firebase/Firestore/context'
-import { Duration } from '@/types/types'
+import { Duration, VisitData } from '@/types/types'
 
-interface FormValues {
-  visitType: string
-  clientName: string
+interface VisitFormProps {
+  id: number | null
+  visitData: VisitData | null
+}
+
+interface ClientInfo {
+  id: string
+  petNames: string
+}
+
+export interface FormValues {
+  visitType: SelectOption<string>
+  clientName: SelectOption<ClientInfo>
   startTime: string
   duration: Duration
   walkDist: number
   commuteDist: number
-  commuteMethod: string
+  commuteMethod: SelectOption<string>
   notes: string
 }
 
-const visitTypes: SelectOption[] = [
-  {
-    label: 'Label1',
-    value: 'Value1'
-  },
-  {
-    label: 'Label2',
-    value: 'Value2'
-  }
-]
-
-const defaultCommuteMethods: SelectOption[] = [
-  {
-    label: 'Bus',
-    value: 'Bus'
-  },
-  {
-    label: 'Car',
-    value: 'Car'
-  },
-  {
-    label: 'Train',
-    value: 'Train'
-  }
-]
-
-export const VisitForm = () => {
+export const VisitForm = ({ visitData, id }: VisitFormProps) => {
   const { userDoc, updateVisit } = useFirestore()
+  const { reset } = useContext(FormContext)
+  const router = useRouter()
 
-  const handleSubmit: SubmitHandler<FormValues> = (data) => {
-    console.log(data)
+  const handleSubmit: SubmitHandler<FormValues> = (formData) => {
+    const data: VisitData = {
+      type: formData.visitType.value,
+      clientId: formData.clientName.value.id,
+      clientName: formData.clientName.label,
+      petNames: formData.clientName.value.petNames, // TODO GET PET NAMES FROM CONTACTS
+      startTime: Timestamp.fromDate(new Date(formData.startTime)),
+      duration: formData.duration,
+      walkDist: formData.walkDist,
+      commuteDist: formData.commuteDist,
+      commuteMethod: formData.commuteMethod.value,
+      notes: formData.notes
+    }
+
+    // console.log(data)
+
+    if (visitData && id) {
+      userDoc.visits[id] = data
+    } else {
+      userDoc.visits.push(data)
+    }
+
+    updateVisit?.(userDoc)
+    router.push('/visit')
+    // TODO: add alert?
   }
+
+  // useEffect(() => {
+  //   if (visitData && reset) {
+  //     const defaultValues = {
+  //       visitType: { label: visitData.type, value: visitData.type },
+  //       clientName: {
+  //         label: visitData.clientName,
+  //         value: { id: visitData.clientId, petNames: visitData.petNames }
+  //       },
+  //       startTime: formatTimestamp(visitData.startTime) || '',
+  //       duration: visitData.duration,
+  //       walkDist: visitData.walkDist,
+  //       commuteDist: visitData.commuteDist,
+  //       commuteMethod: {
+  //         label: visitData.commuteMethod,
+  //         value: visitData.commuteMethod
+  //       },
+  //       notes: visitData.notes
+  //     }
+  //     reset?.({ ...defaultValues })
+  //   }
+  // }, [reset, visitData])
 
   return (
-    <Form<FormValues> onSubmit={handleSubmit}>
-      <TextField
-        label='Text Field:'
-        type='text'
-        name='textField'
-        placeholder='hello'
-      />
-      <TextField
-        label='Text Field:'
-        type='textarea'
-        name='textField'
-        placeholder='hello'
-      />
-      <CustomSelect<SelectOption, false>
-        label='Visit Type:'
-        name='visitType'
-        options={visitTypes}
-        isClearable
-        isSearchable
-        rules={validationSchema.visitType}
-      />
-      <CreateSelect<SelectOption, false>
-        label='Commute Method:'
-        name='commuteMethod'
-        options={defaultCommuteMethods}
-        isClearable
-        isSearchable
-        rules={validationSchema.visitType}
-      />
-      <DurationSelect
-        defaultValue={{
-          hours: 0,
-          minutes: 15
-        }}
-        name='duration'
-        label='Duration:'
-        rules={validationSchema.duration}
-      />
-      <Button type='submit'>Submit</Button>
+    <Form<FormValues>
+      onSubmit={handleSubmit}
+      defaultValues={useMemo(() => {
+        if (visitData) {
+          const d: Partial<FormValues> = {
+            visitType: { label: visitData.type, value: visitData.type },
+            clientName: {
+              label: visitData.clientName,
+              value: { id: visitData.clientId, petNames: visitData.petNames }
+            },
+            startTime: formatTimestamp(visitData.startTime) || '',
+            duration: visitData.duration,
+            walkDist: visitData.walkDist,
+            commuteDist: visitData.commuteDist,
+            commuteMethod: {
+              label: visitData.commuteMethod,
+              value: visitData.commuteMethod
+            },
+            notes: visitData.notes
+          }
+          return d
+        }
+      }, [visitData])}
+    >
+      {/* could rewrite to use awful react-select to make chevron icon consistent */}
+      <div className='grid grid-cols-2 gap-4'>
+        <CustomSelect<SelectOption<string>, false>
+          label='Visit Type:'
+          name='visitType'
+          options={visitTypes}
+          isClearable
+          isSearchable
+          rules={validationSchema.visitType}
+        />
+        <CustomSelect<SelectOption<ClientInfo>, false>
+          label='Client Name:'
+          name='clientName'
+          options={userDoc.contacts.map((contact) => {
+            return {
+              label: contact.clientName,
+              value: {
+                id: contact.id,
+                petNames: contact.pets
+              }
+            }
+          })}
+          isClearable
+          isSearchable
+          rules={validationSchema.clientName}
+        />
+        <TextField
+          label='Commute Distance:'
+          type='number'
+          step='0.01'
+          name='commuteDist'
+          placeholder='Distance (km)'
+          rules={validationSchema.commuteDist}
+        />
+        <CreateSelect<SelectOption<string>, false>
+          label='Commute Method:'
+          name='commuteMethod'
+          options={defaultCommuteMethods}
+          isClearable
+          isSearchable
+          rules={validationSchema.commuteMethod}
+        />
+        <TextField
+          className='col-span-2'
+          label='Start Time:'
+          name='startTime'
+          type='dateTime-local'
+          placeholder='Start Time'
+          rules={validationSchema.startTime}
+        />
+        <DurationSelect
+          name='duration'
+          label='Duration:'
+          rules={validationSchema.duration}
+        />
+        <TextField
+          label='Walk Distance:'
+          name='walkDist'
+          type='number'
+          step='0.01'
+          placeholder='Distance (km)'
+          rules={validationSchema.walkDist}
+        />
+        <TextField
+          className='col-span-2'
+          label='Notes:'
+          type='textarea'
+          name='notes'
+          placeholder='Add notes here...'
+        />
+
+        <Button
+          className='col-span-2'
+          intent='primary'
+          fullwidth
+          size='large'
+          type='submit'
+        >
+          Submit
+        </Button>
+      </div>
     </Form>
   )
 }

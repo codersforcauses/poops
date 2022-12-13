@@ -11,18 +11,13 @@ import {
 } from '@/components/UI/FormComponents/utils'
 import { Duration } from '@/types/types'
 
-export interface DurationProps {
-  id: string
-  label: string
-  defaultValue?: Duration
-}
-
 export interface DurationSelectProps extends FormFieldProps {
+  className?: string
   defaultValue?: Duration
 }
 
+// ! hour value exists in state and form but does not render
 const DurationSelect = ({
-  color,
   description,
   disabled = false,
   label,
@@ -31,18 +26,24 @@ const DurationSelect = ({
   setFocused,
   ...props
 }: DurationSelectProps) => {
-  const [hours, setHours] = useState(props.defaultValue?.hours || 0)
-  const [minutes, setMinutes] = useState(props.defaultValue?.minutes || 0)
-
   const {
     formState,
     disabled: formDisabled,
     setFocus,
     register,
+    watch,
     setValue
   } = useContext(FormContext)
   const error: string | undefined =
     formState?.errors?.[props.name]?.message?.toString() || undefined
+  const value: Duration | undefined = watch?.(props.name)
+
+  const [hours, setHours] = useState(
+    value?.hours || props.defaultValue?.hours || 0
+  )
+  const [minutes, setMinutes] = useState(
+    value?.minutes || props.defaultValue?.minutes || 0
+  )
 
   useEffect(() => {
     setFocused && setFocus?.(props.name)
@@ -63,17 +64,23 @@ const DurationSelect = ({
         <FieldLabel>{label}</FieldLabel>
 
         <div
-          className='flex w-full flex-row justify-center rounded border border-dark-gray bg-white'
+          className={[
+            'flex w-full flex-row justify-center rounded border border-dark-gray bg-white',
+            props.className
+          ]
+            .join(' ')
+            .trim()}
           {...register?.(props.name, rules)}
         >
           <select
-            className='form-input flex w-full overflow-scroll rounded-l border-none text-center focus:outline-none'
+            className='form-input flex w-full overflow-scroll rounded-l border-none text-center'
             id='hours'
-            value={hours}
+            value={value?.hours}
             onChange={(e) => {
-              setHours(+e.target.value)
+              const v = +e.target.value
+              setHours(v)
               setValue?.(props.name, {
-                hours: +e.target.value,
+                hours: v,
                 minutes: minutes
               })
             }}
@@ -91,14 +98,15 @@ const DurationSelect = ({
           </select>
           <div className='select-none self-center'>:</div>
           <select
-            className='form-input flex w-full rounded-r border-none text-center focus:outline-none'
+            className='form-input flex w-full rounded-r border-none text-center'
             id='minutes'
-            value={minutes}
+            value={value?.minutes}
             onChange={(e) => {
-              setMinutes(+e.target.value)
+              const v = +e.target.value
+              setMinutes(v)
               setValue?.(props.name, {
                 hours: hours,
-                minutes: +e.target.value
+                minutes: v
               })
             }}
           >
