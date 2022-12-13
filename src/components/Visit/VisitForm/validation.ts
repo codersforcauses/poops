@@ -30,7 +30,7 @@ const validationSchema: Record<VisitFormValues, RegisterOptions> = {
     validate: {
       value: ({ hours, minutes }: Duration) => {
         return (
-          (hours !== 0 && minutes !== 0) || 'Duration must be greater than 0'
+          !(hours === 0 && minutes === 0) || 'Duration must be greater than 0'
         )
       }
     }

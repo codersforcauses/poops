@@ -88,7 +88,7 @@ export const VisitForm = () => {
       <DurationSelect
         defaultValue={{
           hours: 0,
-          minutes: 0
+          minutes: 15
         }}
         name='duration'
         label='Duration:'

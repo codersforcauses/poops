@@ -21,7 +21,6 @@ export interface DurationSelectProps extends FormFieldProps {
   defaultValue?: Duration
 }
 
-// ! WHY DOESN'T THIS RENDER PROPERLY ANYMORE
 const DurationSelect = ({
   color,
   description,
@@ -32,8 +31,8 @@ const DurationSelect = ({
   setFocused,
   ...props
 }: DurationSelectProps) => {
-  const [hours, setHours] = useState(props.defaultValue?.hours || NaN)
-  const [minutes, setMinutes] = useState(props.defaultValue?.minutes || NaN)
+  const [hours, setHours] = useState(props.defaultValue?.hours || 0)
+  const [minutes, setMinutes] = useState(props.defaultValue?.minutes || 0)
 
   const {
     formState,
@@ -50,8 +49,8 @@ const DurationSelect = ({
   }, [props.name, setFocus, setFocused])
 
   useEffect(() => {
-    setValue?.(props.name, { hours, minutes })
-  }, [hours, minutes, props.name, setValue])
+    register?.(props.name)
+  }, [register, props.name])
 
   return (
     <FieldControl
@@ -71,7 +70,13 @@ const DurationSelect = ({
             className='form-input flex w-full overflow-scroll rounded-l border-none text-center focus:outline-none'
             id='hours'
             value={hours}
-            onChange={(e) => setHours(+e.target.value)}
+            onChange={(e) => {
+              setHours(+e.target.value)
+              setValue?.(props.name, {
+                hours: +e.target.value,
+                minutes: minutes
+              })
+            }}
           >
             <option value={0}>0</option>
             <option value={1}>1</option>
@@ -84,12 +89,18 @@ const DurationSelect = ({
             <option value={8}>8</option>
             <option value={9}>9</option>
           </select>
-          <div className='self-center'>:</div>
+          <div className='select-none self-center'>:</div>
           <select
             className='form-input flex w-full rounded-r border-none text-center focus:outline-none'
             id='minutes'
             value={minutes}
-            onChange={(e) => setMinutes(+e.target.value)}
+            onChange={(e) => {
+              setMinutes(+e.target.value)
+              setValue?.(props.name, {
+                hours: hours,
+                minutes: +e.target.value
+              })
+            }}
           >
             <option value={0}>00</option>
             <option value={15}>15</option>
