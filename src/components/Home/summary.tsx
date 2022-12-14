@@ -28,7 +28,7 @@ function Summary() {
             </tr>
             <tr>
               <td>
-                <Statistics title='Number of Hours' data={dummyHourData}/>
+                <Statistics title='Number of Hours' data={dummyHourData} />
               </td>
               <td>
                 <Statistics
