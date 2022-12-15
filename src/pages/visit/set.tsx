@@ -240,7 +240,6 @@ const Set = () => {
             <Button
               className='col-span-2'
               intent='secondary'
-              disabled={!isSubmitEnabled()}
               fullwidth
               onClick={handleDelete}
               hidden={id === null} // button should be hidden if no id
@@ -252,7 +251,7 @@ const Set = () => {
             <Button
               intent='primary'
               size='medium'
-              disabled={!isSubmitEnabled()}
+              hidden={id === null}
               fullwidth
               type='button'
             >
@@ -264,7 +263,7 @@ const Set = () => {
             <Button
               intent='primary'
               size='medium'
-              disabled={!isSubmitEnabled()}
+              hidden={id === null}
               fullwidth
               type='button'
             >
