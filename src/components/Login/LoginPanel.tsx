@@ -1,13 +1,4 @@
 import {
-  // faApple,
-  faFacebookF,
-  faGoogle,
-  faMicrosoft
-  // faTwitter,
-  // faYahoo
-} from '@fortawesome/free-brands-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import {
   Auth,
   AuthProvider,
   FacebookAuthProvider,
@@ -18,6 +9,7 @@ import {
 } from 'firebase/auth'
 
 import LoginButton from '@/components/Login/LoginButton'
+import Logo from '@/components/UI/logoSvg'
 import { useAuth } from '@/context/Firebase/Auth/context'
 
 export interface LoginPanelInterface {
@@ -35,9 +27,9 @@ const LoginPanel = ({
 }: LoginPanelInterface) => {
   const { externalAuthSignIn, linkAuthProvider, currentUser, auth } = useAuth()
 
-  const googleIcon = <FontAwesomeIcon icon={faGoogle} />
-  const facebookIcon = <FontAwesomeIcon icon={faFacebookF} />
-  const microsoftIcon = <FontAwesomeIcon icon={faMicrosoft} />
+  const googleIcon = <Logo name='Google' viewBox='0 0 24 24' />
+  const facebookIcon = <Logo name='Facebook' viewBox='0 0 24 24' />
+  const microsoftIcon = <Logo name='Microsoft' viewBox='0 0 24 24' />
 
   const googleProvider = new GoogleAuthProvider()
   const facebookProvider = new FacebookAuthProvider()
