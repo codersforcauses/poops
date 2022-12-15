@@ -15,20 +15,24 @@ const LoginHeader = ({
   children
 }: LoginHeaderInterface) => {
   return (
-    <div className='flex flex-col items-center h-full animate-text bg-gradient-to-b from-zinc-300 via-zinc-200 to-zinc-50'>
+    <div className='flex h-full animate-text flex-col items-center bg-gradient-to-b from-zinc-300 via-zinc-200 to-zinc-50'>
       <title>{pageTitle}</title>
-      <div className='m-10 w-max h-max'>
+      <div className='m-10 h-max w-max'>
         <Image
           src='/images/poops-logo-transparent.png'
-          width={400}
-          height={400}
+          width={300}
+          height={300}
           alt='POOPS logo'
           className='rounded-full'
         ></Image>
       </div>
 
-      <div className='flex justify-center m-5 text-xl font-bold'>{primaryMessage}</div>
-      <div className='flex justify-center m-3 text-x1 font-sans'>{secondaryMessage}</div>
+      <div className='m-5 flex justify-center text-xl font-bold'>
+        {primaryMessage}
+      </div>
+      <div className='text-x1 m-3 flex justify-center font-sans'>
+        {secondaryMessage}
+      </div>
 
       {children}
     </div>
