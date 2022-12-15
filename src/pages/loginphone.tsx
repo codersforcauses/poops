@@ -34,25 +34,24 @@ const Login: NextPage = () => {
         >
           <EnterPhonePanel onClick={handlePhoneSubmit} />
         </LoginHeader>
-      )}
-    else {
+      )
+    } else {
       return (
         <LoginHeader
-        pageTitle={pageTitle}
-        primaryMessage={primaryMessage}
-        secondaryMessage={secondaryMessage}
-      >
-        <EnterPasswordPanel phoneNumber={phonenumber} togglePanel={togglePanel} />
-      </LoginHeader>
+          pageTitle={pageTitle}
+          primaryMessage={primaryMessage}
+          secondaryMessage={secondaryMessage}
+        >
+          <EnterPasswordPanel
+            phoneNumber={phonenumber}
+            togglePanel={togglePanel}
+          />
+        </LoginHeader>
       )
     }
   }
 
-  return (
-    <main>
-      {renderPanel(panel)}
-    </main>
-  )
+  return <main className='h-full pb-0'>{renderPanel(panel)}</main>
 }
 
 export default withPublic(Login)
