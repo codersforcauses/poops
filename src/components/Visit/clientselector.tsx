@@ -9,8 +9,8 @@ import { SelectOption } from '@/types/types'
 interface ClientSelectorProps extends FormFieldProps {
   setClient: Dispatch<
     SetStateAction<{
-      clientId: string
       clientName: string
+      petNames: string
     }>
   >
 }
@@ -24,7 +24,7 @@ const ClientSelector = (props: ClientSelectorProps) => {
     return contacts.map((contact) => {
       const client: SelectOption = {
         label: contact.clientName,
-        value: contact.id
+        value: contact.pets
       }
       return client
     })
@@ -32,7 +32,7 @@ const ClientSelector = (props: ClientSelectorProps) => {
   const handleChange = (newValue: SingleValue<SelectOption>) => {
     // fired when user selects an option or creates an option
     if (newValue === null) return
-    props.setClient({ clientId: newValue.value, clientName: newValue.label })
+    props.setClient({ clientName: newValue.label, petNames: newValue.value })
   }
 
   const defaultValue: SelectOption = {
