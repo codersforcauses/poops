@@ -1,12 +1,5 @@
 import { Timestamp } from 'firebase/firestore'
 
-//local variables to be passed around the app
-export interface Pet {
-  id: string
-  name: string
-  notes: string
-}
-
 export interface UserData {
   clientName: string
   contacts: Contact[]
@@ -18,7 +11,7 @@ export interface VisitData {
   clientName: string
   petNames: string
   startTime: Timestamp
-  endTime: Timestamp
+  duration: Duration
   walkDist: number
   commuteDist: number
   commuteMethod: string
