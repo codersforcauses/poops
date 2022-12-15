@@ -10,6 +10,7 @@ import FormField from '@/components/Visit/formfield'
 import { visitSelectOptions } from '@/components/Visit/visitlist'
 import { AlertVariant, useAlert } from '@/context/AlertContext'
 import { Duration } from '@/types/types'
+
 import Button from '../UI/button'
 
 function Modal() {
