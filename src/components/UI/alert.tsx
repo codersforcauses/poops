@@ -1,12 +1,12 @@
 import { useEffect, useRef, useState } from 'react'
 import {
-  AnnotationIcon,
+  ChatBubbleBottomCenterTextIcon,
   CheckIcon,
-  ExclamationIcon,
+  ExclamationTriangleIcon,
   InformationCircleIcon,
   ShieldExclamationIcon,
-  XIcon
-} from '@heroicons/react/outline'
+  XMarkIcon
+} from '@heroicons/react/24/outline'
 
 import { AlertContentProps, AlertVariant } from '@/context/AlertContext'
 
@@ -98,10 +98,10 @@ const Alert = ({ visible, content, clearAlert }: AlertProps) => {
         ) : contentCache.variant === AlertVariant.security ? (
           <ShieldExclamationIcon className='h-7 w-7' />
         ) : contentCache.variant === AlertVariant.critical ? (
-          <ExclamationIcon className='h-7 w-7' />
+          <ExclamationTriangleIcon className='h-7 w-7' />
         ) : (
           contentCache.variant === AlertVariant.comment && (
-            <AnnotationIcon className='h-7 w-7' />
+            <ChatBubbleBottomCenterTextIcon className='h-7 w-7' />
           )
         )}
       </div>
@@ -152,7 +152,7 @@ const Alert = ({ visible, content, clearAlert }: AlertProps) => {
               contentCache.cancelFunction()
           }}
         >
-          <XIcon
+          <XMarkIcon
             className='h-5 w-5'
             stroke={contentCache.position === 'bottom' ? 'white' : iconColor}
           />
