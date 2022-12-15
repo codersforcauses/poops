@@ -10,18 +10,16 @@ module.exports = {
   ],
   theme: {
     colors: {
-      primary: '#ce283d',
-      'dark-red': '#a52a2a',
-      transparent: 'transparent',
-      current: 'currentColor',
+      primary: {
+        DEFAULT: '#ce283d',
+        dark: '#a52a2a'
+      },
+      transparent: colors.transparent,
+      current: colors.current,
+      white: colors.white,
+      black: colors.black,
       gray: colors.gray,
-      cream: '#f9f9f9',
-      white: '#ffffff',
-      black: '#000000',
-      'dark-gray': '#7B7B7B',
-      'zinc-200': '#F2F2F2',
-      'zinc-300': '#D9D9D9',
-      'zinc-50': '#FFFFFF'
+      zinc: colors.zinc
     },
     extend: {
       fontFamily: {
@@ -43,9 +41,7 @@ module.exports = {
             'background-size': '200%',
             'background-position': 'right center'
           }
-        },
-        white: colors.white,
-        black: colors.black
+        }
       }
     }
   },

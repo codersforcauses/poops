@@ -78,7 +78,7 @@ const EditableVisitInstance = (props: EditVisitInstanceProps) => {
             onChange={(event) =>
               setStartTime(Timestamp.fromDate(new Date(event.target.value)))
             }
-            className='bg-cream font-normal text-primary'
+            className='bg-gray-50 font-normal text-primary'
             required
           />
         </div>

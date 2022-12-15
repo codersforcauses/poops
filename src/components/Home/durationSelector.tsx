@@ -16,7 +16,7 @@ const DurationSelector = (props: DurationProps) => {
         {props.label}
       </label>
 
-      <div className='flex w-full flex-row justify-center rounded border border-dark-gray'>
+      <div className='flex w-full flex-row justify-center rounded border border-gray-500'>
         <select
           className='form-input flex h-9 w-full overflow-scroll rounded border-none text-center focus:outline-none'
           id='hours'

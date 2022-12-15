@@ -22,7 +22,7 @@ const shadow =
                 0 32px 64px rgba(0,0,0,0.1)'
 
 const buttonClasses =
-  'mx-auto mt-2 w-fit rounded-lg bg-primary py-1 px-4 text-lg text-white shadow-md focus:outline-primary active:bg-dark-red'
+  'mx-auto mt-2 w-fit rounded-lg bg-primary py-1 px-4 text-lg text-white shadow-md focus:outline-primary active:bg-primary-dark'
 const getContainerClasses = (vis: boolean, pos: string) => {
   return (
     `flex items-center fixed right-0 left-0 z-9999 bg-white text-black border-x-1 border-[#dddddd] transition-transform duration-700 ease-in-out` +

@@ -42,7 +42,7 @@ function ContactInfo({ firestoreIndex, image }: ContactInfoProps) {
       {/* PHONE */}
       <Box>
         <div className='flex w-full justify-between'>
-          <label htmlFor={contact.phone} className='text-dark-red'>
+          <label htmlFor={contact.phone} className='text-primary-dark'>
             Phone
           </label>
           <a href={`tel:${contact.phone}`}>
@@ -54,7 +54,7 @@ function ContactInfo({ firestoreIndex, image }: ContactInfoProps) {
       {/* EMAIL */}
       <Box>
         <div className='flex w-full justify-between'>
-          <label htmlFor={contact.email} className='text-dark-red'>
+          <label htmlFor={contact.email} className='text-primary-dark'>
             Email
           </label>
           <a href={`mailto:${contact.email}`} target='_blank' rel='noreferrer'>
@@ -66,7 +66,7 @@ function ContactInfo({ firestoreIndex, image }: ContactInfoProps) {
       {/* ADDRESS */}
       <Box>
         <div className='flex w-full justify-between'>
-          <label htmlFor={contact.streetAddress} className='text-dark-red'>
+          <label htmlFor={contact.streetAddress} className='text-primary-dark'>
             Address
           </label>
           <a
@@ -82,7 +82,7 @@ function ContactInfo({ firestoreIndex, image }: ContactInfoProps) {
       {/* TAGS */}
       {contact.id !== 'me' && (
         <Box>
-          <label htmlFor='tags' className='text-dark-red'>
+          <label htmlFor='tags' className='text-primary-dark'>
             Tags
           </label>
           <TagHolder className='mt-1'>
@@ -98,7 +98,7 @@ function ContactInfo({ firestoreIndex, image }: ContactInfoProps) {
       )}
       {/* REGIONS */}
       <Box className='pb-3'>
-        <label htmlFor='regions' className='text-dark-red'>
+        <label htmlFor='regions' className='text-primary-dark'>
           Region
         </label>
 
@@ -111,14 +111,14 @@ function ContactInfo({ firestoreIndex, image }: ContactInfoProps) {
         </TagHolder>
       </Box>
       <Box className='flex flex-col'>
-        <label htmlFor={contact.pets} className='text-dark-red'>
+        <label htmlFor={contact.pets} className='text-primary-dark'>
           Pets
         </label>
         <span className='text-xl'>{contact.pets}</span>
       </Box>
       {/* NOTES */}
       <Box className='flex flex-col'>
-        <label htmlFor={contact.notes} className='text-dark-red'>
+        <label htmlFor={contact.notes} className='text-primary-dark'>
           Notes
         </label>
         <span className='text-xl'> {contact.notes} </span>
