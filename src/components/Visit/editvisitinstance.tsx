@@ -183,7 +183,7 @@ const EditableVisitInstance = (props: EditVisitInstanceProps) => {
           Notes:
           <br />
           <textarea
-            className='w-full bg-cream text-primary'
+            className='bg-cream w-full text-primary'
             placeholder='Add notes here'
             value={notes}
             onChange={(event) => setNotes(event.target.value)}
