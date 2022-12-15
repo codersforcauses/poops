@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import Link from 'next/link'
+import { useRouter } from 'next/router'
 
 import Form from '@/components/Login/LoginForm'
 import Button from '@/components/UI/button'
@@ -9,6 +9,7 @@ const EnterPasswordPanel = (props: {
   togglePanel?: () => void
 }) => {
   const [password, setpassword] = useState('')
+  const router = useRouter()
 
   function handleSubmit(event: React.ChangeEvent<HTMLFormElement>) {
     event.preventDefault()
@@ -16,26 +17,33 @@ const EnterPasswordPanel = (props: {
     setpassword('')
   }
 
+  function handleForgot(event: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
+    event.preventDefault()
+    router.push('/login')
+  }
+
   function formFilled() {
     return password != ''
   }
 
   return (
-    <div className='flex flex-col m-auto h-1/3 w-1/4 justify-center align-center space-y-4 p-5'>
-      <p className='text-sm text-dark-gray'>
-        Phone Number
-      </p>
-      <div className='flex flex-row justify-between'>
-        <p>
-          {props.phoneNumber}
+    <div className='flex flex-auto flex-col items-center w-1/4'>
+      <div className='flex flex-col w-fit'>
+        <p className='text-sm text-dark-gray'>
+          Phone Number
         </p>
-
-        <button className='text-sm italic underline text-dark-red' onClick={props.togglePanel} >
-          change
-        </button>
+        <div className='flex flex-row justify-between'>
+          <p>
+            {props.phoneNumber}
+          </p>
+          <div className='w-32'></div>
+          <button className='text-sm italic underline text-dark-red' onClick={props.togglePanel} >
+            change
+          </button>
+        </div>
       </div>
       <form onSubmit={handleSubmit}>
-        <div className='justify-center flex'>
+        <div className='flex justify-center'>
           <Form
             id='password'
             label='Password'
@@ -46,12 +54,12 @@ const EnterPasswordPanel = (props: {
             onChange={(event) => setpassword(event.target.value)}
           />
         </div>
-        <Link
-          className='text-xs italic underline text-[#828282] cursor-pointer hover:text-dark-red'
-          href='/index'
+        <button
+          className='text-sm italic underline text-dark-red'
+          onClick={handleForgot}
         >
           Forgot your password?
-        </Link>
+        </button>
         <div className='flex justify-center self-end'>
           <Button
             className='mt-8 mb-2'

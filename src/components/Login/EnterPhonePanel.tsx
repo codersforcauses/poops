@@ -13,8 +13,7 @@ const EnterPhonePanel = ({ onClick }: EnterPhonePanelInterface) => {
   const [countrycode, setcountrycode] = useState('')
 
   const countryCodeSelectOptions: SelectOption[] = [
-    { value: '+61', label: 'Australia (+61)' },
-    { value: '+06', label: 'Malaysia (+06)'}
+    { value: '+61', label: 'Australia (+61)' }
   ]
 
   function handleSubmit(event: React.ChangeEvent<HTMLFormElement>) {
@@ -28,19 +27,11 @@ const EnterPhonePanel = ({ onClick }: EnterPhonePanelInterface) => {
   }
 
   return (
-    <div className='m-auto grid h-1/3 justify-center space-y-4 p-5'>
-      <form onSubmit={handleSubmit}>
+    <div className='flex flex-auto flex-col w-1/4'>
+      <form 
+        onSubmit={handleSubmit}
+        className='flex flex-auto flex-col justify-around items-center h-full m-5'>
         <div className='flex justify-center'>
-          {/* <label htmlFor='countrycode' className='font-bold'>
-                Country Code
-              </label>
-              <div
-                className='mt-1 mb-2 mr-10 flex h-9 rounded border border-[#6b7280] py-0.5 px-4 text-center
-                className='px-auto form-select mt-1 mb-2 flex h-9 rounded border border-[#6b7280] py-0.5 text-center focus:outline-none'
-        shadow-lg focus:outline-[#0066ff]'
-              >
-                {countryCode}
-              </div> */}
           <Form
             id='countrycode'
             label='Country Code'
@@ -61,16 +52,14 @@ const EnterPhonePanel = ({ onClick }: EnterPhonePanelInterface) => {
             onChange={(event) => setdisplaynumber(event.target.value)}
           />
         </div>
-        <table align='center'>
-          <Button
-            className='mt-8 mb-2'
-            size='large'
-            type='submit'
-            disabled={!formFilled()}
-          >
-            CONTINUE
-          </Button>
-        </table>
+        <Button
+          className='w-fit'
+          size='large'
+          type='submit'
+          disabled={!formFilled()}
+        >
+          CONTINUE
+        </Button>
       </form>
     </div>
   )

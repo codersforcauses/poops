@@ -49,7 +49,7 @@ const Login: NextPage = () => {
   }
 
   return (
-    <main>
+    <main className='h-full pb-0'>
       {renderPanel(panel)}
     </main>
   )
