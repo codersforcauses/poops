@@ -10,6 +10,7 @@ import ClientSelector from '@/components/Visit/clientselector'
 import CommuteSelector from '@/components/Visit/commuteselector'
 import DurationSelector from '@/components/Visit/durationselector'
 import FormField from '@/components/Visit/formfield'
+import { AlertVariant, useAlert } from '@/context/AlertContext'
 import { useFirestore } from '@/context/Firebase/Firestore/context'
 import { Duration, VisitData } from '@/types/types'
 import { formatTimestamp, visitSelectOptions } from '@/utils'
@@ -43,9 +44,10 @@ const Set = () => {
   const [commuteMethod, setCommuteMethod] = useState(visit?.commuteMethod || '')
   const [notes, setNotes] = useState(visit?.notes || '')
 
+  const { setAlert } = useAlert()
+
   const handleSubmit = async (click: React.FormEvent<HTMLFormElement>) => {
     click.preventDefault()
-    console.log('submit')
 
     const data: VisitData = {
       type: visitType,
@@ -69,8 +71,15 @@ const Set = () => {
     const tmp2 = { ...userDoc }
     tmp2.visits = tmp
     await updateVisit?.(tmp2)
+    setAlert({
+      variant: AlertVariant.info,
+      title: 'Success!',
+      text: 'Visits have been updated',
+      position: 'bottom',
+      showFor: 1000
+    })
+
     router.push('/visit')
-    // TODO: add alert?
   }
 
   const handleDelete = async () => {
@@ -79,6 +88,14 @@ const Set = () => {
     tmp2.visits = tmp
 
     await updateVisit?.(tmp2)
+    setAlert({
+      variant: AlertVariant.info,
+      title: 'Success!',
+      text: 'Visit has been deleted',
+      position: 'bottom',
+      showFor: 1000
+    })
+
     router.push('/visit')
   }
 
