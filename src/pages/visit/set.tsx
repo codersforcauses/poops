@@ -10,10 +10,9 @@ import ClientSelector from '@/components/Visit/clientselector'
 import CommuteSelector from '@/components/Visit/commuteselector'
 import DurationSelector from '@/components/Visit/durationselector'
 import FormField from '@/components/Visit/formfield'
-import { formatTimestamp, visitSelectOptions } from '@/components/Visit/utils'
-import { findContactIndex } from '@/components/Visit/utils'
 import { useFirestore } from '@/context/Firebase/Firestore/context'
 import { Duration, VisitData } from '@/types/types'
+import { formatTimestamp, visitSelectOptions } from '@/utils'
 
 const Set = () => {
   // BUG: when reloading this page whilst editing, all the fields are removed. userDoc is undefined?
@@ -28,9 +27,9 @@ const Set = () => {
   }
 
   const [visitType, setVisitType] = useState(visit?.type || '')
-  const [{ clientId, clientName }, setClient] = useState({
-    clientId: visit?.clientId || '',
-    clientName: visit?.clientName || ''
+  const [{ clientName, petNames }, setClient] = useState({
+    clientName: visit?.clientName || '',
+    petNames: visit?.petNames || ''
   })
   const [startTime, setStartTime] = useState(
     formatTimestamp(visit?.startTime) || ''
@@ -44,34 +43,42 @@ const Set = () => {
   const [commuteMethod, setCommuteMethod] = useState(visit?.commuteMethod || '')
   const [notes, setNotes] = useState(visit?.notes || '')
 
-  const handleSubmit = (click: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (click: React.FormEvent<HTMLFormElement>) => {
     click.preventDefault()
+    console.log('submit')
 
     const data: VisitData = {
       type: visitType,
-      clientId: clientId, // possible refac: push a client object
       clientName: clientName,
       startTime: Timestamp.fromDate(new Date(startTime)),
       duration: duration,
-      petNames: userDoc.contacts[findContactIndex(clientName, userDoc)].pets, // TODO?: find contact by id instead
+      petNames: petNames,
       walkDist: walkDist,
       commuteDist: commuteDist,
       commuteMethod: commuteMethod,
       notes: notes
     }
+
+    let tmp: VisitData[] = [...userDoc.visits]
     if (id !== null) {
-      userDoc.visits[id] = data
+      tmp[id] = data
     } else {
-      userDoc.visits.push(data)
+      tmp = [data, ...tmp]
     }
-    updateVisit?.(userDoc)
+
+    const tmp2 = { ...userDoc }
+    tmp2.visits = tmp
+    await updateVisit?.(tmp2)
     router.push('/visit')
     // TODO: add alert?
   }
 
-  const handleDelete = () => {
-    userDoc.visits.splice(Number(id), 1)
-    updateVisit?.(userDoc) // can I guarantee visits will be updated by the time the client returns to /visit?
+  const handleDelete = async () => {
+    const tmp: VisitData[] = [...userDoc.visits]
+    const tmp2 = { ...userDoc }
+    tmp2.visits = tmp
+
+    await updateVisit?.(tmp2)
     router.push('/visit')
   }
 
@@ -158,7 +165,7 @@ const Set = () => {
               label='Start Time:'
               isRequired={true}
               onChange={(event) => {
-                // event.target.value = event.target.value.substring(0, 16) // fixes invalid input on ios safari? can't test
+                event.target.value = event.target.value.substring(0, 16) // fixes invalid input on ios safari? can't test
                 setStartTime(event.target.value)
               }}
             />
@@ -216,20 +223,34 @@ const Set = () => {
             <Button
               className='col-span-2'
               intent='secondary'
+              disabled={!isSubmitEnabled()}
               fullwidth
               onClick={handleDelete}
               hidden={id === null} // button should be hidden if no id
+              type='button'
             >
               Remove This Visit
             </Button>
 
-            <Button intent='primary' size='medium' fullwidth>
+            <Button
+              intent='primary'
+              size='medium'
+              disabled={!isSubmitEnabled()}
+              fullwidth
+              type='button'
+            >
               Report
               <br />
               Incident
             </Button>
 
-            <Button intent='primary' size='medium' fullwidth>
+            <Button
+              intent='primary'
+              size='medium'
+              disabled={!isSubmitEnabled()}
+              fullwidth
+              type='button'
+            >
               Register Vet
               <br />
               Concern
