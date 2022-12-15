@@ -6,10 +6,10 @@ import {
 } from '@/components/Home/dummyOptions'
 import Form from '@/components/Home/form'
 import FormField from '@/components/Visit/formfield'
-import { visitTypes } from '@/components/Visit/utils'
 import DurationSelector from '@/components/Visit/VisitForm/Selectors/durationselector'
 import { AlertVariant, useAlert } from '@/context/AlertContext'
 import { Duration } from '@/types/types'
+import { visitTypes } from '@/utils'
 
 import Button from '../UI/button'
 

@@ -5,6 +5,7 @@ import { XIcon } from '@heroicons/react/outline'
 import { withProtected } from '@/components/PrivateRoute'
 import Button from '@/components/UI/button'
 import { VisitForm } from '@/components/Visit/VisitForm'
+import { AlertVariant, useAlert } from '@/context/AlertContext'
 import { useFirestore } from '@/context/Firebase/Firestore/context'
 import { VisitData } from '@/types/types'
 
@@ -12,6 +13,7 @@ const Set = () => {
   // ! BUG: when reloading this page whilst editing, all the fields are removed. userDoc is undefined?
   const { userDoc, updateVisit } = useFirestore()
   const router = useRouter()
+  const { setAlert } = useAlert()
   const i: string | string[] | undefined = router.query.id
   let id: number | null = null
   let visitData: VisitData | null = null
@@ -20,9 +22,20 @@ const Set = () => {
     visitData = userDoc.visits[id]
   }
 
-  const handleDelete = () => {
-    userDoc.visits.splice(Number(id), 1) // update visit locally
-    updateVisit?.(userDoc) // send updated visit list to firestore
+  const handleDelete = async () => {
+    const tmp: VisitData[] = [...userDoc.visits]
+    const tmp2 = { ...userDoc }
+    tmp2.visits = tmp
+
+    await updateVisit?.(tmp2)
+    setAlert({
+      variant: AlertVariant.info,
+      title: 'Success!',
+      text: 'Visit has been deleted',
+      position: 'bottom',
+      showFor: 1000
+    })
+
     router.push('/visit')
   }
 
@@ -54,19 +67,32 @@ const Set = () => {
           className='col-span-2'
           intent='secondary'
           fullwidth
+          type='button'
           onClick={handleDelete}
           hidden={id === null} // button should be hidden if no id
         >
           Remove This Visit
         </Button>
 
-        <Button intent='primary' size='medium' hidden={id === null} fullwidth>
+        <Button
+          intent='primary'
+          size='medium'
+          type='button'
+          hidden={id === null}
+          fullwidth
+        >
           Report
           <br />
           Incident
         </Button>
 
-        <Button intent='primary' size='medium' hidden={id === null} fullwidth>
+        <Button
+          intent='primary'
+          size='medium'
+          type='button'
+          hidden={id === null}
+          fullwidth
+        >
           Register Vet
           <br />
           Concern

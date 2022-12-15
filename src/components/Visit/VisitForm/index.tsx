@@ -13,14 +13,10 @@ import {
 } from '@/components/UI/FormComponents/SelectFields'
 import { SelectOption } from '@/components/UI/FormComponents/SelectFields/utils'
 import TextField from '@/components/UI/FormComponents/TextField'
-import {
-  defaultCommuteMethods,
-  formatTimestamp,
-  visitTypes
-} from '@/components/Visit/utils'
 import validationSchema from '@/components/Visit/VisitForm/validation'
 import { useFirestore } from '@/context/Firebase/Firestore/context'
 import { Duration, VisitData } from '@/types/types'
+import { defaultCommuteMethods, formatTimestamp, visitTypes } from '@/utils'
 
 interface VisitFormProps {
   id: number | null
@@ -28,7 +24,7 @@ interface VisitFormProps {
 }
 
 interface ClientInfo {
-  id: string
+  clientName: string
   petNames: string
 }
 
@@ -51,8 +47,7 @@ export const VisitForm = ({ visitData, id }: VisitFormProps) => {
   const handleSubmit: SubmitHandler<FormValues> = (formData) => {
     const data: VisitData = {
       type: formData.visitType.value,
-      clientId: formData.clientName.value.id,
-      clientName: formData.clientName.label,
+      clientName: formData.clientName.value.clientName,
       petNames: formData.clientName.value.petNames, // TODO GET PET NAMES FROM CONTACTS
       startTime: Timestamp.fromDate(new Date(formData.startTime)),
       duration: formData.duration,
@@ -75,28 +70,6 @@ export const VisitForm = ({ visitData, id }: VisitFormProps) => {
     // TODO: add alert?
   }
 
-  // useEffect(() => {
-  //   if (visitData && reset) {
-  //     const defaultValues = {
-  //       visitType: { label: visitData.type, value: visitData.type },
-  //       clientName: {
-  //         label: visitData.clientName,
-  //         value: { id: visitData.clientId, petNames: visitData.petNames }
-  //       },
-  //       startTime: formatTimestamp(visitData.startTime) || '',
-  //       duration: visitData.duration,
-  //       walkDist: visitData.walkDist,
-  //       commuteDist: visitData.commuteDist,
-  //       commuteMethod: {
-  //         label: visitData.commuteMethod,
-  //         value: visitData.commuteMethod
-  //       },
-  //       notes: visitData.notes
-  //     }
-  //     reset?.({ ...defaultValues })
-  //   }
-  // }, [reset, visitData])
-
   return (
     <Form<FormValues>
       onSubmit={handleSubmit}
@@ -106,7 +79,10 @@ export const VisitForm = ({ visitData, id }: VisitFormProps) => {
             visitType: { label: visitData.type, value: visitData.type },
             clientName: {
               label: visitData.clientName,
-              value: { id: visitData.clientId, petNames: visitData.petNames }
+              value: {
+                clientName: visitData.clientName,
+                petNames: visitData.petNames
+              }
             },
             startTime: formatTimestamp(visitData.startTime) || '',
             duration: visitData.duration,
@@ -139,7 +115,7 @@ export const VisitForm = ({ visitData, id }: VisitFormProps) => {
             return {
               label: contact.clientName,
               value: {
-                id: contact.id,
+                clientName: contact.clientName,
                 petNames: contact.pets
               }
             }

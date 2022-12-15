@@ -1,6 +1,6 @@
 import { Timestamp } from 'firebase/firestore'
 
-import { humanizeTimestamp } from '@/components/Visit/utils'
+import { humanizeTimestamp } from '@/utils'
 import { Duration, VisitData } from '@/types/types'
 
 export const formatDuration = (duration: Duration) => {
