@@ -84,7 +84,7 @@ const EditableVisitInstance = (props: EditVisitInstanceProps) => {
         </div>
         <div>
           <input
-            className='bg-cream text-sm font-normal text-primary'
+            className='bg-gray-50 text-sm font-normal text-primary'
             placeholder='Display Name'
             value={clientName}
             onChange={(event) => setClientName(event.target.value)}
@@ -96,7 +96,7 @@ const EditableVisitInstance = (props: EditVisitInstanceProps) => {
         <div>
           Visit Type:{' '}
           <select
-            className='bg-cream text-primary'
+            className='bg-gray-50 text-primary'
             onChange={(event) => setVisitType(event.target.value)}
             value={visitType}
             required
@@ -112,7 +112,7 @@ const EditableVisitInstance = (props: EditVisitInstanceProps) => {
         <div>
           Pet/Pets:{' '}
           <input
-            className='bg-cream text-primary'
+            className='bg-gray-50 text-primary'
             placeholder='Pet Name(s)'
             value={petNames}
             onChange={(event) => setPetNames(event.target.value)}
@@ -123,7 +123,7 @@ const EditableVisitInstance = (props: EditVisitInstanceProps) => {
           End Time:{' '}
           <input
             type='datetime-local'
-            className='bg-cream text-primary'
+            className='bg-gray-50 text-primary'
             placeholder='End Time'
             value={formatDate(endTime)}
             onChange={(event) =>
@@ -136,7 +136,7 @@ const EditableVisitInstance = (props: EditVisitInstanceProps) => {
         <div>
           Walk Distance:{' '}
           <input
-            className='bg-cream text-primary'
+            className='bg-gray-50 text-primary'
             type='number'
             step='0.001'
             min='0'
@@ -151,7 +151,7 @@ const EditableVisitInstance = (props: EditVisitInstanceProps) => {
         <div>
           Commute Distance:{' '}
           <input
-            className='bg-cream text-primary'
+            className='bg-gray-50 text-primary'
             type='number'
             step='0.001'
             min='0'
@@ -166,7 +166,7 @@ const EditableVisitInstance = (props: EditVisitInstanceProps) => {
         <div>
           Commute Method:{' '}
           <select
-            className='bg-cream text-primary'
+            className='bg-gray-50 text-primary'
             onChange={(event) => setCommuteMethod(event.target.value)}
             value={commuteMethod}
             required
@@ -183,7 +183,7 @@ const EditableVisitInstance = (props: EditVisitInstanceProps) => {
           Notes:
           <br />
           <textarea
-            className='bg-cream w-full text-primary'
+            className='w-full bg-gray-50 text-primary'
             placeholder='Add notes here'
             value={notes}
             onChange={(event) => setNotes(event.target.value)}
