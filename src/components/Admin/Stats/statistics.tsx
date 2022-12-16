@@ -1,5 +1,5 @@
 interface SummaryStatistics {
-  title: string
+  title?: string
   data: string
 }
 
