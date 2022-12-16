@@ -1,9 +1,11 @@
 import AdminPage from '@/components/Admin/AdminPage/adminPage'
 import Summary from '@/components/Admin/Stats/summary'
 
+const dummyUsername = 'Admin'
+
 const Stats = () => {
   return (
-    <AdminPage content={<Summary />} />
+    <AdminPage title={`Welcome ${dummyUsername}!`} content={<Summary />} />
   )
 }
 
