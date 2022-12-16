@@ -124,7 +124,7 @@ const FirestoreProvider = ({ children }: { children: ReactNode }) => {
       updateVisit,
       updateContact
     }),
-    [userDoc, setUserDoc, updateUserInfo, updateVisit, updateContact]
+    [userDoc, updateUserInfo, updateVisit, updateContact]
   )
 
   return (

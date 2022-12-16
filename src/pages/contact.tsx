@@ -39,13 +39,15 @@ const Contact = () => {
     return [...set]
   }, [allContacts])
 
+  const contactIndex = getDisplayContactIndex()
+
   return (
     <>
       {/* <Seo /> */}
       <Header pageTitle='Contact' />
       <TopNav />
       <main className='h-[calc(100%-7rem)]'>
-        {getDisplayContactIndex() === null && !getCreatingNewContact() && (
+        {contactIndex === null && !getCreatingNewContact() && (
           <div className='m-auto flex h-14 max-w-md flex-row'>
             <div className='flex-1'></div>
             <h1 className='m-3 flex-1 text-center text-2xl'>Contacts</h1>
@@ -57,7 +59,7 @@ const Contact = () => {
           </div>
         )}
         <div className='m-auto max-w-md'>
-          {getDisplayContactIndex() === null && !getCreatingNewContact() && (
+          {contactIndex === null && !getCreatingNewContact() && (
             <div className='border-grey m-2 flex flex-row rounded-xl border-2'>
               <SearchTag
                 name='Filter By'
@@ -72,7 +74,7 @@ const Contact = () => {
               </div>
             </div>
           )}
-          {getDisplayContactIndex() === null && !getCreatingNewContact() ? (
+          {contactIndex === null && !getCreatingNewContact() ? (
             <>
               <ContactItem
                 image=''
@@ -83,12 +85,12 @@ const Contact = () => {
             </>
           ) : (
             <ContactDetails
-              firestoreIndex={getDisplayContactIndex() as number}
+              firestoreIndex={contactIndex as number}
             />
           )}
         </div>
       </main>
-      {getDisplayContactIndex() === null && <NavBar />}
+      {contactIndex === null && <NavBar />}
     </>
   )
 }
