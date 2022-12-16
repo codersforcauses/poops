@@ -4,21 +4,22 @@ import Header from "@/components/Header"
 import NavBar from "@/components/NavBar"
 import TopNav from "@/components/TopNav"
 
-interface ParentCompProps {
+interface props {
   title?: string
+  heading?: string
   content?: ReactNode
 }
 
-const AdminPage= ({ title, content }: ParentCompProps) => {
+const AdminPage= ({ title, heading, content }: props) => {
   return (
     <>
-      <Header pageTitle='Home' />
+      <Header pageTitle={ title } />
       <TopNav />
       <main className='absolute h-[calc(100%-7rem)] overflow-y-scroll bg-contain bg-fixed bg-[left_50%_top_calc(100%-4rem)] bg-no-repeat'>
         <div className='h-[calc(max-content +4rem)] m-auto flex w-screen flex-col'>
           <div className='flex flex-col px-4 '>
-            <h1 className='py-3 text-center text-3xl'>
-              { title }
+            <h1 className='py-3 text-center text-3xl flex-1'>
+              { heading }
             </h1>
             { content }
           </div>

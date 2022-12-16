@@ -5,7 +5,7 @@ const dummyUsername = 'Admin'
 
 const Stats = () => {
   return (
-    <AdminPage title={`Welcome ${dummyUsername}!`} content={<Summary />} />
+    <AdminPage title="Admin Statistics" heading={`Welcome ${dummyUsername}!`} content={<Summary />} />
   )
 }
 
