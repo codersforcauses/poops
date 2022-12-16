@@ -77,13 +77,11 @@ const FirestoreProvider = ({ children }: { children: ReactNode }) => {
 
   const updateVisit = useCallback(
     async (user: UserData) => {
-      // setAchievementsCount((prev) => ({
-      //   count: prev.count + newAchievementsEarned
-      // }))
       try {
         if (currentUser?.uid) {
           const userDocRef = doc(db, 'users', currentUser.uid)
           await updateDoc(userDocRef, 'visits', user.visits)
+          setUserDoc(user)
         }
       } catch (err: unknown) {
         //#region  //*=========== For logging ===========
@@ -97,9 +95,6 @@ const FirestoreProvider = ({ children }: { children: ReactNode }) => {
   )
   const updateContact = useCallback(
     async (user: UserData) => {
-      // setAchievementsCount((prev) => ({
-      //   count: prev.count + newAchievementsEarned
-      // }))
       try {
         if (currentUser?.uid) {
           const userDocRef = doc(db, 'users', currentUser.uid)

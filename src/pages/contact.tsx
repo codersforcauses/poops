@@ -84,9 +84,7 @@ const Contact = () => {
               <ContactList firestoreIndexMap={getFilteredIndexes()} />
             </>
           ) : (
-            <ContactDetails
-              firestoreIndex={contactIndex as number}
-            />
+            <ContactDetails firestoreIndex={contactIndex as number} />
           )}
         </div>
       </main>
