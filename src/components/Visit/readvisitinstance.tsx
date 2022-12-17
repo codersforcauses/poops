@@ -3,6 +3,7 @@ import { Timestamp } from 'firebase/firestore'
 import { Duration, VisitData } from '@/types/types'
 import { humanizeTimestamp } from '@/utils'
 import Button from '@/components/UI/button'
+import Link from 'next/link'
 
 export const formatDuration = (duration: Duration) => {
   const d = `${duration.hours} ${duration.hours === 1 ? 'hr' : 'hrs'} ${
@@ -37,17 +38,12 @@ const VisitInfo = ({
         <p>Commute Method: {commuteMethod}</p>
         <p>Notes: {notes}</p>
         <div className='my-2 flex justify-center gap-2'>
-          <Button
-            size='medium'
-            // onClick={() => setCurrentForm(<IncidentForm />)}
-          >
-            Report incident
-          </Button>
-          <Button
-            size='medium' /* onClick={() => setCurrentForm(<VetForm />)} */
-          >
-            Register Vet Concern
-          </Button>
+          <Link href='/visit/incident'>
+            <Button size='medium'>Report incident</Button>
+          </Link>
+          <Link href='/visit/vet'>
+            <Button size='medium'>Register Vet Concern</Button>
+          </Link>
         </div>
       </div>
     </>

@@ -52,7 +52,7 @@ export type IncidentForm = {
 }
 
 export type VetConcernsForm = {
-  userID: string
+  userID?: string
   userName: string
   email: string
   petName: string
