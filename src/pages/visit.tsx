@@ -4,7 +4,9 @@ import Header from '@/components/Header'
 import NavBar from '@/components/NavBar'
 import { withProtected } from '@/components/PrivateRoute'
 import TopNav from '@/components/TopNav'
+import Button from '@/components/UI/button'
 import { AddButton } from '@/components/Visit/buttons'
+import IncidentForm from '@/components/Visit/incidentform'
 import SearchBar from '@/components/Visit/searchbar'
 import VisitForm from '@/components/Visit/visitform'
 import VisitList from '@/components/Visit/visitlist'
@@ -17,6 +19,14 @@ const Visit = () => {
   const setVisitForm = (isActive: boolean) => {
     if (isActive) {
       setCurrentForm(<VisitForm setVisitForm={setVisitForm} />)
+    } else {
+      setCurrentForm(null)
+    }
+  }
+
+  const setIncidentForm = (isActive: boolean) => {
+    if (isActive) {
+      setCurrentForm(<IncidentForm setIncidentForm={setIncidentForm} />)
     } else {
       setCurrentForm(null)
     }
@@ -39,6 +49,15 @@ const Visit = () => {
             </div>
 
             <VisitList searchQuery={searchQuery} />
+            <Button
+              type='button'
+              size='medium'
+              onClick={() => {
+                setIncidentForm(true)
+              }}
+            >
+              Report Incident
+            </Button>
           </div>
         )}
       </main>
