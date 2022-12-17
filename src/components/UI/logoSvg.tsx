@@ -1,5 +1,3 @@
-import { useCallback } from 'react'
-
 interface svgProps {
   name: string
   className?: string
@@ -19,18 +17,18 @@ const SolidEmojiSad =
   'M10 18a8 8 0 100-16 8 8 0 000 16zM7 9a1 1 0 100-2 1 1 0 000 2zm7-1a1 1 0 11-2 0 1 1 0 012 0zm-7.536 5.879a1 1 0 001.415 0 3 3 0 014.242 0 1 1 0 001.415-1.415 5 5 0 00-7.072 0 1 1 0 000 1.415z'
 
 const Logo = (props: svgProps) => {
-  const svgPath = useCallback(() => {
+  const svgPath = () => {
     switch (props.name) {
       case 'Facebook':
-        return <path fillRule='evenodd' clipRule='evenodd' d={Facebook} />
+        return <path d={Facebook} />
       case 'Google':
-        return <path fillRule='evenodd' clipRule='evenodd' d={Google} />
+        return <path d={Google} />
       case 'Microsoft':
-        return <path fillRule='evenodd' clipRule='evenodd' d={Microsoft} />
+        return <path d={Microsoft} />
       default:
-        return <path fillRule='evenodd' clipRule='evenodd' d={SolidEmojiSad} />
+        return <path d={SolidEmojiSad} />
     }
-  }, [props.name])
+  }
 
   return (
     <svg xmlns='http://www.w3.org/2000/svg' {...props}>
