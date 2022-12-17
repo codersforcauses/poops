@@ -1,11 +1,11 @@
 import { Timestamp } from 'firebase/firestore'
 
+import IncidentForm from '@/components/Visit/incidentform'
 import { formatDuration } from '@/components/Visit/visitinstance'
+import { useVisit } from '@/context/VisitContext/context'
 import { VisitData } from '@/types/types'
 
 import Button from '../UI/button'
-import { useVisit } from '@/context/VisitContext/context'
-import IncidentForm from '@/components/Visit/incidentform'
 
 const formatTime = (time: Timestamp) => {
   return time.toDate().toLocaleString().slice(0, -3)
