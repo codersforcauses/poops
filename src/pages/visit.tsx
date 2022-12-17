@@ -8,15 +8,15 @@ import { AddButton } from '@/components/Visit/buttons'
 import SearchBar from '@/components/Visit/searchbar'
 import VisitForm from '@/components/Visit/visitform'
 import VisitList from '@/components/Visit/visitlist'
+import { useVisit } from '@/context/VisitContext/context'
 
 const Visit = () => {
   const [searchQuery, setSearchQuery] = useState('')
-  const [currentForm, setCurrentForm] = useState<null | JSX.Element>(null)
-  const [isFormActive, setIsFormActive] = useState(false)
+  const { getCurrentForm, setCurrentForm } = useVisit()
+
+  // let currentForm = getCurrentForm();
 
   const setVisitForm = (isActive: boolean) => {
-    setIsFormActive(isActive)
-
     if (isActive) {
       setCurrentForm(<VisitForm setVisitForm={setVisitForm} />)
     } else {
@@ -29,8 +29,8 @@ const Visit = () => {
       <Header pageTitle='Visit' />
       <TopNav />
       <main className='h-[calc(100%-7rem)]'>
-        {isFormActive ? (
-          currentForm
+        {getCurrentForm() === null ? (
+          getCurrentForm()
         ) : (
           <div className='flex h-full w-screen flex-col p-4'>
             <div className='align-center flex flex-row justify-around'>

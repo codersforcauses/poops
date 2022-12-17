@@ -6,6 +6,7 @@ import { AuthContextProvider } from '@/context/Firebase/Auth'
 import FirestoreProvider from '@/context/Firebase/Firestore'
 
 import '@/styles/main.css'
+import VisitProvider from '@/context/VisitContext'
 
 const POOPS = ({ Component, pageProps }: AppProps) => {
   return (
@@ -14,8 +15,10 @@ const POOPS = ({ Component, pageProps }: AppProps) => {
         <FirestoreProvider>
           <AlertContextProvider>
             <ContactProvider>
-              <Component {...pageProps} />
-              {/* <NavBar /> */}
+              <VisitProvider>
+                <Component {...pageProps} />
+                {/* <NavBar /> */}
+              </VisitProvider>
             </ContactProvider>
           </AlertContextProvider>
         </FirestoreProvider>
