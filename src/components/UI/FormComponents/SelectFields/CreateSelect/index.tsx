@@ -68,7 +68,9 @@ const CreateSelect = <
     // console.log(`New option created ${value}`)
     const newOption = { label: value, value }
     setOptions((prev: Option[]) => [...prev, newOption])
-    setValue?.(name, newOption)
+
+    if (isMulti) setValue?.(name, [...options, newOption])
+    else setValue?.(name, newOption)
   }
 
   const handleChange = (data: OnChangeValue<Option, IsMulti>) => {
