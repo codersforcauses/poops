@@ -23,7 +23,7 @@ export interface Contact {
   id: string
   clientName: string
   desc?: string
-  pets?: string
+  pets: string
   email: string
   phone: string
   streetAddress: string

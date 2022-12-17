@@ -47,7 +47,7 @@ const ContactProvider = ({ children }: { children: ReactNode }) => {
           return false
         }
 
-        if (reg.test(contact.clientName) || reg.test(contact.pets!)) {
+        if (reg.test(contact.clientName) || reg.test(contact.pets)) {
           newFilteredIndexes.push(index)
         }
       })
