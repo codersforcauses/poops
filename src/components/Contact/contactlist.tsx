@@ -23,35 +23,22 @@ const ContactList = ({ firestoreIndexMap }: ContactsProp) => {
     return 0
   })
 
-  const contactItems = firestoreIndexMap.map((firestoreIndex) => {
-    if (firestoreIndex === 0) return
-    return (
-      <ContactItem
-        firestoreIndex={firestoreIndex}
-        contact={allContacts[firestoreIndex]}
-        image=''
-        key={firestoreIndex}
-      />
-    )
-  })
+  const contactItems = firestoreIndexMap.map((firestoreIndex) => (
+    <ContactItem
+      firestoreIndex={firestoreIndex}
+      contact={allContacts[firestoreIndex]}
+      image=''
+      key={firestoreIndex}
+    />
+  ))
 
   return (
-    <div className='h-full flex-col'>
-      {firestoreIndexMap.includes(0) && (
-        <ul>
-          <ContactItem
-            firestoreIndex={0}
-            contact={allContacts[0]}
-            image=''
-            key={0}
-          />
-        </ul>
-      )}
+    <div>
       {contactItems.length > 0 ? (
         <ul>{contactItems}</ul>
       ) : (
-        <div className='flex h-full flex-col items-center justify-center'>
-          <XCircleIcon className='h-16 w-16 content-center' />
+        <div className='mt-12 flex flex-col items-center gap-2'>
+          <XCircleIcon className='h-16 w-16' />
           <p>You don&apos;t have any contacts yet. Add some!</p>
         </div>
       )}

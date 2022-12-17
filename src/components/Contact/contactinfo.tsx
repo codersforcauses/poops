@@ -8,6 +8,9 @@ import tw from 'tailwind-styled-components'
 import Avatar from '@/components/Contact/avatar'
 import { AlertVariant, useAlert } from '@/context/AlertContext'
 import { useContact } from '@/context/ContactContext/context'
+import { useFirestore } from '@/context/Firebase/Firestore/context'
+import { Contact } from '@/types/types'
+
 import Button from '../UI/button'
 
 type ContactInfoProps = {
@@ -16,13 +19,19 @@ type ContactInfoProps = {
 }
 
 function ContactInfo({ firestoreIndex, image }: ContactInfoProps) {
+  const { userDoc } = useFirestore()
   const {
     allContacts,
     setCreatingNewContact,
     removeContact,
     setDisplayContactIndex
   } = useContact()
-  const contact = allContacts[firestoreIndex]
+
+  const isContact = firestoreIndex !== -1
+  const contact: Contact = isContact
+    ? allContacts[firestoreIndex as number]
+    : userDoc.info
+
   const { setAlert } = useAlert()
 
   return (
@@ -37,7 +46,7 @@ function ContactInfo({ firestoreIndex, image }: ContactInfoProps) {
       {/* FIRST AND LAST NAME */}
       <h1 className='text-4xl font-normal'>{contact.clientName}</h1>
       {/* DESCRIPTION */}
-      <h3>{contact.desc}</h3>
+      {isContact && <h3>{contact.desc}</h3>}
       {/* PHONE */}
       <Box>
         <div className='flex w-full justify-between'>
@@ -79,52 +88,57 @@ function ContactInfo({ firestoreIndex, image }: ContactInfoProps) {
         <span className='text-xl'>{contact.streetAddress}</span>
       </Box>
       {/* TAGS */}
-      {contact.id !== 'me' && (
-        <Box>
-          <label htmlFor='tags' className='text-dark-red'>
-            Tags
-          </label>
-          <TagHolder className='mt-1'>
-            {contact.tags.map((tag, index) => (
-              <div key={index}>
-                <Tag>{tag}</Tag>
-              </div>
-            ))}
-          </TagHolder>
-          {/* Padding to counter the shadow */}
-          <div className='pt-2'></div>
-        </Box>
-      )}
-      {/* REGIONS */}
-      <Box className='pb-3'>
-        <label htmlFor='regions' className='text-dark-red'>
-          Region
+      <Box>
+        <label htmlFor='tags' className='text-dark-red'>
+          Tags
         </label>
-
         <TagHolder className='mt-1'>
-          {contact.region.map((region, index) => (
+          {contact.tags.map((tag, index) => (
             <div key={index}>
-              <Tag>{region}</Tag>
+              <Tag>{tag}</Tag>
             </div>
           ))}
         </TagHolder>
+        {/* Padding to counter the shadow */}
+        <div className='pt-2'></div>
       </Box>
-      <Box className='flex flex-col'>
-        <label htmlFor={contact.pets} className='text-dark-red'>
-          Pets
-        </label>
-        <span className='text-xl'>{contact.pets}</span>
-      </Box>
+      {/* REGIONS */}
+      {contact.region && (
+        <Box className='pb-3'>
+          <label htmlFor='regions' className='text-dark-red'>
+            Region
+          </label>
+
+          <TagHolder className='mt-1'>
+            {contact.region.map((region, index) => (
+              <div key={index}>
+                <Tag>{region}</Tag>
+              </div>
+            ))}
+          </TagHolder>
+        </Box>
+      )}
+      {/* PETS */}
+      {isContact && (
+        <Box className='flex flex-col'>
+          <label htmlFor={contact.pets} className='text-dark-red'>
+            Pets
+          </label>
+          <span className='text-xl'>{contact.pets}</span>
+        </Box>
+      )}
       {/* NOTES */}
-      <Box className='flex flex-col'>
-        <label htmlFor={contact.notes} className='text-dark-red'>
-          Notes
-        </label>
-        <span className='text-xl'> {contact.notes} </span>
-      </Box>
+      {isContact && (
+        <Box className='flex flex-col'>
+          <label htmlFor={contact.notes} className='text-dark-red'>
+            Notes
+          </label>
+          <span className='text-xl'> {contact.notes} </span>
+        </Box>
+      )}
       <div className='mb-2'>
         {/* can't delete users profile */}
-        {firestoreIndex !== 0 && (
+        {isContact && (
           <Button
             type='button'
             onClick={() => {
@@ -136,7 +150,7 @@ function ContactInfo({ firestoreIndex, image }: ContactInfoProps) {
                 confirmFunction: () => {
                   setCreatingNewContact(false)
                   removeContact(firestoreIndex)
-                  setDisplayContactIndex(-1)
+                  setDisplayContactIndex(null)
                 }
               })
             }}
