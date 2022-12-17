@@ -12,6 +12,7 @@ export const emptyUserDoc: UserData = {
     phone: '',
     streetAddress: '',
     region: [],
+    pets: '',
     tags: []
   },
   visits: [],
@@ -28,6 +29,7 @@ export const newUser = (currentUser: User): UserData => ({
     phone: currentUser.phoneNumber ?? '',
     streetAddress: '',
     region: [],
+    pets: '',
     tags: ['Volunteer']
   },
   visits: [],
