@@ -2,6 +2,7 @@ import { useMemo } from 'react'
 import { MagnifyingGlassIcon } from '@heroicons/react/24/outline'
 
 import ContactDetails from '@/components/Contact/contactdetails'
+import ContactItem from '@/components/Contact/contactitem'
 import ContactList from '@/components/Contact/contactlist'
 import Header from '@/components/Header'
 import NavBar from '@/components/NavBar'
@@ -11,9 +12,12 @@ import SearchTag from '@/components/SearchBar/searchtag'
 import TopNav from '@/components/TopNav'
 import Button from '@/components/UI/button'
 import { useContact } from '@/context/ContactContext/context'
+import { useFirestore } from '@/context/Firebase/Firestore/context'
 import type { Contact } from '@/types/types'
 
 const Contact = () => {
+  const { userDoc } = useFirestore()
+
   const {
     allContacts,
     setCreatingNewContact,
@@ -35,24 +39,28 @@ const Contact = () => {
     return [...set]
   }, [allContacts])
 
+  const contactIndex = getDisplayContactIndex()
+  const creatingNewContact = getCreatingNewContact()
+
   return (
     <>
       {/* <Seo /> */}
       <Header pageTitle='Contact' />
       <TopNav />
       <main className='h-[calc(100%-7rem)]'>
-        <div className='flex h-full flex-col p-4'>
-          {/* <div className='mx-auto '> */}
-          {getDisplayContactIndex() === -1 && !getCreatingNewContact() && (
-            <div className='m-auto flex h-14 w-full flex-row'>
-              <div className='flex-1'></div>
-              <h1 className='m-3 flex-1 text-center text-2xl'>Contacts</h1>
-              <div className='m-auto flex-1 text-center'>
-                <Button onClick={() => setCreatingNewContact(true)}>Add</Button>
-              </div>
+        {contactIndex === null && !creatingNewContact && (
+          <div className='m-auto flex h-14 max-w-md flex-row'>
+            <div className='flex-1'></div>
+            <h1 className='m-3 flex-1 text-center text-2xl'>Contacts</h1>
+            <div className='m-auto flex-1 text-center'>
+              <Button size='medium' onClick={() => setCreatingNewContact(true)}>
+                Add
+              </Button>
             </div>
-          )}
-          {getDisplayContactIndex() === -1 && !getCreatingNewContact() && (
+          </div>
+        )}
+        <div className='m-auto max-w-md'>
+          {contactIndex === null && !creatingNewContact && (
             <div className='border-grey m-2 flex flex-row rounded-xl border-2'>
               <SearchTag
                 name='Filter By'
@@ -67,16 +75,21 @@ const Contact = () => {
               </div>
             </div>
           )}
-
-          {getDisplayContactIndex() === -1 && !getCreatingNewContact() ? (
-            <ContactList firestoreIndexMap={getFilteredIndexes()} />
+          {contactIndex === null && !creatingNewContact ? (
+            <>
+              <ContactItem
+                image=''
+                firestoreIndex={-1}
+                contact={userDoc.info}
+              />
+              <ContactList firestoreIndexMap={getFilteredIndexes()} />
+            </>
           ) : (
-            <ContactDetails firestoreIndex={getDisplayContactIndex()} />
+            <ContactDetails firestoreIndex={contactIndex as number} />
           )}
-          {/* </div> */}
         </div>
       </main>
-      {getDisplayContactIndex() === -1 && <NavBar />}
+      {contactIndex === null && <NavBar />}
     </>
   )
 }
