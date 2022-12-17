@@ -50,9 +50,9 @@ export type Duration = {
 }
 
 export type IncidentForm = {
-  userID: string
-  userName: string
-  email: string
+  userID?: string
+  userName: string | null | undefined
+  email: string | null | undefined
   petName: string
   time: string
   details: string

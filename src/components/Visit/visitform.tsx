@@ -4,12 +4,12 @@ import { Timestamp } from 'firebase/firestore'
 
 import { visitSelectOptions } from '@/components/Visit/visitlist'
 import { useFirestore } from '@/context/Firebase/Firestore/context'
+import { useVisit } from '@/context/VisitContext/context'
 import { VisitData } from '@/types/types'
 
 import CommuteSelector from './commuteselector'
 import FormField from './formfield'
 import Button from '../UI/button'
-import { useVisit } from '@/context/VisitContext/context'
 
 const ModalView = () => {
   const { userDoc, updateVisit } = useFirestore()

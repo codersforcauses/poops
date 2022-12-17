@@ -1,16 +1,21 @@
 import { FormEvent, useState } from 'react'
 import { XIcon } from '@heroicons/react/solid'
 
+import { useAuth } from '@/context/Firebase/Auth/context'
+import { useVisit } from '@/context/VisitContext/context'
 import { IncidentForm } from '@/types/types'
 
 import FormField from './formfield'
 import Button from '../UI/button'
-import { useVisit } from '@/context/VisitContext/context'
 
 const IncidentForm = () => {
-  const [userID, setUserID] = useState('') //get from firebase auth, not form
-  const [userName, setUserName] = useState('') //could just get username and email from login?
-  const [email, setEmail] = useState('')
+  const { currentUser } = useAuth()
+  const [userName, setUserName] = useState(
+    currentUser?.displayName ? currentUser?.displayName : ''
+  )
+  const [email, setEmail] = useState(
+    currentUser?.email ? currentUser?.email : ''
+  )
   const [petName, setPetName] = useState('')
   const [time, setTime] = useState('') //check issue comments for date/time
   const [notes, setNotes] = useState('')
@@ -19,7 +24,7 @@ const IncidentForm = () => {
   const handleSubmit = (click: FormEvent<HTMLFormElement>) => {
     click.preventDefault()
     const data: IncidentForm = {
-      userID: userID,
+      userID: currentUser?.uid,
       userName: userName,
       email: email,
       petName: petName,
@@ -31,7 +36,7 @@ const IncidentForm = () => {
   }
 
   const isSubmitEnabled = () => {
-    return userID && userName && email && petName && time && notes
+    return currentUser?.uid && userName && email && petName && time && notes
   }
 
   return (
@@ -53,21 +58,21 @@ const IncidentForm = () => {
               <tr>
                 <td>
                   <FormField
-                    id='userID'
+                    id='userNameInput'
                     type='text'
-                    placeholder='userID'
-                    label='UserID:'
-                    isRequired={true}
-                    onChange={(event) => setUserID(event.target.value)}
+                    placeholder={userName}
+                    label='Name'
+                    isRequired={false}
+                    onChange={(event) => setUserName(event.target.value)}
                   />
                 </td>
                 <td>
                   <FormField
                     id='emailInput'
                     type='email'
-                    placeholder='email'
-                    label='User Email'
-                    isRequired={true}
+                    placeholder={email}
+                    label='Email'
+                    isRequired={false}
                     onChange={(event) => setEmail(event.target.value)}
                   />
                 </td>
@@ -75,41 +80,33 @@ const IncidentForm = () => {
               <tr>
                 <td>
                   <FormField
-                    id='userNameInput'
-                    type='text'
-                    placeholder='username'
-                    label='User Name'
-                    isRequired={true}
-                    onChange={(event) => setUserName(event.target.value)}
-                  />
-                </td>
-                <td>
-                  <FormField
                     id='petNameInput'
                     type='text'
                     placeholder='Pet name'
                     label='Pet Name'
-                    isRequired={true}
+                    isRequired={false}
                     onChange={(event) => setPetName(event.target.value)}
+                  />
+                </td>
+                <td>
+                  <FormField
+                    id='timeInput'
+                    type='dateTime-local'
+                    placeholder='Time'
+                    label='Date & Time'
+                    isRequired={false}
+                    onChange={(event) => setTime(event.target.value)}
                   />
                 </td>
               </tr>
             </tbody>
           </table>
           <FormField
-            id='timeInput'
-            type='dateTime-local'
-            placeholder='Time'
-            label='Date & Time'
-            isRequired={true}
-            onChange={(event) => setTime(event.target.value)}
-          />
-          <FormField
             id='notesInput'
             type='textarea'
             placeholder='Add notes here'
             label='Description'
-            isRequired={true}
+            isRequired={false}
             onChange={(event) => setNotes(event.target.value)}
           />
           <div className='mx-auto my-2 flex flex-col p-1 '>
