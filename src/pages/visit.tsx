@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 
 import Header from '@/components/Header'
 import NavBar from '@/components/NavBar'
@@ -14,8 +14,6 @@ const Visit = () => {
   const [searchQuery, setSearchQuery] = useState('')
   const { getCurrentForm, setCurrentForm } = useVisit()
 
-  // let currentForm = getCurrentForm();
-
   const setVisitForm = (isActive: boolean) => {
     if (isActive) {
       setCurrentForm(<VisitForm setVisitForm={setVisitForm} />)
@@ -29,7 +27,7 @@ const Visit = () => {
       <Header pageTitle='Visit' />
       <TopNav />
       <main className='h-[calc(100%-7rem)]'>
-        {getCurrentForm() === null ? (
+        {getCurrentForm() !== null ? (
           getCurrentForm()
         ) : (
           <div className='flex h-full w-screen flex-col p-4'>
