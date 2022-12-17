@@ -7,6 +7,7 @@ import RegionSelector from '@/components/Contact/regiondropdown'
 import TagSelector from '@/components/Contact/tagdropdown'
 import { useContact } from '@/context/ContactContext/context'
 import type { Contact } from '@/types/types'
+
 import Button from '../UI/button'
 
 type ContactInfoProps = {
@@ -74,7 +75,7 @@ const ContactForm = ({
 
   return (
     <form onSubmit={submitForm}>
-      <div className='flex flex-col items-center justify-center gap-3'>
+      <div className='flex flex-col mb-10 items-center justify-center gap-3'>
         {/* USER PROFILE IMAGE */}
         <Avatar
           image={image}
@@ -183,8 +184,7 @@ const ContactForm = ({
           />
         </Box>
         {/* FORM BUTTONS */}
-        <div className='mb-3 flex justify-center'>
-          <div className='space-y-2'>
+        <div className=' flex justify-center'>
             <Button type='submit' fullwidth>
               Save
             </Button>
@@ -200,7 +200,6 @@ const ContactForm = ({
               </Button>
             )}
           </div>
-        </div>
       </div>
     </form>
   )
