@@ -1,14 +1,13 @@
-import { XIcon } from '@heroicons/react/solid'
 import { FormEvent, useState } from 'react'
-
-import { useAuth } from '@/context/Firebase/Auth/context'
-import { VetConcernsForm } from '@/types/types'
+import Link from 'next/link'
+import { useRouter } from 'next/router'
+import { XIcon } from '@heroicons/react/solid'
 
 import { withProtected } from '@/components/PrivateRoute'
 import Button from '@/components/UI/button'
 import FormField from '@/components/Visit/formfield'
-import Link from 'next/link'
-import { useRouter } from 'next/router'
+import { useAuth } from '@/context/Firebase/Auth/context'
+import { VetConcernsForm } from '@/types/types'
 
 const VetForm = () => {
   const { currentUser } = useAuth()
@@ -55,7 +54,7 @@ const VetForm = () => {
         </div>
 
         <div className='border-b-2 border-primary py-3 pt-10'>
-          <h1 className='pl-2 text-2xl font-bold'>Add Your Vet</h1>
+          <h1 className='pl-2 text-2xl font-bold'>Register a Vet Concern</h1>
         </div>
 
         <form className='pt-3' onSubmit={handleSubmit}>
