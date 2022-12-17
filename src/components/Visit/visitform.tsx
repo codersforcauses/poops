@@ -9,12 +9,9 @@ import { VisitData } from '@/types/types'
 import CommuteSelector from './commuteselector'
 import FormField from './formfield'
 import Button from '../UI/button'
+import { useVisit } from '@/context/VisitContext/context'
 
-interface ModalViewProps {
-  setVisitForm: (isActive: boolean) => void
-}
-
-const ModalView = ({ setVisitForm }: ModalViewProps) => {
+const ModalView = () => {
   const { userDoc, updateVisit } = useFirestore()
   const [visitType, setVisitType] = useState('')
   const [clientName, setClientName] = useState('')
@@ -25,6 +22,7 @@ const ModalView = ({ setVisitForm }: ModalViewProps) => {
   const [commuteDist, setCommuteDist] = useState(NaN)
   const [commuteMethod, setCommuteMethod] = useState('')
   const [notes, setNotes] = useState('')
+  const { setCurrentForm } = useVisit()
 
   const handleSubmit = (click: FormEvent<HTMLFormElement>) => {
     click.preventDefault()
@@ -41,7 +39,7 @@ const ModalView = ({ setVisitForm }: ModalViewProps) => {
     }
     userDoc.visits.push(data)
     updateVisit?.(userDoc)
-    setVisitForm(false)
+    setCurrentForm(null)
   }
 
   const isSubmitEnabled = () => {
@@ -61,7 +59,7 @@ const ModalView = ({ setVisitForm }: ModalViewProps) => {
     <div className='z-50 p-4'>
       <>
         <div className='fixed right-5 top-4 z-[100] h-10 w-10 rounded-full bg-primary p-1 drop-shadow-default'>
-          <button onClick={() => setVisitForm(false)}>
+          <button onClick={() => setCurrentForm(null)}>
             <XIcon className='h-full w-full text-white' />
           </button>
         </div>

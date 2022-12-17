@@ -4,12 +4,16 @@ import { formatDuration } from '@/components/Visit/visitinstance'
 import { VisitData } from '@/types/types'
 
 import Button from '../UI/button'
+import { useVisit } from '@/context/VisitContext/context'
+import IncidentForm from '@/components/Visit/incidentform'
 
 const formatTime = (time: Timestamp) => {
   return time.toDate().toLocaleString().slice(0, -3)
 }
 
 const ReadOnlyVisitInstance = (props: VisitData) => {
+  const { setCurrentForm } = useVisit()
+
   return (
     <>
       <div className='font-bold peer-checked:font-normal'>
@@ -26,8 +30,15 @@ const ReadOnlyVisitInstance = (props: VisitData) => {
         <p>Commute Method: {props.commuteMethod}</p>
         <p>Notes: {props.notes}</p>
         <div className='my-2 flex justify-center gap-2'>
-          <Button size='medium'>Register vet concern </Button>
-          <Button size='medium'>Report incident</Button>
+          {/* <Button size='medium' onClick={() => setCurrentForm(<VetForm />)}>
+            Register vet concern{' '}
+          </Button> */}
+          <Button
+            size='medium'
+            onClick={() => setCurrentForm(<IncidentForm />)}
+          >
+            Report incident
+          </Button>
         </div>
       </div>
     </>

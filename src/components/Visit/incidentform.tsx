@@ -5,18 +5,16 @@ import { IncidentForm } from '@/types/types'
 
 import FormField from './formfield'
 import Button from '../UI/button'
+import { useVisit } from '@/context/VisitContext/context'
 
-interface IncidentFormProps {
-  setIncidentForm: (isActive: boolean) => void
-}
-
-const IncidentForm = ({ setIncidentForm }: IncidentFormProps) => {
+const IncidentForm = () => {
   const [userID, setUserID] = useState('') //get from firebase auth, not form
   const [userName, setUserName] = useState('') //could just get username and email from login?
   const [email, setEmail] = useState('')
   const [petName, setPetName] = useState('')
   const [time, setTime] = useState('') //check issue comments for date/time
   const [notes, setNotes] = useState('')
+  const { setCurrentForm } = useVisit()
 
   const handleSubmit = (click: FormEvent<HTMLFormElement>) => {
     click.preventDefault()
@@ -29,7 +27,7 @@ const IncidentForm = ({ setIncidentForm }: IncidentFormProps) => {
       details: notes
     }
     console.log(data)
-    setIncidentForm(false)
+    setCurrentForm(null)
   }
 
   const isSubmitEnabled = () => {
@@ -40,7 +38,7 @@ const IncidentForm = ({ setIncidentForm }: IncidentFormProps) => {
     <div className='z-50 p-4'>
       <>
         <div className='fixed right-5 top-4 z-[100] h-10 w-10 rounded-full bg-primary p-1 drop-shadow-default'>
-          <button onClick={() => setIncidentForm(false)}>
+          <button onClick={() => setCurrentForm(null)}>
             <XIcon className='h-full w-full text-white' />
           </button>
         </div>

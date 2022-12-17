@@ -1,4 +1,6 @@
+import { useVisit } from '@/context/VisitContext/context'
 import { PencilIcon, PlusIcon, XIcon } from '@heroicons/react/solid'
+import VisitForm from '@/components/Visit/visitform'
 
 interface EditButtonProps {
   isEditable: boolean
@@ -24,14 +26,11 @@ export const EditButton = (props: EditButtonProps) => {
   )
 }
 
-interface AddButtonProps {
-  setVisitForm: (isActive: boolean) => void
-}
-
-export const AddButton = ({ setVisitForm }: AddButtonProps) => {
+export const AddButton = () => {
+  const { setCurrentForm } = useVisit()
   return (
     <div className='align-center flex h-10 w-10 place-items-center self-center rounded-full bg-primary p-1 drop-shadow-default'>
-      <button type='button' onClick={() => setVisitForm(true)}>
+      <button type='button' onClick={() => setCurrentForm(<VisitForm />)}>
         <PlusIcon className='flex h-full w-full self-center text-white' />
       </button>
     </div>
