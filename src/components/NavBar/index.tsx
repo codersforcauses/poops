@@ -1,9 +1,12 @@
 import { useState } from 'react'
+import Image from 'next/image'
 import { useRouter } from 'next/router'
 import { ChatAltIcon, HomeIcon } from '@heroicons/react/outline'
 
-import { NavIcon } from '@/components/NavBar/navicon'
+//import { NavIcon } from '@/components/NavBar/navicon'
 import NavLink from '@/components/NavBar/navlink'
+
+import PoopsSVG from '../../../public/images/poops.svg'
 
 export default function NavBar() {
   // Gets top level path, capitalises first letter
@@ -26,6 +29,15 @@ export default function NavBar() {
       name: 'Contact',
       route: '/contact',
       icon: <ChatAltIcon className={iconClasses} />
+    },
+    {
+      name: 'Visit',
+      route: '/visit',
+      icon: (
+        <div className='relative inline-block h-7 w-8 hover:text-primary'>
+          <Image alt='dog-icon' src={PoopsSVG} layout='fill' />
+        </div>
+      )
     }
   ]
 
@@ -42,22 +54,22 @@ export default function NavBar() {
     )
   })
 
-  const visitLinkDetail = {
-    name: 'Visit',
-    route: '/visit',
-    icon: <NavIcon currentPage={currentPage} />
-  }
+  // const visitLinkDetail = {
+  //   name: 'Visit',
+  //   route: '/visit',
+  //   icon: <NavIcon currentPage={currentPage} />
+  // }
 
-  const visitNavLink = (
-    <NavLink
-      href={visitLinkDetail.route}
-      name={visitLinkDetail.name}
-      key={visitLinkDetail.name}
-      currentPage={visitLinkDetail.name === currentPage}
-      setCurrentPage={setCurrentPage}
-      icon={visitLinkDetail.icon}
-    />
-  )
+  // const visitNavLink = (
+  //   <NavLink
+  //     href={visitLinkDetail.route}
+  //     name={visitLinkDetail.name}
+  //     key={visitLinkDetail.name}
+  //     currentPage={visitLinkDetail.name === currentPage}
+  //     setCurrentPage={setCurrentPage}
+  //     icon={visitLinkDetail.icon}
+  //   />
+  //)
 
   return (
     <div className='h-16 w-full'>
@@ -65,7 +77,7 @@ export default function NavBar() {
         id='bottom-navigation'
         className='fixed inset-x-0 bottom-0 z-10 block h-16 bg-white shadow'
       >
-        {visitNavLink}
+        {/* {visitNavLink} */}
         <div className='flex justify-between'>{navLinks}</div>
       </nav>
     </div>
