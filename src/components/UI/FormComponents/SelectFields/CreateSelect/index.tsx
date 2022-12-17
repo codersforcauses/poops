@@ -50,7 +50,7 @@ const CreateSelect = <
   } = useContext(FormContext)
   const error: string | undefined =
     formState?.errors?.[name]?.message?.toString() || undefined
-  const value: Option | undefined = watch?.(name)
+  const currValue: Option | Option[] | undefined = watch?.(name)
 
   const [options, setOptions] = usePersistentState<
     OptionsOrGroups<Option, Group>
@@ -69,7 +69,8 @@ const CreateSelect = <
     const newOption = { label: value, value }
     setOptions((prev: Option[]) => [...prev, newOption])
 
-    if (isMulti) setValue?.(name, [...options, newOption])
+    if (isMulti && currValue instanceof Array)
+      setValue?.(name, [...currValue, newOption])
     else setValue?.(name, newOption)
   }
 
@@ -97,7 +98,7 @@ const CreateSelect = <
           isClearable={isClearable}
           isMulti={isMulti}
           options={options}
-          value={value}
+          value={currValue}
           onChange={handleChange}
           onCreateOption={handleCreate}
           placeholder='Select...'
