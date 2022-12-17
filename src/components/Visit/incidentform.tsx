@@ -6,11 +6,11 @@ import { IncidentForm } from '@/types/types'
 import FormField from './formfield'
 import Button from '../UI/button'
 
-interface ModalViewProps {
+interface IncidentFormProps {
   setIncidentForm: (isActive: boolean) => void
 }
 
-const ModalView = ({ setIncidentForm }: ModalViewProps) => {
+const IncidentForm = ({ setIncidentForm }: IncidentFormProps) => {
   const [userID, setUserID] = useState('') //get from firebase auth, not form
   const [userName, setUserName] = useState('') //could just get username and email from login?
   const [email, setEmail] = useState('')
@@ -125,4 +125,4 @@ const ModalView = ({ setIncidentForm }: ModalViewProps) => {
   )
 }
 
-export default ModalView
+export default IncidentForm
