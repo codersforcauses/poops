@@ -40,6 +40,7 @@ const Contact = () => {
   }, [allContacts])
 
   const contactIndex = getDisplayContactIndex()
+  const creatingNewContact = getCreatingNewContact()
 
   return (
     <>
@@ -47,7 +48,7 @@ const Contact = () => {
       <Header pageTitle='Contact' />
       <TopNav />
       <main className='h-[calc(100%-7rem)]'>
-        {contactIndex === null && !getCreatingNewContact() && (
+        {contactIndex === null && !creatingNewContact && (
           <div className='m-auto flex h-14 max-w-md flex-row'>
             <div className='flex-1'></div>
             <h1 className='m-3 flex-1 text-center text-2xl'>Contacts</h1>
@@ -59,7 +60,7 @@ const Contact = () => {
           </div>
         )}
         <div className='m-auto max-w-md'>
-          {contactIndex === null && !getCreatingNewContact() && (
+          {contactIndex === null && !creatingNewContact && (
             <div className='border-grey m-2 flex flex-row rounded-xl border-2'>
               <SearchTag
                 name='Filter By'
@@ -74,7 +75,7 @@ const Contact = () => {
               </div>
             </div>
           )}
-          {contactIndex === null && !getCreatingNewContact() ? (
+          {contactIndex === null && !creatingNewContact ? (
             <>
               <ContactItem
                 image=''
