@@ -89,7 +89,7 @@ function ContactInfo({ firestoreIndex, image }: ContactInfoProps) {
       </Box>
       {/* TAGS */}
       <Box>
-        <label htmlFor='tags' className='text-dark-red'>
+        <label htmlFor='tags' className='text-primary-dark'>
           Tags
         </label>
         <TagHolder className='mt-1'>
@@ -105,7 +105,7 @@ function ContactInfo({ firestoreIndex, image }: ContactInfoProps) {
       {/* REGIONS */}
       {contact.region && (
         <Box className='pb-3'>
-          <label htmlFor='regions' className='text-dark-red'>
+          <label htmlFor='regions' className='text-primary-dark'>
             Region
           </label>
 
@@ -121,7 +121,7 @@ function ContactInfo({ firestoreIndex, image }: ContactInfoProps) {
       {/* PETS */}
       {isContact && (
         <Box className='flex flex-col'>
-          <label htmlFor={contact.pets} className='text-dark-red'>
+          <label htmlFor={contact.pets} className='text-primary-dark'>
             Pets
           </label>
           <span className='text-xl'>{contact.pets}</span>
@@ -130,7 +130,7 @@ function ContactInfo({ firestoreIndex, image }: ContactInfoProps) {
       {/* NOTES */}
       {isContact && (
         <Box className='flex flex-col'>
-          <label htmlFor={contact.notes} className='text-dark-red'>
+          <label htmlFor={contact.notes} className='text-primary-dark'>
             Notes
           </label>
           <span className='text-xl'> {contact.notes} </span>
