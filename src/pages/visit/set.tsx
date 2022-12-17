@@ -25,6 +25,7 @@ const Set = () => {
   const handleDelete = async () => {
     const tmp: VisitData[] = [...userDoc.visits]
     const tmp2 = { ...userDoc }
+    tmp.splice(Number(id), 1)
     tmp2.visits = tmp
 
     await updateVisit?.(tmp2)

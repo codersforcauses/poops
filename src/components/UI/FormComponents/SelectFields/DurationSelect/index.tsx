@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react'
+import { useContext, useEffect } from 'react'
 
 import {
   FormContext,
@@ -16,7 +16,6 @@ export interface DurationSelectProps extends FormFieldProps {
   defaultValue?: Duration
 }
 
-// ! hour value exists in state and form but does not render
 const DurationSelect = ({
   description,
   disabled = false,
@@ -30,28 +29,14 @@ const DurationSelect = ({
     formState,
     disabled: formDisabled,
     setFocus,
-    register,
-    watch,
-    setValue
+    register
   } = useContext(FormContext)
   const error: string | undefined =
     formState?.errors?.[props.name]?.message?.toString() || undefined
-  const value: Duration | undefined = watch?.(props.name)
-
-  const [hours, setHours] = useState(
-    value?.hours || props.defaultValue?.hours || 0
-  )
-  const [minutes, setMinutes] = useState(
-    value?.minutes || props.defaultValue?.minutes || 0
-  )
 
   useEffect(() => {
     setFocused && setFocus?.(props.name)
   }, [props.name, setFocus, setFocused])
-
-  useEffect(() => {
-    register?.(props.name)
-  }, [register, props.name])
 
   return (
     <FieldControl
@@ -70,20 +55,11 @@ const DurationSelect = ({
           ]
             .join(' ')
             .trim()}
-          {...register?.(props.name, rules)}
         >
           <select
             className='form-input flex w-full overflow-scroll rounded-l border-none text-center'
             id='hours'
-            value={value?.hours}
-            onChange={(e) => {
-              const v = +e.target.value
-              setHours(v)
-              setValue?.(props.name, {
-                hours: v,
-                minutes: minutes
-              })
-            }}
+            {...register?.(`${props.name}.hours`, rules)}
           >
             <option value={0}>0</option>
             <option value={1}>1</option>
@@ -100,15 +76,7 @@ const DurationSelect = ({
           <select
             className='form-input flex w-full rounded-r border-none text-center'
             id='minutes'
-            value={value?.minutes}
-            onChange={(e) => {
-              const v = +e.target.value
-              setMinutes(v)
-              setValue?.(props.name, {
-                hours: hours,
-                minutes: v
-              })
-            }}
+            {...register?.(`${props.name}.minutes`, rules)}
           >
             <option value={0}>00</option>
             <option value={15}>15</option>

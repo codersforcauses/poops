@@ -14,6 +14,7 @@ import {
 import { SelectOption } from '@/components/UI/FormComponents/SelectFields/utils'
 import TextField from '@/components/UI/FormComponents/TextField'
 import validationSchema from '@/components/Visit/VisitForm/validation'
+import { AlertVariant, useAlert } from '@/context/AlertContext'
 import { useFirestore } from '@/context/Firebase/Firestore/context'
 import { Duration, VisitData } from '@/types/types'
 import { defaultCommuteMethods, formatTimestamp, visitTypes } from '@/utils'
@@ -43,8 +44,9 @@ export const VisitForm = ({ visitData, id }: VisitFormProps) => {
   const { userDoc, updateVisit } = useFirestore()
   const { reset } = useContext(FormContext)
   const router = useRouter()
+  const { setAlert } = useAlert()
 
-  const handleSubmit: SubmitHandler<FormValues> = (formData) => {
+  const handleSubmit: SubmitHandler<FormValues> = async (formData) => {
     const data: VisitData = {
       type: formData.visitType.value,
       clientName: formData.clientName.value.clientName,
@@ -57,17 +59,25 @@ export const VisitForm = ({ visitData, id }: VisitFormProps) => {
       notes: formData.notes
     }
 
-    // console.log(data)
-
-    if (visitData && id) {
-      userDoc.visits[id] = data
+    let tmp: VisitData[] = [...userDoc.visits]
+    if (id !== null) {
+      tmp[id] = data
     } else {
-      userDoc.visits.push(data)
+      tmp = [data, ...tmp]
     }
 
-    updateVisit?.(userDoc)
+    const tmp2 = { ...userDoc }
+    tmp2.visits = tmp
+    await updateVisit?.(tmp2)
+    setAlert({
+      variant: AlertVariant.info,
+      title: 'Success!',
+      text: 'Visits have been updated',
+      position: 'bottom',
+      showFor: 1000
+    })
+
     router.push('/visit')
-    // TODO: add alert?
   }
 
   return (
