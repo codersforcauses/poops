@@ -1,6 +1,7 @@
 import { Timestamp } from 'firebase/firestore'
 
 import IncidentForm from '@/components/Visit/incidentform'
+import VetForm from '@/components/Visit/vetconcernform'
 import { formatDuration } from '@/components/Visit/visitinstance'
 import { useVisit } from '@/context/VisitContext/context'
 import { VisitData } from '@/types/types'
@@ -38,6 +39,12 @@ const ReadOnlyVisitInstance = (props: VisitData) => {
             onClick={() => setCurrentForm(<IncidentForm />)}
           >
             Report incident
+          </Button>
+          <Button
+            size='medium'
+            onClick={() => setCurrentForm(<VetForm />)}
+          >
+            Register Vet Concern
           </Button>
         </div>
       </div>

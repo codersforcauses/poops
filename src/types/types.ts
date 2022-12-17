@@ -57,3 +57,13 @@ export type IncidentForm = {
   time: string
   details: string
 }
+
+export type VetConcernsForm = {
+  userID: string
+  userName: string
+  email: string
+  petName: string
+  vetName: string
+  time: string
+  details: string
+}
