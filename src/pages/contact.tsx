@@ -1,5 +1,5 @@
 import { useMemo } from 'react'
-import { SearchIcon } from '@heroicons/react/outline'
+import { MagnifyingGlassIcon } from '@heroicons/react/24/outline'
 
 import ContactDetails from '@/components/Contact/contactdetails'
 import ContactItem from '@/components/Contact/contactitem'
@@ -71,7 +71,7 @@ const Contact = () => {
               />
               <div className='flex w-full justify-between'>
                 <SearchBar onChangeHandler={onSearchChange} />
-                <SearchIcon className='my-auto mx-2 h-6' />
+                <MagnifyingGlassIcon className='my-auto mx-2 h-6' />
               </div>
             </div>
           )}

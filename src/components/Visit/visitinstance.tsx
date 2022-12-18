@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction, useState } from 'react'
-import ChevronDownIcon from '@heroicons/react/outline/ChevronDownIcon'
+import { ChevronDownIcon } from '@heroicons/react/24/outline'
 
 import { VisitData } from '@/types/types'
 
@@ -17,7 +17,7 @@ const VisitInstance = (props: VisitInstanceProps) => {
   return (
     <div
       key={props.id}
-      className='m-2 flex flex-col rounded-xl bg-cream p-4 drop-shadow-default'
+      className='m-2 flex flex-col space-y-1 rounded-xl bg-gray-50 p-2 drop-shadow-default'
     >
       <div className='flex justify-between'>
         <div className='relative w-full'>
