@@ -27,6 +27,7 @@ const FirestoreProvider = ({ children }: { children: ReactNode }) => {
       //try to get existing doc if the doc does not exist then create a new doc with uid as its ref
       try {
         const userDocSnap = await getDoc(doc(db, 'users', currentUser.uid))
+
         if (userDocSnap.exists()) {
           const userDocData = userDocSnap.data() as UserData
           setUserDoc(userDocData)

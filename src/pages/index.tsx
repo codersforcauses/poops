@@ -3,9 +3,17 @@ import Modal from '@/components/Home/modal'
 import Summary from '@/components/Home/summary'
 import NavBar from '@/components/NavBar'
 import TopNav from '@/components/TopNav'
+import Button from '@/components/UI/button'
+import { useAuth } from '@/context/Firebase/Auth/context'
+import useUser from '@/hooks/user'
 const dummyUsername = 'User'
 
 const Home = () => {
+  const { getUser, updateUser } = useUser()
+  const { data } = getUser()
+  const { mutate } = updateUser()
+  console.log(data)
+
   return (
     <>
       <Header pageTitle='Home' />
@@ -16,6 +24,16 @@ const Home = () => {
             <h1 className='py-3 text-center text-3xl'>
               Welcome, {dummyUsername}!
             </h1>
+            <Button
+              onClick={() => {
+                mutate({
+                  ...data!.info,
+                  clientName: 'Test',
+                })
+              }}
+            >
+              Click Me!
+            </Button>
             <Summary />
             <br />
             <div className='flex justify-center overscroll-none'>
