@@ -23,16 +23,11 @@ const DurationSelector = (props: DurationProps) => {
           defaultValue={props.defaultValue?.hours}
           onChange={props.onHourChange}
         >
-          <option value={0}>0</option>
-          <option value={1}>1</option>
-          <option value={2}>2</option>
-          <option value={3}>3</option>
-          <option value={4}>4</option>
-          <option value={5}>5</option>
-          <option value={6}>6</option>
-          <option value={7}>7</option>
-          <option value={8}>8</option>
-          <option value={9}>9</option>
+          {Array.from(Array(10), (_, i) => (
+            <option key={i} value={i}>
+              {i}
+            </option>
+          ))}
         </select>
         <div className='self-center'>:</div>
         <select
@@ -41,10 +36,11 @@ const DurationSelector = (props: DurationProps) => {
           defaultValue={props.defaultValue?.minutes}
           onChange={props.onMinuteChange}
         >
-          <option value={0}>00</option>
-          <option value={15}>15</option>
-          <option value={30}>30</option>
-          <option value={45}>45</option>
+          {Array.from(Array(4), (_, i) => (
+            <option key={i} value={i * 15}>
+              {i * 15}
+            </option>
+          ))}
         </select>
       </div>
     </div>
