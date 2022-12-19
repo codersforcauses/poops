@@ -1,4 +1,3 @@
-import React from 'react'
 import Link from 'next/link'
 import { PencilIcon, PlusIcon } from '@heroicons/react/solid'
 
