@@ -1,4 +1,5 @@
 /// <reference types="cypress" />
+
 // ***********************************************
 // This example commands.ts shows you how to
 // create various custom commands and overwrite
@@ -35,5 +36,28 @@
 //     }
 //   }
 // }
+
+// Cypress.Commands.addAll({
+//   loginNative(
+//     redirectPath = '/',
+//     credentials = {
+//       email: Cypress.env(`EMAIL`) as string,
+//       password: Cypress.env(`PASSWORD`) as string
+//     }
+//   ) {
+//     cy.session([credentials.email, credentials.password], () => {
+//       signInNatively(credentials)
+//     })
+
+//     cy.visit(redirectPath)
+//   },
+//   loginExternal(redirectPath = '/', provider: AuthProvider) {
+//     cy.session([provider.providerId], () => {
+//       signInExternally(provider)
+//     })
+
+//     cy.visit(redirectPath)
+//   }
+// })
 
 export {}

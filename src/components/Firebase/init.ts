@@ -27,11 +27,8 @@ if (clientSide) {
   auth = getAuth(app)
   db = getFirestore(app)
 
-  // Use emulator if running in development and emualtor is running
-  // if (
-  //   location?.hostname === 'localhost' &&
-  //   process.env.NODE_ENV === 'development'
-  // ) {
+  // Use emulator if running in test and emulator is running
+  // if (location?.hostname === 'localhost' && process.env.NODE_ENV === 'test') {
   //   connectAuthEmulator(auth, 'http://localhost:9099')
   //   connectFirestoreEmulator(db, 'localhost', 8080)
   //   console.log('Connected to emulator')

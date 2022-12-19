@@ -27,7 +27,9 @@
     "format:check": "prettier -c .",
     "prepare": "husky install",
     "firebase": "cd firebase && yarn",
-    "cypress:open": "cypress open"
+    "cypress": "cypress open",
+    "cypress:headless": "cypress run",
+    "test": "NODE_ENV=test & next dev"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.2.1",
