@@ -1,6 +1,7 @@
 import { FirebaseApp, getApp, getApps, initializeApp } from 'firebase/app'
-import { Auth, getAuth } from 'firebase/auth'
+import { Auth, connectAuthEmulator, getAuth } from 'firebase/auth'
 import {
+  connectFirestoreEmulator,
   enableMultiTabIndexedDbPersistence,
   Firestore,
   getFirestore
@@ -27,13 +28,20 @@ if (clientSide) {
   auth = getAuth(app)
   db = getFirestore(app)
 
-  // Use emulator if running in test and emulator is running
-  // if (location?.hostname === 'localhost' && process.env.NODE_ENV === 'test') {
-  //   connectAuthEmulator(auth, 'http://localhost:9099')
-  //   connectFirestoreEmulator(db, 'localhost', 8080)
-  //   console.log('Connected to emulator')
-  // }
+  // Use emulator if running in dev and emulator is running
+  if (
+    location?.hostname === 'localhost' &&
+    process.env.NODE_ENV === 'development'
+  ) {
+    connectAuthEmulator(auth, 'http://localhost:9099')
+    connectFirestoreEmulator(db, 'localhost', 8080)
+    console.log('Connected to emulator')
 
+    // Pass the auth to the window if Cypress is running
+    if (window.Cypress) {
+      window.Firebase = [auth]
+    }
+  }
   // Enables offline support for firestore
   enableMultiTabIndexedDbPersistence(db).catch((err) => {
     if (err.code == 'failed-precondition') {
@@ -56,3 +64,10 @@ if (clientSide) {
 }
 
 export { auth, db }
+
+declare global {
+  interface Window {
+    Cypress?: unknown
+    Firebase: Auth[]
+  }
+}

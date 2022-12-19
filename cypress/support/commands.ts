@@ -41,19 +41,19 @@
 //   loginNative(
 //     redirectPath = '/',
 //     credentials = {
-//       email: Cypress.env(`EMAIL`) as string,
-//       password: Cypress.env(`PASSWORD`) as string
+//       email: Cypress.env('EMAIL') as string,
+//       password: Cypress.env('PASSWORD') as string
 //     }
 //   ) {
 //     cy.session([credentials.email, credentials.password], () => {
-//       signInNatively(credentials)
+//       loginNatively(credentials)
 //     })
 
 //     cy.visit(redirectPath)
 //   },
 //   loginExternal(redirectPath = '/', provider: AuthProvider) {
 //     cy.session([provider.providerId], () => {
-//       signInExternally(provider)
+//       loginExternally(provider)
 //     })
 
 //     cy.visit(redirectPath)

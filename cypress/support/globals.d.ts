@@ -21,6 +21,10 @@ declare global {
        * @example cy.loginExternal('/', new GoogleAuthProvider())
        */
       loginExternal(redirectPath?: string, provider?: AuthProvider): void
+
+      signAs({ uid, displayName, photoURL }): void
+
+      clearAuthState(): void
     }
   }
 }
