@@ -1,13 +1,4 @@
 import {
-  // faApple,
-  faFacebookF,
-  faGoogle,
-  faMicrosoft
-  // faTwitter,
-  // faYahoo
-} from '@fortawesome/free-brands-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import {
   Auth,
   AuthProvider,
   FacebookAuthProvider,
@@ -18,6 +9,7 @@ import {
 } from 'firebase/auth'
 
 import LoginButton from '@/components/Login/LoginButton'
+import Logo from '@/components/UI/logoSvg'
 import { useAuth } from '@/context/Firebase/Auth/context'
 
 export interface LoginPanelInterface {
@@ -35,9 +27,9 @@ const LoginPanel = ({
 }: LoginPanelInterface) => {
   const { externalAuthSignIn, linkAuthProvider, currentUser, auth } = useAuth()
 
-  const googleIcon = <FontAwesomeIcon icon={faGoogle} />
-  const facebookIcon = <FontAwesomeIcon icon={faFacebookF} />
-  const microsoftIcon = <FontAwesomeIcon icon={faMicrosoft} />
+  const googleIcon = <Logo name='Google' viewBox='0 0 24 24' />
+  const facebookIcon = <Logo name='Facebook' viewBox='0 0 24 24' />
+  const microsoftIcon = <Logo name='Microsoft' viewBox='0 0 24 24' />
 
   const googleProvider = new GoogleAuthProvider()
   const facebookProvider = new FacebookAuthProvider()
@@ -70,7 +62,7 @@ const LoginPanel = ({
         onClick={() => handleExternalAuth(auth, currentUser, googleProvider)}
         icon={googleIcon}
         buttonlabel={buttonString('Google')}
-        style='h-12 rounded-full border-4 border-t-googleblue border-r-googlegreen border-b-googleyellow border-l-googlered px-6 transition duration-300'
+        style='h-12 rounded-full border-4 border-t-[#4285F4] border-r-[#34A853] border-b-[#FBBC05] border-l-[#EA4335] px-6 transition duration-300'
         display={displayGoogle}
       />
 
@@ -79,7 +71,7 @@ const LoginPanel = ({
         onClick={() => handleExternalAuth(auth, currentUser, facebookProvider)}
         icon={facebookIcon}
         buttonlabel={buttonString('Facebook')}
-        style='group h-12 rounded-full border-4 border-facebook px-6 transition duration-300'
+        style='group h-12 rounded-full border-4 border-[#4267B2] px-6 transition duration-300'
         display={displayFacebook}
       />
 
@@ -88,7 +80,7 @@ const LoginPanel = ({
         onClick={() => handleExternalAuth(auth, currentUser, microsoftProvider)}
         icon={microsoftIcon}
         buttonlabel={buttonString('Microsoft')}
-        style='group h-12 rounded-full border-4 border-microsoftblue px-6 transition duration-300'
+        style='group h-12 rounded-full border-4 border-[#00A4EF] px-6 transition duration-300'
         display={displayMicrosoft}
       />
 
