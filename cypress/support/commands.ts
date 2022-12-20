@@ -37,27 +37,4 @@
 //   }
 // }
 
-// Cypress.Commands.addAll({
-//   loginNative(
-//     redirectPath = '/',
-//     credentials = {
-//       email: Cypress.env('EMAIL') as string,
-//       password: Cypress.env('PASSWORD') as string
-//     }
-//   ) {
-//     cy.session([credentials.email, credentials.password], () => {
-//       loginNatively(credentials)
-//     })
-
-//     cy.visit(redirectPath)
-//   },
-//   loginExternal(redirectPath = '/', provider: AuthProvider) {
-//     cy.session([provider.providerId], () => {
-//       loginExternally(provider)
-//     })
-
-//     cy.visit(redirectPath)
-//   }
-// })
-
 export {}

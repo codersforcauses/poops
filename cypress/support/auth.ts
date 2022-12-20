@@ -1,31 +1,10 @@
 // https://github.com/akauppi/GroundLevel-firebase-es/blob/master/packages/app/cypress/support/auth.js
 
-/*
- * cypress/support/auth.js
- *
- * Add commands for signing in/out from Firebase auth.
- *
- * Implementation note:
- *   We use "real" 'signInWithCustomToken' that signs up the users in Firebase Auth Emulation. 'npm run dev' has the
- *   '?user=xyz' parameter that would do the same but we don't need to go through it.
- *
- * Note:
- *   Cannot 'import' any of the application sources, since they use '/@xxx' path mapping. (This should be fine.)
- */
 import { signInWithCustomToken, updateProfile } from '@firebase/auth'
 import { Auth } from 'firebase/auth'
 
-/*
- * 'cy.clearAuthState'
- *
- * Make sure a test starts without prior login. No access to 'firebase' is needed; thus the test does not need to do
- * 'cy.visit'.
- *
- * Note:
- *   This is needed because Cypress does _not_ clear IndexedDB between tests. The whole discussion about how state
- *   clearing / carry-over is to be handled is still ongoing (Oct 2020; Cypress 5.3.0). The stated _idea_ is that
- *   default would "clear all" (it doesn't, currently), but test authors be given control about which parts they
- *   want cleared, which not. Makes sense.
+/**
+ * Clears firebase auth state since Cypress does not clear IndexedDB between sessions.
  */
 Cypress.Commands.add('clearAuthState', () => {
   const prom = new Promise((resolve, reject) => {
@@ -37,75 +16,53 @@ Cypress.Commands.add('clearAuthState', () => {
   cy.wrap(prom)
 })
 
-/*
- * 'cy.signAs'
- *
- * Sign in as a certain user, to Firebase Auth emulation.
- *
- * Creates the user ad-hoc, with fields (if given) 'uid', 'displayName' and 'photoURL' (more fields can be supported,
- * if needed).
+/**
+ * Sign in as a certain user to Firebase Auth emulation.
+ * Creates the user ad-hoc, with fields (if given) 'uid', 'displayName' and 'photoURL'.
  */
-Cypress.Commands.add('signAs', ({ uid, displayName, photoURL }) => {
-  if (!uid) fail("No 'uid' provided.")
+Cypress.Commands.add('login', ({ uid, displayName, photoURL }) => {
+  if (!uid) throw new Error('No uid provided')
 
-  firebaseAuthChainable().then(
-    (auth) => promGen(auth) // can return Promise for 'then'
-  ) /*.then( user =>
-    cy.log(`Signed as: ${ JSON.stringify(user) }` );   // DEBUG
-  )*/
+  cy.log(`Logging with as '${uid}'...`)
 
-  // The auth logic.
-  //
-  // Note: No 'cy.log' (or any other 'cy.*') within the Promise definition.
-  //
-  async function promGen(auth: Auth) {
+  /**
+   * Sign in with the uid.
+   * @param auth the auth handle
+   * @returns promise containing the current user
+   */
+  const promGen = async (auth: Auth) => {
     // Create a user based on the provided token (only '.uid' is used by Firebase)
-    //
-    const { user: /*as*/ currentUser } = await signInWithCustomToken(
+    const { user: currentUser } = await signInWithCustomToken(
       auth,
       JSON.stringify({ uid })
     )
     assert(currentUser.uid === uid)
 
-    // Set '.displayName', '.photoURL'; for email and password, other functions exist (not implemented)
+    // Set profile
     await updateProfile(currentUser, { displayName, photoURL })
 
     return currentUser
   }
+
+  firebaseAuthChainable().then(
+    (auth) => promGen(auth) // can return Promise for 'then'
+  )
 })
 
-/*
- * Provide the auth handle that the _app itself_ has.
+/**
+ * Provide the auth handle that the app has to Cypress.
  *
- * This seems to be required, in order to steer its user login/logout behaviour.
- *
- * Note:
- *   Tried also creating our own auth handle, so there wouldn't be any awareness of Cypress in the 'dev' bootup code,
- *   but that's not enough. The auth handle "works", but unrelated to the UI, thus - being pointless.
- *
- * Note:
- *   If we need access to any source code side things, this is how to get them. We cannot 'import' since the source
- *   uses '/@xyz' module redirects that Cypress doesn't know of.
+ * Creating our own auth handle does not work as the app will have no knowledge we logged in.
+ * We cannot simply import the auth handle since they are basically on separate servers.
+ * @returns promise containing the auth handle
  */
-function firebaseAuthChainable() {
-  // () => Chainable<FirebaseAuth>
-
+const firebaseAuthChainable = () => {
+  // Wait for browser side to initialise Firebase
   cy.visit('/')
 
-  // Wait until browser side's initialized Firebase, then claim the handle within here. DOES NOT WORK!!!
-  //  <<
-  //    Firebase: No Firebase App '[DEFAULT]' has been created - call Firebase App.initializeApp() (app/no-app).
-  //  <<
-  //
-  //return cy.window().its("Let's test!").then( _ => getAuth() );
-
-  // works (Firebase auth handle from browser side):
+  // Grab Firebase auth handle from browser side
   return cy
     .window()
     .its('Firebase')
     .then(([auth]) => auth)
-}
-
-function fail(msg: string | undefined) {
-  throw new Error(msg)
 }
