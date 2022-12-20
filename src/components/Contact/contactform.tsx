@@ -92,7 +92,7 @@ const ContactForm = ({
         />
         {/* FIRST AND LAST NAME */}
         <Box>
-          <label htmlFor={contact.clientName} className='text-dark-red'>
+          <label htmlFor={contact.clientName} className='text-primary-dark'>
             Full Name
           </label>
           <input
@@ -104,7 +104,7 @@ const ContactForm = ({
         </Box>
         {/* DESCRIPTION */}
         <Box>
-          <label htmlFor={contact.notes} className='text-dark-red'>
+          <label htmlFor={contact.notes} className='text-primary-dark'>
             Description
           </label>
           <textarea
@@ -116,7 +116,7 @@ const ContactForm = ({
         </Box>
         {/* PHONE */}
         <Box>
-          <label htmlFor={contact.phone} className='text-dark-red'>
+          <label htmlFor={contact.phone} className='text-primary-dark'>
             Phone
           </label>
           <input
@@ -128,7 +128,7 @@ const ContactForm = ({
         </Box>
         {/* EMAIL */}
         <Box>
-          <label htmlFor={contact.email} className='text-dark-red'>
+          <label htmlFor={contact.email} className='text-primary-dark'>
             Email
           </label>
           <input
@@ -140,7 +140,7 @@ const ContactForm = ({
         </Box>
         {/* ADDRESS */}
         <Box>
-          <label htmlFor={contact.streetAddress} className='text-dark-red'>
+          <label htmlFor={contact.streetAddress} className='text-primary-dark'>
             Address
           </label>
           <input
@@ -152,7 +152,7 @@ const ContactForm = ({
         </Box>
         {/* TAGS */}
         <Box>
-          <label htmlFor='tags' className='text-dark-red'>
+          <label htmlFor='tags' className='text-primary-dark'>
             Tags
           </label>
 
@@ -162,13 +162,13 @@ const ContactForm = ({
         </Box>
         {/* REGIONS */}
         <Box className='pb-3'>
-          <label htmlFor='region' className='text-dark-red'>
+          <label htmlFor='region' className='text-primary-dark'>
             Region
           </label>
           <RegionSelector regions={contact.region} setRegions={setRegions} />
         </Box>
         <Box>
-          <label htmlFor='pets' className='text-dark-red'>
+          <label htmlFor='pets' className='text-primary-dark'>
             Pets
           </label>
           <input
@@ -180,7 +180,7 @@ const ContactForm = ({
         </Box>
         {/* NOTES */}
         <Box>
-          <label htmlFor={contact.notes} className='text-dark-red'>
+          <label htmlFor={contact.notes} className='text-primary-dark'>
             Notes
           </label>
           <textarea
