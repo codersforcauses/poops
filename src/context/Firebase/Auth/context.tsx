@@ -1,5 +1,5 @@
 import { createContext, useContext } from 'react'
-import { Auth, AuthProvider, User } from 'firebase/auth'
+import { Auth, AuthProvider, User} from 'firebase/auth'
 
 import { auth } from '@/components/Firebase/init'
 

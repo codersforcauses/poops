@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { XIcon } from '@heroicons/react/outline'
@@ -19,30 +19,44 @@ const Set = () => {
   // BUG: when reloading this page whilst editing, all the fields are removed. userDoc is undefined?
   const { userDoc, updateVisit } = useFirestore()
   const router = useRouter()
-  const i: string | string[] | undefined = router.query.id
-  let id: number | null = null
-  let visit: VisitData | null = null
-  if (i !== undefined) {
-    id = parseInt(i + '')
-    visit = userDoc.visits[id]
-  }
+  const id = router.query.id ? +router.query.id : undefined
 
-  const [visitType, setVisitType] = useState(visit?.type || '')
+  const [visitType, setVisitType] = useState('')
   const [{ clientName, petNames }, setClient] = useState({
-    clientName: visit?.clientName || '',
-    petNames: visit?.petNames || ''
+    clientName: '',
+    petNames: ''
   })
-  const [startTime, setStartTime] = useState(
-    formatTimestamp(visit?.startTime) || ''
-  )
+  const [startTime, setStartTime] = useState('')
   const [duration, setDuration] = useState<Duration>({
-    hours: visit?.duration.hours || 0,
-    minutes: visit?.duration.minutes || 0
+    hours: 0,
+    minutes: 0
   })
-  const [walkDist, setWalkDist] = useState(visit?.walkDist || NaN)
-  const [commuteDist, setCommuteDist] = useState(visit?.commuteDist || NaN)
-  const [commuteMethod, setCommuteMethod] = useState(visit?.commuteMethod || '')
-  const [notes, setNotes] = useState(visit?.notes || '')
+  const [walkDist, setWalkDist] = useState(0)
+  const [commuteDist, setCommuteDist] = useState(0)
+  const [commuteMethod, setCommuteMethod] = useState('')
+  const [notes, setNotes] = useState('')
+
+  useEffect(() => {
+    if (id) {
+      const visit = userDoc.visits[id]
+
+      // setting visit value
+      setVisitType(visit.type)
+      setClient({ clientName: visit.clientName, petNames: visit.petNames })
+      const startTime = formatTimestamp(visit.startTime)
+      if (startTime) {
+        setStartTime(startTime)
+      }
+      setDuration({
+        hours: visit.duration.hours,
+        minutes: visit.duration.minutes
+      })
+      setWalkDist(visit.walkDist)
+      setCommuteDist(visit.commuteDist)
+      setCommuteMethod(visit.commuteMethod)
+      setNotes(visit.notes)
+    }
+  }, [userDoc.visits, id])
 
   const { setAlert } = useAlert()
 
@@ -62,7 +76,7 @@ const Set = () => {
     }
 
     let tmp: VisitData[] = [...userDoc.visits]
-    if (id !== null) {
+    if (id !== undefined) {
       tmp[id] = data
     } else {
       tmp = [data, ...tmp]
