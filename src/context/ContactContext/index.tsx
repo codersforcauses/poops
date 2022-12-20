@@ -11,12 +11,13 @@ import {
   ContactContextProps,
   ContactContextProvider
 } from '@/context/ContactContext/context'
-import { useFirestore } from '@/context/Firebase/Firestore/context'
 import { Contact } from '@/types/types'
+import { useContacts, useCreateContact } from '@/hooks/contacts'
 
 const ContactProvider = ({ children }: { children: ReactNode }) => {
-  const { userDoc, updateContact } = useFirestore()
-  const [allContacts, setAllContacts] = useState(userDoc.contacts || [])
+  const { data: contacts } = useContacts()
+  const { mutate: insertContact } = useCreateContact()
+  const [allContacts, setAllContacts] = useState(contacts || [])
   const [creatingNewContact, setCreatingNewContact] = useState(false)
   const [displayContactIndex, setDisplayContactIndex] = useState<number | null>(
     null
@@ -29,8 +30,8 @@ const ContactProvider = ({ children }: { children: ReactNode }) => {
   const [searchFieldString, setSearchFieldString] = useState('')
 
   useEffect(() => {
-    setAllContacts(userDoc.contacts)
-  }, [userDoc.contacts])
+    setAllContacts(contacts ?? [])
+  }, [contacts])
 
   useEffect(() => {
     setFilteredIndexes([...allContacts.keys()])
@@ -57,30 +58,14 @@ const ContactProvider = ({ children }: { children: ReactNode }) => {
   )
 
   // Sends newContacts to Firestore
-  const setFirestoreContacts = useCallback(
-    (newContacts: Contact[]) => {
-      userDoc.contacts = newContacts
-      updateContact?.(userDoc)
-    },
-    [updateContact, userDoc]
-  )
-
-  const insertContact = useCallback(
-    (contact: Contact, index?: number) => {
-      let newArray: Contact[]
-      if (index !== undefined) {
-        newArray = [...allContacts]
-        newArray[index] = contact
-      } else {
-        newArray = [...allContacts, contact]
-      }
-      filterContact('', '', newArray) // reset filter with new contacts
-      setFirestoreContacts(newArray)
-      setAllContacts(newArray)
-      return index ? index : allContacts.length
-    },
-    [allContacts, filterContact, setFirestoreContacts]
-  )
+  const setFirestoreContacts = (newContacts: Contact[]) => {console.log(newContacts)}
+  // useCallback(
+  // (newContacts: Contact[]) => {
+  //   contacts = newContacts
+  //   updateContact?.(userDoc)
+  // },
+  // [updateContact, userDoc]
+  // )
 
   const removeContact = useCallback(
     (index: number) => {
@@ -89,7 +74,7 @@ const ContactProvider = ({ children }: { children: ReactNode }) => {
 
       filterContact('', '', newArray) // reset filter with new contacts
       setAllContacts(newArray)
-      setFirestoreContacts(newArray)
+      // setFirestoreContacts(newArray)
     },
     [allContacts, filterContact, setFirestoreContacts]
   )

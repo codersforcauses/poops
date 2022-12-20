@@ -68,13 +68,14 @@ const ContactForm = ({
   const submitForm = (e: FormEvent) => {
     e.preventDefault()
     if (isNewContact) {
-      firestoreIndex = insertContact(contactForm)
+      insertContact(contactForm)
+      // TODO: Set the active index to the newly created contact
       setDisplayContactIndex(firestoreIndex)
     } else if (isUser) {
       mutate(contactForm)
       setDisplayContactIndex(firestoreIndex)
     } else {
-      insertContact(contactForm, firestoreIndex as number)
+      insertContact(contactForm)
       setDisplayContactIndex(firestoreIndex)
     }
     setIsEditing(false)

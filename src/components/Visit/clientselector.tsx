@@ -5,6 +5,7 @@ import { FormFieldProps } from '@/components/Visit/formfield'
 import customStyles from '@/components/Visit/selectorstyles'
 import { useFirestore } from '@/context/Firebase/Firestore/context'
 import { SelectOption } from '@/types/types'
+import { useContacts } from '@/hooks/contacts'
 
 interface ClientSelectorProps extends FormFieldProps {
   setClient: Dispatch<
@@ -16,9 +17,8 @@ interface ClientSelectorProps extends FormFieldProps {
 }
 
 const ClientSelector = (props: ClientSelectorProps) => {
-  const {
-    userDoc: { contacts }
-  } = useFirestore()
+  const { data: contacts } = useContacts()
+  if (contacts === undefined) return null
 
   const getClientList = () => {
     return contacts.map((contact) => {

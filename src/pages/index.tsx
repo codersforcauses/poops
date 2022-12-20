@@ -3,10 +3,13 @@ import Modal from '@/components/Home/modal'
 import Summary from '@/components/Home/summary'
 import NavBar from '@/components/NavBar'
 import TopNav from '@/components/TopNav'
+import Button from '@/components/UI/button'
+import { useCreateContact } from '@/hooks/contacts'
 import useUser from '@/hooks/user'
 
 const Home = () => {
   const { isSuccess, data: currentUser } = useUser()
+  const { mutate: createContact } = useCreateContact()
 
   const welcomeMessage = isSuccess
     ? `Welcome, ${currentUser?.clientName}!`
@@ -20,6 +23,22 @@ const Home = () => {
         <div className='h-[calc(max-content +4rem)] m-auto flex w-screen flex-col'>
           <div className='flex flex-col px-4 '>
             <h1 className='py-3 text-center text-3xl'>{welcomeMessage}</h1>
+            <Button
+              onClick={() => {
+                createContact({
+                  clientName: 'Bob Jane',
+                  id: '',
+                  email: '',
+                  phone: '',
+                  streetAddress: '',
+                  region: [''],
+                  tags: ['Client'],
+                  pets: 'pets'
+                })
+              }}
+            >
+              New Contact
+            </Button>
             <Summary />
             <br />
             <div className='flex justify-center overscroll-none'>

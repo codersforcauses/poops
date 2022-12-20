@@ -10,7 +10,7 @@ import { Contact } from '@/types/types'
 
 export type ContactContextProps = {
   allContacts: Contact[]
-  insertContact: (contact: Contact, index?: number) => number
+  insertContact: (contact: Contact) => void
   removeContact: (index: number) => void
   onSearchChange: (event: ChangeEvent<HTMLInputElement>) => void
   onSearchTagChange: (event: ChangeEvent<HTMLSelectElement>) => void

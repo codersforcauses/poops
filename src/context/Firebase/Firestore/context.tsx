@@ -1,5 +1,5 @@
 import { createContext, useContext } from 'react'
-import { User } from 'firebase/auth'
+import { User as AuthUser } from 'firebase/auth'
 
 import { User } from '@/types/types'
 
@@ -16,12 +16,11 @@ export const emptyUserDoc: User = {
     tags: []
   },
   visits: [],
-  contacts: []
 }
 
 //create new user
 // TODO: clientName, email, and phone should be set via a user creation wizard on new user creation
-export const newUser = (currentUser: User): User => ({
+export const newUser = (currentUser: AuthUser): User => ({
   info: {
     id: currentUser.uid,
     clientName: currentUser.displayName ?? '',
@@ -32,14 +31,12 @@ export const newUser = (currentUser: User): User => ({
     pets: '',
     tags: ['Volunteer']
   },
-  visits: [],
-  contacts: []
+  visits: []
 })
 //update functions as a context api
 export interface FirestoreContextProps {
   userDoc: User
   updateVisit?: (userDoc: User) => void
-  updateContact?: (userDoc: User) => void
 }
 
 const FirestoreContext = createContext<FirestoreContextProps>({

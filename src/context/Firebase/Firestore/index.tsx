@@ -67,32 +67,14 @@ const FirestoreProvider = ({ children }: { children: ReactNode }) => {
     },
     [currentUser]
   )
-  const updateContact = useCallback(
-    async (user: User) => {
-      try {
-        if (currentUser?.uid) {
-          const userDocRef = doc(db, 'users', currentUser.uid)
-          await updateDoc(userDocRef, 'contacts', user.contacts)
-        }
-      } catch (err: unknown) {
-        //#region  //*=========== For logging ===========
-        if (err instanceof FirestoreError) {
-          console.error(err.message)
-        } else console.error(err)
-        //#endregion  //*======== For logging ===========
-      }
-    },
-    [currentUser]
-  )
 
   //changes the default value to the data retreived and saved in state
   const value: FirestoreContextProps = useMemo(
     () => ({
       userDoc,
       updateVisit,
-      updateContact
     }),
-    [userDoc, updateVisit, updateContact]
+    [userDoc, updateVisit]
   )
 
   return (

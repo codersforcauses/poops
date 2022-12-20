@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
-import { User } from 'firebase/auth'
+import { User as AuthUser } from 'firebase/auth'
 import {
   doc,
   FirestoreError,
@@ -10,9 +10,9 @@ import {
 
 import { db } from '@/components/Firebase/init'
 import { useAuth } from '@/context/Firebase/Auth/context'
-import { Contact, UserData } from '@/types/types'
+import { Contact, User } from '@/types/types'
 
-const newUser = (currentUser: User): UserData => {
+const newUser = (currentUser: AuthUser): User => {
   return {
     info: {
       id: currentUser.uid,
@@ -23,7 +23,8 @@ const newUser = (currentUser: User): UserData => {
       region: [],
       pets: '',
       tags: ['Volunteer']
-    }
+    },
+    visits:[]
   }
 }
 
@@ -41,7 +42,7 @@ export const useUser = () => {
           await setDoc(doc(db, 'users', currentUser.uid), newUser(currentUser))
         }
 
-        const userData = userDocSnap.data() as UserData
+        const userData = userDocSnap.data() as User
         return userData.info
       } catch (err: unknown) {
         //#region  //*=========== For logging ===========
