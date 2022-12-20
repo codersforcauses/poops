@@ -49,6 +49,7 @@ const ClientSelector = (props: ClientSelectorProps) => {
           placeholder={props.placeholder}
           styles={customStyles}
           value={props.value}
+          getOptionValue={(option) => option.label}
         />
       </div>
     </div>
