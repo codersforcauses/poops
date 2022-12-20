@@ -20,10 +20,11 @@ const Set = () => {
   const { userDoc, updateVisit } = useFirestore()
   const router = useRouter()
   const id = router.query.id ? +router.query.id : undefined
+  const visit = userDoc.visits[id || 0]
 
   const [visitType, setVisitType] = useState('')
   const [{ clientName, petNames }, setClient] = useState({
-    clientName: '',
+    clientName: 'Select...',
     petNames: ''
   })
   const [startTime, setStartTime] = useState('')
@@ -33,13 +34,11 @@ const Set = () => {
   })
   const [walkDist, setWalkDist] = useState(0)
   const [commuteDist, setCommuteDist] = useState(0)
-  const [commuteMethod, setCommuteMethod] = useState('')
+  const [commuteMethod, setCommuteMethod] = useState('Select...')
   const [notes, setNotes] = useState('')
 
   useEffect(() => {
-    if (id) {
-      const visit = userDoc.visits[id]
-
+    if (id !== undefined && visit) {
       // setting visit value
       setVisitType(visit.type)
       setClient({ clientName: visit.clientName, petNames: visit.petNames })
@@ -56,7 +55,7 @@ const Set = () => {
       setCommuteMethod(visit.commuteMethod)
       setNotes(visit.notes)
     }
-  }, [userDoc.visits, id])
+  }, [visit, id])
 
   const { setAlert } = useAlert()
 
@@ -107,7 +106,7 @@ const Set = () => {
       title: 'Success!',
       text: 'Visit has been deleted',
       position: 'bottom',
-      showFor: 1000
+      showFor: 2000
     })
 
     router.push('/visit')
@@ -160,7 +159,7 @@ const Set = () => {
               id='clientNameInput'
               type='text'
               placeholder='Client Name'
-              value={clientName}
+              value={{ label: clientName, value: petNames }}
               label='Client Name:'
               isRequired={true}
               setClient={setClient}
@@ -181,7 +180,7 @@ const Set = () => {
             <CommuteSelector
               id='commuteMethodInput'
               placeholder='Commute Method'
-              value={commuteMethod}
+              value={{ label: commuteMethod, value: commuteMethod }}
               label='Commute Method:'
               setCommuteMethod={setCommuteMethod}
               isRequired={true}
@@ -204,7 +203,7 @@ const Set = () => {
             <DurationSelector
               id='durationInput'
               label='Duration:'
-              defaultValue={duration}
+              value={duration}
               onHourChange={(event) =>
                 setDuration((duration) => ({
                   ...duration,
