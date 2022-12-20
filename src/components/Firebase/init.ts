@@ -35,7 +35,6 @@ if (clientSide) {
   ) {
     connectAuthEmulator(auth, 'http://localhost:9099')
     connectFirestoreEmulator(db, 'localhost', 8080)
-    console.log('Connected to emulator')
   }
 
   // Enables offline support for firestore

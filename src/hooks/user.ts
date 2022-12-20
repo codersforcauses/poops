@@ -12,16 +12,18 @@ import { db } from '@/components/Firebase/init'
 import { useAuth } from '@/context/Firebase/Auth/context'
 import { Contact, UserData } from '@/types/types'
 
-const newUser = (currentUser: User): Contact => {
+const newUser = (currentUser: User): UserData => {
   return {
-    id: currentUser.uid,
-    clientName: currentUser.displayName ?? '',
-    email: currentUser.email ?? '',
-    phone: currentUser.phoneNumber ?? '',
-    streetAddress: '',
-    region: [],
-    pets: '',
-    tags: ['Volunteer']
+    info: {
+      id: currentUser.uid,
+      clientName: currentUser.displayName ?? '',
+      email: currentUser.email ?? '',
+      phone: currentUser.phoneNumber ?? '',
+      streetAddress: '',
+      region: [],
+      pets: '',
+      tags: ['Volunteer']
+    }
   }
 }
 

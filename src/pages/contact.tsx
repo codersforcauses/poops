@@ -14,9 +14,10 @@ import Button from '@/components/UI/button'
 import { useContact } from '@/context/ContactContext/context'
 import { useFirestore } from '@/context/Firebase/Firestore/context'
 import type { Contact } from '@/types/types'
+import useUser from '@/hooks/user'
 
 const Contact = () => {
-  const { userDoc } = useFirestore()
+  const { data: currentUser } = useUser()
 
   const {
     allContacts,
@@ -41,6 +42,8 @@ const Contact = () => {
 
   const contactIndex = getDisplayContactIndex()
   const creatingNewContact = getCreatingNewContact()
+
+  if (currentUser === undefined) return null
 
   return (
     <>
@@ -77,11 +80,7 @@ const Contact = () => {
           )}
           {contactIndex === null && !creatingNewContact ? (
             <>
-              <ContactItem
-                image=''
-                firestoreIndex={-1}
-                contact={userDoc.info}
-              />
+              <ContactItem image='' firestoreIndex={-1} contact={currentUser} />
               <ContactList firestoreIndexMap={getFilteredIndexes()} />
             </>
           ) : (

@@ -15,12 +15,12 @@ import {
   FirestoreContextProvider,
   newUser
 } from '@/context/Firebase/Firestore/context'
-import { UserData } from '@/types/types'
+import { User } from '@/types/types'
 
 //retreiving firestore data and setting the data to the local variable FireContextProps
 const FirestoreProvider = ({ children }: { children: ReactNode }) => {
   const { currentUser } = useAuth()
-  const [userDoc, setUserDoc] = useState<UserData>(emptyUserDoc)
+  const [userDoc, setUserDoc] = useState<User>(emptyUserDoc)
 
   const retrieveData = useCallback(async () => {
     if (currentUser?.uid) {
@@ -29,7 +29,7 @@ const FirestoreProvider = ({ children }: { children: ReactNode }) => {
         const userDocSnap = await getDoc(doc(db, 'users', currentUser.uid))
 
         if (userDocSnap.exists()) {
-          const userDocData = userDocSnap.data() as UserData
+          const userDocData = userDocSnap.data() as User
           setUserDoc(userDocData)
         } else {
           // doc.data() will be undefined in this case
@@ -50,7 +50,7 @@ const FirestoreProvider = ({ children }: { children: ReactNode }) => {
   }, [retrieveData])
 
   const updateVisit = useCallback(
-    async (user: UserData) => {
+    async (user: User) => {
       try {
         if (currentUser?.uid) {
           const userDocRef = doc(db, 'users', currentUser.uid)
@@ -68,7 +68,7 @@ const FirestoreProvider = ({ children }: { children: ReactNode }) => {
     [currentUser]
   )
   const updateContact = useCallback(
-    async (user: UserData) => {
+    async (user: User) => {
       try {
         if (currentUser?.uid) {
           const userDocRef = doc(db, 'users', currentUser.uid)
