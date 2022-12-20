@@ -5,7 +5,7 @@ import ContactForm from '@/components/Contact/contactform'
 import ContactInfo from '@/components/Contact/contactinfo'
 import Header from '@/components/Header'
 import { useContact } from '@/context/ContactContext/context'
-import { useFirestore } from '@/context/Firebase/Firestore/context'
+import useUser from '@/hooks/user'
 
 import Button from '../UI/button'
 
@@ -14,7 +14,7 @@ type ContactProp = {
 }
 
 const ContactDetails = ({ firestoreIndex }: ContactProp) => {
-  const { userDoc } = useFirestore()
+  const { data: currentUser } = useUser()
   const { allContacts, setCreatingNewContact, setDisplayContactIndex } =
     useContact()
   const isNewContact = firestoreIndex === null
@@ -26,7 +26,7 @@ const ContactDetails = ({ firestoreIndex }: ContactProp) => {
         pageTitle={
           firestoreIndex
             ? firestoreIndex === -1
-              ? userDoc.info.clientName
+              ? currentUser?.clientName
               : allContacts[firestoreIndex as number].clientName
             : 'New Contact'
         }

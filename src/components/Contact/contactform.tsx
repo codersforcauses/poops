@@ -6,7 +6,7 @@ import Avatar from '@/components/Contact/avatar'
 import RegionSelector from '@/components/Contact/regiondropdown'
 import TagSelector from '@/components/Contact/tagdropdown'
 import { useContact } from '@/context/ContactContext/context'
-import { useFirestore } from '@/context/Firebase/Firestore/context'
+import useUser, { useUpdateUser } from '@/hooks/user'
 import type { Contact } from '@/types/types'
 
 import Button from '../UI/button'
@@ -22,7 +22,8 @@ const ContactForm = ({
   image,
   setIsEditing
 }: ContactInfoProps) => {
-  const { userDoc, updateUserInfo } = useFirestore()
+  const { data: currentUser } = useUser()
+  const { mutate } = useUpdateUser()
   const { allContacts, insertContact, setDisplayContactIndex } = useContact()
 
   const isNewContact = firestoreIndex === null
@@ -42,7 +43,7 @@ const ContactForm = ({
         tags: []
       }
     : isUser
-    ? userDoc.info
+    ? currentUser!
     : allContacts[firestoreIndex as number]
 
   const [regions, setRegions] = useState(contact.region)
@@ -70,7 +71,7 @@ const ContactForm = ({
       firestoreIndex = insertContact(contactForm)
       setDisplayContactIndex(firestoreIndex)
     } else if (isUser) {
-      updateUserInfo?.(contactForm)
+      mutate(contactForm)
       setDisplayContactIndex(firestoreIndex)
     } else {
       insertContact(contactForm, firestoreIndex as number)

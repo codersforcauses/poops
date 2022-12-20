@@ -8,7 +8,7 @@ import tw from 'tailwind-styled-components'
 import Avatar from '@/components/Contact/avatar'
 import { AlertVariant, useAlert } from '@/context/AlertContext'
 import { useContact } from '@/context/ContactContext/context'
-import { useFirestore } from '@/context/Firebase/Firestore/context'
+import useUser from '@/hooks/user'
 import { Contact } from '@/types/types'
 
 import Button from '../UI/button'
@@ -19,20 +19,21 @@ type ContactInfoProps = {
 }
 
 function ContactInfo({ firestoreIndex, image }: ContactInfoProps) {
-  const { userDoc } = useFirestore()
+  const { data: currentUser } = useUser()
   const {
     allContacts,
     setCreatingNewContact,
     removeContact,
     setDisplayContactIndex
   } = useContact()
+  const { setAlert } = useAlert()
+
+  if (currentUser === undefined) return null
 
   const isContact = firestoreIndex !== -1
   const contact: Contact = isContact
     ? allContacts[firestoreIndex as number]
-    : userDoc.info
-
-  const { setAlert } = useAlert()
+    : currentUser
 
   return (
     <div className='mb-2 flex flex-col items-center justify-center gap-3'>
