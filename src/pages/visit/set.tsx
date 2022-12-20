@@ -16,7 +16,6 @@ import { Duration, VisitData } from '@/types/types'
 import { formatTimestamp, visitSelectOptions } from '@/utils'
 
 const Set = () => {
-  // BUG: when reloading this page whilst editing, all the fields are removed. userDoc is undefined?
   const { userDoc, updateVisit } = useFirestore()
   const router = useRouter()
   const id = router.query.id ? +router.query.id : undefined
