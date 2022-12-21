@@ -14,10 +14,10 @@
   "homepage": "https://github.com/codersforcauses/poops#readme",
   "scripts": {
     "dev": "next dev",
-    "dev:emu": "yarn firebase emu & (sleep 15 && yarn dev)",
+    "dev:emu": "yarn firebase emu & (sleep 15 && NEXT_PUBLIC_EMULATOR=true yarn dev)",
     "build": "next build",
     "start": "next start",
-    "start:emu": "yarn firebase emu & (sleep 15 && yarn start)",
+    "start:emu": "yarn firebase emu & (sleep 15 && NEXT_PUBLIC_EMULATOR=true yarn start)",
     "analyse": "ANALYZE=true next build",
     "lint": "next lint",
     "lint:fix": "eslint src --fix && yarn format",
