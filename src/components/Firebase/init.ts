@@ -29,10 +29,7 @@ if (clientSide) {
   db = getFirestore(app)
 
   // Use emulator if running in development and emualtor is running
-  if (
-    location?.hostname === 'localhost' &&
-    process.env.NODE_ENV === 'development'
-  ) {
+  if (process.env.EMULATOR === 'true') {
     connectAuthEmulator(auth, 'http://localhost:9099')
     connectFirestoreEmulator(db, 'localhost', 8080)
   }
