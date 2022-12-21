@@ -17,7 +17,7 @@
     "dev:emu": "yarn firebase emu & (sleep 15 && NEXT_PUBLIC_EMULATOR=true yarn dev)",
     "build": "next build",
     "start": "next start",
-    "start:emu": "yarn firebase emu & (sleep 15 && EMULATOR=true yarn start)",
+    "start:emu": "yarn firebase emu & (sleep 15 && NEXT_PUBLIC_EMULATOR=true yarn start)",
     "analyse": "ANALYZE=true next build",
     "lint": "next lint",
     "lint:fix": "eslint src --fix && yarn format",
