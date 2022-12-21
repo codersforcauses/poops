@@ -29,10 +29,9 @@ if (clientSide) {
   db = getFirestore(app)
 
   // Use emulator if running in development and emualtor is running
-  if (process.env.EMULATOR === 'true') {
+  if (process.env.NEXT_PUBLIC_EMULATOR === 'true') {
     connectAuthEmulator(auth, 'http://localhost:9099')
     connectFirestoreEmulator(db, 'localhost', 8080)
-    console.log('Connected to emulator')
   }
 
   // Enables offline support for firestore
