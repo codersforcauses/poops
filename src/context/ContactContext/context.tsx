@@ -14,8 +14,8 @@ export type ContactContextProps = {
   removeContact: (index: number) => void
   onSearchChange: (event: ChangeEvent<HTMLInputElement>) => void
   onSearchTagChange: (event: ChangeEvent<HTMLSelectElement>) => void
-  setDisplayContactIndex: Dispatch<SetStateAction<number>>
-  getDisplayContactIndex: () => number
+  setDisplayContactIndex: Dispatch<SetStateAction<number | null>>
+  getDisplayContactIndex: () => number | null
   setCreatingNewContact: (newValue: boolean) => void
   getCreatingNewContact: () => boolean
   getFilteredIndexes: () => number[]

@@ -6,11 +6,13 @@ import Avatar from '@/components/Contact/avatar'
 import RegionSelector from '@/components/Contact/regiondropdown'
 import TagSelector from '@/components/Contact/tagdropdown'
 import { useContact } from '@/context/ContactContext/context'
+import { useFirestore } from '@/context/Firebase/Firestore/context'
 import type { Contact } from '@/types/types'
+
 import Button from '../UI/button'
 
 type ContactInfoProps = {
-  firestoreIndex: number
+  firestoreIndex: number | null
   image: string
   setIsEditing: Dispatch<SetStateAction<boolean>>
 }
@@ -20,9 +22,11 @@ const ContactForm = ({
   image,
   setIsEditing
 }: ContactInfoProps) => {
+  const { userDoc, updateUserInfo } = useFirestore()
   const { allContacts, insertContact, setDisplayContactIndex } = useContact()
 
-  const isNewContact = firestoreIndex === -1
+  const isNewContact = firestoreIndex === null
+  const isUser = firestoreIndex === -1
 
   const contact: Contact = isNewContact
     ? {
@@ -37,7 +41,9 @@ const ContactForm = ({
         notes: '',
         tags: []
       }
-    : allContacts[firestoreIndex]
+    : isUser
+    ? userDoc.info
+    : allContacts[firestoreIndex as number]
 
   const [regions, setRegions] = useState(contact.region)
   const [tags, setTags] = useState(contact.tags)
@@ -58,15 +64,16 @@ const ContactForm = ({
     }))
   }, [regions, tags])
 
-  // TODO: Submit ContactForm to database
   const submitForm = (e: FormEvent) => {
     e.preventDefault()
-    // TODO: submit to firestore here
     if (isNewContact) {
       firestoreIndex = insertContact(contactForm)
       setDisplayContactIndex(firestoreIndex)
+    } else if (isUser) {
+      updateUserInfo?.(contactForm)
+      setDisplayContactIndex(firestoreIndex)
     } else {
-      insertContact(contactForm, firestoreIndex)
+      insertContact(contactForm, firestoreIndex as number)
       setDisplayContactIndex(firestoreIndex)
     }
     setIsEditing(false)
@@ -84,7 +91,7 @@ const ContactForm = ({
         />
         {/* FIRST AND LAST NAME */}
         <Box>
-          <label htmlFor={contact.clientName} className='text-dark-red'>
+          <label htmlFor={contact.clientName} className='text-primary-dark'>
             Full Name
           </label>
           <input
@@ -96,7 +103,7 @@ const ContactForm = ({
         </Box>
         {/* DESCRIPTION */}
         <Box>
-          <label htmlFor={contact.notes} className='text-dark-red'>
+          <label htmlFor={contact.notes} className='text-primary-dark'>
             Description
           </label>
           <textarea
@@ -108,7 +115,7 @@ const ContactForm = ({
         </Box>
         {/* PHONE */}
         <Box>
-          <label htmlFor={contact.phone} className='text-dark-red'>
+          <label htmlFor={contact.phone} className='text-primary-dark'>
             Phone
           </label>
           <input
@@ -120,7 +127,7 @@ const ContactForm = ({
         </Box>
         {/* EMAIL */}
         <Box>
-          <label htmlFor={contact.email} className='text-dark-red'>
+          <label htmlFor={contact.email} className='text-primary-dark'>
             Email
           </label>
           <input
@@ -132,7 +139,7 @@ const ContactForm = ({
         </Box>
         {/* ADDRESS */}
         <Box>
-          <label htmlFor={contact.streetAddress} className='text-dark-red'>
+          <label htmlFor={contact.streetAddress} className='text-primary-dark'>
             Address
           </label>
           <input
@@ -144,7 +151,7 @@ const ContactForm = ({
         </Box>
         {/* TAGS */}
         <Box>
-          <label htmlFor='tags' className='text-dark-red'>
+          <label htmlFor='tags' className='text-primary-dark'>
             Tags
           </label>
 
@@ -154,13 +161,13 @@ const ContactForm = ({
         </Box>
         {/* REGIONS */}
         <Box className='pb-3'>
-          <label htmlFor='region' className='text-dark-red'>
+          <label htmlFor='region' className='text-primary-dark'>
             Region
           </label>
           <RegionSelector regions={contact.region} setRegions={setRegions} />
         </Box>
         <Box>
-          <label htmlFor='pets' className='text-dark-red'>
+          <label htmlFor='pets' className='text-primary-dark'>
             Pets
           </label>
           <input
@@ -172,7 +179,7 @@ const ContactForm = ({
         </Box>
         {/* NOTES */}
         <Box>
-          <label htmlFor={contact.notes} className='text-dark-red'>
+          <label htmlFor={contact.notes} className='text-primary-dark'>
             Notes
           </label>
           <textarea

@@ -1,12 +1,12 @@
 import { useEffect, useRef, useState } from 'react'
 import {
-  AnnotationIcon,
+  ChatBubbleBottomCenterTextIcon,
   CheckIcon,
-  ExclamationIcon,
+  ExclamationTriangleIcon,
   InformationCircleIcon,
   ShieldExclamationIcon,
-  XIcon
-} from '@heroicons/react/outline'
+  XMarkIcon
+} from '@heroicons/react/24/outline'
 
 import { AlertContentProps, AlertVariant } from '@/context/AlertContext'
 
@@ -22,7 +22,7 @@ const shadow =
                 0 32px 64px rgba(0,0,0,0.1)'
 
 const buttonClasses =
-  'mx-auto mt-2 w-fit rounded-lg bg-primary py-1 px-4 text-lg text-white shadow-md focus:outline-primary active:bg-dark-red'
+  'mx-auto mt-2 w-fit rounded-lg bg-primary py-1 px-4 text-lg text-white shadow-md focus:outline-primary active:bg-primary-dark'
 const getContainerClasses = (vis: boolean, pos: string) => {
   return (
     `flex items-center fixed right-0 left-0 z-9999 bg-white text-black border-x-1 border-[#dddddd] transition-transform duration-700 ease-in-out` +
@@ -98,10 +98,10 @@ const Alert = ({ visible, content, clearAlert }: AlertProps) => {
         ) : contentCache.variant === AlertVariant.security ? (
           <ShieldExclamationIcon className='h-7 w-7' />
         ) : contentCache.variant === AlertVariant.critical ? (
-          <ExclamationIcon className='h-7 w-7' />
+          <ExclamationTriangleIcon className='h-7 w-7' />
         ) : (
           contentCache.variant === AlertVariant.comment && (
-            <AnnotationIcon className='h-7 w-7' />
+            <ChatBubbleBottomCenterTextIcon className='h-7 w-7' />
           )
         )}
       </div>
@@ -152,7 +152,7 @@ const Alert = ({ visible, content, clearAlert }: AlertProps) => {
               contentCache.cancelFunction()
           }}
         >
-          <XIcon
+          <XMarkIcon
             className='h-5 w-5'
             stroke={contentCache.position === 'bottom' ? 'white' : iconColor}
           />

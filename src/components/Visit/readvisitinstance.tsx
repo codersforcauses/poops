@@ -1,7 +1,7 @@
 import { Timestamp } from 'firebase/firestore'
 
-import { humanizeTimestamp } from '@/utils'
 import { Duration, VisitData } from '@/types/types'
+import { humanizeTimestamp } from '@/utils'
 
 export const formatDuration = (duration: Duration) => {
   const d = `${duration.hours} ${duration.hours === 1 ? 'hr' : 'hrs'} ${

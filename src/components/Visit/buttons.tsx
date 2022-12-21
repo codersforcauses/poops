@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { PencilIcon, PlusIcon } from '@heroicons/react/solid'
+import { PencilIcon, PlusIcon } from '@heroicons/react/24/solid'
 
 interface EditButtonProps {
   id: number
