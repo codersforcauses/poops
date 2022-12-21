@@ -1,10 +1,7 @@
 import { useState } from 'react'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
-import {
-  ChatBubbleLeftEllipsisIcon,
-  HomeIcon
-} from '@heroicons/react/24/outline'
+import { HomeIcon, UsersIcon } from '@heroicons/react/24/outline'
 
 //import { NavIcon } from '@/components/NavBar/navicon'
 import NavLink from '@/components/NavBar/navlink'
@@ -29,15 +26,15 @@ export default function NavBar() {
     { name: 'Home', route: '/', icon: <HomeIcon className={iconClasses} /> },
 
     {
-      name: 'Contact',
+      name: 'Contacts',
       route: '/contact',
-      icon: <ChatBubbleLeftEllipsisIcon className={iconClasses} />
+      icon: <UsersIcon className={iconClasses} />
     },
     {
       name: 'Visit',
       route: '/visit',
       icon: (
-        <div className='relative inline-block h-7 w-8 hover:text-primary'>
+        <div className='relative inline-block h-7 w-8'>
           <Image alt='dog-icon' src={PoopsSVG} layout='fill' />
         </div>
       )
