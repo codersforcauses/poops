@@ -1,6 +1,8 @@
 import { atom } from 'jotai'
 
+import { Contact } from '@/types/types'
+
 export const searchQueryAtom = atom('')
 export const searchTagsAtom = atom('')
-export const selectedIndexAtom = atom<number | null>(null)
-export const isNewContactAtom = atom(false)
+export const currentContactAtom = atom<Contact | null>(null)
+export const isEditingAtom = atom(false)

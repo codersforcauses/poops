@@ -4,15 +4,15 @@ import Summary from '@/components/Home/summary'
 import NavBar from '@/components/NavBar'
 import TopNav from '@/components/TopNav'
 import Button from '@/components/UI/button'
-import { useCreateContact } from '@/hooks/contacts'
+import { useMutateContacts } from '@/hooks/contacts'
 import useUser from '@/hooks/user'
 
 const Home = () => {
   const { isSuccess, data: currentUser } = useUser()
-  const { mutate: createContact } = useCreateContact()
+  const { mutate: mutateContacts } = useMutateContacts()
 
   const welcomeMessage = isSuccess
-    ? `Welcome, ${currentUser?.clientName}!`
+    ? `Welcome, ${currentUser?.name}!`
     : 'Welcome!'
 
   return (
@@ -25,10 +25,11 @@ const Home = () => {
             <h1 className='py-3 text-center text-3xl'>{welcomeMessage}</h1>
             <Button
               onClick={() => {
-                createContact({
-                  clientName: 'Bob Jane',
-                  id: '',
+                mutateContacts({
+                  name: 'Bob Jane',
                   email: '',
+                  desc: '',
+                  notes: '',
                   phone: '',
                   streetAddress: '',
                   region: [''],
@@ -38,6 +39,24 @@ const Home = () => {
               }}
             >
               New Contact
+            </Button>
+            <Button
+              onClick={() => {
+                mutateContacts({
+                  docId: '4DC4lHhLgecYsqemMBfh',
+                  name: 'Bob Jane',
+                  email: '',
+                  desc: '',
+                  notes: '',
+                  phone: '',
+                  streetAddress: '',
+                  region: [''],
+                  tags: ['Client'],
+                  pets: 'pets'
+                })
+              }}
+            >
+              Edit Contact
             </Button>
             <Summary />
             <br />

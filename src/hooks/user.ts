@@ -1,3 +1,5 @@
+/* eslint-disable no-console */
+
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { User as AuthUser } from 'firebase/auth'
 import {
@@ -15,8 +17,8 @@ import { Contact, User } from '@/types/types'
 const newUser = (currentUser: AuthUser): User => {
   return {
     info: {
-      id: currentUser.uid,
-      clientName: currentUser.displayName ?? '',
+      docId: currentUser.uid,
+      name: currentUser.displayName ?? '',
       email: currentUser.email ?? '',
       phone: currentUser.phoneNumber ?? '',
       streetAddress: '',
@@ -24,7 +26,7 @@ const newUser = (currentUser: AuthUser): User => {
       pets: '',
       tags: ['Volunteer']
     },
-    visits:[]
+    visits: []
   }
 }
 
@@ -57,7 +59,7 @@ export const useUser = () => {
   return useQuery(['user'], queryFn)
 }
 
-export const useUpdateUser = () => {
+export const useMutateUser = () => {
   const { currentUser } = useAuth()
   const queryClient = useQueryClient()
 

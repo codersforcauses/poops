@@ -9,7 +9,7 @@ const roles = [
 ]
 type Props = {
   tags: Array<string>
-  setTags: Dispatch<SetStateAction<Array<string>>>
+  setTags: (tags: string[]) => void
 }
 type MyOption = { label: string; value: string }
 

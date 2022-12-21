@@ -18,16 +18,17 @@ export interface VisitData {
 }
 
 export interface Contact {
-  //historic type to deal with type issues with contacts
-  id: string
-  clientName: string
-  desc?: string
+  // TODO: change from 'clientName' -> 'name'
+  // TODO: remove optional stuff, set to an empty string for user
+  docId?: string
+  name: string
+  desc: string
   pets: string
   email: string
   phone: string
   streetAddress: string
   region: string[]
-  notes?: string
+  notes: string
   tags: string[]
 }
 

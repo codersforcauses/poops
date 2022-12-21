@@ -1,15 +1,20 @@
-import { db } from '@/components/Firebase/init'
-import { useAuth } from '@/context/Firebase/Auth/context'
-import { Contact } from '@/types/types'
+/* eslint-disable no-console */
+
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import {
-  addDoc,
   collection,
+  deleteDoc,
   doc,
   FirestoreError,
   getDocs,
   setDoc
 } from 'firebase/firestore'
+import { useSetAtom } from 'jotai'
+
+import { currentContactAtom } from '@/atoms/contacts'
+import { db } from '@/components/Firebase/init'
+import { useAuth } from '@/context/Firebase/Auth/context'
+import { Contact } from '@/types/types'
 
 export const useContacts = () => {
   const { currentUser } = useAuth()
@@ -18,7 +23,9 @@ export const useContacts = () => {
       try {
         const contactsRef = collection(db, 'users', currentUser.uid, 'contacts')
         const contactsDocs = await getDocs(contactsRef)
-        return contactsDocs.docs.map((doc) => doc.data() as Contact)
+        return contactsDocs.docs.map(
+          (doc) => ({ ...doc.data(), docId: doc.id } as Contact)
+        )
       } catch (err: unknown) {
         //#region  //*=========== For logging ===========
         if (err instanceof FirestoreError) {
@@ -31,22 +38,33 @@ export const useContacts = () => {
   return useQuery(['contacts'], queryFn)
 }
 
-export const useCreateContact = () => {
+export const useMutateContacts = () => {
   const { currentUser } = useAuth()
   const queryClient = useQueryClient()
+  const setCurrentContact = useSetAtom(currentContactAtom)
 
-  const mutationFn = async (newContact: Contact) => {
+  const mutationFn = async (contact: Contact & { deleteDoc?: boolean }) => {
     try {
       if (currentUser?.uid) {
+        const { docId: contactId, ...contactMut } = contact
         const collectionRef = collection(
           db,
           'users',
           currentUser.uid,
           'contacts'
         )
-        console.log(collectionRef)
-        const docRef = await addDoc(collectionRef, newContact)
-        console.log(docRef)
+
+        const docRef = contactId
+          ? doc(collectionRef, contactId)
+          : doc(collectionRef)
+
+        if (contactMut.deleteDoc) {
+          await deleteDoc(docRef)
+          setCurrentContact(null)
+        } else {
+          await setDoc(docRef, contactMut, { merge: true })
+          setCurrentContact({ ...contact, docId: docRef.id })
+        }
       }
     } catch (err: unknown) {
       console.log(err)
