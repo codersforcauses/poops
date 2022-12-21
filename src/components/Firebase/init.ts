@@ -1,6 +1,7 @@
 import { FirebaseApp, getApp, getApps, initializeApp } from 'firebase/app'
-import { Auth, getAuth } from 'firebase/auth'
+import { Auth, connectAuthEmulator, getAuth } from 'firebase/auth'
 import {
+  connectFirestoreEmulator,
   enableMultiTabIndexedDbPersistence,
   Firestore,
   getFirestore
@@ -28,14 +29,11 @@ if (clientSide) {
   db = getFirestore(app)
 
   // Use emulator if running in development and emualtor is running
-  // if (
-  //   location?.hostname === 'localhost' &&
-  //   process.env.NODE_ENV === 'development'
-  // ) {
-  //   connectAuthEmulator(auth, 'http://localhost:9099')
-  //   connectFirestoreEmulator(db, 'localhost', 8080)
-  //   console.log('Connected to emulator')
-  // }
+  if (process.env.EMULATOR === 'true') {
+    connectAuthEmulator(auth, 'http://localhost:9099')
+    connectFirestoreEmulator(db, 'localhost', 8080)
+    console.log('Connected to emulator')
+  }
 
   // Enables offline support for firestore
   enableMultiTabIndexedDbPersistence(db).catch((err) => {
