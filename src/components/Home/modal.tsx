@@ -4,12 +4,13 @@ import {
   clientSelectOptions,
   commuteSelectOptions
 } from '@/components/Home/dummyOptions'
-import DurationSelector from '@/components/Home/durationSelector'
 import Form from '@/components/Home/form'
+import DurationSelector from '@/components/Visit/durationselector'
 import FormField from '@/components/Visit/formfield'
-import { visitSelectOptions } from '@/components/Visit/visitlist'
 import { AlertVariant, useAlert } from '@/context/AlertContext'
 import { Duration } from '@/types/types'
+import { visitSelectOptions } from '@/utils'
+
 import Button from '../UI/button'
 
 function Modal() {
@@ -66,11 +67,11 @@ function Modal() {
 
   return (
     <div className='text-center'>
-      <div className='rounded-lg bg-zinc-200 py-4 px-5 text-center shadow-lg sm:py-4'>
-        <h1 className='mb-2 text-xl text-dark-red'>
+      <div className='rounded-lg bg-zinc-100 py-4 px-5 text-center shadow-lg sm:py-4'>
+        <h1 className='mb-2 text-xl text-primary-dark'>
           <b>Visit Details</b>
         </h1>
-        <hr className='mb-3 h-0.5 border-dark-red bg-dark-red text-dark-red' />
+        <hr className='mb-3 h-0.5 border-primary-dark bg-primary-dark text-primary-dark' />
         <form onSubmit={handleSubmit}>
           <div>
             <Form

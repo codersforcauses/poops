@@ -6,13 +6,14 @@ const variants = cva(['rounded-lg', 'font-semibold', 'drop-shadow-default'], {
       primary: [
         'bg-primary',
         'text-white',
-        'active:bg-dark-red',
-        'hover:bg-dark-red',
-        'disabled:bg-dark-gray'
+        'active:bg-primary-dark',
+        'hover:bg-primary-dark',
+        'disabled:bg-gray-500'
       ],
       secondary: [
         'bg-white',
         'text-gray-800',
+        'border',
         'border-gray-400',
         'hover:bg-gray-100'
       ]

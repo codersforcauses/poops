@@ -1,15 +1,10 @@
 import { useEffect, useState } from 'react'
-import { XCircleIcon } from '@heroicons/react/outline'
+import { XCircleIcon } from '@heroicons/react/24/outline'
 
 import { useFirestore } from '@/context/Firebase/Firestore/context'
-import { SelectOption, VisitData } from '@/types/types'
+import { VisitData } from '@/types/types'
 
 import VisitInstance from './visitinstance'
-
-export const visitSelectOptions: SelectOption[] = [
-  { label: 'Vet', value: 'Vet' },
-  { label: 'Walk', value: 'Walk' }
-]
 
 interface VisitListProps {
   searchQuery: string
@@ -22,17 +17,18 @@ export const VisitList = (props: VisitListProps) => {
     setVisits(userDoc.visits)
   }, [userDoc.visits])
 
-  const matchesClientName = (post: VisitData) =>
+  const matchesDisplayName = (post: VisitData) =>
     post.clientName.toLowerCase().includes(props.searchQuery.toLowerCase())
 
+  //get pets from contact name
   const matchespetNames = (post: VisitData) =>
-    post.petNames.toLowerCase().includes(props.searchQuery.toLowerCase())
+    post.petNames?.toLowerCase().includes(props.searchQuery.toLowerCase())
 
   const matchesSearchTerms = (post: VisitData) =>
-    matchesClientName(post) || matchespetNames(post)
+    matchesDisplayName(post) || matchespetNames(post)
 
   return (
-    <div className='h-full flex-col'>
+    <div className='m-2 h-full flex-col'>
       {visits && visits.length !== 0 ? (
         visits
           .filter((post: VisitData) => {
@@ -42,14 +38,14 @@ export const VisitList = (props: VisitListProps) => {
           })
           .map((post, index) => (
             <VisitInstance
-              set={setVisits}
+              setVisits={setVisits}
               key={post.startTime + post.clientName + post.petNames} // <-- dumb? or genius?
               type={post.type}
               id={index}
               clientName={post.clientName}
               petNames={post.petNames}
               startTime={post.startTime}
-              endTime={post.endTime}
+              duration={post.duration}
               walkDist={post.walkDist}
               commuteDist={post.commuteDist}
               commuteMethod={post.commuteMethod}

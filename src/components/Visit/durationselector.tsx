@@ -10,15 +10,15 @@ export interface DurationProps {
 
 const DurationSelector = (props: DurationProps) => {
   return (
-    <div className='p-1'>
+    <div className='flex flex-col'>
       <label className='font-bold'>
         <span className='text-primary'>*</span>
         {props.label}
       </label>
 
-      <div className='flex w-full flex-row justify-center rounded border border-dark-gray'>
+      <div className='flex w-full flex-row justify-center rounded border border-gray-500 bg-white'>
         <select
-          className='form-input flex h-9 w-full overflow-scroll rounded border-none text-center focus:outline-none'
+          className='form-input flex w-full overflow-scroll rounded-l border-none text-center focus:outline-none'
           id='hours'
           defaultValue={props.defaultValue?.hours}
           onChange={props.onHourChange}
@@ -34,14 +34,14 @@ const DurationSelector = (props: DurationProps) => {
           <option value={8}>8</option>
           <option value={9}>9</option>
         </select>
-        <div className='flex self-center'>:</div>
+        <div className='self-center'>:</div>
         <select
-          className='form-input flex h-9 w-full rounded border-none text-center focus:outline-none'
+          className='form-input flex w-full rounded-r border-none text-center focus:outline-none'
           id='minutes'
           defaultValue={props.defaultValue?.minutes}
           onChange={props.onMinuteChange}
         >
-          <option value={0}>0</option>
+          <option value={0}>00</option>
           <option value={15}>15</option>
           <option value={30}>30</option>
           <option value={45}>45</option>
