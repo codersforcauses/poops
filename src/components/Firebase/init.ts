@@ -28,20 +28,17 @@ if (clientSide) {
   auth = getAuth(app)
   db = getFirestore(app)
 
-  // Use emulator if running in dev and emulator is running
-  if (
-    location?.hostname === 'localhost' &&
-    process.env.NODE_ENV === 'development'
-  ) {
+  // Use emulator if running in development and emualtor is running
+  if (process.env.NEXT_PUBLIC_EMULATOR === 'true') {
     connectAuthEmulator(auth, 'http://localhost:9099')
     connectFirestoreEmulator(db, 'localhost', 8080)
-    console.log('Connected to emulator')
 
     // Pass the auth to the window if Cypress is running
     if (window.Cypress) {
       window.Firebase = [auth]
     }
   }
+
   // Enables offline support for firestore
   enableMultiTabIndexedDbPersistence(db).catch((err) => {
     if (err.code == 'failed-precondition') {

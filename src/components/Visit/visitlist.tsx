@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { XCircleIcon } from '@heroicons/react/outline'
+import { XCircleIcon } from '@heroicons/react/24/outline'
 
 import { useFirestore } from '@/context/Firebase/Firestore/context'
 import { VisitData } from '@/types/types'

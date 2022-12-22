@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { XIcon } from '@heroicons/react/outline'
+import { XMarkIcon } from '@heroicons/react/24/outline'
 import { Timestamp } from 'firebase/firestore'
 
 import { withProtected } from '@/components/PrivateRoute'
@@ -85,6 +85,7 @@ const Set = () => {
   const handleDelete = async () => {
     const tmp: VisitData[] = [...userDoc.visits]
     const tmp2 = { ...userDoc }
+    tmp.slice(Number(id), 1)
     tmp2.visits = tmp
 
     await updateVisit?.(tmp2)
@@ -113,7 +114,7 @@ const Set = () => {
       <div className='fixed right-5 top-4 z-[100] h-10 w-10 rounded-full bg-primary drop-shadow-default'>
         <Link href='/visit'>
           <button>
-            <XIcon className='h-full w-full text-white' />
+            <XMarkIcon className='h-full w-full text-white' />
           </button>
         </Link>
       </div>

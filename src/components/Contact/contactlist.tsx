@@ -1,4 +1,4 @@
-import { XCircleIcon } from '@heroicons/react/outline'
+import { XCircleIcon } from '@heroicons/react/24/outline'
 
 import ContactItem from '@/components/Contact/contactitem'
 import { useContact } from '@/context/ContactContext/context'
