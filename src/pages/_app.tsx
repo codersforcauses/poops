@@ -13,12 +13,12 @@ const POOPS = ({ Component, pageProps }: AppProps) => {
   return (
     <>
       <AuthContextProvider>
-        <QueryClientProvider client={queryClient}>
-          <AlertContextProvider>
+        <AlertContextProvider>
+          <QueryClientProvider client={queryClient}>
             <Component {...pageProps} />
             <ReactQueryDevtools />
-          </AlertContextProvider>
-        </QueryClientProvider>{' '}
+          </QueryClientProvider>{' '}
+        </AlertContextProvider>
       </AuthContextProvider>
     </>
   )

@@ -81,7 +81,7 @@ const ContactForm = () => {
             Full Name
           </label>
           <input
-            name='clientName'
+            name='name'
             defaultValue={contact.name}
             className='border-grey mb-2 w-80 rounded-lg border pl-1'
             onChange={handleInputChange}

@@ -13,6 +13,7 @@ import { useSetAtom } from 'jotai'
 
 import { currentContactAtom } from '@/atoms/contacts'
 import { db } from '@/components/Firebase/init'
+import { AlertVariant, useAlert } from '@/context/AlertContext'
 import { useAuth } from '@/context/Firebase/Auth/context'
 import { Contact } from '@/types/types'
 
@@ -42,6 +43,7 @@ export const useMutateContacts = () => {
   const { currentUser } = useAuth()
   const queryClient = useQueryClient()
   const setCurrentContact = useSetAtom(currentContactAtom)
+  const { setAlert } = useAlert()
 
   const mutationFn = async (contact: Contact & { deleteDoc?: boolean }) => {
     try {
@@ -78,10 +80,28 @@ export const useMutateContacts = () => {
 
   const onSuccess = () => {
     queryClient.invalidateQueries({ queryKey: ['contacts'] })
+    setAlert({
+      variant: AlertVariant.info,
+      title: 'Success!',
+      text: 'Updated contacts',
+      position: 'bottom',
+      showFor: 1000
+    })
+  }
+
+  const onError = () => {
+    setAlert({
+      variant: AlertVariant.critical,
+      title: 'Error!',
+      text: 'Could not update contacts',
+      position: 'bottom',
+      showFor: 1000
+    })
   }
 
   return useMutation({
     mutationFn,
-    onSuccess
+    onSuccess,
+    onError
   })
 }

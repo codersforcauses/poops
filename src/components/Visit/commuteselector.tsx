@@ -8,7 +8,7 @@ import { FormFieldProps } from './formfield'
 import customStyles from './selectorstyles'
 
 interface CommuteSelectorProps extends FormFieldProps {
-  setCommuteMethod: Dispatch<SetStateAction<string | undefined>>
+  setCommuteMethod: Dispatch<SetStateAction<string>>
 }
 
 const defaultCommuteMethods = ['Bus', 'Car', 'Train']

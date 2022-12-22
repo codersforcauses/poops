@@ -11,13 +11,13 @@ import {
 } from 'firebase/firestore'
 
 import { db } from '@/components/Firebase/init'
+import { AlertVariant, useAlert } from '@/context/AlertContext'
 import { useAuth } from '@/context/Firebase/Auth/context'
 import { Contact, User } from '@/types/types'
 
 const newUser = (currentUser: AuthUser): User => {
   return {
     info: {
-      docId: currentUser.uid,
       name: currentUser.displayName ?? '',
       email: currentUser.email ?? '',
       phone: currentUser.phoneNumber ?? '',
@@ -47,7 +47,7 @@ export const useUser = () => {
         }
 
         const userData = userDocSnap.data() as User
-        return userData.info
+        return { ...userData.info, docId: 'USER' }
       } catch (err: unknown) {
         //#region  //*=========== For logging ===========
         if (err instanceof FirestoreError) {
@@ -64,6 +64,7 @@ export const useUser = () => {
 export const useMutateUser = () => {
   const { currentUser } = useAuth()
   const queryClient = useQueryClient()
+  const { setAlert } = useAlert()
 
   const mutationFn = async (info: Contact) => {
     try {
@@ -82,12 +83,29 @@ export const useMutateUser = () => {
 
   const onSuccess = () => {
     queryClient.invalidateQueries({ queryKey: ['user'] })
-    // TODO: Alert? On failure too?
+    setAlert({
+      variant: AlertVariant.info,
+      title: 'Success!',
+      text: 'Updated user information',
+      position: 'bottom',
+      showFor: 1000
+    })
+  }
+
+  const onError = () => {
+    setAlert({
+      variant: AlertVariant.critical,
+      title: 'Error!',
+      text: 'Could not update user information',
+      position: 'bottom',
+      showFor: 1000
+    })
   }
 
   return useMutation({
     mutationFn,
-    onSuccess
+    onSuccess,
+    onError
   })
 }
 

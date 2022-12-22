@@ -8,13 +8,10 @@ import { SelectOption } from '@/types/types'
 
 interface ClientSelectorProps extends FormFieldProps {
   setClient: Dispatch<
-    SetStateAction<
-      | {
-          clientName: string
-          petNames: string
-        }
-      | undefined
-    >
+    SetStateAction<{
+      clientName: string
+      petNames: string
+    }>
   >
 }
 

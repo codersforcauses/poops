@@ -191,25 +191,16 @@ const Set = () => {
               label='Duration:'
               defaultValue={duration}
               onHourChange={(event) =>
-                setDuration((duration) =>
-                  duration
-                    ? {
-                        ...duration,
-                        hours: Number(event.target.value)
-                      }
-                    : undefined
-                )
+                setDuration((duration) => ({
+                  ...duration,
+                  hours: Number(event.target.value)
+                }))
               }
               onMinuteChange={(event) =>
-                setDuration((duration) =>
-                  duration
-                    ? {
-                        ...duration,
-                        minutes:
-                          Math.round(Number(event.target.value) / 15) * 15
-                      }
-                    : undefined
-                )
+                setDuration((duration) => ({
+                  ...duration,
+                  minutes: Math.round(Number(event.target.value) / 15) * 15
+                }))
               }
             />
 

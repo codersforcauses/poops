@@ -11,6 +11,7 @@ import {
 } from 'firebase/firestore'
 
 import { db } from '@/components/Firebase/init'
+import { AlertVariant, useAlert } from '@/context/AlertContext'
 import { useAuth } from '@/context/Firebase/Auth/context'
 import { Visit } from '@/types/types'
 
@@ -40,6 +41,7 @@ export const useVisits = () => {
 export const useMutateVisits = () => {
   const { currentUser } = useAuth()
   const queryClient = useQueryClient()
+  const { setAlert } = useAlert()
 
   const mutationFn = async (visit: Visit & { deleteDoc?: boolean }) => {
     try {
@@ -69,10 +71,27 @@ export const useMutateVisits = () => {
 
   const onSuccess = () => {
     queryClient.invalidateQueries({ queryKey: ['visits'] })
+    setAlert({
+      variant: AlertVariant.info,
+      title: 'Success!',
+      text: 'Updated visits',
+      position: 'bottom',
+      showFor: 1000
+    })
+  }
+  const onError = () => {
+    setAlert({
+      variant: AlertVariant.critical,
+      title: 'Error!',
+      text: 'Could not update contacts',
+      position: 'bottom',
+      showFor: 1000
+    })
   }
 
   return useMutation({
     mutationFn,
-    onSuccess
+    onSuccess,
+    onError
   })
 }

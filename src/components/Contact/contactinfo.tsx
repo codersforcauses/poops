@@ -21,7 +21,7 @@ function ContactInfo() {
 
   if (currentContact === null) return null
 
-  const isContact = currentContact.docId === undefined
+  const isContact = currentContact.docId !== 'USER'
 
   return (
     <div className='mb-2 flex flex-col items-center justify-center gap-3'>
