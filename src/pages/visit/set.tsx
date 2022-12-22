@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { XMarkIcon } from '@heroicons/react/24/outline'
@@ -10,98 +10,97 @@ import ClientSelector from '@/components/Visit/clientselector'
 import CommuteSelector from '@/components/Visit/commuteselector'
 import DurationSelector from '@/components/Visit/durationselector'
 import FormField from '@/components/Visit/formfield'
-import { AlertVariant, useAlert } from '@/context/AlertContext'
-import { useFirestore } from '@/context/Firebase/Firestore/context'
-import { Duration, VisitData } from '@/types/types'
+import { useMutateVisits, useVisits } from '@/hooks/visits'
+import { Duration, Visit } from '@/types/types'
 import { formatTimestamp, visitSelectOptions } from '@/utils'
 
 const Set = () => {
-  // BUG: when reloading this page whilst editing, all the fields are removed. userDoc is undefined?
-  const { userDoc, updateVisit } = useFirestore()
+  const { data: visits } = useVisits()
+  const { mutate: mutateVisits } = useMutateVisits()
+
   const router = useRouter()
-  const i: string | string[] | undefined = router.query.id
-  let id: number | null = null
-  let visit: VisitData | null = null
-  if (i !== undefined) {
-    id = parseInt(i + '')
-    visit = userDoc.visits[id]
-  }
+  const queryId = router.query.id
+  const visitId =
+    queryId === undefined || Array.isArray(queryId) ? null : queryId
+  const visit = visits?.find((visit) => queryId && visit.docId === visitId)
 
-  const [visitType, setVisitType] = useState(visit?.type || '')
-  const [{ clientName, petNames }, setClient] = useState({
-    clientName: visit?.clientName || '',
-    petNames: visit?.petNames || ''
-  })
-  const [startTime, setStartTime] = useState(
-    formatTimestamp(visit?.startTime) || ''
-  )
-  const [duration, setDuration] = useState<Duration>({
-    hours: visit?.duration.hours || 0,
-    minutes: visit?.duration.minutes || 0
-  })
-  const [walkDist, setWalkDist] = useState(visit?.walkDist || NaN)
-  const [commuteDist, setCommuteDist] = useState(visit?.commuteDist || NaN)
-  const [commuteMethod, setCommuteMethod] = useState(visit?.commuteMethod || '')
-  const [notes, setNotes] = useState(visit?.notes || '')
+  const [visitType, setVisitType] = useState<string>('')
+  const [clientPetNames, setClientPetNames] = useState<{
+    clientName: string
+    petNames: string
+  }>({ clientName: '', petNames: '' })
+  const [startTime, setStartTime] = useState<string>('')
+  const [duration, setDuration] = useState<Duration>({ hours: 0, minutes: 0 })
+  const [walkDist, setWalkDist] = useState<number>(0)
+  const [commuteDist, setCommuteDist] = useState<number>(0)
+  const [commuteMethod, setCommuteMethod] = useState<string>('')
+  const [notes, setNotes] = useState<string>('')
 
-  const { setAlert } = useAlert()
+  useEffect(() => {
+    if (visit === undefined) return
+    const {
+      type,
+      clientName,
+      petNames,
+      startTime,
+      duration,
+      walkDist,
+      commuteDist,
+      commuteMethod
+    } = visit
+
+    setVisitType(type)
+    setClientPetNames({ clientName, petNames })
+    setStartTime(formatTimestamp(startTime) || '')
+    setDuration(duration)
+    setWalkDist(walkDist)
+    setCommuteDist(commuteDist)
+    setCommuteMethod(commuteMethod)
+  }, [visit])
+
+  const isNewVisit = visit === undefined || visit?.docId === null
 
   const handleSubmit = async (click: React.FormEvent<HTMLFormElement>) => {
     click.preventDefault()
 
-    const data: VisitData = {
+    const data: Visit = {
       type: visitType,
-      clientName: clientName,
+      clientName: clientPetNames.clientName,
       startTime: Timestamp.fromDate(new Date(startTime)),
       duration: duration,
-      petNames: petNames,
+      petNames: clientPetNames.petNames,
       walkDist: walkDist,
       commuteDist: commuteDist,
       commuteMethod: commuteMethod,
       notes: notes
     }
 
-    let tmp: VisitData[] = [...userDoc.visits]
-    if (id !== null) {
-      tmp[id] = data
-    } else {
-      tmp = [data, ...tmp]
-    }
-
-    const tmp2 = { ...userDoc }
-    tmp2.visits = tmp
-    await updateVisit?.(tmp2)
-    setAlert({
-      variant: AlertVariant.info,
-      title: 'Success!',
-      text: 'Visits have been updated',
-      position: 'bottom',
-      showFor: 1000
-    })
+    mutateVisits(data)
 
     router.push('/visit')
   }
 
   const handleDelete = async () => {
-    const tmp: VisitData[] = [...userDoc.visits]
-    const tmp2 = { ...userDoc }
-    tmp2.visits = tmp
+    const data: Visit = {
+      type: visitType,
+      clientName: clientPetNames.clientName,
+      startTime: Timestamp.fromDate(new Date(startTime)),
+      duration: duration,
+      petNames: clientPetNames.petNames,
+      walkDist: walkDist,
+      commuteDist: commuteDist,
+      commuteMethod: commuteMethod,
+      notes: notes
+    }
 
-    await updateVisit?.(tmp2)
-    setAlert({
-      variant: AlertVariant.info,
-      title: 'Success!',
-      text: 'Visit has been deleted',
-      position: 'bottom',
-      showFor: 1000
-    })
+    mutateVisits({ ...data, deleteDoc: true })
 
     router.push('/visit')
   }
 
   const isSubmitEnabled = () =>
     visitType &&
-    clientName &&
+    clientPetNames &&
     startTime &&
     duration.hours >= 0 &&
     duration.minutes >= 0
@@ -121,7 +120,7 @@ const Set = () => {
       {/* Heading */}
       <>
         <h1 className='p-2 text-2xl font-bold'>
-          {id !== null ? 'Edit' : 'Add'} Your Visit
+          {isNewVisit ? 'Add' : 'Edit'} Your Visit
         </h1>
         <div className='my-2 box-content border-t-2 border-primary' />
       </>
@@ -146,10 +145,10 @@ const Set = () => {
               id='clientNameInput'
               type='text'
               placeholder='Client Name'
-              value={clientName}
+              value={clientPetNames.clientName}
               label='Client Name:'
               isRequired={true}
-              setClient={setClient}
+              setClient={setClientPetNames}
             />
 
             <FormField
@@ -192,16 +191,25 @@ const Set = () => {
               label='Duration:'
               defaultValue={duration}
               onHourChange={(event) =>
-                setDuration((duration) => ({
-                  ...duration,
-                  hours: Number(event.target.value)
-                }))
+                setDuration((duration) =>
+                  duration
+                    ? {
+                        ...duration,
+                        hours: Number(event.target.value)
+                      }
+                    : undefined
+                )
               }
               onMinuteChange={(event) =>
-                setDuration((duration) => ({
-                  ...duration,
-                  minutes: Math.round(Number(event.target.value) / 15) * 15
-                }))
+                setDuration((duration) =>
+                  duration
+                    ? {
+                        ...duration,
+                        minutes:
+                          Math.round(Number(event.target.value) / 15) * 15
+                      }
+                    : undefined
+                )
               }
             />
 
@@ -242,7 +250,7 @@ const Set = () => {
               intent='secondary'
               fullwidth
               onClick={handleDelete}
-              hidden={id === null} // button should be hidden if no id
+              hidden={isNewVisit} // button should be hidden if no id
               type='button'
             >
               Remove This Visit
@@ -251,7 +259,7 @@ const Set = () => {
             <Button
               intent='primary'
               size='medium'
-              hidden={id === null}
+              hidden={isNewVisit}
               fullwidth
               type='button'
             >
@@ -263,7 +271,7 @@ const Set = () => {
             <Button
               intent='primary'
               size='medium'
-              hidden={id === null}
+              hidden={isNewVisit}
               fullwidth
               type='button'
             >

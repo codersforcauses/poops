@@ -1,24 +1,18 @@
-import { Dispatch, SetStateAction, useState } from 'react'
+import { useState } from 'react'
 import { ChevronDownIcon } from '@heroicons/react/24/outline'
 
-import { VisitData } from '@/types/types'
+import { Visit } from '@/types/types'
 
 import { EditButton } from './buttons'
 import VisitInfo from './readvisitinstance'
 
-export interface VisitInstanceProps extends VisitData {
-  setVisits: Dispatch<SetStateAction<VisitData[]>>
-  id: number
-}
-
-const VisitInstance = (props: VisitInstanceProps) => {
+const VisitInstance = (props: Visit) => {
   const [isOpen, setIsOpen] = useState(false)
 
+  if (props.docId === undefined) return null
+
   return (
-    <div
-      key={props.id}
-      className='m-2 flex flex-col space-y-1 rounded-xl bg-gray-50 p-2 drop-shadow-default'
-    >
+    <div className='m-2 flex flex-col space-y-1 rounded-xl bg-gray-50 p-2 drop-shadow-default'>
       <div className='flex justify-between'>
         <div className='relative w-full'>
           <input
@@ -34,7 +28,7 @@ const VisitInstance = (props: VisitInstanceProps) => {
             }}
           />
           <VisitInfo {...props} />
-          <EditButton id={props.id} />
+          <EditButton id={props.docId} />
         </div>
       </div>
     </div>

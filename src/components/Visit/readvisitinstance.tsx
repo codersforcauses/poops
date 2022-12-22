@@ -1,6 +1,6 @@
 import { Timestamp } from 'firebase/firestore'
 
-import { Duration, VisitData } from '@/types/types'
+import { Duration, Visit } from '@/types/types'
 import { humanizeTimestamp } from '@/utils'
 
 export const formatDuration = (duration: Duration) => {
@@ -20,7 +20,7 @@ const VisitInfo = ({
   commuteDist = 0,
   commuteMethod = 'N/A',
   notes = ''
-}: VisitData) => {
+}: Visit) => {
   return (
     <>
       <div className='font-bold peer-checked:font-normal'>

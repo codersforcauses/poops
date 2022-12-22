@@ -24,7 +24,9 @@ const newUser = (currentUser: AuthUser): User => {
       streetAddress: '',
       region: [],
       pets: '',
-      tags: ['Volunteer']
+      tags: ['Volunteer'],
+      desc: '',
+      notes: ''
     },
     visits: []
   }
@@ -80,6 +82,7 @@ export const useMutateUser = () => {
 
   const onSuccess = () => {
     queryClient.invalidateQueries({ queryKey: ['user'] })
+    // TODO: Alert? On failure too?
   }
 
   return useMutation({

@@ -2,10 +2,11 @@ import { Timestamp } from 'firebase/firestore'
 
 export interface User {
   info: Contact
-  visits: VisitData[]
+  visits: Visit[]
 }
 
-export interface VisitData {
+export interface Visit {
+  docId?: string
   type: string
   clientName: string
   petNames: string
@@ -18,8 +19,6 @@ export interface VisitData {
 }
 
 export interface Contact {
-  // TODO: change from 'clientName' -> 'name'
-  // TODO: remove optional stuff, set to an empty string for user
   docId?: string
   name: string
   desc: string
