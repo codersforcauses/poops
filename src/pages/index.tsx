@@ -32,7 +32,7 @@ const Home = () => {
                   notes: '',
                   phone: '',
                   streetAddress: '',
-                  region: [''],
+                  region: [],
                   tags: ['Client'],
                   pets: 'pets'
                 })
@@ -50,7 +50,7 @@ const Home = () => {
                   notes: '',
                   phone: '',
                   streetAddress: '',
-                  region: [''],
+                  region: [],
                   tags: ['Client'],
                   pets: 'pets'
                 })

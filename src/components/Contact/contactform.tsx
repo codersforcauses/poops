@@ -1,48 +1,54 @@
-import { ChangeEvent, FormEvent, useEffect } from 'react'
-import { useState } from 'react'
-import { useAtomValue, useSetAtom } from 'jotai'
+import { ChangeEvent, FormEvent, useEffect, useMemo } from 'react'
+import { useAtom, useAtomValue, useSetAtom } from 'jotai'
 import tw from 'tailwind-styled-components'
 
-import { currentContactAtom, isEditingAtom } from '@/atoms/contacts'
+import {
+  contactFormAtom,
+  currentContactAtom,
+  isEditingAtom
+} from '@/atoms/contacts'
 import Avatar from '@/components/Contact/avatar'
 import RegionSelector from '@/components/Contact/regiondropdown'
 import TagSelector from '@/components/Contact/tagdropdown'
 import { useMutateContacts } from '@/hooks/contacts'
 import useUser, { useMutateUser } from '@/hooks/user'
-import type { Contact } from '@/types/types'
 
 import Button from '../UI/button'
 
 const ContactForm = () => {
   const currentContact = useAtomValue(currentContactAtom)
   const setIsEditing = useSetAtom(isEditingAtom)
+  const [contactForm, setContactForm] = useAtom(contactFormAtom)
   const { data: currentUser } = useUser()
   const { mutate: mutateUser } = useMutateUser()
   const { mutate: mutateContacts } = useMutateContacts()
-  const [contactForm, setContactForm] = useState<Contact | null>(null)
 
   const isNewContact = currentContact === null
   const isUser = currentContact?.docId === currentUser?.docId
 
-  const contact = isNewContact
-    ? {
-        name: '',
-        desc: '',
-        pets: '',
-        email: '',
-        phone: '',
-        streetAddress: '',
-        region: [],
-        notes: '',
-        tags: []
-      }
-    : currentContact
+  const contact = useMemo(
+    () =>
+      isNewContact
+        ? {
+            name: '',
+            desc: '',
+            pets: '',
+            email: '',
+            phone: '',
+            streetAddress: '',
+            region: [],
+            notes: '',
+            tags: ['Client']
+          }
+        : currentContact,
+    [isNewContact, currentContact]
+  )
 
   useEffect(() => {
     if (contact !== null) {
       setContactForm(contact)
     }
-  }, [contact])
+  }, [contact, setContactForm])
 
   if (currentUser === null || contactForm === null) return null
 
@@ -135,14 +141,7 @@ const ContactForm = () => {
             Tags
           </label>
 
-          <TagSelector
-            tags={contact.tags}
-            setTags={(tags: string[]) => {
-              setContactForm((prev) =>
-                prev !== null ? { ...prev, tags } : null
-              )
-            }}
-          />
+          <TagSelector tags={contact.tags} />
           {/* Padding to counter the shadow */}
           <div className='pt-2'></div>
         </Box>
@@ -151,12 +150,7 @@ const ContactForm = () => {
           <label htmlFor='region' className='text-primary-dark'>
             Region
           </label>
-          <RegionSelector
-            regions={contact.region}
-            setRegions={() => {
-              console.log('TODO')
-            }}
-          />
+          <RegionSelector regions={contact.region} />
         </Box>
         <Box>
           <label htmlFor='pets' className='text-primary-dark'>
