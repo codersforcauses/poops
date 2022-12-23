@@ -68,10 +68,10 @@ function Modal() {
   return (
     <div className='text-center'>
       <div className='rounded-lg bg-zinc-200 py-4 px-5 text-center shadow-lg sm:py-4'>
-        <h1 className='mb-2 text-xl text-dark-red'>
+        <h1 className='text-dark-red mb-2 text-xl'>
           <b>Visit Details</b>
         </h1>
-        <hr className='mb-3 h-0.5 border-dark-red bg-dark-red text-dark-red' />
+        <hr className='border-dark-red bg-dark-red text-dark-red mb-3 h-0.5' />
         <form onSubmit={handleSubmit}>
           <div>
             <Form

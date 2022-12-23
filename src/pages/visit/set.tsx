@@ -1,7 +1,7 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { XIcon } from '@heroicons/react/outline'
+import { XMarkIcon } from '@heroicons/react/24/outline'
 import { Timestamp } from 'firebase/firestore'
 
 import { withProtected } from '@/components/PrivateRoute'
@@ -16,33 +16,45 @@ import { Duration, VisitData } from '@/types/types'
 import { formatTimestamp, visitSelectOptions } from '@/utils'
 
 const Set = () => {
-  // BUG: when reloading this page whilst editing, all the fields are removed. userDoc is undefined?
   const { userDoc, updateVisit } = useFirestore()
   const router = useRouter()
-  const i: string | string[] | undefined = router.query.id
-  let id: number | null = null
-  let visit: VisitData | null = null
-  if (i !== undefined) {
-    id = parseInt(i + '')
-    visit = userDoc.visits[id]
-  }
+  const id = router.query.id ? +router.query.id : undefined
+  const visit = userDoc.visits[id || 0]
 
-  const [visitType, setVisitType] = useState(visit?.type || '')
+  const [visitType, setVisitType] = useState('')
   const [{ clientName, petNames }, setClient] = useState({
-    clientName: visit?.clientName || '',
-    petNames: visit?.petNames || ''
+    clientName: 'Select...',
+    petNames: ''
   })
-  const [startTime, setStartTime] = useState(
-    formatTimestamp(visit?.startTime) || ''
-  )
+  const [startTime, setStartTime] = useState('')
   const [duration, setDuration] = useState<Duration>({
-    hours: visit?.duration.hours || 0,
-    minutes: visit?.duration.minutes || 0
+    hours: 0,
+    minutes: 0
   })
-  const [walkDist, setWalkDist] = useState(visit?.walkDist || NaN)
-  const [commuteDist, setCommuteDist] = useState(visit?.commuteDist || NaN)
-  const [commuteMethod, setCommuteMethod] = useState(visit?.commuteMethod || '')
-  const [notes, setNotes] = useState(visit?.notes || '')
+  const [walkDist, setWalkDist] = useState(0)
+  const [commuteDist, setCommuteDist] = useState(0)
+  const [commuteMethod, setCommuteMethod] = useState('Select...')
+  const [notes, setNotes] = useState('')
+
+  useEffect(() => {
+    if (id !== undefined && visit) {
+      // setting visit value
+      setVisitType(visit.type)
+      setClient({ clientName: visit.clientName, petNames: visit.petNames })
+      const startTime = formatTimestamp(visit.startTime)
+      if (startTime) {
+        setStartTime(startTime)
+      }
+      setDuration({
+        hours: visit.duration.hours,
+        minutes: visit.duration.minutes
+      })
+      setWalkDist(visit.walkDist)
+      setCommuteDist(visit.commuteDist)
+      setCommuteMethod(visit.commuteMethod)
+      setNotes(visit.notes)
+    }
+  }, [visit, id])
 
   const { setAlert } = useAlert()
 
@@ -62,7 +74,7 @@ const Set = () => {
     }
 
     let tmp: VisitData[] = [...userDoc.visits]
-    if (id !== null) {
+    if (id !== undefined) {
       tmp[id] = data
     } else {
       tmp = [data, ...tmp]
@@ -85,6 +97,7 @@ const Set = () => {
   const handleDelete = async () => {
     const tmp: VisitData[] = [...userDoc.visits]
     const tmp2 = { ...userDoc }
+    tmp.slice(Number(id), 1)
     tmp2.visits = tmp
 
     await updateVisit?.(tmp2)
@@ -93,7 +106,7 @@ const Set = () => {
       title: 'Success!',
       text: 'Visit has been deleted',
       position: 'bottom',
-      showFor: 1000
+      showFor: 2000
     })
 
     router.push('/visit')
@@ -113,7 +126,7 @@ const Set = () => {
       <div className='fixed right-5 top-4 z-[100] h-10 w-10 rounded-full bg-primary drop-shadow-default'>
         <Link href='/visit'>
           <button>
-            <XIcon className='h-full w-full text-white' />
+            <XMarkIcon className='h-full w-full text-white' />
           </button>
         </Link>
       </div>
@@ -146,7 +159,7 @@ const Set = () => {
               id='clientNameInput'
               type='text'
               placeholder='Client Name'
-              value={clientName}
+              value={{ label: clientName, value: petNames }}
               label='Client Name:'
               isRequired={true}
               setClient={setClient}
@@ -167,7 +180,7 @@ const Set = () => {
             <CommuteSelector
               id='commuteMethodInput'
               placeholder='Commute Method'
-              value={commuteMethod}
+              value={{ label: commuteMethod, value: commuteMethod }}
               label='Commute Method:'
               setCommuteMethod={setCommuteMethod}
               isRequired={true}
@@ -190,7 +203,7 @@ const Set = () => {
             <DurationSelector
               id='durationInput'
               label='Duration:'
-              defaultValue={duration}
+              value={duration}
               onHourChange={(event) =>
                 setDuration((duration) => ({
                   ...duration,
