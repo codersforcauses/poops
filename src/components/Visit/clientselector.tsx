@@ -6,7 +6,8 @@ import customStyles from '@/components/Visit/selectorstyles'
 import { useContacts } from '@/hooks/contacts'
 import { SelectOption } from '@/types/types'
 
-interface ClientSelectorProps extends FormFieldProps {
+interface ClientSelectorProps extends Omit<FormFieldProps, 'value'> {
+  value?: SelectOption
   setClient: Dispatch<
     SetStateAction<{
       clientName: string
@@ -34,11 +35,6 @@ const ClientSelector = (props: ClientSelectorProps) => {
     props.setClient({ clientName: newValue.label, petNames: newValue.value })
   }
 
-  const defaultValue: SelectOption = {
-    label: props.value ?? 'Select...',
-    value: props.value ?? ''
-  }
-
   return (
     <div className={props.className}>
       <div className='flex flex-col'>
@@ -51,7 +47,8 @@ const ClientSelector = (props: ClientSelectorProps) => {
           options={getClientList()}
           placeholder={props.placeholder}
           styles={customStyles}
-          defaultValue={defaultValue}
+          value={props.value}
+          getOptionValue={(option) => option.label}
         />
       </div>
     </div>

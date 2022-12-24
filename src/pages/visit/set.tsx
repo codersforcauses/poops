@@ -58,21 +58,22 @@ const Set = () => {
     setCommuteMethod(commuteMethod)
   }, [visit])
 
-  const isNewVisit = visit === undefined || visit?.docId === null
+  const isNewVisit = visit === undefined || visit.docId === null
 
   const handleSubmit = async (click: React.FormEvent<HTMLFormElement>) => {
     click.preventDefault()
 
     const data: Visit = {
-      type: visitType,
       clientName: clientPetNames.clientName,
-      startTime: Timestamp.fromDate(new Date(startTime)),
-      duration: duration,
-      petNames: clientPetNames.petNames,
-      walkDist: walkDist,
       commuteDist: commuteDist,
       commuteMethod: commuteMethod,
-      notes: notes
+      docId: isNewVisit || visitId === null ? undefined : visitId,
+      duration: duration,
+      notes: notes,
+      petNames: clientPetNames.petNames,
+      startTime: Timestamp.fromDate(new Date(startTime)),
+      type: visitType,
+      walkDist: walkDist
     }
 
     mutateVisits(data)
@@ -82,15 +83,16 @@ const Set = () => {
 
   const handleDelete = async () => {
     const data: Visit = {
-      type: visitType,
       clientName: clientPetNames.clientName,
-      startTime: Timestamp.fromDate(new Date(startTime)),
-      duration: duration,
-      petNames: clientPetNames.petNames,
-      walkDist: walkDist,
       commuteDist: commuteDist,
       commuteMethod: commuteMethod,
-      notes: notes
+      docId: isNewVisit || visitId === null ? undefined : visitId,
+      duration: duration,
+      notes: notes,
+      petNames: clientPetNames.petNames,
+      startTime: Timestamp.fromDate(new Date(startTime)),
+      type: visitType,
+      walkDist: walkDist
     }
 
     mutateVisits({ ...data, deleteDoc: true })
@@ -145,7 +147,10 @@ const Set = () => {
               id='clientNameInput'
               type='text'
               placeholder='Client Name'
-              value={clientPetNames.clientName}
+              value={{
+                label: clientPetNames.clientName,
+                value: clientPetNames.clientName
+              }}
               label='Client Name:'
               isRequired={true}
               setClient={setClientPetNames}
@@ -166,7 +171,7 @@ const Set = () => {
             <CommuteSelector
               id='commuteMethodInput'
               placeholder='Commute Method'
-              value={commuteMethod}
+              value={{ label: commuteMethod, value: commuteMethod }}
               label='Commute Method:'
               setCommuteMethod={setCommuteMethod}
               isRequired={true}
@@ -189,7 +194,7 @@ const Set = () => {
             <DurationSelector
               id='durationInput'
               label='Duration:'
-              defaultValue={duration}
+              value={duration}
               onHourChange={(event) =>
                 setDuration((duration) => ({
                   ...duration,
