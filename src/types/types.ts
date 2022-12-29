@@ -1,12 +1,11 @@
 import { Timestamp } from 'firebase/firestore'
 
-export interface UserData {
+export interface User {
   info: Contact
-  contacts: Contact[]
-  visits: VisitData[]
 }
 
-export interface VisitData {
+export interface Visit {
+  docId?: string
   type: string
   clientName: string
   petNames: string
@@ -19,16 +18,15 @@ export interface VisitData {
 }
 
 export interface Contact {
-  //historic type to deal with type issues with contacts
-  id: string
-  clientName: string
-  desc?: string
+  docId?: string
+  name: string
+  desc: string
   pets: string
   email: string
   phone: string
   streetAddress: string
   region: string[]
-  notes?: string
+  notes: string
   tags: string[]
 }
 

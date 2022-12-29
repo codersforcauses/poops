@@ -1,26 +1,40 @@
-import { ChangeEvent } from 'react'
+import { useSetAtom } from 'jotai'
 
-type SearchTagProps = {
-  name: string
-  options: string[]
-  onChangehandler: (event: ChangeEvent<HTMLSelectElement>) => void
-}
+import { searchTagsAtom } from '@/atoms/contacts'
+import { useContacts } from '@/hooks/contacts'
 
-const SearchTag = ({ name, options, onChangehandler }: SearchTagProps) => {
+const SearchTag = () => {
+  const { data: contacts } = useContacts()
+  const setSearchTags = useSetAtom(searchTagsAtom)
+
+  if (contacts === undefined) return null
+
+  const taglist = [
+    ...new Set(
+      contacts
+        .map((contact) => {
+          return contact.tags
+        })
+        .flat()
+    )
+  ]
+
   return (
     <div>
       <select
-        onChange={onChangehandler}
+        onChange={(e) => {
+          setSearchTags(e.target.value)
+        }}
         className='h-10 border-r border-none bg-transparent pl-2 pr-8 text-sm valid:text-black invalid:text-[#9ca3af] focus:outline-none'
       >
         <option value='' disabled>
-          {name}
+          Filter By
         </option>
         <option value=''>All</option>
-        {options.map((o) => {
+        {taglist.map((t) => {
           return (
-            <option key={o} value={o}>
-              {o}
+            <option key={t} value={t}>
+              {t}
             </option>
           )
         })}

@@ -2,6 +2,8 @@ import Statistics from '@/components/Home/statistics'
 
 const dummyVisitData = '12'
 const dummyDistanceData = '6.5'
+const dummyHourData = '3'
+const dummyDistanceCommuted = '20.5'
 
 function Summary() {
   return (
@@ -21,6 +23,17 @@ function Summary() {
                 <Statistics
                   title='Distance Walked'
                   data={dummyDistanceData + ' km'}
+                />
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <Statistics title='Number of Hours' data={dummyHourData} />
+              </td>
+              <td>
+                <Statistics
+                  title='Distance Commuted'
+                  data={dummyDistanceCommuted + ' km'}
                 />
               </td>
             </tr>
