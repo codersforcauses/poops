@@ -24,4 +24,3 @@ export const addVisit = firestore
     })
     return null
   })
-
