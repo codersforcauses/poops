@@ -57,7 +57,7 @@ const Contact = () => {
           )}
           {isListView ? (
             <>
-              <ContactItem contact={currentUser} />
+              <ContactItem contact={currentUser.info} />
               <ContactList />
             </>
           ) : (

@@ -1,11 +1,7 @@
 import Statistics from '@/components/Home/statistics'
+import { Stat } from '@/types/types'
 
-const dummyVisitData = '12'
-const dummyDistanceData = '6.5'
-const dummyHourData = '3'
-const dummyDistanceCommuted = '20.5'
-
-function Summary() {
+function Summary(props: Stat) {
   return (
     <div className='rounded-lg bg-zinc-100 py-4 px-5 text-center shadow-lg sm:py-4'>
       <h1 className='mb-2 text-xl text-primary-dark'>
@@ -17,23 +13,29 @@ function Summary() {
           <tbody>
             <tr>
               <td>
-                <Statistics title='Number of Visits' data={dummyVisitData} />
+                <Statistics
+                  title='Number of Visits'
+                  data={props.numVisits.toString()}
+                />
               </td>
               <td>
                 <Statistics
                   title='Distance Walked'
-                  data={dummyDistanceData + ' km'}
+                  data={props.walkedDist + ' km'}
                 />
               </td>
             </tr>
             <tr>
               <td>
-                <Statistics title='Number of Hours' data={dummyHourData} />
+                <Statistics
+                  title='Number of Hours'
+                  data={props.numHours.toString()}
+                />
               </td>
               <td>
                 <Statistics
                   title='Distance Commuted'
-                  data={dummyDistanceCommuted + ' km'}
+                  data={props.commutedDist + ' km'}
                 />
               </td>
             </tr>
