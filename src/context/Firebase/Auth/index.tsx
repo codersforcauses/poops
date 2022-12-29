@@ -1,4 +1,4 @@
-import { ReactNode, useEffect, useState } from 'react'
+import { ReactNode, useCallback, useEffect, useState } from 'react'
 import {
   Auth,
   AuthProvider,
@@ -21,6 +21,7 @@ import { auth } from '../../../components/Firebase/init'
 export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
   const [currentUser, setCurrentUser] = useState<User | null>(null)
   const [loading, setLoading] = useState(true)
+  const [isAdmin, setIsAdmin] = useState(false)
 
   function externalAuthSignIn(auth: Auth, provider: AuthProvider) {
     signInWithRedirect(auth, provider)
@@ -87,13 +88,29 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
     return () => unsubscribe()
   }, [])
 
+  const getUserToken = useCallback(async () => {
+    if (currentUser) {
+      const token = await currentUser.getIdTokenResult(true)
+      const result = token?.claims
+      setIsAdmin(!!result?.admin)
+    }
+  }, [currentUser])
+
+  useEffect(() => {
+    if (currentUser) {
+      getUserToken()
+    }
+  }, [currentUser, getUserToken])
+
   const value: FirebaseContextProps = {
     auth,
     getGoogleResults,
     linkAuthProvider,
     externalAuthSignIn,
     logOut,
-    currentUser
+    currentUser,
+    isAdmin,
+    getUserToken
   }
 
   return (
