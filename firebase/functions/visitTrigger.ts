@@ -2,10 +2,11 @@ import { firestore, app } from './main'
 import { getFirestore } from 'firebase-admin/firestore'
 const db = getFirestore(app)
 
-export const addVisit = firestore
+export const updateVisitTrigger = firestore
   .document('users/{userId}/visits/{visitId}')
-  .onCreate(async (snap, context) => {
-    const newVisit = snap.data()
+  .onWrite(async (change, context) => {
+    const oldVisit = change.before.exists ? change.before.data() : null
+    const newVisit = change.after.exists ? change.after.data() : null
     const userId = context.params.userId
     const userRef = db.collection('users').doc(userId)
 
@@ -13,14 +14,41 @@ export const addVisit = firestore
     const userDoc = await userRef.get()
     const oldStats = userDoc.data()?.stats
 
+    // prepping difference in old and new visit
+    let hoursDiff = 0
+    let commuteDistDiff = 0
+    let walkDistDiff = 0
+    let visitDiff = 0
+
+    if (newVisit && oldVisit) {
+      // visit was updated
+      hoursDiff =
+        (newVisit.duration.hours +
+        newVisit.duration.minutes / 60) -
+        (oldVisit.duration.hours + oldVisit.duration.minutes / 60)
+      commuteDistDiff = (newVisit.commuteDist - oldVisit.commuteDist)
+      walkDistDiff = (newVisit.walkDist - oldVisit.walkDist)
+    } else if (oldVisit) {
+      // visit was deleted
+      visitDiff -= 1
+      hoursDiff -= oldVisit.duration.hours + oldVisit.duration.minutes / 60
+      commuteDistDiff -= oldVisit.commuteDist
+      walkDistDiff -= oldVisit.walkDist
+    } else if (newVisit) {
+      // visit was added
+      visitDiff += 1
+      hoursDiff += newVisit.duration.hours + newVisit.duration.minutes / 60
+      commuteDistDiff += newVisit.commuteDist
+      walkDistDiff += newVisit.walkDist
+    }
+
     // updating user stats with new visit data
-    await userRef.update({
+    return userRef.update({
       stats: {
-        numVisits: oldStats.numVisits + 1,
-        numHours: oldStats.numHours + newVisit.duration.hours,
-        commutedDist: oldStats.commutedDist + newVisit.commuteDist,
-        walkedDist: oldStats.walkedDist + newVisit.walkDist
+        numVisits: oldStats.numVisits + visitDiff,
+        numHours: oldStats.numHours + hoursDiff,
+        commutedDist: oldStats.commutedDist + commuteDistDiff,
+        walkedDist: oldStats.walkedDist + walkDistDiff
       }
     })
-    return null
   })
