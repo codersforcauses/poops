@@ -25,12 +25,13 @@ service cloud.firestore {
       return request.auth.token.admin == "true";
     }
 
-    match /users/{userId} {
-      allow read, write: if isSignIn() && isOwner() && hasUnrevokedIDToken() && isUser();
+    match /users/{userId}/{document=**} {
+      allow read, write: if isSignIn() && isOwner();
     }
 
     match /roles/{email} {
-      allow read, write: if isSignIn() && isOwner() && hasUnrevokedIDToken() && isAdmin();
+      allow read: if isSignIn() && isOwner() && isAdmin();
+      allow write: if false;
     }
 
     match /revoked_tokens/{userId} {
