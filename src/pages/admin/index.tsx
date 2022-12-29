@@ -2,19 +2,17 @@ import { useCallback, useEffect, useState } from 'react'
 import { doc, DocumentData, getDoc } from '@firebase/firestore'
 
 import { db } from '@/components/Firebase/init'
+import NavBar from '@/components/NavBar'
+import Button from '@/components/UI/button'
 import { useAuth } from '@/context/Firebase/Auth/context'
-import setRole from '@/lib/temp/firebase/functions/setRole'
+import mod from '@/lib/temp/firebase/functions/setRole'
 
 const Admin = () => {
-  const { currentUser } = useAuth()
-  const [isAdmin, setIsAdmin] = useState(false)
+  const { currentUser, isAdmin, getUserToken } = useAuth()
   const [userDoc, setUserDoc] = useState<DocumentData>()
 
-  const getUserToken = useCallback(async () => {
+  const getUserDoc = useCallback(async () => {
     if (currentUser) {
-      const token = await currentUser.getIdTokenResult(true)
-      const result = token?.claims
-      setIsAdmin(!!result?.admin)
       try {
         const userRef = doc(db, 'roles', currentUser?.email || '')
         const userDocSnapshot = await getDoc(userRef)
@@ -22,61 +20,54 @@ const Admin = () => {
         setUserDoc(userDocData)
       } catch (error) {
         console.log('Error getting document:', error)
+        setUserDoc(error as DocumentData)
       }
     }
   }, [currentUser])
 
   useEffect(() => {
-    if (currentUser) {
-      getUserToken()
-    }
-  }, [currentUser, getUserToken])
+    if (currentUser) getUserDoc()
+  }, [currentUser, getUserDoc, isAdmin])
 
-  const mod = async (adminAccess: boolean) => {
-    try {
-      if (currentUser?.email) {
-        const reponse = await setRole({
-          email: currentUser.email,
-          roles: { admin: adminAccess }
-        })
-        const data = await reponse.json()
-        console.log('Next API Response', data)
-        getUserToken()
-      }
-    } catch (error) {
-      console.log('Firebase Functions Error: ', error)
+  const onMod = (adminAccess: boolean) => {
+    if (currentUser) {
+      mod(adminAccess, currentUser, getUserToken, getUserDoc)
     }
   }
 
   return (
     <>
-      <p>Admin page</p>
+      <h1>Admin page</h1>
       <p>User: {currentUser?.displayName}</p>
       <p>Email: {currentUser?.email}</p>
       <p>Admin status: {isAdmin.toString()}</p>
       <p>User role firestore document: {JSON.stringify(userDoc)}</p>
-      <button
-        className='border border-black'
+      <Button
+        size='medium'
+        intent='secondary'
         type='button'
-        onClick={() => mod(true)}
+        onClick={() => onMod(true)}
       >
         Mod me!
-      </button>
-      <button
-        className='border border-black'
+      </Button>
+      <Button
+        size='medium'
+        intent='secondary'
         type='button'
         onClick={async () => getUserToken()}
       >
         Refresh Token
-      </button>
+      </Button>
 
-      <button
-        className='border border-black'
+      <Button
+        size='medium'
+        intent='secondary'
         type='button'
-        onClick={() => mod(false)}
+        onClick={() => onMod(false)}
       >
         Unmod me!
-      </button>
+      </Button>
+      <NavBar />
     </>
   )
 }
