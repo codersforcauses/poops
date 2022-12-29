@@ -3,7 +3,7 @@ import Select, { SingleValue } from 'react-select'
 
 import { FormFieldProps } from '@/components/Visit/formfield'
 import customStyles from '@/components/Visit/selectorstyles'
-import { useFirestore } from '@/context/Firebase/Firestore/context'
+import { useContacts } from '@/hooks/contacts'
 import { SelectOption } from '@/types/types'
 
 interface ClientSelectorProps extends Omit<FormFieldProps, 'value'> {
@@ -17,14 +17,13 @@ interface ClientSelectorProps extends Omit<FormFieldProps, 'value'> {
 }
 
 const ClientSelector = (props: ClientSelectorProps) => {
-  const {
-    userDoc: { contacts }
-  } = useFirestore()
+  const { data: contacts } = useContacts()
+  if (contacts === undefined) return null
 
   const getClientList = () => {
     return contacts.map((contact) => {
       const client: SelectOption = {
-        label: contact.clientName,
+        label: contact.name,
         value: contact.pets ?? ''
       }
       return client

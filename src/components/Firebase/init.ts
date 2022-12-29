@@ -1,3 +1,5 @@
+/* eslint-disable no-console */
+
 import { FirebaseApp, getApp, getApps, initializeApp } from 'firebase/app'
 import { Auth, connectAuthEmulator, getAuth } from 'firebase/auth'
 import {

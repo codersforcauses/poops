@@ -1,4 +1,4 @@
-import { Duration, VisitData } from '@/types/types'
+import { Duration, Visit } from '@/types/types'
 
 export const formatDuration = (duration: Duration) => {
   const d = `${duration.hours} ${duration.hours === 1 ? 'hr' : 'hrs'} ${
@@ -7,7 +7,7 @@ export const formatDuration = (duration: Duration) => {
   return d
 }
 
-interface VisitInfoProps extends VisitData {
+interface VisitInfoProps extends Visit {
   isOpen: boolean
 }
 

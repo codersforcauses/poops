@@ -10,111 +10,99 @@ import ClientSelector from '@/components/Visit/clientselector'
 import CommuteSelector from '@/components/Visit/commuteselector'
 import DurationSelector from '@/components/Visit/durationselector'
 import FormField from '@/components/Visit/formfield'
-import { AlertVariant, useAlert } from '@/context/AlertContext'
-import { useFirestore } from '@/context/Firebase/Firestore/context'
-import { Duration, VisitData } from '@/types/types'
+import { useMutateVisits, useVisits } from '@/hooks/visits'
+import { Duration, Visit } from '@/types/types'
 import { formatTimestamp, visitSelectOptions } from '@/utils'
 
 const Set = () => {
-  const { userDoc, updateVisit } = useFirestore()
-  const router = useRouter()
-  const id = router.query.id ? +router.query.id : undefined
-  const visit = userDoc.visits[id || 0]
+  const { data: visits } = useVisits()
+  const { mutate: mutateVisits } = useMutateVisits()
 
-  const [visitType, setVisitType] = useState('')
-  const [{ clientName, petNames }, setClient] = useState({
-    clientName: 'Select...',
-    petNames: ''
-  })
-  const [startTime, setStartTime] = useState('')
-  const [duration, setDuration] = useState<Duration>({
-    hours: 0,
-    minutes: 0
-  })
-  const [walkDist, setWalkDist] = useState(0)
-  const [commuteDist, setCommuteDist] = useState(0)
-  const [commuteMethod, setCommuteMethod] = useState('Select...')
-  const [notes, setNotes] = useState('')
+  const router = useRouter()
+  const queryId = router.query.id
+  const visitId =
+    queryId === undefined || Array.isArray(queryId) ? null : queryId
+  const visit = visits?.find((visit) => queryId && visit.docId === visitId)
+
+  const [visitType, setVisitType] = useState<string>('')
+  const [clientPetNames, setClientPetNames] = useState<{
+    clientName: string
+    petNames: string
+  }>({ clientName: '', petNames: '' })
+  const [startTime, setStartTime] = useState<string>('')
+  const [duration, setDuration] = useState<Duration>({ hours: 0, minutes: 0 })
+  const [walkDist, setWalkDist] = useState<number>(0)
+  const [commuteDist, setCommuteDist] = useState<number>(0)
+  const [commuteMethod, setCommuteMethod] = useState<string>('')
+  const [notes, setNotes] = useState<string>('')
 
   useEffect(() => {
-    if (id !== undefined && visit) {
-      // setting visit value
-      setVisitType(visit.type)
-      setClient({ clientName: visit.clientName, petNames: visit.petNames })
-      const startTime = formatTimestamp(visit.startTime)
-      if (startTime) {
-        setStartTime(startTime)
-      }
-      setDuration({
-        hours: visit.duration.hours,
-        minutes: visit.duration.minutes
-      })
-      setWalkDist(visit.walkDist)
-      setCommuteDist(visit.commuteDist)
-      setCommuteMethod(visit.commuteMethod)
-      setNotes(visit.notes)
-    }
-  }, [visit, id])
+    if (visit === undefined) return
+    const {
+      type,
+      clientName,
+      petNames,
+      startTime,
+      duration,
+      walkDist,
+      commuteDist,
+      commuteMethod
+    } = visit
 
-  const { setAlert } = useAlert()
+    setVisitType(type)
+    setClientPetNames({ clientName, petNames })
+    setStartTime(formatTimestamp(startTime) || '')
+    setDuration(duration)
+    setWalkDist(walkDist)
+    setCommuteDist(commuteDist)
+    setCommuteMethod(commuteMethod)
+  }, [visit])
+
+  const isNewVisit = visit === undefined || visit.docId === null
 
   const handleSubmit = async (click: React.FormEvent<HTMLFormElement>) => {
     click.preventDefault()
 
-    const data: VisitData = {
-      type: visitType,
-      clientName: clientName,
-      startTime: Timestamp.fromDate(new Date(startTime)),
-      duration: duration,
-      petNames: petNames,
-      walkDist: walkDist,
+    const data: Visit = {
+      clientName: clientPetNames.clientName,
       commuteDist: commuteDist,
       commuteMethod: commuteMethod,
-      notes: notes
+      docId: isNewVisit || visitId === null ? undefined : visitId,
+      duration: duration,
+      notes: notes,
+      petNames: clientPetNames.petNames,
+      startTime: Timestamp.fromDate(new Date(startTime)),
+      type: visitType,
+      walkDist: walkDist
     }
 
-    let tmp: VisitData[] = [...userDoc.visits]
-    if (id !== undefined) {
-      tmp[id] = data
-    } else {
-      tmp = [data, ...tmp]
-    }
-
-    const tmp2 = { ...userDoc }
-    tmp2.visits = tmp
-    await updateVisit?.(tmp2)
-    setAlert({
-      variant: AlertVariant.info,
-      title: 'Success!',
-      text: 'Visits have been updated',
-      position: 'bottom',
-      showFor: 1000
-    })
+    mutateVisits(data)
 
     router.push('/visit')
   }
 
   const handleDelete = async () => {
-    const tmp: VisitData[] = [...userDoc.visits]
-    const tmp2 = { ...userDoc }
-    tmp.slice(Number(id), 1)
-    tmp2.visits = tmp
+    const data: Visit = {
+      clientName: clientPetNames.clientName,
+      commuteDist: commuteDist,
+      commuteMethod: commuteMethod,
+      docId: isNewVisit || visitId === null ? undefined : visitId,
+      duration: duration,
+      notes: notes,
+      petNames: clientPetNames.petNames,
+      startTime: Timestamp.fromDate(new Date(startTime)),
+      type: visitType,
+      walkDist: walkDist
+    }
 
-    await updateVisit?.(tmp2)
-    setAlert({
-      variant: AlertVariant.info,
-      title: 'Success!',
-      text: 'Visit has been deleted',
-      position: 'bottom',
-      showFor: 2000
-    })
+    mutateVisits({ ...data, deleteDoc: true })
 
     router.push('/visit')
   }
 
   const isSubmitEnabled = () =>
     visitType &&
-    clientName &&
+    clientPetNames &&
     startTime &&
     duration.hours >= 0 &&
     duration.minutes >= 0
@@ -134,7 +122,7 @@ const Set = () => {
       {/* Heading */}
       <>
         <h1 className='p-2 text-2xl font-bold'>
-          {id !== null ? 'Edit' : 'Add'} Your Visit
+          {isNewVisit ? 'Add' : 'Edit'} Your Visit
         </h1>
         <div className='my-2 box-content border-t-2 border-primary' />
       </>
@@ -159,10 +147,13 @@ const Set = () => {
               id='clientNameInput'
               type='text'
               placeholder='Client Name'
-              value={{ label: clientName, value: petNames }}
+              value={{
+                label: clientPetNames.clientName,
+                value: clientPetNames.clientName
+              }}
               label='Client Name:'
               isRequired={true}
-              setClient={setClient}
+              setClient={setClientPetNames}
             />
 
             <FormField
@@ -255,7 +246,7 @@ const Set = () => {
               intent='secondary'
               fullwidth
               onClick={handleDelete}
-              hidden={id === null} // button should be hidden if no id
+              hidden={isNewVisit} // button should be hidden if no id
               type='button'
             >
               Remove This Visit
@@ -264,7 +255,7 @@ const Set = () => {
             <Button
               intent='primary'
               size='medium'
-              hidden={id === null}
+              hidden={isNewVisit}
               fullwidth
               type='button'
             >
@@ -276,7 +267,7 @@ const Set = () => {
             <Button
               intent='primary'
               size='medium'
-              hidden={id === null}
+              hidden={isNewVisit}
               fullwidth
               type='button'
             >

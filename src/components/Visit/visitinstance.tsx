@@ -1,26 +1,20 @@
-import { Dispatch, SetStateAction, useState } from 'react'
+import { useState } from 'react'
 import { ChevronDownIcon } from '@heroicons/react/24/outline'
 import { Timestamp } from 'firebase/firestore'
 
-import { VisitData } from '@/types/types'
+import { Visit } from '@/types/types'
 import { humanizeTimestamp } from '@/utils'
 
 import { EditButton } from './buttons'
 import VisitInfo from './readvisitinstance'
 
-export interface VisitInstanceProps extends VisitData {
-  setVisits: Dispatch<SetStateAction<VisitData[]>>
-  id: number
-}
-
-const VisitInstance = (props: VisitInstanceProps) => {
+const VisitInstance = (props: Visit) => {
   const [isOpen, setIsOpen] = useState(false)
 
+  if (props.docId === undefined) return null
+
   return (
-    <div
-      key={props.id}
-      className='m-2 flex flex-col rounded-xl bg-gray-50 p-4 drop-shadow-default'
-    >
+    <div className='m-2 flex flex-col rounded-xl bg-gray-50 p-4 drop-shadow-default'>
       <div className='flex content-center justify-between'>
         <div style={{ fontWeight: isOpen ? 400 : 700 }}>
           <p className='font-bold text-primary'>
@@ -41,7 +35,7 @@ const VisitInstance = (props: VisitInstanceProps) => {
         />
       </div>
       <VisitInfo {...props} isOpen={isOpen} />
-      {isOpen && <EditButton id={props.id} />}
+      {isOpen && <EditButton id={props.docId} />}
     </div>
   )
 }
