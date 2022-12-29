@@ -8,9 +8,6 @@ const firebaseAdminConfig = {
   privateKey: process.env.FIREBASE_PRIVATE_KEY
 }
 
-console.log(firebaseAdminConfig)
-console.log(process.env.FIREBASE_DATABASE_URL)
-
 const app: App = !getApps().length
   ? initializeApp({
       credential: cert(firebaseAdminConfig),
