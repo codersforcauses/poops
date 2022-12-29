@@ -1,21 +1,27 @@
 import { useCallback, useEffect, useState } from 'react'
+import { doc, DocumentData, getDoc } from '@firebase/firestore'
 
+import { db } from '@/components/Firebase/init'
 import { useAuth } from '@/context/Firebase/Auth/context'
 import setRole from '@/lib/temp/firebase/functions/setRole'
 
 const Admin = () => {
   const { currentUser } = useAuth()
   const [isAdmin, setIsAdmin] = useState(false)
+  const [userDoc, setUserDoc] = useState<DocumentData>()
 
   const getUserToken = useCallback(async () => {
     if (currentUser) {
       const token = await currentUser.getIdTokenResult(true)
       const result = token?.claims
-      console.log(result)
-      if (result?.admin) {
-        setIsAdmin(true)
-      } else {
-        setIsAdmin(false)
+      setIsAdmin(!!result?.admin)
+      try {
+        const userRef = doc(db, 'roles', currentUser?.email || '')
+        const userDocSnapshot = await getDoc(userRef)
+        const userDocData = userDocSnapshot.data()
+        setUserDoc(userDocData)
+      } catch (error) {
+        console.log('Error getting document:', error)
       }
     }
   }, [currentUser])
@@ -48,6 +54,7 @@ const Admin = () => {
       <p>User: {currentUser?.displayName}</p>
       <p>Email: {currentUser?.email}</p>
       <p>Admin status: {isAdmin.toString()}</p>
+      <p>User role firestore document: {JSON.stringify(userDoc)}</p>
       <button
         className='border border-black'
         type='button'

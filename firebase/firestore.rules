@@ -14,11 +14,11 @@ service cloud.firestore {
     // }
 
     // function isUser(){
-    //   return request.auth.token.user == "true";
+    //   return request.auth.token.user;
     // }
 
     function isAdmin(){
-      return request.auth.token.admin == "true";
+      return request.auth.token.admin;
     }
 
     match /users/{userId}/{document=**} {
