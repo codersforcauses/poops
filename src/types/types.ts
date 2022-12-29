@@ -2,7 +2,6 @@ import { Timestamp } from 'firebase/firestore'
 
 export interface User {
   info: Contact
-  visits: Visit[]
 }
 
 export interface Visit {

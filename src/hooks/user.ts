@@ -27,8 +27,7 @@ const newUser = (currentUser: AuthUser): User => {
       tags: ['Volunteer'],
       desc: '',
       notes: ''
-    },
-    visits: []
+    }
   }
 }
 
