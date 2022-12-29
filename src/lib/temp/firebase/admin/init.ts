@@ -9,6 +9,7 @@ const firebaseAdminConfig = {
 }
 
 console.log(firebaseAdminConfig)
+console.log(process.env.FIREBASE_DATABASE_URL)
 
 const app: App = !getApps().length
   ? initializeApp({
