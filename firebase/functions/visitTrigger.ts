@@ -23,11 +23,11 @@ export const updateVisitTrigger = firestore
     if (newVisit && oldVisit) {
       // visit was updated
       hoursDiff =
-        (newVisit.duration.hours +
-        newVisit.duration.minutes / 60) -
+        newVisit.duration.hours +
+        newVisit.duration.minutes / 60 -
         (oldVisit.duration.hours + oldVisit.duration.minutes / 60)
-      commuteDistDiff = (newVisit.commuteDist - oldVisit.commuteDist)
-      walkDistDiff = (newVisit.walkDist - oldVisit.walkDist)
+      commuteDistDiff = newVisit.commuteDist - oldVisit.commuteDist
+      walkDistDiff = newVisit.walkDist - oldVisit.walkDist
     } else if (oldVisit) {
       // visit was deleted
       visitDiff -= 1
