@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react'
 import Link from 'next/link'
 
 import Header from '@/components/Header'
@@ -12,22 +11,10 @@ import useUser from '@/hooks/user'
 const Home = () => {
   const { data: currentUser } = useUser()
 
-  const [welcomeMessage, setWelcomeMessage] = useState('Welcome!')
-  const [numVisits, setNumVisits] = useState(0)
-  const [numHours, setNumHours] = useState(0)
-  const [commutedDist, setCommutedDist] = useState(0)
-  const [walkedDist, setWalkedDist] = useState(0)
-
-  useEffect(() => {
-    currentUser?.info &&
-      setWelcomeMessage(`Welcome, ${currentUser?.info.name}!`)
-
-    // getting user stats
-    currentUser?.stats && setNumVisits(currentUser?.stats.numVisits)
-    currentUser?.stats && setNumHours(currentUser?.stats.numHours)
-    currentUser?.stats && setCommutedDist(currentUser?.stats.commutedDist)
-    currentUser?.stats && setWalkedDist(currentUser?.stats.walkedDist)
-  }, [currentUser])
+  const welcomeMessage =
+    currentUser && currentUser.info
+      ? `Welcome, ${currentUser.info.name}!`
+      : 'Welcome!'
 
   return (
     <>
@@ -37,12 +24,7 @@ const Home = () => {
         <div className='h-[calc(max-content +4rem)] m-auto flex w-screen flex-col'>
           <div className='flex flex-col px-4 '>
             <h1 className='py-3 text-center text-3xl'>{welcomeMessage}</h1>
-            <Summary
-              numVisits={numVisits}
-              numHours={numHours}
-              commutedDist={commutedDist}
-              walkedDist={walkedDist}
-            />
+            <Summary />
             <br />
             <div className='flex justify-center'>
               <Link href='visit/set'>

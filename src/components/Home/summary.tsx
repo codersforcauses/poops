@@ -1,7 +1,21 @@
 import Statistics from '@/components/Home/statistics'
-import { Stat } from '@/types/types'
+import useUser from '@/hooks/user'
 
-function Summary(props: Stat) {
+function Summary() {
+  const { data: currentUser } = useUser()
+
+  let numVisits = 0
+  let numHours = 0
+  let commutedDist = 0
+  let walkedDist = 0
+
+  if (currentUser && currentUser.stats) {
+    numVisits = currentUser.stats.numVisits
+    numHours = currentUser.stats.numHours
+    commutedDist = currentUser.stats.commutedDist
+    walkedDist = currentUser.stats.walkedDist
+  }
+
   return (
     <div className='rounded-lg bg-zinc-100 py-4 px-5 text-center shadow-lg sm:py-4'>
       <h1 className='mb-2 text-xl text-primary-dark'>
@@ -15,27 +29,24 @@ function Summary(props: Stat) {
               <td>
                 <Statistics
                   title='Number of Visits'
-                  data={props.numVisits.toString()}
+                  data={numVisits.toString()}
                 />
               </td>
               <td>
-                <Statistics
-                  title='Distance Walked'
-                  data={props.walkedDist + ' km'}
-                />
+                <Statistics title='Distance Walked' data={walkedDist + ' km'} />
               </td>
             </tr>
             <tr>
               <td>
                 <Statistics
                   title='Number of Hours'
-                  data={props.numHours.toString()}
+                  data={numHours.toString()}
                 />
               </td>
               <td>
                 <Statistics
                   title='Distance Commuted'
-                  data={props.commutedDist + ' km'}
+                  data={commutedDist + ' km'}
                 />
               </td>
             </tr>
