@@ -2,7 +2,7 @@ import { Timestamp } from 'firebase/firestore'
 
 export interface User {
   info: Contact
-  stats: Stat
+  stats: UserStat
 }
 
 export interface Visit {
@@ -31,7 +31,7 @@ export interface Contact {
   tags: string[]
 }
 
-export interface Stat {
+export interface UserStat {
   numVisits: number
   numHours: number
   commutedDist: number

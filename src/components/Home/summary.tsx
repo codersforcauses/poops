@@ -2,19 +2,14 @@ import Statistics from '@/components/Home/statistics'
 import useUser from '@/hooks/user'
 
 function Summary() {
-  const { data: currentUser } = useUser()
+  const { isSuccess, data: currentUser } = useUser()
 
-  let numVisits = 0
-  let numHours = 0
-  let commutedDist = 0
-  let walkedDist = 0
+  if (!isSuccess || currentUser == undefined || currentUser.stats == undefined)
+    return null
 
-  if (currentUser && currentUser.stats) {
-    numVisits = currentUser.stats.numVisits
-    numHours = currentUser.stats.numHours
-    commutedDist = currentUser.stats.commutedDist
-    walkedDist = currentUser.stats.walkedDist
-  }
+  const {
+    stats: { numHours, numVisits, commutedDist, walkedDist }
+  } = currentUser
 
   return (
     <div className='rounded-lg bg-zinc-100 py-4 px-5 text-center shadow-lg sm:py-4'>

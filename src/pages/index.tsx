@@ -9,10 +9,10 @@ import Button from '@/components/UI/button'
 import useUser from '@/hooks/user'
 
 const Home = () => {
-  const { data: currentUser } = useUser()
+  const { isSuccess, data: currentUser } = useUser()
 
   const welcomeMessage =
-    currentUser && currentUser.info
+    isSuccess && currentUser && currentUser.info
       ? `Welcome, ${currentUser.info.name}!`
       : 'Welcome!'
 
