@@ -55,12 +55,7 @@ const getUpdatedUserStats = (
   newVisit?: DocumentData | null
 ) => {
   // appending the oldStats to the newStats first.
-  const newStats: UserStat = {
-    numHours: oldStats.numHours,
-    numVisits: oldStats.numVisits,
-    commutedDist: oldStats.commutedDist,
-    walkedDist: oldStats.walkedDist
-  }
+  const newStats: UserStat = oldStats
 
   // The values of oldVisit and newVisit can be used to determine what
   // operation was done on the visit subcollection
