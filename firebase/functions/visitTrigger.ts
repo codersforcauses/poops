@@ -1,7 +1,7 @@
-import { firestore, app } from './main'
+import { firestore } from './main'
 import { getFirestore, DocumentData } from 'firebase-admin/firestore'
 import { UserStat } from '../../src/types/types'
-const db = getFirestore(app)
+const db = getFirestore()
 
 /**
  * Trigger for any changes to the visit subcollection
