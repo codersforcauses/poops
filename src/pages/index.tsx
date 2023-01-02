@@ -3,6 +3,7 @@ import Link from 'next/link'
 import Header from '@/components/Header'
 import Summary from '@/components/Home/summary'
 import NavBar from '@/components/NavBar'
+import { withProtected } from '@/components/PrivateRoute'
 import TopNav from '@/components/TopNav'
 import Button from '@/components/UI/button'
 import useUser from '@/hooks/user'
@@ -10,9 +11,10 @@ import useUser from '@/hooks/user'
 const Home = () => {
   const { isSuccess, data: currentUser } = useUser()
 
-  const welcomeMessage = isSuccess
-    ? `Welcome, ${currentUser?.name}!`
-    : 'Welcome!'
+  const welcomeMessage =
+    isSuccess && currentUser && currentUser.info
+      ? `Welcome, ${currentUser.info.name}!`
+      : 'Welcome!'
 
   return (
     <>
@@ -39,4 +41,4 @@ const Home = () => {
   )
 }
 
-export default Home
+export default withProtected(Home)
