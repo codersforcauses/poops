@@ -1,7 +1,12 @@
 import { firestore } from './main'
 import { getFirestore, DocumentData } from 'firebase-admin/firestore'
-import { UserStat } from '../../src/types/types'
 const db = getFirestore()
+interface UserStat {
+  numVisits: number
+  numHours: number
+  commutedDist: number
+  walkedDist: number
+}
 
 /**
  * Trigger for any changes to the visit subcollection
