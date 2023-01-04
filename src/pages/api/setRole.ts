@@ -1,5 +1,4 @@
 import { NextApiRequest, NextApiResponse } from 'next'
-import { UserRecord } from 'firebase-admin/auth'
 
 import { auth, firestore } from '@/lib/temp/firebase/admin/init'
 
@@ -7,7 +6,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const { email, roles } = JSON.parse(req.body)
   const claims: Record<string, boolean> = { ...roles }
   try {
-    const userRecord: UserRecord = await auth.getUserByEmail(email)
+    const userRecord = await auth.getUserByEmail(email)
     // See the UserRecord reference doc for the contents of userRecord.
     await auth.setCustomUserClaims(userRecord.uid, {
       ...userRecord.customClaims,
