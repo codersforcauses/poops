@@ -9,14 +9,6 @@ service cloud.firestore {
     //   return request.auth.token.email_verified;
     // }
 
-    // function hasUnrevokedIDToken(){
-    //   return request.auth.token.auth_time > get(/databases/$(database)/documents/revoked_tokens/$(userId)).data.revokeTime;
-    // }
-
-    // function isUser(){
-    //   return request.auth.token.user;
-    // }
-
     function isAdmin(){
       return request.auth.token.admin;
     }
@@ -34,10 +26,6 @@ service cloud.firestore {
       }
       allow read: if isSignIn() && isAdmin() && checkEmail();
       allow write: if false;
-    }
-
-    match /revoked_tokens/{userId} {
-      allow read, write: if false;
     }
   }
 }
