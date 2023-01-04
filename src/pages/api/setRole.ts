@@ -9,7 +9,10 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
     const userRecord: UserRecord = await auth.getUserByEmail(email)
     // See the UserRecord reference doc for the contents of userRecord.
-    await auth.setCustomUserClaims(userRecord.uid, claims)
+    await auth.setCustomUserClaims(userRecord.uid, {
+      ...userRecord.customClaims,
+      ...claims
+    })
     // const userRecord: UserRecord = await auth.getUser(userId)
     const doc: Record<string, boolean> = { ...roles, by: 'none' }
     await firestore
