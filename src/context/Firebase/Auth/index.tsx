@@ -1,6 +1,8 @@
 import { ReactNode, useCallback, useEffect, useState } from 'react'
+import { FirebaseError } from 'firebase/app'
 import {
   Auth,
+  AuthErrorCodes,
   AuthProvider,
   getRedirectResult,
   GoogleAuthProvider,
@@ -23,61 +25,62 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
   const [loading, setLoading] = useState(true)
   const [isAdmin, setIsAdmin] = useState(false)
 
-  function externalAuthSignIn(auth: Auth, provider: AuthProvider) {
-    signInWithRedirect(auth, provider)
-      .then((result) => {
-        return result
-      })
-      .catch((error) => {
-        return error
-      })
+  const externalAuthSignIn = async (auth: Auth, provider: AuthProvider) => {
+    try {
+      const result = await signInWithRedirect(auth, provider)
+      return result
+    } catch (error) {
+      return error
+    }
   }
 
-  function linkAuthProvider(currentUser: User, provider: AuthProvider) {
-    linkWithRedirect(currentUser, provider)
-      .then((result) => {
-        return result
-      })
-      .catch((error) => {
-        if (error.code === 'auth/provider-already-linked') {
-          // console.log("auth/provider-already-linked")
+  const linkAuthProvider = async (
+    currentUser: User,
+    provider: AuthProvider
+  ) => {
+    try {
+      const result = await linkWithRedirect(currentUser, provider)
+      return result
+    } catch (error) {
+      if (error instanceof FirebaseError) {
+        switch (error.code) {
+          case AuthErrorCodes.PROVIDER_ALREADY_LINKED:
+            console.log('auth/provider-already-linked')
           // TODO Send error alert to user
         }
-        return error
-      })
+      }
+      return error
+    }
   } // TODO Success message for user?
 
-  function getGoogleResults(auth: Auth) {
-    getRedirectResult(auth)
-      .then((result) => {
-        if (result !== null) {
-          const credential = GoogleAuthProvider.credentialFromResult(result)
-          if (credential !== null) {
-            // const token = credential.accessToken;
-          }
-          const user = result.user
-          return user
+  const getGoogleResults = async (auth: Auth) => {
+    try {
+      const result = await getRedirectResult(auth)
+      if (result !== null) {
+        const credential = GoogleAuthProvider.credentialFromResult(result)
+        if (credential !== null) {
+          // const token = credential.accessToken;
         }
-      })
-      .catch((error) => {
-        return error
-        // const errorCode = error.code;
-        // const errorMessage = error.message;
-        // The email of the user's account used.
-        // const email = error.customData.email;
-        // The AuthCredential type that was used.
-        // const credential = GoogleAuthProvider.credentialFromError(error);
-      })
+        return result.user
+      }
+    } catch (error) {
+      return error
+      // const errorCode = error.code;
+      // const errorMessage = error.message;
+      // The email of the user's account used.
+      // const email = error.customData.email;
+      // The AuthCredential type that was used.
+      // const credential = GoogleAuthProvider.credentialFromError(error);
+    }
   }
   //to log out curremt user
-  function logOut() {
-    signOut(auth)
-      .then((result) => {
-        return result
-      })
-      .catch((error) => {
-        return error
-      })
+  const logOut = async () => {
+    try {
+      const result = await signOut(auth)
+      return result
+    } catch (error) {
+      return error
+    }
   }
   //set the current user to the user retrieved from the login
   useEffect(() => {
