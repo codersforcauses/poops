@@ -14,7 +14,7 @@ const Admin = () => {
   const getUserDoc = useCallback(async () => {
     if (currentUser) {
       try {
-        const userRef = doc(db, 'roles', currentUser?.email || '')
+        const userRef = doc(db, 'roles', currentUser.uid)
         const userDocSnapshot = await getDoc(userRef)
         const userDocData = userDocSnapshot.data()
         setUserDoc(userDocData)
