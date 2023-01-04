@@ -1,9 +1,4 @@
-import { functions } from '../main'
-import { getAuth } from 'firebase-admin/auth'
-import { getFirestore } from 'firebase-admin/firestore'
-
-const auth = getAuth()
-const firestore = getFirestore()
+import { functions, auth, firestore } from '../main'
 
 export const createAdmin = functions
   .region('australia-southeast1')
