@@ -91,8 +91,7 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
   const getUserToken = useCallback(async () => {
     if (currentUser) {
       const token = await currentUser.getIdTokenResult(true)
-      const result = token?.claims
-      setIsAdmin(!!result?.admin)
+      setIsAdmin(token.claims.admin ?? false)
     }
   }, [currentUser])
 
