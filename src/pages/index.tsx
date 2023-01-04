@@ -10,7 +10,7 @@ import useUser from '@/hooks/user'
 import mod from '@/lib/temp/firebase/functions/setRole'
 
 const Home = () => {
-  const { currentUser, getUserToken } = useAuth()
+  const { currentUser, refreshUserToken } = useAuth()
   const { isSuccess } = useUser()
 
   const welcomeMessage = isSuccess
@@ -19,7 +19,7 @@ const Home = () => {
 
   const onMod = (adminAccess: boolean) => {
     if (currentUser) {
-      mod(adminAccess, currentUser, getUserToken)
+      mod(adminAccess, currentUser, refreshUserToken)
     }
   }
 

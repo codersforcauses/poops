@@ -8,7 +8,7 @@ import { useAuth } from '@/context/Firebase/Auth/context'
 import mod from '@/lib/temp/firebase/functions/setRole'
 
 const Admin = () => {
-  const { currentUser, isAdmin, getUserToken } = useAuth()
+  const { currentUser, isAdmin, refreshUserToken } = useAuth()
   const [userDoc, setUserDoc] = useState<DocumentData>()
 
   const getUserDoc = useCallback(async () => {
@@ -31,7 +31,7 @@ const Admin = () => {
 
   const onMod = (adminAccess: boolean) => {
     if (currentUser) {
-      mod(adminAccess, currentUser, getUserToken, getUserDoc)
+      mod(adminAccess, currentUser, refreshUserToken, getUserDoc)
     }
   }
 
@@ -54,7 +54,7 @@ const Admin = () => {
         size='medium'
         intent='secondary'
         type='button'
-        onClick={async () => getUserToken()}
+        onClick={async () => refreshUserToken()}
       >
         Refresh Token
       </Button>

@@ -88,7 +88,7 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
     return () => unsubscribe()
   }, [])
 
-  const getUserToken = useCallback(async () => {
+  const refreshUserToken = useCallback(async () => {
     if (currentUser) {
       const token = await currentUser.getIdTokenResult(true)
       setIsAdmin(token.claims.admin ?? false)
@@ -97,9 +97,9 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
 
   useEffect(() => {
     if (currentUser) {
-      getUserToken()
+      refreshUserToken()
     }
-  }, [currentUser, getUserToken])
+  }, [currentUser, refreshUserToken])
 
   const value: FirebaseContextProps = {
     auth,
@@ -109,7 +109,7 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
     logOut,
     currentUser,
     isAdmin,
-    getUserToken
+    refreshUserToken
   }
 
   return (

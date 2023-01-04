@@ -16,7 +16,7 @@ const setRole = async (data: ISetRoles) => {
 const mod = async (
   adminAccess: boolean,
   currentUser: User,
-  getUserToken: () => Promise<void>,
+  refreshUserToken: () => Promise<void>,
   getUserDoc?: () => Promise<void>
 ) => {
   try {
@@ -27,7 +27,7 @@ const mod = async (
       })
       const data = await reponse.json()
       console.log('Next API Response', data)
-      getUserToken()
+      refreshUserToken()
       getUserDoc?.()
     }
   } catch (error) {
