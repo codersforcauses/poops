@@ -52,3 +52,4 @@ sitemap-*.xml
 **/public/sw.js.map
 **/public/workbox-*.js.map
 **/public/worker-*.js.map
+/firebase/firebase-export-1672769483153re2mZe

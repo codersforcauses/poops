@@ -21,5 +21,10 @@ declare namespace Cypress {
      * @example cy.clearAuthState()
      */
     clearAuthState(): Chainable<unknown>
+
+    /**
+     *
+     */
+    clearDb(): Chainable<unknown>
   }
 }

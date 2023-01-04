@@ -43,6 +43,7 @@ const ClientSelector = (props: ClientSelectorProps) => {
           {props.label}
         </label>
         <Select
+          id={props.id}
           onChange={handleChange}
           options={getClientList()}
           placeholder={props.placeholder}

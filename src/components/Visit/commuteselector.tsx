@@ -57,6 +57,7 @@ const CommuteSelector = (props: CommuteSelectorProps) => {
         {props.label}
       </label>
       <CreatableSelect
+        id={props.id}
         onChange={handleChange}
         options={commuteMethods}
         placeholder={props.placeholder}

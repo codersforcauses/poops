@@ -2,6 +2,7 @@ import user from '../../fixtures/auth-user.json'
 
 beforeEach(() => {
   cy.clearAuthState()
+  cy.clearDb()
 })
 
 describe('Launch login page', () => {

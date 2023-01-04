@@ -6,7 +6,7 @@ import {
   connectFirestoreEmulator,
   enableMultiTabIndexedDbPersistence,
   Firestore,
-  getFirestore
+  initializeFirestore
 } from 'firebase/firestore'
 
 const firebaseConfig = {
@@ -26,39 +26,42 @@ const clientSide = typeof window !== 'undefined'
 
 // Runs on the client side
 if (clientSide) {
+  const isEmu = process.env.NEXT_PUBLIC_EMULATOR === 'true'
+
   app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApp()
   auth = getAuth(app)
-  db = getFirestore(app)
+  db = initializeFirestore(app, { experimentalForceLongPolling: isEmu })
 
   // Use emulator if running in development and emualtor is running
-  if (process.env.NEXT_PUBLIC_EMULATOR === 'true') {
-    connectAuthEmulator(auth, 'http://localhost:9099')
-    connectFirestoreEmulator(db, 'localhost', 8080)
-
+  if (isEmu) {
     // Pass the auth to the window if Cypress is running
     if (window.Cypress) {
       window.Firebase = [auth]
     }
+
+    connectAuthEmulator(auth, 'http://localhost:9099')
+    connectFirestoreEmulator(db, 'localhost', 8080)
   }
 
   // Enables offline support for firestore
-  enableMultiTabIndexedDbPersistence(db).catch((err) => {
-    if (err.code == 'failed-precondition') {
-      // Multiple tabs open, persistence can only be enabled
-      // in one tab at a a time.
-      // ...
-      console.log(
-        'The app is already open in another browser tab and multi-tab is not enabled'
-      )
-    } else if (err.code == 'unimplemented') {
-      // The current browser does not support all of the
-      // features required to enable persistence
-      // ...
-      console.log(
-        'The current browser does not support all of the features required to enable persistence'
-      )
-    }
-  })
+  if (!isEmu)
+    enableMultiTabIndexedDbPersistence(db).catch((err) => {
+      if (err.code == 'failed-precondition') {
+        // Multiple tabs open, persistence can only be enabled
+        // in one tab at a a time.
+        // ...
+        console.log(
+          'The app is already open in another browser tab and multi-tab is not enabled'
+        )
+      } else if (err.code == 'unimplemented') {
+        // The current browser does not support all of the
+        // features required to enable persistence
+        // ...
+        console.log(
+          'The current browser does not support all of the features required to enable persistence'
+        )
+      }
+    })
   // Subsequent queries will use persistence, if it was enabled successfully
 }
 

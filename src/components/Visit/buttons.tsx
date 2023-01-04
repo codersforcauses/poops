@@ -28,7 +28,7 @@ export const AddButton = () => {
   return (
     <div className='align-center flex h-10 w-10 place-items-center self-center rounded-full bg-primary p-1 drop-shadow-default'>
       <Link href='/visit/set'>
-        <button type='button'>
+        <button type='button' data-cy='add-visit'>
           <PlusIcon className='flex h-full w-full self-center text-white' />
         </button>
       </Link>

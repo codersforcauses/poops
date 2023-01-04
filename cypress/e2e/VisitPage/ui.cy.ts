@@ -7,7 +7,7 @@ describe('The Visit Page', () => {
 
   it('successfully loads', () => {
     cy.login(user)
-    cy.visit('/')
+    cy.visit('/visit')
     cy.get('title').should('contain', 'Visit')
   })
 })
