@@ -35,7 +35,9 @@ const Home = () => {
             <br />
             <div className='flex flex-col justify-center'>
               <Link href='visit/set'>
-                <Button size='large'>START VISIT</Button>
+                <a className='flex justify-center'>
+                  <Button size='large'>START VISIT</Button>
+                </a>
               </Link>
               <br />
               <Button

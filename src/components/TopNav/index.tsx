@@ -16,9 +16,11 @@ function TopNav() {
           <Image alt='logo' src='/images/logo.png' width={100} height={64} />
           {isAdmin && (
             <Link href='admin/'>
-              <Button size='small' intent='secondary'>
-                Admin Page
-              </Button>
+              <a className='flex justify-center'>
+                <Button size='small' intent='secondary'>
+                  Admin Page
+                </Button>
+              </a>
             </Link>
           )}
         </div>
