@@ -110,9 +110,7 @@ export const createUser = functions
         disabled: false
       }
 
-      const userRecord = await auth.createUser(newUser)
-
-      const userId = userRecord.uid
+      const { uid: userId } = await auth.createUser(newUser)
 
       const claims: Record<string, boolean> = {}
       claims[role] = true
