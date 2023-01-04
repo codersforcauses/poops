@@ -8,6 +8,12 @@ const firebaseAdminConfig = {
   privateKey: process.env.FIREBASE_PRIVATE_KEY
 }
 
+// Use emulator if running in development and emualtor is running
+if (process.env.NEXT_PUBLIC_EMULATOR === 'true') {
+  process.env['FIREBASE_AUTH_EMULATOR_HOST'] = 'localhost:9099'
+  process.env['FIRESTORE_EMULATOR_HOST'] = 'localhost:8080'
+}
+
 const app: App = !getApps().length
   ? initializeApp({
       credential: cert(firebaseAdminConfig),
