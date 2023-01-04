@@ -3,6 +3,7 @@ import Link from 'next/link'
 import Header from '@/components/Header'
 import Summary from '@/components/Home/summary'
 import NavBar from '@/components/NavBar'
+import { withProtected } from '@/components/PrivateRoute'
 import TopNav from '@/components/TopNav'
 import Button from '@/components/UI/button'
 import { useAuth } from '@/context/Firebase/Auth/context'
@@ -59,4 +60,4 @@ const Home = () => {
   )
 }
 
-export default Home
+export default withProtected(Home)

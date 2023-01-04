@@ -1,11 +1,16 @@
 import Statistics from '@/components/Home/statistics'
-
-const dummyVisitData = '12'
-const dummyDistanceData = '6.5'
-const dummyHourData = '3'
-const dummyDistanceCommuted = '20.5'
+import useUser from '@/hooks/user'
 
 function Summary() {
+  const { isSuccess, data: currentUser } = useUser()
+
+  if (!isSuccess || currentUser == undefined || currentUser.stats == undefined)
+    return null
+
+  const {
+    stats: { numHours, numVisits, commutedDist, walkedDist }
+  } = currentUser
+
   return (
     <div className='rounded-lg bg-zinc-100 py-4 px-5 text-center shadow-lg sm:py-4'>
       <h1 className='mb-2 text-xl text-primary-dark'>
@@ -17,23 +22,26 @@ function Summary() {
           <tbody>
             <tr>
               <td>
-                <Statistics title='Number of Visits' data={dummyVisitData} />
+                <Statistics
+                  title='Number of Visits'
+                  data={numVisits.toString()}
+                />
               </td>
               <td>
-                <Statistics
-                  title='Distance Walked'
-                  data={dummyDistanceData + ' km'}
-                />
+                <Statistics title='Distance Walked' data={walkedDist + ' km'} />
               </td>
             </tr>
             <tr>
               <td>
-                <Statistics title='Number of Hours' data={dummyHourData} />
+                <Statistics
+                  title='Number of Hours'
+                  data={numHours.toString()}
+                />
               </td>
               <td>
                 <Statistics
                   title='Distance Commuted'
-                  data={dummyDistanceCommuted + ' km'}
+                  data={commutedDist + ' km'}
                 />
               </td>
             </tr>

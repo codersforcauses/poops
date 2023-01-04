@@ -27,6 +27,12 @@ const newUser = (currentUser: AuthUser): User => {
       tags: ['Volunteer'],
       desc: '',
       notes: ''
+    },
+    stats: {
+      numHours: 0,
+      numVisits: 0,
+      commutedDist: 0,
+      walkedDist: 0
     }
   }
 }
@@ -46,7 +52,7 @@ export const useUser = () => {
         }
 
         const userData = userDocSnap.data() as User
-        return { ...userData.info, docId: 'USER' }
+        return { ...userData, docId: 'USER' }
       } catch (err: unknown) {
         //#region  //*=========== For logging ===========
         if (err instanceof FirestoreError) {
