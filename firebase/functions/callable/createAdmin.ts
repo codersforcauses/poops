@@ -1,9 +1,9 @@
 import { functions } from '../main'
-import { getAuth, Auth, UserRecord } from 'firebase-admin/auth'
-import { getFirestore, Firestore } from 'firebase-admin/firestore'
+import { getAuth } from 'firebase-admin/auth'
+import { getFirestore } from 'firebase-admin/firestore'
 
-const auth: Auth = getAuth()
-const firestore: Firestore = getFirestore()
+const auth = getAuth()
+const firestore = getFirestore()
 
 export const createAdmin = functions
   .region('australia-southeast1')
@@ -16,7 +16,7 @@ export const createAdmin = functions
 
     await auth.setCustomUserClaims(userId, claims)
 
-    const userRecord: UserRecord = await auth.getUser(userId)
+    const userRecord = await auth.getUser(userId)
     const data = { role: 'admin', by: 'none' }
     await firestore
       .collection('roles')

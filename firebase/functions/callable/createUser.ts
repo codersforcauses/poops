@@ -1,9 +1,9 @@
 import { functions } from '../main'
-import { getAuth, Auth, UserRecord } from 'firebase-admin/auth'
-import { getFirestore, Firestore, FieldValue } from 'firebase-admin/firestore'
+import { getAuth } from 'firebase-admin/auth'
+import { getFirestore, FieldValue } from 'firebase-admin/firestore'
 
-const auth: Auth = getAuth()
-const firestore: Firestore = getFirestore()
+const auth = getAuth()
+const firestore = getFirestore()
 
 /**
  * Error message thrown when user is not authenticated
@@ -75,7 +75,7 @@ export const createUser = functions
       // Checking that the user calling the Cloud Function is an Admin user
       // uid of the user calling the Cloud Function
       const callerUid = context.auth.uid
-      const callerUserRecord: UserRecord = await auth.getUser(callerUid)
+      const callerUserRecord = await auth.getUser(callerUid)
       if (
         callerUserRecord?.customClaims &&
         !callerUserRecord.customClaims.admin
