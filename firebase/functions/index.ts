@@ -1,7 +1,5 @@
 export * from './main'
-export * from './callable/helloWorld'
 export * from './callable/pubsubWriter'
 export * from './trigger/billingKillswitch'
 export * from './callable/createUser'
-export * from './trigger/setUser'
 export * from './callable/createAdmin'
