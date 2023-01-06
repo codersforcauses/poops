@@ -4,12 +4,10 @@ import useUser from '@/hooks/user'
 function Summary() {
   const { isSuccess, data: currentUser } = useUser()
 
-  if (!isSuccess || currentUser == undefined || currentUser.stats == undefined)
-    return null
-
-  const {
-    stats: { numHours, numVisits, commutedDist, walkedDist }
-  } = currentUser
+  const { numHours, numVisits, commutedDist, walkedDist } =
+    isSuccess && currentUser && currentUser.stats
+      ? currentUser.stats
+      : { numHours: 0, numVisits: 0, commutedDist: 0, walkedDist: 0 }
 
   return (
     <div className='rounded-lg bg-zinc-100 py-4 px-5 text-center shadow-lg sm:py-4'>
