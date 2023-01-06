@@ -1,8 +1,5 @@
-import { Timestamp } from 'firebase/firestore'
-
-import { Duration, VisitData } from '@/types/types'
-import { humanizeTimestamp } from '@/utils'
 import Button from '@/components/UI/button'
+import { Duration, Visit } from '@/types/types'
 import Link from 'next/link'
 
 export const formatDuration = (duration: Duration) => {
@@ -12,9 +9,12 @@ export const formatDuration = (duration: Duration) => {
   return d
 }
 
+interface VisitInfoProps extends Visit {
+  isOpen: boolean
+}
+
 const VisitInfo = ({
-  startTime = new Timestamp(0, 0),
-  clientName = 'N/A',
+  isOpen,
   type = 'N/A',
   petNames = 'N/A',
   duration = { hours: 0, minutes: 0 },
@@ -22,14 +22,14 @@ const VisitInfo = ({
   commuteDist = 0,
   commuteMethod = 'N/A',
   notes = ''
-}: VisitData) => {
+}: VisitInfoProps) => {
   return (
     <>
-      <div className='font-bold peer-checked:font-normal'>
-        <p className='font-bold text-primary'>{humanizeTimestamp(startTime)}</p>
-        <p className='text-sm'>{clientName}</p>
-      </div>
-      <div className='max-h-0 justify-between overflow-hidden text-sm transition-all duration-300 peer-checked:max-h-screen'>
+      <div
+        className={`justify-between overflow-hidden text-sm transition-all duration-300 ${
+          isOpen ? 'max-h-screen' : 'max-h-0'
+        }`}
+      >
         <p>Visit Type: {type}</p>
         <p>Pet(s): {petNames}</p>
         <p>Duration: {formatDuration(duration)}</p>

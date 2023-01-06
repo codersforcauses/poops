@@ -1,36 +1,15 @@
-import { XCircleIcon } from '@heroicons/react/outline'
+import { XCircleIcon } from '@heroicons/react/24/outline'
 
 import ContactItem from '@/components/Contact/contactitem'
-import { useContact } from '@/context/ContactContext/context'
+import { useContacts } from '@/hooks/contacts'
 
-type ContactsProp = {
-  firestoreIndexMap: number[]
-}
+const ContactList = () => {
+  const { data: contacts } = useContacts()
+  if (contacts === undefined) return null
 
-const ContactList = ({ firestoreIndexMap }: ContactsProp) => {
-  const { allContacts } = useContact()
-
-  firestoreIndexMap.sort((a: number, b: number) => {
-    const nameA = allContacts[a].clientName.toUpperCase() // ignore upper and lowercase
-    const nameB = allContacts[b].clientName.toUpperCase() // ignore upper and lowercase
-    if (nameA < nameB) {
-      return -1
-    }
-    if (nameA > nameB) {
-      return 1
-    }
-    // names must be equal
-    return 0
-  })
-
-  const contactItems = firestoreIndexMap.map((firestoreIndex) => (
-    <ContactItem
-      firestoreIndex={firestoreIndex}
-      contact={allContacts[firestoreIndex]}
-      image=''
-      key={firestoreIndex}
-    />
-  ))
+  const contactItems = contacts
+    .sort((a, b) => a.name.localeCompare(b.name))
+    .map((contact) => <ContactItem key={contact.docId} contact={contact} />)
 
   return (
     <div>

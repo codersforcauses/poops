@@ -10,7 +10,7 @@ const Login: NextPage = () => {
   return (
     <main>
       <title>Login</title>
-      <div className='animate-text bg-gradient-to-b from-zinc-300 via-zinc-200 to-zinc-50 '>
+      <div className='animate-text bg-gradient-to-b from-zinc-200 via-zinc-100 to-white '>
         <div className='m-auto max-w-sm p-10'>
           <Image
             src='/images/poops-logo-transparent.png'

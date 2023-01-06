@@ -1,8 +1,7 @@
-import { useEffect, useState } from 'react'
-import { XCircleIcon } from '@heroicons/react/outline'
+import { XCircleIcon } from '@heroicons/react/24/outline'
 
-import { useFirestore } from '@/context/Firebase/Firestore/context'
-import { VisitData } from '@/types/types'
+import { useVisits } from '@/hooks/visits'
+import { Visit } from '@/types/types'
 
 import VisitInstance from './visitinstance'
 
@@ -11,47 +10,25 @@ interface VisitListProps {
 }
 
 export const VisitList = (props: VisitListProps) => {
-  const { userDoc } = useFirestore()
-  const [visits, setVisits] = useState(userDoc.visits || [])
-  useEffect(() => {
-    setVisits(userDoc.visits)
-  }, [userDoc.visits])
+  const { data: visits } = useVisits()
 
-  const matchesDisplayName = (post: VisitData) =>
-    post.clientName.toLowerCase().includes(props.searchQuery.toLowerCase())
+  const clientNameFilter = (visit: Visit) =>
+    visit.clientName.toLowerCase().includes(props.searchQuery.toLowerCase())
 
-  //get pets from contact name
-  const matchespetNames = (post: VisitData) =>
-    post.petNames?.toLowerCase().includes(props.searchQuery.toLowerCase())
+  const petNameFilter = (visit: Visit) =>
+    visit.petNames?.toLowerCase().includes(props.searchQuery.toLowerCase())
 
-  const matchesSearchTerms = (post: VisitData) =>
-    matchesDisplayName(post) || matchespetNames(post)
+  const searchFilter = (visit: Visit) =>
+    props.searchQuery === '' || clientNameFilter(visit) || petNameFilter(visit)
 
   return (
     <div className='m-2 h-full flex-col'>
       {visits && visits.length !== 0 ? (
         visits
-          .filter((post: VisitData) => {
-            if (props.searchQuery === '' || matchesSearchTerms(post)) {
-              return post
-            }
-          })
-          .map((post, index) => (
-            <VisitInstance
-              setVisits={setVisits}
-              key={post.startTime + post.clientName + post.petNames} // <-- dumb? or genius?
-              type={post.type}
-              id={index}
-              clientName={post.clientName}
-              petNames={post.petNames}
-              startTime={post.startTime}
-              duration={post.duration}
-              walkDist={post.walkDist}
-              commuteDist={post.commuteDist}
-              commuteMethod={post.commuteMethod}
-              notes={post.notes}
-            />
-          ))
+          .filter(searchFilter)
+          .map((visit) =>
+            visit.docId ? <VisitInstance key={visit.docId} {...visit} /> : null
+          )
       ) : (
         <div className='flex h-full flex-col items-center justify-center'>
           <XCircleIcon className='h-16 w-16 content-center' />
