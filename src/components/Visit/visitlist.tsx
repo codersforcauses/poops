@@ -26,7 +26,7 @@ export const VisitList = (props: VisitListProps) => {
       {visits && visits.length !== 0 ? (
         visits
           .filter(searchFilter)
-          .map((visit) =>
+          .map((visit: any) =>
             visit.docId ? <VisitInstance key={visit.docId} {...visit} /> : null
           )
       ) : (

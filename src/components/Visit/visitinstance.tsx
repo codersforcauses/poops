@@ -1,6 +1,5 @@
-import { useState } from 'react'
 import { ChevronDownIcon } from '@heroicons/react/24/outline'
-import { Timestamp } from 'firebase/firestore'
+import { useState } from 'react'
 
 import { Visit } from '@/types/types'
 import { humanizeTimestamp } from '@/utils'
@@ -15,15 +14,14 @@ const VisitInstance = (props: Visit) => {
 
   return (
     <div className='m-2 flex flex-col rounded-xl bg-gray-50 p-4 drop-shadow-default'>
-      <div className='flex-row content-center justify-between'>
+      <div className='flex justify-between'>
+        <div className='font-bold'>
+          <p className='font-bold text-primary'>
+            {humanizeTimestamp(props.startTime)}
+          </p>
+          <p className='text-sm'>{props.clientName}</p>
+        </div>
         <div>
-          <div className='font-bold peer-checked:font-normal'>
-            <p className='font-bold text-primary'>
-              {humanizeTimestamp(props.startTime)}
-            </p>
-            <p className='text-sm'>{props.clientName}</p>
-          </div>
-
           <ChevronDownIcon
             className='h-7 w-7 cursor-pointer self-center text-primary transition-transform duration-300'
             style={{
@@ -35,9 +33,9 @@ const VisitInstance = (props: Visit) => {
             }}
           />
         </div>
-        <VisitInfo {...props} isOpen={isOpen} />
       </div>
       {isOpen && <EditButton id={props.docId} />}
+      <VisitInfo {...props} isOpen={isOpen} />
     </div>
   )
 }
