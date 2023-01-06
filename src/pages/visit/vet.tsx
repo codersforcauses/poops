@@ -1,7 +1,7 @@
 import { FormEvent, useState } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { XIcon } from '@heroicons/react/solid'
+import { XMarkIcon } from '@heroicons/react/24/solid'
 
 import { withProtected } from '@/components/PrivateRoute'
 import Button from '@/components/UI/button'
@@ -48,7 +48,7 @@ const VetForm = () => {
         <div className='fixed right-5 top-4 z-[100] h-10 w-10 rounded-full bg-primary p-1 drop-shadow-default'>
           <Link href='/visit'>
             <button>
-              <XIcon className='h-full w-full text-white' />
+              <XMarkIcon className='h-full w-full text-white' />
             </button>
           </Link>
         </div>
