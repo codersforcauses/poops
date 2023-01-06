@@ -26,7 +26,7 @@ const DurationSelector = (props: DurationProps) => {
           defaultValue={props.defaultValue?.hours}
           onChange={props.onHourChange}
         >
-          {Array.from(Array(10), (_, i) => (
+          {Array.from(Array(24), (_, i) => (
             <option key={i} value={i}>
               {i}
             </option>

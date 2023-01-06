@@ -45,6 +45,7 @@ if (clientSide) {
 
   // Enables offline support for firestore
   if (!isEmu)
+    // disable persistence for emus because it desyncs with firestore when db is cleared
     enableMultiTabIndexedDbPersistence(db).catch((err) => {
       if (err.code == 'failed-precondition') {
         // Multiple tabs open, persistence can only be enabled

@@ -23,8 +23,14 @@ declare namespace Cypress {
     clearAuthState(): Chainable<unknown>
 
     /**
-     *
+     * Sends a request to the firestore emulator to clear it
      */
     clearDb(): Chainable<unknown>
+
+    /**
+     * Fills the visit form
+     * @param visit The visit data
+     */
+    addVisit(visit: Visit): Chainable<unknown>
   }
 }
