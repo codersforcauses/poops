@@ -43,7 +43,7 @@ export const useMutateVisits = () => {
   const queryClient = useQueryClient()
   const { setAlert } = useAlert()
 
-  const mutationFn = async (visit: Visit & { deleteDoc?: boolean }) => {
+  const mutationFn = async (visit: Visit | { docId?: string }) => {
     try {
       if (currentUser?.uid) {
         const { docId: visitId, ...visitMut } = visit
@@ -53,7 +53,7 @@ export const useMutateVisits = () => {
           ? doc(collectionRef, visitId)
           : doc(collectionRef)
 
-        if (visitMut.deleteDoc) {
+        if (Object.keys(visitMut).length === 0 && visitId) {
           await deleteDoc(docRef)
         } else {
           await setDoc(docRef, visitMut, { merge: true })
