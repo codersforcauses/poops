@@ -50,7 +50,7 @@ const DurationSelect = ({
 
         <div
           className={[
-            'flex w-full flex-row justify-center rounded border border-dark-gray bg-white',
+            'flex w-full flex-row justify-center rounded border border-gray-500 bg-white',
             props.className
           ]
             .join(' ')
