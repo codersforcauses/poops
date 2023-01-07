@@ -26,7 +26,7 @@ export default function NavBar() {
     { name: 'Home', route: '/', icon: <HomeIcon className={iconClasses} /> },
 
     {
-      name: 'Contacts',
+      name: 'Contact',
       route: '/contact',
       icon: <ChatBubbleLeftEllipsisIcon className={iconClasses} />
     }
