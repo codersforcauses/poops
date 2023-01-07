@@ -1,130 +1,135 @@
 import {
-  LocationMarkerIcon,
-  MailIcon,
+  EnvelopeIcon,
+  MapPinIcon,
   PhoneIcon
-} from '@heroicons/react/outline'
+} from '@heroicons/react/24/outline'
+import { useAtomValue, useSetAtom } from 'jotai'
 import tw from 'tailwind-styled-components'
 
+import { currentContactAtom, isEditingAtom } from '@/atoms/contacts'
 import Avatar from '@/components/Contact/avatar'
 import { AlertVariant, useAlert } from '@/context/AlertContext'
-import { useContact } from '@/context/ContactContext/context'
+import { useMutateContacts } from '@/hooks/contacts'
+
 import Button from '../UI/button'
 
-type ContactInfoProps = {
-  firestoreIndex: number
-  image: string
-}
-
-function ContactInfo({ firestoreIndex, image }: ContactInfoProps) {
-  const {
-    allContacts,
-    setCreatingNewContact,
-    removeContact,
-    setDisplayContactIndex
-  } = useContact()
-  const contact = allContacts[firestoreIndex]
+function ContactInfo() {
   const { setAlert } = useAlert()
+  const currentContact = useAtomValue(currentContactAtom)
+  const setIsEditing = useSetAtom(isEditingAtom)
+  const { mutate: mutateContacts } = useMutateContacts()
+
+  if (currentContact === null) return null
+
+  const isContact = currentContact.docId !== 'USER'
 
   return (
     <div className='mb-2 flex flex-col items-center justify-center gap-3'>
       {/* USER PROFILE IMAGE */}
-      <Avatar
-        image={image}
-        height={48}
-        width={48}
-        iconClass='w-32 rounded-full'
-      />
+      <Avatar image='' height={48} width={48} iconClass='w-32 rounded-full' />
       {/* FIRST AND LAST NAME */}
-      <h1 className='text-4xl font-normal'>{contact.clientName}</h1>
+      <h1 className='text-4xl font-normal'>{currentContact.name}</h1>
       {/* DESCRIPTION */}
-      <h3>{contact.desc}</h3>
+      {isContact && <h3>{currentContact.desc}</h3>}
       {/* PHONE */}
       <Box>
         <div className='flex w-full justify-between'>
-          <label htmlFor={contact.phone} className='text-dark-red'>
+          <label htmlFor={currentContact.phone} className='text-primary-dark'>
             Phone
           </label>
-          <a href={`tel:${contact.phone}`}>
+          <a href={`tel:${currentContact.phone}`}>
             <PhoneIcon className='h-5 w-5' />
           </a>
         </div>
-        <span className='text-xl'>{contact.phone}</span>
+        <span className='text-xl'>{currentContact.phone}</span>
       </Box>
       {/* EMAIL */}
       <Box>
         <div className='flex w-full justify-between'>
-          <label htmlFor={contact.email} className='text-dark-red'>
+          <label htmlFor={currentContact.email} className='text-primary-dark'>
             Email
           </label>
-          <a href={`mailto:${contact.email}`} target='_blank' rel='noreferrer'>
-            <MailIcon className='h-5 w-5' />
+          <a
+            href={`mailto:${currentContact.email}`}
+            target='_blank'
+            rel='noreferrer'
+          >
+            <EnvelopeIcon className='h-5 w-5' />
           </a>
         </div>
-        <span className='text-xl'>{contact.email}</span>
+        <span className='text-xl'>{currentContact.email}</span>
       </Box>
       {/* ADDRESS */}
       <Box>
         <div className='flex w-full justify-between'>
-          <label htmlFor={contact.streetAddress} className='text-dark-red'>
+          <label
+            htmlFor={currentContact.streetAddress}
+            className='text-primary-dark'
+          >
             Address
           </label>
           <a
-            href={`http://maps.google.com/?q=${contact.streetAddress}`}
+            href={`http://maps.google.com/?q=${currentContact.streetAddress}`}
             target='_blank'
             rel='noreferrer'
           >
-            <LocationMarkerIcon className='h-5 w-5' />
+            <MapPinIcon className='h-5 w-5' />
           </a>
         </div>
-        <span className='text-xl'>{contact.streetAddress}</span>
+        <span className='text-xl'>{currentContact.streetAddress}</span>
       </Box>
       {/* TAGS */}
-      {contact.id !== 'me' && (
-        <Box>
-          <label htmlFor='tags' className='text-dark-red'>
-            Tags
-          </label>
-          <TagHolder className='mt-1'>
-            {contact.tags.map((tag, index) => (
-              <div key={index}>
-                <Tag>{tag}</Tag>
-              </div>
-            ))}
-          </TagHolder>
-          {/* Padding to counter the shadow */}
-          <div className='pt-2'></div>
-        </Box>
-      )}
-      {/* REGIONS */}
-      <Box className='pb-3'>
-        <label htmlFor='regions' className='text-dark-red'>
-          Region
+      <Box>
+        <label htmlFor='tags' className='text-primary-dark'>
+          Tags
         </label>
-
         <TagHolder className='mt-1'>
-          {contact.region.map((region, index) => (
+          {currentContact.tags.map((tag, index) => (
             <div key={index}>
-              <Tag>{region}</Tag>
+              <Tag>{tag}</Tag>
             </div>
           ))}
         </TagHolder>
+        {/* Padding to counter the shadow */}
+        <div className='pt-2'></div>
       </Box>
-      <Box className='flex flex-col'>
-        <label htmlFor={contact.pets} className='text-dark-red'>
-          Pets
-        </label>
-        <span className='text-xl'>{contact.pets}</span>
-      </Box>
+      {/* REGIONS */}
+      {currentContact.region && (
+        <Box className='pb-3'>
+          <label htmlFor='regions' className='text-primary-dark'>
+            Region
+          </label>
+
+          <TagHolder className='mt-1'>
+            {currentContact.region.map((region, index) => (
+              <div key={index}>
+                <Tag>{region}</Tag>
+              </div>
+            ))}
+          </TagHolder>
+        </Box>
+      )}
+      {/* PETS */}
+      {isContact && (
+        <Box className='flex flex-col'>
+          <label htmlFor={currentContact.pets} className='text-primary-dark'>
+            Pets
+          </label>
+          <span className='text-xl'>{currentContact.pets}</span>
+        </Box>
+      )}
       {/* NOTES */}
-      <Box className='flex flex-col'>
-        <label htmlFor={contact.notes} className='text-dark-red'>
-          Notes
-        </label>
-        <span className='text-xl'> {contact.notes} </span>
-      </Box>
+      {isContact && (
+        <Box className='flex flex-col'>
+          <label htmlFor={currentContact.notes} className='text-primary-dark'>
+            Notes
+          </label>
+          <span className='text-xl'> {currentContact.notes} </span>
+        </Box>
+      )}
       <div className='mb-2'>
         {/* can't delete users profile */}
-        {firestoreIndex !== 0 && (
+        {isContact && (
           <Button
             type='button'
             onClick={() => {
@@ -134,9 +139,8 @@ function ContactInfo({ firestoreIndex, image }: ContactInfoProps) {
                 text: 'Are you sure?',
                 position: 'bottom',
                 confirmFunction: () => {
-                  setCreatingNewContact(false)
-                  removeContact(firestoreIndex)
-                  setDisplayContactIndex(-1)
+                  mutateContacts({ ...currentContact, deleteDoc: true })
+                  setIsEditing(false)
                 }
               })
             }}

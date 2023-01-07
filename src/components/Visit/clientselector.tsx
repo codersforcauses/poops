@@ -3,10 +3,11 @@ import Select, { SingleValue } from 'react-select'
 
 import { FormFieldProps } from '@/components/Visit/formfield'
 import customStyles from '@/components/Visit/selectorstyles'
-import { useFirestore } from '@/context/Firebase/Firestore/context'
+import { useContacts } from '@/hooks/contacts'
 import { SelectOption } from '@/types/types'
 
-interface ClientSelectorProps extends FormFieldProps {
+interface ClientSelectorProps extends Omit<FormFieldProps, 'value'> {
+  value?: SelectOption
   setClient: Dispatch<
     SetStateAction<{
       clientName: string
@@ -16,15 +17,14 @@ interface ClientSelectorProps extends FormFieldProps {
 }
 
 const ClientSelector = (props: ClientSelectorProps) => {
-  const {
-    userDoc: { contacts }
-  } = useFirestore()
+  const { data: contacts } = useContacts()
+  if (contacts === undefined) return null
 
   const getClientList = () => {
     return contacts.map((contact) => {
       const client: SelectOption = {
-        label: contact.clientName,
-        value: contact.pets
+        label: contact.name,
+        value: contact.pets ?? ''
       }
       return client
     })
@@ -33,11 +33,6 @@ const ClientSelector = (props: ClientSelectorProps) => {
     // fired when user selects an option or creates an option
     if (newValue === null) return
     props.setClient({ clientName: newValue.label, petNames: newValue.value })
-  }
-
-  const defaultValue: SelectOption = {
-    label: props.value || 'Select...',
-    value: props.value || ''
   }
 
   return (
@@ -52,7 +47,8 @@ const ClientSelector = (props: ClientSelectorProps) => {
           options={getClientList()}
           placeholder={props.placeholder}
           styles={customStyles}
-          defaultValue={defaultValue}
+          value={props.value}
+          getOptionValue={(option) => option.label}
         />
       </div>
     </div>

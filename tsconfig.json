@@ -17,7 +17,6 @@
     "removeComments": true,
     "jsx": "preserve",
     "sourceMap": true,
-    "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"],
       "~/*": ["./public/*"]

@@ -7,7 +7,8 @@ import { SelectOption } from '@/types/types'
 import { FormFieldProps } from './formfield'
 import customStyles from './selectorstyles'
 
-interface CommuteSelectorProps extends FormFieldProps {
+interface CommuteSelectorProps extends Omit<FormFieldProps, 'value'> {
+  value?: SelectOption
   setCommuteMethod: Dispatch<SetStateAction<string>>
 }
 
@@ -49,11 +50,6 @@ const CommuteSelector = (props: CommuteSelectorProps) => {
     setCommuteMethods(getCommuteMethods())
   }
 
-  const defaultValue: SelectOption = {
-    label: props.value || 'Select...',
-    value: props.value || ''
-  }
-
   return (
     <div className='flex flex-col'>
       <label htmlFor={props.id} className='font-bold'>
@@ -65,7 +61,7 @@ const CommuteSelector = (props: CommuteSelectorProps) => {
         options={commuteMethods}
         placeholder={props.placeholder}
         styles={customStyles}
-        defaultValue={defaultValue}
+        value={props.value}
       />
     </div>
   )
