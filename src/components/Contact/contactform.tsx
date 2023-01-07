@@ -1,64 +1,56 @@
-import { ChangeEvent, useEffect } from 'react'
-import { Dispatch, SetStateAction, useState } from 'react'
-import { SubmitHandler } from 'react-hook-form'
+import { ChangeEvent, FormEvent, useEffect, useMemo } from 'react'
+import { useAtom, useAtomValue, useSetAtom } from 'jotai'
 import tw from 'tailwind-styled-components'
 
+import {
+  contactFormAtom,
+  currentContactAtom,
+  isEditingAtom
+} from '@/atoms/contacts'
 import Avatar from '@/components/Contact/avatar'
-import validationSchema from '@/components/Contact/validation'
-import Form from '@/components/UI/FormComponents/Form'
-import { CreateSelect } from '@/components/UI/FormComponents/SelectFields'
-import { SelectOption } from '@/components/UI/FormComponents/SelectFields/utils'
-import TextField from '@/components/UI/FormComponents/TextField'
-import { useContact } from '@/context/ContactContext/context'
-import type { Contact } from '@/types/types'
+import RegionSelector from '@/components/Contact/regiondropdown'
+import TagSelector from '@/components/Contact/tagdropdown'
+import { useMutateContacts } from '@/hooks/contacts'
+import useUser, { useMutateUser } from '@/hooks/user'
 
 import Button from '../UI/button'
 
-type ContactInfoProps = {
-  firestoreIndex: number
-  image: string
-  setIsEditing: Dispatch<SetStateAction<boolean>>
-}
+const ContactForm = () => {
+  const currentContact = useAtomValue(currentContactAtom)
+  const setIsEditing = useSetAtom(isEditingAtom)
+  const [contactForm, setContactForm] = useAtom(contactFormAtom)
+  const { data: currentUser } = useUser()
+  const { mutate: mutateUser } = useMutateUser()
+  const { mutate: mutateContacts } = useMutateContacts()
 
-export interface FormValues {
-  fullName: string
-  clientDescription: string
-  clientPhoneNumber: number
-  clientEmail: string
-  clientAddress: string
-  clientTags: SelectOption<string>[]
-  clientRegion: SelectOption<string>[]
-  clientPets: string
-  clientNotes: string
-}
+  const isNewContact = currentContact === null
+  const isUser = currentContact?.docId === currentUser?.docId
 
-const ContactForm = ({
-  firestoreIndex,
-  image,
-  setIsEditing
-}: ContactInfoProps) => {
-  const { allContacts, insertContact, setDisplayContactIndex } = useContact()
+  const contact = useMemo(
+    () =>
+      isNewContact
+        ? {
+            name: '',
+            desc: '',
+            pets: '',
+            email: '',
+            phone: '',
+            streetAddress: '',
+            region: [],
+            notes: '',
+            tags: ['Client']
+          }
+        : currentContact,
+    [isNewContact, currentContact]
+  )
 
-  const isNewContact = firestoreIndex === -1
+  useEffect(() => {
+    if (contact !== null) {
+      setContactForm(contact)
+    }
+  }, [contact, setContactForm])
 
-  const contact: Contact = isNewContact
-    ? {
-        id: '',
-        clientName: '',
-        desc: '',
-        pets: '',
-        email: '',
-        phone: '',
-        streetAddress: '',
-        region: [],
-        notes: '',
-        tags: []
-      }
-    : allContacts[firestoreIndex]
-
-  const [regions, setRegions] = useState(contact.region)
-  const [tags, setTags] = useState(contact.tags)
-  const [contactForm, setContactForm] = useState(contact)
+  if (currentUser === null || contactForm === null) return null
 
   const handleInputChange = (
     e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>
@@ -67,43 +59,14 @@ const ContactForm = ({
     setContactForm({ ...contactForm, [name]: value })
   }
 
-  useEffect(() => {
-    setContactForm((contactForm) => ({
-      ...contactForm,
-      tags: tags,
-      region: regions
-    }))
-  }, [regions, tags])
-
-  // TODO: Submit ContactForm to database
-  const submitForm: SubmitHandler<FormValues> = async (formData: FormValues) => {
-    // TODO: submit to firestore here
-    console.log(formData.clientRegion)
-    console.log(formData.clientTags)
-    const contactData: Contact = {
-      id: '',
-      clientName: formData.fullName,
-      desc: formData.clientDescription,
-      pets: formData.clientPets,
-      email: formData.clientEmail,
-      phone: formData.clientPhoneNumber.toString(),
-      streetAddress: formData.clientAddress,
-      region: formData.clientRegion.map((region) => {
-        return region.label
-      }),
-      notes: formData.clientNotes,
-      tags: formData.clientTags.map((tag) => {
-        return tag.label
-      })
-    }
-
-    if (isNewContact) {
-      firestoreIndex = insertContact(contactData)
-      setDisplayContactIndex(firestoreIndex)
+  const submitForm = (e: FormEvent) => {
+    e.preventDefault()
+    if (isUser) {
+      mutateUser(contactForm)
     } else {
-      insertContact(contactForm, firestoreIndex)
-      setDisplayContactIndex(firestoreIndex)
+      mutateContacts(contactForm)
     }
+
     setIsEditing(false)
   }
 
@@ -114,29 +77,26 @@ const ContactForm = ({
       
       <div className='flex flex-col items-center justify-center gap-3'>
         {/* USER PROFILE IMAGE */}
-        <Avatar
-          image={image}
-          height={48}
-          width={48}
-          iconClass='w-32 rounded-full'
-        />
+        <Avatar image='' height={48} width={48} iconClass='w-32 rounded-full' />
         {/* FIRST AND LAST NAME */}
         <Box>
-
-          <TextField
-            label='Full Name'
-            name='fullName'
-            defaultValue={contact.clientName}
+          <label htmlFor={contact.name} className='text-primary-dark'>
+            Full Name
+          </label>
+          <input
+            name='name'
+            defaultValue={contact.name}
             className='border-grey mb-2 w-80 rounded-lg border pl-1'
             rules={validationSchema.fullName}
           />
         </Box>
         {/* DESCRIPTION */}
         <Box>
-
-          <TextField
-            label='Description'
-            name='clientDescription'
+          <label htmlFor={contact.notes} className='text-primary-dark'>
+            Description
+          </label>
+          <textarea
+            name='desc'
             defaultValue={contact.desc}
             className='w-80 rounded-lg border border-gray-300 pl-1'
             rules={validationSchema.clientDescription}
@@ -144,10 +104,11 @@ const ContactForm = ({
         </Box>
         {/* PHONE */}
         <Box>
-
-          <TextField
-            label='Phone Number'
-            name='clientPhoneNumber'
+          <label htmlFor={contact.phone} className='text-primary-dark'>
+            Phone
+          </label>
+          <input
+            name='phone'
             defaultValue={contact.phone}
             className='mb-2 w-full rounded-lg border border-gray-300 pl-1'
             rules={validationSchema.clientPhoneNumber}
@@ -155,10 +116,11 @@ const ContactForm = ({
         </Box>
         {/* EMAIL */}
         <Box>
-
-          <TextField
-            label='Email'
-            name='clientEmail'
+          <label htmlFor={contact.email} className='text-primary-dark'>
+            Email
+          </label>
+          <input
+            name='email'
             defaultValue={contact.email}
             className='mb-2 w-full rounded-lg border border-gray-300 pl-1'
             rules={validationSchema.clientEmail}
@@ -166,10 +128,11 @@ const ContactForm = ({
         </Box>
         {/* ADDRESS */}
         <Box>
-
-          <TextField
-            label='Address'
-            name='clientAddress'
+          <label htmlFor={contact.streetAddress} className='text-primary-dark'>
+            Address
+          </label>
+          <input
+            name='streetAddress'
             defaultValue={contact.streetAddress}
             className='mb-2 w-full rounded-lg border border-gray-300 pl-1'
             rules={validationSchema.clientAddress}
@@ -177,34 +140,28 @@ const ContactForm = ({
         </Box>
         {/* TAGS */}
         <Box>
+          <label htmlFor='tags' className='text-primary-dark'>
+            Tags
+          </label>
 
-          <CreateSelect<SelectOption<string>, true>
-            label='Tags'
-            name='clientTags'
-            isMulti
-            isSearchable
-            rules={validationSchema.clientTags}
-          />
-
+          <TagSelector tags={contact.tags} />
           {/* Padding to counter the shadow */}
           <div className='pt-2'></div>
         </Box>
         {/* REGIONS */}
         <Box className='pb-3'>
-
-            <CreateSelect<SelectOption<string>, true>
-              label='Regions'
-              name='clientRegion'
-              isMulti
-              isSearchable
-            />
+          <label htmlFor='region' className='text-primary-dark'>
+            Region
+          </label>
+          <RegionSelector regions={contact.region} />
         </Box>
         
         <Box>
-
-          <TextField
-            label='Pets'
-            name='clientPets'
+          <label htmlFor='pets' className='text-primary-dark'>
+            Pets
+          </label>
+          <input
+            name='pets'
             defaultValue={contact.pets}
             className='mb-2 w-80 rounded-lg border border-gray-300 pl-1'
             rules={validationSchema.clientPets}
@@ -212,10 +169,11 @@ const ContactForm = ({
         </Box>
         {/* NOTES */}
         <Box>
-
-          <TextField
-            label='Notes'
-            name='clientNotes'
+          <label htmlFor={contact.notes} className='text-primary-dark'>
+            Notes
+          </label>
+          <textarea
+            name='notes'
             defaultValue={contact.notes}
             className='w-full rounded-lg border border-gray-300'
             rules={validationSchema.clientNotes}

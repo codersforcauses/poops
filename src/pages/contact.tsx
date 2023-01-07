@@ -1,7 +1,9 @@
-import { useMemo } from 'react'
-import { SearchIcon } from '@heroicons/react/outline'
+import { MagnifyingGlassIcon } from '@heroicons/react/24/outline'
+import { useAtom, useAtomValue } from 'jotai'
 
+import { currentContactAtom, isEditingAtom } from '@/atoms/contacts'
 import ContactDetails from '@/components/Contact/contactdetails'
+import ContactItem from '@/components/Contact/contactitem'
 import ContactList from '@/components/Contact/contactlist'
 import Header from '@/components/Header'
 import NavBar from '@/components/NavBar'
@@ -10,30 +12,21 @@ import SearchBar from '@/components/SearchBar'
 import SearchTag from '@/components/SearchBar/searchtag'
 import TopNav from '@/components/TopNav'
 import Button from '@/components/UI/button'
-import { useContact } from '@/context/ContactContext/context'
+import { useContacts } from '@/hooks/contacts'
+import useUser from '@/hooks/user'
 import type { Contact } from '@/types/types'
 
 const Contact = () => {
-  const {
-    allContacts,
-    setCreatingNewContact,
-    onSearchChange,
-    onSearchTagChange,
-    getDisplayContactIndex,
-    getCreatingNewContact,
-    getFilteredIndexes
-  } = useContact()
+  const { data: currentUser } = useUser()
+  const { data: contacts } = useContacts()
 
-  // Get all unique tags to popular dropdown filter
-  const taglist = useMemo(() => {
-    const tags = allContacts
-      .map((contact) => {
-        return contact.tags
-      })
-      .flat()
-    const set = new Set(tags)
-    return [...set]
-  }, [allContacts])
+  const currentContact = useAtomValue(currentContactAtom)
+
+  const [isEditing, setIsEditing] = useAtom(isEditingAtom)
+  if (currentUser === undefined || contacts === undefined) return null
+
+  const noCurrentContact = currentContact === null
+  const isListView = noCurrentContact && !isEditing
 
   return (
     <>
@@ -41,42 +34,38 @@ const Contact = () => {
       <Header pageTitle='Contact' />
       <TopNav />
       <main className='h-[calc(100%-7rem)]'>
-        <div className='flex h-full flex-col p-4'>
-          {/* <div className='mx-auto '> */}
-          {getDisplayContactIndex() === -1 && !getCreatingNewContact() && (
-            <div className='m-auto flex h-14 w-full flex-row'>
-              <div className='flex-1'></div>
-              <h1 className='m-3 flex-1 text-center text-2xl'>Contacts</h1>
-              <div className='m-auto flex-1 text-center'>
-                <Button onClick={() => setCreatingNewContact(true)}>Add</Button>
-              </div>
+        {isListView && (
+          <div className='m-auto flex h-14 max-w-md flex-row'>
+            <div className='flex-1'></div>
+            <h1 className='m-3 flex-1 text-center text-2xl'>Contacts</h1>
+            <div className='m-auto flex-1 text-center'>
+              <Button size='medium' onClick={() => setIsEditing(true)}>
+                Add
+              </Button>
             </div>
-          )}
-          {getDisplayContactIndex() === -1 && !getCreatingNewContact() && (
+          </div>
+        )}
+        <div className='m-auto max-w-md'>
+          {isListView && (
             <div className='border-grey m-2 flex flex-row rounded-xl border-2'>
-              <SearchTag
-                name='Filter By'
-                options={taglist}
-                onChangehandler={(e: React.ChangeEvent<HTMLSelectElement>) =>
-                  onSearchTagChange(e)
-                }
-              />
+              <SearchTag />
               <div className='flex w-full justify-between'>
-                <SearchBar onChangeHandler={onSearchChange} />
-                <SearchIcon className='my-auto mx-2 h-6' />
+                <SearchBar />
+                <MagnifyingGlassIcon className='my-auto mx-2 h-6' />
               </div>
             </div>
           )}
-
-          {getDisplayContactIndex() === -1 && !getCreatingNewContact() ? (
-            <ContactList firestoreIndexMap={getFilteredIndexes()} />
+          {isListView ? (
+            <>
+              <ContactItem contact={currentUser.info} />
+              <ContactList />
+            </>
           ) : (
-            <ContactDetails firestoreIndex={getDisplayContactIndex()} />
+            <ContactDetails />
           )}
-          {/* </div> */}
         </div>
       </main>
-      {getDisplayContactIndex() === -1 && <NavBar />}
+      {noCurrentContact && <NavBar />}
     </>
   )
 }

@@ -1,17 +1,18 @@
-import { ChangeEvent } from 'react'
+import { useSetAtom } from 'jotai'
 
-type ContactBoxProps = {
-  onChangeHandler: (event: ChangeEvent<HTMLInputElement>) => void
-}
+import { searchQueryAtom } from '@/atoms/contacts'
 
-function SearchBar({ onChangeHandler }: ContactBoxProps) {
+function SearchBar() {
+  const setSearchQuery = useSetAtom(searchQueryAtom)
   return (
     <input
       className='h-10 w-full rounded-lg border-none bg-transparent pl-2 text-sm focus:outline-none'
       type='search'
       name='search'
       placeholder='Search...'
-      onChange={onChangeHandler}
+      onChange={(e) => {
+        setSearchQuery(e.target.value)
+      }}
     />
   )
 }

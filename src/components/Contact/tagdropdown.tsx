@@ -1,6 +1,9 @@
-import { Dispatch, SetStateAction, useState } from 'react'
+import { useState } from 'react'
+import { useSetAtom } from 'jotai'
 import { MultiValue, StylesConfig } from 'react-select'
 import Creatable from 'react-select/creatable'
+
+import { contactFormAtom } from '@/atoms/contacts'
 
 const roles = [
   { value: 'Volunteer', label: 'Volunteer' },
@@ -9,8 +12,8 @@ const roles = [
 ]
 type Props = {
   tags: Array<string>
-  setTags: Dispatch<SetStateAction<Array<string>>>
 }
+
 type MyOption = { label: string; value: string }
 
 const customStyles: StylesConfig<MyOption> = {
@@ -31,13 +34,22 @@ const customStyles: StylesConfig<MyOption> = {
   }
 }
 
-const TagSelector = ({ tags, setTags }: Props) => {
+const TagSelector = ({ tags }: Props) => {
+  const setContactForm = useSetAtom(contactFormAtom)
   const [roleValue, setRoleValue] = useState<MultiValue<MyOption>>()
 
   const handleChange = (newValue: MultiValue<MyOption>) => {
     setRoleValue(newValue)
-    setTags(Object.values(newValue).map((val) => val.value))
+    setContactForm((prev) =>
+      prev
+        ? {
+            ...prev,
+            tags: newValue.map((v) => v.value)
+          }
+        : null
+    )
   }
+
   return (
     <div>
       <Creatable
