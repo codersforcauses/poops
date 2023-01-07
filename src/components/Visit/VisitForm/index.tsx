@@ -16,7 +16,7 @@ import TextField from '@/components/UI/FormComponents/TextField'
 import validationSchema from '@/components/Visit/VisitForm/validation'
 import { AlertVariant, useAlert } from '@/context/AlertContext'
 import { useFirestore } from '@/context/Firebase/Firestore/context'
-import { Duration, VisitData } from '@/types/types'
+import { Contact, Duration, VisitData } from '@/types/types'
 import { defaultCommuteMethods, formatTimestamp, visitTypes } from '@/utils'
 
 interface VisitFormProps {
@@ -29,7 +29,7 @@ interface ClientInfo {
   petNames: string
 }
 
-export interface FormValues {
+interface FormValues {
   visitType: SelectOption<string>
   clientName: SelectOption<ClientInfo>
   startTime: string
@@ -121,11 +121,11 @@ export const VisitForm = ({ visitData, id }: VisitFormProps) => {
         <CustomSelect<SelectOption<ClientInfo>, false>
           label='Client Name:'
           name='clientName'
-          options={userDoc.contacts.map((contact) => {
+          options={userDoc.contacts.map((contact: Contact) => {
             return {
-              label: contact.clientName,
+              label: contact.name,
               value: {
-                clientName: contact.clientName,
+                clientName: contact.name,
                 petNames: contact.pets
               }
             }
