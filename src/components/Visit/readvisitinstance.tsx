@@ -1,6 +1,7 @@
+import Link from 'next/link'
+
 import Button from '@/components/UI/button'
 import { Duration, Visit } from '@/types/types'
-import Link from 'next/link'
 
 export const formatDuration = (duration: Duration) => {
   const d = `${duration.hours} ${duration.hours === 1 ? 'hr' : 'hrs'} ${
@@ -39,7 +40,7 @@ const VisitInfo = ({
         <p>Notes: {notes}</p>
         <div className='my-2 flex justify-center gap-2'>
           <Link href='/visit/incident'>
-            <Button size='medium'>Report incident</Button>
+            <Button size='medium'>Report Incident</Button>
           </Link>
           <Link href='/visit/vet'>
             <Button size='medium'>Register Vet Concern</Button>

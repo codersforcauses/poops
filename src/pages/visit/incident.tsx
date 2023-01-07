@@ -1,14 +1,13 @@
-import { XMarkIcon } from '@heroicons/react/24/solid'
 import { FormEvent, useState } from 'react'
-
-import { useAuth } from '@/context/Firebase/Auth/context'
-import { IncidentForm } from '@/types/types'
+import Link from 'next/link'
+import { useRouter } from 'next/router'
+import { XMarkIcon } from '@heroicons/react/24/solid'
 
 import { withProtected } from '@/components/PrivateRoute'
 import Button from '@/components/UI/button'
 import FormField from '@/components/Visit/formfield'
-import Link from 'next/link'
-import { useRouter } from 'next/router'
+import { useAuth } from '@/context/Firebase/Auth/context'
+import { IncidentForm } from '@/types/types'
 
 const IncidentForm = () => {
   const { currentUser } = useAuth()
