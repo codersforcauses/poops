@@ -28,7 +28,8 @@
     "prepare": "husky install",
     "firebase": "cd firebase && yarn",
     "cypress": "cypress open",
-    "cypress:headless": "cypress run"
+    "cypress:headless": "cypress run",
+    "kill:emu": "cd firebase && yarn emu:stop"
   },
   "dependencies": {
     "@heroicons/react": "2.0.13",
