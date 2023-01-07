@@ -1,48 +1,110 @@
-import Statistics from '@/components/Admin/Stats/statistics'
+const headers = [
+  'Number of Clients',
+  'Number of Visits',
+  'Walk Duration (mins)',
+  'Walk Distance (kms)',
+  'Commute Distance (kms)'
+]
 
-const dummyVisitData = '12'
-const dummyTimeData = '400'
-const dummyDistanceData = '6.5'
-
-const borderColor = ' border-gray-300 '
-const headerCellDecor = borderColor + 'border-4 p-6 font-extrabold text-2xl'
+const data = {
+  voluteerCount: 10,
+  totalClientCount: 50,
+  totalCommuteDistance: 50,
+  totalVisitCount: 500,
+  totalWalkDistance: 500,
+  totalWalkTime: 5000,
+  avgClientCount: 50,
+  avgCommuteDistance: 50,
+  avgVisitCount: 500,
+  avgWalkDistance: 500,
+  avgWalkTime: 5000
+}
 
 function Summary() {
+  const {
+    voluteerCount,
+    totalClientCount,
+    totalCommuteDistance,
+    totalVisitCount,
+    totalWalkDistance,
+    totalWalkTime,
+    avgClientCount,
+    avgCommuteDistance,
+    avgVisitCount,
+    avgWalkDistance,
+    avgWalkTime
+  } = data
+
+  const totalStats = [
+    totalClientCount,
+    totalVisitCount,
+    totalWalkTime,
+    totalWalkDistance,
+    totalCommuteDistance
+  ]
+
+  const avgStats = [
+    avgClientCount,
+    avgVisitCount,
+    avgWalkTime,
+    avgWalkDistance,
+    avgCommuteDistance
+  ]
+
   return (
     <div className='rounded-lg py-4 px-5 text-center sm:py-4'>
-      <h1 className='mb-2 text-xl text-dark-red'>
+      <h1 className='mb-2 text-xl text-primary-dark'>
         <b>Admin Summary Dashboard</b>
       </h1>
-      <hr className='h-0.5 border-dark-red bg-dark-red text-dark-red' />
+      <hr className='h-0.5 border-primary-dark bg-primary-dark text-primary-dark' />
       <div>
-        <table className={'w-full border-collapse border-spacing-2 border-8' + borderColor}>
+        <table className='w-full border-collapse border-spacing-2 border-8 border-gray-300'>
           <thead>
             <tr>
               <th className=''></th>
-              <th className={headerCellDecor}>Number of Clients</th>
-              <th className={headerCellDecor}>Number of Visits</th>
-              <th className={headerCellDecor}>Time Walked (mins)</th>
-              <th className={headerCellDecor}>Distance Walked Over the Period (kms)</th>
+              {headers.map((header) => (
+                <th
+                  key={header}
+                  className='border-4 border-gray-300 p-6 text-2xl font-extrabold'
+                >
+                  {header}
+                </th>
+              ))}
             </tr>
           </thead>
           <tbody>
             <tr>
-              <th className={headerCellDecor}>Total</th>
-              <Statistics data={dummyVisitData} />
-              <Statistics data={dummyVisitData} />
-              <Statistics data={dummyTimeData + ' mins'} />
-              <Statistics data={dummyDistanceData + ' km'} />
+              <th className='border-4 border-gray-300 p-6 text-2xl font-extrabold'>
+                Total
+              </th>
+              {totalStats.map((stat) => (
+                <td
+                  key={stat}
+                  className='border-4 border-gray-300 p-10 text-3xl font-extrabold text-primary-dark'
+                >
+                  {stat}
+                </td>
+              ))}
             </tr>
-
             <tr>
-              <th className={headerCellDecor}>Average (per volunteer)</th>
-              <Statistics data={dummyVisitData} />
-              <Statistics data={dummyVisitData} />
-              <Statistics data={dummyTimeData + ' mins'} />
-              <Statistics data={dummyDistanceData + ' km'} />
+              <th className='border-4 border-gray-300 p-6 text-2xl font-extrabold'>
+                Average (per volunteer)
+              </th>
+              {avgStats.map((stat) => (
+                <td
+                  key={stat}
+                  className='border-4 border-gray-300 p-10 text-3xl font-extrabold text-primary-dark'
+                >
+                  {stat}
+                </td>
+              ))}
             </tr>
           </tbody>
         </table>
+        <div className='mt-4 flex items-baseline gap-2 p-2 text-3xl'>
+          <div>Total Number of Volunteers: </div>
+          <div className='text-primary-dark'>{voluteerCount}</div>
+        </div>
       </div>
     </div>
   )
