@@ -75,7 +75,7 @@ const ContactForm = ({
 
   return (
     <form onSubmit={submitForm}>
-      <div className='flex flex-col mb-9 items-center justify-center gap-3'>
+      <div className='mb-9 flex flex-col items-center justify-center gap-3'>
         {/* USER PROFILE IMAGE */}
         <Avatar
           image={image}
@@ -185,21 +185,21 @@ const ContactForm = ({
         </Box>
         {/* FORM BUTTONS */}
         <div className=' flex justify-center'>
-            <Button type='submit' fullwidth>
-              Save
+          <Button type='submit' fullwidth>
+            Save
+          </Button>
+          {!isNewContact && (
+            <Button
+              intent='secondary'
+              fullwidth
+              onClick={() => {
+                if (setIsEditing !== undefined) setIsEditing(false)
+              }}
+            >
+              Cancel
             </Button>
-            {!isNewContact && (
-              <Button
-                intent='secondary'
-                fullwidth
-                onClick={() => {
-                  if (setIsEditing !== undefined) setIsEditing(false)
-                }}
-              >
-                Cancel
-              </Button>
-            )}
-          </div>
+          )}
+        </div>
       </div>
     </form>
   )
