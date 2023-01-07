@@ -69,14 +69,13 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
       })
   }
   //to log out curremt user
-  function logOut() {
-    signOut(auth)
-      .then((result) => {
-        return result
-      })
-      .catch((error) => {
-        return error
-      })
+  async function logOut() {
+    try {
+      const result = await signOut(auth)
+      return result
+    } catch (error) {
+      return error
+    }
   }
   //set the current user to the user retrieved from the login
   useEffect(() => {
