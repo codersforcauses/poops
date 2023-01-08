@@ -52,7 +52,7 @@ export const useUser = () => {
         }
 
         const userData = userDocSnap.data() as User
-        return { ...userData, docId: 'USER' }
+        return { ...userData, info: {...userData.info, docId: 'USER' } }
       } catch (err: unknown) {
         //#region  //*=========== For logging ===========
         if (err instanceof FirestoreError) {

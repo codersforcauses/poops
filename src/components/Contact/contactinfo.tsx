@@ -24,9 +24,7 @@ function ContactInfo() {
 
   if (currentContact === null) return null
 
-  const isContact = currentContact.tags.includes('Volunteer')
-
-  // console.log(currentContact.tags.includes('Volunteer'))
+  const isContact = currentContact.docId !== 'USER'
 
   return (
     <div className='mb-2 flex flex-col items-center justify-center gap-3'>
@@ -134,7 +132,7 @@ function ContactInfo() {
       )}
       <div className='mb-2'>
         {/* can't delete users profile */}
-        {!isContact ? (
+        {isContact ? (
           <Button
             type='button'
             onClick={() => {
