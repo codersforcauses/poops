@@ -40,7 +40,7 @@ const newUser = (currentUser: AuthUser): User => {
 export const useUser = () => {
   const { currentUser } = useAuth()
 
-  const queryFn = async () => {
+  const queryFn = async (): Promise<User | undefined> => {
     if (currentUser?.uid) {
       //try to get existing doc if the doc does not exist then create a new doc with uid as its ref
       try {
@@ -52,7 +52,7 @@ export const useUser = () => {
         }
 
         const userData = userDocSnap.data() as User
-        return { ...userData, info: {...userData.info, docId: 'USER' } }
+        return { ...userData, info: { ...userData.info, docId: 'USER' } }
       } catch (err: unknown) {
         //#region  //*=========== For logging ===========
         if (err instanceof FirestoreError) {

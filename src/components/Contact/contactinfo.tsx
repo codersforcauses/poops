@@ -152,24 +152,24 @@ function ContactInfo() {
           </Button>
         ) : (
           <Button
-            type="button"
+            type='button'
             onClick={async () => {
               try {
                 const result = await signOut(auth) //TODO
-                console.log(result);
+                console.log(result)
                 Router.push('/login')
               } catch (error) {
-                console.log('log out failed', {cause: error})
+                console.log('log out failed', { cause: error })
               }
             }}
-            > Logout
-            </Button>
-            )}
+          >
+            Logout
+          </Button>
+        )}
       </div>
     </div>
   )
 }
-
 
 export default ContactInfo
 

@@ -71,8 +71,7 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
   //to log out curremt user
   async function logOut() {
     try {
-      const result = await signOut(auth)
-      return result
+      return await signOut(auth)
     } catch (error) {
       return error
     }
