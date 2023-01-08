@@ -38,12 +38,12 @@ const VisitInfo = ({
         <p>Commute Distance: {commuteDist.toFixed(1)} km</p>
         <p>Commute Method: {commuteMethod}</p>
         <p>Notes: {notes}</p>
-        <div className='my-2 flex justify-center gap-2'>
+        <div className='my-2 mr-9 flex justify-start gap-2'>
           <Link href='/visit/incident'>
-            <Button size='medium'>Report Incident</Button>
+            <Button size='small'>Report Incident</Button>
           </Link>
           <Link href='/visit/vet'>
-            <Button size='medium'>Register Vet Concern</Button>
+            <Button size='small'>Register Vet Concern</Button>
           </Link>
         </div>
       </div>
