@@ -44,11 +44,12 @@ export const useUser = () => {
     if (currentUser?.uid) {
       //try to get existing doc if the doc does not exist then create a new doc with uid as its ref
       try {
-        const userDocSnap = await getDoc(doc(db, 'users', currentUser.uid))
+        let userDocSnap = await getDoc(doc(db, 'users', currentUser.uid))
 
         if (!userDocSnap.exists()) {
           // doc.data() will be undefined in this case
           await setDoc(doc(db, 'users', currentUser.uid), newUser(currentUser))
+          userDocSnap = await getDoc(doc(db, 'users', currentUser.uid))
         }
 
         const userData = userDocSnap.data() as User
