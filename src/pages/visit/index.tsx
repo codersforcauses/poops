@@ -3,6 +3,7 @@ import { ReactElement } from 'react'
 
 import Layout from '@/components/Layout'
 import { withProtected } from '@/components/PrivateRoute'
+import TopNav from '@/components/TopNav'
 import { AddButton } from '@/components/Visit/buttons'
 import SearchBar from '@/components/Visit/searchbar'
 import VisitList from '@/components/Visit/visitlist'
