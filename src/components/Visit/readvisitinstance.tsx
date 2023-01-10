@@ -2,6 +2,7 @@ import Link from 'next/link'
 
 import Button from '@/components/UI/button'
 import { Duration, Visit } from '@/types/types'
+import { useRouter } from 'next/router'
 
 export const formatDuration = (duration: Duration) => {
   const d = `${duration.hours} ${duration.hours === 1 ? 'hr' : 'hrs'} ${
@@ -24,6 +25,7 @@ const VisitInfo = ({
   commuteMethod = 'N/A',
   notes = ''
 }: VisitInfoProps) => {
+  const router = useRouter()
   return (
     <>
       <div
@@ -39,12 +41,18 @@ const VisitInfo = ({
         <p>Commute Method: {commuteMethod}</p>
         <p>Notes: {notes}</p>
         <div className='my-2 mr-9 flex justify-start gap-2'>
-          <Link href={`/visit/incident?pets=${petNames}`}>
-            <Button size='small'>Report Incident</Button>
-          </Link>
-          <Link href={`/visit/vet?pets=${petNames}`}>
-            <Button size='small'>Register Vet Concern</Button>
-          </Link>
+          <Button
+            size='small'
+            onClick={() => router.push(`/visit/incident?pets=${petNames}`)}
+          >
+            Report Incident
+          </Button>
+          <Button
+            size='small'
+            onClick={() => router.push(`/visit/vet?pets=${petNames}`)}
+          >
+            Register Vet Concern
+          </Button>
         </div>
       </div>
     </>
