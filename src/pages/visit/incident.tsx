@@ -24,16 +24,18 @@ const IncidentForm = () => {
 
   const handleSubmit = (click: FormEvent<HTMLFormElement>) => {
     click.preventDefault()
-    const data: IncidentForm = {
-      userID: currentUser?.uid,
-      userName: userName,
-      email: email,
-      petName: petName,
-      time: time,
-      details: notes
+    if (currentUser !== null) {
+      const data: IncidentForm = {
+        userID: currentUser.uid,
+        userName: userName,
+        email: email,
+        petName: petName,
+        time: time,
+        details: notes
+      }
+      console.log(data)
+      router.push('/visit')
     }
-    console.log(data)
-    router.push('/visit')
   }
 
   const isSubmitEnabled = () => {
