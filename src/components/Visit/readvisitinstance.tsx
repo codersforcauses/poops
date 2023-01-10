@@ -39,7 +39,7 @@ const VisitInfo = ({
         <p>Commute Method: {commuteMethod}</p>
         <p>Notes: {notes}</p>
         <div className='my-2 mr-9 flex justify-start gap-2'>
-          <Link href='/visit/incident'>
+          <Link href={`/visit/incident?pets=${petNames}`}>
             <Button size='small'>Report Incident</Button>
           </Link>
           <Link href='/visit/vet'>
