@@ -17,11 +17,16 @@ const VetForm = () => {
   const [email, setEmail] = useState(
     currentUser?.email ? currentUser?.email : ''
   )
-  const [petName, setPetName] = useState('')
   const [vetName, setVetName] = useState('')
   const [time, setTime] = useState('') //check issue comments for date/time
   const [notes, setNotes] = useState('')
   const router = useRouter()
+  let { pets } = router.query
+
+  if (pets === undefined) pets = ''
+  if (Array.isArray(pets)) pets = pets.length > 0 ? pets[0] : ''
+
+  const [petName, setPetName] = useState(pets)
 
   const handleSubmit = (click: FormEvent<HTMLFormElement>) => {
     click.preventDefault()
@@ -87,7 +92,7 @@ const VetForm = () => {
                   <FormField
                     id='petNameInput'
                     type='text'
-                    placeholder='Pet name'
+                    placeholder={pets}
                     label='Pet Name'
                     isRequired={false}
                     onChange={(event) => setPetName(event.target.value)}

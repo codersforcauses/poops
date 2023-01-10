@@ -42,7 +42,7 @@ const VisitInfo = ({
           <Link href={`/visit/incident?pets=${petNames}`}>
             <Button size='small'>Report Incident</Button>
           </Link>
-          <Link href='/visit/vet'>
+          <Link href={`/visit/vet?pets=${petNames}`}>
             <Button size='small'>Register Vet Concern</Button>
           </Link>
         </div>
