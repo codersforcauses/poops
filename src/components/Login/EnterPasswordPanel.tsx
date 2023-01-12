@@ -5,7 +5,7 @@ import Form from '@/components/Login/LoginForm'
 import Button from '@/components/UI/button'
 
 const EnterPasswordPanel = (props: {
-  phoneNumber: string, 
+  phoneNumber: string
   togglePanel?: () => void
 }) => {
   const [password, setpassword] = useState('')
@@ -17,7 +17,9 @@ const EnterPasswordPanel = (props: {
     setpassword('')
   }
 
-  function handleForgot(event: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
+  function handleForgot(
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) {
     event.preventDefault()
     router.push('/login')
   }
@@ -27,17 +29,16 @@ const EnterPasswordPanel = (props: {
   }
 
   return (
-    <div className='flex flex-auto flex-col items-center w-1/4'>
-      <div className='flex flex-col w-fit'>
-        <p className='text-sm text-dark-gray'>
-          Phone Number
-        </p>
+    <div className='flex w-1/4 flex-auto flex-col items-center'>
+      <div className='flex w-fit flex-col'>
+        <p className='text-sm text-dark-gray'>Phone Number</p>
         <div className='flex flex-row justify-between'>
-          <p>
-            {props.phoneNumber}
-          </p>
+          <p>{props.phoneNumber}</p>
           <div className='w-32'></div>
-          <button className='text-sm italic underline text-dark-red' onClick={props.togglePanel} >
+          <button
+            className='text-sm italic text-dark-red underline'
+            onClick={props.togglePanel}
+          >
             change
           </button>
         </div>
@@ -55,7 +56,7 @@ const EnterPasswordPanel = (props: {
           />
         </div>
         <button
-          className='text-sm italic underline text-dark-red'
+          className='text-sm italic text-dark-red underline'
           onClick={handleForgot}
         >
           Forgot your password?

@@ -27,10 +27,11 @@ const EnterPhonePanel = ({ onClick }: EnterPhonePanelInterface) => {
   }
 
   return (
-    <div className='flex flex-auto flex-col w-1/4'>
-      <form 
+    <div className='flex w-1/4 flex-auto flex-col'>
+      <form
         onSubmit={handleSubmit}
-        className='flex flex-auto flex-col justify-around items-center h-full m-5'>
+        className='m-5 flex h-full flex-auto flex-col items-center justify-around'
+      >
         <div className='flex justify-center'>
           <Form
             id='countrycode'
