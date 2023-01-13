@@ -50,5 +50,4 @@ const Login: NextPage = () => {
   )
 }
 
-
 export default withPublic(Login)
