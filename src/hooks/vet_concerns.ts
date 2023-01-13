@@ -94,7 +94,10 @@ export const useMutateVetConcerns = () => {
   })
 }
 
-const setVetConcern = async (vetConcernRef : DocumentReference, vetConcernMut : VetConcern) => { 
+const setVetConcern = async (
+  vetConcernRef: DocumentReference,
+  vetConcernMut: VetConcern
+) => {
   const batch = writeBatch(db)
 
   // Set vet concern
@@ -110,8 +113,9 @@ const setVetConcern = async (vetConcernRef : DocumentReference, vetConcernMut : 
   )
   const visitData = (await getDoc(visitRef)).data() as Visit
   const notes = visitData.notes
-  visitData.notes = notes == '' ? '-' + vetConcernMut.detail : '\n-' + vetConcernMut.detail
-  batch.set(visitRef, visitData, { merge: true})
+  visitData.notes =
+    notes == '' ? '-' + vetConcernMut.detail : '\n-' + vetConcernMut.detail
+  batch.set(visitRef, visitData, { merge: true })
 
   await batch.commit()
 }
