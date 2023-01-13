@@ -31,6 +31,20 @@ export interface Contact {
   tags: string[]
 }
 
+export interface VetConcern {
+  docId?: string
+  user_uid: string
+  user_name: string
+  user_email: string
+  user_phone?: number
+  client_name: string
+  pet_name: string
+  visit_time: Timestamp
+  visit_id: string
+  detail: string
+  created_at: Timestamp
+}
+
 export interface UserStat {
   numVisits: number
   numHours: number
