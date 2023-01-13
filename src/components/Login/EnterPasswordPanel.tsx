@@ -31,12 +31,12 @@ const EnterPasswordPanel = (props: {
   return (
     <div className='flex w-1/4 flex-auto flex-col items-center'>
       <div className='flex w-fit flex-col'>
-        <p className='text-sm text-dark-gray'>Phone Number</p>
+        <p className='text-dark-gray text-sm'>Phone Number</p>
         <div className='flex flex-row justify-between'>
           <p>{props.phoneNumber}</p>
           <div className='w-32'></div>
           <button
-            className='text-sm italic text-dark-red underline'
+            className='text-dark-red text-sm italic underline'
             onClick={props.togglePanel}
           >
             change
@@ -56,7 +56,7 @@ const EnterPasswordPanel = (props: {
           />
         </div>
         <button
-          className='text-sm italic text-dark-red underline'
+          className='text-dark-red text-sm italic underline'
           onClick={handleForgot}
         >
           Forgot your password?

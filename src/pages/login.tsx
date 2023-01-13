@@ -38,5 +38,4 @@ const Login: NextPageWithLayout = () => {
   )
 }
 
-
 export default withPublic(Login)
