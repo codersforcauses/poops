@@ -36,7 +36,7 @@ export interface VetConcern {
   user_uid: string
   user_name: string
   user_email: string
-  user_phone?: number
+  user_phone: number
   client_name: string
   pet_name: string
   visit_time: Timestamp

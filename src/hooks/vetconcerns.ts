@@ -3,13 +3,11 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import {
   collection,
-  deleteDoc,
   doc,
   DocumentReference,
   FirestoreError,
   getDoc,
   getDocs,
-  setDoc,
   writeBatch
 } from 'firebase/firestore'
 
