@@ -19,7 +19,7 @@ const Set = () => {
   const { mutate: mutateVisits } = useMutateVisits()
 
   const router = useRouter()
-  const queryId = router.query.id
+  const {id : queryId} = router.query
   const visitId =
     queryId === undefined || Array.isArray(queryId) ? null : queryId
   const visit = visits?.find((visit) => queryId && visit.docId === visitId)

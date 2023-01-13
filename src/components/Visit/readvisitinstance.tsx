@@ -23,7 +23,8 @@ const VisitInfo = ({
   walkDist = 0,
   commuteDist = 0,
   commuteMethod = 'N/A',
-  notes = ''
+  notes = '',
+  docId
 }: VisitInfoProps) => {
   const router = useRouter()
   return (
@@ -43,13 +44,15 @@ const VisitInfo = ({
         <div className='my-2 mr-9 flex justify-start gap-2'>
           <Button
             size='small'
-            onClick={() => router.push(`/visit/incident?pets=${petNames}`)}
+            onClick={() =>
+              router.push(`/visit/${docId}/incident?pets=${petNames}`)
+            }
           >
             Report Incident
           </Button>
           <Button
             size='small'
-            onClick={() => router.push(`/visit/vet?pets=${petNames}`)}
+            onClick={() => router.push(`/visit/${docId}/vet?pets=${petNames}`)}
           >
             Register Vet Concern
           </Button>
