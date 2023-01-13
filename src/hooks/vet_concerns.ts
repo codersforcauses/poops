@@ -42,21 +42,12 @@ export const useMutateVetConcerns = () => {
   const { setAlert } = useAlert()
 
   const mutationFn = async (
-    vetConcern: VetConcern & { deleteDoc?: boolean }
+    vetConcern: VetConcern
   ) => {
     try {
-      const { docId: vetConcernId, ...vetConcernMut } = vetConcern
       const collectionRef = collection(db, 'vet_concern')
-
-      const docRef = vetConcernId
-        ? doc(collectionRef, vetConcernId)
-        : doc(collectionRef)
-
-      if (vetConcernMut.deleteDoc) {
-        await deleteDoc(docRef)
-      } else {
-        setVetConcern(docRef, vetConcernMut)
-      }
+      const docRef = doc(collectionRef)
+      addVetConcern(docRef, vetConcern)
     } catch (err: unknown) {
       console.log(err)
       //#region  //*=========== For logging ===========
@@ -72,7 +63,7 @@ export const useMutateVetConcerns = () => {
     setAlert({
       variant: AlertVariant.info,
       title: 'Success!',
-      text: 'Updated vet concerns',
+      text: 'Vet concern submitted',
       position: 'bottom',
       showFor: 1000
     })
@@ -81,7 +72,7 @@ export const useMutateVetConcerns = () => {
     setAlert({
       variant: AlertVariant.critical,
       title: 'Error!',
-      text: 'Could not update vet concern',
+      text: 'Vet concern was not submitted',
       position: 'bottom',
       showFor: 1000
     })
@@ -94,7 +85,7 @@ export const useMutateVetConcerns = () => {
   })
 }
 
-const setVetConcern = async (
+const addVetConcern = async (
   vetConcernRef: DocumentReference,
   vetConcernMut: VetConcern
 ) => {
@@ -113,8 +104,9 @@ const setVetConcern = async (
   )
   const visitData = (await getDoc(visitRef)).data() as Visit
   const notes = visitData.notes
+  // appending to notes if not empty.
   visitData.notes =
-    notes == '' ? '-' + vetConcernMut.detail : '\n-' + vetConcernMut.detail
+    notes == '' ? '\n-' + vetConcernMut.detail : notes + '\n-' + vetConcernMut.detail
   batch.set(visitRef, visitData, { merge: true })
 
   await batch.commit()
