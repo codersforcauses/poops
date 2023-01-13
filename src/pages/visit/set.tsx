@@ -46,7 +46,8 @@ const Set = () => {
       duration,
       walkDist,
       commuteDist,
-      commuteMethod
+      commuteMethod,
+      notes
     } = visit
 
     setVisitType(type)
@@ -56,6 +57,7 @@ const Set = () => {
     setWalkDist(walkDist)
     setCommuteDist(commuteDist)
     setCommuteMethod(commuteMethod)
+    setNotes(notes)
   }, [visit])
 
   const isNewVisit = visit === undefined || visit.docId === null
