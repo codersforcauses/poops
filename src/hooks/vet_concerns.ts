@@ -45,7 +45,7 @@ export const useMutateVetConcerns = () => {
     try {
       const collectionRef = collection(db, 'vet_concern')
       const docRef = doc(collectionRef)
-      addVetConcern(docRef, vetConcern)
+      await addVetConcern(docRef, vetConcern)
     } catch (err: unknown) {
       console.log(err)
       //#region  //*=========== For logging ===========
