@@ -1,16 +1,12 @@
 import { NextPage } from 'next'
+import Image from 'next/image'
 
-import LoginHeader from '@/components/Login/LoginHeader'
 import LoginPanel from '@/components/Login/LoginPanel'
 import { withPublic } from '@/components/PrivateRoute'
 import { useAuth } from '@/context/Firebase/Auth/context'
 
 const Login: NextPage = () => {
   const { logOut, currentUser } = useAuth()
-
-  const pageTitle = 'Login'
-  const primaryMessage = 'Sign In'
-  const secondaryMessage = 'Use any one of your profiles'
 
   return (
     <main>
@@ -40,7 +36,7 @@ const Login: NextPage = () => {
           displayMicrosoft={true}
           displayPhone={true}
         />
-      </LoginHeader>
+      </div>
       {/* //! used for testing} */}
       <br />
       <br />
@@ -53,5 +49,6 @@ const Login: NextPage = () => {
     </main>
   )
 }
+
 
 export default withPublic(Login)

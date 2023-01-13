@@ -1,15 +1,5 @@
 import { useRouter } from 'next/router'
 import {
-  // faApple,
-  faFacebookF,
-  faGoogle,
-  faMicrosoft
-  // faTwitter,
-  // faYahoo
-} from '@fortawesome/free-brands-svg-icons'
-import { faPhone } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import {
   Auth,
   AuthProvider,
   FacebookAuthProvider,
@@ -40,10 +30,10 @@ const LoginPanel = ({
 }: LoginPanelInterface) => {
   const { externalAuthSignIn, linkAuthProvider, currentUser, auth } = useAuth()
 
-  const googleIcon = <FontAwesomeIcon icon={faGoogle} />
-  const facebookIcon = <FontAwesomeIcon icon={faFacebookF} />
-  const microsoftIcon = <FontAwesomeIcon icon={faMicrosoft} />
-  const phoneIcon = <FontAwesomeIcon icon={faPhone} />
+  const googleIcon = <Logo name='Google' viewBox='0 0 24 24' />
+  const facebookIcon = <Logo name='Facebook' viewBox='0 0 24 24' />
+  const microsoftIcon = <Logo name='Microsoft' viewBox='0 0 24 24' />
+  const phoneIcon = <Logo name='Phone' viewBox='0 0 24 24' />
 
   const googleProvider = new GoogleAuthProvider()
   const facebookProvider = new FacebookAuthProvider()
@@ -104,7 +94,7 @@ const LoginPanel = ({
         onClick={() => router.push('/loginphone')}
         icon={phoneIcon}
         buttonlabel={buttonString('Phone')}
-        style='group h-12 rounded-full border-4 border-phonegreen px-6 transition duration-300'
+        style='group h-12 rounded-full border-4 border-[#68CC6A] px-6 transition duration-300'
         display={displayPhone}
       />
     </div>
