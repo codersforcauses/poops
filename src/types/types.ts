@@ -1,24 +1,17 @@
 import { Timestamp } from 'firebase/firestore'
 
-//local variables to be passed around the app
-export interface Pet {
-  id: string
-  name: string
-  notes: string
+export interface User {
+  info: Contact
+  stats: UserStat
 }
 
-export interface UserData {
-  clientName: string
-  contacts: Contact[]
-  visits: VisitData[]
-}
-
-export interface VisitData {
+export interface Visit {
+  docId?: string
   type: string
   clientName: string
   petNames: string
   startTime: Timestamp
-  endTime: Timestamp
+  duration: Duration
   walkDist: number
   commuteDist: number
   commuteMethod: string
@@ -26,9 +19,8 @@ export interface VisitData {
 }
 
 export interface Contact {
-  //historic type to deal with type issues with contacts
-  id: string
-  clientName: string
+  docId?: string
+  name: string
   desc: string
   pets: string
   email: string
@@ -37,6 +29,13 @@ export interface Contact {
   region: string[]
   notes: string
   tags: string[]
+}
+
+export interface UserStat {
+  numVisits: number
+  numHours: number
+  commutedDist: number
+  walkedDist: number
 }
 
 export interface SelectOption {

@@ -1,47 +1,56 @@
-import { ChangeEvent, FormEvent, useEffect } from 'react'
-import { Dispatch, SetStateAction, useState } from 'react'
+import { ChangeEvent, FormEvent, useEffect, useMemo } from 'react'
+import { useAtom, useAtomValue, useSetAtom } from 'jotai'
 import tw from 'tailwind-styled-components'
 
+import {
+  contactFormAtom,
+  currentContactAtom,
+  isEditingAtom
+} from '@/atoms/contacts'
 import Avatar from '@/components/Contact/avatar'
 import RegionSelector from '@/components/Contact/regiondropdown'
 import TagSelector from '@/components/Contact/tagdropdown'
-import { useContact } from '@/context/ContactContext/context'
-import type { Contact } from '@/types/types'
+import { useMutateContacts } from '@/hooks/contacts'
+import useUser, { useMutateUser } from '@/hooks/user'
+
 import Button from '../UI/button'
 
-type ContactInfoProps = {
-  firestoreIndex: number
-  image: string
-  setIsEditing: Dispatch<SetStateAction<boolean>>
-}
+const ContactForm = () => {
+  const currentContact = useAtomValue(currentContactAtom)
+  const setIsEditing = useSetAtom(isEditingAtom)
+  const [contactForm, setContactForm] = useAtom(contactFormAtom)
+  const { data: currentUser } = useUser()
+  const { mutate: mutateUser } = useMutateUser()
+  const { mutate: mutateContacts } = useMutateContacts()
 
-const ContactForm = ({
-  firestoreIndex,
-  image,
-  setIsEditing
-}: ContactInfoProps) => {
-  const { allContacts, insertContact, setDisplayContactIndex } = useContact()
+  const isNewContact = currentContact === null
+  const isUser = currentContact?.docId === currentUser?.docId
 
-  const isNewContact = firestoreIndex === -1
+  const contact = useMemo(
+    () =>
+      isNewContact
+        ? {
+            name: '',
+            desc: '',
+            pets: '',
+            email: '',
+            phone: '',
+            streetAddress: '',
+            region: [],
+            notes: '',
+            tags: ['Client']
+          }
+        : currentContact,
+    [isNewContact, currentContact]
+  )
 
-  const contact: Contact = isNewContact
-    ? {
-        id: '',
-        clientName: '',
-        desc: '',
-        pets: '',
-        email: '',
-        phone: '',
-        streetAddress: '',
-        region: [],
-        notes: '',
-        tags: []
-      }
-    : allContacts[firestoreIndex]
+  useEffect(() => {
+    if (contact !== null) {
+      setContactForm(contact)
+    }
+  }, [contact, setContactForm])
 
-  const [regions, setRegions] = useState(contact.region)
-  const [tags, setTags] = useState(contact.tags)
-  const [contactForm, setContactForm] = useState(contact)
+  if (currentUser === null || contactForm === null) return null
 
   const handleInputChange = (
     e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>
@@ -50,53 +59,37 @@ const ContactForm = ({
     setContactForm({ ...contactForm, [name]: value })
   }
 
-  useEffect(() => {
-    setContactForm((contactForm) => ({
-      ...contactForm,
-      tags: tags,
-      region: regions
-    }))
-  }, [regions, tags])
-
-  // TODO: Submit ContactForm to database
   const submitForm = (e: FormEvent) => {
     e.preventDefault()
-    // TODO: submit to firestore here
-    if (isNewContact) {
-      firestoreIndex = insertContact(contactForm)
-      setDisplayContactIndex(firestoreIndex)
+    if (isUser) {
+      mutateUser(contactForm)
     } else {
-      insertContact(contactForm, firestoreIndex)
-      setDisplayContactIndex(firestoreIndex)
+      mutateContacts(contactForm)
     }
+
     setIsEditing(false)
   }
 
   return (
     <form onSubmit={submitForm}>
-      <div className='flex flex-col items-center justify-center gap-3'>
+      <div className='mb-9 flex flex-col items-center justify-center gap-3'>
         {/* USER PROFILE IMAGE */}
-        <Avatar
-          image={image}
-          height={48}
-          width={48}
-          iconClass='w-32 rounded-full'
-        />
+        <Avatar image='' height={48} width={48} iconClass='w-32 rounded-full' />
         {/* FIRST AND LAST NAME */}
         <Box>
-          <label htmlFor={contact.clientName} className='text-dark-red'>
+          <label htmlFor={contact.name} className='text-primary-dark'>
             Full Name
           </label>
           <input
-            name='clientName'
-            defaultValue={contact.clientName}
+            name='name'
+            defaultValue={contact.name}
             className='border-grey mb-2 w-80 rounded-lg border pl-1'
             onChange={handleInputChange}
           />
         </Box>
         {/* DESCRIPTION */}
         <Box>
-          <label htmlFor={contact.notes} className='text-dark-red'>
+          <label htmlFor={contact.notes} className='text-primary-dark'>
             Description
           </label>
           <textarea
@@ -108,7 +101,7 @@ const ContactForm = ({
         </Box>
         {/* PHONE */}
         <Box>
-          <label htmlFor={contact.phone} className='text-dark-red'>
+          <label htmlFor={contact.phone} className='text-primary-dark'>
             Phone
           </label>
           <input
@@ -120,7 +113,7 @@ const ContactForm = ({
         </Box>
         {/* EMAIL */}
         <Box>
-          <label htmlFor={contact.email} className='text-dark-red'>
+          <label htmlFor={contact.email} className='text-primary-dark'>
             Email
           </label>
           <input
@@ -132,7 +125,7 @@ const ContactForm = ({
         </Box>
         {/* ADDRESS */}
         <Box>
-          <label htmlFor={contact.streetAddress} className='text-dark-red'>
+          <label htmlFor={contact.streetAddress} className='text-primary-dark'>
             Address
           </label>
           <input
@@ -144,23 +137,23 @@ const ContactForm = ({
         </Box>
         {/* TAGS */}
         <Box>
-          <label htmlFor='tags' className='text-dark-red'>
+          <label htmlFor='tags' className='text-primary-dark'>
             Tags
           </label>
 
-          <TagSelector tags={contact.tags} setTags={setTags} />
+          <TagSelector tags={contact.tags} />
           {/* Padding to counter the shadow */}
           <div className='pt-2'></div>
         </Box>
         {/* REGIONS */}
         <Box className='pb-3'>
-          <label htmlFor='region' className='text-dark-red'>
+          <label htmlFor='region' className='text-primary-dark'>
             Region
           </label>
-          <RegionSelector regions={contact.region} setRegions={setRegions} />
+          <RegionSelector regions={contact.region} />
         </Box>
         <Box>
-          <label htmlFor='pets' className='text-dark-red'>
+          <label htmlFor='pets' className='text-primary-dark'>
             Pets
           </label>
           <input
@@ -172,7 +165,7 @@ const ContactForm = ({
         </Box>
         {/* NOTES */}
         <Box>
-          <label htmlFor={contact.notes} className='text-dark-red'>
+          <label htmlFor={contact.notes} className='text-primary-dark'>
             Notes
           </label>
           <textarea
@@ -183,23 +176,21 @@ const ContactForm = ({
           />
         </Box>
         {/* FORM BUTTONS */}
-        <div className='mb-3 flex justify-center'>
-          <div className='space-y-2'>
-            <Button type='submit' fullwidth>
-              Save
+        <div className=' flex justify-center'>
+          <Button type='submit' fullwidth>
+            Save
+          </Button>
+          {!isNewContact && (
+            <Button
+              intent='secondary'
+              fullwidth
+              onClick={() => {
+                if (setIsEditing !== undefined) setIsEditing(false)
+              }}
+            >
+              Cancel
             </Button>
-            {!isNewContact && (
-              <Button
-                intent='secondary'
-                fullwidth
-                onClick={() => {
-                  if (setIsEditing !== undefined) setIsEditing(false)
-                }}
-              >
-                Cancel
-              </Button>
-            )}
-          </div>
+          )}
         </div>
       </div>
     </form>

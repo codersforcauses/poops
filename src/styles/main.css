@@ -32,3 +32,7 @@ main {
   overflow-y: scroll;
   overflow-x: hidden;
 }
+
+.firebase-emulator-warning {
+  display: none;
+}
