@@ -42,12 +42,8 @@ const VisitInfo = ({
         <p>Commute Distance: {commuteDist.toFixed(1)} km</p>
         <p>Commute Method: {commuteMethod}</p>
         <p>Notes: </p>
-        {paragraphs.map((paragraph) => {
-          return (
-            <>
-              <p> {paragraph}</p>
-            </>
-          )
+        {paragraphs.map((paragraph, i) => {
+          return <p key={i}> {paragraph}</p>
         })}
 
         <div className='my-2 mr-9 flex justify-start gap-2'>

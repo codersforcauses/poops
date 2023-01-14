@@ -55,6 +55,7 @@ export const useMutateVetConcerns = () => {
 
   const onSuccess = () => {
     queryClient.invalidateQueries({ queryKey: ['vetConcerns'] })
+    queryClient.invalidateQueries({queryKey: ['visit']})
     setAlert({
       variant: AlertVariant.info,
       title: 'Success!',
