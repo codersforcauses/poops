@@ -1,5 +1,6 @@
 import { FormEvent, useState } from 'react'
 import { useRouter } from 'next/router'
+import { ResolverSuccess } from 'react-hook-form'
 
 import Header from '@/components/Header'
 import NavBar from '@/components/NavBar'
@@ -61,16 +62,14 @@ const Roles = () => {
           </tr>
         </thead>
         <tbody>
-          {ROLES_DATA.map((roles) => {
-            return (
-              <tr>
-                <td>{roles['id']}</td>
-                <td>{roles['roles']}</td>
-                <td>{roles['assigned_by']}</td>
-                <td>{roles['created_at']}</td>
-              </tr>
-            )
-          })}
+          {ROLES_DATA.map((roles, i) => (
+            <tr key={i}>
+              <td>{roles['id']}</td>
+              <td>{roles['roles']}</td>
+              <td>{roles['assigned_by']}</td>
+              <td>{roles['created_at']}</td>
+            </tr>
+          ))}
         </tbody>
       </table>
       <NavBar />
