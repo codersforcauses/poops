@@ -11,8 +11,8 @@ import FormField from '@/components/Visit/formfield'
 import ROLES_DATA from '../../../mockData/ROLES_DATA.json'
 
 // TODO: import docs and mod, add header to index?
-
-//? onsubmit add user to mockdata, should update table
+// TODO: onsubmit add user to mockdata, should update table
+// TODO: style for mobile view
 
 const Roles = () => {
   const [email, setEmail] = useState('')
@@ -38,7 +38,7 @@ const Roles = () => {
       <Header pageTitle='Roles' />
       <TopNav />
       <h1 className='m-3 flex-1 text-center text-2xl'>Roles</h1>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} className='m-auto mb-5 w-1/2 rounded-lg'>
         <FormField
           id='emailInput'
           type='email'
@@ -49,29 +49,28 @@ const Roles = () => {
         />
       </form>
 
-      {/* use roles data as array (of js objects) to populate table */}
-      {/* ROLES_DATA.forEach create row or try map  */}
-
-      <table className='border-slate-700 border-separate border-spacing-3 border'>
-        <thead>
-          <tr>
-            <th>Id</th>
-            <th>Roles</th>
-            <th>Assigned By</th>
-            <th>Created At</th>
-          </tr>
-        </thead>
-        <tbody>
-          {ROLES_DATA.map((roles, i) => (
-            <tr key={i}>
-              <td>{roles['id']}</td>
-              <td>{roles['roles']}</td>
-              <td>{roles['assigned_by']}</td>
-              <td>{roles['created_at']}</td>
+      <div className='overflow-scroll'>
+        <table className='border-slate-700 m-auto border-separate border-spacing-3 border'>
+          <thead>
+            <tr className='text-center'>
+              <th>Id</th>
+              <th>Role</th>
+              <th>Assigned By</th>
+              <th>Created At</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {ROLES_DATA.map((roles, i) => (
+              <tr key={i}>
+                <td>{roles['id']}</td>
+                <td className='text-center'>{roles['roles']}</td>
+                <td>{roles['assigned_by']}</td>
+                <td>{roles['created_at']}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
       <NavBar />
     </>
   )
