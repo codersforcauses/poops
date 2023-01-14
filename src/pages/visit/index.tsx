@@ -3,6 +3,7 @@ import { useState } from 'react'
 import Header from '@/components/Header'
 import NavBar from '@/components/NavBar'
 import { withProtected } from '@/components/PrivateRoute'
+import TopNav from '@/components/TopNav'
 import { AddButton } from '@/components/Visit/buttons'
 import SearchBar from '@/components/Visit/searchbar'
 import VisitList from '@/components/Visit/visitlist'
@@ -12,6 +13,7 @@ const Visit = () => {
   return (
     <>
       <Header pageTitle='Visit' />
+      <TopNav />
       <main>
         <div className='flex w-screen flex-col p-4'>
           <div className='align-center flex flex-row justify-around'>

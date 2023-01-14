@@ -1,5 +1,5 @@
 import { CloudBillingClient } from '@google-cloud/billing'
-import { region } from './main'
+import { functions } from '../main'
 
 const billing = new CloudBillingClient()
 
@@ -42,7 +42,8 @@ const _disableBillingForProject = async (projectName: string) => {
   return `Billing disabled: ${JSON.stringify(res)}`
 }
 
-export const stopBilling = region('australia-southeast1')
+export const stopBilling = functions
+  .region('australia-southeast1')
   .pubsub.topic('billing')
   .onPublish(async (pubsubEvent) => {
     const pubsubData = JSON.parse(

@@ -1,20 +1,33 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
-    match /users/{userId}/{document=**} {
-      function isSignIn(){
+    function isSignIn(){
         return request.auth != null;
       }
 
-      function isOwner(){
-        return request.auth.uid == userId;
-      }
+    // function hasVerifiedEmail(){
+    //   return request.auth.token.email_verified;
+    // }
 
-      function hasVerifiedEmail(){
-        return request.auth.token.email_verified;
-      }
+    function isOwner(uid){
+      return request.auth.uid == uid;
+    }
 
-      allow read, write: if isSignIn() && isOwner();
+    function isAdmin(){
+      return request.auth.token.admin;
+    }
+
+    match /users/{userId}/{document=**} {
+      
+      allow read, write: if isSignIn() && isOwner(userId);
+    }
+
+    match /roles/{userId} {
+      // function checkEmail(){
+      //   return request.auth.token.email == email;
+      // }
+      allow read: if isSignIn() && isAdmin() && isOwner(userId);
+      allow write: if false;
     }
   }
 }

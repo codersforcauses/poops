@@ -6,15 +6,21 @@ import NavBar from '@/components/NavBar'
 import { withProtected } from '@/components/PrivateRoute'
 import TopNav from '@/components/TopNav'
 import Button from '@/components/UI/button'
-import useUser from '@/hooks/user'
+import { useAuth } from '@/context/Firebase/Auth/context'
+import mod from '@/lib/temp/firebase/functions/setRole'
 
 const Home = () => {
-  const { isSuccess, data: currentUser } = useUser()
+  const { currentUser, refreshUserToken } = useAuth()
 
-  const welcomeMessage =
-    isSuccess && currentUser && currentUser.info
-      ? `Welcome, ${currentUser.info.name}!`
-      : 'Welcome!'
+  const welcomeMessage = currentUser
+    ? `Welcome, ${currentUser?.displayName}!`
+    : 'Welcome!'
+
+  const onMod = (adminAccess: boolean) => {
+    if (currentUser) {
+      mod(adminAccess, currentUser, refreshUserToken)
+    }
+  }
 
   return (
     <>
@@ -26,10 +32,21 @@ const Home = () => {
             <h1 className='py-3 text-center text-3xl'>{welcomeMessage}</h1>
             <Summary />
             <br />
-            <div className='flex justify-center'>
+            <div className='flex flex-col justify-center'>
               <Link href='visit/set'>
-                <Button size='large'>START VISIT</Button>
+                <a className='flex justify-center'>
+                  <Button size='large'>START VISIT</Button>
+                </a>
               </Link>
+              <br />
+              <Button
+                size='medium'
+                intent='secondary'
+                type='button'
+                onClick={() => onMod(true)}
+              >
+                Mod me!
+              </Button>
             </div>
             <br />
             <br />
