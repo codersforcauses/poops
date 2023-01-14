@@ -1,4 +1,4 @@
-# Setting up a Firebase Project with Authentication and Firestore
+# Setting up a Firebase Project with Authentication, Firestore, and Functions
 
 ## Prerequisites
 
@@ -71,9 +71,41 @@
 
 #### Facebook
 
+- Create a new app in the [Facebook Developer](https://developers.facebook.com/) portal
+- Go to the Dashboard
+- Click on the "Set up" for Facebook Login in the "Add a product" section
+- Click on the "Web" button
+- Enter the URL of your website in the "Site URL" field and click "Save"
+- Click "Continue" and the rest can be skipped
+- Go to "Settings"
+- Click on the "Basic" tab
+- Copy the callback URL in the Firebase console
+- Copy the `App ID` and `App Secret`, paste them into their respective filed in the Firebase console and click "Save"
+- Paste it into the `Valid OAuth Redirect URIs` field in the "Facebook Login Settings"
+- Click "Save Changes"
+
 #### Microsoft
 
+- Copy the callback URL in the Firebase console
+- Go to the [Microsoft Azure](https://portal.azure.com/) portal
+- Click on the "App registrations" under the "Azure services" section
+- Click on the "New registration"
+- Enter a name for your app
+- Select "Accounts in any organizational directory (Any Azure AD directory - Multitenant) and personal Microsoft accounts (e.g. Skype, Xbox)" for the "Supported account types"
+- Select "Web" for the "Redirect URI"
+- Paste the callback URL into the "Redirect URI" field
+- Click on the "Register" button
+- Copy the `Application (client) ID` in the "Overview" and paste it into the "Application ID" field in the Firebase console
+- Click on the "Certificates & secrets" under the "Manage" section in the Microsoft Azure portal
+- Click on the "New client secret"
+- Enter a description and click on the "Add" button (Be sure to create a new client secret when the current one expires)
+- Copy the client secret value, paste it into the "Application secret" field in the Firebase console and click "Save"
+
 #### Phone
+
+- Click on the "Enable" button
+- reCAPTCHA is enabled by default
+- Click on the "Save" button
 
 ## Firebase Hosting
 
