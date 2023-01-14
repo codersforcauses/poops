@@ -33,7 +33,6 @@ const VetForm = () => {
   const [petName, setPetName] = useState('')
 
   const userId = useRef('')
-  const userEmail = useRef('')
   const userPhone = useRef(0)
   const client = useRef('')
 
@@ -53,7 +52,6 @@ const VetForm = () => {
     setPetName(petNames)
 
     userId.current = currentUser.uid
-    userEmail.current = currentUser.email ?? ''
     userPhone.current = currentUser.phoneNumber
       ? Number(currentUser.phoneNumber)
       : 0
@@ -65,7 +63,7 @@ const VetForm = () => {
     const data: VetConcern = {
       userId: userId.current,
       userName: userName,
-      userEmail: userEmail.current,
+      userEmail: email,
       userPhone: userPhone.current,
       clientName: client.current,
       petName: petName,
@@ -108,7 +106,8 @@ const VetForm = () => {
                   <FormField
                     id='userNameInput'
                     type='text'
-                    placeholder={userName}
+                    value={userName}
+                    placeholder='Username'
                     label='Name'
                     isRequired={false}
                     onChange={(event) => setUserName(event.target.value)}
@@ -118,7 +117,8 @@ const VetForm = () => {
                   <FormField
                     id='emailInput'
                     type='email'
-                    placeholder={email}
+                    value={email}
+                    placeholder='Email'
                     label='Email'
                     isRequired={false}
                     onChange={(event) => setEmail(event.target.value)}
@@ -130,7 +130,7 @@ const VetForm = () => {
                   <FormField
                     id='petNameInput'
                     type='text'
-                    placeholder={petName}
+                    placeholder='Pet name'
                     label='Pet Name'
                     isRequired={false}
                     onChange={(event) => setPetName(event.target.value)}
@@ -152,6 +152,7 @@ const VetForm = () => {
           <FormField
             id='timeInput'
             type='dateTime-local'
+            value={time}
             placeholder='Time'
             label='Date & Time'
             isRequired={false}
