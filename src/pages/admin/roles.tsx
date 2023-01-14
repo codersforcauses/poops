@@ -7,6 +7,17 @@ const Roles = () => {
 
   const handleSubmit = (click: FormEvent<HTMLFormElement>) => {
     click.preventDefault()
+
+    const addPriviliegeAcess = {
+      email: email,
+      roles: { admin: true }
+    }
+
+    fetch('/api/setRole', {
+      method: 'POST',
+      body: JSON.stringify(addPriviliegeAcess)
+    })
+
     console.log('gave admin to: ' + email)
   }
 
