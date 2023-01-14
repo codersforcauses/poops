@@ -44,15 +44,13 @@ const VisitInfo = ({
         <div className='my-2 mr-9 flex justify-start gap-2'>
           <Button
             size='small'
-            onClick={() =>
-              router.push(`/visit/${docId}/incident?pets=${petNames}`)
-            }
+            onClick={() => router.push(`/visit/${docId}/incident`)}
           >
             Report Incident
           </Button>
           <Button
             size='small'
-            onClick={() => router.push(`/visit/${docId}/vet?pets=${petNames}`)}
+            onClick={() => router.push(`/visit/${docId}/vet`)}
           >
             Register Vet Concern
           </Button>
