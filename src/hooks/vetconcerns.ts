@@ -13,7 +13,6 @@ import {
 
 import { db } from '@/components/Firebase/init'
 import { AlertVariant, useAlert } from '@/context/AlertContext'
-import visit from '@/pages/visit'
 import { VetConcern, Visit } from '@/types/types'
 
 export const useVetConcerns = () => {
@@ -94,9 +93,9 @@ const addVetConcern = async (
   const visitRef = doc(
     db,
     'users',
-    vetConcernMut.user_uid,
+    vetConcernMut.userId,
     'visits',
-    vetConcernMut.visit_id
+    vetConcernMut.visitId
   )
   const visitData = (await getDoc(visitRef)).data() as Visit
   const notes = visitData.notes

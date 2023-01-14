@@ -33,17 +33,17 @@ export interface Contact {
 
 export interface VetConcern {
   docId?: string
-  user_uid: string
-  user_name: string
-  user_email: string
-  user_phone: number
-  client_name: string
-  pet_name: string
-  vet_name: string
-  visit_time: Timestamp
-  visit_id: string
+  userId: string
+  userName: string
+  userEmail: string
+  userPhone: number
+  clientName: string
+  petName: string
+  vetName: string
+  visitTime: Timestamp
+  visitId: string
   detail: string
-  created_at: Timestamp
+  createdAt: Timestamp
 }
 
 export interface UserStat {

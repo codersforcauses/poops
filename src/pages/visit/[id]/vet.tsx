@@ -63,17 +63,17 @@ const VetForm = () => {
   const handleSubmit = (click: FormEvent<HTMLFormElement>) => {
     click.preventDefault()
     const data: VetConcern = {
-      user_uid: userId.current,
-      user_name: userName,
-      user_email: userEmail.current,
-      user_phone: userPhone.current,
-      client_name: client.current,
-      pet_name: petName,
-      vet_name: vetName,
-      visit_time: Timestamp.fromDate(new Date(time)),
-      visit_id: visitId ? visitId : '',
+      userId: userId.current,
+      userName: userName,
+      userEmail: userEmail.current,
+      userPhone: userPhone.current,
+      clientName: client.current,
+      petName: petName,
+      vetName: vetName,
+      visitTime: Timestamp.fromDate(new Date(time)),
+      visitId: visitId ? visitId : '',
       detail: notes,
-      created_at: Timestamp.fromDate(new Date())
+      createdAt: Timestamp.fromDate(new Date())
     }
 
     mutateVetConcerns(data)
