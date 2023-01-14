@@ -40,7 +40,7 @@ export const useMutateVetConcerns = () => {
 
   const mutationFn = async (vetConcern: VetConcern) => {
     try {
-      const collectionRef = collection(db, 'vet_concern')
+      const collectionRef = collection(db, 'vet_concerns')
       const docRef = doc(collectionRef)
       await addVetConcern(docRef, vetConcern)
     } catch (err: unknown) {
@@ -102,8 +102,8 @@ const addVetConcern = async (
   // appending to notes if not empty.
   visitData.notes =
     notes == ''
-      ? '\n-' + vetConcernMut.detail
-      : notes + '\n-' + vetConcernMut.detail
+      ? '- ' + vetConcernMut.detail
+      : notes + '\n- ' + vetConcernMut.detail
   batch.set(visitRef, visitData, { merge: true })
 
   await batch.commit()
