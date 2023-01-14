@@ -1,0 +1,26 @@
+[
+  {
+    "id": "62b98f1a66ea8b5c05b353c5",
+    "roles": "admin",
+    "assigned_by": "62b98f1a35cf119cfd93348c",
+    "created_at": "2023-01-14T15:00"
+  },
+  {
+    "id": "62b98f1a0368326081ed7e7d",
+    "roles": "admin",
+    "assigned_by": "62b98f1a35cf119cfd93348c",
+    "created_at": "2023-01-11T09:00"
+  },
+  {
+    "id": "62b98f1a35cf119cfd93348c",
+    "roles": "admin",
+    "assigned_by": "62b98f1a73749f471f13ebd6",
+    "created_at": "2023-01-09T13:00"
+  },
+  {
+    "id": "62b98f1a8d203b0b6166e224",
+    "roles": "nonadmin",
+    "assigned_by": "62b98f1a73749f471f13ebd6",
+    "created_at": "2023-01-09T12:00"
+  }
+]
