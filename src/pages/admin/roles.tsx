@@ -1,8 +1,17 @@
 import { FormEvent, useState } from 'react'
+import { useRouter } from 'next/router'
 
+import Header from '@/components/Header'
+import NavBar from '@/components/NavBar'
+import TopNav from '@/components/TopNav'
+import Button from '@/components/UI/button'
 import FormField from '@/components/Visit/formfield'
 
-// TODO: add button to index to go here, and one here to go back, import docs and mod, add header to index?
+import ROLES_DATA from '../../../mockData/ROLES_DATA.json'
+
+// TODO: import docs and mod, add header to index?
+
+//? onsubmit add user to mockdata, should update table
 
 const Roles = () => {
   const [email, setEmail] = useState('')
@@ -14,6 +23,9 @@ const Roles = () => {
 
   return (
     <>
+      <Header pageTitle='Roles' />
+      <TopNav />
+      <h1 className='m-3 flex-1 text-center text-2xl'>Roles</h1>
       <form onSubmit={handleSubmit}>
         <FormField
           id='emailInput'
@@ -25,7 +37,32 @@ const Roles = () => {
         />
       </form>
 
-      {/* table listing admins and schema data */}
+      {/* use roles data as array (of js objects) to populate table */}
+      {/* ROLES_DATA.forEach create row or try map  */}
+
+      <table className='border-slate-700 border-separate border-spacing-3 border'>
+        <thead>
+          <tr>
+            <th>Id</th>
+            <th>Roles</th>
+            <th>Assigned By</th>
+            <th>Created At</th>
+          </tr>
+        </thead>
+        <tbody>
+          {ROLES_DATA.map((roles) => {
+            return (
+              <tr>
+                <td>{roles['id']}</td>
+                <td>{roles['roles']}</td>
+                <td>{roles['assigned_by']}</td>
+                <td>{roles['created_at']}</td>
+              </tr>
+            )
+          })}
+        </tbody>
+      </table>
+      <NavBar />
     </>
   )
 }
