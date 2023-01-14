@@ -64,7 +64,6 @@ const Contact: NextPageWithLayout = () => {
           )}
         </div>
       </div>
-      {/* {noCurrentContact && <NavBar />} */}
     </>
   )
 }
