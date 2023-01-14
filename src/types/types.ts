@@ -1,5 +1,7 @@
 import { Timestamp } from 'firebase/firestore'
 
+// NOTE: If you update any of these types, you will also need to update the firestore.rules file
+
 export interface User {
   info: Contact
   stats: UserStat

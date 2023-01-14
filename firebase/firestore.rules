@@ -1,25 +1,67 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
-    function isSignIn(){
-        return request.auth != null;
-      }
+    function isSignIn() {
+      return request.auth != null;
+    }
 
     // function hasVerifiedEmail(){
     //   return request.auth.token.email_verified;
     // }
 
-    function isOwner(uid){
+    function isOwner(uid) {
       return request.auth.uid == uid;
     }
 
-    function isAdmin(){
+    function isAdmin() {
       return request.auth.token.admin;
     }
 
-    match /users/{userId}/{document=**} {
-      
+    function isValidContact() {
+      return request.resource.data.size() == 9 &&
+        request.resource.data.name is string &&
+        request.resource.data.desc is string &&
+        request.resource.data.pets is string &&
+        request.resource.data.email is string &&
+        request.resource.data.phone is string &&
+        request.resource.data.streetAddress is string &&
+        request.resource.data.region is list &&
+        request.resource.data.notes is string &&
+        request.resource.data.tags is list
+    }
+
+    function isValidVisit() {
+      return request.resource.data.size() == 9 &&
+        request.resource.data.type is string &&
+        request.resource.data.clientName is string &&
+        request.resource.data.petNames is string &&
+        request.resource.data.startTime is timestamp &&
+        request.resource.data.duration.size() == 2 &&
+        request.resource.data.duration.hours is number &&
+        request.resource.data.duration.minutes is number &&
+        request.resource.data.walkDist is number &&
+        request.resource.data.commuteDist is number &&
+        request.resource.data.commuteMethod is string &&
+        request.resource.data.notes is string
+    }
+
+    match /users/{userId} {
+      match /contacts/{visitId} {
+        allow read: if isSignIn() && isOwner(userId);
+        allow write: if isSignIn() && isOwner(userId) && isValidContact();
+      }
+
+      match /visits/{visitId} {
+        allow read: if isSignIn() && isOwner(userId);
+        allow write: if isSignIn() && isOwner(userId) && isValidVisit();
+      }
+
       allow read, write: if isSignIn() && isOwner(userId);
+    }
+
+    match /incidents/{document=**} {
+      allow read: if isSignIn() && isAdmin();
+      allow write: if isSignIn();
     }
 
     match /roles/{userId} {
