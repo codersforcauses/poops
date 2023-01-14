@@ -1,4 +1,4 @@
-import {ReactElement} from 'react'
+import { ReactElement } from 'react'
 import Link from 'next/link'
 
 import Summary from '@/components/Home/summary'
@@ -54,9 +54,7 @@ const Home: NextPageWithLayout = () => {
 }
 
 Home.getLayout = function getLayout(page: ReactElement) {
-  return (
-    <Layout title="Home">{page}</Layout>
-  )
+  return <Layout title='Home'>{page}</Layout>
 }
 
 // export default withProtected(Home) // withProtected breaks the layout

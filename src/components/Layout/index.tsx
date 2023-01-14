@@ -4,19 +4,19 @@ import NavBar from '@/components/NavBar'
 import Header from '@/components/Header'
 
 export interface LayoutInterface {
-    title: string, 
-    children?: ReactNode
+  title: string
+  children?: ReactNode
 }
 
 const Layout = ({ children, title }: LayoutInterface) => {
-    return (
-        <>
-            <Header pageTitle={title} />
-            <TopNav />
-            <main>{children}</main>
-            <NavBar />
-        </>
-    )
+  return (
+    <>
+      <Header pageTitle={title} />
+      <TopNav />
+      <main>{children}</main>
+      <NavBar />
+    </>
+  )
 }
 
 export default Layout
