@@ -1,45 +1,83 @@
-import { FormEvent, useState } from 'react'
+import { FormEvent, useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { XMarkIcon } from '@heroicons/react/24/solid'
+import { Timestamp } from 'firebase/firestore'
 
 import { withProtected } from '@/components/PrivateRoute'
 import Button from '@/components/UI/button'
 import FormField from '@/components/Visit/formfield'
 import { useAuth } from '@/context/Firebase/Auth/context'
-import { VetConcernsForm } from '@/types/types'
+import { useMutateVetConcerns } from '@/hooks/vetconcerns'
+import { useVisits } from '@/hooks/visits'
+import { VetConcern } from '@/types/types'
+import { formatTimestamp } from '@/utils'
 
 const VetForm = () => {
   const { currentUser } = useAuth()
-  const [userName, setUserName] = useState(
-    currentUser?.displayName ? currentUser?.displayName : ''
-  )
-  const [email, setEmail] = useState(
-    currentUser?.email ? currentUser?.email : ''
-  )
+  const { mutate: mutateVetConcerns } = useMutateVetConcerns()
+
+  // getting specific visit info
+  const { data: visits } = useVisits()
+  const router = useRouter()
+  const { id: queryId } = router.query
+  const visitId =
+    queryId === undefined || Array.isArray(queryId) ? null : queryId
+  const visit = visits?.find((visit) => queryId && visit.docId === visitId)
+
+  const [userName, setUserName] = useState('')
+  const [email, setEmail] = useState('')
   const [vetName, setVetName] = useState('')
   const [time, setTime] = useState('') //check issue comments for date/time
   const [notes, setNotes] = useState('')
-  const router = useRouter()
-  let { pets } = router.query
+  const [petName, setPetName] = useState('')
 
-  if (pets === undefined) pets = ''
-  if (Array.isArray(pets)) pets = pets.length > 0 ? pets[0] : ''
+  const userId = useRef('')
+  const userEmail = useRef('')
+  const userPhone = useRef(0)
+  const client = useRef('')
 
-  const [petName, setPetName] = useState(pets)
+  useEffect(() => {
+    // prefilling any form values.
+    if (visit === undefined || currentUser == null) return
+
+    const { petNames, startTime, clientName } = visit
+
+    const displayName = currentUser.displayName ?? ''
+    const email = currentUser.email ?? ''
+    const visitTime = formatTimestamp(startTime)
+
+    setUserName(displayName)
+    setEmail(email)
+    setTime(visitTime ?? '')
+    setPetName(petNames)
+
+    userId.current = currentUser.uid
+    userEmail.current = currentUser.email ?? ''
+    userPhone.current = currentUser.phoneNumber
+      ? Number(currentUser.phoneNumber)
+      : 0
+    client.current = clientName
+  }, [visit, currentUser])
 
   const handleSubmit = (click: FormEvent<HTMLFormElement>) => {
     click.preventDefault()
-    const data: VetConcernsForm = {
-      userID: currentUser?.uid,
-      userName: userName,
-      email: email,
-      petName: petName,
-      vetName: vetName,
-      time: time,
-      details: notes
+    const data: VetConcern = {
+      user_uid: userId.current,
+      user_name: userName,
+      user_email: userEmail.current,
+      user_phone: userPhone.current,
+      client_name: client.current,
+      pet_name: petName,
+      vet_name: vetName,
+      visit_time: Timestamp.fromDate(new Date(time)),
+      visit_id: visitId ? visitId : '',
+      detail: notes,
+      created_at: Timestamp.fromDate(new Date())
     }
-    console.log(data)
+
+    mutateVetConcerns(data)
+
     router.push('/visit')
   }
 
@@ -92,7 +130,7 @@ const VetForm = () => {
                   <FormField
                     id='petNameInput'
                     type='text'
-                    placeholder={pets}
+                    placeholder={petName}
                     label='Pet Name'
                     isRequired={false}
                     onChange={(event) => setPetName(event.target.value)}
