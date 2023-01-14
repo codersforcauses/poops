@@ -128,6 +128,7 @@ const VetForm = () => {
                   <FormField
                     id='petNameInput'
                     type='text'
+                    value={petName}
                     placeholder='Pet name'
                     label='Pet Name'
                     isRequired={false}
