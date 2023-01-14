@@ -1,3 +1,4 @@
+import { ReactElement } from 'react'
 import { MagnifyingGlassIcon } from '@heroicons/react/24/outline'
 import { useAtom, useAtomValue } from 'jotai'
 
@@ -5,18 +6,18 @@ import { currentContactAtom, isEditingAtom } from '@/atoms/contacts'
 import ContactDetails from '@/components/Contact/contactdetails'
 import ContactItem from '@/components/Contact/contactitem'
 import ContactList from '@/components/Contact/contactlist'
-import Header from '@/components/Header'
-import NavBar from '@/components/NavBar'
+import Layout from '@/components/Layout'
 import { withProtected } from '@/components/PrivateRoute'
 import SearchBar from '@/components/SearchBar'
 import SearchTag from '@/components/SearchBar/searchtag'
-import TopNav from '@/components/TopNav'
 import Button from '@/components/UI/button'
 import { useContacts } from '@/hooks/contacts'
 import useUser from '@/hooks/user'
 import type { Contact } from '@/types/types'
 
-const Contact = () => {
+import { NextPageWithLayout } from './_app'
+
+const Contact: NextPageWithLayout = () => {
   const { data: currentUser } = useUser()
   const { data: contacts } = useContacts()
 
@@ -31,9 +32,7 @@ const Contact = () => {
   return (
     <>
       {/* <Seo /> */}
-      <Header pageTitle='Contact' />
-      <TopNav />
-      <main className='h-[calc(100%-7rem)]'>
+      <div className='h-[calc(100%-7rem)]'>
         {isListView && (
           <div className='m-auto flex h-14 max-w-md flex-row'>
             <div className='flex-1'></div>
@@ -64,10 +63,15 @@ const Contact = () => {
             <ContactDetails />
           )}
         </div>
-      </main>
-      {noCurrentContact && <NavBar />}
+      </div>
+      {/* {noCurrentContact && <NavBar />} */}
     </>
   )
 }
 
-export default withProtected(Contact)
+Contact.getLayout = function getLayout(page: ReactElement) {
+  return <Layout title='Contact'>{page}</Layout>
+}
+
+// export default withProtected(Contact)
+export default Contact
