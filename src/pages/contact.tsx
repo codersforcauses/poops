@@ -30,7 +30,7 @@ const Contact: NextPageWithLayout = () => {
   const isListView = noCurrentContact && !isEditing
 
   return (
-    <>
+    <div className='main-style'>
       {/* <Seo /> */}
       <div className='h-full'>
         {isListView && (
@@ -64,7 +64,7 @@ const Contact: NextPageWithLayout = () => {
           )}
         </div>
       </div>
-    </>
+    </div>
   )
 }
 
