@@ -27,6 +27,7 @@ const VisitInfo = ({
   docId
 }: VisitInfoProps) => {
   const router = useRouter()
+  const paragraphs = notes.split('\n')
   return (
     <>
       <div
@@ -40,7 +41,15 @@ const VisitInfo = ({
         <p>Walk Distance: {walkDist.toFixed(3)} km</p>
         <p>Commute Distance: {commuteDist.toFixed(1)} km</p>
         <p>Commute Method: {commuteMethod}</p>
-        <p>Notes: {notes}</p>
+        <p>Notes: </p>
+        {paragraphs.map((paragraph) => {
+          return (
+            <>
+              <p> {paragraph}</p>
+            </>
+          )
+        })}
+
         <div className='my-2 mr-9 flex justify-start gap-2'>
           <Button
             size='small'
