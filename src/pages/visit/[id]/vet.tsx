@@ -33,7 +33,7 @@ const VetForm = () => {
   const [petName, setPetName] = useState('')
 
   const userId = useRef('')
-  const userPhone = useRef(0)
+  const userPhone = useRef('')
   const client = useRef('')
 
   useEffect(() => {
@@ -52,9 +52,7 @@ const VetForm = () => {
     setPetName(petNames)
 
     userId.current = currentUser.uid
-    userPhone.current = currentUser.phoneNumber
-      ? Number(currentUser.phoneNumber)
-      : 0
+    userPhone.current = currentUser.phoneNumber ? currentUser.phoneNumber : ''
     client.current = clientName
   }, [visit, currentUser])
 

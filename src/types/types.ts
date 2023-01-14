@@ -36,7 +36,7 @@ export interface VetConcern {
   userId: string
   userName: string
   userEmail: string
-  userPhone: number
+  userPhone: string
   clientName: string
   petName: string
   vetName: string
