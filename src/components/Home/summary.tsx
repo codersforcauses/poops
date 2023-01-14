@@ -12,7 +12,7 @@ function Summary() {
         </h1>
         <hr className='h-0.5 border-primary-dark bg-primary-dark text-primary-dark' />
         <div className='flex h-20 items-center justify-center'>
-          <Spinner style="h-10 w-10 fill-primary-dark text-gray-200"/>
+          <Spinner style='h-10 w-10 fill-primary-dark text-gray-200' />
         </div>
       </div>
     )
