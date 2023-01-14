@@ -155,10 +155,10 @@ function ContactInfo() {
             type='button'
             onClick={async () => {
               try {
-                const result = await signOut(auth) //TODO
-                console.log(result)
+                await signOut(auth) //TODO
                 Router.push('/login')
               } catch (error) {
+                //eslint-disable-next-lineZ
                 console.log('log out failed', { cause: error })
               }
             }}
