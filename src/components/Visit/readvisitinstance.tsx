@@ -1,8 +1,8 @@
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 
 import Button from '@/components/UI/button'
 import { Duration, Visit } from '@/types/types'
-import { useRouter } from 'next/router'
 
 export const formatDuration = (duration: Duration) => {
   const d = `${duration.hours} ${duration.hours === 1 ? 'hr' : 'hrs'} ${
@@ -23,9 +23,12 @@ const VisitInfo = ({
   walkDist = 0,
   commuteDist = 0,
   commuteMethod = 'N/A',
-  notes = ''
+  notes = '',
+  clientName = '',
+  docId = ''
 }: VisitInfoProps) => {
   const router = useRouter()
+  const params = `pets=${petNames}&client=${clientName}&visitId=${docId}`
   return (
     <>
       <div
@@ -43,7 +46,7 @@ const VisitInfo = ({
         <div className='my-2 mr-9 flex justify-start gap-2'>
           <Button
             size='small'
-            onClick={() => router.push(`/visit/incident?pets=${petNames}`)}
+            onClick={() => router.push(`/visit/incident?${params}`)}
           >
             Report Incident
           </Button>

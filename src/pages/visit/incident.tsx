@@ -22,11 +22,21 @@ const Incident = () => {
   )
   const [time, setTime] = useState('') //check issue comments for date/time
   const [notes, setNotes] = useState('')
+
   const router = useRouter()
   let { pets } = router.query
+  const { client, visitId } = router.query
 
   if (pets === undefined) pets = ''
   if (Array.isArray(pets)) pets = pets.length > 0 ? pets[0] : ''
+
+  let clientName = ''
+  if (Array.isArray(client)) clientName = client.length > 0 ? client[0] : ''
+  else if (client) clientName = client
+
+  let docId = ''
+  if (Array.isArray(visitId)) docId = visitId.length > 0 ? visitId[0] : ''
+  else if (visitId) docId = visitId
 
   const [petName, setPetName] = useState(pets)
 
@@ -36,10 +46,14 @@ const Incident = () => {
       const data: Incident = {
         userID: currentUser.uid,
         userName: userName,
+        clientName: clientName,
+        visitId: docId,
+        visitTime: time,
         email: email,
         petName: petName,
         time: time,
-        details: notes
+        details: notes,
+        createdAt: Date.now().toString()
       }
       mutateIncidents(data)
 
