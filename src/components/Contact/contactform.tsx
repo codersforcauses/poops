@@ -72,7 +72,7 @@ const ContactForm = () => {
 
   return (
     <form onSubmit={submitForm}>
-      <div className='mb-9 flex flex-col items-center justify-center gap-3'>
+      <div className='pb-24 flex flex-col items-center justify-center gap-3'>
         {/* USER PROFILE IMAGE */}
         <Avatar image='' height={48} width={48} iconClass='w-32 rounded-full' />
         {/* FIRST AND LAST NAME */}

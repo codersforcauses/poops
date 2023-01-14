@@ -32,7 +32,7 @@ const Contact: NextPageWithLayout = () => {
   return (
     <>
       {/* <Seo /> */}
-      <div className='h-[calc(100%-7rem)]'>
+      <div className='h-full'>
         {isListView && (
           <div className='m-auto flex h-14 max-w-md flex-row'>
             <div className='flex-1'></div>
