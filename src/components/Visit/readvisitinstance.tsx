@@ -1,8 +1,8 @@
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 
 import Button from '@/components/UI/button'
 import { Duration, Visit } from '@/types/types'
-import { useRouter } from 'next/router'
 
 export const formatDuration = (duration: Duration) => {
   const d = `${duration.hours} ${duration.hours === 1 ? 'hr' : 'hrs'} ${
