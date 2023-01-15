@@ -21,8 +21,6 @@
       "firestore-debug.log",
       "firestore.indexes.json",
       "firestore.rules",
-      "index.ts",
-      "package.json",
       "package-lock.json",
       "pub_sub_sample_message.json",
       "pubsub-debug.log",
