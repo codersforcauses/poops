@@ -5,7 +5,7 @@
     "emu": "yarn build && firebase emulators:start",
     "emu:stop": "lsof -ti :4400 -ti :4000 -ti :5001 -ti :8080 -ti :8085 -ti :9099 -ti :9199 | xargs kill",
     "lint": "eslint --ext .js,.ts .",
-    "build": "tsc",
+    "build": "rm -rf lib/ && tsc",
     "build:watch": "tsc --watch",
     "serve": "yarn build && firebase emulators:start --only functions",
     "shell": "yarn build && firebase functions:shell",
