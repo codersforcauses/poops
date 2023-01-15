@@ -10,7 +10,7 @@
     ],
     "source": ".",
     "ignore": [
-      "**/lib/**",
+      "**/functions/**",
       "**/node_modules/**",
       ".eslintrc.js",
       ".firebaserc",
@@ -21,10 +21,15 @@
       "firestore-debug.log",
       "firestore.indexes.json",
       "firestore.rules",
+      "index.ts",
+      "package.json",
       "package-lock.json",
       "pub_sub_sample_message.json",
+      "pubsub-debug.log",
       "README.md",
       "storage.rules",
+      "tsconfig.dev.json",
+      "tsconfig.json",
       "ui-debug.log",
       "yarn.lock"
     ]
