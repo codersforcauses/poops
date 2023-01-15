@@ -24,8 +24,10 @@ const Visit: NextPageWithLayout = () => {
   )
 }
 
-Visit.getLayout = function getLayout(page: ReactElement) {
-  return <Layout title='Visit'>{page}</Layout>
-}
-// export default withProtected(Visit)
-export default Visit
+const VisitWithProtected = withProtected(Visit)
+
+VisitWithProtected.getLayout = (page: ReactElement) => (
+  <Layout title='Visit'>{page}</Layout>
+)
+
+export default VisitWithProtected

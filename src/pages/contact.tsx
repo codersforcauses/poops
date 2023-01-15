@@ -68,9 +68,10 @@ const Contact: NextPageWithLayout = () => {
   )
 }
 
-Contact.getLayout = function getLayout(page: ReactElement) {
-  return <Layout title='Contact'>{page}</Layout>
-}
+const ContactWithProtected = withProtected(Contact)
 
-// export default withProtected(Contact)
-export default Contact
+ContactWithProtected.getLayout = (page: ReactElement) => (
+  <Layout title='Contact'>{page}</Layout>
+)
+
+export default ContactWithProtected

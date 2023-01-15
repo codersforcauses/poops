@@ -3,6 +3,7 @@ import Link from 'next/link'
 
 import Summary from '@/components/Home/summary'
 import Layout from '@/components/Layout'
+import { withProtected } from '@/components/PrivateRoute'
 import Button from '@/components/UI/button'
 import { useAuth } from '@/context/Firebase/Auth/context'
 import mod from '@/lib/temp/firebase/functions/setRole'
@@ -55,9 +56,10 @@ const Home: NextPageWithLayout = () => {
   )
 }
 
-Home.getLayout = function getLayout(page: ReactElement) {
-  return <Layout title='Home'>{page}</Layout>
-}
+const HomeWithProtected = withProtected(Home)
 
-// export default withProtected(Home) // withProtected breaks the layout
-export default Home
+HomeWithProtected.getLayout = (page: ReactElement) => (
+  <Layout title='Home'>{page}</Layout>
+)
+
+export default HomeWithProtected
