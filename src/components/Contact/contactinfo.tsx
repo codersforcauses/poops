@@ -1,13 +1,16 @@
+import Router from 'next/router'
 import {
   EnvelopeIcon,
   MapPinIcon,
   PhoneIcon
 } from '@heroicons/react/24/outline'
+import { signOut } from 'firebase/auth'
 import { useAtomValue, useSetAtom } from 'jotai'
 import tw from 'tailwind-styled-components'
 
 import { currentContactAtom, isEditingAtom } from '@/atoms/contacts'
 import Avatar from '@/components/Contact/avatar'
+import { auth } from '@/components/Firebase/init'
 import { AlertVariant, useAlert } from '@/context/AlertContext'
 import { useMutateContacts } from '@/hooks/contacts'
 
@@ -129,7 +132,7 @@ function ContactInfo() {
       )}
       <div className='mb-2'>
         {/* can't delete users profile */}
-        {isContact && (
+        {isContact ? (
           <Button
             type='button'
             onClick={() => {
@@ -146,6 +149,21 @@ function ContactInfo() {
             }}
           >
             Delete Contact
+          </Button>
+        ) : (
+          <Button
+            type='button'
+            onClick={async () => {
+              try {
+                await signOut(auth) //TODO
+                Router.push('/login')
+              } catch (error) {
+                //eslint-disable-next-lineZ
+                console.log('log out failed', { cause: error })
+              }
+            }}
+          >
+            Logout
           </Button>
         )}
       </div>

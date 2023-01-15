@@ -24,7 +24,7 @@ const ContactForm = () => {
   const { mutate: mutateContacts } = useMutateContacts()
 
   const isNewContact = currentContact === null
-  const isUser = currentContact?.docId === currentUser?.docId
+  const isUser = currentContact?.docId === currentUser?.info.docId
 
   const contact = useMemo(
     () =>
@@ -72,7 +72,7 @@ const ContactForm = () => {
 
   return (
     <form onSubmit={submitForm}>
-      <div className='flex flex-col items-center justify-center gap-3'>
+      <div className='mb-9 flex flex-col items-center justify-center gap-3'>
         {/* USER PROFILE IMAGE */}
         <Avatar image='' height={48} width={48} iconClass='w-32 rounded-full' />
         {/* FIRST AND LAST NAME */}
@@ -176,23 +176,21 @@ const ContactForm = () => {
           />
         </Box>
         {/* FORM BUTTONS */}
-        <div className='mb-3 flex justify-center'>
-          <div className='space-y-2'>
-            <Button type='submit' fullwidth>
-              Save
+        <div className=' flex justify-center'>
+          <Button type='submit' fullwidth>
+            Save
+          </Button>
+          {!isNewContact && (
+            <Button
+              intent='secondary'
+              fullwidth
+              onClick={() => {
+                if (setIsEditing !== undefined) setIsEditing(false)
+              }}
+            >
+              Cancel
             </Button>
-            {!isNewContact && (
-              <Button
-                intent='secondary'
-                fullwidth
-                onClick={() => {
-                  if (setIsEditing !== undefined) setIsEditing(false)
-                }}
-              >
-                Cancel
-              </Button>
-            )}
-          </div>
+          )}
         </div>
       </div>
     </form>
