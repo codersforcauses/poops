@@ -14,6 +14,7 @@ import {
 import { db } from '@/components/Firebase/init'
 import { AlertVariant, useAlert } from '@/context/AlertContext'
 import { VetConcern, Visit } from '@/types/types'
+import { humanizeTimestamp } from '@/utils'
 
 export const useVetConcerns = () => {
   const queryFn = async () => {
@@ -101,10 +102,12 @@ const addVetConcern = async (
   const visitData = (await getDoc(visitRef)).data() as Visit
   const notes = visitData.notes
   // appending to notes if not empty.
+  const newDetail = `${humanizeTimestamp(vetConcernMut.visitTime)}\n ${vetConcernMut.detail}`
   visitData.notes =
     notes == ''
-      ? '- ' + vetConcernMut.detail
-      : notes + '\n- ' + vetConcernMut.detail
+      ? `- ${newDetail}`
+      : `${notes}\n- ${newDetail}`
+      
   batch.set(visitRef, visitData, { merge: true })
 
   await batch.commit()
