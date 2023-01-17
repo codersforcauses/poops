@@ -10,11 +10,15 @@ export interface FirebaseContextProps {
   externalAuthSignIn?: (auth: Auth, provider: AuthProvider) => void
   logOut?: () => void
   currentUser: User | null
+  isAdmin: boolean
+  refreshUserToken: () => Promise<void>
 }
 //set auth and current user as a context api to be called by other funcs
 export const AuthContext = createContext<FirebaseContextProps>({
   auth: auth,
-  currentUser: null
+  currentUser: null,
+  isAdmin: false,
+  refreshUserToken: async () => undefined
 })
 
 export const useAuth = () => useContext(AuthContext)

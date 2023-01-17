@@ -2,12 +2,12 @@ import Link from 'next/link'
 import { PencilIcon, PlusIcon } from '@heroicons/react/24/solid'
 
 interface EditButtonProps {
-  id: number
+  id: string
 }
 
 export const EditButton = ({ id }: EditButtonProps) => {
   return (
-    <div className='invisible absolute right-4 bottom-1 h-8 w-8 rounded-full bg-primary p-1 drop-shadow-default transition-all peer-checked:visible'>
+    <div className='absolute right-4 bottom-4 h-8 w-8 rounded-full bg-primary p-1 drop-shadow-default transition-all'>
       <Link
         href={{
           pathname: '/visit/set',
