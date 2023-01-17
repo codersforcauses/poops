@@ -24,12 +24,6 @@ export default function NavBar() {
 
   const linkDetails = [
     { name: 'Home', route: '/', icon: <HomeIcon className={iconClasses} /> },
-
-    {
-      name: 'Contacts',
-      route: '/contact',
-      icon: <UsersIcon className={iconClasses} />
-    },
     {
       name: 'Visit',
       route: '/visit',
@@ -38,6 +32,11 @@ export default function NavBar() {
           <Image alt='dog-icon' src={PoopsSVG} layout='fill' />
         </div>
       )
+    },
+    {
+      name: 'Contacts',
+      route: '/contact',
+      icon: <UsersIcon className={iconClasses} />
     }
   ]
 
