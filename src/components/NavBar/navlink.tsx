@@ -22,25 +22,14 @@ export default function NavLink({
 
   return (
     <Link href={href}>
-      {name !== 'Visit' ? (
-        <a
-          className={`${
-            currentPage ? currentTabClasses : tabClasses
-          } pt-2 pb-1`}
-          onMouseDown={() => setCurrentPage(name)}
-          aria-hidden='true' // TODO: need work on accessibility
-        >
-          {icon}
-          <span className='tab tab-home block text-xs'>{name}</span>
-        </a>
-      ) : (
-        <a
-          onMouseDown={() => setCurrentPage(name)}
-          aria-hidden='true' // TODO: need work on accessibility
-        >
-          {icon}
-        </a>
-      )}
+      <a
+        className={`${currentPage ? currentTabClasses : tabClasses} pt-2 pb-1`}
+        onMouseDown={() => setCurrentPage(name)}
+        aria-hidden='true' // TODO: need work on accessibility
+      >
+        {icon}
+        <span className='tab tab-home block text-xs'>{name}</span>
+      </a>
     </Link>
   )
 }
