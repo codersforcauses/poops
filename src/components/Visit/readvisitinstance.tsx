@@ -26,7 +26,6 @@ const VisitInfo = ({
   notes = '',
   docId
 }: VisitInfoProps) => {
-  const router = useRouter()
   const paragraphs = notes.split('\n')
   return (
     <>
@@ -47,18 +46,16 @@ const VisitInfo = ({
         })}
 
         <div className='my-2 mr-9 flex justify-start gap-2'>
-          <Button
-            size='small'
-            onClick={() => router.push(`/visit/${docId}/incident`)}
-          >
-            Report Incident
-          </Button>
-          <Button
-            size='small'
-            onClick={() => router.push(`/visit/${docId}/vet`)}
-          >
-            Register Vet Concern
-          </Button>
+          <Link href={`/visit/${docId}/incident`}>
+            <a>
+              <Button size='small'>Report Incident</Button>
+            </a>
+          </Link>
+          <Link href={`/visit/${docId}/vet`}>
+            <a>
+              <Button size='small'>Register Vet Concern</Button>
+            </a>
+          </Link>
         </div>
       </div>
     </>

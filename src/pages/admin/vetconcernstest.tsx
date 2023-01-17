@@ -6,7 +6,7 @@ const VetConcernsTest = () => {
 
   return (
     <div className='flex'>
-      {vetConcerns && vetConcerns.length !== 0
+      {vetConcerns?.length !== 0
         ? vetConcerns?.map((concern) => {
             return (
               <div key={concern.docId} className='m-2'>
