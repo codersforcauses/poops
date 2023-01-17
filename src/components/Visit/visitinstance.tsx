@@ -34,7 +34,7 @@ const VisitInstance = (props: Visit) => {
           />
         </div>
       </div>
-      {isOpen && <EditButton id={props.docId} />}
+      {/* {isOpen && <EditButton id={props.docId} />} */}
       <VisitInfo {...props} isOpen={isOpen} />
     </div>
   )
