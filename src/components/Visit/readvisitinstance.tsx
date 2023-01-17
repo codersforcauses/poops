@@ -36,12 +36,10 @@ const VisitInfo = ({
     <>
       <div
         className={`justify-between text-sm transition-all duration-300 ${
-          isOpen ? '' : 'overflow-hidden max-h-0'
+          isOpen ? '' : 'max-h-0 overflow-hidden'
         }`}
       >
-        <div
-          className = "max-h-screen overflow-hidden"
-        >
+        <div className='max-h-screen overflow-hidden'>
           <p>Visit Type: {type}</p>
           <p>Pet(s): {petNames}</p>
           <p>Duration: {formatDuration(duration)}</p>
@@ -50,8 +48,8 @@ const VisitInfo = ({
           <p>Commute Method: {commuteMethod}</p>
           <p>Notes: {notes}</p>
         </div>
-        
-        <div className='py-2 flex justify-around items-center'>
+
+        <div className='flex items-center justify-around py-2'>
           <div className='w-2/5'>
             <Button
               size='small'
