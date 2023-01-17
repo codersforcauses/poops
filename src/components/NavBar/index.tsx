@@ -3,6 +3,7 @@ import Image from 'next/image'
 import { useRouter } from 'next/router'
 import { HomeIcon, UsersIcon } from '@heroicons/react/24/outline'
 
+import { NavIcon } from '@/components/NavBar/navicon'
 //import { NavIcon } from '@/components/NavBar/navicon'
 import NavLink from '@/components/NavBar/navlink'
 
@@ -27,11 +28,7 @@ export default function NavBar() {
     {
       name: 'Visit',
       route: '/visit',
-      icon: (
-        <div className='relative inline-block h-7 w-8'>
-          <Image alt='dog-icon' src={PoopsSVG} layout='fill' />
-        </div>
-      )
+      icon: <Image alt='dog-icon' src={PoopsSVG} layout='fill' />
     },
     {
       name: 'Contacts',
@@ -68,7 +65,7 @@ export default function NavBar() {
   //     setCurrentPage={setCurrentPage}
   //     icon={visitLinkDetail.icon}
   //   />
-  //)
+  // )
 
   return (
     <div className='h-16 w-full'>
