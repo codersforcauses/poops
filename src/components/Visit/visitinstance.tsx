@@ -4,7 +4,6 @@ import { ChevronDownIcon } from '@heroicons/react/24/outline'
 import { Visit } from '@/types/types'
 import { humanizeTimestamp } from '@/utils'
 
-import { EditButton } from './buttons'
 import VisitInfo from './readvisitinstance'
 
 const VisitInstance = (props: Visit) => {
@@ -34,7 +33,6 @@ const VisitInstance = (props: Visit) => {
           />
         </div>
       </div>
-      {/* {isOpen && <EditButton id={props.docId} />} */}
       <VisitInfo {...props} isOpen={isOpen} />
     </div>
   )
