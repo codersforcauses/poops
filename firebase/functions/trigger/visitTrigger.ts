@@ -1,6 +1,6 @@
-import { firestore } from './main'
-import { getFirestore, DocumentData } from 'firebase-admin/firestore'
-const db = getFirestore()
+import { functions, firestore } from '../main'
+import { DocumentData } from 'firebase-admin/firestore'
+
 interface UserStat {
   numVisits: number
   numHours: number
@@ -13,7 +13,7 @@ interface UserStat {
  * Automatically updates the user stats when a visit is added,
  * deleted or updated.
  */
-export const updateVisitTrigger = firestore
+export const updateVisitTrigger = functions.firestore
   .document('users/{userId}/visits/{visitId}')
   .onWrite(async (change, context) => {
     const userId = context.params.userId
@@ -26,7 +26,7 @@ export const updateVisitTrigger = firestore
     }
 
     // require oldStats to append to newStats
-    const userRef = db.collection('users').doc(userId)
+    const userRef = firestore.collection('users').doc(userId)
     const userDoc = await userRef.get()
     const oldStats: UserStat = userDoc.data()?.stats
 

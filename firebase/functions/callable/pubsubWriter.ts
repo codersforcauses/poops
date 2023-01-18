@@ -1,10 +1,11 @@
 import { PubSub } from '@google-cloud/pubsub'
-import { region } from './main'
+import { functions } from '../main'
 
 const pubsub = new PubSub()
 
-export const pubsubWriter = region('australia-southeast1').https.onRequest(
-  async (req, res) => {
+export const pubsubWriter = functions
+  .region('australia-southeast1')
+  .https.onRequest(async (req, res) => {
     console.log('Pubsub Emulator:', process.env.PUBSUB_EMULATOR_HOST)
 
     const msg = await pubsub.topic('billing').publishJSON(
@@ -23,5 +24,4 @@ export const pubsubWriter = region('australia-southeast1').https.onRequest(
     res.json({
       published: msg
     })
-  }
-)
+  })

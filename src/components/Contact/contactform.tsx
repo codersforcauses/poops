@@ -42,7 +42,7 @@ const ContactForm = () => {
   const { mutate: mutateContacts } = useMutateContacts()
 
   const isNewContact = currentContact === null
-  const isUser = currentContact?.docId === currentUser?.docId
+  const isUser = currentContact?.docId === currentUser?.info.docId
 
   const contact = useMemo(
     () =>
