@@ -5,76 +5,119 @@ service cloud.firestore {
       return request.auth != null;
     }
 
+    function isOwner(uid) {
+      return isSignIn() && request.auth.uid == uid;
+    }
+
     // function hasVerifiedEmail(){
     //   return request.auth.token.email_verified;
     // }
 
-    function isOwner(uid) {
-      return request.auth.uid == uid;
-    }
-
     function isAdmin() {
-      return request.auth.token.admin;
-    }
-
-    function isValidContact() {
-      return request.resource.data.size() == 9 &&
-        request.resource.data.name is string &&
-        request.resource.data.desc is string &&
-        request.resource.data.pets is string &&
-        request.resource.data.email is string &&
-        request.resource.data.phone is string &&
-        request.resource.data.streetAddress is string &&
-        request.resource.data.region is list &&
-        request.resource.data.notes is string &&
-        request.resource.data.tags is list
-    }
-
-    function isValidVisit() {
-      return request.resource.data.size() == 9 &&
-        request.resource.data.type is string &&
-        request.resource.data.clientName is string &&
-        request.resource.data.petNames is string &&
-        request.resource.data.startTime is timestamp &&
-        request.resource.data.duration.size() == 2 &&
-        request.resource.data.duration.hours is number &&
-        request.resource.data.duration.minutes is number &&
-        request.resource.data.walkDist is number &&
-        request.resource.data.commuteDist is number &&
-        request.resource.data.commuteMethod is string &&
-        request.resource.data.notes is string
+      return isSignIn() && request.auth.token.admin;
     }
 
     match /users/{userId} {
+      function isValidContact(data) {
+        return
+          data.size() == 9 &&
+          data.name is string &&
+          data.desc is string &&
+          data.pets is string &&
+          data.email is string &&
+          data.phone is string &&
+          data.streetAddress is string &&
+          data.region is list &&
+          data.notes is string &&
+          data.tags is list;
+      }
+
+      function isValidUserStats(data) {
+        return
+          data.size() == 4 &&
+          data.numVisits is number &&
+          data.numHours is number &&
+          data.commutedDist is number &&
+          data.walkedDist is number;
+      }
+
+      function isValidUser(data) {
+        return
+          data.size() == 2 &&
+          isValidContact(data.info) &&
+          isValidUserStats(data.stats);
+      }
+
       match /contacts/{visitId} {
-        allow read: if isSignIn() && isOwner(userId);
-        allow write: if isSignIn() && isOwner(userId) && isValidContact();
+        allow read: if isOwner(userId);
+        allow write: if isOwner(userId) && isValidContact(request.resource.data);
       }
 
       match /visits/{visitId} {
-        allow read: if isSignIn() && isOwner(userId);
-        allow write: if isSignIn() && isOwner(userId) && isValidVisit();
+        function isValidVisit(data) {
+          return
+            data.size() == 9 &&
+            data.type is string &&
+            data.clientName is string &&
+            data.petNames is string &&
+            data.startTime is timestamp &&
+            data.duration.size() == 2 &&
+            data.duration.hours is number &&
+            data.duration.minutes is number &&
+            data.walkDist is number &&
+            data.commuteDist is number &&
+            data.commuteMethod is string &&
+            data.notes is string;
+        }
+
+        allow read: if isOwner(userId);
+        allow write: if isOwner(userId) && isValidVisit(request.resource.data);
       }
 
-      allow read, write: if isSignIn() && isOwner(userId);
+      match /info {
+        allow read: if isOwner(userId);
+        allow write: if isOwner(userId) && isValidContact(request.resource.data);
+      }
+
+      allow read: if isOwner(userId);
+      allow write: if isOwner(userId) && isValidUser(request.resource.data);
     }
 
     match /incidents/{document=**} {
-      allow read: if isSignIn() && isAdmin();
-      allow write: if isSignIn();
+      // TODO: Type check the incidents
+      allow create: if isSignIn();
+      allow read: if isAdmin();
+      allow update, delete: if false;
     }
 
     match /roles/{userId} {
       // function checkEmail(){
       //   return request.auth.token.email == email;
       // }
-      allow read: if isSignIn() && isAdmin() && isOwner(userId);
+
+      allow read: if isAdmin() && isOwner(userId);
       allow write: if false;
     }
 
     match /vet_concerns/{concern} {
-      allow create: if isSignIn();
-      allow read: if isSignIn() && isAdmin();
+      function  isValidVetConcern(data) {
+        return
+          data.size() == 11 &&
+          data.clientName is string &&
+          data.createdAt is timestamp &&
+          data.detail is string &&
+          data.petName is string &&
+          data.userEmail is string &&
+          data.userId is string &&
+          data.userName is string &&
+          data.userPhone is string &&
+          data.vetName is string &&
+          data.visitId is string &&
+          data.visitTime is timestamp;
+      }
+
+      allow create: if isSignIn() && isValidVetConcern(request.resource.data);
+      allow read: if isAdmin();
       allow update, delete: if false;
     }
   }
