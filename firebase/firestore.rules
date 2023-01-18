@@ -71,5 +71,11 @@ service cloud.firestore {
       allow read: if isSignIn() && isAdmin() && isOwner(userId);
       allow write: if false;
     }
+
+    match /vet_concerns/{concern} {
+      allow create: if isSignIn();
+      allow read: if isSignIn() && isAdmin();
+      allow update, delete: if false;
+    }
   }
 }

@@ -63,14 +63,12 @@ export default function NavBar() {
   )
 
   return (
-    <div className='h-16 w-full'>
-      <nav
-        id='bottom-navigation'
-        className='fixed inset-x-0 bottom-0 z-10 block h-20 bg-white shadow'
-      >
-        {visitNavLink}
-        <div className='flex justify-between'>{navLinks}</div>
-      </nav>
-    </div>
+    <nav
+      id='bottom-navigation'
+      className='fixed inset-x-0 bottom-0 z-10 block h-16 w-full bg-white shadow'
+    >
+      {visitNavLink}
+      <div className='flex justify-between'>{navLinks}</div>
+    </nav>
   )
 }
