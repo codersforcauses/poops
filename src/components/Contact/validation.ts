@@ -13,16 +13,16 @@ const validateEmail = (email: string) => {
 };
 
 const validationSchema: Record<ContactFormValues, RegisterOptions> = {
-  fullName: {
+  name: {
     required: {
       value: true,
       message: requiredMessage
     }
   },
-  clientDescription: {
+  desc: {
     required: false 
   },
-  clientPhoneNumber: {
+  phone: {
     required: {
       value: true,
       message: requiredMessage
@@ -31,7 +31,7 @@ const validationSchema: Record<ContactFormValues, RegisterOptions> = {
       value: (value: number) => {return(value > 0) || 'Please enter a valid phone number!'}},
     valueAsNumber: true
   },
-  clientEmail: {
+  email: {
     required: {
       value: true,
       message: requiredMessage
@@ -44,31 +44,31 @@ const validationSchema: Record<ContactFormValues, RegisterOptions> = {
       }
     }
   },
-  clientAddress: {
+  address: {
     required: {
       value: true,
       message: requiredMessage
     }
   },
-  clientTags: {
+  tags: {
     required: {
       value: true,
       message: requiredMessage
     }
   },
-  clientRegion: {
+  region: {
     required: {
       value: true,
       message: requiredMessage
     }
   },
-  clientPets: {
+  pets: {
     required: {
       value: true,
       message: requiredMessage
     }
   },
-  clientNotes: {
+  notes: {
     required: false
   }
 }

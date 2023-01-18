@@ -1,6 +1,6 @@
-import { ChangeEvent, FormEvent, useEffect, useMemo } from 'react'
+import { useEffect, useMemo } from 'react'
 import { useAtom, useAtomValue, useSetAtom } from 'jotai'
-import tw from 'tailwind-styled-components'
+import { SubmitHandler } from 'react-hook-form'
 
 import {
   contactFormAtom,
@@ -8,12 +8,30 @@ import {
   isEditingAtom
 } from '@/atoms/contacts'
 import Avatar from '@/components/Contact/avatar'
-import RegionSelector from '@/components/Contact/regiondropdown'
-import TagSelector from '@/components/Contact/tagdropdown'
+import validationSchema from '@/components/Contact/validation'
+import Form from '@/components/UI/FormComponents/Form'
+import { CreateSelect } from '@/components/UI/FormComponents/SelectFields'
+import TextField from '@/components/UI/FormComponents/TextField'
 import { useMutateContacts } from '@/hooks/contacts'
 import useUser, { useMutateUser } from '@/hooks/user'
+import { Contact, SelectOption } from '@/types/types'
 
 import Button from '../UI/button'
+
+
+
+export interface contactForm {
+  name: string
+  phone: string
+  email: string
+  address: string
+  desc: string
+  tags: SelectOption<string>[]
+  region: SelectOption<string>[]
+  pets: string
+  notes: string
+
+}
 
 const ContactForm = () => {
   const currentContact = useAtomValue(currentContactAtom)
@@ -52,133 +70,110 @@ const ContactForm = () => {
 
   if (currentUser === null || contactForm === null) return null
 
-  const handleInputChange = (
-    e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>
-  ) => {
-    const { name, value } = e.target
-    setContactForm({ ...contactForm, [name]: value })
-  }
 
-  const submitForm = (e: FormEvent) => {
-    e.preventDefault()
+
+  const submitForm: SubmitHandler<contactForm> = async (formData) => {
+
+    const data: Contact = {
+      docId: currentContact?.docId,
+      name: formData.name,
+      desc: formData.desc,
+      phone: formData.phone,
+      email: formData.email,
+      streetAddress: formData.address,
+      tags: formData.tags.map((tag) => {return tag.value}),
+      region: formData.region.map((region) => {return region.value}),
+      pets: formData.pets,
+      notes: formData.notes
+    }
+
     if (isUser) {
-      mutateUser(contactForm)
+      mutateUser(data)
     } else {
-      mutateContacts(contactForm)
+      mutateContacts(data)
     }
 
     setIsEditing(false)
   }
 
-  return (
-    <Form<FormValues>
-      onSubmit={submitForm}>
+  
 
+  return (
+    <Form<contactForm>
+      onSubmit={submitForm}
+      defaultValues= {contact}>
       
       <div className='flex flex-col items-center justify-center gap-3'>
         {/* USER PROFILE IMAGE */}
         <Avatar image='' height={48} width={48} iconClass='w-32 rounded-full' />
         {/* FIRST AND LAST NAME */}
-        <Box>
-          <label htmlFor={contact.name} className='text-primary-dark'>
-            Full Name
-          </label>
-          <input
-            name='name'
-            defaultValue={contact.name}
-            className='border-grey mb-2 w-80 rounded-lg border pl-1'
-            rules={validationSchema.fullName}
-          />
-        </Box>
+        <TextField
+          label='name'
+          type='string'
+          name='name'
+          rules={validationSchema.name}
+        />
+          
         {/* DESCRIPTION */}
-        <Box>
-          <label htmlFor={contact.notes} className='text-primary-dark'>
-            Description
-          </label>
-          <textarea
-            name='desc'
-            defaultValue={contact.desc}
-            className='w-80 rounded-lg border border-gray-300 pl-1'
-            rules={validationSchema.clientDescription}
-          />
-        </Box>
+        <TextField
+          label='description'
+          type='string'
+          name='desc'
+          rules={validationSchema.desc}
+        />
         {/* PHONE */}
-        <Box>
-          <label htmlFor={contact.phone} className='text-primary-dark'>
-            Phone
-          </label>
-          <input
-            name='phone'
-            defaultValue={contact.phone}
-            className='mb-2 w-full rounded-lg border border-gray-300 pl-1'
-            rules={validationSchema.clientPhoneNumber}
-          />
-        </Box>
+        <TextField
+          label='phone'
+          type='string'
+          name='phone'
+          rules={validationSchema.phone}
+        />
         {/* EMAIL */}
-        <Box>
-          <label htmlFor={contact.email} className='text-primary-dark'>
-            Email
-          </label>
-          <input
-            name='email'
-            defaultValue={contact.email}
-            className='mb-2 w-full rounded-lg border border-gray-300 pl-1'
-            rules={validationSchema.clientEmail}
-          />
-        </Box>
+        <TextField
+          label='email'
+          type='string'
+          name='email'
+          rules={validationSchema.email}
+        />
         {/* ADDRESS */}
-        <Box>
-          <label htmlFor={contact.streetAddress} className='text-primary-dark'>
-            Address
-          </label>
-          <input
-            name='streetAddress'
-            defaultValue={contact.streetAddress}
-            className='mb-2 w-full rounded-lg border border-gray-300 pl-1'
-            rules={validationSchema.clientAddress}
-          />
-        </Box>
+        <TextField
+          label='address'
+          type='string'
+          name='address'
+          rules={validationSchema.address}
+        />
         {/* TAGS */}
-        <Box>
-          <label htmlFor='tags' className='text-primary-dark'>
-            Tags
-          </label>
-
-          <TagSelector tags={contact.tags} />
-          {/* Padding to counter the shadow */}
-          <div className='pt-2'></div>
-        </Box>
+        <CreateSelect<SelectOption<string>, true>
+          label='tags'
+          name='tags'
+          isMulti
+          rules={validationSchema.tags}
+          isSearchable
+        />
         {/* REGIONS */}
-        <Box className='pb-3'>
-          <label htmlFor='region' className='text-primary-dark'>
-            Region
-          </label>
-          <RegionSelector regions={contact.region} />
-        </Box>
+        <CreateSelect<SelectOption<string>, true>
+          label='region'
+          name='region'
+          rules={validationSchema.region}
+          isSearchable
+          isMulti
+        />
         
-        <Box>
-          <label htmlFor='pets' className='text-primary-dark'>
-            Pets
-          </label>
-          <input
-            name='pets'
-            defaultValue={contact.pets}
-            className='mb-2 w-80 rounded-lg border border-gray-300 pl-1'
-            rules={validationSchema.clientPets}
-          />
-        </Box>
+        {/* PETS */}
+        <TextField
+          label='pets'
+          type='string'
+          name='pets'
+          rules={validationSchema.pets}
+        />
+
         {/* NOTES */}
-        <Box>
-          <label htmlFor={contact.notes} className='text-primary-dark'>
-            Notes
-          </label>
-          <textarea
-            name='notes'
-            defaultValue={contact.notes}
-            className='w-full rounded-lg border border-gray-300'
-            rules={validationSchema.clientNotes}
-          />
-        </Box>
+        <TextField
+          label='notes'
+          type='string'
+          name='notes'
+          rules={validationSchema.notes}
+        />
         {/* FORM BUTTONS */}
         <div className='mb-3 flex justify-center'>
           <div className='space-y-2'>
@@ -205,14 +200,14 @@ const ContactForm = () => {
 
 export default ContactForm
 
-const Box = tw.div`
-    bg-gray-300
-    bg-opacity-20
-    box-content
-    w-80
-    rounded-lg
-    px-3
-    py-1
-    break-words
-`
-export type ContactFormValues = keyof FormValues
+// const Box = tw.div`
+//     bg-gray-300
+//     bg-opacity-20
+//     box-content
+//     w-80
+//     rounded-lg
+//     px-3
+//     py-1
+//     break-words
+// `
+export type ContactFormValues = keyof contactForm
