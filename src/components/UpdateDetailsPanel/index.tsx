@@ -29,8 +29,8 @@ function UpdateDetailsPanel({ currentUser }: UpdateDetailsPanelInterface) {
   const [email, setEmail] = useState(currentUser?.email || '')
   const [displayName, setDisplayName] = useState(currentUser?.displayName || '')
   const [phoneNumber, setPhoneNumber] = useState(currentUser?.phoneNumber || '')
-  const [OTP, setOTP] = useState('')
-  const [expandForm, setExpandForm] = useState(false)
+  // const [OTP, setOTP] = useState('')
+  // const [expandForm, setExpandForm] = useState(false)
   // const displayName = currentUser?.displayName ?? undefined
   // const email = currentUser?.email ?? undefined
   // const phoneNumber = currentUser?.phoneNumber ?? undefined
@@ -44,9 +44,11 @@ function UpdateDetailsPanel({ currentUser }: UpdateDetailsPanelInterface) {
   function editPhoneNumber(event: React.ChangeEvent<HTMLInputElement>) {
     setPhoneNumber(event.target.value)
   }
-  function editOTPCode(event: React.ChangeEvent<HTMLInputElement>) {
-    setOTP(event.target.value)
-  }
+  // function editOTPCode(event: React.ChangeEvent<HTMLInputElement>) {
+  //   setOTP(event.target.value)
+  // }
+  
+  
 
   function submitChanges(currentUser: User | null) {
     console.log('into function')
@@ -79,13 +81,7 @@ function UpdateDetailsPanel({ currentUser }: UpdateDetailsPanelInterface) {
         window.recaptchaVerifier = new RecaptchaVerifier(
           'recaptcha-container',
           {
-            size: 'invisible',
-            callback: () => {
-              // console.log('test')
-              // TODO fix phone number stuff
-              // TODO dont know why this part will never run
-              // updatePhoneNumber(currentUser, provider)
-            }
+            size: 'invisible'
           },
           auth
         )
@@ -94,53 +90,41 @@ function UpdateDetailsPanel({ currentUser }: UpdateDetailsPanelInterface) {
         console.log(error)
       }
 
-      // TODO fix window.confirmationResult not working in typescript
-      // TODO test phone number not receiving any OTP code.
-      const appVerifier = window.recaptchaVerifier
-      signInWithPhoneNumber(auth, countryCode + phoneNumber, appVerifier)
-        .then((confirmationResult) => {
-          window.confirmationResult = confirmationResult
-          console.log(confirmationResult)
-          setExpandForm(true)
-        })
-        .catch((error) => {
-          console.log(error)
-        })
-    }
-
-    //   const verificationId = provider.verifyPhoneNumber(phoneNumber, window.rec);
-    //   const verificationId = provider.verifyPhoneNumber(phoneNumber, window.recaptchaVerifier)
-
-    //   try {
-    //     window.recaptchaVerifier.render()
-    //   } catch (error) {
-    //     console.log(error)
-    //   }
-    // }
-    // if (email) {
-    //   updateEmail(currentUser, email)
-    // }
-  }
-
-  function submitOTP(currentUser: User | null) {
-    const credential = PhoneAuthProvider.credential(
-      window.confirmationResult.verificationId,
-      OTP
-    )
-    if (currentUser != null) {
-      try {
-        console.log(currentUser.providerData[0].providerId)
-        linkWithCredential(currentUser, credential)
-        updatePhoneNumber(currentUser, credential)
-        console.log(currentUser?.phoneNumber)
-      } catch (error) {
-        console.log(error)
-      }
+      // // TODO fix window.confirmationResult not working in typescript
+      // // TODO test phone number not receiving any OTP code.
+      // const appVerifier = window.recaptchaVerifier
+      // signInWithPhoneNumber(auth, countryCode + phoneNumber, appVerifier)
+      //   .then((confirmationResult) => {
+      //     window.confirmationResult = confirmationResult
+      //     console.log(confirmationResult)
+      //     setExpandForm(true)
+      //   })
+      //   .catch((error) => {
+      //     console.log(error)
+      //   })
     }
   }
+
+  // function submitOTP(currentUser: User | null) {
+  //   const credential = PhoneAuthProvider.credential(
+  //     window.confirmationResult.verificationId,
+  //     OTP
+  //   )
+  //   if (currentUser != null) {
+  //     try {
+  //       console.log(currentUser.providerData[0].providerId)
+  //       linkWithCredential(currentUser, credential)
+  //       updatePhoneNumber(currentUser, credential)
+  //       console.log(currentUser?.phoneNumber)
+  //     } catch (error) {
+  //       console.log(error)
+  //     }
+  //   }
+  // }
 
   return (
     <>
+      <h1>providerId: {currentUser?.providerId}</h1>
       <input
         className='h-10 w-full rounded-lg bg-transparent pl-2 text-sm'
         value={displayName}
@@ -163,30 +147,23 @@ function UpdateDetailsPanel({ currentUser }: UpdateDetailsPanelInterface) {
         placeholder='Phone Number'
       />
       <div id='recaptcha-container'></div>
-      {expandForm === true ? (
-        <>
-          <div>
-            <label htmlFor='otpInput' className='form-label'>
-              OTP
-            </label>
-            <input
-              type='number'
-              className='form-control'
-              id='otpInput'
-              onChange={(e) => editOTPCode(e)}
-            />
-            <div id='otpHelp' className='form-text'>
-              Please enter the one time pin sent to your phone
-            </div>
-            <button onClick={() => submitOTP(currentUser)}>Submit OTP</button>
+      {/* <>
+        <div>
+          <label htmlFor='otpInput' className='form-label'>
+            OTP
+          </label>
+          <input
+            type='number'
+            className='form-control'
+            id='otpInput'
+            onChange={(e) => editOTPCode(e)}
+          />
+          <div id='otpHelp' className='form-text'>
+            Please enter the one time pin sent to your phone
           </div>
-        </>
-      ) : null}
-      {expandForm === false ? (
-        <button onClick={() => submitChanges(currentUser)}>
-          Request SMS code
-        </button>
-      ) : null}
+          <button>Submit OTP</button>
+        </div>
+      </> */}
     </>
   )
 }
