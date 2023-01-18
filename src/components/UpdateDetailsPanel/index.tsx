@@ -1,16 +1,18 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import {
   ConfirmationResult,
   linkWithCredential,
   PhoneAuthProvider,
   RecaptchaVerifier,
   signInWithPhoneNumber,
+  updateEmail,
   updatePhoneNumber,
   updateProfile,
   User
 } from 'firebase/auth'
 
 import { useAuth } from '@/context/Firebase/Auth/context'
+import useUser from '@/hooks/user'
 
 declare global {
   interface Window {
@@ -20,151 +22,138 @@ declare global {
 }
 
 export interface UpdateDetailsPanelInterface {
-  currentUser: User | null
+  user: User | null
 }
 
-function UpdateDetailsPanel({ currentUser }: UpdateDetailsPanelInterface) {
+
+function UpdateDetailsPanel({ user }: UpdateDetailsPanelInterface) {
   const countryCode = '+61'
+  const { data: currentUser } = useUser()
+  console.log(currentUser)
+  const [email, setEmail] = useState(currentUser?.info.email || '')
+  const [displayName, setDisplayName] = useState(currentUser?.info.name || '')
+  const [phoneNumber, setPhoneNumber] = useState(currentUser?.info.phone || '')
+  const [phoneErr, setPhoneErr] = useState(false)
+  const [displayNameErr, setDisplayNameErr] = useState(false)
+  const [emailErr, setEmailErr] = useState(false)
+  const [err, setErr] = useState(false)
   const { auth } = useAuth()
-  const [email, setEmail] = useState(currentUser?.email || '')
-  const [displayName, setDisplayName] = useState(currentUser?.displayName || '')
-  const [phoneNumber, setPhoneNumber] = useState(currentUser?.phoneNumber || '')
-  // const [OTP, setOTP] = useState('')
-  // const [expandForm, setExpandForm] = useState(false)
-  // const displayName = currentUser?.displayName ?? undefined
-  // const email = currentUser?.email ?? undefined
-  // const phoneNumber = currentUser?.phoneNumber ?? undefined
 
-  function editEmail(event: React.ChangeEvent<HTMLInputElement>) {
+  console.log(currentUser)
+
+  // useEffect(() => {
+  //   setEmail(currentUser?.email || '')
+  //   setDisplayName(currentUser?.displayName || '')
+  //   setPhoneNumber(currentUser?.phoneNumber || '')
+  // }, [])
+
+  const editEmail = (event: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(event.target.value)
+    console.log(event.target.value)
   }
-  function editName(event: React.ChangeEvent<HTMLInputElement>) {
+  const editName = (event: React.ChangeEvent<HTMLInputElement>) => {
     setDisplayName(event.target.value)
+    console.log(event.target.value)
   }
-  function editPhoneNumber(event: React.ChangeEvent<HTMLInputElement>) {
+  const editPhoneNumber = (event: React.ChangeEvent<HTMLInputElement>) => {
     setPhoneNumber(event.target.value)
-  }
-  // function editOTPCode(event: React.ChangeEvent<HTMLInputElement>) {
-  //   setOTP(event.target.value)
-  // }
-  
-  
-
-  function submitChanges(currentUser: User | null) {
-    console.log('into function')
-    if (phoneNumber) {
-      if (!currentUser) {
-        return
-      }
-      console.log('TEST')
-      if (displayName) {
-        updateProfile(currentUser, {
-          displayName: displayName
-        })
-      }
-    }
-    console.log(email)
-
-    // ###
-    // if (phoneNumber && credential) {
-    //   updatePhoneNumber(currentUser, credential)
-    // }
-
-    console.log(phoneNumber)
-    // ####
-    // if (phoneNumber && typeof window !== 'undefined') {
-    if (phoneNumber.length >= 9) {
-      // const provider = new PhoneAuthProvider(auth)
-      // const phoneCredential = new PhoneAuthCredential
-      console.log('into phone part')
-      try {
-        window.recaptchaVerifier = new RecaptchaVerifier(
-          'recaptcha-container',
-          {
-            size: 'invisible'
-          },
-          auth
-        )
-        console.log('Recaptcha resolved')
-      } catch (error) {
-        console.log(error)
-      }
-
-      // // TODO fix window.confirmationResult not working in typescript
-      // // TODO test phone number not receiving any OTP code.
-      // const appVerifier = window.recaptchaVerifier
-      // signInWithPhoneNumber(auth, countryCode + phoneNumber, appVerifier)
-      //   .then((confirmationResult) => {
-      //     window.confirmationResult = confirmationResult
-      //     console.log(confirmationResult)
-      //     setExpandForm(true)
-      //   })
-      //   .catch((error) => {
-      //     console.log(error)
-      //   })
-    }
+    console.log(event.target.value)
   }
 
-  // function submitOTP(currentUser: User | null) {
-  //   const credential = PhoneAuthProvider.credential(
-  //     window.confirmationResult.verificationId,
-  //     OTP
-  //   )
-  //   if (currentUser != null) {
-  //     try {
-  //       console.log(currentUser.providerData[0].providerId)
-  //       linkWithCredential(currentUser, credential)
-  //       updatePhoneNumber(currentUser, credential)
-  //       console.log(currentUser?.phoneNumber)
-  //     } catch (error) {
-  //       console.log(error)
-  //     }
-  //   }
-  // }
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>, user: User | null) => {
+    e.preventDefault()
+
+    try {
+      setErr(false)
+      console.log('into function')
+      if (phoneNumber) {
+        setPhoneErr(false)
+        if (!currentUser) {
+          return
+        }
+        if (email) {
+          setEmailErr(false)
+        } else {
+          setEmailErr(true)
+        }
+        if (displayName) {
+          setDisplayNameErr(false)
+        } else {
+          setDisplayNameErr(true)
+        }
+        if (phoneNumber.length >= 9) {
+          try {
+            window.recaptchaVerifier = new RecaptchaVerifier(
+              'recaptcha-container',
+              {
+                size: 'invisible'
+              },
+              auth
+            )
+            console.log('Recaptcha resolved')
+          } catch (error) {
+            console.log(error)
+          }
+        } else {
+          setPhoneErr(true)
+        }
+        if (user != null) {
+          updateProfile(user, {
+            displayName: displayName
+          })
+        }
+
+      } else {
+        setPhoneErr(true)
+      }
+    } catch (error) {
+      setErr(true)
+      console.log('here')
+    }
+  }
 
   return (
-    <>
-      <h1>providerId: {currentUser?.providerId}</h1>
-      <input
-        className='h-10 w-full rounded-lg bg-transparent pl-2 text-sm'
-        value={displayName}
-        onChange={(e) => editName(e)}
-        name={displayName}
-        placeholder='Name'
-      />
-      <input
-        className='h-10 w-full rounded-lg bg-transparent pl-2 text-sm'
-        value={email}
-        onChange={(e) => editEmail(e)}
-        name={email}
-        placeholder='Email'
-      />
-      <input
-        className='h-10 w-full rounded-lg bg-transparent pl-2 text-sm'
-        value={phoneNumber}
-        onChange={(e) => editPhoneNumber(e)}
-        name={phoneNumber}
-        placeholder='Phone Number'
-      />
-      <div id='recaptcha-container'></div>
-      {/* <>
-        <div>
-          <label htmlFor='otpInput' className='form-label'>
-            OTP
-          </label>
-          <input
-            type='number'
-            className='form-control'
-            id='otpInput'
-            onChange={(e) => editOTPCode(e)}
-          />
-          <div id='otpHelp' className='form-text'>
-            Please enter the one time pin sent to your phone
-          </div>
-          <button>Submit OTP</button>
-        </div>
-      </> */}
-    </>
+    <div>
+      <form onSubmit={(e) => handleSubmit(e, user)}>
+        <input
+          className='h-10 w-full rounded-lg bg-transparent pl-2 text-sm'
+          value={displayName}
+          onChange={(e) => editName(e)}
+          name={displayName}
+          placeholder='Name'
+        />
+        <>
+          {displayName && <span>please type in name</span>}
+          {displayNameErr && <span>please type in correct name</span>}
+        </>
+        <input
+          className='h-10 w-full rounded-lg bg-transparent pl-2 text-sm'
+          value={email}
+          onChange={(e) => editEmail(e)}
+          name={email}
+          placeholder='Email'
+        />
+        <>
+          {email && <span>please type in email</span>}
+          {emailErr && <span>please type in correct email</span>}
+        </>
+        <input
+          className='h-10 w-full rounded-lg bg-transparent pl-2 text-sm'
+          value={phoneNumber}
+          onChange={(e) => editPhoneNumber(e)}
+          name={phoneNumber}
+          placeholder='Phone Number'
+        />
+        <>
+          {phoneNumber && <span>please type in phone number</span>}
+          {phoneErr && <span>please type in correct phone number</span>}
+        </>
+        <div id='recaptcha-container'></div>
+        <button>Submit</button>
+        {err && <span>Something Went Wrong...</span>}
+      </form>
+    </div >
   )
 }
+
 export default UpdateDetailsPanel
