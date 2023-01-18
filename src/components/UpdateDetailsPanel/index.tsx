@@ -30,6 +30,7 @@ function UpdateDetailsPanel({ user }: UpdateDetailsPanelInterface) {
   const countryCode = '+61'
   const { data: currentUser } = useUser()
   console.log(currentUser)
+  // TODO if currentUser:[newUser:true] {} else {}
   const [email, setEmail] = useState(currentUser?.info.email || '')
   const [displayName, setDisplayName] = useState(currentUser?.info.name || '')
   const [phoneNumber, setPhoneNumber] = useState(currentUser?.info.phone || '')
