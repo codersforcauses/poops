@@ -1,179 +1,188 @@
-import { useEffect, useMemo } from 'react'
-import { useAtom, useAtomValue, useSetAtom } from 'jotai'
-import { SubmitHandler } from 'react-hook-form'
+import { ChangeEvent, FormEvent, useEffect } from 'react'
+import { Dispatch, SetStateAction, useState } from 'react'
+import tw from 'tailwind-styled-components'
 
-import {
-  contactFormAtom,
-  currentContactAtom,
-  isEditingAtom
-} from '@/atoms/contacts'
 import Avatar from '@/components/Contact/avatar'
-import validationSchema from '@/components/Contact/validation'
-import Form from '@/components/UI/FormComponents/Form'
-import { CreateSelect } from '@/components/UI/FormComponents/SelectFields'
-import TextField from '@/components/UI/FormComponents/TextField'
-import { useMutateContacts } from '@/hooks/contacts'
-import useUser, { useMutateUser } from '@/hooks/user'
-import { Contact, SelectOption } from '@/types/types'
+import RegionSelector from '@/components/Contact/regiondropdown'
+import TagSelector from '@/components/Contact/tagdropdown'
+import { useContact } from '@/context/ContactContext/context'
+import type { Contact } from '@/types/types'
 
 import Button from '../UI/button'
 
-
-
-export interface contactForm {
-  name: string
-  phone: string
-  email: string
-  address: string
-  desc: string
-  tags: SelectOption<string>[]
-  region: SelectOption<string>[]
-  pets: string
-  notes: string
-
+type ContactInfoProps = {
+  firestoreIndex: number
+  image: string
+  setIsEditing: Dispatch<SetStateAction<boolean>>
 }
 
-const ContactForm = () => {
-  const currentContact = useAtomValue(currentContactAtom)
-  const setIsEditing = useSetAtom(isEditingAtom)
-  const [contactForm, setContactForm] = useAtom(contactFormAtom)
-  const { data: currentUser } = useUser()
-  const { mutate: mutateUser } = useMutateUser()
-  const { mutate: mutateContacts } = useMutateContacts()
+const ContactForm = ({
+  firestoreIndex,
+  image,
+  setIsEditing
+}: ContactInfoProps) => {
+  const { allContacts, insertContact, setDisplayContactIndex } = useContact()
 
-  const isNewContact = currentContact === null
-  const isUser = currentContact?.docId === currentUser?.info.docId
+  const isNewContact = firestoreIndex === -1
 
-  const contact = useMemo(
-    () =>
-      isNewContact
-        ? {
-            name: '',
-            desc: '',
-            pets: '',
-            email: '',
-            phone: '',
-            streetAddress: '',
-            region: [],
-            notes: '',
-            tags: ['Client']
-          }
-        : currentContact,
-    [isNewContact, currentContact]
-  )
+  const contact: Contact = isNewContact
+    ? {
+        id: '',
+        clientName: '',
+        desc: '',
+        pets: '',
+        email: '',
+        phone: '',
+        streetAddress: '',
+        region: [],
+        notes: '',
+        tags: []
+      }
+    : allContacts[firestoreIndex]
+
+  const [regions, setRegions] = useState(contact.region)
+  const [tags, setTags] = useState(contact.tags)
+  const [contactForm, setContactForm] = useState(contact)
+
+  const handleInputChange = (
+    e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>
+  ) => {
+    const { name, value } = e.target
+    setContactForm({ ...contactForm, [name]: value })
+  }
 
   useEffect(() => {
-    if (contact !== null) {
-      setContactForm(contact)
-    }
-  }, [contact, setContactForm])
+    setContactForm((contactForm) => ({
+      ...contactForm,
+      tags: tags,
+      region: regions
+    }))
+  }, [regions, tags])
 
-  if (currentUser === null || contactForm === null) return null
-
-
-
-  const submitForm: SubmitHandler<contactForm> = async (formData) => {
-
-    const data: Contact = {
-      docId: currentContact?.docId,
-      name: formData.name,
-      desc: formData.desc,
-      phone: formData.phone,
-      email: formData.email,
-      streetAddress: formData.address,
-      tags: formData.tags.map((tag) => {return tag.value}),
-      region: formData.region.map((region) => {return region.value}),
-      pets: formData.pets,
-      notes: formData.notes
-    }
-
-    if (isUser) {
-      mutateUser(data)
+  // TODO: Submit ContactForm to database
+  const submitForm = (e: FormEvent) => {
+    e.preventDefault()
+    // TODO: submit to firestore here
+    if (isNewContact) {
+      firestoreIndex = insertContact(contactForm)
+      setDisplayContactIndex(firestoreIndex)
     } else {
-      mutateContacts(data)
+      insertContact(contactForm, firestoreIndex)
+      setDisplayContactIndex(firestoreIndex)
     }
-
     setIsEditing(false)
   }
 
-  
-
   return (
-    <Form<contactForm>
-      onSubmit={submitForm}
-      defaultValues= {contact}>
-      
+    <form onSubmit={submitForm}>
       <div className='flex flex-col items-center justify-center gap-3'>
         {/* USER PROFILE IMAGE */}
-        <Avatar image='' height={48} width={48} iconClass='w-32 rounded-full' />
+        <Avatar
+          image={image}
+          height={48}
+          width={48}
+          iconClass='w-32 rounded-full'
+        />
         {/* FIRST AND LAST NAME */}
-        <TextField
-          label='name'
-          type='string'
-          name='name'
-          rules={validationSchema.name}
-        />
-          
+        <Box>
+          <label htmlFor={contact.clientName} className='text-dark-red'>
+            Full Name
+          </label>
+          <input
+            name='clientName'
+            defaultValue={contact.clientName}
+            className='border-grey mb-2 w-80 rounded-lg border pl-1'
+            onChange={handleInputChange}
+          />
+        </Box>
         {/* DESCRIPTION */}
-        <TextField
-          label='description'
-          type='string'
-          name='desc'
-          rules={validationSchema.desc}
-        />
+        <Box>
+          <label htmlFor={contact.notes} className='text-dark-red'>
+            Description
+          </label>
+          <textarea
+            name='desc'
+            defaultValue={contact.desc}
+            className='w-80 rounded-lg border border-gray-300 pl-1'
+            onChange={handleInputChange}
+          />
+        </Box>
         {/* PHONE */}
-        <TextField
-          label='phone'
-          type='string'
-          name='phone'
-          rules={validationSchema.phone}
-        />
+        <Box>
+          <label htmlFor={contact.phone} className='text-dark-red'>
+            Phone
+          </label>
+          <input
+            name='phone'
+            defaultValue={contact.phone}
+            className='mb-2 w-full rounded-lg border border-gray-300 pl-1'
+            onChange={handleInputChange}
+          />
+        </Box>
         {/* EMAIL */}
-        <TextField
-          label='email'
-          type='string'
-          name='email'
-          rules={validationSchema.email}
-        />
+        <Box>
+          <label htmlFor={contact.email} className='text-dark-red'>
+            Email
+          </label>
+          <input
+            name='email'
+            defaultValue={contact.email}
+            className='mb-2 w-full rounded-lg border border-gray-300 pl-1'
+            onChange={handleInputChange}
+          />
+        </Box>
         {/* ADDRESS */}
-        <TextField
-          label='address'
-          type='string'
-          name='address'
-          rules={validationSchema.address}
-        />
+        <Box>
+          <label htmlFor={contact.streetAddress} className='text-dark-red'>
+            Address
+          </label>
+          <input
+            name='streetAddress'
+            defaultValue={contact.streetAddress}
+            className='mb-2 w-full rounded-lg border border-gray-300 pl-1'
+            onChange={handleInputChange}
+          />
+        </Box>
         {/* TAGS */}
-        <CreateSelect<SelectOption<string>, true>
-          label='tags'
-          name='tags'
-          isMulti
-          rules={validationSchema.tags}
-          isSearchable
-        />
-        {/* REGIONS */}
-        <CreateSelect<SelectOption<string>, true>
-          label='region'
-          name='region'
-          rules={validationSchema.region}
-          isSearchable
-          isMulti
-        />
-        
-        {/* PETS */}
-        <TextField
-          label='pets'
-          type='string'
-          name='pets'
-          rules={validationSchema.pets}
-        />
+        <Box>
+          <label htmlFor='tags' className='text-dark-red'>
+            Tags
+          </label>
 
+          <TagSelector tags={contact.tags} setTags={setTags} />
+          {/* Padding to counter the shadow */}
+          <div className='pt-2'></div>
+        </Box>
+        {/* REGIONS */}
+        <Box className='pb-3'>
+          <label htmlFor='region' className='text-dark-red'>
+            Region
+          </label>
+          <RegionSelector regions={contact.region} setRegions={setRegions} />
+        </Box>
+        <Box>
+          <label htmlFor='pets' className='text-dark-red'>
+            Pets
+          </label>
+          <input
+            name='pets'
+            defaultValue={contact.pets}
+            className='mb-2 w-80 rounded-lg border border-gray-300 pl-1'
+            onChange={handleInputChange}
+          />
+        </Box>
         {/* NOTES */}
-        <TextField
-          label='notes'
-          type='string'
-          name='notes'
-          rules={validationSchema.notes}
-        />
+        <Box>
+          <label htmlFor={contact.notes} className='text-dark-red'>
+            Notes
+          </label>
+          <textarea
+            name='notes'
+            defaultValue={contact.notes}
+            className='w-full rounded-lg border border-gray-300'
+            onChange={handleInputChange}
+          />
+        </Box>
         {/* FORM BUTTONS */}
         <div className='mb-3 flex justify-center'>
           <div className='space-y-2'>
@@ -194,20 +203,19 @@ const ContactForm = () => {
           </div>
         </div>
       </div>
-    </Form>
+    </form>
   )
 }
 
 export default ContactForm
 
-// const Box = tw.div`
-//     bg-gray-300
-//     bg-opacity-20
-//     box-content
-//     w-80
-//     rounded-lg
-//     px-3
-//     py-1
-//     break-words
-// `
-export type ContactFormValues = keyof contactForm
+const Box = tw.div`
+    bg-gray-300
+    bg-opacity-20
+    box-content
+    w-80
+    rounded-lg
+    px-3
+    py-1
+    break-words
+`

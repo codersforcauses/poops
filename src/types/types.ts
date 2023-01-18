@@ -19,6 +19,7 @@ export interface Visit {
 }
 
 export interface Contact {
+  clientName: string | undefined
   docId?: string
   name: string
   desc: string

@@ -9,8 +9,8 @@ const validateEmail = (email: string) => {
     .toLowerCase()
     .match(
       /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-    );
-};
+    )
+}
 
 const validationSchema: Record<ContactFormValues, RegisterOptions> = {
   name: {
@@ -20,7 +20,7 @@ const validationSchema: Record<ContactFormValues, RegisterOptions> = {
     }
   },
   desc: {
-    required: false 
+    required: false
   },
   phone: {
     required: {
@@ -28,7 +28,10 @@ const validationSchema: Record<ContactFormValues, RegisterOptions> = {
       message: requiredMessage
     },
     validate: {
-      value: (value: number) => {return(value > 0) || 'Please enter a valid phone number!'}},
+      value: (value: number) => {
+        return value > 0 || 'Please enter a valid phone number!'
+      }
+    },
     valueAsNumber: true
   },
   email: {
@@ -38,9 +41,7 @@ const validationSchema: Record<ContactFormValues, RegisterOptions> = {
     },
     validate: {
       value: (value: string) => {
-        return (
-          (validateEmail(value)) || 'Please enter a valid email address'
-        )
+        return validateEmail(value) || 'Please enter a valid email address'
       }
     }
   },
