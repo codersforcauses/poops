@@ -32,6 +32,7 @@ const VisitInfo = ({
 
   if (docId === undefined) return null
 
+  const paragraphs = notes.split('\n')
   return (
     <>
       <div
@@ -46,7 +47,10 @@ const VisitInfo = ({
           <p>Walk Distance: {walkDist.toFixed(3)} km</p>
           <p>Commute Distance: {commuteDist.toFixed(1)} km</p>
           <p>Commute Method: {commuteMethod}</p>
-          <p>Notes: {notes}</p>
+          <p>Notes: </p>
+          {paragraphs.map((paragraph, i) => {
+            return <p key={i}> {paragraph}</p>
+          })}
         </div>
 
         <div className='flex items-center justify-around py-2'>

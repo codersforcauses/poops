@@ -1,45 +1,79 @@
-import { FormEvent, useState } from 'react'
+import { FormEvent, useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { XMarkIcon } from '@heroicons/react/24/solid'
+import { Timestamp } from 'firebase/firestore'
 
 import { withProtected } from '@/components/PrivateRoute'
 import Button from '@/components/UI/button'
 import FormField from '@/components/Visit/formfield'
 import { useAuth } from '@/context/Firebase/Auth/context'
-import { VetConcernsForm } from '@/types/types'
+import { useMutateVetConcerns } from '@/hooks/vetconcerns'
+import { useVisits } from '@/hooks/visits'
+import { VetConcern } from '@/types/types'
+import { formatTimestamp } from '@/utils'
 
 const VetForm = () => {
   const { currentUser } = useAuth()
-  const [userName, setUserName] = useState(
-    currentUser?.displayName ? currentUser?.displayName : ''
-  )
-  const [email, setEmail] = useState(
-    currentUser?.email ? currentUser?.email : ''
-  )
+  const { mutate: mutateVetConcerns } = useMutateVetConcerns()
+
+  // getting specific visit info
+  const { data: visits } = useVisits()
+  const router = useRouter()
+  const { id: queryId } = router.query
+  const visitId =
+    queryId === undefined || Array.isArray(queryId) ? null : queryId
+  const visit = visits?.find((visit) => queryId && visit.docId === visitId)
+
+  const [userName, setUserName] = useState('')
+  const [email, setEmail] = useState('')
   const [vetName, setVetName] = useState('')
   const [time, setTime] = useState('') //check issue comments for date/time
   const [notes, setNotes] = useState('')
-  const router = useRouter()
-  let { pets } = router.query
+  const [petName, setPetName] = useState('')
 
-  if (pets === undefined) pets = ''
-  if (Array.isArray(pets)) pets = pets.length > 0 ? pets[0] : ''
+  const userId = useRef('')
+  const userPhone = useRef('')
+  const client = useRef('')
 
-  const [petName, setPetName] = useState(pets)
+  useEffect(() => {
+    // prefilling any form values.
+    if (visit === undefined || currentUser == null) return
+
+    const { petNames, startTime, clientName } = visit
+
+    const displayName = currentUser.displayName ?? ''
+    const email = currentUser.email ?? ''
+    const visitTime = formatTimestamp(startTime)
+
+    setUserName(displayName)
+    setEmail(email)
+    setTime(visitTime ?? '')
+    setPetName(petNames)
+
+    userId.current = currentUser.uid
+    userPhone.current = currentUser.phoneNumber ? currentUser.phoneNumber : ''
+    client.current = clientName
+  }, [visit, currentUser])
 
   const handleSubmit = (click: FormEvent<HTMLFormElement>) => {
     click.preventDefault()
-    const data: VetConcernsForm = {
-      userID: currentUser?.uid,
+    const data: VetConcern = {
+      userId: userId.current,
       userName: userName,
-      email: email,
+      userEmail: email,
+      userPhone: userPhone.current,
+      clientName: client.current,
       petName: petName,
       vetName: vetName,
-      time: time,
-      details: notes
+      visitTime: Timestamp.fromDate(new Date(time)),
+      visitId: visitId ? visitId : '',
+      detail: notes,
+      createdAt: Timestamp.fromDate(new Date())
     }
-    console.log(data)
+
+    mutateVetConcerns(data)
+
     router.push('/visit')
   }
 
@@ -70,7 +104,8 @@ const VetForm = () => {
                   <FormField
                     id='userNameInput'
                     type='text'
-                    placeholder={userName}
+                    value={userName}
+                    placeholder='Username'
                     label='Name'
                     isRequired={false}
                     onChange={(event) => setUserName(event.target.value)}
@@ -80,7 +115,8 @@ const VetForm = () => {
                   <FormField
                     id='emailInput'
                     type='email'
-                    placeholder={email}
+                    value={email}
+                    placeholder='Email'
                     label='Email'
                     isRequired={false}
                     onChange={(event) => setEmail(event.target.value)}
@@ -92,7 +128,8 @@ const VetForm = () => {
                   <FormField
                     id='petNameInput'
                     type='text'
-                    placeholder={pets}
+                    value={petName}
+                    placeholder='Pet name'
                     label='Pet Name'
                     isRequired={false}
                     onChange={(event) => setPetName(event.target.value)}
@@ -114,6 +151,7 @@ const VetForm = () => {
           <FormField
             id='timeInput'
             type='dateTime-local'
+            value={time}
             placeholder='Time'
             label='Date & Time'
             isRequired={false}
