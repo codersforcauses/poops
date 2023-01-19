@@ -57,7 +57,7 @@ const VisitInfo = ({
           <div className='w-2/5'>
             <Button
               size='small'
-              onClick={() => router.push(`/visit/incident?pets=${petNames}`)}
+              onClick={() => router.push(`/visit/${docId}/incident`)}
             >
               Report Incident
             </Button>
@@ -65,7 +65,7 @@ const VisitInfo = ({
           <div className='w-2/5'>
             <Button
               size='small'
-              onClick={() => router.push(`/visit/vet?pets=${petNames}`)}
+              onClick={() => router.push(`/visit/${docId}/vet`)}
             >
               Register Vet Concern
             </Button>
