@@ -1,56 +1,42 @@
-import { ChangeEvent, FormEvent, useEffect, useMemo } from 'react'
-import { useAtom, useAtomValue, useSetAtom } from 'jotai'
+import { ChangeEvent, FormEvent, useEffect } from 'react'
+import { useRouter } from 'next/router'
+import { UseMutateFunction } from '@tanstack/react-query'
+import { useAtom, useSetAtom } from 'jotai'
 import tw from 'tailwind-styled-components'
 
-import {
-  contactFormAtom,
-  currentContactAtom,
-  isEditingAtom
-} from '@/atoms/contacts'
+import { contactFormAtom, isEditingAtom } from '@/atoms/contacts'
 import Avatar from '@/components/Contact/avatar'
 import RegionSelector from '@/components/Contact/regiondropdown'
 import TagSelector from '@/components/Contact/tagdropdown'
-import { useMutateContacts } from '@/hooks/contacts'
-import useUser, { useMutateUser } from '@/hooks/user'
+import { Contact } from '@/types/types'
 
 import Button from '../UI/button'
 
-const ContactForm = () => {
-  const currentContact = useAtomValue(currentContactAtom)
+interface ContactFormProps {
+  contact: Contact
+  isNewContact?: boolean
+  mutate: UseMutateFunction<
+    unknown,
+    unknown,
+    Contact & { deleteDoc?: boolean },
+    unknown
+  >
+}
+
+const ContactForm = ({
+  contact,
+  isNewContact = false,
+  mutate
+}: ContactFormProps) => {
+  const router = useRouter()
   const setIsEditing = useSetAtom(isEditingAtom)
   const [contactForm, setContactForm] = useAtom(contactFormAtom)
-  const { data: currentUser } = useUser()
-  const { mutate: mutateUser } = useMutateUser()
-  const { mutate: mutateContacts } = useMutateContacts()
-
-  const isNewContact = currentContact === null
-  const isUser = currentContact?.docId === currentUser?.info.docId
-
-  const contact = useMemo(
-    () =>
-      isNewContact
-        ? {
-            name: '',
-            desc: '',
-            pets: '',
-            email: '',
-            phone: '',
-            streetAddress: '',
-            region: [],
-            notes: '',
-            tags: ['Client']
-          }
-        : currentContact,
-    [isNewContact, currentContact]
-  )
 
   useEffect(() => {
-    if (contact !== null) {
-      setContactForm(contact)
-    }
-  }, [contact, setContactForm])
+    setContactForm(contact)
+  }, [setContactForm, contact])
 
-  if (currentUser === null || contactForm === null) return null
+  if (contactForm === null) return null
 
   const handleInputChange = (
     e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>
@@ -61,13 +47,12 @@ const ContactForm = () => {
 
   const submitForm = (e: FormEvent) => {
     e.preventDefault()
-    if (isUser) {
-      mutateUser(contactForm)
-    } else {
-      mutateContacts(contactForm)
-    }
-
     setIsEditing(false)
+    mutate(contactForm, {
+      onSuccess(mutatedDocId, _variables, _context) {
+        if (isNewContact) router.replace(`/contact/${mutatedDocId}`)
+      }
+    })
   }
 
   return (
@@ -176,7 +161,7 @@ const ContactForm = () => {
           />
         </Box>
         {/* FORM BUTTONS */}
-        <div className=' flex justify-center'>
+        <div className=' flex justify-center gap-2'>
           <Button type='submit' fullwidth>
             Save
           </Button>
@@ -185,7 +170,7 @@ const ContactForm = () => {
               intent='secondary'
               fullwidth
               onClick={() => {
-                if (setIsEditing !== undefined) setIsEditing(false)
+                setIsEditing(false)
               }}
             >
               Cancel
