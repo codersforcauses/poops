@@ -42,8 +42,10 @@ const _disableBillingForProject = async (projectName: string) => {
   return `Billing disabled: ${JSON.stringify(res)}`
 }
 
+const REGION = process.env.REGION ?? 'australia-southeast1'
+
 export const stopBilling = functions
-  .region('australia-southeast1')
+  .region(REGION)
   .pubsub.topic('billing')
   .onPublish(async (pubsubEvent) => {
     const pubsubData = JSON.parse(

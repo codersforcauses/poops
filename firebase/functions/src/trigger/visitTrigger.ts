@@ -8,13 +8,15 @@ interface UserStat {
   walkedDist: number
 }
 
+const REGION = process.env.REGION ?? 'australia-southeast1'
+
 /**
  * Trigger for any changes to the visit subcollection
  * Automatically updates the user stats when a visit is added,
  * deleted or updated.
  */
 export const updateVisitTrigger = functions
-  .region('australia-southeast1')
+  .region(REGION)
   .firestore.document('users/{userId}/visits/{visitId}')
   .onWrite(async (change, context) => {
     const userId = context.params.userId
