@@ -33,7 +33,7 @@ function UpdateDetailsPanel({ contact }: ContactItemProps) {
   const [phoneNumber, setPhoneNumber] = useState(contact.phone || '')
   const [err, setErr] = useState(false)
   const { auth } = useAuth()
-  console.log(contact)
+  // console.log(contact)
 
   if (currentUser === null) {
     return null
