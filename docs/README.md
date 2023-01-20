@@ -1,95 +1,65 @@
-# POOPS - Pets of Older Persons 2022
+<img src="_media/cfc_logo.png" width="20%">
+<img src="_media/POOPS_black_circle.png" width="20%">
 
-## Introduction
+Welcome to **POOPS Volunteer Tracking** - a mobile first web app that volunteers can use to track the amount of time they have volunteered for and can report any troublesome incidents during their volunteering session.
 
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+It is being developed by Coders For Causes with student volunteers.
 
-## Getting Started
+This wiki is the main source of documentation for developers working on the POOPS project. If this is your first time hearing about POOPS, we recommend taking a look at [their website][website].
 
-First, install yarn:
+## Key Outcomes of the App
 
-```bash
-npm install --global yarn
-```
+- **Objective:** To improve communication of volunteers back to the org of their volunteering activities.
 
-Then, install the dependencies:
+## Why
 
-```bash
-yarn install
-```
+- Will help them gain data for grants
+- Streamlining the process
 
-Then, run the development server:
+## When and where app will be used
 
-```bash
-yarn dev
-```
+The target group for the app are POOPS volunteers. The app will be used by the volunteers via their mobile devices when performing their volunteering duties.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Figma
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+The Figma design can be found [here](https://www.figma.com/file/wNPsWJtPY9RVGQ6sytk2jZ/POOPs?node-id=0%3A1)
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+<iframe style="border: 1px solid rgba(0, 0, 0, 0.1);" width="800" height="450" src="https://www.figma.com/embed?embed_host=share&url=https%3A%2F%2Fwww.figma.com%2Ffile%2FwNPsWJtPY9RVGQ6sytk2jZ%2FPOOPs%3Fnode-id%3D0%253A1%26t%3DyNaiHKHVtR32bEZ8-1" allowfullscreen></iframe>
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+## Tech Stack
 
-## Firebase and Firestore
+### Frontend
 
-The Poops backend is powered by Firebase, which provides: authentication, a database, security policies, and more. The database used here is Firestore, and for the user-facing half of the application, the general structure is like so:
+- Client
+  - [NextJS](https://nextjs.org/)
+  - [ReactJS](https://reactjs.org/)
+  - [TypeScript](https://www.typescriptlang.org/)
+  - [Tailwind CSS](https://tailwindcss.com/)
+- Testing
+  - [Jest](https://jestjs.io/)
+  - [Cypress](https://www.cypress.io/)
 
-![image](https://user-images.githubusercontent.com/34858205/209237751-c7dd491c-2deb-4e4a-9839-2150db7e4118.png)
+### Backend
 
-## Database Queries
+- [Firebase](https://firebase.google.com/)
+  - Authentication
+  - Cloud Firestore (noSQL)
+  - Functions
 
-Database queries are made via [React Query](https://tanstack.com/query/v4/docs/react/overview), and are available through a number of hooks all located in `src/hooks`. The hooks follow two patterns, one hook for fetching data (i.e. `useUser()`) and one for mutating it (i.e. `useMutateUser()`).
+### Other
 
-### Data Fetching
+- Documentation
+  - Docsify
 
-Each of the data fetching hooks simply makes a request to firestore, passes it to React Query to cache and handle, and then returns the result from React Query. As such, in order to see what is available from the hook it is best to consult the React Query [documentation](https://tanstack.com/query/v4/docs/react/guides/queries) discussing the `result` object. One common usage pattern is like so:
+### Recommended VS Code extensions
 
-```tsx
-const UserCard = () => {
-  const { data: currentUser, isError, isLoading } = useUser()
+- ESLint
+- Prettier
+- Tailwind CSS IntelliSense
 
-  if (isError || currentUser === undefined) {
-    return <div>Whoops, something went wrong! </div>
-  }
+## Questions or need help?
 
-  if (isLoading) {
-    return <Spinner />
-  }
+Feel free to post in our [Discord][discord] if you have any questions.
 
-  return <div>Hi, {currentUser.name}! </div>
-}
-```
-
-### Data Mutation
-
-Create, update, and delete actions all mutate the server state in some way, and are handled separately to data fetching. The data mutation hooks behave slighltly differently to the data fetching hooks. In addition to passing a database query to React Query, they also pass an onSuccess function which will, on a successful return from the database, invalidate the client state so that the new server state is fetched by the client.
-
-When using the hook, you will predominantly access the `mutate` function that is returned from calling the hook. The mutate can be used in three different ways:
-
-- Create: pass a new object with no `docId` attribute
-- Update: pass an object with the `docId` set to the Firestore document that will be mutated
-- Delete: pass an object with the `docId` set to the Firestore document that will be deleted, and the `deleteDoc` attribute set to `true`
-
-Note: the `docId` attribute will be set automatically when the documents are fetched from Firestore
-
-```tsx
-const { mutate: mutateVisits } = useMutateVisits()
-
-// Some visit object
-const data = visit
-
-// Create new visit
-mutateVisits(data)
-
-// Update it
-mutateVisits({ ...data, type: 'Walk', docId: 'some UUID from firestore here' })
-
-// Delete
-mutateVisits({
-  ...data,
-  docId: 'some UUID from firestore here',
-  deleteDoc: true
-})
-```
+[discord]: http://discord.codersforcauses.org
+[website]: https://www.poopswa.org.au/
