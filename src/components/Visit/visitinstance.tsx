@@ -15,9 +15,7 @@ const VisitInstance = (props: Visit) => {
     <div className='m-2 flex flex-col rounded-xl bg-gray-50 p-4 drop-shadow-default'>
       <div className='flex justify-between'>
         <div className='font-bold'>
-          <p className='text-primary'>
-            {humanizeTimestamp(props.startTime)}
-          </p>
+          <p className='text-primary'>{humanizeTimestamp(props.startTime)}</p>
           <p className='text-sm'>{props.clientName}</p>
         </div>
         <div>

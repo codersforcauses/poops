@@ -66,7 +66,7 @@ const VisitInfo = ({
           </div>
           <div>
             <div className='font-semibold'>Notes:</div>
-            <p className='line-clamp-6 my-1'>{notes}</p>
+            <p className='my-1 line-clamp-6'>{notes}</p>
           </div>
         </div>
         <div className='flex items-center justify-around py-2'>
