@@ -1,18 +1,14 @@
 import { useEffect, useState } from 'react'
 import {
   ConfirmationResult,
-  linkWithCredential,
-  PhoneAuthProvider,
   RecaptchaVerifier,
-  signInWithPhoneNumber,
-  updateEmail,
-  updatePhoneNumber,
   updateProfile,
   User
 } from 'firebase/auth'
 
 import { useAuth } from '@/context/Firebase/Auth/context'
-import useUser from '@/hooks/user'
+// import useUser from '@/hooks/user'
+import { Contact } from '@/types/types'
 
 declare global {
   interface Window {
@@ -21,66 +17,49 @@ declare global {
   }
 }
 
-export interface UpdateDetailsPanelInterface {
-  user: User | null
+// export interface UpdateDetailsPanelInterface {
+//   user: User | null
+// }
+
+type ContactItemProps = {
+  contact: Contact
 }
 
-
-function UpdateDetailsPanel({ user }: UpdateDetailsPanelInterface) {
+function UpdateDetailsPanel({ contact }: ContactItemProps) {
   const countryCode = '+61'
-  const { data: currentUser } = useUser()
-  console.log(currentUser)
+  // const { data: currentUser } = useUser()
   // TODO if currentUser:[newUser:true] {} else {}
-  const [email, setEmail] = useState(currentUser?.info.email || '')
-  const [displayName, setDisplayName] = useState(currentUser?.info.name || '')
-  const [phoneNumber, setPhoneNumber] = useState(currentUser?.info.phone || '')
-  const [phoneErr, setPhoneErr] = useState(false)
-  const [displayNameErr, setDisplayNameErr] = useState(false)
-  const [emailErr, setEmailErr] = useState(false)
+  const [email, setEmail] = useState(contact.email || '')
+  const [displayName, setDisplayName] = useState(contact.name || '')
+  const [phoneNumber, setPhoneNumber] = useState(contact.phone || '')
   const [err, setErr] = useState(false)
   const { auth } = useAuth()
-
-  console.log(currentUser)
-
+  console.log(contact)
   // useEffect(() => {
-  //   setEmail(currentUser?.email || '')
-  //   setDisplayName(currentUser?.displayName || '')
-  //   setPhoneNumber(currentUser?.phoneNumber || '')
+  //   setEmail(currentUser?.info.email || '')
+  //   setDisplayName(currentUser?.info.name || '')
+  //   setPhoneNumber(currentUser?.info.phone || '')
   // }, [])
 
   const editEmail = (event: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(event.target.value)
-    console.log(event.target.value)
   }
   const editName = (event: React.ChangeEvent<HTMLInputElement>) => {
     setDisplayName(event.target.value)
-    console.log(event.target.value)
   }
   const editPhoneNumber = (event: React.ChangeEvent<HTMLInputElement>) => {
     setPhoneNumber(event.target.value)
-    console.log(event.target.value)
   }
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>, user: User | null) => {
+  const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>, contact: Contact | null) => {
     e.preventDefault()
 
     try {
       setErr(false)
       console.log('into function')
       if (phoneNumber) {
-        setPhoneErr(false)
-        if (!currentUser) {
+        if (!contact) {
           return
-        }
-        if (email) {
-          setEmailErr(false)
-        } else {
-          setEmailErr(true)
-        }
-        if (displayName) {
-          setDisplayNameErr(false)
-        } else {
-          setDisplayNameErr(true)
         }
         if (phoneNumber.length >= 9) {
           try {
@@ -95,64 +74,42 @@ function UpdateDetailsPanel({ user }: UpdateDetailsPanelInterface) {
           } catch (error) {
             console.log(error)
           }
-        } else {
-          setPhoneErr(true)
         }
-        if (user != null) {
-          updateProfile(user, {
-            displayName: displayName
-          })
-        }
-
-      } else {
-        setPhoneErr(true)
       }
     } catch (error) {
       setErr(true)
-      console.log('here')
     }
   }
 
   return (
     <div>
-      <form onSubmit={(e) => handleSubmit(e, user)}>
-        <input
-          className='h-10 w-full rounded-lg bg-transparent pl-2 text-sm'
-          value={displayName}
-          onChange={(e) => editName(e)}
-          name={displayName}
-          placeholder='Name'
-        />
-        <>
-          {displayName && <span>please type in name</span>}
-          {displayNameErr && <span>please type in correct name</span>}
-        </>
-        <input
-          className='h-10 w-full rounded-lg bg-transparent pl-2 text-sm'
-          value={email}
-          onChange={(e) => editEmail(e)}
-          name={email}
-          placeholder='Email'
-        />
-        <>
-          {email && <span>please type in email</span>}
-          {emailErr && <span>please type in correct email</span>}
-        </>
-        <input
-          className='h-10 w-full rounded-lg bg-transparent pl-2 text-sm'
-          value={phoneNumber}
-          onChange={(e) => editPhoneNumber(e)}
-          name={phoneNumber}
-          placeholder='Phone Number'
-        />
-        <>
-          {phoneNumber && <span>please type in phone number</span>}
-          {phoneErr && <span>please type in correct phone number</span>}
-        </>
-        <div id='recaptcha-container'></div>
-        <button>Submit</button>
-        {err && <span>Something Went Wrong...</span>}
-      </form>
+      <input
+        className='h-10 w-full rounded-lg bg-transparent pl-2 text-sm'
+        value={displayName}
+        onChange={(e) => editName(e)}
+        name={displayName}
+        placeholder='Name'
+      />
+
+      <input
+        className='h-10 w-full rounded-lg bg-transparent pl-2 text-sm'
+        value={email}
+        onChange={(e) => editEmail(e)}
+        name={email}
+        placeholder='Email'
+      />
+
+      <input
+        className='h-10 w-full rounded-lg bg-transparent pl-2 text-sm'
+        value={phoneNumber}
+        onChange={(e) => editPhoneNumber(e)}
+        name={phoneNumber}
+        placeholder='Phone Number'
+      />
+
+      <div id='recaptcha-container'></div>
+      <button onClick={(e) => handleSubmit(e, contact)}>Submit</button>
+      {err && <span>Something Went Wrong...</span>}
     </div >
   )
 }
