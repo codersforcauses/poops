@@ -5,7 +5,9 @@ import {
   updateProfile,
   User
 } from 'firebase/auth'
+import { doc, updateDoc } from 'firebase/firestore'
 
+import { db } from '@/components/Firebase/init'
 import { useAuth } from '@/context/Firebase/Auth/context'
 // import useUser from '@/hooks/user'
 import { Contact } from '@/types/types'
@@ -26,7 +28,7 @@ type ContactItemProps = {
 }
 
 function UpdateDetailsPanel({ contact }: ContactItemProps) {
-  const countryCode = '+61'
+  const { currentUser } = useAuth()
   // const { data: currentUser } = useUser()
   // TODO if currentUser:[newUser:true] {} else {}
   const [email, setEmail] = useState(contact.email || '')
@@ -40,7 +42,9 @@ function UpdateDetailsPanel({ contact }: ContactItemProps) {
   //   setDisplayName(currentUser?.info.name || '')
   //   setPhoneNumber(currentUser?.info.phone || '')
   // }, [])
-
+  if (currentUser === null) {
+    return null
+  }
   const editEmail = (event: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(event.target.value)
   }
@@ -51,12 +55,17 @@ function UpdateDetailsPanel({ contact }: ContactItemProps) {
     setPhoneNumber(event.target.value)
   }
 
-  const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>, contact: Contact | null) => {
+  const handleDocUpdate = async (currentUser: User) => {
+    const userDocRef = doc(db, 'users', currentUser.uid)
+    await updateDoc(userDocRef, { "info.email": email, "info.name": displayName, "info.phone": phoneNumber })
+  }
+
+  const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>, contact: Contact | null, currentUser: User) => {
     e.preventDefault()
 
     try {
-      setErr(false)
-      console.log('into function')
+      setErr(false) // debug only
+      // console.log('into function')
       if (phoneNumber) {
         if (!contact) {
           return
@@ -70,14 +79,15 @@ function UpdateDetailsPanel({ contact }: ContactItemProps) {
               },
               auth
             )
-            console.log('Recaptcha resolved')
+            // console.log('Recaptcha resolved')
           } catch (error) {
-            console.log(error)
+            // console.log(error)
           }
+          handleDocUpdate(currentUser)
         }
       }
     } catch (error) {
-      setErr(true)
+      setErr(true) // debug only
     }
   }
 
@@ -97,6 +107,7 @@ function UpdateDetailsPanel({ contact }: ContactItemProps) {
         onChange={(e) => editEmail(e)}
         name={email}
         placeholder='Email'
+        type="email"
       />
 
       <input
@@ -107,9 +118,14 @@ function UpdateDetailsPanel({ contact }: ContactItemProps) {
         placeholder='Phone Number'
       />
 
+
       <div id='recaptcha-container'></div>
-      <button onClick={(e) => handleSubmit(e, contact)}>Submit</button>
-      {err && <span>Something Went Wrong...</span>}
+      <button disabled={!(displayName && email && phoneNumber)} onClick={(e) => handleSubmit(e, contact, currentUser)}>Submit</button>
+      <div>
+        {!(displayName && email && phoneNumber) && <span>Please finish your missing details</span>}
+        {err && <span>Something Went Wrong...</span>}
+      </div>
+
     </div >
   )
 }

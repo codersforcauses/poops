@@ -10,12 +10,12 @@ import type { Contact } from '@/types/types'
 
 const SignupDetails: NextPage = () => {
   const { logOut } = useAuth()
-  const {data:currentUser} = useUser()
+  const { data: currentUser } = useUser()
   if (currentUser === undefined) return null
 
   return (
     <>
-      <h1>Setup Login</h1>
+      <h1>Please fill in your details</h1>
       <button onClick={logOut}>LOG OUT</button>
       <UpdateDetailsPanel contact={currentUser.info} />
       {/* <input type='text' value={displayName} placeholder='Name' />
