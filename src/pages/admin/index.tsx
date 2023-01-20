@@ -3,7 +3,9 @@ import { Router, useRouter } from 'next/router'
 import { doc, DocumentData, getDoc } from '@firebase/firestore'
 
 import { db } from '@/components/Firebase/init'
+import Header from '@/components/Header'
 import NavBar from '@/components/NavBar'
+import TopNav from '@/components/TopNav'
 import Button from '@/components/UI/button'
 import { useAuth } from '@/context/Firebase/Auth/context'
 import mod from '@/lib/temp/firebase/functions/setRole'
@@ -39,7 +41,9 @@ const Admin = () => {
 
   return (
     <>
-      <h1>Admin page</h1>
+      <Header pageTitle='Admin' />
+      <TopNav />
+      <h1 className='m-3 flex-1 text-center text-2xl'>Admin</h1>
       <p>User: {currentUser?.displayName}</p>
       <p>Email: {currentUser?.email}</p>
       <p>Admin status: {isAdmin.toString()}</p>

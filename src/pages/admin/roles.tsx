@@ -10,9 +10,8 @@ import FormField from '@/components/Visit/formfield'
 
 import ROLES_DATA from '../../../mockData/ROLES_DATA.json'
 
-// TODO: import docs and mod, add header to index?
-// TODO: onsubmit add user to mockdata, should update table
-// TODO: style for mobile view
+//current: table consists of mockdata, email submit consolelogs the email
+//todo: update firebase schema and use that data, email submit updates firebase and pulls new data
 
 const Roles = () => {
   const [email, setEmail] = useState('')
@@ -20,15 +19,16 @@ const Roles = () => {
   const handleSubmit = (click: FormEvent<HTMLFormElement>) => {
     click.preventDefault()
 
-    const addPriviliegeAcess = {
-      email: email,
-      roles: { admin: true }
-    }
+    //function should work, to be used once the firestore data can be
+    // const addPriviliegeAcess = {
+    //   email: email,
+    //   roles: { admin: true }
+    // }
 
-    fetch('/api/setRole', {
-      method: 'POST',
-      body: JSON.stringify(addPriviliegeAcess)
-    })
+    // fetch('/api/setRole', {
+    //   method: 'POST',
+    //   body: JSON.stringify(addPriviliegeAcess)
+    // })
 
     console.log('gave admin to: ' + email)
   }
@@ -37,40 +37,42 @@ const Roles = () => {
     <>
       <Header pageTitle='Roles' />
       <TopNav />
-      <h1 className='m-3 flex-1 text-center text-2xl'>Roles</h1>
-      <form onSubmit={handleSubmit} className='m-auto mb-5 w-1/2 rounded-lg'>
-        <FormField
-          id='emailInput'
-          type='email'
-          placeholder='email required'
-          label='Give admin to:'
-          isRequired={true}
-          onChange={(event) => setEmail(event.target.value)}
-        />
-      </form>
+      <main className='border-slate-900 h-[calc(100%-7rem)] border'>
+        <h1 className='m-3 flex-1 text-center text-2xl'>Roles</h1>
+        <form onSubmit={handleSubmit} className='m-auto mb-3 w-1/2 rounded-lg'>
+          <FormField
+            id='emailInput'
+            type='email'
+            placeholder='email required'
+            label='Give admin to:'
+            isRequired={true}
+            onChange={(event) => setEmail(event.target.value)}
+          />
+        </form>
 
-      <div className='overflow-scroll'>
-        <table className='border-slate-700 m-auto border-separate border-spacing-3 border'>
-          <thead>
-            <tr className='text-center'>
-              <th>Id</th>
-              <th>Role</th>
-              <th>Assigned By</th>
-              <th>Created At</th>
-            </tr>
-          </thead>
-          <tbody>
-            {ROLES_DATA.map((roles, i) => (
-              <tr key={i}>
-                <td>{roles['id']}</td>
-                <td className='text-center'>{roles['roles']}</td>
-                <td>{roles['assigned_by']}</td>
-                <td>{roles['created_at']}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+        <div className='flex max-h-screen overflow-y-scroll'>
+          <table className='m-auto flex border-spacing-3 flex-row overflow-y-scroll'>
+            <tbody>
+              {ROLES_DATA.map((roles, i) => (
+                <div key={i} className='border-slate-700 flex flex-row border'>
+                  <tr className='flex flex-col text-left'>
+                    <th>Id:</th>
+                    <th>Role:</th>
+                    <th>Assigned By:</th>
+                    <th>Created At:</th>
+                  </tr>
+                  <tr className='mr-1 flex flex-1 flex-col text-right'>
+                    <td>{roles['id']}</td>
+                    <td>{roles['roles']}</td>
+                    <td>{roles['assigned_by']}</td>
+                    <td>{roles['created_at']}</td>
+                  </tr>
+                </div>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </main>
       <NavBar />
     </>
   )
