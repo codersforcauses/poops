@@ -1,18 +1,18 @@
 {
-    "compilerOptions": {
-        "module": "commonjs",
-        "noImplicitReturns": true,
-        "noUnusedLocals": true,
-        "forceConsistentCasingInFileNames": true,
-        "outDir": "lib",
-        "sourceMap": true,
-        "strict": true,
-        "target": "es2017",
-        "removeComments": true,
-        "allowSyntheticDefaultImports": true,
-        "typeRoots": ["./node_modules/@types"]
-    },
-    "compileOnSave": true,
-    "include": ["src/*.ts"],
-    "exclude": ["node_modules", "../node_modules"]
+  "compilerOptions": {
+    "module": "commonjs",
+    "noImplicitReturns": true,
+    "noUnusedLocals": true,
+    "forceConsistentCasingInFileNames": true,
+    "outDir": "lib",
+    "sourceMap": true,
+    "strict": true,
+    "target": "es2017",
+    "removeComments": true,
+    "allowSyntheticDefaultImports": true,
+    "typeRoots": ["./node_modules/@types"]
+  },
+  "compileOnSave": true,
+  "include": ["src/*.ts"],
+  "exclude": ["node_modules", "../node_modules"]
 }
