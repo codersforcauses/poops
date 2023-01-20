@@ -11,7 +11,7 @@
     "source": "functions",
     "codebase": "default",
     "ignore": [
-      "**/functions/**",
+      "**/functions/src/**",
       "**/node_modules/**",
       ".eslintrc.js",
       ".firebaserc",
