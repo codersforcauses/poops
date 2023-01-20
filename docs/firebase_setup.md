@@ -58,6 +58,7 @@
 ## Step 6: Set up Firebase Functions
 
 - In your terminal, run `yarn deploy:functions` to deploy all of your Firebase functions
+- Go to the [billing killswitch setup](billing_killswitch.md) page to setup the billing killswitch
 - Run`firebase deploy --only functions:<myFunction>` to deploy a specific Firebase function
 - Run `firebase functions:delete <myFunction>` to delete a Firebase function
 
@@ -106,9 +107,3 @@
 - Click on the "Enable" button
 - reCAPTCHA is enabled by default
 - Click on the "Save" button
-
-## Firebase Hosting
-
-## Admin Setup
-
-## Extract data from Firestore
