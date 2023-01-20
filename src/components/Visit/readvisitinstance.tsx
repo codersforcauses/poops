@@ -23,9 +23,10 @@ const VisitInfo = ({
   walkDist = 0,
   commuteDist = 0,
   commuteMethod = 'N/A',
-  notes = ''
+  notes = '',
+  docId
 }: VisitInfoProps) => {
-  const router = useRouter()
+  const paragraphs = notes.split('\n')
   return (
     <>
       <div
@@ -39,20 +40,22 @@ const VisitInfo = ({
         <p>Walk Distance: {walkDist.toFixed(3)} km</p>
         <p>Commute Distance: {commuteDist.toFixed(1)} km</p>
         <p>Commute Method: {commuteMethod}</p>
-        <p>Notes: {notes}</p>
+        <p>Notes: </p>
+        {paragraphs.map((paragraph, i) => {
+          return <p key={i}> {paragraph}</p>
+        })}
+
         <div className='my-2 mr-9 flex justify-start gap-2'>
-          <Button
-            size='small'
-            onClick={() => router.push(`/visit/incident?pets=${petNames}`)}
-          >
-            Report Incident
-          </Button>
-          <Button
-            size='small'
-            onClick={() => router.push(`/visit/vet?pets=${petNames}`)}
-          >
-            Register Vet Concern
-          </Button>
+          <Link href={`/visit/${docId}/incident`}>
+            <a>
+              <Button size='small'>Report Incident</Button>
+            </a>
+          </Link>
+          <Link href={`/visit/${docId}/vet`}>
+            <a>
+              <Button size='small'>Register Vet Concern</Button>
+            </a>
+          </Link>
         </div>
       </div>
     </>
