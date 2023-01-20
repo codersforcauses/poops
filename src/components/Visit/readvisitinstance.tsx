@@ -32,27 +32,43 @@ const VisitInfo = ({
 
   if (docId === undefined) return null
 
-  const paragraphs = notes.split('\n')
   return (
     <>
       <div
-        className={`justify-between text-sm transition-all duration-300 ${
+        className={`mt-2 justify-between text-sm transition-all duration-300 ${
           isOpen ? '' : 'max-h-0 overflow-hidden'
         }`}
       >
-        <div className='max-h-screen overflow-hidden'>
-          <p>Visit Type: {type}</p>
-          <p>Pet(s): {petNames}</p>
-          <p>Duration: {formatDuration(duration)}</p>
-          <p>Walk Distance: {walkDist.toFixed(3)} km</p>
-          <p>Commute Distance: {commuteDist.toFixed(1)} km</p>
-          <p>Commute Method: {commuteMethod}</p>
-          <p>Notes: </p>
-          {paragraphs.map((paragraph, i) => {
-            return <p key={i}> {paragraph}</p>
-          })}
+        <div className='max-h-screen space-y-1'>
+          <div className='space-x-1'>
+            <span className='font-semibold'>Visit Type:</span>
+            <span>{type}</span>
+          </div>
+          <div className='space-x-1'>
+            <span className='font-semibold'>Pet(s):</span>
+            <span>{petNames}</span>
+          </div>
+          <div className='space-x-1'>
+            <span className='font-semibold'>Duration:</span>
+            <span>{formatDuration(duration)}</span>
+          </div>
+          <div className='space-x-1'>
+            <span className='font-semibold'>Walk Distance:</span>
+            <span>{walkDist.toFixed(3)} km</span>
+          </div>
+          <div className='space-x-1'>
+            <span className='font-semibold'>Commute Distance:</span>
+            <span>{commuteDist.toFixed(1)} km</span>
+          </div>
+          <div className='space-x-1'>
+            <span className='font-semibold'>Commute Method:</span>
+            <span>{commuteMethod}</span>
+          </div>
+          <div>
+            <div className='font-semibold'>Notes:</div>
+            <p className='line-clamp-6 my-1'>{notes}</p>
+          </div>
         </div>
-
         <div className='flex items-center justify-around py-2'>
           <div className='w-2/5'>
             <Button
