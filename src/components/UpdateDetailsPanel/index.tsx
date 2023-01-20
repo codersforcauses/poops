@@ -19,9 +19,7 @@ declare global {
   }
 }
 
-// export interface UpdateDetailsPanelInterface {
-//   user: User | null
-// }
+// TODO add correct redirect to the pages path
 
 type ContactItemProps = {
   contact: Contact
@@ -29,19 +27,14 @@ type ContactItemProps = {
 
 function UpdateDetailsPanel({ contact }: ContactItemProps) {
   const { currentUser } = useAuth()
-  // const { data: currentUser } = useUser()
-  // TODO if currentUser:[newUser:true] {} else {}
+
   const [email, setEmail] = useState(contact.email || '')
   const [displayName, setDisplayName] = useState(contact.name || '')
   const [phoneNumber, setPhoneNumber] = useState(contact.phone || '')
   const [err, setErr] = useState(false)
   const { auth } = useAuth()
   console.log(contact)
-  // useEffect(() => {
-  //   setEmail(currentUser?.info.email || '')
-  //   setDisplayName(currentUser?.info.name || '')
-  //   setPhoneNumber(currentUser?.info.phone || '')
-  // }, [])
+
   if (currentUser === null) {
     return null
   }
@@ -65,7 +58,6 @@ function UpdateDetailsPanel({ contact }: ContactItemProps) {
 
     try {
       setErr(false) // debug only
-      // console.log('into function')
       if (phoneNumber) {
         if (!contact) {
           return
