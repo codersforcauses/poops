@@ -9,9 +9,9 @@ const Login: NextPage = () => {
   const { logOut, currentUser } = useAuth()
 
   return (
-    <main>
+    <>
       <title>Login</title>
-      <div className='animate-text bg-gradient-to-b from-zinc-200 via-zinc-100 to-white '>
+      <div className='animate-text bg-gradient-to-b from-zinc-200 via-zinc-100 to-white'>
         <div className='m-auto max-w-sm p-10'>
           <Image
             src='/images/poops-logo-transparent.png'
@@ -46,7 +46,7 @@ const Login: NextPage = () => {
           <button onClick={() => logOut?.()}>logout</button>
         </div>
       )}
-    </main>
+    </>
   )
 }
 
