@@ -1,20 +1,27 @@
-import VoluteerStatsTable from '@/components/Admin/volunteerstatstable'
-import Header from '@/components/Header'
-import TopNav from '@/components/TopNav'
+import { ReactElement } from 'react'
 
-const Stats = () => {
+import VoluteerStatsTable from '@/components/Admin/volunteerstatstable'
+import Layout from '@/components/Layout'
+import { withProtected } from '@/components/PrivateRoute'
+import { NextPageWithLayout } from '@/pages/_app'
+
+const Stats: NextPageWithLayout = () => {
   return (
     <>
-      <Header pageTitle='Admin' />
-      <TopNav />
-      <main>
+      <div className='main-style'>
         <h1 className='my-8 mx-auto text-center text-4xl font-bold text-primary-dark'>
           Admin Summary Dashboard
         </h1>
         <VoluteerStatsTable />
-      </main>
+      </div>
     </>
   )
 }
 
-export default Stats
+const StatsWithProtected = withProtected(Stats)
+
+StatsWithProtected.getLayout = (page: ReactElement) => (
+  <Layout title='Statistics'>{page}</Layout>
+)
+
+export default StatsWithProtected
