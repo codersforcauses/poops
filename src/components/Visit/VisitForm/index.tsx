@@ -190,30 +190,6 @@ export const VisitForm = ({ visitData }: VisitFormProps) => {
         >
           Remove This Visit
         </Button>
-
-        <Button
-          intent='primary'
-          size='medium'
-          hidden={isNewVisit}
-          fullwidth
-          type='button'
-        >
-          Report
-          <br />
-          Incident
-        </Button>
-
-        <Button
-          intent='primary'
-          size='medium'
-          hidden={isNewVisit}
-          fullwidth
-          type='button'
-        >
-          Register Vet
-          <br />
-          Concern
-        </Button>
       </div>
     </Form>
   )
