@@ -7,6 +7,7 @@ import NavBar from '@/components/NavBar'
 import Button from '@/components/UI/button'
 import { useAuth } from '@/context/Firebase/Auth/context'
 import mod from '@/lib/temp/firebase/functions/setRole'
+import Router from 'next/router'
 
 const Admin = () => {
   const { currentUser, isAdmin, refreshUserToken } = useAuth()
@@ -72,6 +73,16 @@ const Admin = () => {
       >
         Unmod me!
       </Button>
+      <div className='m-2'>
+        <Button
+          size='medium'
+          intent='primary'
+          type='button'
+          onClick={() => Router.push('/admin/incidents')}
+        >
+          View Incidents
+        </Button>
+      </div>
 
       <NavBar />
     </>
