@@ -21,7 +21,7 @@ const VisitInstance = (props: Visit) => {
           </p>
           <p className='text-sm'>{props.clientName}</p>
         </div>
-        <div>
+        <div className='flex flex-row'>
           <ChevronDownIcon
             className='h-7 w-7 cursor-pointer self-center text-primary transition-transform duration-300'
             style={{
