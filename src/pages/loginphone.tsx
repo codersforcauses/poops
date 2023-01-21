@@ -9,10 +9,8 @@ import { withPublic } from '@/components/PrivateRoute'
 const Login: NextPage = () => {
   const pageTitle = 'Phone Login'
   const primaryMessage = 'Enter your phone number'
-  const secondaryMessage = 'Please enter your phone number'
 
   const [phonenumber, setphonenumber] = useState<string>('')
-  // const [password, setpassword] = useState<string>('')
   const [panel, setpanel] = useState('phone')
 
   function handlePhoneSubmit(phoneNumber: string) {
@@ -30,7 +28,6 @@ const Login: NextPage = () => {
         <LoginHeader
           pageTitle={pageTitle}
           primaryMessage={primaryMessage}
-          secondaryMessage={secondaryMessage}
         >
           <EnterPhonePanel onClick={handlePhoneSubmit} />
         </LoginHeader>
@@ -40,7 +37,6 @@ const Login: NextPage = () => {
         <LoginHeader
           pageTitle={pageTitle}
           primaryMessage={primaryMessage}
-          secondaryMessage={secondaryMessage}
         >
           <EnterPasswordPanel
             phoneNumber={phonenumber}
