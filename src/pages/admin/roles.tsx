@@ -1,10 +1,9 @@
 import { FormEvent, useState } from 'react'
-import { useRouter } from 'next/router'
+import router, { useRouter } from 'next/router'
 import { ResolverSuccess } from 'react-hook-form'
 
 import Header from '@/components/Header'
 import NavBar from '@/components/NavBar'
-import TopNav from '@/components/TopNav'
 import Button from '@/components/UI/button'
 import FormField from '@/components/Visit/formfield'
 
@@ -36,9 +35,17 @@ const Roles = () => {
   return (
     <>
       <Header pageTitle='Roles' />
-      <TopNav />
       <main className='border-slate-900 h-[calc(100%-7rem)] border'>
-        <h1 className='m-3 flex-1 text-center text-2xl'>Roles</h1>
+        <div className='m-3 mb-0 flex-1 text-left'>
+          <Button
+            type='button'
+            size='medium'
+            onClick={() => router.push('/admin')}
+          >
+            Back
+          </Button>
+        </div>
+        <h1 className='m-3 mt-0 flex-1 text-center text-2xl'>Roles</h1>
         <form onSubmit={handleSubmit} className='m-auto mb-3 w-1/2 rounded-lg'>
           <FormField
             id='emailInput'
