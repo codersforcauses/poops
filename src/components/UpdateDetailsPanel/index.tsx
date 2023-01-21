@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import Link from 'next/link'
 import {
   ConfirmationResult,
   RecaptchaVerifier,
@@ -11,7 +12,6 @@ import { db } from '@/components/Firebase/init'
 import { useAuth } from '@/context/Firebase/Auth/context'
 // import useUser from '@/hooks/user'
 import { Contact } from '@/types/types'
-
 declare global {
   interface Window {
     recaptchaVerifier: RecaptchaVerifier
@@ -28,9 +28,9 @@ type ContactItemProps = {
 function UpdateDetailsPanel({ contact }: ContactItemProps) {
   const { currentUser } = useAuth()
 
-  const [email, setEmail] = useState(contact.email || '')
-  const [displayName, setDisplayName] = useState(contact.name || '')
-  const [phoneNumber, setPhoneNumber] = useState(contact.phone || '')
+  const [email, setEmail] = useState(contact?.email || '')
+  const [displayName, setDisplayName] = useState(contact?.name || '')
+  const [phoneNumber, setPhoneNumber] = useState(contact?.phone || '')
   const [err, setErr] = useState(false)
   const { auth } = useAuth()
   // console.log(contact)
@@ -50,10 +50,18 @@ function UpdateDetailsPanel({ contact }: ContactItemProps) {
 
   const handleDocUpdate = async (currentUser: User) => {
     const userDocRef = doc(db, 'users', currentUser.uid)
-    await updateDoc(userDocRef, { "info.email": email, "info.name": displayName, "info.phone": phoneNumber })
+    await updateDoc(userDocRef, {
+      'info.email': email,
+      'info.name': displayName,
+      'info.phone': phoneNumber
+    })
   }
 
-  const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>, contact: Contact | null, currentUser: User) => {
+  const handleSubmit = (
+    e: React.MouseEvent<HTMLButtonElement>,
+    contact: Contact | null,
+    currentUser: User
+  ) => {
     e.preventDefault()
 
     try {
@@ -76,6 +84,7 @@ function UpdateDetailsPanel({ contact }: ContactItemProps) {
             // console.log(error)
           }
           handleDocUpdate(currentUser)
+          updateProfile(currentUser, { displayName: displayName })
         }
       }
     } catch (error) {
@@ -99,7 +108,7 @@ function UpdateDetailsPanel({ contact }: ContactItemProps) {
         onChange={(e) => editEmail(e)}
         name={email}
         placeholder='Email'
-        type="email"
+        type='email'
       />
 
       <input
@@ -110,15 +119,22 @@ function UpdateDetailsPanel({ contact }: ContactItemProps) {
         placeholder='Phone Number'
       />
 
-
       <div id='recaptcha-container'></div>
-      <button disabled={!(displayName && email && phoneNumber)} onClick={(e) => handleSubmit(e, contact, currentUser)}>Submit</button>
+      <Link href=''>
+        <button
+          disabled={!(displayName && email && phoneNumber)}
+          onClick={(e) => handleSubmit(e, contact, currentUser)}
+        >
+          Submit
+        </button>
+      </Link>
       <div>
-        {!(displayName && email && phoneNumber) && <span>Please finish your missing details</span>}
+        {!(displayName && email && phoneNumber) && (
+          <span>Please finish your missing details</span>
+        )}
         {err && <span>Something Went Wrong...</span>}
       </div>
-
-    </div >
+    </div>
   )
 }
 
