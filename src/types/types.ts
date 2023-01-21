@@ -31,6 +31,21 @@ export interface Contact {
   tags: string[]
 }
 
+export interface VetConcern {
+  docId?: string
+  userId: string
+  userName: string
+  userEmail: string
+  userPhone: string
+  clientName: string
+  petName: string
+  vetName: string
+  visitTime: Timestamp
+  visitId: string
+  detail: string
+  createdAt: Timestamp
+}
+
 export interface UserStat {
   numVisits: number
   numHours: number
@@ -60,14 +75,4 @@ export type Incident = {
   time: string
   details: string
   createdAt: string
-}
-
-export type VetConcernsForm = {
-  userID?: string
-  userName: string
-  email: string
-  petName: string
-  vetName: string
-  time: string
-  details: string
 }
