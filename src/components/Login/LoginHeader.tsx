@@ -4,14 +4,12 @@ import Image from 'next/image'
 export interface LoginHeaderInterface {
   pageTitle: string // Main Page Title Displayed at top of the page
   primaryMessage: string
-  secondaryMessage: string
   children?: ReactNode // The set of buttons or form that the user is to interact with
 }
 
 const LoginHeader = ({
   pageTitle,
   primaryMessage,
-  secondaryMessage,
   children
 }: LoginHeaderInterface) => {
   return (
@@ -29,9 +27,6 @@ const LoginHeader = ({
 
       <div className='m-5 flex justify-center text-xl font-bold'>
         {primaryMessage}
-      </div>
-      <div className='text-x1 m-3 flex justify-center font-sans'>
-        {secondaryMessage}
       </div>
 
       {children}
