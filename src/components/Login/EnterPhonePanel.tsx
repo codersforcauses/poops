@@ -21,6 +21,7 @@ const EnterPhonePanel = ({ onClick }: EnterPhonePanelInterface) => {
     event.preventDefault()
     event.target.reset()
   }
+  /* TODO: add 'auth update' functionality */
 
   function formFilled() {
     return displaynumber !== ''

@@ -16,6 +16,7 @@ const EnterPasswordPanel = (props: {
     event.target.reset()
     setpassword('')
   }
+  /* TODO: add 'auth update' functionality */
 
   function handleForgot(
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
@@ -23,9 +24,10 @@ const EnterPasswordPanel = (props: {
     event.preventDefault()
     router.push('/login')
   }
+  /* TODO: add 'forgot password' functionality */
 
   function formFilled() {
-    return password != ''
+    return (password != '' && password.length > 7)
   }
 
   return (
