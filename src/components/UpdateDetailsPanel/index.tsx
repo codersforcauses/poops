@@ -127,7 +127,7 @@ function UpdateDetailsPanel({ contact }: ContactItemProps) {
           disabled={!(displayName && email && phoneNumber && !done)}
           onClick={(e) => handleSubmit(e, contact, currentUser)}
         >
-          Submit
+          <Link href="/">Submit</Link>
         </button>
       )}
 
