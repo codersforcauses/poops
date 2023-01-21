@@ -40,7 +40,7 @@ const Incident = () => {
 
   const [petName, setPetName] = useState(pets)
 
-  const handleSubmit = (click: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (click: FormEvent<HTMLFormElement>) => {
     click.preventDefault()
     if (currentUser !== null) {
       const data: Incident = {
@@ -56,6 +56,14 @@ const Incident = () => {
         createdAt: Date.now().toString()
       }
       mutateIncidents(data)
+      const message = {
+        subject: 'Incident Report',
+        text: JSON.stringify(data)
+      }
+      await fetch('/api/sendEmail', {
+        method: 'POST',
+        body: JSON.stringify(message)
+      })
 
       router.push('/visit')
     }
