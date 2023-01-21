@@ -1,6 +1,6 @@
 import { RegisterOptions } from 'react-hook-form'
 
-import { ContactFormValues } from '@/components/Contact/contactform'
+import { SubmittedContactFormValues } from '@/components/Contact/contactform'
 
 const requiredMessage = 'This field is required'
 
@@ -12,7 +12,7 @@ const validateEmail = (email: string) => {
     )
 }
 
-const validationSchema: Record<ContactFormValues, RegisterOptions> = {
+const validationSchema: Record<SubmittedContactFormValues, RegisterOptions> = {
   name: {
     required: {
       value: true,
@@ -45,7 +45,7 @@ const validationSchema: Record<ContactFormValues, RegisterOptions> = {
       }
     }
   },
-  address: {
+  streetAddress: {
     required: {
       value: true,
       message: requiredMessage
