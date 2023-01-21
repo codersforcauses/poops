@@ -40,19 +40,20 @@ const newUser = (currentUser: AuthUser): User => {
 export const useUser = () => {
   const { currentUser } = useAuth()
 
-  const queryFn = async () => {
+  const queryFn = async (): Promise<User | undefined> => {
     if (currentUser?.uid) {
       //try to get existing doc if the doc does not exist then create a new doc with uid as its ref
       try {
-        const userDocSnap = await getDoc(doc(db, 'users', currentUser.uid))
+        let userDocSnap = await getDoc(doc(db, 'users', currentUser.uid))
 
         if (!userDocSnap.exists()) {
           // doc.data() will be undefined in this case
           await setDoc(doc(db, 'users', currentUser.uid), newUser(currentUser))
+          userDocSnap = await getDoc(doc(db, 'users', currentUser.uid))
         }
 
         const userData = userDocSnap.data() as User
-        return { ...userData, docId: 'USER' }
+        return { ...userData, info: { ...userData.info, docId: 'USER' } }
       } catch (err: unknown) {
         //#region  //*=========== For logging ===========
         if (err instanceof FirestoreError) {

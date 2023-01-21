@@ -25,7 +25,7 @@
 @layer utilities {
 }
 
-main {
+.main-style {
   /* 4rem is bottom nav height */
   height: calc(100vh - 4rem);
   padding-bottom: 4rem;
