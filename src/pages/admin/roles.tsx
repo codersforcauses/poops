@@ -36,7 +36,7 @@ const Roles = () => {
     <>
       <Header pageTitle='Roles' />
       <main className='border-slate-900 h-[calc(100%-7rem)] border'>
-      <div className='m-3 mb-0 flex-1 text-left'>
+        <div className='m-3 mb-0 flex-1 text-left'>
           <Button
             type='button'
             size='medium'
