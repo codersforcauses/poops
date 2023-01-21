@@ -44,9 +44,6 @@ const Admin = () => {
       <p>Email: {currentUser?.email}</p>
       <p>Admin status: {isAdmin.toString()}</p>
       <p>User role firestore document: {JSON.stringify(userDoc)}</p>
-      <div>
-        <Link href='/admin/incidents'>Go to /admin/incidents</Link>
-      </div>
 
       <Button
         size='medium'
