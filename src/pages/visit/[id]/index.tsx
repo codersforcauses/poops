@@ -130,7 +130,7 @@ const Set = () => {
       </>
 
       {/* Wrapper */}
-      <div className='container mx-auto flex flex-col gap-2 p-2'>
+      <div className='container mx-auto flex flex-col gap-2 overflow-scroll p-2'>
         {/* Form */}
         <form onSubmit={handleSubmit}>
           {/* could rewrite to use awful react-select to make chevron icon consistent */}
