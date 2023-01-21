@@ -1,75 +1,101 @@
 rules_version = '2';
 service cloud.firestore {
+  function isSignIn() {
+    return request.auth != null;
+  }
+
+  function isOwner(uid) {
+    return isSignIn() && request.auth.uid == uid;
+  }
+
+  function isAdmin() {
+    return isSignIn() && request.auth.token.admin;
+  }
+
+  function isValidContact(data) {
+    return
+      data.size() == 9 &&
+      data.name is string &&
+      data.desc is string &&
+      data.pets is string &&
+      data.email is string &&
+      data.phone is string &&
+      data.streetAddress is string &&
+      data.region is list &&
+      data.notes is string &&
+      data.tags is list;
+  }
+
+  function isValidUserStats(data) {
+    return
+      data.size() == 4 &&
+      data.numVisits is number &&
+      data.numHours is number &&
+      data.commutedDist is number &&
+      data.walkedDist is number;
+  }
+
+  function isValidUser(data) {
+    return
+      data.size() == 2 &&
+      isValidContact(data.info) &&
+      isValidUserStats(data.stats);
+  }
+
+  function isValidVisit(data) {
+    return
+      data.size() == 9 &&
+      data.type is string &&
+      data.clientName is string &&
+      data.petNames is string &&
+      data.startTime is timestamp &&
+      data.duration.size() == 2 &&
+      data.duration.hours is number &&
+      data.duration.minutes is number &&
+      data.walkDist is number &&
+      data.commuteDist is number &&
+      data.commuteMethod is string &&
+      data.notes is string;
+  }
+
+  function isValidVetConcern(data) {
+    return
+      data.size() == 11 &&
+      data.clientName is string &&
+      data.createdAt is timestamp &&
+      data.detail is string &&
+      data.petName is string &&
+      data.userEmail is string &&
+      data.userId is string &&
+      data.userName is string &&
+      data.userPhone is string &&
+      data.vetName is string &&
+      data.visitId is string &&
+      data.visitTime is timestamp;
+  }
+
+  function isValidIncident(data) {
+    return
+      data.size() == 10 &&
+        data.userID is string &&
+        data.userName is string &&
+        data.clientName is string &&
+        data.visitId is string &&
+        data.visitTime is timestamp &&
+        data.email is string &&
+        data.petName is string &&
+        data.time is timestamp &&
+        data.details is string &&
+        data.createdAt is timestamp
+  }
   match /databases/{database}/documents {
-    function isSignIn() {
-      return request.auth != null;
-    }
-
-    function isOwner(uid) {
-      return isSignIn() && request.auth.uid == uid;
-    }
-
-    // function hasVerifiedEmail(){
-    //   return request.auth.token.email_verified;
-    // }
-
-    function isAdmin() {
-      return isSignIn() && request.auth.token.admin;
-    }
-
     match /users/{userId} {
-      function isValidContact(data) {
-        return
-          data.size() == 9 &&
-          data.name is string &&
-          data.desc is string &&
-          data.pets is string &&
-          data.email is string &&
-          data.phone is string &&
-          data.streetAddress is string &&
-          data.region is list &&
-          data.notes is string &&
-          data.tags is list;
-      }
-
-      function isValidUserStats(data) {
-        return
-          data.size() == 4 &&
-          data.numVisits is number &&
-          data.numHours is number &&
-          data.commutedDist is number &&
-          data.walkedDist is number;
-      }
-
-      function isValidUser(data) {
-        return
-          data.size() == 2 &&
-          isValidContact(data.info) &&
-          isValidUserStats(data.stats);
-      }
-
       match /contacts/{visitId} {
         allow read: if isOwner(userId);
         allow write: if isOwner(userId) && isValidContact(request.resource.data);
       }
 
       match /visits/{visitId} {
-        function isValidVisit(data) {
-          return
-            data.size() == 9 &&
-            data.type is string &&
-            data.clientName is string &&
-            data.petNames is string &&
-            data.startTime is timestamp &&
-            data.duration.size() == 2 &&
-            data.duration.hours is number &&
-            data.duration.minutes is number &&
-            data.walkDist is number &&
-            data.commuteDist is number &&
-            data.commuteMethod is string &&
-            data.notes is string;
-        }
-
         allow read: if isOwner(userId);
         allow write: if isOwner(userId) && isValidVisit(request.resource.data);
       }
@@ -84,38 +110,17 @@ service cloud.firestore {
     }
 
     match /incidents/{document=**} {
-      // TODO: Type check the incidents
       allow create: if isSignIn();
       allow read: if isAdmin();
       allow update, delete: if false;
     }
 
     match /roles/{userId} {
-      // function checkEmail(){
-      //   return request.auth.token.email == email;
-      // }
-
       allow read: if isAdmin() && isOwner(userId);
       allow write: if false;
     }
 
     match /vet_concerns/{concern} {
-      function  isValidVetConcern(data) {
-        return
-          data.size() == 11 &&
-          data.clientName is string &&
-          data.createdAt is timestamp &&
-          data.detail is string &&
-          data.petName is string &&
-          data.userEmail is string &&
-          data.userId is string &&
-          data.userName is string &&
-          data.userPhone is string &&
-          data.vetName is string &&
-          data.visitId is string &&
-          data.visitTime is timestamp;
-      }
-
       allow create: if isSignIn() && isValidVetConcern(request.resource.data);
       allow read: if isAdmin();
       allow update, delete: if false;
