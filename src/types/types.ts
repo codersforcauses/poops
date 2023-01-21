@@ -65,11 +65,16 @@ export type Duration = {
   minutes: number
 }
 
-export type IncidentForm = {
+export type Incident = {
+  docId?: string
   userID: string
   userName: string | null | undefined
+  visitId: string
+  visitTime: string
+  clientName: string
   email: string | null | undefined
   petName: string
   time: string
   details: string
+  createdAt: string
 }
