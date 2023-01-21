@@ -32,6 +32,8 @@ const VisitInfo = ({
 
   if (docId === undefined) return null
 
+  
+
   return (
     <>
       <div
@@ -63,6 +65,9 @@ const VisitInfo = ({
           <div className='space-x-1'>
             <span className='font-semibold'>Commute Method:</span>
             <span>{commuteMethod}</span>
+          </div>
+          <div>
+            <div className='font-semibold'>Photo:</div>
           </div>
           <div>
             <div className='font-semibold'>Notes:</div>
