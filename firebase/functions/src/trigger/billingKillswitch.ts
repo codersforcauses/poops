@@ -1,4 +1,5 @@
 import { CloudBillingClient } from '@google-cloud/billing'
+import { REGION } from '../config'
 import { functions } from '../main'
 
 const billing = new CloudBillingClient()
@@ -41,8 +42,6 @@ const _disableBillingForProject = async (projectName: string) => {
   console.log('Billing disabled')
   return `Billing disabled: ${JSON.stringify(res)}`
 }
-
-const REGION = process.env.REGION ?? 'australia-southeast1'
 
 export const stopBilling = functions
   .region(REGION)

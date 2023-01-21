@@ -1,5 +1,6 @@
 import { functions, firestore } from '../main'
 import { DocumentData } from 'firebase-admin/firestore'
+import { REGION } from '../config'
 
 interface UserStat {
   numVisits: number
@@ -7,8 +8,6 @@ interface UserStat {
   commutedDist: number
   walkedDist: number
 }
-
-const REGION = process.env.REGION ?? 'australia-southeast1'
 
 /**
  * Trigger for any changes to the visit subcollection
