@@ -50,32 +50,30 @@ export default function NavBar() {
     )
   })
 
-  // const visitLinkDetail = {
-  //   name: 'Visit',
-  //   route: '/visit',
-  //   icon: <NavIcon currentPage={currentPage} />
-  // }
+  const visitLinkDetail = {
+    name: 'Visit',
+    route: '/visit',
+    icon: <NavIcon currentPage={currentPage} />
+  }
 
-  // const visitNavLink = (
-  //   <NavLink
-  //     href={visitLinkDetail.route}
-  //     name={visitLinkDetail.name}
-  //     key={visitLinkDetail.name}
-  //     currentPage={visitLinkDetail.name === currentPage}
-  //     setCurrentPage={setCurrentPage}
-  //     icon={visitLinkDetail.icon}
-  //   />
-  // )
+  const visitNavLink = (
+    <NavLink
+      href={visitLinkDetail.route}
+      name={visitLinkDetail.name}
+      key={visitLinkDetail.name}
+      currentPage={visitLinkDetail.name === currentPage}
+      setCurrentPage={setCurrentPage}
+      icon={visitLinkDetail.icon}
+    />
+  )
 
   return (
-    <div className='h-16 w-full'>
-      <nav
-        id='bottom-navigation'
-        className='fixed inset-x-0 bottom-0 z-10 block h-20 bg-white shadow'
-      >
-        {/* {visitNavLink} */}
-        <div className='flex justify-between'>{navLinks}</div>
-      </nav>
-    </div>
+    <nav
+      id='bottom-navigation'
+      className='fixed inset-x-0 bottom-0 z-10 block h-16 w-full bg-white shadow'
+    >
+      {visitNavLink}
+      <div className='flex justify-between'>{navLinks}</div>
+    </nav>
   )
 }
