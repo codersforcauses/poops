@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from 'react'
-import { Router, useRouter } from 'next/router'
+import Link from 'next/link'
+import Router from 'next/router'
 import { doc, DocumentData, getDoc } from '@firebase/firestore'
 
 import { db } from '@/components/Firebase/init'
@@ -12,7 +13,6 @@ import mod from '@/lib/temp/firebase/functions/setRole'
 const Admin = () => {
   const { currentUser, isAdmin, refreshUserToken } = useAuth()
   const [userDoc, setUserDoc] = useState<DocumentData>()
-  const router = useRouter()
 
   const getUserDoc = useCallback(async () => {
     if (currentUser) {
@@ -46,6 +46,7 @@ const Admin = () => {
       <p>Email: {currentUser?.email}</p>
       <p>Admin status: {isAdmin.toString()}</p>
       <p>User role firestore document: {JSON.stringify(userDoc)}</p>
+
       <Button
         size='medium'
         intent='secondary'
@@ -71,14 +72,25 @@ const Admin = () => {
       >
         Unmod me!
       </Button>
-      <Button
-        size='medium'
-        intent='secondary'
-        type='button'
-        onClick={() => router.push('admin/roles')}
-      >
-        Roles
-      </Button>
+      <div className='m-2'>
+        <Button
+          size='medium'
+          intent='primary'
+          type='button'
+          onClick={() => Router.push('/admin/incidents')}
+        >
+          View Incidents
+        </Button>
+        <Button
+          size='medium'
+          intent='primary'
+          type='button'
+          onClick={() => Router.push('/admin/roles')}
+        >
+          View Roles
+        </Button>
+      </div>
+
       <NavBar />
     </>
   )
