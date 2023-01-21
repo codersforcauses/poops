@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react'
-import Link from 'next/link'
+import Router from 'next/router'
 import { doc, DocumentData, getDoc } from '@firebase/firestore'
 
 import { db } from '@/components/Firebase/init'
@@ -7,7 +7,6 @@ import NavBar from '@/components/NavBar'
 import Button from '@/components/UI/button'
 import { useAuth } from '@/context/Firebase/Auth/context'
 import mod from '@/lib/temp/firebase/functions/setRole'
-import Router from 'next/router'
 
 const Admin = () => {
   const { currentUser, isAdmin, refreshUserToken } = useAuth()
