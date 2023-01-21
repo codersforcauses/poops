@@ -28,6 +28,7 @@ type ContactItemProps = {
 function UpdateDetailsPanel({ contact }: ContactItemProps) {
   const { currentUser } = useAuth()
 
+  const [done, setDone] = useState(false)
   const [email, setEmail] = useState(contact?.email || '')
   const [displayName, setDisplayName] = useState(contact?.name || '')
   const [phoneNumber, setPhoneNumber] = useState(contact?.phone || '')
@@ -85,6 +86,7 @@ function UpdateDetailsPanel({ contact }: ContactItemProps) {
           }
           handleDocUpdate(currentUser)
           updateProfile(currentUser, { displayName: displayName })
+          setDone(true)
         }
       }
     } catch (error) {
@@ -120,14 +122,15 @@ function UpdateDetailsPanel({ contact }: ContactItemProps) {
       />
 
       <div id='recaptcha-container'></div>
-      <Link href=''>
+      {!done && (
         <button
-          disabled={!(displayName && email && phoneNumber)}
+          disabled={!(displayName && email && phoneNumber && !done)}
           onClick={(e) => handleSubmit(e, contact, currentUser)}
         >
           Submit
         </button>
-      </Link>
+      )}
+
       <div>
         {!(displayName && email && phoneNumber) && (
           <span>Please finish your missing details</span>
