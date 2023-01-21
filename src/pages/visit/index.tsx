@@ -12,7 +12,7 @@ const Visit: NextPageWithLayout = () => {
   const [searchQuery, setSearchQuery] = useState('')
   return (
     <div className='main-style'>
-      <div className='flex w-screen overflow-visible flex-col p-4'>
+      <div className='flex w-screen flex-col p-4'>
         <div className='align-center flex flex-row justify-around'>
           <SearchBar onChange={(event) => setSearchQuery(event.target.value)} />
           <AddButton />

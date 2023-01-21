@@ -111,7 +111,7 @@ const Set = () => {
   walkDist >= 0 && commuteDist >= 0 && commuteMethod
 
   return (
-    <div className='space-4 z-50 flex overflow-visible h-full flex-col p-4'>
+    <div className='space-4 z-50 flex h-full flex-col p-4'>
       {/* Exit Button */}
       <div className='fixed right-5 top-4 z-[100] h-10 w-10 rounded-full bg-primary drop-shadow-default'>
         <Link href='/visit'>
