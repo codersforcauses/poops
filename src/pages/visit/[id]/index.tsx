@@ -18,23 +18,24 @@ const Set = () => {
   const isNewVisit = visit === undefined || visit.docId === null
 
   return (
-    <div className='space-4 z-50 flex h-full flex-col p-4'>
-      {/* Exit Button */}
-      <div className='fixed right-5 top-4 z-[100] h-10 w-10 rounded-full bg-primary drop-shadow-default'>
-        <Link href='/visit'>
-          <button>
-            <XMarkIcon className='h-full w-full text-white' />
-          </button>
-        </Link>
-      </div>
-
-      {/* Heading */}
-      <>
+    /* Container */
+    <div className='space-4 z-50 flex h-full flex-col overflow-auto p-4'>
+      {/* Header */}
+      <div className='flex justify-between border-b-2 border-primary pb-2'>
+        {/* Heading */}
         <h1 className='p-2 text-2xl font-bold'>
           {isNewVisit ? 'Add' : 'Edit'} Your Visit
         </h1>
-        <div className='my-2 box-content border-t-2 border-primary' />
-      </>
+
+        {/* Exit Button */}
+        <div className='z-[100] h-10 w-10 rounded-full bg-primary drop-shadow-default'>
+          <Link href='/visit'>
+            <button>
+              <XMarkIcon className='h-full w-full text-white' />
+            </button>
+          </Link>
+        </div>
+      </div>
 
       {/* Wrapper */}
       <div className='container mx-auto flex flex-col gap-2 p-2'>
