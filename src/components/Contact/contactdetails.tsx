@@ -1,30 +1,44 @@
+import { useRouter } from 'next/router'
 import { PencilIcon } from '@heroicons/react/24/outline'
+import { UseMutateFunction } from '@tanstack/react-query'
 import { useAtom } from 'jotai'
 
-import { currentContactAtom, isEditingAtom } from '@/atoms/contacts'
+import { isEditingAtom } from '@/atoms/contacts'
 import ContactForm from '@/components/Contact/contactform'
 import ContactInfo from '@/components/Contact/contactinfo'
-import Header from '@/components/Header'
+import { Contact } from '@/types/types'
 
 import Button from '../UI/button'
 
-const ContactDetails = () => {
-  const [currentContact, setCurrentContact] = useAtom(currentContactAtom)
+interface ContactFormProps {
+  contact: Contact
+  mutate: UseMutateFunction<
+    unknown,
+    unknown,
+    Contact & { deleteDoc?: boolean },
+    unknown
+  >
+}
+
+const ContactDetails = ({ contact, mutate }: ContactFormProps) => {
   const [isEditing, setIsEditing] = useAtom(isEditingAtom)
+  const router = useRouter()
 
   return (
     <>
-      <Header
-        pageTitle={currentContact ? currentContact.name : 'New Contact'}
-      />
+      {/* <Header pageTitle={contact ? contact.name : 'New Contact'} /> */}
       <div className='m-auto flex h-14 w-full flex-row'>
         <div className='m-auto flex-1 text-center'>
           <Button
             type='button'
             size='medium'
             onClick={() => {
-              setCurrentContact(null)
-              setIsEditing(false)
+              if (isEditing) {
+                setIsEditing(false)
+              } else {
+                setIsEditing(false)
+                router.back()
+              }
             }}
           >
             Back
@@ -40,7 +54,11 @@ const ContactDetails = () => {
           )}
         </div>
       </div>
-      {isEditing ? <ContactForm /> : <ContactInfo />}
+      {isEditing ? (
+        <ContactForm contact={contact} mutate={mutate} />
+      ) : (
+        <ContactInfo contact={contact} mutate={mutate} />
+      )}
     </>
   )
 }

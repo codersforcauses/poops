@@ -1,15 +1,17 @@
 import { ReactElement } from 'react'
+import { useRouter } from 'next/router'
 
 import ContactDetails from '@/components/Contact/contactdetails'
 import Layout from '@/components/Layout'
 import { withProtected } from '@/components/PrivateRoute'
 import Spinner from '@/components/UI/loadingSpinner'
-import useUser, { useMutateUser } from '@/hooks/user'
+import { useContacts, useMutateContacts } from '@/hooks/contacts'
 import { NextPageWithLayout } from '@/pages/_app'
 
-const Profile: NextPageWithLayout = () => {
-  const { data, isLoading } = useUser()
-  const { mutate: mutateUser } = useMutateUser()
+const Contact: NextPageWithLayout = () => {
+  const router = useRouter()
+  const { data: contacts, isLoading } = useContacts()
+  const { mutate: mutateContacts } = useMutateContacts()
 
   if (isLoading)
     return (
@@ -18,18 +20,23 @@ const Profile: NextPageWithLayout = () => {
       </div>
     )
 
-  if (data === undefined) return null
+  const { id } = router.query
 
-  const user = data.info
+  if (contacts === undefined || id === undefined || Array.isArray(id))
+    return null
+
+  const contact = contacts.find((contact) => contact.docId === id)
+
+  if (contact === undefined) return null
 
   return (
     <div className='main-style'>
-      <ContactDetails contact={user} mutate={mutateUser} />
+      <ContactDetails contact={contact} mutate={mutateContacts} />
     </div>
   )
 }
 
-const ProfileWithProtected = withProtected(Profile)
+const ProfileWithProtected = withProtected(Contact)
 
 ProfileWithProtected.getLayout = (page: ReactElement) => (
   <Layout title='Profile'>{page}</Layout>

@@ -1,48 +1,42 @@
 import { ChangeEvent, FormEvent, useEffect } from 'react'
-import { Dispatch, SetStateAction, useState } from 'react'
+import { useRouter } from 'next/router'
+import { UseMutateFunction } from '@tanstack/react-query'
+import { useAtom, useSetAtom } from 'jotai'
 import tw from 'tailwind-styled-components'
 
+import { contactFormAtom, isEditingAtom } from '@/atoms/contacts'
 import Avatar from '@/components/Contact/avatar'
 import RegionSelector from '@/components/Contact/regiondropdown'
 import TagSelector from '@/components/Contact/tagdropdown'
-import { useContact } from '@/context/ContactContext/context'
-import type { Contact } from '@/types/types'
+import { Contact } from '@/types/types'
 
 import Button from '../UI/button'
 
-type ContactInfoProps = {
-  firestoreIndex: number
-  image: string
-  setIsEditing: Dispatch<SetStateAction<boolean>>
+interface ContactFormProps {
+  contact: Contact
+  isNewContact?: boolean
+  mutate: UseMutateFunction<
+    unknown,
+    unknown,
+    Contact & { deleteDoc?: boolean },
+    unknown
+  >
 }
 
 const ContactForm = ({
-  firestoreIndex,
-  image,
-  setIsEditing
-}: ContactInfoProps) => {
-  const { allContacts, insertContact, setDisplayContactIndex } = useContact()
+  contact,
+  isNewContact = false,
+  mutate
+}: ContactFormProps) => {
+  const router = useRouter()
+  const setIsEditing = useSetAtom(isEditingAtom)
+  const [contactForm, setContactForm] = useAtom(contactFormAtom)
 
-  const isNewContact = firestoreIndex === -1
+  useEffect(() => {
+    setContactForm(contact)
+  }, [setContactForm, contact])
 
-  const contact: Contact = isNewContact
-    ? {
-        id: '',
-        clientName: '',
-        desc: '',
-        pets: '',
-        email: '',
-        phone: '',
-        streetAddress: '',
-        region: [],
-        notes: '',
-        tags: []
-      }
-    : allContacts[firestoreIndex]
-
-  const [regions, setRegions] = useState(contact.region)
-  const [tags, setTags] = useState(contact.tags)
-  const [contactForm, setContactForm] = useState(contact)
+  if (contactForm === null) return null
 
   const handleInputChange = (
     e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>
@@ -62,15 +56,12 @@ const ContactForm = ({
   // TODO: Submit ContactForm to database
   const submitForm = (e: FormEvent) => {
     e.preventDefault()
-    // TODO: submit to firestore here
-    if (isNewContact) {
-      firestoreIndex = insertContact(contactForm)
-      setDisplayContactIndex(firestoreIndex)
-    } else {
-      insertContact(contactForm, firestoreIndex)
-      setDisplayContactIndex(firestoreIndex)
-    }
     setIsEditing(false)
+    mutate(contactForm, {
+      onSuccess(mutatedDocId, _variables, _context) {
+        if (isNewContact) router.replace(`/contact/${mutatedDocId}`)
+      }
+    })
   }
 
   return (
@@ -184,23 +175,21 @@ const ContactForm = ({
           />
         </Box>
         {/* FORM BUTTONS */}
-        <div className='mb-3 flex justify-center'>
-          <div className='space-y-2'>
-            <Button type='submit' fullwidth>
-              Save
+        <div className=' flex justify-center gap-2'>
+          <Button type='submit' fullwidth>
+            Save
+          </Button>
+          {!isNewContact && (
+            <Button
+              intent='secondary'
+              fullwidth
+              onClick={() => {
+                setIsEditing(false)
+              }}
+            >
+              Cancel
             </Button>
-            {!isNewContact && (
-              <Button
-                intent='secondary'
-                fullwidth
-                onClick={() => {
-                  if (setIsEditing !== undefined) setIsEditing(false)
-                }}
-              >
-                Cancel
-              </Button>
-            )}
-          </div>
+          )}
         </div>
       </div>
     </form>
