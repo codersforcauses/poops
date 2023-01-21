@@ -76,7 +76,6 @@ export const useMutateUser = () => {
     try {
       if (currentUser?.uid) {
         delete info.docId
-        console.log(info)
         const userDocRef = doc(db, 'users', currentUser.uid)
         await updateDoc(userDocRef, 'info', info)
       }

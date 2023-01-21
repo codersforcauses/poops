@@ -26,7 +26,6 @@ const ContactDetails = ({ contact, mutate }: ContactFormProps) => {
 
   return (
     <>
-      {/* <Header pageTitle={contact ? contact.name : 'New Contact'} /> */}
       <div className='m-auto flex h-14 w-full flex-row'>
         <div className='m-auto flex-1 text-center'>
           <Button
@@ -36,7 +35,6 @@ const ContactDetails = ({ contact, mutate }: ContactFormProps) => {
               if (isEditing) {
                 setIsEditing(false)
               } else {
-                setIsEditing(false)
                 router.back()
               }
             }}

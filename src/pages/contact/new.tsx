@@ -9,20 +9,22 @@ import { NextPageWithLayout } from '@/pages/_app'
 const NewContact: NextPageWithLayout = () => {
   const { mutate: mutateContacts } = useMutateContacts()
 
+  const newContact = {
+    name: '',
+    desc: '',
+    pets: '',
+    email: '',
+    phone: '',
+    streetAddress: '',
+    region: [],
+    notes: '',
+    tags: ['Client']
+  }
+
   return (
     <div className='main-style'>
       <ContactForm
-        contact={{
-          name: '',
-          desc: '',
-          pets: '',
-          email: '',
-          phone: '',
-          streetAddress: '',
-          region: [],
-          notes: '',
-          tags: ['Client']
-        }}
+        contact={newContact}
         isNewContact={true}
         mutate={mutateContacts}
       />
