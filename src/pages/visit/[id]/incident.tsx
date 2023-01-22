@@ -56,9 +56,10 @@ const Incident = () => {
         createdAt: Date.now().toString()
       }
       mutateIncidents(data)
+
       const message = {
         subject: 'Incident Report',
-        text: JSON.stringify(data)
+        text: formatIncident(data)
       }
       await fetch('/api/sendEmail', {
         method: 'POST',
@@ -67,6 +68,22 @@ const Incident = () => {
 
       router.push('/visit')
     }
+  }
+
+  const formatIncident = (data: Incident) => {
+    return `Incident Report
+User ID: ${data.userID}
+Username: ${data.userName}
+Email: ${data.email}
+Created At: ${data.createdAt}
+
+Client Name: ${data.clientName}
+Pet Name: ${data.petName}
+Visit ID: ${data.visitId}
+Visit Time: ${data.visitTime}
+
+Incident Time: ${data.time}
+Details: ${data.details}`
   }
 
   const isSubmitEnabled = () => {
