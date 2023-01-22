@@ -2,7 +2,7 @@ import { useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { ChatBubbleLeftEllipsisIcon,HomeIcon} from '@heroicons/react/24/outline'
+import { ChatBubbleLeftEllipsisIcon, HomeIcon} from '@heroicons/react/24/outline'
 import { ChatBubbleLeftEllipsisIcon as ChatIconSolid,HomeIcon as HomeIconSolid} from '@heroicons/react/24/solid'
 
 import NavLink from '@/components/NavBar/navlink'
