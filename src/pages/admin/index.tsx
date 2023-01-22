@@ -1,5 +1,4 @@
 import { useCallback, useEffect, useState } from 'react'
-import Link from 'next/link'
 import Router from 'next/router'
 import { doc, DocumentData, getDoc } from '@firebase/firestore'
 
