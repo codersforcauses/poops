@@ -35,17 +35,21 @@ const Roles = () => {
   return (
     <>
       <Header pageTitle='Roles' />
-      <main className='border-slate-900 h-[calc(100%-7rem)] border'>
-        <div className='m-3 mb-0 flex-1 text-left'>
-          <Button
-            type='button'
-            size='medium'
-            onClick={() => router.push('/admin')}
-          >
-            Back
-          </Button>
+      <div className='main-style'>
+        <div className='m-auto flex h-14 w-full flex-row'>
+          <div className='m-auto flex-1 text-center'>
+            <Button
+              type='button'
+              size='medium'
+              onClick={() => router.push('/admin')}
+            >
+              Back
+            </Button>
+          </div>
+          <h1 className='m-3 flex-1 text-center text-2xl'>Roles</h1>
+
+          <div className='flex-1'></div>
         </div>
-        <h1 className='m-3 mt-0 flex-1 text-center text-2xl'>Roles</h1>
         <form onSubmit={handleSubmit} className='m-auto mb-3 w-1/2 rounded-lg'>
           <FormField
             id='emailInput'
@@ -79,7 +83,7 @@ const Roles = () => {
             </tbody>
           </table>
         </div>
-      </main>
+      </div>
       <NavBar />
     </>
   )
