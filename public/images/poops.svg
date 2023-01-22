@@ -3,11 +3,12 @@
 	path {
 		fill: #FFFFFF;
         stroke: #000000;
-        stroke-width: 25px;
+        stroke-width: 30px;
 	}
 	@media (prefers-color-scheme: dark) {
 		path {
 			fill: #FFFFFF;
+			stroke-width: 30px;
 		}
 	}
 </style>
