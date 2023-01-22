@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from 'react'
+import Router from 'next/router'
 import { doc, DocumentData, getDoc } from '@firebase/firestore'
 
 import { db } from '@/components/Firebase/init'
@@ -42,6 +43,7 @@ const Admin = () => {
       <p>Email: {currentUser?.email}</p>
       <p>Admin status: {isAdmin.toString()}</p>
       <p>User role firestore document: {JSON.stringify(userDoc)}</p>
+
       <Button
         size='medium'
         intent='secondary'
@@ -67,6 +69,17 @@ const Admin = () => {
       >
         Unmod me!
       </Button>
+      <div className='m-2'>
+        <Button
+          size='medium'
+          intent='primary'
+          type='button'
+          onClick={() => Router.push('/admin/incidents')}
+        >
+          View Incidents
+        </Button>
+      </div>
+
       <NavBar />
     </>
   )

@@ -48,6 +48,7 @@ module.exports = {
   plugins: [
     require('@tailwindcss/forms')({
       strategy: 'class' // only generate classes
-    })
+    }),
+    require('@tailwindcss/line-clamp')
   ]
 }

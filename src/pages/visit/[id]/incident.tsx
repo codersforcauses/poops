@@ -7,10 +7,13 @@ import { withProtected } from '@/components/PrivateRoute'
 import Button from '@/components/UI/button'
 import FormField from '@/components/Visit/formfield'
 import { useAuth } from '@/context/Firebase/Auth/context'
-import { IncidentForm } from '@/types/types'
+import { useMutateIncidents } from '@/hooks/incidents'
+import { Incident } from '@/types/types'
 
-const IncidentForm = () => {
+const Incident = () => {
   const { currentUser } = useAuth()
+  const { mutate: mutateIncidents } = useMutateIncidents()
+
   const [userName, setUserName] = useState(
     currentUser?.displayName ? currentUser?.displayName : ''
   )
@@ -19,26 +22,41 @@ const IncidentForm = () => {
   )
   const [time, setTime] = useState('') //check issue comments for date/time
   const [notes, setNotes] = useState('')
+
   const router = useRouter()
   let { pets } = router.query
+  const { client, visitId } = router.query
 
   if (pets === undefined) pets = ''
   if (Array.isArray(pets)) pets = pets.length > 0 ? pets[0] : ''
+
+  let clientName = ''
+  if (Array.isArray(client)) clientName = client.length > 0 ? client[0] : ''
+  else if (client) clientName = client
+
+  let docId = ''
+  if (Array.isArray(visitId)) docId = visitId.length > 0 ? visitId[0] : ''
+  else if (visitId) docId = visitId
 
   const [petName, setPetName] = useState(pets)
 
   const handleSubmit = (click: FormEvent<HTMLFormElement>) => {
     click.preventDefault()
     if (currentUser !== null) {
-      const data: IncidentForm = {
+      const data: Incident = {
         userID: currentUser.uid,
         userName: userName,
+        clientName: clientName,
+        visitId: docId,
+        visitTime: time,
         email: email,
         petName: petName,
         time: time,
-        details: notes
+        details: notes,
+        createdAt: Date.now().toString()
       }
-      console.log(data)
+      mutateIncidents(data)
+
       router.push('/visit')
     }
   }
@@ -130,4 +148,4 @@ const IncidentForm = () => {
   )
 }
 
-export default withProtected(IncidentForm)
+export default withProtected(Incident)
