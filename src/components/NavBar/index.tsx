@@ -1,13 +1,12 @@
 import { useState } from 'react'
-import Image from 'next/image'
 import { useRouter } from 'next/router'
-import { HomeIcon, UsersIcon } from '@heroicons/react/24/outline'
+import {
+  ChatBubbleLeftEllipsisIcon,
+  HomeIcon
+} from '@heroicons/react/24/outline'
 
 import { NavIcon } from '@/components/NavBar/navicon'
-//import { NavIcon } from '@/components/NavBar/navicon'
 import NavLink from '@/components/NavBar/navlink'
-
-import PoopsSVG from '../../../public/images/poops.svg'
 
 export default function NavBar() {
   // Gets top level path, capitalises first letter
@@ -24,20 +23,12 @@ export default function NavBar() {
   const iconClasses = 'inline-block h-7 w-8 hover:text-primary'
 
   const linkDetails = [
-    { 
-      name: 'Home', 
-      route: '/', 
-      icon: <HomeIcon className={iconClasses} /> 
-    },
+    { name: 'Home', route: '/', icon: <HomeIcon className={iconClasses} /> },
+
     {
-      name: 'Visit',
-      route: '/visit',
-      icon: <Image className={iconClasses} alt='dog-icon' src={PoopsSVG} layout='fill' />
-    },
-    {
-      name: 'Contacts',
+      name: 'Contact',
       route: '/contact',
-      icon: <UsersIcon className={iconClasses} />
+      icon: <ChatBubbleLeftEllipsisIcon className={iconClasses} />
     }
   ]
 
@@ -54,29 +45,29 @@ export default function NavBar() {
     )
   })
 
-  // const visitLinkDetail = {
-  //   name: 'Visit',
-  //   route: '/visit',
-  //   icon: <NavIcon currentPage={currentPage} />
-  // }
+  const visitLinkDetail = {
+    name: 'Visit',
+    route: '/visit',
+    icon: <NavIcon currentPage={currentPage} />
+  }
 
-  // const visitNavLink = (
-  //   <NavLink
-  //     href={visitLinkDetail.route}
-  //     name={visitLinkDetail.name}
-  //     key={visitLinkDetail.name}
-  //     currentPage={visitLinkDetail.name === currentPage}
-  //     setCurrentPage={setCurrentPage}
-  //     icon={visitLinkDetail.icon}
-  //   />
-  // )
+  const visitNavLink = (
+    <NavLink
+      href={visitLinkDetail.route}
+      name={visitLinkDetail.name}
+      key={visitLinkDetail.name}
+      currentPage={visitLinkDetail.name === currentPage}
+      setCurrentPage={setCurrentPage}
+      icon={visitLinkDetail.icon}
+    />
+  )
 
   return (
     <nav
       id='bottom-navigation'
       className='fixed inset-x-0 bottom-0 z-10 block h-16 w-full bg-white shadow'
     >
-      {/* {visitNavLink} */}
+      {visitNavLink}
       <div className='flex justify-between'>{navLinks}</div>
     </nav>
   )
