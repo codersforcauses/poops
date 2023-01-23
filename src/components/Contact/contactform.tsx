@@ -52,13 +52,10 @@ const ContactForm = ({
 
   if (contactForm === null) return null
 
-
-
-
-
   // TODO: Submit ContactForm to database
-  const submitForm: SubmitHandler<ContactFormValues> = (formData: ContactFormValues) => {
-    
+  const submitForm: SubmitHandler<ContactFormValues> = (
+    formData: ContactFormValues
+  ) => {
     console.log(formData)
 
     const data: Contact = {
@@ -69,9 +66,13 @@ const ContactForm = ({
       email: formData.email,
       phone: formData.phone,
       streetAddress: formData.streetAddress,
-      region: formData.region?.map((region) => {return region.label}),
+      region: formData.region?.map((region) => {
+        return region.label
+      }),
       notes: formData.notes,
-      tags: formData.tags?.map((tag) => {return tag.label})
+      tags: formData.tags?.map((tag) => {
+        return tag.label
+      })
     }
 
     setIsEditing(false)
@@ -84,101 +85,103 @@ const ContactForm = ({
 
   return (
     <div className='flex justify-center'>
-    <Form<ContactFormValues>
-    onSubmit={submitForm}
-    defaultValues={contact ? {
-          name: contact.name,
-          desc: contact.desc,
-          pets: contact.pets,
-          email: contact.email,
-          phone: contact.phone,
-          streetAddress: contact.streetAddress,
-          region: contact.region.map((region) => {return {label: region, value: region}}),
-          notes: contact.notes,
-          tags: contact.tags.map((tag) => {return {label: tag, value: tag}})
-        } : {}
-        
-      }
-    >
-      <div className='flex flex-col items-center justify-center gap-3 bg-gray-300 bg-opacity-20 box-content w-80 rounded-lg px-3 py-1 break-words'>
-        {/* USER PROFILE IMAGE */}
-        <Avatar
-          image=''
-          height={48}
-          width={48}
-          iconClass='w-32 rounded-full'
-        />
-        <TextField
-          label='Full Name'
-          name='name'
-          rules={validationSchema.name}
-        />
+      <Form<ContactFormValues>
+        onSubmit={submitForm}
+        defaultValues={
+          contact
+            ? {
+                name: contact.name,
+                desc: contact.desc,
+                pets: contact.pets,
+                email: contact.email,
+                phone: contact.phone,
+                streetAddress: contact.streetAddress,
+                region: contact.region.map((region) => {
+                  return { label: region, value: region }
+                }),
+                notes: contact.notes,
+                tags: contact.tags.map((tag) => {
+                  return { label: tag, value: tag }
+                })
+              }
+            : {}
+        }
+      >
+        <div className='box-content flex w-80 flex-col items-center justify-center gap-3 break-words rounded-lg bg-gray-300 bg-opacity-20 px-3 py-1'>
+          {/* USER PROFILE IMAGE */}
+          <Avatar
+            image=''
+            height={48}
+            width={48}
+            iconClass='w-32 rounded-full'
+          />
+          <TextField
+            label='Full Name'
+            name='name'
+            rules={validationSchema.name}
+          />
 
-        <TextField
-          label='Description'
-          name='desc'
-          rules={validationSchema.desc}
-        />
-        <TextField
-          label='Phone Number'
-          name='phone'
-          rules={validationSchema.phone}
-        />
-        <TextField
-          label='Email'
-          name='email'
-          rules={validationSchema.email}
-        />
-        <TextField
-          label='Address'
-          name='streetAddress'
-          rules={validationSchema.streetAddress}
-        />
-        <CreateSelect<SelectOption<string>, true>
-          label='Tags'
-          name='tags'
-          rules={validationSchema.tags}
-          isMulti
-          isSearchable
-        />
-        <CreateSelect<SelectOption<string>, true>
-          label='Region'
-          name='region'
-          rules={validationSchema.region}
-          isMulti
-          isSearchable
-        />
+          <TextField
+            label='Description'
+            name='desc'
+            rules={validationSchema.desc}
+          />
+          <TextField
+            label='Phone Number'
+            name='phone'
+            rules={validationSchema.phone}
+          />
+          <TextField
+            label='Email'
+            name='email'
+            rules={validationSchema.email}
+          />
+          <TextField
+            label='Address'
+            name='streetAddress'
+            rules={validationSchema.streetAddress}
+          />
+          <CreateSelect<SelectOption<string>, true>
+            label='Tags'
+            name='tags'
+            rules={validationSchema.tags}
+            isMulti
+            isSearchable
+          />
+          <CreateSelect<SelectOption<string>, true>
+            label='Region'
+            name='region'
+            rules={validationSchema.region}
+            isMulti
+            isSearchable
+          />
 
-        <TextField
-          label='Pets'
-          name='pets'
-          rules={validationSchema.pets}
-        />
+          <TextField label='Pets' name='pets' rules={validationSchema.pets} />
 
-        <TextField
-          label='Notes'
-          name='notes'
-          rules={validationSchema.notes}
-        />
-        {/* FORM BUTTONS */}
-        <div className=' flex justify-center gap-2'>
-          <Button type='submit' fullwidth>
-            Save
-          </Button>
-          {!isNewContact && (
-            <Button
-              intent='secondary'
-              fullwidth
-              onClick={() => {
-                setIsEditing(false)
-              }}
-            >
-              Cancel
+          <TextField
+            label='Notes'
+            name='notes'
+            rules={validationSchema.notes}
+          />
+          {/* FORM BUTTONS */}
+          <div className=' flex justify-center gap-2'>
+            <Button type='submit' fullwidth>
+              Save
             </Button>
-          )}
+            {!isNewContact && (
+              <Button
+                intent='secondary'
+                fullwidth
+                onClick={() => {
+                  setIsEditing(false)
+                }}
+              >
+                Cancel
+              </Button>
+            )}
+          </div>
         </div>
-      </div>
-    </Form>
+      </Form>
     </div>
   )
 }
@@ -186,4 +189,3 @@ const ContactForm = ({
 export type SubmittedContactFormValues = keyof ContactFormValues
 
 export default ContactForm
-
