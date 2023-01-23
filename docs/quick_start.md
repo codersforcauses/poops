@@ -54,7 +54,7 @@ Local development with Local Emulator Suite can be a good fit for your evaluatio
    yarn emu
    ```
 
-1. To kill the emulators, press `Ctrl + z` and run:
+1. To kill the emulators, press `Ctrl + c` and run:
 
    ```bash
    yarn emu:stop
@@ -90,14 +90,22 @@ Local development with Local Emulator Suite can be a good fit for your evaluatio
    yarn build:emu
    ```
 
-1. To kill the emulators, press `Ctrl + z` and run:
+1. To kill the emulators, press `Ctrl + c` and run:
 
    ```bash
    yarn emu:stop
    ```
 
-&emsp;
+## Docsify
 
-&emsp;
+It is recommended to install `docsify-cli` globally, which helps initializing and previewing the website locally.
 
-&emsp;
+```bash
+npm i docsify-cli -g
+```
+
+Run the local server with `docsify serve`. You can preview your site in your browser on <http://localhost:3000>
+
+```bash
+docsify serve ./docs
+```
