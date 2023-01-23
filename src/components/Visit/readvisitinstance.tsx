@@ -1,7 +1,7 @@
-import Link from 'next/link'
 import { useRouter } from 'next/router'
 
 import Button from '@/components/UI/button'
+import { EditButton } from '@/components/Visit/buttons'
 import { Duration, Visit } from '@/types/types'
 
 export const formatDuration = (duration: Duration) => {
@@ -23,36 +23,72 @@ const VisitInfo = ({
   walkDist = 0,
   commuteDist = 0,
   commuteMethod = 'N/A',
-  notes = ''
+  notes = '',
+  clientName = '',
+  docId = ''
 }: VisitInfoProps) => {
   const router = useRouter()
+  const params = `pets=${petNames}&client=${clientName}&visitId=${docId}`
+
+  if (docId === undefined) return null
+
   return (
     <>
       <div
-        className={`justify-between overflow-hidden text-sm transition-all duration-300 ${
-          isOpen ? 'max-h-screen' : 'max-h-0'
+        className={`mt-2 justify-between text-sm transition-all duration-300 ${
+          isOpen ? '' : 'max-h-0 overflow-hidden'
         }`}
       >
-        <p>Visit Type: {type}</p>
-        <p>Pet(s): {petNames}</p>
-        <p>Duration: {formatDuration(duration)}</p>
-        <p>Walk Distance: {walkDist.toFixed(3)} km</p>
-        <p>Commute Distance: {commuteDist.toFixed(1)} km</p>
-        <p>Commute Method: {commuteMethod}</p>
-        <p>Notes: {notes}</p>
-        <div className='my-2 mr-9 flex justify-start gap-2'>
-          <Button
-            size='small'
-            onClick={() => router.push(`/visit/incident?pets=${petNames}`)}
-          >
-            Report Incident
-          </Button>
-          <Button
-            size='small'
-            onClick={() => router.push(`/visit/vet?pets=${petNames}`)}
-          >
-            Register Vet Concern
-          </Button>
+        <div className='max-h-screen space-y-1'>
+          <div className='space-x-1'>
+            <span className='font-semibold'>Visit Type:</span>
+            <span>{type}</span>
+          </div>
+          <div className='space-x-1'>
+            <span className='font-semibold'>Pet(s):</span>
+            <span>{petNames}</span>
+          </div>
+          <div className='space-x-1'>
+            <span className='font-semibold'>Duration:</span>
+            <span>{formatDuration(duration)}</span>
+          </div>
+          <div className='space-x-1'>
+            <span className='font-semibold'>Walk Distance:</span>
+            <span>{walkDist.toFixed(3)} km</span>
+          </div>
+          <div className='space-x-1'>
+            <span className='font-semibold'>Commute Distance:</span>
+            <span>{commuteDist.toFixed(1)} km</span>
+          </div>
+          <div className='space-x-1'>
+            <span className='font-semibold'>Commute Method:</span>
+            <span>{commuteMethod}</span>
+          </div>
+          <div>
+            <div className='font-semibold'>Notes:</div>
+            <p className='my-1 line-clamp-6'>{notes}</p>
+          </div>
+        </div>
+        <div className='flex items-center justify-around py-2'>
+          <div className='w-2/5'>
+            <Button
+              size='small'
+              onClick={() => router.push(`/visit/${docId}/incident?${params}`)}
+            >
+              Report Incident
+            </Button>
+          </div>
+          <div className='w-2/5'>
+            <Button
+              size='small'
+              onClick={() => router.push(`/visit/${docId}/vet?${params}`)}
+            >
+              Register Vet Concern
+            </Button>
+          </div>
+          <div className='w-fit'>
+            <EditButton id={docId} />
+          </div>
         </div>
       </div>
     </>

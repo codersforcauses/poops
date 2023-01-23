@@ -19,7 +19,7 @@ const Set = () => {
   const { mutate: mutateVisits } = useMutateVisits()
 
   const router = useRouter()
-  const queryId = router.query.id
+  const { id: queryId } = router.query
   const visitId =
     queryId === undefined || Array.isArray(queryId) ? null : queryId
   const visit = visits?.find((visit) => queryId && visit.docId === visitId)
@@ -46,7 +46,8 @@ const Set = () => {
       duration,
       walkDist,
       commuteDist,
-      commuteMethod
+      commuteMethod,
+      notes
     } = visit
 
     setVisitType(type)
@@ -56,6 +57,7 @@ const Set = () => {
     setWalkDist(walkDist)
     setCommuteDist(commuteDist)
     setCommuteMethod(commuteMethod)
+    setNotes(notes)
   }, [visit])
 
   const isNewVisit = visit === undefined || visit.docId === null
