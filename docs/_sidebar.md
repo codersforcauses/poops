@@ -1,5 +1,3 @@
-# poops
-
 - Quick Start
 
   - [NextJS](quick_start.md#nextjs)
