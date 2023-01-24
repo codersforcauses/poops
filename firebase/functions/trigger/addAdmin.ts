@@ -5,7 +5,7 @@ const WHITELISTED_DOMAINS = 'poops.org'
 
 /**
  * Trigger to automatically assign admin role if email matches whitelisted
- * domain.
+ * domains.
  */
 export const addAdmin = functions.auth.user().onCreate(async (user) => {
   const userId = user.uid
