@@ -135,16 +135,6 @@ const Set = () => {
         <form onSubmit={handleSubmit}>
           {/* could rewrite to use awful react-select to make chevron icon consistent */}
           <div className='grid grid-cols-2 gap-4'>
-            <FormField
-              id='visitTypeInput'
-              type='select'
-              placeholder='Select...'
-              value={visitType}
-              label='Visit Type:'
-              selectOptions={visitSelectOptions}
-              isRequired={true}
-              onChange={(event) => setVisitType(event.target.value)}
-            />
             <ClientSelector
               id='clientNameInput'
               type='text'
@@ -157,7 +147,16 @@ const Set = () => {
               isRequired={true}
               setClient={setClientPetNames}
             />
-
+            <FormField
+              id='visitTypeInput'
+              type='select'
+              placeholder='Select...'
+              value={visitType}
+              label='Visit Type:'
+              selectOptions={visitSelectOptions}
+              isRequired={true}
+              onChange={(event) => setVisitType(event.target.value)}
+            />
             <FormField
               id='commuteDistInput'
               type='number'
