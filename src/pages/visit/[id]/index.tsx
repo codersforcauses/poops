@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { XMarkIcon } from '@heroicons/react/24/outline'
 import { Timestamp } from 'firebase/firestore'
+import { SingleValue } from 'react-select'
 
 import { withProtected } from '@/components/PrivateRoute'
 import Button from '@/components/UI/button'
@@ -11,7 +12,7 @@ import CommuteSelector from '@/components/Visit/commuteselector'
 import DurationSelector from '@/components/Visit/durationselector'
 import FormField from '@/components/Visit/formfield'
 import { useMutateVisits, useVisits } from '@/hooks/visits'
-import { Duration, Visit } from '@/types/types'
+import { Duration, SelectOption,Visit } from '@/types/types'
 import { formatTimestamp, visitSelectOptions } from '@/utils'
 
 const Set = () => {
@@ -110,6 +111,24 @@ const Set = () => {
     duration.minutes >= 0
   walkDist >= 0 && commuteDist >= 0 && commuteMethod
 
+  const handleClientChange = (newValue: SingleValue<SelectOption>) => {
+    // fired when user selects an option or creates an option
+    if (newValue === null) return
+    setClientPetNames({ clientName: newValue.label, petNames: newValue.value })
+
+    // no need to prefill if not new visit
+    if (!isNewVisit) return
+
+    // getting past visit for selected client to prefill
+    const pastVisit = visits?.find((visit) => visit.clientName === newValue.label)
+    if (pastVisit !== undefined) {
+      setDuration(pastVisit.duration)
+      setCommuteDist(pastVisit.commuteDist)
+      setCommuteMethod(pastVisit.commuteMethod)
+      setWalkDist(pastVisit.walkDist)
+    }
+  }
+
   return (
     <div className='space-4 z-50 flex h-full flex-col p-4'>
       {/* Exit Button */}
@@ -146,6 +165,7 @@ const Set = () => {
               label='Client Name:'
               isRequired={true}
               setClient={setClientPetNames}
+              handleChange={handleClientChange}
             />
             <FormField
               id='visitTypeInput'
