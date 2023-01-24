@@ -12,7 +12,7 @@ import CommuteSelector from '@/components/Visit/commuteselector'
 import DurationSelector from '@/components/Visit/durationselector'
 import FormField from '@/components/Visit/formfield'
 import { useMutateVisits, useVisits } from '@/hooks/visits'
-import { Duration, SelectOption,Visit } from '@/types/types'
+import { Duration, SelectOption, Visit } from '@/types/types'
 import { formatTimestamp, visitSelectOptions } from '@/utils'
 
 const Set = () => {
@@ -25,7 +25,9 @@ const Set = () => {
     queryId === undefined || Array.isArray(queryId) ? null : queryId
   const visit = visits?.find((visit) => queryId && visit.docId === visitId)
 
-  const [visitType, setVisitType] = useState<string>('')
+  const [visitType, setVisitType] = useState<string>(
+    visitSelectOptions[0].value
+  )
   const [clientPetNames, setClientPetNames] = useState<{
     clientName: string
     petNames: string
@@ -120,7 +122,9 @@ const Set = () => {
     if (!isNewVisit) return
 
     // getting past visit for selected client to prefill
-    const pastVisit = visits?.find((visit) => visit.clientName === newValue.label)
+    const pastVisit = visits?.find(
+      (visit) => visit.clientName === newValue.label
+    )
     if (pastVisit !== undefined) {
       setDuration(pastVisit.duration)
       setCommuteDist(pastVisit.commuteDist)
@@ -170,7 +174,6 @@ const Set = () => {
             <FormField
               id='visitTypeInput'
               type='select'
-              placeholder='Select...'
               value={visitType}
               label='Visit Type:'
               selectOptions={visitSelectOptions}

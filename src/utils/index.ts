@@ -38,6 +38,6 @@ export const humanizeTimestamp = (timestamp?: Timestamp) => {
 }
 
 export const visitSelectOptions: SelectOption[] = [
-  { label: 'Vet', value: 'Vet' },
-  { label: 'Walk', value: 'Walk' }
+  { label: 'Walk', value: 'Walk' },
+  { label: 'Vet', value: 'Vet' }
 ]
