@@ -24,21 +24,19 @@ const Incident = () => {
 
   return (
     <div className='z-50 p-4'>
-      <>
-        <div className='fixed right-5 top-4 z-[100] h-10 w-10 rounded-full bg-primary p-1 drop-shadow-default'>
-          <Link href='/visit'>
-            <button>
-              <XMarkIcon className='h-full w-full text-white' />
-            </button>
-          </Link>
-        </div>
+      <div className='fixed right-5 top-4 z-[100] h-10 w-10 rounded-full bg-primary p-1 drop-shadow-default'>
+        <Link href='/visit'>
+          <button>
+            <XMarkIcon className='h-full w-full text-white' />
+          </button>
+        </Link>
+      </div>
 
-        <div className='border-b-2 border-primary py-3 pt-10'>
-          <h1 className='pl-2 text-2xl font-bold'>Add Your Incident</h1>
-        </div>
+      <div className='border-b-2 border-primary py-3 pt-10'>
+        <h1 className='pl-2 text-2xl font-bold'>Add Your Incident</h1>
+      </div>
 
-        <IncidentForm docId={docId} clientName={clientName} pets={pets} />
-      </>
+      <IncidentForm docId={docId} clientName={clientName} pets={pets} />
     </div>
   )
 }
