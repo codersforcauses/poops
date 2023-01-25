@@ -16,9 +16,9 @@ export default function NavLink({
   currentPage,
   setCurrentPage
 }: NavLinkProps) {
-  const tabClasses =
-    'inline-block w-full justify-center text-center'
-  const currentTabClasses = tabClasses + ' border-t-2 border-t-primary transition duration-500'
+  const tabClasses = 'inline-block w-full justify-center text-center'
+  const currentTabClasses =
+    tabClasses + ' border-t-2 border-t-primary transition duration-500'
 
   return (
     <Link href={href}>
@@ -27,10 +27,10 @@ export default function NavLink({
         onMouseUp={() => setCurrentPage(name)}
         aria-hidden='true' // TODO: need work on accessibility
       >
-        {icon}
+        <object className='pointer-events-none'>{icon}</object>
+
         <span className='tab tab-home block text-xs'>{name}</span>
       </a>
     </Link>
   )
 }
-
