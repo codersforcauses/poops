@@ -1,5 +1,8 @@
-import { Dispatch, SetStateAction, useState } from 'react'
+import { useState } from 'react'
+import { useSetAtom } from 'jotai'
 import Select, { MultiValue, StylesConfig } from 'react-select'
+
+import { contactFormAtom } from '@/atoms/contacts'
 const regionOptions = [
   { value: 'Eastern', label: 'Eastern' },
   { value: 'Coastal South', label: 'Coastal South' },
@@ -14,8 +17,8 @@ const regionOptions = [
 
 type Props = {
   regions: Array<string>
-  setRegions: Dispatch<SetStateAction<Array<string>>>
 }
+
 type MyOption = { label: string; value: string }
 
 const customStyles: StylesConfig<MyOption> = {
@@ -36,12 +39,20 @@ const customStyles: StylesConfig<MyOption> = {
   }
 }
 
-const RegionSelector = ({ regions, setRegions }: Props) => {
+const RegionSelector = ({ regions }: Props) => {
+  const setContactForm = useSetAtom(contactFormAtom)
   const [regionValue, setRegionValue] = useState<MultiValue<MyOption>>()
 
   const handleChange = (newValue: MultiValue<MyOption>) => {
     setRegionValue(newValue)
-    setRegions(Object.values(newValue).map((val) => val.value))
+    setContactForm((prev) =>
+      prev
+        ? {
+            ...prev,
+            region: newValue.map((v) => v.value)
+          }
+        : null
+    )
   }
 
   return (

@@ -32,14 +32,16 @@ yarn-error.log*
 # vercel
 .vercel
 
+# yarn
+.yarn/cache
+
 # next-sitemap
 robots.txt
 sitemap.xml
 sitemap-*.xml
 
 # environmonet
-# .env
-.env.local
+.env
 .env.development
 .env.production
 

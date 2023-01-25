@@ -1,12 +1,12 @@
 import { Timestamp } from 'firebase/firestore'
 
-export interface UserData {
-  clientName: string
-  contacts: Contact[]
-  visits: VisitData[]
+export interface User {
+  info: Contact
+  stats: UserStat
 }
 
-export interface VisitData {
+export interface Visit {
+  docId?: string
   type: string
   clientName: string
   petNames: string
@@ -19,9 +19,8 @@ export interface VisitData {
 }
 
 export interface Contact {
-  //historic type to deal with type issues with contacts
-  id: string
-  clientName: string
+  docId?: string
+  name: string
   desc: string
   pets: string
   email: string
@@ -32,7 +31,43 @@ export interface Contact {
   tags: string[]
 }
 
+export interface VetConcern {
+  docId?: string
+  userId: string
+  userName: string
+  userEmail: string
+  userPhone: string
+  clientName: string
+  petName: string
+  vetName: string
+  visitTime: Timestamp
+  visitId: string
+  detail: string
+  createdAt: Timestamp
+}
+
+export interface UserStat {
+  numVisits: number
+  numHours: number
+  commutedDist: number
+  walkedDist: number
+}
+
+export interface SelectOption<T> {
+  label: string
+  value: T
+}
+
 export type Duration = {
   hours: number
   minutes: number
+}
+
+export type IncidentForm = {
+  userID: string
+  userName: string | null | undefined
+  email: string | null | undefined
+  petName: string
+  time: string
+  details: string
 }

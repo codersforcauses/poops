@@ -1,11 +1,10 @@
-import { useContext, useMemo } from 'react'
+import { useMemo } from 'react'
 import { useRouter } from 'next/router'
 import { Timestamp } from 'firebase/firestore'
 import { SubmitHandler } from 'react-hook-form'
 
 import Button from '@/components/UI/button'
 import Form from '@/components/UI/FormComponents/Form'
-import { FormContext } from '@/components/UI/FormComponents/Form/context'
 import {
   CreateSelect,
   CustomSelect,
@@ -14,13 +13,13 @@ import {
 import { SelectOption } from '@/components/UI/FormComponents/SelectFields/utils'
 import TextField from '@/components/UI/FormComponents/TextField'
 import validationSchema from '@/components/Visit/VisitForm/validation'
-import { useFirestore } from '@/context/Firebase/Firestore/context'
-import { Duration, VisitData } from '@/types/types'
+import { useContacts } from '@/hooks/contacts'
+import { useMutateVisits } from '@/hooks/visits'
+import { Contact, Duration, Visit } from '@/types/types'
 import { defaultCommuteMethods, formatTimestamp, visitTypes } from '@/utils'
 
 interface VisitFormProps {
-  id: number | null
-  visitData: VisitData | null
+  visitData?: Visit
 }
 
 interface ClientInfo {
@@ -28,7 +27,7 @@ interface ClientInfo {
   petNames: string
 }
 
-export interface FormValues {
+interface FormValues {
   visitType: SelectOption<string>
   clientName: SelectOption<ClientInfo>
   startTime: string
@@ -39,16 +38,21 @@ export interface FormValues {
   notes: string
 }
 
-export const VisitForm = ({ visitData, id }: VisitFormProps) => {
-  const { userDoc, updateVisit } = useFirestore()
-  const { reset } = useContext(FormContext)
+export const VisitForm = ({ visitData }: VisitFormProps) => {
+  const { data: contacts } = useContacts()
+  const { mutate: mutateVisits } = useMutateVisits()
   const router = useRouter()
 
-  const handleSubmit: SubmitHandler<FormValues> = (formData) => {
-    const data: VisitData = {
+  const isNewVisit = visitData === undefined || visitData?.docId === null
+
+  const handleSubmit: SubmitHandler<FormValues> = async (
+    formData: FormValues
+  ) => {
+    const data: Visit = {
+      docId: isNewVisit ? undefined : visitData?.docId,
       type: formData.visitType.value,
       clientName: formData.clientName.value.clientName,
-      petNames: formData.clientName.value.petNames, // TODO GET PET NAMES FROM CONTACTS
+      petNames: formData.clientName.value.petNames,
       startTime: Timestamp.fromDate(new Date(formData.startTime)),
       duration: formData.duration,
       walkDist: formData.walkDist,
@@ -57,17 +61,15 @@ export const VisitForm = ({ visitData, id }: VisitFormProps) => {
       notes: formData.notes
     }
 
-    // console.log(data)
+    mutateVisits(data)
 
-    if (visitData && id) {
-      userDoc.visits[id] = data
-    } else {
-      userDoc.visits.push(data)
-    }
-
-    updateVisit?.(userDoc)
     router.push('/visit')
-    // TODO: add alert?
+  }
+
+  const handleDelete = async () => {
+    mutateVisits({ docId: visitData?.docId })
+
+    router.push('/visit')
   }
 
   return (
@@ -98,7 +100,6 @@ export const VisitForm = ({ visitData, id }: VisitFormProps) => {
         }
       }, [visitData])}
     >
-      {/* could rewrite to use awful react-select to make chevron icon consistent */}
       <div className='grid grid-cols-2 gap-4'>
         <CustomSelect<SelectOption<string>, false>
           label='Visit Type:'
@@ -111,11 +112,11 @@ export const VisitForm = ({ visitData, id }: VisitFormProps) => {
         <CustomSelect<SelectOption<ClientInfo>, false>
           label='Client Name:'
           name='clientName'
-          options={userDoc.contacts.map((contact) => {
+          options={contacts?.map((contact: Contact) => {
             return {
-              label: contact.clientName,
+              label: contact.name,
               value: {
-                clientName: contact.clientName,
+                clientName: contact.name,
                 petNames: contact.pets
               }
             }
@@ -177,6 +178,17 @@ export const VisitForm = ({ visitData, id }: VisitFormProps) => {
           type='submit'
         >
           Submit
+        </Button>
+
+        <Button
+          className='col-span-2'
+          intent='secondary'
+          fullwidth
+          onClick={handleDelete}
+          hidden={isNewVisit} // button should be hidden if no id
+          type='button'
+        >
+          Remove This Visit
         </Button>
       </div>
     </Form>

@@ -1,41 +1,44 @@
-import { useState } from 'react'
-import { PencilIcon } from '@heroicons/react/outline'
+import { useRouter } from 'next/router'
+import { PencilIcon } from '@heroicons/react/24/outline'
+import { UseMutateFunction } from '@tanstack/react-query'
+import { useAtom } from 'jotai'
 
+import { isEditingAtom } from '@/atoms/contacts'
 import ContactForm from '@/components/Contact/contactform'
 import ContactInfo from '@/components/Contact/contactinfo'
-import Header from '@/components/Header'
-import { useContact } from '@/context/ContactContext/context'
+import { Contact } from '@/types/types'
 
 import Button from '../UI/button'
 
-type ContactProp = {
-  firestoreIndex: number
+interface ContactFormProps {
+  contact: Contact
+  mutate: UseMutateFunction<
+    unknown,
+    unknown,
+    Contact & { deleteDoc?: boolean },
+    unknown
+  >
 }
 
-const ContactDetails = ({ firestoreIndex }: ContactProp) => {
-  const { allContacts, setCreatingNewContact, setDisplayContactIndex } =
-    useContact()
-  const contacts = allContacts
-  const isNewContact = firestoreIndex === -1
-  const [isEditing, setIsEditing] = useState<boolean>(isNewContact)
+const ContactDetails = ({ contact, mutate }: ContactFormProps) => {
+  const [isEditing, setIsEditing] = useAtom(isEditingAtom)
+  const router = useRouter()
 
   return (
     <>
-      <Header
-        pageTitle={
-          firestoreIndex >= 0
-            ? contacts[firestoreIndex].clientName
-            : 'New Contact'
-        }
-      />
+      {/* <Header pageTitle={contact ? contact.name : 'New Contact'} /> */}
       <div className='m-auto flex h-14 w-full flex-row'>
         <div className='m-auto flex-1 text-center'>
           <Button
             type='button'
             size='medium'
             onClick={() => {
-              setCreatingNewContact(false)
-              setDisplayContactIndex(-1)
+              if (isEditing) {
+                setIsEditing(false)
+              } else {
+                setIsEditing(false)
+                router.back()
+              }
             }}
           >
             Back
@@ -51,14 +54,10 @@ const ContactDetails = ({ firestoreIndex }: ContactProp) => {
           )}
         </div>
       </div>
-      {!isEditing ? (
-        <ContactInfo firestoreIndex={firestoreIndex} image='' />
+      {isEditing ? (
+        <ContactForm contact={contact} mutate={mutate} />
       ) : (
-        <ContactForm
-          firestoreIndex={firestoreIndex}
-          image=''
-          setIsEditing={setIsEditing}
-        />
+        <ContactInfo contact={contact} mutate={mutate} />
       )}
     </>
   )

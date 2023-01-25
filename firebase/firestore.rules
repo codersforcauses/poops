@@ -1,37 +1,39 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
-    match /users/{userId} {
-      function isSignIn(){
+    function isSignIn(){
         return request.auth != null;
       }
 
-      function isOwner(){
-        return request.auth.uid == userId;
-      }
+    // function hasVerifiedEmail(){
+    //   return request.auth.token.email_verified;
+    // }
 
-      function hasVerifiedEmail(){
-        return request.auth.token.email_verified;
-      }
-
-      allow read, write: if isSignIn() && isOwner();
+    function isOwner(uid){
+      return request.auth.uid == uid;
     }
 
-    // TODO: Remove this after firestore has integrated into the contact page
-    match /TestUsers/{userId} {
-      function isSignIn(){
-        return request.auth != null;
-      }
+    function isAdmin(){
+      return request.auth.token.admin;
+    }
 
-      function isOwner(){
-        return request.auth.uid == userId;
-      }
+    match /users/{userId}/{document=**} {
+      
+      allow read, write: if isSignIn() && isOwner(userId);
+    }
 
-      function hasVerifiedEmail(){
-        return request.auth.token.email_verified;
-      }
+    match /roles/{userId} {
+      // function checkEmail(){
+      //   return request.auth.token.email == email;
+      // }
+      allow read: if isSignIn() && isAdmin() && isOwner(userId);
+      allow write: if false;
+    }
 
-      allow read, write: if isSignIn() && isOwner();
+    match /vet_concerns/{concern} {
+      allow create: if isSignIn();
+      allow read: if isSignIn() && isAdmin();
+      allow update, delete: if false;
     }
   }
 }

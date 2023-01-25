@@ -1,24 +1,35 @@
+import { ReactElement, ReactNode } from 'react'
+import { NextPage } from 'next'
 import { AppProps } from 'next/app'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 
 import { AlertContextProvider } from '@/context/AlertContext'
-import ContactProvider from '@/context/ContactContext'
 import { AuthContextProvider } from '@/context/Firebase/Auth'
-import FirestoreProvider from '@/context/Firebase/Firestore'
 
 import '@/styles/main.css'
 
-const POOPS = ({ Component, pageProps }: AppProps) => {
+const queryClient = new QueryClient()
+
+export type NextPageWithLayout = NextPage & {
+  getLayout?: (page: ReactElement) => ReactNode
+}
+
+type AppPropsWithLayout = AppProps & {
+  Component: NextPageWithLayout
+}
+
+const POOPS = ({ Component, pageProps }: AppPropsWithLayout) => {
+  const getLayout = Component.getLayout ?? ((page) => page)
   return (
     <>
       <AuthContextProvider>
-        <FirestoreProvider>
-          <AlertContextProvider>
-            <ContactProvider>
-              <Component {...pageProps} />
-              {/* <NavBar /> */}
-            </ContactProvider>
-          </AlertContextProvider>
-        </FirestoreProvider>
+        <AlertContextProvider>
+          <QueryClientProvider client={queryClient}>
+            {getLayout(<Component {...pageProps} />)}
+            <ReactQueryDevtools />
+          </QueryClientProvider>{' '}
+        </AlertContextProvider>
       </AuthContextProvider>
     </>
   )
