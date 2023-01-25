@@ -38,7 +38,7 @@ const Set = () => {
       </div>
 
       {/* Wrapper */}
-      <div className='container mx-auto flex flex-col gap-2 p-2'>
+      <div className='container mx-auto flex flex-col gap-2 overflow-scroll p-2'>
         {/* Form */}
         <VisitForm visitData={visit} />
       </div>
