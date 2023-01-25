@@ -1,4 +1,5 @@
 import { createContext, PropsWithChildren, useMemo } from 'react'
+import { ValidationValueMessage } from 'react-hook-form'
 
 const FieldControlContext = createContext<FieldControlProps>({
   disabled: false,
@@ -25,5 +26,5 @@ interface FieldControlProps {
   disabled: boolean
   error?: string
   name: string
-  required?: boolean
+  required?: string | boolean | ValidationValueMessage<boolean>
 }

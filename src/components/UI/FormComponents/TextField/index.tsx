@@ -32,7 +32,7 @@ const TextField = ({
     <FieldControl
       name={props.name}
       error={error}
-      required={'required' in rules || required}
+      required={rules.required || required}
       disabled={formDisabled || disabled}
     >
       <div
