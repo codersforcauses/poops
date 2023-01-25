@@ -84,104 +84,107 @@ const ContactForm = ({
   }
 
   return (
-    <div className='flex justify-center'>
-      <Form<ContactFormValues>
-        onSubmit={submitForm}
-        defaultValues={
-          contact
-            ? {
-                name: contact.name,
-                desc: contact.desc,
-                pets: contact.pets,
-                email: contact.email,
-                phone: contact.phone,
-                streetAddress: contact.streetAddress,
-                region: contact.region.map((region) => {
-                  return { label: region, value: region }
-                }),
-                notes: contact.notes,
-                tags: contact.tags.map((tag) => {
-                  return { label: tag, value: tag }
-                })
-              }
-            : {}
-        }
-      >
-        <div className='box-content flex w-80 flex-col items-center justify-center gap-3 break-words rounded-lg bg-gray-300 bg-opacity-20 px-3 py-1'>
-          {/* USER PROFILE IMAGE */}
-          <Avatar
-            image=''
-            height={48}
-            width={48}
-            iconClass='w-32 rounded-full'
-          />
-          <TextField
-            label='Full Name'
-            name='name'
-            rules={validationSchema.name}
-          />
+    <div className='mx-auto flex w-screen flex-col justify-center gap-4 p-4'>
+      <div className='flex w-full flex-col items-center justify-center gap-4 rounded-lg bg-gray-100 p-4'>
+        <Avatar
+          image=''
+          height={48}
+          width={48}
+          iconClass='w-32 rounded-full bg-white hover:bg-gray-200 hover:cursor-pointer'
+        />
+        <div className='w-full border border-b-gray-300' />
+        <Form<ContactFormValues>
+          className='w-full'
+          onSubmit={submitForm}
+          defaultValues={
+            contact
+              ? {
+                  name: contact.name,
+                  desc: contact.desc,
+                  pets: contact.pets,
+                  email: contact.email,
+                  phone: contact.phone,
+                  streetAddress: contact.streetAddress,
+                  region: contact.region.map((region) => {
+                    return { label: region, value: region }
+                  }),
+                  notes: contact.notes,
+                  tags: contact.tags.map((tag) => {
+                    return { label: tag, value: tag }
+                  })
+                }
+              : {}
+          }
+        >
+          <div className='flex flex-col gap-4 p-4'>
+            <TextField
+              label='Full Name'
+              name='name'
+              rules={validationSchema.name}
+            />
 
-          <TextField
-            label='Description'
-            name='desc'
-            rules={validationSchema.desc}
-          />
-          <TextField
-            label='Phone Number'
-            name='phone'
-            rules={validationSchema.phone}
-          />
-          <TextField
-            label='Email'
-            name='email'
-            rules={validationSchema.email}
-          />
-          <TextField
-            label='Address'
-            name='streetAddress'
-            rules={validationSchema.streetAddress}
-          />
-          <CreateSelect<SelectOption<string>, true>
-            label='Tags'
-            name='tags'
-            rules={validationSchema.tags}
-            isMulti
-            isSearchable
-          />
-          <CreateSelect<SelectOption<string>, true>
-            label='Region'
-            name='region'
-            rules={validationSchema.region}
-            isMulti
-            isSearchable
-          />
+            <TextField
+              label='Description'
+              name='desc'
+              rules={validationSchema.desc}
+            />
+            <TextField
+              label='Phone Number'
+              name='phone'
+              rules={validationSchema.phone}
+            />
+            <TextField
+              label='Email'
+              name='email'
+              rules={validationSchema.email}
+            />
+            <TextField
+              label='Address'
+              name='streetAddress'
+              rules={validationSchema.streetAddress}
+            />
+            <CreateSelect<SelectOption<string>, true>
+              label='Tags'
+              name='tags'
+              rules={validationSchema.tags}
+              isMulti
+              isSearchable
+            />
+            <CreateSelect<SelectOption<string>, true>
+              label='Region'
+              name='region'
+              rules={validationSchema.region}
+              isMulti
+              isSearchable
+            />
 
-          <TextField label='Pets' name='pets' rules={validationSchema.pets} />
+            <TextField label='Pets' name='pets' rules={validationSchema.pets} />
 
-          <TextField
-            label='Notes'
-            name='notes'
-            rules={validationSchema.notes}
-          />
-          {/* FORM BUTTONS */}
-          <div className=' flex justify-center gap-2'>
-            <Button type='submit' fullwidth>
-              Save
-            </Button>
-            {!isNewContact && (
-              <Button
-                intent='secondary'
-                fullwidth
-                onClick={() => {
-                  setIsEditing(false)
-                }}
-              >
-                Cancel
+            <TextField
+              label='Notes'
+              name='notes'
+              rules={validationSchema.notes}
+            />
+            {/* FORM BUTTONS */}
+            <div className=' flex justify-center gap-2'>
+              <Button type='submit' fullwidth>
+                Save
               </Button>
-            )}
+              {!isNewContact && (
+                <Button
+                  intent='secondary'
+                  fullwidth
+                  onClick={() => {
+                    setIsEditing(false)
+                  }}
+                >
+                  Cancel
+                </Button>
+              )}
+            </div>
           </div>
-        </div>
-      </Form>
+        </Form>
+      </div>
     </div>
   )
 }

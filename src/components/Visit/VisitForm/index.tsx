@@ -168,6 +168,7 @@ export const VisitForm = ({ visitData }: VisitFormProps) => {
           type='textarea'
           name='notes'
           placeholder='Add notes here...'
+          rules={validationSchema.notes}
         />
 
         <Button
