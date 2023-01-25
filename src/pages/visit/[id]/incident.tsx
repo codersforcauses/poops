@@ -1,8 +1,7 @@
-import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { XMarkIcon } from '@heroicons/react/24/solid'
 
 import { withProtected } from '@/components/PrivateRoute'
+import Modal from '@/components/UI/modal'
 import IncidentForm from '@/components/Visit/IncidentForm'
 
 const Incident = () => {
@@ -23,21 +22,9 @@ const Incident = () => {
   else if (visitId) docId = visitId
 
   return (
-    <div className='z-50 p-4'>
-      <div className='fixed right-5 top-4 z-[100] h-10 w-10 rounded-full bg-primary p-1 drop-shadow-default'>
-        <Link href='/visit'>
-          <button>
-            <XMarkIcon className='h-full w-full text-white' />
-          </button>
-        </Link>
-      </div>
-
-      <div className='border-b-2 border-primary py-3 pt-10'>
-        <h1 className='pl-2 text-2xl font-bold'>Add Your Incident</h1>
-      </div>
-
+    <Modal title='Add Your Incident' backLink='/visit'>
       <IncidentForm docId={docId} clientName={clientName} pets={pets} />
-    </div>
+    </Modal>
   )
 }
 
