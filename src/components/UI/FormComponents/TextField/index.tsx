@@ -33,7 +33,7 @@ const TextField = ({
       name={props.name}
       error={error}
       required={rules.required || required}
-      disabled={formDisabled || disabled}
+      disabled={rules.disabled || formDisabled || disabled}
     >
       <div
         className={['flex w-full flex-col', props.className].join(' ').trim()}
@@ -45,7 +45,12 @@ const TextField = ({
             aria-describedby={`${props.name}-label`}
             aria-invalid={!!error}
             id={props.name}
-            className={['form-textarea rounded text-black'].join(' ').trim()}
+            className={[
+              'form-textarea rounded text-black',
+              'disabled:bg-gray-200'
+            ]
+              .join(' ')
+              .trim()}
             {...register?.(props.name, rules)}
           />
         ) : (
@@ -54,7 +59,9 @@ const TextField = ({
             aria-describedby={`${props.name}-label`}
             aria-invalid={!!error}
             id={props.name}
-            className={['form-input rounded text-black'].join(' ').trim()}
+            className={['form-input rounded text-black', 'disabled:bg-gray-200']
+              .join(' ')
+              .trim()}
             {...register?.(props.name, rules)}
           />
         )}

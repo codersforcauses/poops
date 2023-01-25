@@ -2,8 +2,7 @@ import { RegisterOptions } from 'react-hook-form'
 
 import { VisitFormValues } from '@/components/Visit/VisitForm'
 import { Duration } from '@/types/types'
-
-const requiredMessage = 'This field is required'
+import { requiredMessage } from '@/utils'
 
 const validationSchema: Record<VisitFormValues, RegisterOptions> = {
   visitType: {

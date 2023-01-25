@@ -1,6 +1,6 @@
 import { ReactElement } from 'react'
 
-import ContactForm from '@/components/Contact/contactform'
+import ContactForm from '@/components/Contact/ContactForm'
 import Layout from '@/components/Layout'
 import { withProtected } from '@/components/PrivateRoute'
 import { useMutateContacts } from '@/hooks/contacts'

@@ -6,13 +6,13 @@ import { SubmitHandler } from 'react-hook-form'
 
 import { contactFormAtom, isEditingAtom } from '@/atoms/contacts'
 import Avatar from '@/components/Contact/avatar'
-import validationSchema from '@/components/Contact/validation'
+import validationSchema from '@/components/Contact/ContactForm/validation'
 import Form from '@/components/UI/FormComponents/Form'
 import { CreateSelect } from '@/components/UI/FormComponents/SelectFields'
 import TextField from '@/components/UI/FormComponents/TextField'
 import { Contact, SelectOption } from '@/types/types'
 
-import Button from '../UI/button'
+import Button from '../../UI/button'
 
 interface ContactFormProps {
   contact: Contact

@@ -23,7 +23,7 @@ const FieldControl = ({
 export { FieldControl, FieldControlContext }
 
 interface FieldControlProps {
-  disabled: boolean
+  disabled?: boolean
   error?: string
   name: string
   required?: string | boolean | ValidationValueMessage<boolean>

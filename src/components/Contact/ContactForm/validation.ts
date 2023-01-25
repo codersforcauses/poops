@@ -1,16 +1,7 @@
 import { RegisterOptions } from 'react-hook-form'
 
-import { SubmittedContactFormValues } from '@/components/Contact/contactform'
-
-const requiredMessage = 'This field is required'
-
-const validateEmail = (email: string) => {
-  return String(email)
-    .toLowerCase()
-    .match(
-      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-    )
-}
+import { SubmittedContactFormValues } from '@/components/Contact/ContactForm'
+import { requiredMessage, validateEmail } from '@/utils'
 
 const validationSchema: Record<SubmittedContactFormValues, RegisterOptions> = {
   name: {

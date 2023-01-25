@@ -4,11 +4,10 @@ import { UseMutateFunction } from '@tanstack/react-query'
 import { useAtom } from 'jotai'
 
 import { isEditingAtom } from '@/atoms/contacts'
-import ContactForm from '@/components/Contact/contactform'
+import ContactForm from '@/components/Contact/ContactForm'
 import ContactInfo from '@/components/Contact/contactinfo'
+import Button from '@/components/UI/button'
 import { Contact } from '@/types/types'
-
-import Button from '../UI/button'
 
 interface ContactFormProps {
   contact: Contact
