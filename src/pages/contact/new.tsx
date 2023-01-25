@@ -11,6 +11,7 @@ const NewContact: NextPageWithLayout = () => {
 
   return (
     <div className='main-style'>
+      <h1 className='m-3 text-center text-2xl'>Add Contact</h1>
       <ContactForm
         contact={{
           name: '',

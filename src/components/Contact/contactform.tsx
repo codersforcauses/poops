@@ -170,12 +170,23 @@ const ContactForm = ({
               <Button type='submit' fullwidth>
                 Save
               </Button>
-              {!isNewContact && (
+              {!isNewContact ? (
                 <Button
                   intent='secondary'
                   fullwidth
                   onClick={() => {
                     setIsEditing(false)
+                  }}
+                >
+                  Cancel
+                </Button>
+              ) : (
+                <Button
+                  intent='secondary'
+                  type='button'
+                  fullwidth
+                  onClick={() => {
+                    router.push('/contact')
                   }}
                 >
                   Cancel
