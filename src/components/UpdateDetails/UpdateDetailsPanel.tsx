@@ -10,7 +10,6 @@ import { doc, updateDoc } from 'firebase/firestore'
 
 import { db } from '@/components/Firebase/init'
 import { useAuth } from '@/context/Firebase/Auth/context'
-// import useUser from '@/hooks/user'
 import { Contact } from '@/types/types'
 declare global {
   interface Window {
@@ -18,6 +17,8 @@ declare global {
     confirmationResult: ConfirmationResult
   }
 }
+
+import SubmitButton from '@/components/UpdateDetails/SubmitButton'
 
 // TODO add correct redirect to the pages path
 
@@ -34,7 +35,6 @@ function UpdateDetailsPanel({ contact }: ContactItemProps) {
   const [phoneNumber, setPhoneNumber] = useState(contact?.phone || '')
   const [err, setErr] = useState(false)
   const { auth } = useAuth()
-  // console.log(contact)
 
   if (currentUser === null) {
     return null
@@ -80,7 +80,6 @@ function UpdateDetailsPanel({ contact }: ContactItemProps) {
               },
               auth
             )
-            // console.log('Recaptcha resolved')
           } catch (error) {
             // console.log(error)
           }
@@ -96,6 +95,7 @@ function UpdateDetailsPanel({ contact }: ContactItemProps) {
 
   return (
     <div>
+      <h1>Name</h1>
       <input
         className='h-10 w-full rounded-lg bg-transparent pl-2 text-sm'
         value={displayName}
@@ -103,7 +103,7 @@ function UpdateDetailsPanel({ contact }: ContactItemProps) {
         name={displayName}
         placeholder='Name'
       />
-
+      <h1>Email</h1>
       <input
         className='h-10 w-full rounded-lg bg-transparent pl-2 text-sm'
         value={email}
@@ -112,7 +112,7 @@ function UpdateDetailsPanel({ contact }: ContactItemProps) {
         placeholder='Email'
         type='email'
       />
-
+      <div>Phone</div>
       <input
         className='h-10 w-full rounded-lg bg-transparent pl-2 text-sm'
         value={phoneNumber}
@@ -122,13 +122,14 @@ function UpdateDetailsPanel({ contact }: ContactItemProps) {
       />
 
       <div id='recaptcha-container'></div>
+
       {!done && (
-        <button
-          disabled={!(displayName && email && phoneNumber && !done)}
-          onClick={(e) => handleSubmit(e, contact, currentUser)}
-        >
-          <Link href="/">Submit</Link>
-        </button>
+        <div>
+          <SubmitButton onClick={(e) => handleSubmit(e, contact, currentUser)}
+            buttonlabel="Submit"
+            style='group h-12 rounded-full border-4 border-[#4267B2] px-6 transition duration-300'
+          />
+        </div>
       )}
 
       <div>
