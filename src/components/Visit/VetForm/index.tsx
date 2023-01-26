@@ -5,46 +5,46 @@ import { SubmitHandler } from 'react-hook-form'
 import Button from '@/components/UI/button'
 import Form from '@/components/UI/FormComponents/Form'
 import TextField from '@/components/UI/FormComponents/TextField'
-import validationSchema from '@/components/Visit/IncidentForm/validation'
+import validationSchema from '@/components/Visit/VetForm/validation'
 import { useAuth } from '@/context/Firebase/Auth/context'
-import { useMutateIncidents } from '@/hooks/incidents'
-import { Incident } from '@/types/types'
+import { useMutateVetConcerns } from '@/hooks/vetconcerns'
+import { VetConcern } from '@/types/types'
 
 interface FormValues {
   userName: string
-  email: string
+  userEmail: string
   petName: string
   time: string
-  details: string
+  vetName: string
+  detail: string
 }
 
-interface IncidentFormProps {
+interface VetFormProps {
   docId: string
   clientName: string
   pets: string
-  visitTime: Timestamp
 }
 
-const IncidentForm = (props: IncidentFormProps) => {
+const VetForm = (props: VetFormProps) => {
   const router = useRouter()
   const { currentUser } = useAuth()
-  const { mutate: mutateIncidents } = useMutateIncidents()
+  const { mutate: mutateVetConcerns } = useMutateVetConcerns()
 
   const handleSubmit: SubmitHandler<FormValues> = (formData) => {
     if (currentUser) {
       const { time, ...rest } = formData
 
-      const data: Incident = {
+      const data: VetConcern = {
         ...rest,
+        userId: currentUser.uid,
+        userPhone: currentUser.phoneNumber ?? '',
         clientName: props.clientName,
-        createdAt: Timestamp.fromDate(new Date()),
-        time: Timestamp.fromDate(new Date(time)),
-        userID: currentUser.uid,
+        visitTime: Timestamp.fromDate(new Date(time)),
         visitId: props.docId,
-        visitTime: props.visitTime
+        createdAt: Timestamp.fromDate(new Date())
       }
 
-      mutateIncidents(data)
+      mutateVetConcerns(data)
 
       router.push('/visit')
     }
@@ -58,7 +58,7 @@ const IncidentForm = (props: IncidentFormProps) => {
         currentUser
           ? {
               userName: currentUser.displayName || '',
-              email: currentUser.email || '',
+              userEmail: currentUser.email || '',
               petName: props.pets
             }
           : {}
@@ -77,10 +77,10 @@ const IncidentForm = (props: IncidentFormProps) => {
             </td>
             <td>
               <TextField
-                name='email'
+                name='userEmail'
                 label='Email'
                 type='email'
-                rules={validationSchema.email}
+                rules={validationSchema.userEmail}
               />
             </td>
           </tr>
@@ -95,6 +95,16 @@ const IncidentForm = (props: IncidentFormProps) => {
             </td>
             <td>
               <TextField
+                name='vetName'
+                label='Vet Name'
+                type='text'
+                rules={validationSchema.vetName}
+              />
+            </td>
+          </tr>
+          <tr className='align-top'>
+            <td colSpan={2}>
+              <TextField
                 name='time'
                 label='Date & Time'
                 type='dateTime-local'
@@ -106,11 +116,11 @@ const IncidentForm = (props: IncidentFormProps) => {
           <tr className='align-top'>
             <td colSpan={2}>
               <TextField
-                name='details'
+                name='detail'
                 label='Description'
                 type='textarea'
                 placeholder='Add notes here'
-                rules={validationSchema.details}
+                rules={validationSchema.detail}
               />
             </td>
           </tr>
@@ -127,6 +137,6 @@ const IncidentForm = (props: IncidentFormProps) => {
   )
 }
 
-export default IncidentForm
+export default VetForm
 
-export type IncidentFormValues = keyof FormValues
+export type VetFormValues = keyof FormValues

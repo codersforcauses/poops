@@ -26,7 +26,7 @@ const Modal = (props: PropsWithChildren<ModalProps>) => {
       </div>
 
       {/* Wrapper */}
-      <div className='container mx-auto flex flex-col gap-2 overflow-scroll p-2'>
+      <div className='container mx-auto flex h-full w-full flex-col gap-2 overflow-auto p-2'>
         {/* Content */}
         {props.children}
       </div>

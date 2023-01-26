@@ -1,9 +1,9 @@
 import { RegisterOptions } from 'react-hook-form'
 
-import { IncidentFormValues } from '@/components/Visit/IncidentForm'
+import { VetFormValues } from '@/components/Visit/VetForm'
 import { requiredMessage, validateEmail } from '@/utils'
 
-const validationSchema: Record<IncidentFormValues, RegisterOptions> = {
+const validationSchema: Record<VetFormValues, RegisterOptions> = {
   userName: {
     required: {
       value: true,
@@ -27,7 +27,7 @@ const validationSchema: Record<IncidentFormValues, RegisterOptions> = {
     },
     valueAsDate: true
   },
-  email: {
+  userEmail: {
     required: {
       value: true,
       message: requiredMessage
@@ -44,7 +44,13 @@ const validationSchema: Record<IncidentFormValues, RegisterOptions> = {
       message: requiredMessage
     }
   },
-  details: {
+  detail: {
+    required: {
+      value: true,
+      message: requiredMessage
+    }
+  },
+  vetName: {
     required: {
       value: true,
       message: requiredMessage
