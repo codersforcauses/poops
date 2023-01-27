@@ -114,14 +114,12 @@ const Set = () => {
   walkDist >= 0 && commuteDist >= 0 && commuteMethod
 
   const handleClientChange = (newValue: SingleValue<SelectOption>) => {
-    // fired when user selects an option or creates an option
     if (newValue === null) return
+
     setClientPetNames({ clientName: newValue.label, petNames: newValue.value })
 
-    // no need to prefill if not new visit
     if (!isNewVisit) return
 
-    // getting past visit for selected client to prefill
     const pastVisit = visits?.find(
       (visit) => visit.clientName === newValue.label
     )
