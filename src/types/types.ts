@@ -68,11 +68,11 @@ export type Incident = {
   userID: string
   userName: string | null | undefined
   visitId: string
-  visitTime: string
+  visitTime: Timestamp
   clientName: string
   email: string | null | undefined
   petName: string
-  time: string
+  time: Timestamp
   details: string
-  createdAt: string
+  createdAt: Timestamp
 }

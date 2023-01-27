@@ -2,6 +2,7 @@ import { FormEvent, useState } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { XMarkIcon } from '@heroicons/react/24/solid'
+import { Timestamp } from 'firebase/firestore'
 
 import { withProtected } from '@/components/PrivateRoute'
 import Button from '@/components/UI/button'
@@ -9,6 +10,7 @@ import FormField from '@/components/Visit/formfield'
 import { useAuth } from '@/context/Firebase/Auth/context'
 import { useMutateIncidents } from '@/hooks/incidents'
 import { Incident } from '@/types/types'
+import { formatTimestamp } from '@/utils'
 
 const Incident = () => {
   const { currentUser } = useAuth()
@@ -48,12 +50,12 @@ const Incident = () => {
         userName: userName,
         clientName: clientName,
         visitId: docId,
-        visitTime: time,
+        visitTime: Timestamp.fromDate(new Date(time)),
         email: email,
         petName: petName,
-        time: time,
+        time: Timestamp.fromDate(new Date(time)),
         details: notes,
-        createdAt: Date.now().toString()
+        createdAt: Timestamp.fromDate(new Date())
       }
       mutateIncidents(data)
 
@@ -75,14 +77,14 @@ const Incident = () => {
 User ID: ${data.userID}
 Username: ${data.userName}
 Email: ${data.email}
-Created At: ${data.createdAt}
+Created At: ${formatTimestamp(data.createdAt)}
 
 Client Name: ${data.clientName}
 Pet Name: ${data.petName}
 Visit ID: ${data.visitId}
-Visit Time: ${data.visitTime}
+Visit Time: ${formatTimestamp(data.visitTime)}
 
-Incident Time: ${data.time}
+Incident Time: ${formatTimestamp(data.time)}
 Details: ${data.details}`
   }
 
