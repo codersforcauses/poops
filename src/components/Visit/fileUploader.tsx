@@ -6,11 +6,7 @@ export interface fileUploaderInterface {
   label: string
   handleFile(f: File): void
 }
-const FileUploader = ({
-  label,
-  handleFile
-}: fileUploaderInterface) => {
-
+const FileUploader = ({ label, handleFile }: fileUploaderInterface) => {
   const hiddenFileInput = useRef<HTMLInputElement>(null)
 
   const handleClick = () => {
@@ -21,7 +17,7 @@ const FileUploader = ({
   }
 
   const handleChange = (e: React.FormEvent<HTMLInputElement>) => {
-    if (e.currentTarget.files){ 
+    if (e.currentTarget.files) {
       const fileUploaded = e.currentTarget.files[0]
       handleFile(fileUploaded)
     }
@@ -29,18 +25,14 @@ const FileUploader = ({
 
   return (
     <>
-      <Button 
-        type="button"
-        size="small"
-        onClick={handleClick}
-      >
+      <Button type='button' size='small' onClick={handleClick}>
         {label}
       </Button>
-      <input 
-        type="file" 
+      <input
+        type='file'
         ref={hiddenFileInput}
         onChange={handleChange}
-        className="hidden"
+        className='hidden'
       />
     </>
   )

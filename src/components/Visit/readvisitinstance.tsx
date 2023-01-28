@@ -28,7 +28,7 @@ const VisitInfo = ({
   notes = ''
 }: VisitInfoProps) => {
   const router = useRouter()
-  
+
   if (docId === undefined) return null
 
   return (

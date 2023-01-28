@@ -54,16 +54,14 @@ const IncidentForm = () => {
       }
       try {
         await UploadImage(data)
-        console.log("success")
+        console.log('success')
         // TODO on success?
-      }
-      catch (error) {
-        console.log("failure")
+      } catch (error) {
+        console.log('failure')
         return
         // TODO on failure
       }
-    }
-    else {
+    } else {
       alert('You must be logged in to upload a photo')
     }
   }
@@ -147,10 +145,7 @@ const IncidentForm = () => {
           <div>
             <div className='font-semibold'>Photo:</div>
             <div>
-              <FileUploader
-                label="Upload Image"
-                handleFile={handleFile}
-              />
+              <FileUploader label='Upload Image' handleFile={handleFile} />
             </div>
           </div>
           <div className='mx-auto my-2 flex flex-col p-1 '>
