@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { auth, functions } from '../main'
+import { REGION } from '../config'
 
 const WHITELISTED_DOMAINS = 'poops.org'
 
@@ -7,17 +8,18 @@ const WHITELISTED_DOMAINS = 'poops.org'
  * Trigger to automatically assign admin role if email matches whitelisted
  * domains.
  */
-export const addAdmin = functions.auth.user().onCreate(async (user) => {
-  const userId = user.uid
-  const email = user.email
-  const role = 'admin'
+export const addAdmin = functions.region(REGION).auth.user()
+  .onCreate(async (user) => {
+    const userId = user.uid
+    const email = user.email
+    const role = 'admin'
 
-  if (validateEmailDomain(email, 'Add Admin')) {
-    const claims: Record<string, boolean> = {}
-    claims[role] = true
-    await auth.setCustomUserClaims(userId, claims)
-  }
-})
+    if (validateEmailDomain(email, 'Add Admin')) {
+      const claims: Record<string, boolean> = {}
+      claims[role] = true
+      await auth.setCustomUserClaims(userId, claims)
+    }
+  })
 
 /**
  * Splits concatenated config strings into an array of patterns for
