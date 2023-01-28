@@ -84,7 +84,7 @@ const VetForm = () => {
       const data: uploadImageInterface = {
         userID: currentUser.uid,
         image: file,
-        folder: 'incident'
+        folder: 'vet_concern'
       }
       try {
         await UploadImage(data)
