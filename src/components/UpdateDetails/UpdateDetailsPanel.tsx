@@ -19,6 +19,7 @@ declare global {
 }
 
 import SubmitButton from '@/components/UpdateDetails/SubmitButton'
+import { useRouter } from 'next/router'
 
 // TODO add correct redirect to the pages path
 
@@ -35,6 +36,12 @@ function UpdateDetailsPanel({ contact }: ContactItemProps) {
   const [phoneNumber, setPhoneNumber] = useState(contact?.phone || '')
   const [err, setErr] = useState(false)
   const { auth } = useAuth()
+
+  const router = useRouter()
+
+  if (contact.email && contact.name && contact.phone) {
+    router.replace('/')
+  }
 
   if (currentUser === null) {
     return null
