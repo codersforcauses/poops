@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { XMarkIcon } from '@heroicons/react/24/outline'
 import { Timestamp } from 'firebase/firestore'
+import { SingleValue } from 'react-select'
 
 import { withProtected } from '@/components/PrivateRoute'
 import Button from '@/components/UI/button'
@@ -11,7 +12,7 @@ import CommuteSelector from '@/components/Visit/commuteselector'
 import DurationSelector from '@/components/Visit/durationselector'
 import FormField from '@/components/Visit/formfield'
 import { useMutateVisits, useVisits } from '@/hooks/visits'
-import { Duration, Visit } from '@/types/types'
+import { Duration, SelectOption, Visit } from '@/types/types'
 import { formatTimestamp, visitSelectOptions } from '@/utils'
 
 
@@ -25,7 +26,9 @@ const Set = () => {
     queryId === undefined || Array.isArray(queryId) ? null : queryId
   const visit = visits?.find((visit) => queryId && visit.docId === visitId)
 
-  const [visitType, setVisitType] = useState<string>('')
+  const [visitType, setVisitType] = useState<string>(
+    visitSelectOptions[0].value
+  )
   const [clientPetNames, setClientPetNames] = useState<{
     clientName: string
     petNames: string
@@ -111,6 +114,24 @@ const Set = () => {
     duration.minutes >= 0
     walkDist >= 0 && commuteDist >= 0 && commuteMethod
 
+  const handleClientChange = (newValue: SingleValue<SelectOption>) => {
+    if (newValue === null) return
+
+    setClientPetNames({ clientName: newValue.label, petNames: newValue.value })
+
+    if (!isNewVisit) return
+
+    const pastVisit = visits?.find(
+      (visit) => visit.clientName === newValue.label
+    )
+    if (pastVisit !== undefined) {
+      setDuration(pastVisit.duration)
+      setCommuteDist(pastVisit.commuteDist)
+      setCommuteMethod(pastVisit.commuteMethod)
+      setWalkDist(pastVisit.walkDist)
+    }
+  }
+
   return (
     <div className='space-4 z-50 flex h-full flex-col p-4'>
       {/* Exit Button */}
@@ -131,21 +152,11 @@ const Set = () => {
       </>
 
       {/* Wrapper */}
-      <div className='container mx-auto flex flex-col gap-2 p-2'>
+      <div className='container mx-auto flex flex-col gap-2 overflow-scroll p-2'>
         {/* Form */}
         <form onSubmit={handleSubmit}>
           {/* could rewrite to use awful react-select to make chevron icon consistent */}
           <div className='grid grid-cols-2 gap-4'>
-            <FormField
-              id='visitTypeInput'
-              type='select'
-              placeholder='Select...'
-              value={visitType}
-              label='Visit Type:'
-              selectOptions={visitSelectOptions}
-              isRequired={true}
-              onChange={(event) => setVisitType(event.target.value)}
-            />
             <ClientSelector
               id='clientNameInput'
               type='text'
@@ -157,8 +168,17 @@ const Set = () => {
               label='Client Name:'
               isRequired={true}
               setClient={setClientPetNames}
+              handleChange={handleClientChange}
             />
-
+            <FormField
+              id='visitTypeInput'
+              type='select'
+              value={visitType}
+              label='Visit Type:'
+              selectOptions={visitSelectOptions}
+              isRequired={true}
+              onChange={(event) => setVisitType(event.target.value)}
+            />
             <FormField
               id='commuteDistInput'
               type='number'

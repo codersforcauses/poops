@@ -8,6 +8,7 @@ import {
   Firestore,
   getFirestore
 } from 'firebase/firestore'
+import { FirebaseStorage, getStorage } from 'firebase/storage'
 
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
@@ -21,6 +22,7 @@ const firebaseConfig = {
 let app: FirebaseApp
 let auth: Auth
 let db: Firestore
+let storage: FirebaseStorage
 
 const clientSide = typeof window !== 'undefined'
 
@@ -29,6 +31,7 @@ if (clientSide) {
   app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApp()
   auth = getAuth(app)
   db = getFirestore(app)
+  storage = getStorage(app)
 
   // Use emulator if running in development and emualtor is running
   if (process.env.NEXT_PUBLIC_EMULATOR === 'true') {
@@ -57,4 +60,4 @@ if (clientSide) {
   // Subsequent queries will use persistence, if it was enabled successfully
 }
 
-export { auth, db }
+export { auth, db, storage }

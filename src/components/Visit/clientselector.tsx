@@ -14,6 +14,7 @@ interface ClientSelectorProps extends Omit<FormFieldProps, 'value'> {
       petNames: string
     }>
   >
+  handleChange(newValue: SingleValue<SelectOption>): void
 }
 
 const ClientSelector = (props: ClientSelectorProps) => {
@@ -29,11 +30,6 @@ const ClientSelector = (props: ClientSelectorProps) => {
       return client
     })
   }
-  const handleChange = (newValue: SingleValue<SelectOption>) => {
-    // fired when user selects an option or creates an option
-    if (newValue === null) return
-    props.setClient({ clientName: newValue.label, petNames: newValue.value })
-  }
 
   return (
     <div className={props.className}>
@@ -43,7 +39,7 @@ const ClientSelector = (props: ClientSelectorProps) => {
           {props.label}
         </label>
         <Select
-          onChange={handleChange}
+          onChange={props.handleChange}
           options={getClientList()}
           placeholder={props.placeholder}
           styles={customStyles}

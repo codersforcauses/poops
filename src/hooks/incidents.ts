@@ -7,59 +7,56 @@ import {
   doc,
   FirestoreError,
   getDocs,
-  orderBy,
-  query,
   setDoc
 } from 'firebase/firestore'
 
 import { db } from '@/components/Firebase/init'
 import { AlertVariant, useAlert } from '@/context/AlertContext'
 import { useAuth } from '@/context/Firebase/Auth/context'
-import { Visit } from '@/types/types'
+import { Incident } from '@/types/types'
 
-export const useVisits = () => {
+export const useIncidents = () => {
   const { currentUser } = useAuth()
-
-  const queryFn = async () => {
-    if (currentUser?.uid) {
-      try {
-        const visitsRef = collection(db, 'users', currentUser.uid, 'visits')
-        const q = query(visitsRef, orderBy('startTime', 'desc'))
-        const visitsDocs = await getDocs(q)
-        return visitsDocs.docs.map(
-          (doc) => ({ ...doc.data(), docId: doc.id } as Visit)
+  const queryFn = async (): Promise<Incident[]> => {
+    try {
+      if (currentUser?.uid) {
+        const incidentsRef = collection(db, 'incidents')
+        const incidentsDocs = await getDocs(incidentsRef)
+        return incidentsDocs.docs.map(
+          (doc) => ({ ...doc.data(), docId: doc.id } as Incident)
         )
-      } catch (err: unknown) {
-        //#region  //*=========== For logging ===========
-        if (err instanceof FirestoreError) {
-          console.error(err.message)
-        } else console.error(err)
-        //#endregion  //*======== For logging ===========
       }
+    } catch (err: unknown) {
+      //#region  //*=========== For logging ===========
+      if (err instanceof FirestoreError) {
+        console.error(err.message)
+      } else console.error(err)
+      //#endregion  //*======== For logging ===========
     }
+    return []
   }
-  return useQuery(['visits'], queryFn)
+  return useQuery(['incidents'], queryFn)
 }
 
-export const useMutateVisits = () => {
+export const useMutateIncidents = () => {
   const { currentUser } = useAuth()
   const queryClient = useQueryClient()
   const { setAlert } = useAlert()
 
-  const mutationFn = async (visit: Visit & { deleteDoc?: boolean }) => {
+  const mutationFn = async (incident: Incident & { deleteDoc?: boolean }) => {
     try {
       if (currentUser?.uid) {
-        const { docId: visitId, ...visitMut } = visit
-        const collectionRef = collection(db, 'users', currentUser.uid, 'visits')
+        const { docId: incidentId, ...incidentMut } = incident
+        const collectionRef = collection(db, 'incidents')
 
-        const docRef = visitId
-          ? doc(collectionRef, visitId)
+        const docRef = incidentId
+          ? doc(collectionRef, incidentId)
           : doc(collectionRef)
 
-        if (visitMut.deleteDoc) {
+        if (incidentMut.deleteDoc) {
           await deleteDoc(docRef)
         } else {
-          await setDoc(docRef, visitMut, { merge: true })
+          await setDoc(docRef, incidentMut, { merge: true })
         }
       }
     } catch (err: unknown) {
@@ -73,11 +70,11 @@ export const useMutateVisits = () => {
   }
 
   const onSuccess = () => {
-    queryClient.invalidateQueries({ queryKey: ['visits'] })
+    queryClient.invalidateQueries({ queryKey: ['incidents'] })
     setAlert({
       variant: AlertVariant.info,
       title: 'Success!',
-      text: 'Updated visits',
+      text: 'Updated incidents',
       position: 'bottom',
       showFor: 1000
     })
@@ -86,7 +83,7 @@ export const useMutateVisits = () => {
     setAlert({
       variant: AlertVariant.critical,
       title: 'Error!',
-      text: 'Could not update contacts',
+      text: 'Could not update incident',
       position: 'bottom',
       showFor: 1000
     })

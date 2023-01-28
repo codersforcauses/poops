@@ -53,7 +53,6 @@ const inputSwitch = (props: FormFieldProps) => {
           required={props.isRequired}
           onChange={props.onChange}
         >
-          <option value=''>{props.placeholder}</option>
           {props.selectOptions?.map((o, i) => (
             <option key={i} value={o.value}>
               {o.label}

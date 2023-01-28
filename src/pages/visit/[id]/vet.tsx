@@ -6,10 +6,12 @@ import { Timestamp } from 'firebase/firestore'
 
 import { withProtected } from '@/components/PrivateRoute'
 import Button from '@/components/UI/button'
+import FileUploader from '@/components/Visit/fileUploader'
 import FormField from '@/components/Visit/formfield'
 import { useAuth } from '@/context/Firebase/Auth/context'
 import { useMutateVetConcerns } from '@/hooks/vetconcerns'
 import { useVisits } from '@/hooks/visits'
+import { UploadImage, UploadImageInterface } from '@/lib/uploadImage'
 import { VetConcern } from '@/types/types'
 import { formatTimestamp } from '@/utils'
 
@@ -31,6 +33,7 @@ const VetForm = () => {
   const [time, setTime] = useState('') //check issue comments for date/time
   const [notes, setNotes] = useState('')
   const [petName, setPetName] = useState('')
+  const [image, setImage] = useState<File>()
 
   const userId = useRef('')
   const userPhone = useRef('')
@@ -46,15 +49,23 @@ const VetForm = () => {
     const email = currentUser.email ?? ''
     const visitTime = formatTimestamp(startTime)
 
-    setUserName(displayName)
-    setEmail(email)
-    setTime(visitTime ?? '')
-    setPetName(petNames)
+    if (userName === '') {
+      setUserName(displayName)
+    }
+    if (email === '') {
+      setEmail(email)
+    }
+    if (time === '') {
+      setTime(visitTime ?? '')
+    }
+    if (petName === '') {
+      setPetName(petNames)
+    }
 
     userId.current = currentUser.uid
     userPhone.current = currentUser.phoneNumber ? currentUser.phoneNumber : ''
     client.current = clientName
-  }, [visit, currentUser])
+  }, [userName, email, time, petName, visit, currentUser])
 
   const handleSubmit = (click: FormEvent<HTMLFormElement>) => {
     click.preventDefault()
@@ -74,7 +85,31 @@ const VetForm = () => {
 
     mutateVetConcerns(data)
 
+    if (image !== undefined && visitId !== null) {
+      const imageData: UploadImageInterface = {
+        userID: userId.current,
+        visitID: visitId,
+        name: userName,
+        email: email,
+        pet: petName,
+        doctor: vetName,
+        time: time,
+        notes: notes,
+        image: image,
+        folder: 'vet_concerns'
+      }
+
+      UploadImage(imageData)
+    }
+
     router.push('/visit')
+  }
+
+  const handleFile = async (file: File) => {
+    if (currentUser !== null) {
+      setImage(file)
+      console.log(file.name)
+    }
   }
 
   const isSubmitEnabled = () => {
@@ -165,6 +200,12 @@ const VetForm = () => {
             isRequired={false}
             onChange={(event) => setNotes(event.target.value)}
           />
+          <div>
+            <div className='font-semibold'>Photo:</div>
+            <div>
+              <FileUploader label='Upload Image' handleFile={handleFile} />
+            </div>
+          </div>
           <div className='mx-auto my-2 flex flex-col p-1 '>
             <Button type='submit' disabled={!isSubmitEnabled()}>
               Submit

@@ -22,6 +22,14 @@ export const formatTimestamp = (timestamp?: Timestamp) => {
   )}T${padNumber(date.getHours())}:${padNumber(date.getMinutes())}`
 }
 
+export const formatTimestampString = (timestamp?: Timestamp) => {
+  if (!timestamp) return null
+  const date = timestamp.toDate()
+  return (
+    `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}` +
+    `T${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}Z`
+  )
+}
 export const humanizeTimestamp = (timestamp?: Timestamp) => {
   if (!timestamp) return null
   const days = [
@@ -38,6 +46,6 @@ export const humanizeTimestamp = (timestamp?: Timestamp) => {
 }
 
 export const visitSelectOptions: SelectOption[] = [
-  { label: 'Vet', value: 'Vet' },
-  { label: 'Walk', value: 'Walk' }
+  { label: 'Walk', value: 'Walk' },
+  { label: 'Vet', value: 'Vet' }
 ]

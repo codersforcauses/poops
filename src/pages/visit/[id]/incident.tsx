@@ -5,12 +5,17 @@ import { XMarkIcon } from '@heroicons/react/24/solid'
 
 import { withProtected } from '@/components/PrivateRoute'
 import Button from '@/components/UI/button'
+import FileUploader from '@/components/Visit/fileUploader'
 import FormField from '@/components/Visit/formfield'
 import { useAuth } from '@/context/Firebase/Auth/context'
-import { IncidentForm } from '@/types/types'
+import { useMutateIncidents } from '@/hooks/incidents'
+import { UploadImage, UploadImageInterface } from '@/lib/uploadImage'
+import { Incident } from '@/types/types'
 
-const IncidentForm = () => {
+const Incident = () => {
   const { currentUser } = useAuth()
+  const { mutate: mutateIncidents } = useMutateIncidents()
+
   const [userName, setUserName] = useState(
     currentUser?.displayName ? currentUser?.displayName : ''
   )
@@ -22,25 +27,63 @@ const IncidentForm = () => {
   const [selectedImage, setSelectedImage] = useState<File>();
   const router = useRouter()
   let { pets } = router.query
+  const { client, visitId } = router.query
 
   if (pets === undefined) pets = ''
   if (Array.isArray(pets)) pets = pets.length > 0 ? pets[0] : ''
 
+  let clientName = ''
+  if (Array.isArray(client)) clientName = client.length > 0 ? client[0] : ''
+  else if (client) clientName = client
+
+  let docId = ''
+  if (Array.isArray(visitId)) docId = visitId.length > 0 ? visitId[0] : ''
+  else if (visitId) docId = visitId
+
   const [petName, setPetName] = useState(pets)
+
+  const [image, setImage] = useState<File>()
 
   const handleSubmit = (click: FormEvent<HTMLFormElement>) => {
     click.preventDefault()
     if (currentUser !== null) {
-      const data: IncidentForm = {
+      const data: Incident = {
         userID: currentUser.uid,
         userName: userName,
+        clientName: clientName,
+        visitId: docId,
+        visitTime: time,
         email: email,
         petName: petName,
         time: time,
-        details: notes
+        details: notes,
+        createdAt: Date.now().toString()
       }
-      console.log(data)
+      mutateIncidents(data)
+
+      if (image !== undefined) {
+        const imageData: UploadImageInterface = {
+          userID: currentUser.uid,
+          visitID: docId,
+          name: clientName,
+          email: email,
+          pet: petName,
+          time: time,
+          notes: notes,
+          image: image,
+          folder: 'incidents'
+        }
+
+        UploadImage(imageData)
+      }
       router.push('/visit')
+    }
+  }
+
+  const handleFile = async (file: File) => {
+    if (currentUser !== null) {
+      setImage(file)
+      console.log(file.name)
     }
   }
 
@@ -108,6 +151,12 @@ const IncidentForm = () => {
               isRequired={false}
               onChange={(event) => setNotes(event.target.value)}
             />
+          <div>
+            <div className='font-semibold'>Photo:</div>
+            <div>
+              <FileUploader label='Upload Image' handleFile={handleFile} />
+            </div>
+          </div>
 
             <br />
             <div>
@@ -162,4 +211,4 @@ const IncidentForm = () => {
   )
 }
 
-export default withProtected(IncidentForm)
+export default withProtected(Incident)
