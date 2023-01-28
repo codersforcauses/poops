@@ -72,7 +72,7 @@ const Admin = () => {
 
       <Link href='/concern'>
         <Button size='medium' intent='secondary' type='button'>
-          Concern
+          Concerns
         </Button>
       </Link>
 

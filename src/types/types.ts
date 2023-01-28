@@ -66,3 +66,16 @@ export type VetConcernsForm = {
   time: string
   details: string
 }
+
+export interface Concerns {
+  user_uid: string
+  user_name: string | null | undefined
+  user_email: string | null | undefined
+  user_phone?: number
+  client_name: string
+  pet_name: string
+  visit_time: Timestamp
+  visit_id: string
+  detail: string
+  created_at: Timestamp
+}

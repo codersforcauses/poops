@@ -1,7 +1,10 @@
 import Link from 'next/link'
 import { XMarkIcon } from '@heroicons/react/24/outline'
 
-import { withProtected } from '@/components/PrivateRoute'
+import { ConcernsCard } from '@/components/Admin/ConcernsCard'
+import NavBar from '@/components/NavBar'
+import Button from '@/components/UI/button'
+import { Concerns } from '@/types/types'
 
 /* Dummy Data */
 const uid = '123456'
@@ -15,7 +18,7 @@ const vid = '123456'
 const detail = 'Pet was hurt!'
 const ctime = '[timestamp to be added]'
 
-const Concern = () => {
+const Output = () => {
   return (
     <div className='space-4 z-50 flex h-full flex-col p-4'>
       {/* Exit Button */}
@@ -28,7 +31,7 @@ const Concern = () => {
       </div>
 
       {/* Heading */}
-      <h1 className='p-2 text-2xl font-bold'>Concern</h1>
+      <h1 className='p-2 text-2xl font-bold'>Concerns</h1>
       <div className='my-2 box-content border-t-2 border-primary' />
 
       {/* Content */}
@@ -43,9 +46,12 @@ const Concern = () => {
         <h1 class='p-2'>visit_id: {vid}</h1>
         <h1 class='p-2'>detail: {detail}</h1>
         <h1 class='p-2'>created_at: {ctime}</h1>
+        {/* <Concerns user_uid =  */}
       </div>
+
+      <NavBar />
     </div>
   )
 }
 
-export default withProtected(Concern)
+export default Output
