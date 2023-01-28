@@ -78,8 +78,17 @@ const Incident = () => {
         const bucket = await UploadImage(data)
         if (bucket !== undefined) {
           const dest = `users/${currentUser.uid}/visits/${visitId}/incidents`
-          AddImage({userName, email, petName, 
-            time, notes, bucket, dest})
+          const data: addImageInterface = {
+            userName: userName,
+            email: email,
+            petName: petName,
+            time: time,
+            notes: notes,
+            imageBucket: bucket,
+            destination: dest,
+            form: 'incident'
+          }
+          AddImage(data)
         }
         console.log('success')
         // TODO on success?

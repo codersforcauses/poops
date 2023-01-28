@@ -11,13 +11,15 @@ export interface uploadImageInterface {
 }
 
 export interface addImageInterface {
-  userName: string,
+  name: string,
   email: string,
-  petName: string,
+  pet: string,
+  doctor?: string,
   time: string,
   notes: string,
   imageBucket: string,
-  destination: string
+  destination: string,
+  form?: string
 }
 
 export const UploadImage = async ({ userID, image, folder }: uploadImageInterface) => {
@@ -33,13 +35,20 @@ export const UploadImage = async ({ userID, image, folder }: uploadImageInterfac
 }
 
 export const AddImage = ({
-  userName,
+  name,
   email,
-  petName,
+  pet,
+  doctor,
   time,
   notes,
   imageBucket,
-  destination
+  destination,
+  form = 'incident'
 }: addImageInterface) => {
-  addDoc(collection(db, destination), {userName, email, petName, time, notes, imageBucket})
+  if (form === 'vet') {
+    addDoc(collection(db, destination), {name, email, pet, doctor, time, notes, imageBucket})
+  }
+  if (form === 'incident') {
+    addDoc(collection(db, destination), {name, email, pet, time, notes, imageBucket})
+  }
 }
