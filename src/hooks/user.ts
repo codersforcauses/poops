@@ -42,7 +42,7 @@ export const useUser = () => {
   const { currentUser } = useAuth()
   const router = useRouter()
 
-  const queryFn = async () => {
+  const queryFn = async (): Promise<User | undefined> => {
     if (currentUser?.uid) {
       //try to get existing doc if the doc does not exist then create a new doc with uid as its ref
       try {
@@ -60,7 +60,7 @@ export const useUser = () => {
         ) {
           router.replace('/signupDetails')
         }
-        return { ...userData, docId: 'USER' }
+        return { ...userData, info: { ...userData.info, docId: 'USER' } }
       } catch (err: unknown) {
         //#region  //*=========== For logging ===========
         if (err instanceof FirestoreError) {
