@@ -61,8 +61,8 @@ const Roles = () => {
           />
         </form>
 
-        <div className='flex max-h-screen overflow-y-scroll'>
-          <table className='m-auto flex border-spacing-3 flex-row overflow-y-scroll'>
+        <div className='flex max-h-screen'>
+          <table className='m-auto flex border-spacing-3 flex-row'>
             <tbody>
               {ROLES_DATA.map((roles, i) => (
                 <div key={i} className='border-slate-700 flex flex-row border'>
