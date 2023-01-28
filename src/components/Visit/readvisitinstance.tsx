@@ -1,5 +1,4 @@
 import { useRouter } from 'next/router'
-
 import Button from '@/components/UI/button'
 import { EditButton } from '@/components/Visit/buttons'
 import { Duration, Visit } from '@/types/types'
@@ -40,7 +39,7 @@ const VisitInfo = ({
         }`}
       >
         <div className='max-h-screen space-y-1'>
-          <div >
+          <div>
             <span className='font-semibold'>Visit Type:</span>
             <span>{type}</span>
           </div>

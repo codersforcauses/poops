@@ -91,86 +91,89 @@ const Incident = () => {
 
   return (
     <div className='flex w-screen flex-col p-4'>
-        <div className='fixed right-5 top-4 z-[100] h-10 w-10 rounded-full bg-primary p-1 drop-shadow-default'>
-          <Link href='/visit'>
-            <button>
-              <XMarkIcon className='h-full w-full text-white' />
-            </button>
-          </Link>
-        </div>
+      <div className='fixed right-5 top-4 z-[100] h-10 w-10 rounded-full bg-primary p-1 drop-shadow-default'>
+        <Link href='/visit'>
+          <button>
+            <XMarkIcon className='h-full w-full text-white' />
+          </button>
+        </Link>
+      </div>
 
-        <div className='border-b-2 border-primary py-3 pt-10'>
-          <h1 className='pl-2 text-2xl font-bold'>Add Your Incident</h1>
-        </div>
-        
-        <div className='container mx-auto flex flex-col gap-2 p-2'>
-          <form className='pt-3' onSubmit={handleSubmit}>
-            <FormField
-              id='userNameInput'
-              type='text'
-              placeholder={userName}
-              label='Name'
-              isRequired={false}
-              onChange={(event) => setUserName(event.target.value)}
-            />
+      <div className='border-b-2 border-primary py-3 pt-10'>
+        <h1 className='pl-2 text-2xl font-bold'>Add Your Incident</h1>
+      </div>
 
-            <FormField
-              id='emailInput'
-              type='email'
-              placeholder={email}
-              label='Email'
-              isRequired={false}
-              onChange={(event) => setEmail(event.target.value)}
-            />
+      <div className='container mx-auto flex flex-col gap-2 p-2'>
+        <form className='pt-3' onSubmit={handleSubmit}>
+          <FormField
+            id='userNameInput'
+            type='text'
+            placeholder={userName}
+            label='Name'
+            isRequired={false}
+            onChange={(event) => setUserName(event.target.value)}
+          />
 
+          <FormField
+            id='emailInput'
+            type='email'
+            placeholder={email}
+            label='Email'
+            isRequired={false}
+            onChange={(event) => setEmail(event.target.value)}
+          />
 
-            <FormField
-              id='petNameInput'
-              type='text'
-              placeholder={pets}
-              label='Pet Name'
-              isRequired={false}
-              onChange={(event) => setPetName(event.target.value)}
-            />
+          <FormField
+            id='petNameInput'
+            type='text'
+            placeholder={pets}
+            label='Pet Name'
+            isRequired={false}
+            onChange={(event) => setPetName(event.target.value)}
+          />
 
-            <FormField
-              id='timeInput'
-              type='dateTime-local'
-              placeholder='Time'
-              label='Date & Time'
-              isRequired={false}
-              onChange={(event) => setTime(event.target.value)}
-            />
+          <FormField
+            id='timeInput'
+            type='dateTime-local'
+            placeholder='Time'
+            label='Date & Time'
+            isRequired={false}
+            onChange={(event) => setTime(event.target.value)}
+          />
 
-            <FormField
-              id='notesInput'
-              type='textarea'
-              placeholder='Add notes here'
-              label='Description'
-              isRequired={false}
-              onChange={(event) => setNotes(event.target.value)}
-            />
+          <FormField
+            id='notesInput'
+            type='textarea'
+            placeholder='Add notes here'
+            label='Description'
+            isRequired={false}
+            onChange={(event) => setNotes(event.target.value)}
+          />
 
+          <div>
+            <div className='font-semibold'>Photo:</div>
             <div>
-              <div className='font-semibold'>Photo:</div>
+              {image && (
                 <div>
-                  {image && (
-                    <div>
-                    <img alt="not fount" width={"200px"} src={URL.createObjectURL(image)} />
-                    </div>
-                  )}
+                  <img
+                    alt='not fount'
+                    width={'200px'}
+                    src={URL.createObjectURL(image)}
+                  />
                 </div>
-                <div>
-                  <FileUploader label='Upload Image' handleFile={handleFile} />
-                </div>
+              )}
             </div>
-            <div className='mx-auto my-2 flex flex-col p-1 '>
-              <Button type='submit' disabled={!isSubmitEnabled()}>
-                Submit
-              </Button>
+            <div>
+              <FileUploader label='Upload Image' handleFile={handleFile} />
             </div>
-          </form>
-        </div>
+          </div>
+          <div className='mx-auto my-2 flex flex-col p-1 '>
+            <Button type='submit' disabled={!isSubmitEnabled()}>
+              Submit
+            </Button>
+          </div>
+        </form>
+      </div>
     </div>
   )
 }

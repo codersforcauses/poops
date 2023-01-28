@@ -4,7 +4,6 @@ import { useRouter } from 'next/router'
 import { XMarkIcon } from '@heroicons/react/24/outline'
 import { Timestamp } from 'firebase/firestore'
 import { SingleValue } from 'react-select'
-
 import { withProtected } from '@/components/PrivateRoute'
 import Button from '@/components/UI/button'
 import ClientSelector from '@/components/Visit/clientselector'
@@ -15,17 +14,14 @@ import { useMutateVisits, useVisits } from '@/hooks/visits'
 import { Duration, SelectOption, Visit } from '@/types/types'
 import { formatTimestamp, visitSelectOptions } from '@/utils'
 
-
 const Set = () => {
   const { data: visits } = useVisits()
   const { mutate: mutateVisits } = useMutateVisits()
-
   const router = useRouter()
   const { id: queryId } = router.query
   const visitId =
     queryId === undefined || Array.isArray(queryId) ? null : queryId
   const visit = visits?.find((visit) => queryId && visit.docId === visitId)
-
   const [visitType, setVisitType] = useState<string>(
     visitSelectOptions[0].value
   )
@@ -51,7 +47,7 @@ const Set = () => {
       walkDist,
       commuteDist,
       commuteMethod,
-      notes,
+      notes
     } = visit
 
     setVisitType(type)
@@ -112,7 +108,7 @@ const Set = () => {
     startTime &&
     duration.hours >= 0 &&
     duration.minutes >= 0
-    walkDist >= 0 && commuteDist >= 0 && commuteMethod
+  walkDist >= 0 && commuteDist >= 0 && commuteMethod
 
   const handleClientChange = (newValue: SingleValue<SelectOption>) => {
     if (newValue === null) return
