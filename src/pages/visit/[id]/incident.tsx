@@ -8,7 +8,11 @@ import Button from '@/components/UI/button'
 import FileUploader from '@/components/Visit/fileUploader'
 import FormField from '@/components/Visit/formfield'
 import { useAuth } from '@/context/Firebase/Auth/context'
-import UploadImage, { uploadImageInterface } from '@/lib/uploadImage'
+import { 
+  AddImage, 
+  addImageInterface, 
+  UploadImage, 
+  uploadImageInterface} from '@/lib/uploadImage'
 import { IncidentForm } from '@/types/types'
 
 const IncidentForm = () => {
@@ -53,7 +57,12 @@ const IncidentForm = () => {
         folder: 'incident'
       }
       try {
-        await UploadImage(data)
+        const bucket = await UploadImage(data)
+        if (bucket !== undefined) {
+          const dest = `users/${currentUser.uid}/visits/${docID}/incidents`
+          AddImage({userName, email, petName, 
+            time, notes, bucket, dest})
+        }
         console.log('success')
         // TODO on success?
       } catch (error) {
