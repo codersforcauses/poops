@@ -29,7 +29,9 @@ const SignupDetails: NextPage = () => {
             className='rounded-full'
           ></Image>
         </div>
-        <div className='p-3 text-center text-xl font-bold'>Welcome, New User!</div>
+        <div className='p-3 text-center text-xl font-bold'>
+          Welcome, New User!
+        </div>
         <div className='text-x1 text-center font-sans'>
           Please fill in your details
         </div>

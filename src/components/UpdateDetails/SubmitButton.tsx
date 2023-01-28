@@ -10,13 +10,13 @@ export interface SubmitButtonInterface {
 const SubmitButton = ({
   onClick,
   buttonlabel,
-  style, 
+  style
 }: SubmitButtonInterface) => {
   return (
     <button className={style} onClick={onClick}>
       <div className='relative flex items-center space-x-4'>
         <span className='block w-max text-sm font-semibold tracking-wide text-gray-700 transition duration-300 sm:text-base'>
-          <Link href="/">{buttonlabel}</Link>
+          <Link href='/'>{buttonlabel}</Link>
         </span>
       </div>
     </button>
