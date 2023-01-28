@@ -10,10 +10,9 @@ import FormField from '@/components/Visit/formfield'
 import { useAuth } from '@/context/Firebase/Auth/context'
 import { useMutateIncidents } from '@/hooks/incidents'
 import { 
-  AddImage, 
-  addImageInterface, 
-  UploadImage, 
-  uploadImageInterface} from '@/lib/uploadImage'
+  UploadImage,
+  UploadImageInterface
+} from '@/lib/uploadImage'
 import { Incident } from '@/types/types'
 
 const Incident = () => {
@@ -46,6 +45,8 @@ const Incident = () => {
 
   const [petName, setPetName] = useState(pets)
 
+  const [image, setImage] = useState<File>()
+
   const handleSubmit = (click: FormEvent<HTMLFormElement>) => {
     click.preventDefault()
     if (currentUser !== null) {
@@ -62,43 +63,30 @@ const Incident = () => {
         createdAt: Date.now().toString()
       }
       mutateIncidents(data)
+      
+      if (image !== undefined) {
+        const imageData: UploadImageInterface = {
+          userID: currentUser.uid,
+          visitID: docId,
+          name: clientName,
+          email: email,
+          pet: petName,
+          time: time,
+          notes: notes,
+          image: image,
+          folder: 'incidents'
+        }
 
+        UploadImage(imageData)
+      }
       router.push('/visit')
     }
   }
 
   const handleFile = async (file: File) => {
     if (currentUser !== null) {
-      const data: uploadImageInterface = {
-        userID: currentUser.uid,
-        image: file,
-        folder: 'incident'
-      }
-      try {
-        const bucket = await UploadImage(data)
-        if (bucket !== undefined) {
-          const dest = `users/${currentUser.uid}/visits/${visitId}/incidents`
-          const data: addImageInterface = {
-            userName: userName,
-            email: email,
-            petName: petName,
-            time: time,
-            notes: notes,
-            imageBucket: bucket,
-            destination: dest,
-            form: 'incident'
-          }
-          AddImage(data)
-        }
-        console.log('success')
-        // TODO on success?
-      } catch (error) {
-        console.log('failure')
-        return
-        // TODO on failure
-      }
-    } else {
-      alert('You must be logged in to upload a photo')
+      setImage(file)
+      console.log(file.name)
     }
   }
 
