@@ -1,8 +1,6 @@
-import Link from 'next/link'
 import { useRouter } from 'next/router'
 
 import Button from '@/components/UI/button'
-import FileUploader from '@/components/Visit/fileUploader'
 import { Duration, Visit } from '@/types/types'
 
 import { EditButton } from './buttons'
@@ -30,17 +28,8 @@ const VisitInfo = ({
   notes = ''
 }: VisitInfoProps) => {
   const router = useRouter()
-
-  const handleFile = (f: File) => {
-    if (f.name.match(/\.(jpg|jpeg|png|heic|)$/i)) {
-      // TODO add backend image saving
-      return
-    }
-  }
-
-  if (docId === undefined) return null
-
   
+  if (docId === undefined) return null
 
   return (
     <>
@@ -73,15 +62,6 @@ const VisitInfo = ({
           <div className='space-x-1'>
             <span className='font-semibold'>Commute Method:</span>
             <span>{commuteMethod}</span>
-          </div>
-          <div>
-            <div className='font-semibold'>Photo:</div>
-            <div>
-              <FileUploader
-                label="Upload Image"
-                handleFile={handleFile}
-              ></FileUploader>
-            </div>
           </div>
           <div>
             <div className='font-semibold'>Notes:</div>

@@ -5,8 +5,10 @@ import { XMarkIcon } from '@heroicons/react/24/solid'
 
 import { withProtected } from '@/components/PrivateRoute'
 import Button from '@/components/UI/button'
+import FileUploader from '@/components/Visit/fileUploader'
 import FormField from '@/components/Visit/formfield'
 import { useAuth } from '@/context/Firebase/Auth/context'
+import UploadImage, { uploadImageInterface } from '@/lib/uploadImage'
 import { IncidentForm } from '@/types/types'
 
 const IncidentForm = () => {
@@ -40,6 +42,29 @@ const IncidentForm = () => {
       }
       console.log(data)
       router.push('/visit')
+    }
+  }
+
+  const handleFile = async (file: File) => {
+    if (currentUser !== null) {
+      const data: uploadImageInterface = {
+        userID: currentUser.uid,
+        image: file,
+        folder: 'incident'
+      }
+      try {
+        await UploadImage(data)
+        console.log("success")
+        // TODO on success?
+      }
+      catch (error) {
+        console.log("failure")
+        return
+        // TODO on failure
+      }
+    }
+    else {
+      alert('You must be logged in to upload a photo')
     }
   }
 
@@ -119,6 +144,15 @@ const IncidentForm = () => {
             isRequired={false}
             onChange={(event) => setNotes(event.target.value)}
           />
+          <div>
+            <div className='font-semibold'>Photo:</div>
+            <div>
+              <FileUploader
+                label="Upload Image"
+                handleFile={handleFile}
+              />
+            </div>
+          </div>
           <div className='mx-auto my-2 flex flex-col p-1 '>
             <Button type='submit' disabled={!isSubmitEnabled()}>
               Submit
