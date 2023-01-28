@@ -125,7 +125,9 @@ const IncidentForm = () => {
                   <tr>
                       <td>            
                         <Button
-                          type='file'
+                          lassName='col-span-2'
+                          size='small' 
+                          type='submit' 
                           name="UploadImage"
                           onChange={(event) => {
                             setSelectedImage(event.target.files[0]);
