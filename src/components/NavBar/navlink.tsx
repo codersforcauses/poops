@@ -16,9 +16,9 @@ export default function NavLink({
   currentPage,
   setCurrentPage
 }: NavLinkProps) {
-  const tabClasses = 'inline-block w-full justify-center text-center'
+  const tabClasses = 'inline-block w-full justify-center text-center border-t-2'
   const currentTabClasses =
-    tabClasses + ' border-t-2 border-t-primary transition duration-500'
+    tabClasses + ' border-t-primary transition duration-500'
 
   return (
     <Link href={href}>
