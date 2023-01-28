@@ -40,7 +40,7 @@ const VisitInfo = ({
         }`}
       >
         <div className='max-h-screen space-y-1'>
-          <div className='space-x-1'>
+          <div >
             <span className='font-semibold'>Visit Type:</span>
             <span>{type}</span>
           </div>

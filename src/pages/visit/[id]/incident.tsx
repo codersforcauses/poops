@@ -24,7 +24,6 @@ const Incident = () => {
   )
   const [time, setTime] = useState('') //check issue comments for date/time
   const [notes, setNotes] = useState('')
-  const [selectedImage, setSelectedImage] = useState<File>();
   const router = useRouter()
   let { pets } = router.query
   const { client, visitId } = router.query
@@ -73,7 +72,6 @@ const Incident = () => {
           image: image,
           folder: 'incidents'
         }
-
         UploadImage(imageData)
       }
       router.push('/visit')
@@ -92,7 +90,7 @@ const Incident = () => {
   }
 
   return (
-    <div className='z-50 p-4'>
+    <div className='flex w-screen flex-col p-4'>
         <div className='fixed right-5 top-4 z-[100] h-10 w-10 rounded-full bg-primary p-1 drop-shadow-default'>
           <Link href='/visit'>
             <button>
@@ -104,6 +102,7 @@ const Incident = () => {
         <div className='border-b-2 border-primary py-3 pt-10'>
           <h1 className='pl-2 text-2xl font-bold'>Add Your Incident</h1>
         </div>
+        
         <div className='container mx-auto flex flex-col gap-2 p-2'>
           <form className='pt-3' onSubmit={handleSubmit}>
             <FormField
@@ -151,60 +150,25 @@ const Incident = () => {
               isRequired={false}
               onChange={(event) => setNotes(event.target.value)}
             />
-          <div>
-            <div className='font-semibold'>Photo:</div>
-            <div>
-              <FileUploader label='Upload Image' handleFile={handleFile} />
-            </div>
-          </div>
 
-            <br />
             <div>
-              <table>
-                <tbody>
-                  <tr>
-                    <td>
-                      {selectedImage && (
-                        <div>
-                        <img alt="not fount" width={"250px"} src={URL.createObjectURL(selectedImage)} />
-                        </div>
-                      )}
-                    </td>
-                  </tr>
-                  <tr>
-                      <td>            
-                        <Button
-                          lassName='col-span-2'
-                          size='small' 
-                          type='submit' 
-                          name="UploadImage"
-                          onChange={(event) => {
-                            setSelectedImage(event.target.files[0]);
-                          }}
-                        >Upload
-                        </Button>
-                      </td>  
-                      <td>
-                        <Button 
-                          className='col-span-2'
-                          size='small' 
-                          type='submit' 
-                          onClick={()=>setSelectedImage(null)}>Remove</Button>
-                      </td>
-                    </tr>
-                </tbody>
-              </table>
+              <div className='font-semibold'>Photo:</div>
+                <div>
+                  {image && (
+                    <div>
+                    <img alt="not fount" width={"200px"} src={URL.createObjectURL(image)} />
+                    </div>
+                  )}
+                </div>
+                <div>
+                  <FileUploader label='Upload Image' handleFile={handleFile} />
+                </div>
             </div>
-            <br />
-            <Button
-              className='col-span-2'
-              intent='primary'
-              size='large' 
-              type='submit' 
-              fullwidth
-              disabled={!isSubmitEnabled()}>
-              Submit
-            </Button>
+            <div className='mx-auto my-2 flex flex-col p-1 '>
+              <Button type='submit' disabled={!isSubmitEnabled()}>
+                Submit
+              </Button>
+            </div>
           </form>
         </div>
     </div>
