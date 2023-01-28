@@ -19,6 +19,7 @@ const IncidentForm = () => {
   )
   const [time, setTime] = useState('') //check issue comments for date/time
   const [notes, setNotes] = useState('')
+  const [selectedImage, setSelectedImage] = useState<File>();
   const router = useRouter()
   let { pets } = router.query
 
@@ -49,7 +50,6 @@ const IncidentForm = () => {
 
   return (
     <div className='z-50 p-4'>
-      <>
         <div className='fixed right-5 top-4 z-[100] h-10 w-10 rounded-full bg-primary p-1 drop-shadow-default'>
           <Link href='/visit'>
             <button>
@@ -61,71 +61,101 @@ const IncidentForm = () => {
         <div className='border-b-2 border-primary py-3 pt-10'>
           <h1 className='pl-2 text-2xl font-bold'>Add Your Incident</h1>
         </div>
+        <div className='container mx-auto flex flex-col gap-2 p-2'>
+          <form className='pt-3' onSubmit={handleSubmit}>
+            <FormField
+              id='userNameInput'
+              type='text'
+              placeholder={userName}
+              label='Name'
+              isRequired={false}
+              onChange={(event) => setUserName(event.target.value)}
+            />
 
-        <form className='pt-3' onSubmit={handleSubmit}>
-          <table className='container mx-auto table-fixed'>
-            <tbody>
-              <tr>
-                <td>
-                  <FormField
-                    id='userNameInput'
-                    type='text'
-                    placeholder={userName}
-                    label='Name'
-                    isRequired={false}
-                    onChange={(event) => setUserName(event.target.value)}
-                  />
-                </td>
-                <td>
-                  <FormField
-                    id='emailInput'
-                    type='email'
-                    placeholder={email}
-                    label='Email'
-                    isRequired={false}
-                    onChange={(event) => setEmail(event.target.value)}
-                  />
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <FormField
-                    id='petNameInput'
-                    type='text'
-                    placeholder={pets}
-                    label='Pet Name'
-                    isRequired={false}
-                    onChange={(event) => setPetName(event.target.value)}
-                  />
-                </td>
-                <td>
-                  <FormField
-                    id='timeInput'
-                    type='dateTime-local'
-                    placeholder='Time'
-                    label='Date & Time'
-                    isRequired={false}
-                    onChange={(event) => setTime(event.target.value)}
-                  />
-                </td>
-              </tr>
-            </tbody>
-          </table>
-          <FormField
-            id='notesInput'
-            type='textarea'
-            placeholder='Add notes here'
-            label='Description'
-            isRequired={false}
-            onChange={(event) => setNotes(event.target.value)}
-          />
-          <div className='mx-auto my-2 flex flex-col p-1 '>
-            <Button type='submit' disabled={!isSubmitEnabled()}>
+            <FormField
+              id='emailInput'
+              type='email'
+              placeholder={email}
+              label='Email'
+              isRequired={false}
+              onChange={(event) => setEmail(event.target.value)}
+            />
+
+
+            <FormField
+              id='petNameInput'
+              type='text'
+              placeholder={pets}
+              label='Pet Name'
+              isRequired={false}
+              onChange={(event) => setPetName(event.target.value)}
+            />
+
+            <FormField
+              id='timeInput'
+              type='dateTime-local'
+              placeholder='Time'
+              label='Date & Time'
+              isRequired={false}
+              onChange={(event) => setTime(event.target.value)}
+            />
+
+            <FormField
+              id='notesInput'
+              type='textarea'
+              placeholder='Add notes here'
+              label='Description'
+              isRequired={false}
+              onChange={(event) => setNotes(event.target.value)}
+            />
+
+            <br />
+            <div>
+              <table>
+                <tbody>
+                  <tr>
+                    <td>
+                      {selectedImage && (
+                        <div>
+                        <img alt="not fount" width={"250px"} src={URL.createObjectURL(selectedImage)} />
+                        </div>
+                      )}
+                    </td>
+                  </tr>
+                  <tr>
+                      <td>            
+                        <Button
+                          type='file'
+                          name="UploadImage"
+                          onChange={(event) => {
+                            setSelectedImage(event.target.files[0]);
+                          }}
+                        >Upload
+                        </Button>
+                      </td>  
+                      <td>
+                        <Button 
+                          className='col-span-2'
+                          size='small' 
+                          type='submit' 
+                          onClick={()=>setSelectedImage(null)}>Remove</Button>
+                      </td>
+                    </tr>
+                </tbody>
+              </table>
+            </div>
+            <br />
+            <Button
+              className='col-span-2'
+              intent='primary'
+              size='large' 
+              type='submit' 
+              fullwidth
+              disabled={!isSubmitEnabled()}>
               Submit
             </Button>
-          </div>
-        </form>
-      </>
+          </form>
+        </div>
     </div>
   )
 }

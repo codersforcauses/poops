@@ -14,6 +14,7 @@ import { useMutateVisits, useVisits } from '@/hooks/visits'
 import { Duration, Visit } from '@/types/types'
 import { formatTimestamp, visitSelectOptions } from '@/utils'
 
+
 const Set = () => {
   const { data: visits } = useVisits()
   const { mutate: mutateVisits } = useMutateVisits()
@@ -47,7 +48,7 @@ const Set = () => {
       walkDist,
       commuteDist,
       commuteMethod,
-      notes
+      notes,
     } = visit
 
     setVisitType(type)
@@ -108,7 +109,7 @@ const Set = () => {
     startTime &&
     duration.hours >= 0 &&
     duration.minutes >= 0
-  walkDist >= 0 && commuteDist >= 0 && commuteMethod
+    walkDist >= 0 && commuteDist >= 0 && commuteMethod
 
   return (
     <div className='space-4 z-50 flex h-full flex-col p-4'>
@@ -231,7 +232,6 @@ const Set = () => {
               isRequired={false}
               onChange={(event) => setNotes(event.target.value)}
             />
-
             <Button
               className='col-span-2'
               intent='primary'
