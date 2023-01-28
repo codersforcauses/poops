@@ -130,6 +130,12 @@ function UpdateDetailsPanel({ contact }: ContactItemProps) {
 
       <div id='recaptcha-container'></div>
 
+      <div>
+        {!(displayName && email && phoneNumber) && (
+          <span>Please finish your missing details</span>
+        )}
+        {err && <span>Something Went Wrong...</span>}
+      </div>
       {!done && (
         <div>
           <SubmitButton
@@ -139,13 +145,6 @@ function UpdateDetailsPanel({ contact }: ContactItemProps) {
           />
         </div>
       )}
-
-      <div>
-        {!(displayName && email && phoneNumber) && (
-          <span>Please finish your missing details</span>
-        )}
-        {err && <span>Something Went Wrong...</span>}
-      </div>
     </div>
   )
 }
