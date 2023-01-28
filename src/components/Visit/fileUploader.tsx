@@ -1,4 +1,4 @@
-import { useRef } from 'react'
+import { MouseEvent, useRef } from 'react'
 
 import Button from '@/components/UI/button'
 
@@ -17,6 +17,7 @@ const FileUploader = ({
     if (hiddenFileInput.current) {
       hiddenFileInput.current.click()
     }
+    // click.preventDefault()
   }
 
   const handleChange = (e: React.FormEvent<HTMLInputElement>) => {
@@ -29,6 +30,7 @@ const FileUploader = ({
   return (
     <>
       <Button 
+        type="button"
         size="small"
         onClick={handleClick}
       >
