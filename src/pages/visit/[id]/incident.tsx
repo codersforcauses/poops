@@ -2,6 +2,7 @@ import { FormEvent, useState } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { XMarkIcon } from '@heroicons/react/24/solid'
+import { Timestamp } from 'firebase/firestore'
 
 import { withProtected } from '@/components/PrivateRoute'
 import Button from '@/components/UI/button'
@@ -48,12 +49,12 @@ const Incident = () => {
         userName: userName,
         clientName: clientName,
         visitId: docId,
-        visitTime: time,
+        visitTime: Timestamp.fromDate(new Date(time)),
         email: email,
         petName: petName,
-        time: time,
+        time: Timestamp.fromDate(new Date(time)),
         details: notes,
-        createdAt: Date.now().toString()
+        createdAt: Timestamp.fromDate(new Date())
       }
       mutateIncidents(data)
 

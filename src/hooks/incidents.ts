@@ -5,15 +5,19 @@ import {
   collection,
   deleteDoc,
   doc,
+  DocumentReference,
   FirestoreError,
+  getDoc,
   getDocs,
-  setDoc
+  setDoc,
+  writeBatch
 } from 'firebase/firestore'
 
 import { db } from '@/components/Firebase/init'
 import { AlertVariant, useAlert } from '@/context/AlertContext'
 import { useAuth } from '@/context/Firebase/Auth/context'
-import { Incident } from '@/types/types'
+import { Incident, Visit } from '@/types/types'
+import { humanizeTimestamp } from '@/utils'
 
 export const useIncidents = () => {
   const { currentUser } = useAuth()
@@ -56,7 +60,7 @@ export const useMutateIncidents = () => {
         if (incidentMut.deleteDoc) {
           await deleteDoc(docRef)
         } else {
-          await setDoc(docRef, incidentMut, { merge: true })
+          await addIncident(docRef, incident)
         }
       }
     } catch (err: unknown) {
@@ -71,6 +75,7 @@ export const useMutateIncidents = () => {
 
   const onSuccess = () => {
     queryClient.invalidateQueries({ queryKey: ['incidents'] })
+    queryClient.invalidateQueries({ queryKey: ['visits'] })
     setAlert({
       variant: AlertVariant.info,
       title: 'Success!',
@@ -94,4 +99,34 @@ export const useMutateIncidents = () => {
     onSuccess,
     onError
   })
+}
+
+const addIncident = async (
+  incidentRef: DocumentReference,
+  incidentMut: Incident
+) => {
+  const batch = writeBatch(db)
+
+  // Set incident
+  batch.set(incidentRef, incidentMut, { merge: true })
+
+  // Adding details to visit notes
+  const visitRef = doc(
+    db,
+    'users',
+    incidentMut.userID,
+    'visits',
+    incidentMut.visitId
+  )
+  const visitData = (await getDoc(visitRef)).data() as Visit
+  const notes = visitData.notes
+  // appending to notes if not empty.
+  const newDetail = `${humanizeTimestamp(incidentMut.visitTime)}\n ${
+    incidentMut.details
+  }`
+  visitData.notes = notes == '' ? `- ${newDetail}` : `${notes}\n- ${newDetail}`
+
+  batch.set(visitRef, visitData, { merge: true })
+
+  await batch.commit()
 }
