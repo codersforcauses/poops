@@ -125,8 +125,9 @@ function UpdateDetailsPanel({ contact }: ContactItemProps) {
 
       {!done && (
         <div>
-          <SubmitButton onClick={(e) => handleSubmit(e, contact, currentUser)}
-            buttonlabel="Submit"
+          <SubmitButton
+            onClick={(e) => handleSubmit(e, contact, currentUser)}
+            buttonlabel='Submit'
             style='group h-12 rounded-full border-4 border-[#4267B2] px-6 transition duration-300'
           />
         </div>
