@@ -17,7 +17,10 @@ import {
   FieldMessage
 } from '@/components/UI/FormComponents/utils'
 
-export type CustomSelectProps = FormFieldProps
+export interface CustomSelectProps<Option, IsMulti extends boolean>
+  extends FormFieldProps {
+  onChange?: (d: OnChangeValue<Option, IsMulti>) => void
+}
 
 // If IsMulti is true, need to also supply isMulti attrib
 const CustomSelect = <
@@ -37,7 +40,8 @@ const CustomSelect = <
   setFocused,
   options,
   ...props
-}: CustomSelectProps & Omit<Props<Option, IsMulti, Group>, 'name'>) => {
+}: CustomSelectProps<Option, IsMulti> &
+  Omit<Props<Option, IsMulti, Group>, 'name'>) => {
   const {
     formState,
     disabled: formDisabled,
@@ -61,7 +65,8 @@ const CustomSelect = <
 
   const handleChange = (data: OnChangeValue<Option, IsMulti>) => {
     setValue?.(name, data)
-    // console.log(data)
+
+    if (props.onChange) props.onChange(data)
   }
 
   return (
