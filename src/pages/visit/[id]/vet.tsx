@@ -6,10 +6,12 @@ import { Timestamp } from 'firebase/firestore'
 
 import { withProtected } from '@/components/PrivateRoute'
 import Button from '@/components/UI/button'
+import FileUploader from '@/components/Visit/fileUploader'
 import FormField from '@/components/Visit/formfield'
 import { useAuth } from '@/context/Firebase/Auth/context'
 import { useMutateVetConcerns } from '@/hooks/vetconcerns'
 import { useVisits } from '@/hooks/visits'
+import UploadImage, { uploadImageInterface } from '@/lib/uploadImage'
 import { VetConcern } from '@/types/types'
 import { formatTimestamp } from '@/utils'
 
@@ -75,6 +77,27 @@ const VetForm = () => {
     mutateVetConcerns(data)
 
     router.push('/visit')
+  }
+
+  const handleFile = async (file: File) => {
+    if (currentUser !== null) {
+      const data: uploadImageInterface = {
+        userID: currentUser.uid,
+        image: file,
+        folder: 'incident'
+      }
+      try {
+        await UploadImage(data)
+        console.log('success')
+        // TODO on success?
+      } catch (error) {
+        console.log('failure')
+        return
+        // TODO on failure
+      }
+    } else {
+      alert('You must be logged in to upload a photo')
+    }
   }
 
   const isSubmitEnabled = () => {
@@ -165,6 +188,12 @@ const VetForm = () => {
             isRequired={false}
             onChange={(event) => setNotes(event.target.value)}
           />
+          <div>
+            <div className='font-semibold'>Photo:</div>
+            <div>
+              <FileUploader label='Upload Image' handleFile={handleFile} />
+            </div>
+          </div>
           <div className='mx-auto my-2 flex flex-col p-1 '>
             <Button type='submit' disabled={!isSubmitEnabled()}>
               Submit
