@@ -26,7 +26,7 @@
     "format": "prettier -w .",
     "format:check": "prettier -c .",
     "prepare": "husky install",
-    "firebase": "cd firebase && yarn"
+    "firebase": "cd firebase/functions && yarn"
   },
   "dependencies": {
     "@heroicons/react": "2.0.13",
