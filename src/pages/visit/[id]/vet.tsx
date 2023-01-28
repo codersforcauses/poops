@@ -11,10 +11,7 @@ import FormField from '@/components/Visit/formfield'
 import { useAuth } from '@/context/Firebase/Auth/context'
 import { useMutateVetConcerns } from '@/hooks/vetconcerns'
 import { useVisits } from '@/hooks/visits'
-import { 
-  UploadImage,
-  UploadImageInterface
-} from '@/lib/uploadImage'
+import { UploadImage, UploadImageInterface } from '@/lib/uploadImage'
 import { VetConcern } from '@/types/types'
 import { formatTimestamp } from '@/utils'
 

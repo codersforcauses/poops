@@ -9,10 +9,7 @@ import FileUploader from '@/components/Visit/fileUploader'
 import FormField from '@/components/Visit/formfield'
 import { useAuth } from '@/context/Firebase/Auth/context'
 import { useMutateIncidents } from '@/hooks/incidents'
-import { 
-  UploadImage,
-  UploadImageInterface
-} from '@/lib/uploadImage'
+import { UploadImage, UploadImageInterface } from '@/lib/uploadImage'
 import { Incident } from '@/types/types'
 
 const Incident = () => {
@@ -63,7 +60,7 @@ const Incident = () => {
         createdAt: Date.now().toString()
       }
       mutateIncidents(data)
-      
+
       if (image !== undefined) {
         const imageData: UploadImageInterface = {
           userID: currentUser.uid,

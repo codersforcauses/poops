@@ -10,7 +10,11 @@ export interface ImageToStorageInterface {
   folder: string
 }
 
-export const ImageToStorage = async ({ userID, image, folder }: ImageToStorageInterface) => {
+export const ImageToStorage = async ({
+  userID,
+  image,
+  folder
+}: ImageToStorageInterface) => {
   const extension = image.name.split('.').pop()
   if (extension !== undefined && extension.match(/jpg|jpeg|png|heic/)) {
     const formattedDate = formatTimestampString(Timestamp.now())
@@ -22,14 +26,14 @@ export const ImageToStorage = async ({ userID, image, folder }: ImageToStorageIn
 }
 
 export interface ImageToFirestoreInterface {
-  name: string,
-  email: string,
-  pet: string,
-  doctor?: string,
-  time: string,
-  notes: string,
-  imageBucket: string,
-  destination: string,
+  name: string
+  email: string
+  pet: string
+  doctor?: string
+  time: string
+  notes: string
+  imageBucket: string
+  destination: string
   folder?: string
 }
 
@@ -46,23 +50,38 @@ export const ImageToFirestore = ({
 }: ImageToFirestoreInterface) => {
   console.log(destination)
   if (folder === 'vet') {
-    addDoc(collection(db, destination), {name, email, pet, doctor, time, notes, imageBucket})
+    addDoc(collection(db, destination), {
+      name,
+      email,
+      pet,
+      doctor,
+      time,
+      notes,
+      imageBucket
+    })
   }
   if (folder === 'incidents') {
-    addDoc(collection(db, destination), {name, email, pet, time, notes, imageBucket})
+    addDoc(collection(db, destination), {
+      name,
+      email,
+      pet,
+      time,
+      notes,
+      imageBucket
+    })
   }
 }
 
 export interface UploadImageInterface {
-  userID: string,
+  userID: string
   visitID: string
-  name: string,
-  email: string,
-  pet: string,
-  doctor?: string,
-  time: string,
-  notes: string,
-  image: File,
+  name: string
+  email: string
+  pet: string
+  doctor?: string
+  time: string
+  notes: string
+  image: File
   folder: string
 }
 
@@ -98,8 +117,7 @@ export const UploadImage = async ({
         folder
       })
     }
-  }
-  catch (error) {
+  } catch (error) {
     console.log(error)
   }
 }
