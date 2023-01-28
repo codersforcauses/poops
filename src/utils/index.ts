@@ -38,8 +38,8 @@ export const humanizeTimestamp = (timestamp?: Timestamp) => {
 }
 
 export const visitTypes: SelectOption<string>[] = [
-  { label: 'Vet', value: 'Vet' },
-  { label: 'Walk', value: 'Walk' }
+  { label: 'Walk', value: 'Walk' },
+  { label: 'Vet', value: 'Vet' }
 ]
 
 export const defaultCommuteMethods: SelectOption<string>[] = [
