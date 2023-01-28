@@ -13,6 +13,6 @@
     "typeRoots": ["./node_modules/@types"]
   },
   "compileOnSave": true,
-  "include": ["functions/*.ts"],
+  "include": ["src/*.ts"],
   "exclude": ["node_modules", "../node_modules"]
 }

@@ -1,9 +1,8 @@
 import { useRouter } from 'next/router'
 
 import Button from '@/components/UI/button'
+import { EditButton } from '@/components/Visit/buttons'
 import { Duration, Visit } from '@/types/types'
-
-import { EditButton } from './buttons'
 
 export const formatDuration = (duration: Duration) => {
   const d = `${duration.hours} ${duration.hours === 1 ? 'hr' : 'hrs'} ${
@@ -18,16 +17,18 @@ interface VisitInfoProps extends Visit {
 
 const VisitInfo = ({
   isOpen,
-  docId,
   type = 'N/A',
   petNames = 'N/A',
   duration = { hours: 0, minutes: 0 },
   walkDist = 0,
   commuteDist = 0,
   commuteMethod = 'N/A',
-  notes = ''
+  notes = '',
+  clientName = '',
+  docId = ''
 }: VisitInfoProps) => {
   const router = useRouter()
+  const params = `pets=${petNames}&client=${clientName}&visitId=${docId}`
 
   if (docId === undefined) return null
 
@@ -72,7 +73,7 @@ const VisitInfo = ({
           <div className='w-2/5'>
             <Button
               size='small'
-              onClick={() => router.push(`/visit/${docId}/incident`)}
+              onClick={() => router.push(`/visit/${docId}/incident?${params}`)}
             >
               Report Incident
             </Button>
@@ -80,7 +81,7 @@ const VisitInfo = ({
           <div className='w-2/5'>
             <Button
               size='small'
-              onClick={() => router.push(`/visit/${docId}/vet`)}
+              onClick={() => router.push(`/visit/${docId}/vet?${params}`)}
             >
               Register Vet Concern
             </Button>

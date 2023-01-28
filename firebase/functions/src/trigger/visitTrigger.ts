@@ -1,5 +1,6 @@
 import { functions, firestore } from '../main'
 import { DocumentData } from 'firebase-admin/firestore'
+import { REGION } from '../config'
 
 interface UserStat {
   numVisits: number
@@ -13,8 +14,9 @@ interface UserStat {
  * Automatically updates the user stats when a visit is added,
  * deleted or updated.
  */
-export const updateVisitTrigger = functions.firestore
-  .document('users/{userId}/visits/{visitId}')
+export const updateVisitTrigger = functions
+  .region(REGION)
+  .firestore.document('users/{userId}/visits/{visitId}')
   .onWrite(async (change, context) => {
     const userId = context.params.userId
     const oldVisit = change.before.exists ? change.before.data() : null
