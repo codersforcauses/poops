@@ -12,7 +12,7 @@ const Login: NextPageWithLayout = () => {
   return (
     <div className='h-screen w-screen'>
       <title>Login</title>
-      <div className='animate-text bg-gradient-to-b from-zinc-200 via-zinc-100 to-white'>
+      <div className='animate-text bg-white'>
         <div className='m-auto max-w-sm p-10'>
           <Image
             src='/images/poops-logo-transparent.png'
