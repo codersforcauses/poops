@@ -5,29 +5,22 @@ import { SubmitHandler } from 'react-hook-form'
 
 import Button from '@/components/UI/button'
 import Form from '@/components/UI/FormComponents/Form'
-import {
-  CreateSelect,
-  CustomSelect,
-  DurationSelect
-} from '@/components/UI/FormComponents/SelectFields'
 import { SelectOption } from '@/components/UI/FormComponents/SelectFields/utils'
-import TextField from '@/components/UI/FormComponents/TextField'
-import validationSchema from '@/components/Visit/VisitForm/validation'
-import { useContacts } from '@/hooks/contacts'
+import FormFields from '@/components/Visit/VisitForm/formfields'
 import { useMutateVisits } from '@/hooks/visits'
-import { Contact, Duration, Visit } from '@/types/types'
-import { defaultCommuteMethods, formatTimestamp, visitTypes } from '@/utils'
+import { Duration, Visit } from '@/types/types'
+import { formatTimestamp, visitTypes } from '@/utils'
 
 interface VisitFormProps {
   visitData?: Visit
 }
 
-interface ClientInfo {
+export interface ClientInfo {
   clientName: string
   petNames: string
 }
 
-interface FormValues {
+export interface FormValues {
   visitType: SelectOption<string>
   clientName: SelectOption<ClientInfo>
   startTime: string
@@ -39,7 +32,6 @@ interface FormValues {
 }
 
 export const VisitForm = ({ visitData }: VisitFormProps) => {
-  const { data: contacts } = useContacts()
   const { mutate: mutateVisits } = useMutateVisits()
   const router = useRouter()
 
@@ -98,79 +90,11 @@ export const VisitForm = ({ visitData }: VisitFormProps) => {
           }
           return d
         }
+        return { visitType: visitTypes[0] }
       }, [visitData])}
     >
       <div className='grid grid-cols-2 gap-4'>
-        <CustomSelect<SelectOption<string>, false>
-          label='Visit Type:'
-          name='visitType'
-          options={visitTypes}
-          isClearable
-          isSearchable
-          rules={validationSchema.visitType}
-        />
-        <CustomSelect<SelectOption<ClientInfo>, false>
-          label='Client Name:'
-          name='clientName'
-          options={contacts?.map((contact: Contact) => {
-            return {
-              label: contact.name,
-              value: {
-                clientName: contact.name,
-                petNames: contact.pets
-              }
-            }
-          })}
-          isClearable
-          isSearchable
-          rules={validationSchema.clientName}
-        />
-        <TextField
-          label='Commute Distance:'
-          type='number'
-          step='0.01'
-          name='commuteDist'
-          placeholder='Distance (km)'
-          rules={validationSchema.commuteDist}
-        />
-        <CreateSelect<SelectOption<string>, false>
-          label='Commute Method:'
-          name='commuteMethod'
-          options={defaultCommuteMethods}
-          isClearable
-          isSearchable
-          rules={validationSchema.commuteMethod}
-        />
-        <TextField
-          className='col-span-2'
-          label='Start Time:'
-          name='startTime'
-          type='dateTime-local'
-          placeholder='Start Time'
-          rules={validationSchema.startTime}
-        />
-        <DurationSelect
-          name='duration'
-          label='Duration:'
-          rules={validationSchema.duration}
-        />
-        <TextField
-          label='Walk Distance:'
-          name='walkDist'
-          type='number'
-          step='0.01'
-          placeholder='Distance (km)'
-          rules={validationSchema.walkDist}
-        />
-        <TextField
-          className='col-span-2'
-          label='Notes:'
-          type='textarea'
-          name='notes'
-          placeholder='Add notes here...'
-          rules={validationSchema.notes}
-        />
-
+        <FormFields />
         <Button
           className='col-span-2'
           intent='primary'
@@ -180,7 +104,6 @@ export const VisitForm = ({ visitData }: VisitFormProps) => {
         >
           Submit
         </Button>
-
         <Button
           className='col-span-2'
           intent='secondary'

@@ -6,7 +6,6 @@ import IncidentForm from '@/components/Visit/IncidentForm'
 import { useVisits } from '@/hooks/visits'
 
 const Incident = () => {
-  // ! unsafe to store client names and pets in query
   const { data: visits } = useVisits()
   const router = useRouter()
 
