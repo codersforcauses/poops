@@ -8,7 +8,7 @@ import { useAuth } from '@/context/Firebase/Auth/context'
 const Login: NextPage = () => {
   const { logOut, currentUser } = useAuth()
   return (
-    <>
+    <div className='h-screen w-screen'>
       <title>Login</title>
       <div className='animate-text bg-gradient-to-b from-zinc-200 via-zinc-100 to-white'>
         <div className='m-auto max-w-sm p-10'>
@@ -44,7 +44,7 @@ const Login: NextPage = () => {
           <button onClick={() => logOut?.()}>logout</button>
         </div>
       )}
-    </>
+    </div>
   )
 }
 
