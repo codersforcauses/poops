@@ -5,7 +5,9 @@ import LoginPanel from '@/components/Login/LoginPanel'
 import { withPublic } from '@/components/PrivateRoute'
 import { useAuth } from '@/context/Firebase/Auth/context'
 
-const Login: NextPage = () => {
+import { NextPageWithLayout } from './_app'
+
+const Login: NextPageWithLayout = () => {
   const { logOut, currentUser } = useAuth()
   return (
     <div className='h-screen w-screen'>
