@@ -20,7 +20,7 @@ const SignupDetails: NextPage = () => {
         className='fixed top-0 left-0 mb-4 h-12 rounded-full border-4 border-primary bg-primary px-4 text-white'
         onClick={logOut}
       >
-        LOG OUT
+        Logout
       </button>
       <div className='text-center'>
         <div className='pb-2 text-xl font-bold'>Welcome, New User!</div>
