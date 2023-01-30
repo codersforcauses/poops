@@ -79,13 +79,13 @@ export type Incident = {
 
 export type VolunteerStats = {
   volunteerCount: number
-  avgClientCount: number,
-  avgCommuteDistance: number,
-  avgVisitCount: number,
-  avgWalkDistance: number,
-  avgWalkTime: number,
-  totalCommuteDistance: number,
-  totalVisitCount: number,
-  totalWalkDistance: number,
-  totalWalkTime: number,
+  avgClientCount: number
+  avgCommuteDistance: number
+  avgVisitCount: number
+  avgWalkDistance: number
+  avgWalkTime: number
+  totalCommuteDistance: number
+  totalVisitCount: number
+  totalWalkDistance: number
+  totalWalkTime: number
 }

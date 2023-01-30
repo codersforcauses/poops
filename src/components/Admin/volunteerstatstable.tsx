@@ -1,3 +1,8 @@
+import { Timestamp } from 'firebase/firestore'
+
+import Spinner from '@/components/UI/loadingSpinner'
+import { useVolunteerStatsByDateRange } from '@/hooks/admin'
+
 const headers = [
   'Number of Clients',
   'Number of Visits',
@@ -6,49 +11,36 @@ const headers = [
   'Commute Distance (kms)'
 ]
 
-const data = {
-  voluteerCount: 10,
-  totalClientCount: 50,
-  totalCommuteDistance: 50,
-  totalVisitCount: 500,
-  totalWalkDistance: 500,
-  totalWalkTime: 5000,
-  avgClientCount: 50,
-  avgCommuteDistance: 50,
-  avgVisitCount: 500,
-  avgWalkDistance: 500,
-  avgWalkTime: 5000
-}
+const VoluteerStatsTable = () => {
+  const startTime = Timestamp.fromDate(new Date('2023-01-22T18:23'))
+  const endTime = Timestamp.fromDate(new Date())
 
-function VoluteerStatsTable() {
-  const {
-    voluteerCount,
-    totalClientCount,
-    totalCommuteDistance,
-    totalVisitCount,
-    totalWalkDistance,
-    totalWalkTime,
-    avgClientCount,
-    avgCommuteDistance,
-    avgVisitCount,
-    avgWalkDistance,
-    avgWalkTime
-  } = data
+  const { isLoading, data: volunteerStats } = useVolunteerStatsByDateRange(
+    startTime,
+    endTime
+  )
+
+  if (isLoading || volunteerStats === undefined)
+    return (
+      <div className='flex h-20 items-center justify-center'>
+        <Spinner style='h-10 w-10 fill-primary-dark text-gray-200' />
+      </div>
+    )
 
   const totalStats = [
-    totalClientCount,
-    totalVisitCount,
-    totalWalkTime,
-    totalWalkDistance,
-    totalCommuteDistance
+    0, // total client count
+    volunteerStats.totalVisitCount,
+    volunteerStats.totalWalkTime,
+    volunteerStats.totalWalkDistance,
+    volunteerStats.totalCommuteDistance
   ]
 
   const avgStats = [
-    avgClientCount,
-    avgVisitCount,
-    avgWalkTime,
-    avgWalkDistance,
-    avgCommuteDistance
+    volunteerStats.avgClientCount,
+    volunteerStats.avgVisitCount,
+    volunteerStats.avgWalkTime,
+    volunteerStats.avgWalkDistance,
+    volunteerStats.avgCommuteDistance
   ]
 
   return (
@@ -98,7 +90,7 @@ function VoluteerStatsTable() {
       </table>
       <div className='mt-4 flex items-baseline gap-2 p-2 text-3xl'>
         <div>Total Number of Volunteers: </div>
-        <div className='text-primary-dark'>{voluteerCount}</div>
+        <div className='text-primary-dark'>{volunteerStats.volunteerCount}</div>
       </div>
     </div>
   )
