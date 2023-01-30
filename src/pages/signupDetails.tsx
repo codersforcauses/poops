@@ -15,33 +15,18 @@ const SignupDetails: NextPage = () => {
   if (currentUser === undefined) return null
 
   return (
-    <>
-      <div className='animate-text bg-gradient-to-b from-zinc-200 via-zinc-100 to-white '>
-        <button onClick={logOut}>LOG OUT</button>
-
-        <div className='m-auto max-w-sm p-10'>
-          <Image
-            src='/images/poops-logo-transparent.png'
-            width={36}
-            height={36}
-            layout='responsive'
-            alt='POOPS logo'
-            className='rounded-full'
-          ></Image>
-        </div>
-        <div className='h-64 overflow-y-auto'>
-          <div className='p-2 text-center text-xl font-bold'>
-            Welcome, New User!
-          </div>
-          <div className='text-x1 text-center font-sans'>
-            Please fill in your details
-          </div>
-          <div className='m-auto grid h-1/3 w-1/2 max-w-xs justify-center space-y-4 p-5'>
-            <UpdateDetailsPanel contact={currentUser.info} />
-          </div>
-        </div>
+    <div className='flex h-screen w-screen animate-text flex-col items-center justify-center bg-gradient-to-b from-zinc-200 via-zinc-100 to-white'>
+      <button
+        className='fixed top-0 left-0 mb-4 h-12 rounded-full border-4 border-primary bg-primary px-4 text-white'
+        onClick={logOut}
+      >
+        LOG OUT
+      </button>
+      <div className='text-center'>
+        <div className='pb-2 text-xl font-bold'>Welcome, New User!</div>
       </div>
-    </>
+      <UpdateDetailsPanel contact={currentUser.info} />
+    </div>
   )
 }
 

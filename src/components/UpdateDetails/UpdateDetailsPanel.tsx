@@ -18,8 +18,9 @@ declare global {
   }
 }
 
-import SubmitButton from '@/components/UpdateDetails/SubmitButton'
 import { useRouter } from 'next/router'
+
+import SubmitButton from '@/components/UpdateDetails/SubmitButton'
 
 // TODO add correct redirect to the pages path
 
@@ -101,47 +102,93 @@ function UpdateDetailsPanel({ contact }: ContactItemProps) {
   }
 
   return (
-    <div>
-      <h1>Name</h1>
-      <input
-        className='h-10 w-full rounded-lg bg-transparent pl-2 text-sm'
-        value={displayName}
-        onChange={(e) => editName(e)}
-        name={displayName}
-        placeholder='Name'
-      />
-      <h1>Email</h1>
-      <input
-        className='h-10 w-full rounded-lg bg-transparent pl-2 text-sm'
-        value={email}
-        onChange={(e) => editEmail(e)}
-        name={email}
-        placeholder='Email'
-        type='email'
-      />
-      <div>Phone</div>
-      <input
-        className='h-10 w-full rounded-lg bg-transparent pl-2 text-sm'
-        value={phoneNumber}
-        onChange={(e) => editPhoneNumber(e)}
-        name={phoneNumber}
-        placeholder='Phone Number'
-      />
+    <div className='w-4/5 space-y-5 md:w-2/5'>
+      <div>
+        {!displayName ? (
+          <div>
+            <div className='italic text-primary'>*Name required</div>
+            <input
+              className='h-10 w-full rounded-lg border border-primary bg-transparent pl-2 text-sm'
+              value={displayName}
+              onChange={(e) => editName(e)}
+              name={displayName}
+              placeholder='Name'
+            />
+          </div>
+        ) : (
+          <div>
+            <p>Name</p>
+            <input
+              className='h-10 w-full rounded-lg border border-[#6b7280] bg-transparent pl-2 text-sm'
+              value={displayName}
+              onChange={(e) => editName(e)}
+              name={displayName}
+              placeholder='Name'
+            />
+          </div>
+        )}
+      </div>
+      <div>
+        {!email ? (
+          <div>
+            <div className='italic text-primary'>*Email required</div>
+            <input
+              className='h-10 w-full rounded-lg border border-primary bg-transparent pl-2 text-sm'
+              value={email}
+              onChange={(e) => editEmail(e)}
+              name={email}
+              placeholder='Email'
+              type='email'
+            />
+          </div>
+        ) : (
+          <div>
+            <p>Email</p>
+            <input
+              className='h-10 w-full rounded-lg border border-[#6b7280] bg-transparent pl-2 text-sm'
+              value={email}
+              onChange={(e) => editEmail(e)}
+              name={email}
+              placeholder='Email'
+              type='email'
+            />
+          </div>
+        )}
+      </div>
+      <div>
+        {!phoneNumber ? (
+          <div>
+            <div className='italic text-primary'>*Phone required</div>
+            <input
+              className='h-10 w-full rounded-lg border border-primary bg-transparent pl-2 text-sm'
+              value={phoneNumber}
+              onChange={(e) => editPhoneNumber(e)}
+              name={phoneNumber}
+              placeholder='Phone Number'
+            />
+          </div>
+        ) : (
+          <div>
+            <p>Phone</p>
+            <input
+              className='h-10 w-full rounded-lg border border-[#6b7280] bg-transparent pl-2 text-sm'
+              value={phoneNumber}
+              onChange={(e) => editPhoneNumber(e)}
+              name={phoneNumber}
+              placeholder='Phone Number'
+            />
+          </div>
+        )}
+      </div>
 
       <div id='recaptcha-container'></div>
-
-      <div>
-        {!(displayName && email && phoneNumber) && (
-          <span>Please finish your missing details</span>
-        )}
-        {err && <span>Something Went Wrong...</span>}
-      </div>
+      <div>{err && <span>Something Went Wrong...</span>}</div>
       {!done && (
-        <div>
+        <div className='text-center'>
           <SubmitButton
             onClick={(e) => handleSubmit(e, contact, currentUser)}
             buttonlabel='Submit'
-            style='group h-12 rounded-full border-4 border-[#4267B2] px-6 transition duration-300'
+            style='group h-12 rounded-full border-4 border-primary px-6 transition duration-300'
           />
         </div>
       )}
