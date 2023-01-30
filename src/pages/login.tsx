@@ -37,15 +37,6 @@ const Login: NextPageWithLayout = () => {
           displayMicrosoft={true}
         />
       </div>
-      {/* //! used for testing} */}
-      <br />
-      <br />
-      {currentUser && (
-        <div className='text-center'>
-          <p>{currentUser?.displayName}</p>
-          <button onClick={() => logOut?.()}>logout</button>
-        </div>
-      )}
     </div>
   )
 }
