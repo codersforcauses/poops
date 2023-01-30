@@ -90,7 +90,7 @@ const Incident = () => {
   }
 
   return (
-    <div className='flex w-screen flex-col p-4'>
+    <div className='h-full max-h-screen overflow-y-auto flex w-screen flex-col p-4'>
       <div className='fixed right-5 top-4 z-[100] h-10 w-10 rounded-full bg-primary p-1 drop-shadow-default'>
         <Link href='/visit'>
           <button>
