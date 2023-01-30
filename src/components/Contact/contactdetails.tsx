@@ -32,12 +32,8 @@ const ContactDetails = ({ contact, mutate }: ContactFormProps) => {
             type='button'
             size='medium'
             onClick={() => {
-              if (isEditing) {
-                setIsEditing(false)
-              } else {
-                setIsEditing(false)
-                router.back()
-              }
+              setIsEditing(false)
+              if (!isEditing) router.back()
             }}
           >
             Back

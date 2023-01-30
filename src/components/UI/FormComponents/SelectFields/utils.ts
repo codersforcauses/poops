@@ -25,7 +25,6 @@ export const customStyles = <
       color: 'black'
     }),
     placeholder: (provided: Record<string, unknown>) => ({
-      // surely nobody will notice that the select arrow and this icon is different
       ...provided,
       color: '#6b7280'
     }),

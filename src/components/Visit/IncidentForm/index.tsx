@@ -52,7 +52,6 @@ const IncidentForm = (props: IncidentFormProps) => {
 
   return (
     <Form<FormValues>
-      className='pt-3'
       onSubmit={handleSubmit}
       defaultValues={
         currentUser
