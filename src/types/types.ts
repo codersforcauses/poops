@@ -79,7 +79,6 @@ export type Incident = {
 
 export type VolunteerStats = {
   volunteerCount: number
-  avgClientCount: number
   avgCommuteDistance: number
   avgVisitCount: number
   avgWalkDistance: number

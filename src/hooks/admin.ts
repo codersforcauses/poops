@@ -47,20 +47,17 @@ export const useVolunteerStatsByDateRange = (
           visitData.duration.hours * 60 + visitData.duration.minutes
       })
 
-      const volunteerStats: VolunteerStats = {
+      return {
         volunteerCount: volunteerCount,
-        avgClientCount: 0, //TODO: GeeGee
-        avgCommuteDistance: totalDistCommuted / volunteerCount,
-        avgVisitCount: totalVisits / volunteerCount,
-        avgWalkDistance: totalDistWalked / volunteerCount,
-        avgWalkTime: totalDurationMins / volunteerCount,
-        totalCommuteDistance: totalDistCommuted,
-        totalVisitCount: totalVisits,
-        totalWalkDistance: totalDistWalked,
-        totalWalkTime: totalDurationMins
+        avgCommuteDistance: roundNum(totalDistCommuted / volunteerCount, 2),
+        avgVisitCount: roundNum(totalVisits / volunteerCount, 2),
+        avgWalkDistance: roundNum(totalDistWalked / volunteerCount, 2),
+        avgWalkTime: roundNum(totalDurationMins / volunteerCount, 2),
+        totalCommuteDistance: roundNum(totalDistCommuted),
+        totalVisitCount: roundNum(totalVisits),
+        totalWalkDistance: roundNum(totalDistWalked),
+        totalWalkTime: roundNum(totalDurationMins)
       }
-
-      return volunteerStats
     } catch (err: unknown) {
       //#region  //*=========== For logging ===========
       if (err instanceof FirestoreError) {
@@ -71,4 +68,9 @@ export const useVolunteerStatsByDateRange = (
   }
 
   return useQuery(['VolunteerStats'], queryFn)
+}
+
+function roundNum(num: number, decimalPlaces = 0) {
+  const p = Math.pow(10, decimalPlaces)
+  return Math.round(num * p) / p
 }

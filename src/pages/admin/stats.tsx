@@ -1,6 +1,7 @@
 import { ReactElement } from 'react'
 
-import VoluteerStatsTable from '@/components/Admin/volunteerstatstable'
+import StatsBreakdown from '@/components/Admin/statsbreakdown'
+import VolunteerStatsTable from '@/components/Admin/volunteerstatstable'
 import Layout from '@/components/Layout'
 import { withProtected } from '@/components/PrivateRoute'
 import { NextPageWithLayout } from '@/pages/_app'
@@ -12,7 +13,8 @@ const Stats: NextPageWithLayout = () => {
         <h1 className='my-8 mx-auto text-center text-4xl font-bold text-primary-dark'>
           Admin Summary Dashboard
         </h1>
-        <VoluteerStatsTable />
+        <StatsBreakdown />
+        <VolunteerStatsTable />
       </div>
     </>
   )
