@@ -22,7 +22,7 @@ import { useRouter } from 'next/router'
 
 import SubmitButton from '@/components/UpdateDetails/SubmitButton'
 
-// TODO add correct redirect to the pages path
+// TODO add correct redirect to the pages path // done
 
 type ContactItemProps = {
   contact: Contact
@@ -155,7 +155,7 @@ function UpdateDetailsPanel({ contact }: ContactItemProps) {
           </div>
         )}
       </div>
-      <div>
+      <div className='phone-input'>
         {!phoneNumber ? (
           <div>
             <div className='italic text-primary'>*Phone required</div>
@@ -164,6 +164,7 @@ function UpdateDetailsPanel({ contact }: ContactItemProps) {
               value={phoneNumber}
               onChange={(e) => editPhoneNumber(e)}
               name={phoneNumber}
+              type='number'
               placeholder='Phone Number'
             />
           </div>
@@ -175,6 +176,7 @@ function UpdateDetailsPanel({ contact }: ContactItemProps) {
               value={phoneNumber}
               onChange={(e) => editPhoneNumber(e)}
               name={phoneNumber}
+              type='number'
               placeholder='Phone Number'
             />
           </div>
