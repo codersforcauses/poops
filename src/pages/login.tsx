@@ -5,12 +5,14 @@ import LoginPanel from '@/components/Login/LoginPanel'
 import { withPublic } from '@/components/PrivateRoute'
 import { useAuth } from '@/context/Firebase/Auth/context'
 
-const Login: NextPage = () => {
+import { NextPageWithLayout } from './_app'
+
+const Login: NextPageWithLayout = () => {
   const { logOut, currentUser } = useAuth()
   return (
-    <>
+    <div className='h-screen w-screen'>
       <title>Login</title>
-      <div className='animate-text bg-gradient-to-b from-zinc-200 via-zinc-100 to-white'>
+      <div className='animate-text bg-white'>
         <div className='m-auto max-w-sm p-10'>
           <Image
             src='/images/poops-logo-transparent.png'
@@ -35,7 +37,7 @@ const Login: NextPage = () => {
           displayMicrosoft={true}
         />
       </div>
-      {/* //! used for testing} */}
+      {/*! used for testing} */}
       <br />
       <br />
       {currentUser && (
@@ -44,7 +46,7 @@ const Login: NextPage = () => {
           <button onClick={() => logOut?.()}>logout</button>
         </div>
       )}
-    </>
+    </div>
   )
 }
 
