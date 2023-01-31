@@ -16,7 +16,6 @@ const Home: NextPageWithLayout = () => {
 
   const { data: tempUser } = useUser()
 
-
   const welcomeMessage = currentUser
     ? `Welcome, ${tempUser?.info.name}!`
     : 'Welcome!'
