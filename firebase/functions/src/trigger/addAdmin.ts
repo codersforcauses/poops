@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { auth, functions } from '../main'
 import { REGION } from '../config'
 
