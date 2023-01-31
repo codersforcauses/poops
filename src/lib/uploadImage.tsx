@@ -49,7 +49,7 @@ export const ImageToFirestore = ({
   folder = 'incidents'
 }: ImageToFirestoreInterface) => {
   console.log(destination)
-  if (folder === 'vet') {
+  if (folder === 'vet_concerns') {
     addDoc(collection(db, destination), {
       name,
       email,
