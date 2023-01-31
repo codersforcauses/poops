@@ -18,9 +18,6 @@ const StatsBreakdown = ({ days = 7 }: StatsBreakdownProps) => {
     Timestamp.fromDate(new Date(now))
   )
 
-  // if (isLoading || data === undefined)
-  //   return <div className='flex h-20 items-center justify-center'></div>
-
   return (
     <Card title={`${days} Day Breakdown (Average per Volunteer)`}>
       {isLoading || data === undefined ? (
