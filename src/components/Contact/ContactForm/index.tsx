@@ -131,6 +131,7 @@ const ContactForm = ({
             <TextField
               label='Phone Number'
               name='phone'
+              type='tel'
               rules={validationSchema.phone}
             />
             <TextField
@@ -162,7 +163,9 @@ const ContactForm = ({
 
             <TextField
               label='Notes'
+              type='textarea'
               name='notes'
+              placeholder='Add notes here'
               rules={validationSchema.notes}
             />
             {/* FORM BUTTONS */}

@@ -106,7 +106,7 @@ const FormFields = () => {
         label='Notes:'
         type='textarea'
         name='notes'
-        placeholder='Add notes here...'
+        placeholder='Add notes here'
         rules={validationSchema.notes}
       />
     </>

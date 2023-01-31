@@ -35,6 +35,7 @@ const validationSchema: Record<VisitFormValues, RegisterOptions> = {
   },
   duration: {
     required: true,
+    valueAsNumber: true,
     validate: {
       value: ({ hours, minutes }: Duration) => {
         return (
