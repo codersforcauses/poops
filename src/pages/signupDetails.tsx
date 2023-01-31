@@ -22,7 +22,19 @@ const SignupDetails: NextPage = () => {
       >
         Logout
       </button>
+
       <div className='text-center'>
+        <div className='m-auto max-w-sm pb-2'>
+          <Image
+            src='/images/poops-logo-transparent.png'
+            width={36}
+            height={36}
+            layout='responsive'
+            alt='POOPS logo'
+            className='rounded-full'
+          />
+        </div>
+
         <div className='pb-2 text-xl font-bold'>Welcome, New User!</div>
       </div>
       <UpdateDetailsPanel contact={currentUser.info} />
