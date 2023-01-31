@@ -24,7 +24,6 @@ const Incident = () => {
   )
   const [time, setTime] = useState('') //check issue comments for date/time
   const [notes, setNotes] = useState('')
-
   const router = useRouter()
   let { pets } = router.query
   const { client, visitId } = router.query
@@ -73,7 +72,6 @@ const Incident = () => {
           image: image,
           folder: 'incidents'
         }
-
         UploadImage(imageData)
       }
       router.push('/visit')
@@ -92,69 +90,57 @@ const Incident = () => {
   }
 
   return (
-    <div className='z-50 p-4'>
-      <>
-        <div className='fixed right-5 top-4 z-[100] h-10 w-10 rounded-full bg-primary p-1 drop-shadow-default'>
-          <Link href='/visit'>
-            <button>
-              <XMarkIcon className='h-full w-full text-white' />
-            </button>
-          </Link>
-        </div>
+    <div className='flex h-full max-h-screen w-screen flex-col overflow-y-auto p-4'>
+      <div className='fixed right-5 top-4 z-[100] h-10 w-10 rounded-full bg-primary p-1 drop-shadow-default'>
+        <Link href='/visit'>
+          <button>
+            <XMarkIcon className='h-full w-full text-white' />
+          </button>
+        </Link>
+      </div>
 
-        <div className='border-b-2 border-primary py-3 pt-10'>
-          <h1 className='pl-2 text-2xl font-bold'>Add Your Incident</h1>
-        </div>
+      <div className='border-b-2 border-primary py-3 pt-10'>
+        <h1 className='pl-2 text-2xl font-bold'>Add Your Incident</h1>
+      </div>
 
+      <div className='container mx-auto flex flex-col gap-2 p-2'>
         <form className='pt-3' onSubmit={handleSubmit}>
-          <table className='container mx-auto table-fixed'>
-            <tbody>
-              <tr>
-                <td>
-                  <FormField
-                    id='userNameInput'
-                    type='text'
-                    placeholder={userName}
-                    label='Name'
-                    isRequired={false}
-                    onChange={(event) => setUserName(event.target.value)}
-                  />
-                </td>
-                <td>
-                  <FormField
-                    id='emailInput'
-                    type='email'
-                    placeholder={email}
-                    label='Email'
-                    isRequired={false}
-                    onChange={(event) => setEmail(event.target.value)}
-                  />
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <FormField
-                    id='petNameInput'
-                    type='text'
-                    placeholder={pets}
-                    label='Pet Name'
-                    isRequired={false}
-                    onChange={(event) => setPetName(event.target.value)}
-                  />
-                </td>
-                <td>
-                  <FormField
-                    id='timeInput'
-                    type='dateTime-local'
-                    placeholder='Time'
-                    label='Date & Time'
-                    isRequired={false}
-                    onChange={(event) => setTime(event.target.value)}
-                  />
-                </td>
-              </tr>
-            </tbody>
-          </table>
+          <FormField
+            id='userNameInput'
+            type='text'
+            placeholder={userName}
+            label='Name'
+            isRequired={false}
+            onChange={(event) => setUserName(event.target.value)}
+          />
+
+          <FormField
+            id='emailInput'
+            type='email'
+            placeholder={email}
+            label='Email'
+            isRequired={false}
+            onChange={(event) => setEmail(event.target.value)}
+          />
+
+          <FormField
+            id='petNameInput'
+            type='text'
+            placeholder={pets}
+            label='Pet Name'
+            isRequired={false}
+            onChange={(event) => setPetName(event.target.value)}
+          />
+
+          <FormField
+            id='timeInput'
+            type='dateTime-local'
+            placeholder='Time'
+            label='Date & Time'
+            isRequired={false}
+            onChange={(event) => setTime(event.target.value)}
+          />
+
           <FormField
             id='notesInput'
             type='textarea'
@@ -163,8 +149,20 @@ const Incident = () => {
             isRequired={false}
             onChange={(event) => setNotes(event.target.value)}
           />
+
           <div>
             <div className='font-semibold'>Photo:</div>
+            <div>
+              {image && (
+                <div>
+                  <img
+                    alt='not fount'
+                    width={'200px'}
+                    src={URL.createObjectURL(image)}
+                  />
+                </div>
+              )}
+            </div>
             <div>
               <FileUploader label='Upload Image' handleFile={handleFile} />
             </div>
@@ -175,7 +173,7 @@ const Incident = () => {
             </Button>
           </div>
         </form>
-      </>
+      </div>
     </div>
   )
 }

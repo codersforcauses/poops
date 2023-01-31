@@ -4,7 +4,6 @@ import { useRouter } from 'next/router'
 import { XMarkIcon } from '@heroicons/react/24/outline'
 import { Timestamp } from 'firebase/firestore'
 import { SingleValue } from 'react-select'
-
 import { withProtected } from '@/components/PrivateRoute'
 import Button from '@/components/UI/button'
 import ClientSelector from '@/components/Visit/clientselector'
@@ -18,13 +17,11 @@ import { formatTimestamp, visitSelectOptions } from '@/utils'
 const Set = () => {
   const { data: visits } = useVisits()
   const { mutate: mutateVisits } = useMutateVisits()
-
   const router = useRouter()
   const { id: queryId } = router.query
   const visitId =
     queryId === undefined || Array.isArray(queryId) ? null : queryId
   const visit = visits?.find((visit) => queryId && visit.docId === visitId)
-
   const [visitType, setVisitType] = useState<string>(
     visitSelectOptions[0].value
   )
@@ -251,7 +248,6 @@ const Set = () => {
               isRequired={false}
               onChange={(event) => setNotes(event.target.value)}
             />
-
             <Button
               className='col-span-2'
               intent='primary'
