@@ -17,10 +17,10 @@ const SignupDetails: NextPage = () => {
   return (
     <div className='flex h-screen w-screen animate-text flex-col items-center justify-center bg-gradient-to-b from-zinc-200 via-zinc-100 to-white'>
       <button
-        className='fixed top-0 left-0 mb-4 h-12 rounded-full border-4 border-primary bg-primary px-4 text-white'
+        className='fixed top-0 left-0 pt-2 pl-2 text-black'
         onClick={logOut}
       >
-        Logout
+        <span className='text-3xl'>&larr;</span>
       </button>
 
       <div className='text-center'>
