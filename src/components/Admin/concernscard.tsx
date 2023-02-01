@@ -7,9 +7,9 @@ const ConcernsCard = (props: Concerns) => {
       <div>User Name: {props.user_name}</div>
       <div>User Email: {props.user_email}</div>
       <div>User Phone: {props.user_phone}</div>
-      <div>Client Name{props.client_name}</div>
-      <div>Pet Name{props.pet_name}</div>
-      <div>Visit Time{props.visit_time}</div>
+      <div>Client Name: {props.client_name}</div>
+      <div>Pet Name: {props.pet_name}</div>
+      <div>Visit Time: {props.visit_time}</div>
       <div>Visit ID: {props.visit_id}</div>
       <div>Detail: {props.detail}</div>
       <div>Created At: {props.created_at}</div>
