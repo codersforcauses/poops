@@ -1,5 +1,7 @@
 import { Timestamp } from 'firebase/firestore'
 
+// NOTE: If you update any of these types, you will also need to update the firestore.rules file
+
 export interface User {
   info: Contact
   stats: UserStat
@@ -68,13 +70,13 @@ export type Incident = {
   userID: string
   userName: string | null | undefined
   visitId: string
-  visitTime: string
+  visitTime: Timestamp
   clientName: string
   email: string | null | undefined
   petName: string
-  time: string
+  time: Timestamp
   details: string
-  createdAt: string
+  createdAt: Timestamp
 }
 
 export type VolunteerStats = {

@@ -2,6 +2,7 @@ import { FormEvent, useState } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { XMarkIcon } from '@heroicons/react/24/solid'
+import { Timestamp } from 'firebase/firestore'
 
 import { withProtected } from '@/components/PrivateRoute'
 import Button from '@/components/UI/button'
@@ -9,6 +10,7 @@ import FormField from '@/components/Visit/formfield'
 import { useAuth } from '@/context/Firebase/Auth/context'
 import { useMutateIncidents } from '@/hooks/incidents'
 import { Incident } from '@/types/types'
+import { formatTimestamp } from '@/utils'
 
 const Incident = () => {
   const { currentUser } = useAuth()
@@ -40,7 +42,7 @@ const Incident = () => {
 
   const [petName, setPetName] = useState(pets)
 
-  const handleSubmit = (click: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (click: FormEvent<HTMLFormElement>) => {
     click.preventDefault()
     if (currentUser !== null) {
       const data: Incident = {
@@ -48,17 +50,42 @@ const Incident = () => {
         userName: userName,
         clientName: clientName,
         visitId: docId,
-        visitTime: time,
+        visitTime: Timestamp.fromDate(new Date(time)),
         email: email,
         petName: petName,
-        time: time,
+        time: Timestamp.fromDate(new Date(time)),
         details: notes,
-        createdAt: Date.now().toString()
+        createdAt: Timestamp.fromDate(new Date())
       }
       mutateIncidents(data)
 
+      const message = {
+        subject: 'Incident Report',
+        text: formatIncident(data)
+      }
+      await fetch('/api/sendEmail', {
+        method: 'POST',
+        body: JSON.stringify(message)
+      })
+
       router.push('/visit')
     }
+  }
+
+  const formatIncident = (data: Incident) => {
+    return `Incident Report
+User ID: ${data.userID}
+Username: ${data.userName}
+Email: ${data.email}
+Created At: ${formatTimestamp(data.createdAt)}
+
+Client Name: ${data.clientName}
+Pet Name: ${data.petName}
+Visit ID: ${data.visitId}
+Visit Time: ${formatTimestamp(data.visitTime)}
+
+Incident Time: ${formatTimestamp(data.time)}
+Details: ${data.details}`
   }
 
   const isSubmitEnabled = () => {
