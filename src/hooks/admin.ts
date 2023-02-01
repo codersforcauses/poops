@@ -20,12 +20,10 @@ export const useVolunteerStatsByDateRange = (
 ) => {
   const queryFn = async () => {
     try {
-      // volunteer count
       const usersRef = collection(db, 'users')
       const snapshot = await getCountFromServer(usersRef)
       const volunteerCount = snapshot.data().count
-
-      // visits with date range
+      
       const visitsRef = collectionGroup(db, 'visits')
       const q = query(
         visitsRef,
