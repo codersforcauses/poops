@@ -41,8 +41,9 @@
   - [Structure](firestore.md#structure)
   - [Security Rules](firestore.md#firestore-security-rules)
 
-- Functions
+- Firebase Functions and Extensions
 
+  - [Trigger Email](functions.md#trigger-email)
   - [Billing Killswitch](functions.md#billing-killswitch)
   - [Visit Trigger](functions.md#visit-trigger)
 

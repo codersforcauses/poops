@@ -56,7 +56,7 @@ const VetForm = () => {
     client.current = clientName
   }, [visit, currentUser])
 
-  const handleSubmit = (click: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (click: FormEvent<HTMLFormElement>) => {
     click.preventDefault()
     const data: VetConcern = {
       userId: userId.current,
@@ -74,7 +74,31 @@ const VetForm = () => {
 
     mutateVetConcerns(data)
 
+    const message = {
+      subject: 'Vet Concerns Report',
+      text: formatIncident(data)
+    }
+    await fetch('/api/sendEmail', {
+      method: 'POST',
+      body: JSON.stringify(message)
+    })
+
     router.push('/visit')
+  }
+
+  const formatIncident = (data: VetConcern) => {
+    return `Vet Concerns
+User ID: ${data.userId}
+Username: ${data.userName}
+Email: ${data.userEmail}
+Created At: ${formatTimestamp(data.createdAt)}
+
+Client Name: ${data.clientName}
+Pet Name: ${data.petName}
+Visit ID: ${data.visitId}
+Visit Time: ${formatTimestamp(data.visitTime)}
+
+Details: ${data.detail}`
   }
 
   const isSubmitEnabled = () => {
