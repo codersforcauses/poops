@@ -3,11 +3,11 @@ import { XMarkIcon } from '@heroicons/react/24/outline'
 
 import { ConcernsCard } from '@/components/Admin/ConcernsCard'
 import NavBar from '@/components/NavBar'
-import Button from '@/components/UI/button'
 import { Concerns } from '@/types/types'
+/* import { useConcerns } from '@/hooks/concerns' */
 
 /* Dummy Data */
-const uid = '123456'
+/* const uid = '123456'
 const uname = 'Quokka'
 const uemail = 'Quokka@rottnest.com'
 const uphone = 999888777
@@ -16,9 +16,11 @@ const pname = 'Pet'
 const vtime = '[timestamp to be added]'
 const vid = '123456'
 const detail = 'Pet was hurt!'
-const ctime = '[timestamp to be added]'
+const ctime = '[timestamp to be added]' */
 
 const Output = () => {
+  /* const { data: concerns } = useConcerns() */
+
   return (
     <div className='space-4 z-50 flex h-full flex-col p-4'>
       {/* Exit Button */}
@@ -36,7 +38,7 @@ const Output = () => {
 
       {/* Content */}
       <div className='grid'>
-        <h1 class='p-2'>user_uid: {uid}</h1>
+        {/* <h1 class='p-2'>user_uid: {uid}</h1>
         <h1 class='p-2'>user_name: {uname}</h1>
         <h1 class='p-2'>user_email: {uemail}</h1>
         <h1 class='p-2'>user_phone: {uphone}</h1>
@@ -45,8 +47,11 @@ const Output = () => {
         <h1 class='p-2'>visit_time: {vtime}</h1>
         <h1 class='p-2'>visit_id: {vid}</h1>
         <h1 class='p-2'>detail: {detail}</h1>
-        <h1 class='p-2'>created_at: {ctime}</h1>
-        {/* <Concerns user_uid =  */}
+        <h1 class='p-2'>created_at: {ctime}</h1> */}
+
+        {/* {concerns?.map((concern: Concern, i: number) => (
+        <ConcernsCard key={i} {...concern}></ConcernsCard>
+      ))} */}
       </div>
 
       <NavBar />

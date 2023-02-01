@@ -70,7 +70,7 @@ const Admin = () => {
         Unmod me!
       </Button>
 
-      <Link href='/concern'>
+      <Link href='/admin/concerns'>
         <Button size='medium' intent='secondary' type='button'>
           Concerns
         </Button>
