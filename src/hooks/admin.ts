@@ -23,7 +23,7 @@ export const useVolunteerStatsByDateRange = (
       const usersRef = collection(db, 'users')
       const snapshot = await getCountFromServer(usersRef)
       const volunteerCount = snapshot.data().count
-      
+
       const visitsRef = collectionGroup(db, 'visits')
       const q = query(
         visitsRef,
