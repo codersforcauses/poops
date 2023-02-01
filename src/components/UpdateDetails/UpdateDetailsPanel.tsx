@@ -22,8 +22,6 @@ import { useRouter } from 'next/router'
 
 import SubmitButton from '@/components/UpdateDetails/SubmitButton'
 
-// TODO add correct redirect to the pages path // done
-
 type ContactItemProps = {
   contact: Contact
 }
@@ -65,7 +63,6 @@ function UpdateDetailsPanel({ contact }: ContactItemProps) {
       'info.phone': phoneNumber
     })
   }
-  // push test
   const handleSubmit = (
     e: React.MouseEvent<HTMLButtonElement>,
     contact: Contact | null,
@@ -74,30 +71,26 @@ function UpdateDetailsPanel({ contact }: ContactItemProps) {
     e.preventDefault()
 
     try {
-      setErr(false) // debug only
+      setErr(false)
       if (phoneNumber) {
         if (!contact) {
           return
         }
         if (phoneNumber.length >= 9) {
-          try {
-            window.recaptchaVerifier = new RecaptchaVerifier(
-              'recaptcha-container',
-              {
-                size: 'invisible'
-              },
-              auth
-            )
-          } catch (error) {
-            // console.log(error)
-          }
+          window.recaptchaVerifier = new RecaptchaVerifier(
+            'recaptcha-container',
+            {
+              size: 'invisible'
+            },
+            auth
+          )
           handleDocUpdate(currentUser)
           updateProfile(currentUser, { displayName: displayName })
           setDone(true)
         }
       }
     } catch (error) {
-      setErr(true) // debug only
+      setErr(true)
     }
   }
 

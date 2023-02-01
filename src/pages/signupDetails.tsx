@@ -1,13 +1,10 @@
 import { NextPage } from 'next'
 import Image from 'next/image'
 
-import NavBar from '@/components/NavBar'
-// import LoginPanel from '@/components/Login/LoginPanel'
 import { withProtected } from '@/components/PrivateRoute'
 import UpdateDetailsPanel from '@/components/UpdateDetails/UpdateDetailsPanel'
 import { useAuth } from '@/context/Firebase/Auth/context'
 import useUser from '@/hooks/user'
-import type { Contact } from '@/types/types'
 
 const SignupDetails: NextPage = () => {
   const { logOut } = useAuth()
