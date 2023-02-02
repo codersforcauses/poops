@@ -1,13 +1,19 @@
 import { XCircleIcon } from '@heroicons/react/24/outline'
+import { useAtomValue } from 'jotai'
 
+import { searchQueryAtom } from '@/atoms/contacts'
 import ContactItem from '@/components/Contact/contactitem'
 import { useContacts } from '@/hooks/contacts'
 
 const ContactList = () => {
   const { data: contacts } = useContacts()
+  const searchQuery = useAtomValue(searchQueryAtom)
   if (contacts === undefined) return null
 
   const contactItems = contacts
+    .filter((contact) =>
+      contact.name.toLowerCase().includes(searchQuery.toLowerCase())
+    )
     .sort((a, b) => a.name.localeCompare(b.name))
     .map((contact) => <ContactItem key={contact.docId} contact={contact} />)
 
@@ -18,7 +24,7 @@ const ContactList = () => {
       ) : (
         <div className='mt-12 flex flex-col items-center gap-2'>
           <XCircleIcon className='h-16 w-16' />
-          <p>You don&apos;t have any contacts yet. Add some!</p>
+          <p>Sorry! No results found :(</p>
         </div>
       )}
     </div>
