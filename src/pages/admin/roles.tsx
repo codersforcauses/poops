@@ -1,37 +1,15 @@
-import { FormEvent, useState } from 'react'
-import router, { useRouter } from 'next/router'
-import { ResolverSuccess } from 'react-hook-form'
+import router from 'next/router'
 
 import Header from '@/components/Header'
 import NavBar from '@/components/NavBar'
 import Button from '@/components/UI/button'
-import FormField from '@/components/Visit/formfield'
 
 import ROLES_DATA from '../../../mockData/ROLES_DATA.json'
 
-//current: table consists of mockdata, email submit consolelogs the email
-//todo: update firebase schema and use that data, email submit updates firebase and pulls new data
+//current: table consists of mockdata
+//todo: update firebase schema and use that data
 
 const Roles = () => {
-  const [email, setEmail] = useState('')
-
-  const handleSubmit = (click: FormEvent<HTMLFormElement>) => {
-    click.preventDefault()
-
-    //function should work, to be used once the firestore data can be
-    // const addPriviliegeAcess = {
-    //   email: email,
-    //   roles: { admin: true }
-    // }
-
-    // fetch('/api/setRole', {
-    //   method: 'POST',
-    //   body: JSON.stringify(addPriviliegeAcess)
-    // })
-
-    console.log('gave admin to: ' + email)
-  }
-
   return (
     <>
       <Header pageTitle='Roles' />
@@ -50,16 +28,6 @@ const Roles = () => {
 
           <div className='flex-1'></div>
         </div>
-        <form onSubmit={handleSubmit} className='m-auto mb-3 w-1/2 rounded-lg'>
-          <FormField
-            id='emailInput'
-            type='email'
-            placeholder='email required'
-            label='Give admin to:'
-            isRequired={true}
-            onChange={(event) => setEmail(event.target.value)}
-          />
-        </form>
 
         <div className='flex max-h-screen'>
           <table className='m-auto flex border-spacing-3 flex-row'>
@@ -73,10 +41,10 @@ const Roles = () => {
                     <th>Created At:</th>
                   </tr>
                   <tr className='mr-1 flex flex-1 flex-col text-right'>
-                    <td>{roles['id']}</td>
-                    <td>{roles['roles']}</td>
-                    <td>{roles['assigned_by']}</td>
-                    <td>{roles['created_at']}</td>
+                    <td>{roles.id}</td>
+                    <td>{roles.roles}</td>
+                    <td>{roles.assigned_by}</td>
+                    <td>{roles.created_at}</td>
                   </tr>
                 </div>
               ))}
