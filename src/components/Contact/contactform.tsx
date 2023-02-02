@@ -51,6 +51,7 @@ const ContactForm = ({
     mutate(contactForm, {
       onSuccess(mutatedDocId, _variables, _context) {
         if (isNewContact) router.replace(`/contact/${mutatedDocId}`)
+        else router.back()
       }
     })
   }
