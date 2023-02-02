@@ -26,8 +26,8 @@ const ContactDetails = ({ contact, mutate }: ContactFormProps) => {
 
   return (
     <>
-      <div className='m-auto flex h-14 w-full flex-row'>
-        <div className='m-auto flex-1 text-center'>
+      <div className='my-4 mx-6 flex h-14 flex-row justify-between'>
+        <div className='text-center'>
           <Button
             type='button'
             size='medium'
@@ -42,8 +42,7 @@ const ContactDetails = ({ contact, mutate }: ContactFormProps) => {
             Back
           </Button>
         </div>
-        <div className='flex-1'></div>
-        <div className='m-auto flex-1'>
+        <div>
           {!isEditing && (
             <PencilIcon
               className='m-auto flex h-7 w-7 cursor-pointer'
