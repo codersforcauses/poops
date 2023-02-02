@@ -5,11 +5,12 @@
     "emu": "yarn build && firebase emulators:start",
     "emu:stop": "lsof -ti :4400 -ti :4000 -ti :5001 -ti :8080 -ti :8085 -ti :9099 -ti :9199 | xargs kill",
     "lint": "eslint --ext .js,.ts .",
-    "build": "tsc",
+    "build": "yarn clean && tsc",
     "build:watch": "tsc --watch",
     "serve": "yarn build && firebase emulators:start --only functions",
     "shell": "yarn build && firebase functions:shell",
     "start": "yarn shell",
+    "clean": "rm -rf lib/",
     "deploy:functions": "yarn build && firebase deploy --only functions",
     "deploy:firestore": "firebase deploy --only firestore:rules",
     "deploy:storage": "firebase deploy --only storage:rules",
@@ -22,21 +23,23 @@
   },
   "main": "lib/index.js",
   "dependencies": {
-    "@google-cloud/billing": "^3.1.3",
-    "@google-cloud/pubsub": "^3.2.1",
-    "firebase-admin": "^11.3.0",
-    "firebase-functions": "^4.1.1"
+    "@firebase/app-types": "0.x",
+    "@google-cloud/billing": "3.1.3",
+    "@google-cloud/pubsub": "3.2.1",
+    "firebase-admin": "11.3.0",
+    "firebase-functions": "4.2.0",
+    "jest": "28.0.0"
   },
   "devDependencies": {
-    "@types/node": "^16.18.3",
-    "@typescript-eslint/eslint-plugin": "^5.44.0",
-    "@typescript-eslint/parser": "^5.44.0",
-    "eslint": "^8.28.0",
-    "eslint-config-google": "^0.14.0",
-    "eslint-plugin-import": "^2.26.0",
-    "firebase-functions-test": "^3.0.0",
-    "typescript": "^4.9.3",
-    "yarn-upgrade-all": "^0.7.1"
+    "@types/node": "16.18.3",
+    "@typescript-eslint/eslint-plugin": "5.44.0",
+    "@typescript-eslint/parser": "5.44.0",
+    "eslint": "8.28.0",
+    "eslint-config-google": "0.14.0",
+    "eslint-plugin-import": "2.26.0",
+    "firebase-functions-test": "3.0.0",
+    "typescript": "4.9.3",
+    "yarn-upgrade-all": "0.7.1"
   },
   "private": true
 }

@@ -2,15 +2,20 @@ import { FormEvent, useState } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { XMarkIcon } from '@heroicons/react/24/solid'
+import { Timestamp } from 'firebase/firestore'
 
 import { withProtected } from '@/components/PrivateRoute'
 import Button from '@/components/UI/button'
 import FormField from '@/components/Visit/formfield'
 import { useAuth } from '@/context/Firebase/Auth/context'
-import { IncidentForm } from '@/types/types'
+import { useMutateIncidents } from '@/hooks/incidents'
+import { Incident } from '@/types/types'
+import { formatTimestamp } from '@/utils'
 
-const IncidentForm = () => {
+const Incident = () => {
   const { currentUser } = useAuth()
+  const { mutate: mutateIncidents } = useMutateIncidents()
+
   const [userName, setUserName] = useState(
     currentUser?.displayName ? currentUser?.displayName : ''
   )
@@ -19,28 +24,68 @@ const IncidentForm = () => {
   )
   const [time, setTime] = useState('') //check issue comments for date/time
   const [notes, setNotes] = useState('')
+
   const router = useRouter()
   let { pets } = router.query
+  const { client, visitId } = router.query
 
   if (pets === undefined) pets = ''
   if (Array.isArray(pets)) pets = pets.length > 0 ? pets[0] : ''
 
+  let clientName = ''
+  if (Array.isArray(client)) clientName = client.length > 0 ? client[0] : ''
+  else if (client) clientName = client
+
+  let docId = ''
+  if (Array.isArray(visitId)) docId = visitId.length > 0 ? visitId[0] : ''
+  else if (visitId) docId = visitId
+
   const [petName, setPetName] = useState(pets)
 
-  const handleSubmit = (click: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (click: FormEvent<HTMLFormElement>) => {
     click.preventDefault()
     if (currentUser !== null) {
-      const data: IncidentForm = {
+      const data: Incident = {
         userID: currentUser.uid,
         userName: userName,
+        clientName: clientName,
+        visitId: docId,
+        visitTime: Timestamp.fromDate(new Date(time)),
         email: email,
         petName: petName,
-        time: time,
-        details: notes
+        time: Timestamp.fromDate(new Date(time)),
+        details: notes,
+        createdAt: Timestamp.fromDate(new Date())
       }
-      console.log(data)
+      mutateIncidents(data)
+
+      const message = {
+        subject: 'Incident Report',
+        text: formatIncident(data)
+      }
+      await fetch('/api/sendEmail', {
+        method: 'POST',
+        body: JSON.stringify(message)
+      })
+
       router.push('/visit')
     }
+  }
+
+  const formatIncident = (data: Incident) => {
+    return `Incident Report
+User ID: ${data.userID}
+Username: ${data.userName}
+Email: ${data.email}
+Created At: ${formatTimestamp(data.createdAt)}
+
+Client Name: ${data.clientName}
+Pet Name: ${data.petName}
+Visit ID: ${data.visitId}
+Visit Time: ${formatTimestamp(data.visitTime)}
+
+Incident Time: ${formatTimestamp(data.time)}
+Details: ${data.details}`
   }
 
   const isSubmitEnabled = () => {
@@ -130,4 +175,4 @@ const IncidentForm = () => {
   )
 }
 
-export default withProtected(IncidentForm)
+export default withProtected(Incident)

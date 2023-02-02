@@ -1,6 +1,7 @@
 import { ReactElement, ReactNode } from 'react'
 import { NextPage } from 'next'
 import { AppProps } from 'next/app'
+import Head from 'next/head'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 
@@ -23,6 +24,12 @@ const POOPS = ({ Component, pageProps }: AppPropsWithLayout) => {
   const getLayout = Component.getLayout ?? ((page) => page)
   return (
     <>
+      <Head>
+        <meta
+          name='viewport'
+          content='width=device-width, initial-scale=1 viewport-fit=cover maximum-scale=1'
+        />
+      </Head>
       <AuthContextProvider>
         <AlertContextProvider>
           <QueryClientProvider client={queryClient}>

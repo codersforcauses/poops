@@ -1,5 +1,6 @@
 /* eslint-disable no-console */
 
+import { useRouter } from 'next/router'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { User as AuthUser } from 'firebase/auth'
 import {
@@ -39,6 +40,7 @@ const newUser = (currentUser: AuthUser): User => {
 
 export const useUser = () => {
   const { currentUser } = useAuth()
+  const router = useRouter()
 
   const queryFn = async (): Promise<User | undefined> => {
     if (currentUser?.uid) {
@@ -53,6 +55,11 @@ export const useUser = () => {
         }
 
         const userData = userDocSnap.data() as User
+        if (
+          !(userData.info.email && userData.info.phone && userData.info.name)
+        ) {
+          router.replace('/signupDetails')
+        }
         return { ...userData, info: { ...userData.info, docId: 'USER' } }
       } catch (err: unknown) {
         //#region  //*=========== For logging ===========
