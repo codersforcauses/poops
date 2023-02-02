@@ -1,8 +1,10 @@
 import { ReactElement } from 'react'
+import { useRouter } from 'next/router'
 
-import ContactDetails from '@/components/Contact/contactdetails'
+import ContactForm from '@/components/Contact/contactform'
 import Layout from '@/components/Layout'
 import { withProtected } from '@/components/PrivateRoute'
+import Button from '@/components/UI/button'
 import Spinner from '@/components/UI/loadingSpinner'
 import useUser, { useMutateUser } from '@/hooks/user'
 import { NextPageWithLayout } from '@/pages/_app'
@@ -10,6 +12,7 @@ import { NextPageWithLayout } from '@/pages/_app'
 const Profile: NextPageWithLayout = () => {
   const { data, isLoading } = useUser()
   const { mutate: mutateUser } = useMutateUser()
+  const router = useRouter()
 
   if (isLoading)
     return (
@@ -24,7 +27,18 @@ const Profile: NextPageWithLayout = () => {
 
   return (
     <div className='main-style'>
-      <ContactDetails contact={user} mutate={mutateUser} />
+      <div className='my-4 ml-6 h-14 w-max text-center'>
+        <Button
+          type='button'
+          size='medium'
+          onClick={() => {
+            router.back()
+          }}
+        >
+          Back
+        </Button>
+      </div>
+      <ContactForm contact={user} mutate={mutateUser} />
     </div>
   )
 }

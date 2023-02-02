@@ -1,12 +1,12 @@
 import { ReactElement } from 'react'
+import { useRouter } from 'next/router'
 
 import ContactForm from '@/components/Contact/contactform'
 import Layout from '@/components/Layout'
 import { withProtected } from '@/components/PrivateRoute'
+import Button from '@/components/UI/button'
 import { useMutateContacts } from '@/hooks/contacts'
 import { NextPageWithLayout } from '@/pages/_app'
-import Button from '@/components/UI/button'
-import { useRouter } from 'next/router'
 
 const NewContact: NextPageWithLayout = () => {
   const { mutate: mutateContacts } = useMutateContacts()
