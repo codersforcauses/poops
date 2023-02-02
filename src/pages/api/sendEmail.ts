@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 
-import { auth, firestore } from '@/lib/temp/firebase/admin/init'
+import { firestore } from '@/lib/temp/firebase/admin/init'
 
 interface Message {
   message: {

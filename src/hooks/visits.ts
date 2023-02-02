@@ -7,6 +7,8 @@ import {
   doc,
   FirestoreError,
   getDocs,
+  orderBy,
+  query,
   setDoc
 } from 'firebase/firestore'
 
@@ -22,7 +24,8 @@ export const useVisits = () => {
     if (currentUser?.uid) {
       try {
         const visitsRef = collection(db, 'users', currentUser.uid, 'visits')
-        const visitsDocs = await getDocs(visitsRef)
+        const q = query(visitsRef, orderBy('startTime', 'desc'))
+        const visitsDocs = await getDocs(q)
         return visitsDocs.docs.map(
           (doc) => ({ ...doc.data(), docId: doc.id } as Visit)
         )

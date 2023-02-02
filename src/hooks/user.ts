@@ -14,6 +14,7 @@ import { db } from '@/components/Firebase/init'
 import { AlertVariant, useAlert } from '@/context/AlertContext'
 import { useAuth } from '@/context/Firebase/Auth/context'
 import { Contact, User } from '@/types/types'
+import { useRouter } from 'next/router'
 
 const newUser = (currentUser: AuthUser): User => {
   return {
@@ -39,6 +40,7 @@ const newUser = (currentUser: AuthUser): User => {
 
 export const useUser = () => {
   const { currentUser } = useAuth()
+  const router = useRouter()
 
   const queryFn = async (): Promise<User | undefined> => {
     if (currentUser?.uid) {
@@ -53,6 +55,11 @@ export const useUser = () => {
         }
 
         const userData = userDocSnap.data() as User
+        if (
+          !(userData.info.email && userData.info.phone && userData.info.name)
+        ) {
+          router.replace('/signupDetails')
+        }
         return { ...userData, info: { ...userData.info, docId: 'USER' } }
       } catch (err: unknown) {
         //#region  //*=========== For logging ===========

@@ -10,6 +10,7 @@ import FormField from '@/components/Visit/formfield'
 import { useAuth } from '@/context/Firebase/Auth/context'
 import { useMutateIncidents } from '@/hooks/incidents'
 import { Incident } from '@/types/types'
+import { formatTimestamp } from '@/utils'
 
 const Incident = () => {
   const { currentUser } = useAuth()
@@ -76,14 +77,14 @@ const Incident = () => {
 User ID: ${data.userID}
 Username: ${data.userName}
 Email: ${data.email}
-Created At: ${data.createdAt}
+Created At: ${formatTimestamp(data.createdAt)}
 
 Client Name: ${data.clientName}
 Pet Name: ${data.petName}
 Visit ID: ${data.visitId}
-Visit Time: ${data.visitTime}
+Visit Time: ${formatTimestamp(data.visitTime)}
 
-Incident Time: ${data.time}
+Incident Time: ${formatTimestamp(data.time)}
 Details: ${data.details}`
   }
 
