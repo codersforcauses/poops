@@ -1,10 +1,10 @@
 import { ChangeEvent, FormEvent, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import { UseMutateFunction } from '@tanstack/react-query'
-import { useAtom, useSetAtom } from 'jotai'
+import { useAtom } from 'jotai'
 import tw from 'tailwind-styled-components'
 
-import { contactFormAtom, isEditingAtom } from '@/atoms/contacts'
+import { contactFormAtom } from '@/atoms/contacts'
 import Avatar from '@/components/Contact/avatar'
 import RegionSelector from '@/components/Contact/regiondropdown'
 import TagSelector from '@/components/Contact/tagdropdown'
@@ -29,7 +29,6 @@ const ContactForm = ({
   mutate
 }: ContactFormProps) => {
   const router = useRouter()
-  const setIsEditing = useSetAtom(isEditingAtom)
   const [contactForm, setContactForm] = useAtom(contactFormAtom)
 
   useEffect(() => {
@@ -47,7 +46,6 @@ const ContactForm = ({
 
   const submitForm = (e: FormEvent) => {
     e.preventDefault()
-    setIsEditing(false)
     mutate(contactForm, {
       onSuccess(mutatedDocId, _variables, _context) {
         if (isNewContact) router.replace(`/contact/${mutatedDocId}`)
@@ -166,17 +164,9 @@ const ContactForm = ({
           <Button type='submit' fullwidth>
             Save
           </Button>
-          {!isNewContact && (
-            <Button
-              intent='secondary'
-              fullwidth
-              onClick={() => {
-                setIsEditing(false)
-              }}
-            >
-              Cancel
-            </Button>
-          )}
+          <Button intent='secondary' fullwidth onClick={() => router.back()}>
+            Cancel
+          </Button>
         </div>
       </div>
     </form>

@@ -6,10 +6,8 @@ import {
 } from '@heroicons/react/24/outline'
 import { UseMutateFunction } from '@tanstack/react-query'
 import { signOut } from 'firebase/auth'
-import { useSetAtom } from 'jotai'
 import tw from 'tailwind-styled-components'
 
-import { isEditingAtom } from '@/atoms/contacts'
 import Avatar from '@/components/Contact/avatar'
 import { auth } from '@/components/Firebase/init'
 import { AlertVariant, useAlert } from '@/context/AlertContext'
@@ -30,7 +28,6 @@ interface ContactFormProps {
 function ContactInfo({ contact, mutate }: ContactFormProps) {
   const router = useRouter()
   const { setAlert } = useAlert()
-  const setIsEditing = useSetAtom(isEditingAtom)
 
   const isContact = contact.docId !== 'USER'
 
@@ -144,7 +141,6 @@ function ContactInfo({ contact, mutate }: ContactFormProps) {
                 position: 'bottom',
                 confirmFunction: () => {
                   mutate({ ...contact, deleteDoc: true })
-                  setIsEditing(false)
                   router.replace('/contact')
                 }
               })
