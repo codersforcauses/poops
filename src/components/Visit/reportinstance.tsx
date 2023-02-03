@@ -5,6 +5,7 @@ import { Visit } from '@/types/types'
 import { humanizeTimestamp } from '@/utils'
 
 import ReportInfo from '@/components/Visit/readreportinstance'
+import VisitInfo from '@/components/Visit/readvisitinstance'
 
 const VisitInstance = (props: Visit) => {
   const [isOpen, setIsOpen] = useState(false)
@@ -31,7 +32,7 @@ const VisitInstance = (props: Visit) => {
           />
         </div>
       </div>
-      <ReportInfo {...props} isOpen={isOpen} />
+      <VisitInfo {...props} isOpen={isOpen} />
     </div>
   )
 }
