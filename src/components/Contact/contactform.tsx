@@ -164,7 +164,12 @@ const ContactForm = ({
           <Button type='submit' fullwidth>
             Save
           </Button>
-          <Button intent='secondary' fullwidth onClick={() => router.back()}>
+          <Button
+            type='button'
+            intent='secondary'
+            fullwidth
+            onClick={() => router.back()}
+          >
             Cancel
           </Button>
         </div>

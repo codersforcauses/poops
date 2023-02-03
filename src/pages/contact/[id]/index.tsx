@@ -1,11 +1,10 @@
 import { ReactElement } from 'react'
 import { useRouter } from 'next/router'
-import { PencilIcon } from '@heroicons/react/24/outline'
 
 import ContactInfo from '@/components/Contact/contactinfo'
+import NavButtons from '@/components/Contact/navbuttons'
 import Layout from '@/components/Layout'
 import { withProtected } from '@/components/PrivateRoute'
-import Button from '@/components/UI/button'
 import Spinner from '@/components/UI/loadingSpinner'
 import { useContacts, useMutateContacts } from '@/hooks/contacts'
 import { NextPageWithLayout } from '@/pages/_app'
@@ -33,25 +32,7 @@ const Contact: NextPageWithLayout = () => {
 
   return (
     <div className='main-style'>
-      <div className='my-4 mx-6 flex h-14 flex-row justify-between'>
-        <div className='text-center'>
-          <Button
-            type='button'
-            size='medium'
-            onClick={() => {
-              router.back()
-            }}
-          >
-            Back
-          </Button>
-        </div>
-        <div>
-          <PencilIcon
-            className='m-auto flex h-7 w-7 cursor-pointer'
-            onClick={() => router.push(`/contact/${contact.docId}/edit`)}
-          />
-        </div>
-      </div>
+      <NavButtons editRoute={`/contact/${contact.docId}/edit`} />
       <ContactInfo contact={contact} mutate={mutateContacts} />
     </div>
   )

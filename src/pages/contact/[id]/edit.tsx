@@ -2,9 +2,9 @@ import { ReactElement } from 'react'
 import { useRouter } from 'next/router'
 
 import ContactForm from '@/components/Contact/contactform'
+import NavButtons from '@/components/Contact/navbuttons'
 import Layout from '@/components/Layout'
 import { withProtected } from '@/components/PrivateRoute'
-import Button from '@/components/UI/button'
 import Spinner from '@/components/UI/loadingSpinner'
 import { useContacts, useMutateContacts } from '@/hooks/contacts'
 import { NextPageWithLayout } from '@/pages/_app'
@@ -32,17 +32,7 @@ const Contact: NextPageWithLayout = () => {
 
   return (
     <div className='main-style'>
-      <div className='my-4 ml-6 h-14 w-max text-center'>
-        <Button
-          type='button'
-          size='medium'
-          onClick={() => {
-            router.back()
-          }}
-        >
-          Back
-        </Button>
-      </div>
+      <NavButtons />
       <ContactForm contact={contact} mutate={mutateContacts} />
     </div>
   )
