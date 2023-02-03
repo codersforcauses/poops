@@ -4,6 +4,7 @@ import { useRouter } from 'next/router'
 import { XMarkIcon } from '@heroicons/react/24/outline'
 import { Timestamp } from 'firebase/firestore'
 import { SingleValue } from 'react-select'
+
 import { withProtected } from '@/components/PrivateRoute'
 import Button from '@/components/UI/button'
 import ClientSelector from '@/components/Visit/clientselector'

@@ -90,7 +90,7 @@ const Incident = () => {
   }
 
   return (
-    <div className='flex h-full max-h-screen w-screen flex-col overflow-y-auto p-4'>
+    <div className='flex max-h-screen flex-col overflow-y-auto p-4'>
       <div className='fixed right-5 top-4 z-[100] h-10 w-10 rounded-full bg-primary p-1 drop-shadow-default'>
         <Link href='/visit'>
           <button>
@@ -103,7 +103,7 @@ const Incident = () => {
         <h1 className='pl-2 text-2xl font-bold'>Add Your Incident</h1>
       </div>
 
-      <div className='container mx-auto flex flex-col gap-2 p-2'>
+      <div className='container flex max-h-screen flex-col gap-2 overflow-y-auto p-2'>
         <form className='pt-3' onSubmit={handleSubmit}>
           <FormField
             id='userNameInput'
@@ -157,7 +157,7 @@ const Incident = () => {
                 <div>
                   <img
                     alt='not fount'
-                    width={'200px'}
+                    width='200px'
                     src={URL.createObjectURL(image)}
                   />
                 </div>

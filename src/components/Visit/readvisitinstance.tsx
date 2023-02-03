@@ -1,4 +1,5 @@
 import { useRouter } from 'next/router'
+
 import Button from '@/components/UI/button'
 import { EditButton } from '@/components/Visit/buttons'
 import { Duration, Visit } from '@/types/types'
@@ -88,6 +89,14 @@ const VisitInfo = ({
           <div className='w-fit'>
             <EditButton id={docId} />
           </div>
+        </div>
+        <div className='flex h-full flex-col py-2'>
+          <Button
+            size='small'
+            onClick={() => router.push(`/visit/${docId}/details?${params}`)}
+          >
+            View More Details
+          </Button>
         </div>
       </div>
     </>

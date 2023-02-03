@@ -117,7 +117,7 @@ const VetForm = () => {
   }
 
   return (
-    <div className='flex h-full max-h-screen w-screen flex-col overflow-y-auto p-4'>
+    <div className='flex max-h-screen flex-col overflow-y-auto p-4'>
       <div className='fixed right-5 top-4 z-[100] h-10 w-10 rounded-full bg-primary p-1 drop-shadow-default'>
         <Link href='/visit'>
           <button>
@@ -129,88 +129,89 @@ const VetForm = () => {
       <div className='border-b-2 border-primary py-3 pt-10'>
         <h1 className='pl-2 text-2xl font-bold'>Register a Vet Concern</h1>
       </div>
+      <div className='container flex max-h-screen flex-col gap-2 overflow-y-auto p-2'>
+        <form className='pt-3' onSubmit={handleSubmit}>
+          <FormField
+            id='userNameInput'
+            type='text'
+            value={userName}
+            placeholder='Username'
+            label='Name'
+            isRequired={false}
+            onChange={(event) => setUserName(event.target.value)}
+          />
 
-      <form className='pt-3' onSubmit={handleSubmit}>
-        <FormField
-          id='userNameInput'
-          type='text'
-          value={userName}
-          placeholder='Username'
-          label='Name'
-          isRequired={false}
-          onChange={(event) => setUserName(event.target.value)}
-        />
+          <FormField
+            id='emailInput'
+            type='email'
+            value={email}
+            placeholder='Email'
+            label='Email'
+            isRequired={false}
+            onChange={(event) => setEmail(event.target.value)}
+          />
 
-        <FormField
-          id='emailInput'
-          type='email'
-          value={email}
-          placeholder='Email'
-          label='Email'
-          isRequired={false}
-          onChange={(event) => setEmail(event.target.value)}
-        />
+          <FormField
+            id='petNameInput'
+            type='text'
+            value={petName}
+            placeholder='Pet name'
+            label='Pet Name'
+            isRequired={false}
+            onChange={(event) => setPetName(event.target.value)}
+          />
 
-        <FormField
-          id='petNameInput'
-          type='text'
-          value={petName}
-          placeholder='Pet name'
-          label='Pet Name'
-          isRequired={false}
-          onChange={(event) => setPetName(event.target.value)}
-        />
+          <FormField
+            id='vetNameInput'
+            type='text'
+            placeholder='Vet name'
+            label='Vet Name'
+            isRequired={false}
+            onChange={(event) => setVetName(event.target.value)}
+          />
 
-        <FormField
-          id='vetNameInput'
-          type='text'
-          placeholder='Vet name'
-          label='Vet Name'
-          isRequired={false}
-          onChange={(event) => setVetName(event.target.value)}
-        />
+          <FormField
+            id='timeInput'
+            type='dateTime-local'
+            value={time}
+            placeholder='Time'
+            label='Date & Time'
+            isRequired={false}
+            onChange={(event) => setTime(event.target.value)}
+          />
 
-        <FormField
-          id='timeInput'
-          type='dateTime-local'
-          value={time}
-          placeholder='Time'
-          label='Date & Time'
-          isRequired={false}
-          onChange={(event) => setTime(event.target.value)}
-        />
-
-        <FormField
-          id='notesInput'
-          type='textarea'
-          placeholder='Add notes here'
-          label='Description'
-          isRequired={false}
-          onChange={(event) => setNotes(event.target.value)}
-        />
-        <div>
-          <div className='font-semibold'>Photo:</div>
+          <FormField
+            id='notesInput'
+            type='textarea'
+            placeholder='Add notes here'
+            label='Description'
+            isRequired={false}
+            onChange={(event) => setNotes(event.target.value)}
+          />
           <div>
-            {image && (
-              <div>
-                <img
-                  alt='not fount'
-                  width={'250px'}
-                  src={URL.createObjectURL(image)}
-                />
-              </div>
-            )}
+            <div className='font-semibold'>Photo:</div>
+            <div>
+              {image && (
+                <div>
+                  <img
+                    alt='not fount'
+                    width='250px'
+                    src={URL.createObjectURL(image)}
+                  />
+                </div>
+              )}
+            </div>
+            <div>
+              <FileUploader label='Upload Image' handleFile={handleFile} />
+            </div>
           </div>
-          <div>
-            <FileUploader label='Upload Image' handleFile={handleFile} />
+          <div className='mx-auto my-2 flex flex-col p-1 '>
+            <Button type='submit' disabled={!isSubmitEnabled()}>
+              Submit
+            </Button>
           </div>
-        </div>
-        <div className='mx-auto my-2 flex flex-col p-1 '>
-          <Button type='submit' disabled={!isSubmitEnabled()}>
-            Submit
-          </Button>
-        </div>
-      </form>
+        </form>
+      </div>
     </div>
   )
 }

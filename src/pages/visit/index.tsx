@@ -17,7 +17,6 @@ const Visit: NextPageWithLayout = () => {
           <SearchBar onChange={(event) => setSearchQuery(event.target.value)} />
           <AddButton />
         </div>
-
         <VisitList searchQuery={searchQuery} />
       </div>
     </div>
