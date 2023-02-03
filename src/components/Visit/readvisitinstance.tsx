@@ -69,6 +69,14 @@ const VisitInfo = ({
             <p className='my-1 line-clamp-6'>{notes}</p>
           </div>
         </div>
+        <div className='m-1 flex h-full flex-col py-2'>
+          <Button
+            size='small'
+            onClick={() => router.push(`/visit/${docId}/report?${params}`)}
+          >
+            View Incident Reports and <br /> Vet Concerns History
+          </Button>
+        </div>
         <div className='flex items-center justify-around py-2'>
           <div className='w-2/5'>
             <Button
@@ -89,14 +97,6 @@ const VisitInfo = ({
           <div className='w-fit'>
             <EditButton id={docId} />
           </div>
-        </div>
-        <div className='flex h-full flex-col py-2'>
-          <Button
-            size='small'
-            onClick={() => router.push(`/visit/${docId}/details?${params}`)}
-          >
-            View More Details
-          </Button>
         </div>
       </div>
     </>
