@@ -12,11 +12,12 @@ import {
 } from 'firebase/firestore'
 
 import { db } from '@/components/Firebase/init'
-import { VolunteerStats } from '@/types/types'
+import { Visit, VolunteerStats } from '@/types/types'
 
 export const useVolunteerStatsByDateRange = (
   startTime: Timestamp,
-  endTime: Timestamp
+  endTime: Timestamp,
+  queryKey: string
 ) => {
   const queryFn = async () => {
     try {
@@ -37,7 +38,7 @@ export const useVolunteerStatsByDateRange = (
       let totalDistWalked = 0
       let totalDurationMins = 0
       visitDocs.forEach((doc) => {
-        const visitData = doc.data()
+        const visitData = doc.data() as Visit
         totalVisits += 1
         totalDistCommuted += visitData.commuteDist
         totalDistWalked += visitData.walkDist
@@ -45,7 +46,7 @@ export const useVolunteerStatsByDateRange = (
           visitData.duration.hours * 60 + visitData.duration.minutes
       })
 
-      return {
+      const volunteerStats: VolunteerStats = {
         volunteerCount: volunteerCount,
         avgCommuteDistance: roundNum(totalDistCommuted / volunteerCount, 2),
         avgVisitCount: roundNum(totalVisits / volunteerCount, 2),
@@ -56,6 +57,8 @@ export const useVolunteerStatsByDateRange = (
         totalWalkDistance: roundNum(totalDistWalked),
         totalWalkTime: roundNum(totalDurationMins)
       }
+
+      return volunteerStats
     } catch (err: unknown) {
       //#region  //*=========== For logging ===========
       if (err instanceof FirestoreError) {
@@ -65,7 +68,12 @@ export const useVolunteerStatsByDateRange = (
     }
   }
 
-  return useQuery(['VolunteerStats'], queryFn)
+  return useQuery({
+    queryKey: [queryKey],
+    queryFn: queryFn,
+    staleTime: Infinity,
+    cacheTime: Infinity
+  })
 }
 
 function roundNum(num: number, decimalPlaces = 0) {

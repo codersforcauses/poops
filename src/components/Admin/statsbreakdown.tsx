@@ -15,7 +15,8 @@ const StatsBreakdown = ({ days = 7 }: StatsBreakdownProps) => {
   const weekOldTimestamp = Timestamp.fromMillis(now - WEEK_IN_MS)
   const { isLoading, data } = useVolunteerStatsByDateRange(
     weekOldTimestamp,
-    Timestamp.fromDate(new Date(now))
+    Timestamp.fromDate(new Date(now)),
+    '7DaySummary'
   )
 
   return (
@@ -29,13 +30,15 @@ const StatsBreakdown = ({ days = 7 }: StatsBreakdownProps) => {
               <td>
                 <Statistics
                   title='Visits'
-                  data={data.avgVisitCount.toString()}
+                  data={`${data.avgVisitCount}`}
+                  tooltip={`Total: ${data.totalVisitCount}`}
                 />
               </td>
               <td>
                 <Statistics
                   title='Walk Duration: '
-                  data={data.avgWalkTime.toString()}
+                  data={`${data.avgWalkTime} min`}
+                  tooltip={`Total: ${data.totalWalkTime} min`}
                 />
               </td>
             </tr>
@@ -43,13 +46,15 @@ const StatsBreakdown = ({ days = 7 }: StatsBreakdownProps) => {
               <td>
                 <Statistics
                   title='Walk Distance'
-                  data={data.avgWalkDistance.toString()}
+                  data={`${data.avgWalkDistance} km`}
+                  tooltip={`Total: ${data.totalWalkDistance} km`}
                 />
               </td>
               <td>
                 <Statistics
                   title='Commute Distance'
-                  data={data.avgCommuteDistance.toString()}
+                  data={`${data.avgCommuteDistance} km`}
+                  tooltip={`Total: ${data.totalCommuteDistance} km`}
                 />
               </td>
             </tr>
