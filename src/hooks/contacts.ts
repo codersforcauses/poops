@@ -66,6 +66,7 @@ export const useMutateContacts = () => {
         } else {
           await setDoc(docRef, contactMut, { merge: true })
           setCurrentContact({ ...contact, docId: docRef.id })
+          return docRef.id
         }
       }
     } catch (err: unknown) {
