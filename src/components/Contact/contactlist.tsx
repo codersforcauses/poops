@@ -14,9 +14,12 @@ const ContactList = () => {
   const contactItems = contacts
     .filter(
       (contact) =>
-        contact.name.toLowerCase().includes(searchQuery.toLowerCase()) &&
-        (searchTags === '' || contact.tags.includes(searchTags))
+        contact.name.toLowerCase().includes(searchQuery.toLowerCase())
     )
+    .filter(
+      (contact) =>
+        searchTags === '' || contact.tags.includes(searchTags)
+      )
     .sort((a, b) => a.name.localeCompare(b.name))
     .map((contact) => <ContactItem key={contact.docId} contact={contact} />)
 
