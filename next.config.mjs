@@ -2,6 +2,8 @@ import withPWA from 'next-pwa'
 import withBundleAnalyzer from '@next/bundle-analyzer'
 
 /** @type {import('next').NextConfig} */
+const url =  process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN
+
 const nextConfig = {
   eslint: {
     dirs: ['src']
@@ -11,7 +13,13 @@ const nextConfig = {
   experimental: {
     optimizeCss: true,
     appDir: false
-  }
+  },
+  rewrites: [
+    {
+      source: "/__/auth/:path*",
+      destination: `https://${url}/__/auth/:path*`,        
+    }
+  ]
 }
 
 const PWAConfig = withPWA({
