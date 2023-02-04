@@ -1,85 +1,83 @@
-import Router from 'next/router'
+import Router, { useRouter } from 'next/router'
 import {
   EnvelopeIcon,
   MapPinIcon,
   PhoneIcon
 } from '@heroicons/react/24/outline'
+import { UseMutateFunction } from '@tanstack/react-query'
 import { signOut } from 'firebase/auth'
-import { useAtomValue, useSetAtom } from 'jotai'
 import tw from 'tailwind-styled-components'
 
-import { currentContactAtom, isEditingAtom } from '@/atoms/contacts'
 import Avatar from '@/components/Contact/avatar'
 import { auth } from '@/components/Firebase/init'
 import { AlertVariant, useAlert } from '@/context/AlertContext'
-import { useMutateContacts } from '@/hooks/contacts'
+import { Contact } from '@/types/types'
 
 import Button from '../UI/button'
 
-function ContactInfo() {
+interface ContactFormProps {
+  contact: Contact
+  mutate: UseMutateFunction<
+    unknown,
+    unknown,
+    Contact & { deleteDoc?: boolean },
+    unknown
+  >
+}
+
+function ContactInfo({ contact, mutate }: ContactFormProps) {
+  const router = useRouter()
   const { setAlert } = useAlert()
-  const currentContact = useAtomValue(currentContactAtom)
-  const setIsEditing = useSetAtom(isEditingAtom)
-  const { mutate: mutateContacts } = useMutateContacts()
 
-  if (currentContact === null) return null
-
-  const isContact = currentContact.docId !== 'USER'
+  const isContact = contact.docId !== 'USER'
 
   return (
     <div className='flex flex-col items-center justify-center gap-3 pb-24'>
       {/* USER PROFILE IMAGE */}
       <Avatar image='' height={48} width={48} iconClass='w-32 rounded-full' />
       {/* FIRST AND LAST NAME */}
-      <h1 className='text-4xl font-normal'>{currentContact.name}</h1>
+      <h1 className='text-4xl font-normal'>{contact.name}</h1>
       {/* DESCRIPTION */}
-      {isContact && <h3>{currentContact.desc}</h3>}
+      {isContact && <h3>{contact.desc}</h3>}
       {/* PHONE */}
       <Box>
         <div className='flex w-full justify-between'>
-          <label htmlFor={currentContact.phone} className='text-primary-dark'>
+          <label htmlFor={contact.phone} className='text-primary-dark'>
             Phone
           </label>
-          <a href={`tel:${currentContact.phone}`}>
+          <a href={`tel:${contact.phone}`}>
             <PhoneIcon className='h-5 w-5' />
           </a>
         </div>
-        <span className='text-xl'>{currentContact.phone}</span>
+        <span className='text-xl'>{contact.phone}</span>
       </Box>
       {/* EMAIL */}
       <Box>
         <div className='flex w-full justify-between'>
-          <label htmlFor={currentContact.email} className='text-primary-dark'>
+          <label htmlFor={contact.email} className='text-primary-dark'>
             Email
           </label>
-          <a
-            href={`mailto:${currentContact.email}`}
-            target='_blank'
-            rel='noreferrer'
-          >
+          <a href={`mailto:${contact.email}`} target='_blank' rel='noreferrer'>
             <EnvelopeIcon className='h-5 w-5' />
           </a>
         </div>
-        <span className='text-xl'>{currentContact.email}</span>
+        <span className='text-xl'>{contact.email}</span>
       </Box>
       {/* ADDRESS */}
       <Box>
         <div className='flex w-full justify-between'>
-          <label
-            htmlFor={currentContact.streetAddress}
-            className='text-primary-dark'
-          >
+          <label htmlFor={contact.streetAddress} className='text-primary-dark'>
             Address
           </label>
           <a
-            href={`http://maps.google.com/?q=${currentContact.streetAddress}`}
+            href={`http://maps.google.com/?q=${contact.streetAddress}`}
             target='_blank'
             rel='noreferrer'
           >
             <MapPinIcon className='h-5 w-5' />
           </a>
         </div>
-        <span className='text-xl'>{currentContact.streetAddress}</span>
+        <span className='text-xl'>{contact.streetAddress}</span>
       </Box>
       {/* TAGS */}
       <Box>
@@ -87,7 +85,7 @@ function ContactInfo() {
           Tags
         </label>
         <TagHolder className='mt-1'>
-          {currentContact.tags.map((tag, index) => (
+          {contact.tags.map((tag, index) => (
             <div key={index}>
               <Tag>{tag}</Tag>
             </div>
@@ -97,14 +95,14 @@ function ContactInfo() {
         <div className='pt-2'></div>
       </Box>
       {/* REGIONS */}
-      {currentContact.region && (
+      {contact.region && (
         <Box className='pb-3'>
           <label htmlFor='regions' className='text-primary-dark'>
             Region
           </label>
 
           <TagHolder className='mt-1'>
-            {currentContact.region.map((region, index) => (
+            {contact.region.map((region, index) => (
               <div key={index}>
                 <Tag>{region}</Tag>
               </div>
@@ -115,19 +113,19 @@ function ContactInfo() {
       {/* PETS */}
       {isContact && (
         <Box className='flex flex-col'>
-          <label htmlFor={currentContact.pets} className='text-primary-dark'>
+          <label htmlFor={contact.pets} className='text-primary-dark'>
             Pets
           </label>
-          <span className='text-xl'>{currentContact.pets}</span>
+          <span className='text-xl'>{contact.pets}</span>
         </Box>
       )}
       {/* NOTES */}
       {isContact && (
         <Box className='flex flex-col'>
-          <label htmlFor={currentContact.notes} className='text-primary-dark'>
+          <label htmlFor={contact.notes} className='text-primary-dark'>
             Notes
           </label>
-          <span className='text-xl'> {currentContact.notes} </span>
+          <span className='text-xl'> {contact.notes} </span>
         </Box>
       )}
       <div className='mb-2'>
@@ -142,8 +140,8 @@ function ContactInfo() {
                 text: 'Are you sure?',
                 position: 'bottom',
                 confirmFunction: () => {
-                  mutateContacts({ ...currentContact, deleteDoc: true })
-                  setIsEditing(false)
+                  mutate({ ...contact, deleteDoc: true })
+                  router.replace('/contact')
                 }
               })
             }}

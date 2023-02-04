@@ -36,3 +36,15 @@
 .firebase-emulator-warning {
   display: none;
 }
+
+.phone-input input[type='number'] {
+  -moz-appearance: textfield;
+}
+
+.phone-input input::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+}
+
+.phone-input input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
