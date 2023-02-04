@@ -22,7 +22,9 @@ export const ReportList = (props: ReportListProps) => {
     report.petName?.toLowerCase().includes(props.searchQuery.toLowerCase())
 
   const searchFilter = (report: Incident) =>
-    props.searchQuery === '' || clientNameFilter(report) || petNameFilter(report)
+    props.searchQuery === '' ||
+    clientNameFilter(report) ||
+    petNameFilter(report)
 
   return (
     <div className='m-2 h-full flex-col'>
@@ -30,7 +32,9 @@ export const ReportList = (props: ReportListProps) => {
         incidents
           .filter(searchFilter)
           .map((report) =>
-            report.docId ? <ReportInstance key={report.docId} {...report} /> : null
+            report.docId ? (
+              <ReportInstance key={report.docId} {...report} />
+            ) : null
           )
       ) : (
         <div className='flex h-full flex-col items-center justify-center'>

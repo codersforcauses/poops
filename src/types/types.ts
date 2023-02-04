@@ -48,7 +48,7 @@ export interface VetConcern {
   imageBucket: string
 }
 
-export type Incident = Omit<VetConcern, "vetName">
+export type Incident = Omit<VetConcern, 'vetName'>
 
 export interface UserStat {
   numVisits: number
@@ -66,4 +66,3 @@ export type Duration = {
   hours: number
   minutes: number
 }
-

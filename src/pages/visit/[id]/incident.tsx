@@ -144,7 +144,8 @@ const Incident = () => {
             isRequired={false}
             onChange={(event) => {
               const dateTime = new Date(event.target.value)
-              setTime(Timestamp.fromDate(dateTime))}}
+              setTime(Timestamp.fromDate(dateTime))
+            }}
           />
 
           <FormField

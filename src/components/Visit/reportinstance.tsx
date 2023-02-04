@@ -6,7 +6,6 @@ import { humanizeTimestamp } from '@/utils'
 
 import ReportInfo from '@/components/Visit/readreportinstance'
 
-
 const ReportInstance = (props: Incident) => {
   const [isOpen, setIsOpen] = useState(false)
 

@@ -22,7 +22,14 @@ export const useIncidents = (visitId: string) => {
   const queryFn = async () => {
     if (currentUser?.uid) {
       try {
-        const incidentsRef = collection(db, 'users', currentUser.uid, 'visits', visitId, 'incidents')
+        const incidentsRef = collection(
+          db,
+          'users',
+          currentUser.uid,
+          'visits',
+          visitId,
+          'incidents'
+        )
         const q = query(incidentsRef, orderBy('time', 'desc'))
         const incidentsDocs = await getDocs(q)
         return incidentsDocs.docs.map(
