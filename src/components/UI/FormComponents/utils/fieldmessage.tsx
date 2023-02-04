@@ -16,7 +16,11 @@ const FieldMessage = ({
     <span
       {...props}
       role={error && 'alert'}
-      className={[error && !description ? errorClass : messageClass, className]
+      className={[
+        error && !description ? errorClass : messageClass,
+        className,
+        'text-primary-dark'
+      ]
         .join(' ')
         .trim()}
     >
