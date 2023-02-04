@@ -10,11 +10,14 @@ import useUser from '@/hooks/user'
 import mod from '@/lib/temp/firebase/functions/setRole'
 
 import { NextPageWithLayout } from './_app'
+import useDummyData from '@/hooks/dummyData'
 
 const Home: NextPageWithLayout = () => {
   const { currentUser, refreshUserToken } = useAuth()
 
   const { data: tempUser } = useUser()
+
+  const { addDummyContacts, addDummyVisits } = useDummyData()
 
   const welcomeMessage = currentUser
     ? `Welcome, ${tempUser?.info.name}!`
@@ -40,15 +43,32 @@ const Home: NextPageWithLayout = () => {
                   <Button size='large'>START VISIT</Button>
                 </a>
               </Link>
-              <br />
-              <Button
-                size='medium'
-                intent='secondary'
-                type='button'
-                onClick={() => onMod(true)}
-              >
-                Mod me!
-              </Button>
+              {process.env.NODE_ENV === 'development' && (
+                <div className='mt-4 flex flex-col gap-2'>
+                  <Button
+                    size='small'
+                    intent='secondary'
+                    type='button'
+                    onClick={() => onMod(true)}
+                  >
+                    Mod me!
+                  </Button>
+                  <Button
+                    size='small'
+                    intent='secondary'
+                    onClick={addDummyContacts}
+                  >
+                    Add Contacts
+                  </Button>
+                  <Button
+                    size='small'
+                    intent='secondary'
+                    onClick={addDummyVisits}
+                  >
+                    Add Visits
+                  </Button>
+                </div>
+              )}
             </div>
             <br />
             <br />
