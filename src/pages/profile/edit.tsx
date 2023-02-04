@@ -1,6 +1,6 @@
 import { ReactElement } from 'react'
 
-import ContactForm from '@/components/Contact/contactform'
+import ContactForm from '@/components/Contact/ContactForm'
 import NavButtons from '@/components/Contact/navbuttons'
 import Layout from '@/components/Layout'
 import { withProtected } from '@/components/PrivateRoute'

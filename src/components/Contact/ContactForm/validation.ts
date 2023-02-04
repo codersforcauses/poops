@@ -1,9 +1,9 @@
 import { RegisterOptions } from 'react-hook-form'
 
-import { SubmittedContactFormValues } from '@/components/Contact/ContactForm'
+import { ContactFormValues } from '@/components/Contact/ContactForm'
 import { requiredMessage, validateEmail } from '@/utils'
 
-const validationSchema: Record<SubmittedContactFormValues, RegisterOptions> = {
+const validationSchema: Record<ContactFormValues, RegisterOptions> = {
   name: {
     required: {
       value: true,
@@ -19,11 +19,10 @@ const validationSchema: Record<SubmittedContactFormValues, RegisterOptions> = {
       message: requiredMessage
     },
     validate: {
-      value: (value: number) => {
-        return value > 0 || 'Please enter a valid phone number!'
+      value: (value: string) => {
+        return parseInt(value) > 0 || 'Please enter a valid phone number!'
       }
-    },
-    valueAsNumber: true
+    }
   },
   email: {
     required: {

@@ -25,7 +25,7 @@ interface ContactFormProps {
   >
 }
 
-interface ContactFormValues {
+interface FormValues {
   name: string
   desc: string
   pets: string
@@ -51,9 +51,7 @@ const ContactForm = ({
 
   if (contactForm === null) return null
 
-  const submitForm: SubmitHandler<ContactFormValues> = (
-    formData: ContactFormValues
-  ) => {
+  const submitForm: SubmitHandler<FormValues> = (formData) => {
     const data: Contact = {
       docId: contact.docId,
       name: formData.name,
@@ -76,6 +74,8 @@ const ContactForm = ({
         if (isNewContact) router.replace(`/contact/${mutatedDocId}`)
       }
     })
+
+    router.back()
   }
 
   return (
@@ -88,7 +88,7 @@ const ContactForm = ({
           iconClass='w-32 rounded-full bg-white hover:bg-gray-200 hover:cursor-pointer'
         />
         <div className='w-full border border-b-gray-300' />
-        <Form<ContactFormValues>
+        <Form<FormValues>
           className='w-full'
           onSubmit={submitForm}
           defaultValues={
@@ -184,6 +184,6 @@ const ContactForm = ({
   )
 }
 
-export type SubmittedContactFormValues = keyof ContactFormValues
+export type ContactFormValues = keyof FormValues
 
 export default ContactForm
