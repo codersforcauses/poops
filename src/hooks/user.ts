@@ -1,5 +1,6 @@
 /* eslint-disable no-console */
 
+import { useRouter } from 'next/router'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { User as AuthUser } from 'firebase/auth'
 import {
@@ -14,7 +15,6 @@ import { db } from '@/components/Firebase/init'
 import { AlertVariant, useAlert } from '@/context/AlertContext'
 import { useAuth } from '@/context/Firebase/Auth/context'
 import { Contact, User } from '@/types/types'
-import { useRouter } from 'next/router'
 
 const newUser = (currentUser: AuthUser): User => {
   return {
@@ -82,6 +82,7 @@ export const useMutateUser = () => {
   const mutationFn = async (info: Contact) => {
     try {
       if (currentUser?.uid) {
+        delete info.docId
         const userDocRef = doc(db, 'users', currentUser.uid)
         await updateDoc(userDocRef, 'info', info)
       }
