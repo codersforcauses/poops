@@ -9,7 +9,7 @@ import { useVolunteerStatsByDateRange } from '@/hooks/admin'
 import { formatTimestamp } from '@/utils'
 
 const YEAR_IN_MS = 31556952000
-const QUERY_KEY = 'mainVolunteerStatsTable'
+const queryKey = 'mainVolunteerStatsTable'
 
 const headers = [
   'Number of Visits',
@@ -20,22 +20,18 @@ const headers = [
 
 const VolunteerStatsTable = () => {
   const queryClient = useQueryClient()
-
   const now = Date.now()
-  const yearOldTimestamp = Timestamp.fromMillis(now - YEAR_IN_MS)
 
-  const [toTime, setToTime] = useState(
-    formatTimestamp(Timestamp.fromMillis(now))
-  )
-  const [fromTime, setFromTime] = useState(formatTimestamp(yearOldTimestamp))
+  const start = Timestamp.fromMillis(now - YEAR_IN_MS)
+  const end = Timestamp.fromMillis(now)
 
-  const startTime = yearOldTimestamp
-  const endTime = Timestamp.fromMillis(now)
+  const [startTime, setStartTime] = useState(formatTimestamp(start) || '')
+  const [endTime, setEndTime] = useState(formatTimestamp(end) || '')
 
   const { isLoading, data: volunteerStats } = useVolunteerStatsByDateRange(
-    startTime,
-    endTime,
-    QUERY_KEY
+    queryKey,
+    Timestamp.fromDate(new Date(startTime)),
+    Timestamp.fromDate(new Date(endTime))
   )
 
   const totalStats = [
@@ -53,10 +49,19 @@ const VolunteerStatsTable = () => {
   ]
 
   const refetchStats = () => {
-    if (fromTime !== null && toTime !== null) {
+    if (startTime !== null && endTime !== null) {
       // ! have to invalidate queries as staleTime and cacheTimes are infinite.
-      queryClient.invalidateQueries({
-        queryKey: [QUERY_KEY]
+      // queryClient.invalidateQueries({
+      //   type: 'inactive',
+      //   predicate: (q) => {
+      //     return q.queryKey[0] === queryKey
+      //   }
+      // })
+      queryClient.removeQueries([queryKey], {
+        type: 'inactive',
+        predicate: (q) => {
+          return q.queryKey[0] === queryKey
+        }
       })
     }
   }
@@ -81,7 +86,7 @@ const VolunteerStatsTable = () => {
                         id='fromTimeInput'
                         type='dateTime-local'
                         placeholder=''
-                        value={fromTime ? fromTime : undefined}
+                        value={startTime}
                         label=''
                         isRequired={false}
                         onChange={(event) => {
@@ -89,7 +94,8 @@ const VolunteerStatsTable = () => {
                             0,
                             16
                           ) // fixes invalid input on ios safari? can't test
-                          setFromTime(event.target.value)
+                          setStartTime(event.target.value)
+                          refetchStats()
                         }}
                       />
                     </div>
@@ -100,7 +106,7 @@ const VolunteerStatsTable = () => {
                         id='toTimeInput'
                         type='dateTime-local'
                         placeholder=''
-                        value={toTime ? toTime : undefined}
+                        value={endTime}
                         label=''
                         isRequired={false}
                         onChange={(event) => {
@@ -108,7 +114,7 @@ const VolunteerStatsTable = () => {
                             0,
                             16
                           ) // fixes invalid input on ios safari? can't test
-                          setToTime(event.target.value)
+                          setEndTime(event.target.value)
                           refetchStats()
                         }}
                       />

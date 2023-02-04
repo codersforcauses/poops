@@ -1,3 +1,4 @@
+import { useEffect, useRef } from 'react'
 import { Timestamp } from 'firebase/firestore'
 
 import Statistics from '@/components/Home/statistics'
@@ -5,18 +6,19 @@ import Card from '@/components/UI/card'
 import Spinner from '@/components/UI/loadingSpinner'
 import { useVolunteerStatsByDateRange } from '@/hooks/admin'
 
+const WEEK_IN_MS = 604800000
+
 interface StatsBreakdownProps {
   days?: number
 }
 
 const StatsBreakdown = ({ days = 7 }: StatsBreakdownProps) => {
-  const WEEK_IN_MS = 604800000
-  const now = Date.now()
-  const weekOldTimestamp = Timestamp.fromMillis(now - WEEK_IN_MS)
+  const now = useRef(Date.now())
+  const weekOldTimestamp = Timestamp.fromMillis(now.current - WEEK_IN_MS)
   const { isLoading, data } = useVolunteerStatsByDateRange(
+    '7DaySummary',
     weekOldTimestamp,
-    Timestamp.fromDate(new Date(now)),
-    '7DaySummary'
+    Timestamp.fromDate(new Date(now.current))
   )
 
   return (

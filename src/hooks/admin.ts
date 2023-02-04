@@ -15,9 +15,9 @@ import { db } from '@/components/Firebase/init'
 import { Visit, VolunteerStats } from '@/types/types'
 
 export const useVolunteerStatsByDateRange = (
+  queryKey: string,
   startTime: Timestamp,
-  endTime: Timestamp,
-  queryKey: string
+  endTime: Timestamp
 ) => {
   const queryFn = async () => {
     try {
@@ -69,10 +69,10 @@ export const useVolunteerStatsByDateRange = (
   }
 
   return useQuery({
-    queryKey: [queryKey],
+    queryKey: [queryKey, startTime, endTime],
     queryFn: queryFn,
     staleTime: Infinity,
-    cacheTime: Infinity
+    cacheTime: 1800000
   })
 }
 
