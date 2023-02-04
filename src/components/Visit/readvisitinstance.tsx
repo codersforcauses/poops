@@ -24,11 +24,9 @@ const VisitInfo = ({
   commuteDist = 0,
   commuteMethod = 'N/A',
   notes = '',
-  clientName = '',
   docId = ''
 }: VisitInfoProps) => {
   const router = useRouter()
-  const params = `pets=${petNames}&client=${clientName}&visitId=${docId}`
 
   if (docId === undefined) return null
 
@@ -73,7 +71,7 @@ const VisitInfo = ({
           <div className='w-2/5'>
             <Button
               size='small'
-              onClick={() => router.push(`/visit/${docId}/incident?${params}`)}
+              onClick={() => router.push(`/visit/${docId}/incident`)}
             >
               Report Incident
             </Button>
@@ -81,7 +79,7 @@ const VisitInfo = ({
           <div className='w-2/5'>
             <Button
               size='small'
-              onClick={() => router.push(`/visit/${docId}/vet?${params}`)}
+              onClick={() => router.push(`/visit/${docId}/vet`)}
             >
               Register Vet Concern
             </Button>

@@ -30,7 +30,7 @@ const VetForm = () => {
   const [vetName, setVetName] = useState('')
   const [time, setTime] = useState('') //check issue comments for date/time
   const [notes, setNotes] = useState('')
-  const [petName, setPetName] = useState('')
+  const [petName, setPetName] = useState(visit?.petNames || '')
 
   const userId = useRef('')
   const userPhone = useRef('')
@@ -152,8 +152,7 @@ Details: ${data.detail}`
                   <FormField
                     id='petNameInput'
                     type='text'
-                    value={petName}
-                    placeholder='Pet name'
+                    placeholder={petName}
                     label='Pet Name'
                     isRequired={false}
                     onChange={(event) => setPetName(event.target.value)}
