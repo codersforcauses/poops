@@ -8,7 +8,7 @@ import {
   GoogleAuthProvider,
   linkWithRedirect,
   onAuthStateChanged,
-  signInWithRedirect,
+  signInWithPopup,
   signOut,
   User
 } from 'firebase/auth'
@@ -26,7 +26,7 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
 
   const externalAuthSignIn = async (auth: Auth, provider: AuthProvider) => {
     try {
-      const result = await signInWithRedirect(auth, provider)
+      const result = await signInWithPopup(auth, provider)
       return result
     } catch (error) {
       return error
