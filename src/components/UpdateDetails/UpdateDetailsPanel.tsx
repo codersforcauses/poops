@@ -91,6 +91,7 @@ function UpdateDetailsPanel({ contact }: ContactItemProps) {
     } catch (error) {
       setErr(true)
     }
+    window.location.reload()
   }
 
   return (
