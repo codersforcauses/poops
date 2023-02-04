@@ -5,7 +5,7 @@ import Layout from '@/components/Layout'
 import { withProtected } from '@/components/PrivateRoute'
 import { AddButton } from '@/components/Visit/buttons'
 import SearchBar from '@/components/Visit/searchbar'
-import VisitList from '@/components/Visit/reportlist'
+import ReportList from '@/components/Visit/reportlist'
 import { NextPageWithLayout } from '@/pages/_app'
 
 const Visit: NextPageWithLayout = () => {
@@ -17,7 +17,7 @@ const Visit: NextPageWithLayout = () => {
           <SearchBar onChange={(event) => setSearchQuery(event.target.value)} />
           <AddButton />
         </div>
-        <VisitList searchQuery={searchQuery} />
+        <ReportList searchQuery={searchQuery} />
       </div>
     </div>
   )
@@ -26,7 +26,7 @@ const Visit: NextPageWithLayout = () => {
 const VisitWithProtected = withProtected(Visit)
 
 VisitWithProtected.getLayout = (page: ReactElement) => (
-  <Layout title='Visit'>{page}</Layout>
+  <Layout title='Report'>{page}</Layout>
 )
 
 export default VisitWithProtected

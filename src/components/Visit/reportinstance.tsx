@@ -1,13 +1,13 @@
 import { useState } from 'react'
 import { ChevronDownIcon } from '@heroicons/react/24/outline'
 
-import { Visit } from '@/types/types'
+import { Incident } from '@/types/types'
 import { humanizeTimestamp } from '@/utils'
 
 import ReportInfo from '@/components/Visit/readreportinstance'
-import VisitInfo from '@/components/Visit/readvisitinstance'
 
-const VisitInstance = (props: Visit) => {
+
+const ReportInstance = (props: Incident) => {
   const [isOpen, setIsOpen] = useState(false)
 
   if (props.docId === undefined) return null
@@ -16,8 +16,8 @@ const VisitInstance = (props: Visit) => {
     <div className='m-2 flex flex-col rounded-xl bg-gray-50 p-4 shadow-lg'>
       <div className='flex justify-between'>
         <div className='font-bold'>
-          <p className='text-primary'>{humanizeTimestamp(props.startTime)}</p>
-          <p className='text-sm'>{props.clientName}</p>
+          <p className='text-primary'>{props.docId} </p>
+          <p className='text-sm'>Incident Report</p>
         </div>
         <div>
           <ChevronDownIcon
@@ -32,9 +32,9 @@ const VisitInstance = (props: Visit) => {
           />
         </div>
       </div>
-      <VisitInfo {...props} isOpen={isOpen} />
+      <ReportInfo {...props} isOpen={isOpen} />
     </div>
   )
 }
 
-export default VisitInstance
+export default ReportInstance

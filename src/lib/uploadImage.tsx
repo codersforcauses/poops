@@ -5,20 +5,20 @@ import { db, storage } from '@/components/Firebase/init'
 import { formatTimestampString } from '@/utils'
 
 export interface ImageToStorageInterface {
-  userID: string
+  userId: string
   image: File
   folder: string
 }
 
 export const ImageToStorage = async ({
-  userID,
+  userId,
   image,
   folder
 }: ImageToStorageInterface) => {
   const extension = image.name.split('.').pop()
   if (extension !== undefined && extension.match(/jpg|jpeg|png|heic/)) {
     const formattedDate = formatTimestampString(Timestamp.now())
-    const bucket = `${folder}/${userID}/${formattedDate}.${extension}`
+    const bucket = `${folder}/${userId}/${formattedDate}.${extension}`
     const storageRef = ref(storage, bucket)
     await uploadBytes(storageRef, image)
     return bucket
@@ -26,24 +26,24 @@ export const ImageToStorage = async ({
 }
 
 export interface ImageToFirestoreInterface {
-  name: string
+  clientName: string
   email: string
-  pet: string
+  petName: string
   doctor?: string
-  time: string
-  notes: string
+  time: Timestamp
+  detail: string
   imageBucket: string
   destination: string
   folder?: string
 }
 
 export const ImageToFirestore = ({
-  name,
+  clientName,
   email,
-  pet,
+  petName,
   doctor,
   time,
-  notes,
+  detail,
   imageBucket,
   destination,
   folder = 'incidents'
@@ -51,67 +51,70 @@ export const ImageToFirestore = ({
   console.log(destination)
   if (folder === 'vet_concerns') {
     addDoc(collection(db, destination), {
-      name,
+      clientName,
       email,
-      pet,
+      petName,
       doctor,
       time,
-      notes,
+      detail,
       imageBucket
     })
   }
   if (folder === 'incidents') {
     addDoc(collection(db, destination), {
-      name,
+      clientName,
       email,
-      pet,
+      petName,
       time,
-      notes,
+      detail,
       imageBucket
     })
   }
 }
 
 export interface UploadImageInterface {
-  userID: string
-  visitID: string
-  name: string
+  userId: string
+  userName: string
+  visitId: string
+  visitTime: Timestamp
+  clientName: string
   email: string
-  pet: string
+  petName: string
   doctor?: string
-  time: string
-  notes: string
+  time: Timestamp
+  detail: string
   image: File
+  createdAt: string
   folder: string
 }
 
 export const UploadImage = async ({
-  userID,
-  visitID,
-  name,
+  userId,
+  visitId,
+  clientName,
   email,
-  pet,
+  petName,
   doctor,
   time,
-  notes,
+  detail,
   image,
   folder
 }: UploadImageInterface) => {
   try {
     const bucket = await ImageToStorage({
-      userID,
+      userId,
       image,
       folder
     })
     if (bucket !== undefined) {
-      const dest = `users/${userID}/visits/${visitID}/${folder}`
+      const dest = `users/${userId}/visits/${visitId}/${folder}`
       ImageToFirestore({
-        name,
+        clientName,
         email,
-        pet,
+        petName,
         doctor,
         time,
-        notes,
+        detail,
         imageBucket: bucket,
         destination: dest,
         folder

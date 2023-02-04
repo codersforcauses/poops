@@ -2,6 +2,8 @@ import { useRouter } from 'next/router'
 
 import Button from '@/components/UI/button'
 import { Incident } from '@/types/types'
+import { Timestamp } from 'firebase/firestore'
+import { humanizeTimestamp } from '@/utils'
 
 interface ReportInfoProps extends Incident {
   isOpen: boolean
@@ -10,16 +12,11 @@ interface ReportInfoProps extends Incident {
 const ReportInfo = ({
   isOpen,
   docId = '',
-  userID = '',
-  userName = '',
-  visitId = '',
-  visitTime = '',
+  imageBucket = '',
   clientName = '',
-  email = '',
   petName = '',
-  time = '',
-  details = '',
-  createdAt = ''
+  reportTime = Timestamp,
+  detail = ''
 }: ReportInfoProps) => {
   const router = useRouter()
   const params = `pets=${petName}&client=${clientName}&visitId=${docId}`
@@ -34,33 +31,17 @@ const ReportInfo = ({
         }`}
       >
         <div className='max-h-screen space-y-1'>
-          <div>
-            <span className='font-semibold'>Visit Type:</span>
-            <span>{}</span>
-          </div>
           <div className='space-x-1'>
-            <span className='font-semibold'>Pet(s):</span>
+            <span className='font-semibold'>Pet Name:</span>
             <span>{petName}</span>
           </div>
           <div className='space-x-1'>
-            <span className='font-semibold'>Duration:</span>
-            <span>{}</span>
-          </div>
-          <div className='space-x-1'>
-            <span className='font-semibold'>Walk Distance:</span>
-            <span>{} km</span>
-          </div>
-          <div className='space-x-1'>
-            <span className='font-semibold'>Commute Distance:</span>
-            <span>{} km</span>
-          </div>
-          <div className='space-x-1'>
-            <span className='font-semibold'>Commute Method:</span>
-            <span>{}</span>
+            <span className='font-semibold'>Report Date & Time:</span>
+            <span>{reportTime}</span>
           </div>
           <div>
-            <div className='font-semibold'>Notes:</div>
-            <p className='my-1 line-clamp-6'>{}</p>
+            <div className='font-semibold'>Desscription:</div>
+            <p className='my-1 line-clamp-6'>{detail}</p>
           </div>
         </div>
         <div className='flex items-center justify-around py-2'>

@@ -1,42 +1,45 @@
 import { XCircleIcon } from '@heroicons/react/24/outline'
 
-import { useVisits } from '@/hooks/visits'
-import { Visit } from '@/types/types'
+import { useIncidents } from '@/hooks/incidents'
+import { Incident } from '@/types/types'
 
-import VisitInstance from './reportinstance'
+import ReportInstance from './reportinstance'
 
-interface VisitListProps {
+interface ReportListProps {
   searchQuery: string
+  visitId: string
 }
 
-export const VisitList = (props: VisitListProps) => {
-  const { data: visits } = useVisits()
+const visitId = 'nWZ4FWWjBZMkhtzTYNAW'
 
-  const clientNameFilter = (visit: Visit) =>
-    visit.clientName.toLowerCase().includes(props.searchQuery.toLowerCase())
+export const ReportList = (props: ReportListProps) => {
+  const { data: incidents } = useIncidents(visitId)
 
-  const petNameFilter = (visit: Visit) =>
-    visit.petNames?.toLowerCase().includes(props.searchQuery.toLowerCase())
+  const clientNameFilter = (report: Incident) =>
+    report.clientName.toLowerCase().includes(props.searchQuery.toLowerCase())
 
-  const searchFilter = (visit: Visit) =>
-    props.searchQuery === '' || clientNameFilter(visit) || petNameFilter(visit)
+  const petNameFilter = (report: Incident) =>
+    report.petName?.toLowerCase().includes(props.searchQuery.toLowerCase())
+
+  const searchFilter = (report: Incident) =>
+    props.searchQuery === '' || clientNameFilter(report) || petNameFilter(report)
 
   return (
     <div className='m-2 h-full flex-col'>
-      {visits && visits.length !== 0 ? (
-        visits
+      {incidents && incidents.length !== 0 ? (
+        incidents
           .filter(searchFilter)
-          .map((visit) =>
-            visit.docId ? <VisitInstance key={visit.docId} {...visit} /> : null
+          .map((report) =>
+            report.docId ? <ReportInstance key={report.docId} {...report} /> : null
           )
       ) : (
         <div className='flex h-full flex-col items-center justify-center'>
           <XCircleIcon className='h-16 w-16 content-center' />
-          <p>It&apos;s empty here. Add a visit! </p>
+          <p>It&apos;s empty here. Add a report! This is a report page!!!</p>
         </div>
       )}
     </div>
   )
 }
 
-export default VisitList
+export default ReportList

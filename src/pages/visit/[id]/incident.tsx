@@ -11,6 +11,7 @@ import { useAuth } from '@/context/Firebase/Auth/context'
 import { useMutateIncidents } from '@/hooks/incidents'
 import { UploadImage, UploadImageInterface } from '@/lib/uploadImage'
 import { Incident } from '@/types/types'
+import { Timestamp } from 'firebase/firestore'
 
 const Incident = () => {
   const { currentUser } = useAuth()
@@ -22,7 +23,7 @@ const Incident = () => {
   const [email, setEmail] = useState(
     currentUser?.email ? currentUser?.email : ''
   )
-  const [time, setTime] = useState('') //check issue comments for date/time
+  const [time, setTime] = useState<Timestamp>(Timestamp.fromDate(new Date())) //check issue comments for date/time
   const [notes, setNotes] = useState('')
   const router = useRouter()
   let { pets } = router.query
@@ -47,28 +48,31 @@ const Incident = () => {
     click.preventDefault()
     if (currentUser !== null) {
       const data: Incident = {
-        userID: currentUser.uid,
+        userId: currentUser.uid,
         userName: userName,
         clientName: clientName,
         visitId: docId,
         visitTime: time,
-        email: email,
+        userEmail: email,
         petName: petName,
-        time: time,
-        details: notes,
+        reportTime: time,
+        detail: notes,
         createdAt: Date.now().toString()
       }
       mutateIncidents(data)
 
       if (image !== undefined) {
         const imageData: UploadImageInterface = {
-          userID: currentUser.uid,
-          visitID: docId,
-          name: clientName,
+          userId: currentUser.uid,
+          userName: userName,
+          clientName: clientName,
+          visitId: docId,
+          visitTime: time,
           email: email,
-          pet: petName,
+          petName: petName,
           time: time,
-          notes: notes,
+          detail: notes,
+          createdAt: Date.now().toString(),
           image: image,
           folder: 'incidents'
         }
@@ -138,7 +142,9 @@ const Incident = () => {
             placeholder='Time'
             label='Date & Time'
             isRequired={false}
-            onChange={(event) => setTime(event.target.value)}
+            onChange={(event) => {
+              const dateTime = new Date(event.target.value)
+              setTime(Timestamp.fromDate(dateTime))}}
           />
 
           <FormField

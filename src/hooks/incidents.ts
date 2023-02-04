@@ -7,6 +7,8 @@ import {
   doc,
   FirestoreError,
   getDocs,
+  orderBy,
+  query,
   setDoc
 } from 'firebase/firestore'
 
@@ -15,25 +17,25 @@ import { AlertVariant, useAlert } from '@/context/AlertContext'
 import { useAuth } from '@/context/Firebase/Auth/context'
 import { Incident } from '@/types/types'
 
-export const useIncidents = () => {
+export const useIncidents = (visitId: string) => {
   const { currentUser } = useAuth()
-  const queryFn = async (): Promise<Incident[]> => {
-    try {
-      if (currentUser?.uid) {
-        const incidentsRef = collection(db, 'incidents')
-        const incidentsDocs = await getDocs(incidentsRef)
+  const queryFn = async () => {
+    if (currentUser?.uid) {
+      try {
+        const incidentsRef = collection(db, 'users', currentUser.uid, 'visits', visitId, 'incidents')
+        const q = query(incidentsRef, orderBy('time', 'desc'))
+        const incidentsDocs = await getDocs(q)
         return incidentsDocs.docs.map(
           (doc) => ({ ...doc.data(), docId: doc.id } as Incident)
         )
+      } catch (err: unknown) {
+        //#region  //*=========== For logging ===========
+        if (err instanceof FirestoreError) {
+          console.error(err.message)
+        } else console.error(err)
+        //#endregion  //*======== For logging ===========
       }
-    } catch (err: unknown) {
-      //#region  //*=========== For logging ===========
-      if (err instanceof FirestoreError) {
-        console.error(err.message)
-      } else console.error(err)
-      //#endregion  //*======== For logging ===========
     }
-    return []
   }
   return useQuery(['incidents'], queryFn)
 }

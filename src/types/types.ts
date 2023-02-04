@@ -42,9 +42,13 @@ export interface VetConcern {
   vetName: string
   visitTime: Timestamp
   visitId: string
+  reportTime: Timestamp
   detail: string
-  createdAt: Timestamp
+  createdAt: string
+  imageBucket: string
 }
+
+export type Incident = Omit<VetConcern, "vetName">
 
 export interface UserStat {
   numVisits: number
@@ -63,16 +67,3 @@ export type Duration = {
   minutes: number
 }
 
-export type Incident = {
-  docId?: string
-  userID: string
-  userName: string | null | undefined
-  visitId: string
-  visitTime: string
-  clientName: string
-  email: string | null | undefined
-  petName: string
-  time: string
-  details: string
-  createdAt: string
-}
