@@ -9,6 +9,7 @@ import {
   linkWithRedirect,
   onAuthStateChanged,
   signInWithPopup,
+  signInWithRedirect,
   signOut,
   User
 } from 'firebase/auth'
@@ -29,7 +30,8 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
       const result = await signInWithPopup(auth, provider)
       return result
     } catch (error) {
-      return error
+      const result = await signInWithRedirect(auth, provider)
+      return result
     }
   }
 
