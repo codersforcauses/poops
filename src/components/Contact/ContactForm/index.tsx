@@ -1,10 +1,10 @@
 import { useEffect } from 'react'
 import { useRouter } from 'next/router'
 import { UseMutateFunction } from '@tanstack/react-query'
-import { useAtom, useSetAtom } from 'jotai'
+import { useAtom } from 'jotai'
 import { SubmitHandler } from 'react-hook-form'
 
-import { contactFormAtom, isEditingAtom } from '@/atoms/contacts'
+import { contactFormAtom } from '@/atoms/contacts'
 import Avatar from '@/components/Contact/avatar'
 import validationSchema from '@/components/Contact/ContactForm/validation'
 import Form from '@/components/UI/FormComponents/Form'
@@ -43,7 +43,6 @@ const ContactForm = ({
   mutate
 }: ContactFormProps) => {
   const router = useRouter()
-  const setIsEditing = useSetAtom(isEditingAtom)
   const [contactForm, setContactForm] = useAtom(contactFormAtom)
 
   useEffect(() => {
@@ -52,12 +51,9 @@ const ContactForm = ({
 
   if (contactForm === null) return null
 
-  // TODO: Submit ContactForm to database
   const submitForm: SubmitHandler<ContactFormValues> = (
     formData: ContactFormValues
   ) => {
-    console.log(formData)
-
     const data: Contact = {
       docId: contact.docId,
       name: formData.name,
@@ -75,7 +71,6 @@ const ContactForm = ({
       })
     }
 
-    setIsEditing(false)
     mutate(data, {
       onSuccess(mutatedDocId, _variables, _context) {
         if (isNewContact) router.replace(`/contact/${mutatedDocId}`)
@@ -173,28 +168,14 @@ const ContactForm = ({
               <Button type='submit' fullwidth>
                 Save
               </Button>
-              {!isNewContact ? (
-                <Button
-                  intent='secondary'
-                  fullwidth
-                  onClick={() => {
-                    setIsEditing(false)
-                  }}
-                >
-                  Cancel
-                </Button>
-              ) : (
-                <Button
-                  intent='secondary'
-                  type='button'
-                  fullwidth
-                  onClick={() => {
-                    router.push('/contact')
-                  }}
-                >
-                  Cancel
-                </Button>
-              )}
+              <Button
+                type='button'
+                intent='secondary'
+                fullwidth
+                onClick={() => router.back()}
+              >
+                Cancel
+              </Button>
             </div>
           </div>
         </Form>

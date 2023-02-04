@@ -90,7 +90,10 @@ export const VisitForm = ({ visitData }: VisitFormProps) => {
           }
           return d
         }
-        return { visitType: visitTypes[0] }
+        return {
+          visitType: visitTypes[0],
+          startTime: formatTimestamp(Timestamp.now())
+        }
       }, [visitData])}
     >
       <div className='grid grid-cols-2 gap-4'>

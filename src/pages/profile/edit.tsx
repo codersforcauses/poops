@@ -1,6 +1,7 @@
 import { ReactElement } from 'react'
 
-import ContactDetails from '@/components/Contact/contactdetails'
+import ContactForm from '@/components/Contact/contactform'
+import NavButtons from '@/components/Contact/navbuttons'
 import Layout from '@/components/Layout'
 import { withProtected } from '@/components/PrivateRoute'
 import Spinner from '@/components/UI/loadingSpinner'
@@ -24,7 +25,8 @@ const Profile: NextPageWithLayout = () => {
 
   return (
     <div className='main-style'>
-      <ContactDetails contact={user} mutate={mutateUser} />
+      <NavButtons />
+      <ContactForm contact={user} mutate={mutateUser} />
     </div>
   )
 }

@@ -18,7 +18,7 @@ import {
   FieldLabel,
   FieldMessage
 } from '@/components/UI/FormComponents/utils'
-import usePersistentState from '@/utils/hooks/usepersistentstate'
+import usePersistentState from '@/hooks/usepersistentstate'
 
 export type CreateSelectProps = FormFieldProps
 

@@ -9,6 +9,7 @@ import validationSchema from '@/components/Visit/IncidentForm/validation'
 import { useAuth } from '@/context/Firebase/Auth/context'
 import { useMutateIncidents } from '@/hooks/incidents'
 import { Incident } from '@/types/types'
+import { formatTimestamp } from '@/utils'
 
 interface FormValues {
   userName: string
@@ -25,12 +26,28 @@ interface IncidentFormProps {
   visitTime: Timestamp
 }
 
+const formatIncident = (data: Incident) => {
+  return `Incident Report
+User ID: ${data.userID}
+Username: ${data.userName}
+Email: ${data.email}
+Created At: ${formatTimestamp(data.createdAt)}
+
+Client Name: ${data.clientName}
+Pet Name: ${data.petName}
+Visit ID: ${data.visitId}
+Visit Time: ${formatTimestamp(data.visitTime)}
+
+Incident Time: ${formatTimestamp(data.time)}
+Details: ${data.details}`
+}
+
 const IncidentForm = (props: IncidentFormProps) => {
   const router = useRouter()
   const { currentUser } = useAuth()
   const { mutate: mutateIncidents } = useMutateIncidents()
 
-  const handleSubmit: SubmitHandler<FormValues> = (formData) => {
+  const handleSubmit: SubmitHandler<FormValues> = async (formData) => {
     if (currentUser) {
       const { time, ...rest } = formData
 
@@ -46,6 +63,15 @@ const IncidentForm = (props: IncidentFormProps) => {
 
       mutateIncidents(data)
 
+      const message = {
+        subject: 'Incident Report',
+        text: formatIncident(data)
+      }
+      await fetch('/api/sendEmail', {
+        method: 'POST',
+        body: JSON.stringify(message)
+      })
+
       router.push('/visit')
     }
   }
@@ -58,6 +84,7 @@ const IncidentForm = (props: IncidentFormProps) => {
           ? {
               userName: currentUser.displayName || '',
               email: currentUser.email || '',
+              time: formatTimestamp(props.visitTime),
               petName: props.pets
             }
           : {}

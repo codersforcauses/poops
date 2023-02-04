@@ -9,6 +9,7 @@ import validationSchema from '@/components/Visit/VetForm/validation'
 import { useAuth } from '@/context/Firebase/Auth/context'
 import { useMutateVetConcerns } from '@/hooks/vetconcerns'
 import { VetConcern } from '@/types/types'
+import { formatTimestamp } from '@/utils'
 
 interface FormValues {
   userName: string
@@ -23,6 +24,22 @@ interface VetFormProps {
   docId: string
   clientName: string
   pets: string
+  visitTime: Timestamp
+}
+
+const formatIncident = (data: VetConcern) => {
+  return `Vet Concerns
+User ID: ${data.userId}
+Username: ${data.userName}
+Email: ${data.userEmail}
+Created At: ${formatTimestamp(data.createdAt)}
+
+Client Name: ${data.clientName}
+Pet Name: ${data.petName}
+Visit ID: ${data.visitId}
+Visit Time: ${formatTimestamp(data.visitTime)}
+
+Details: ${data.detail}`
 }
 
 const VetForm = (props: VetFormProps) => {
@@ -30,7 +47,7 @@ const VetForm = (props: VetFormProps) => {
   const { currentUser } = useAuth()
   const { mutate: mutateVetConcerns } = useMutateVetConcerns()
 
-  const handleSubmit: SubmitHandler<FormValues> = (formData) => {
+  const handleSubmit: SubmitHandler<FormValues> = async (formData) => {
     if (currentUser) {
       const { time, ...rest } = formData
 
@@ -46,6 +63,15 @@ const VetForm = (props: VetFormProps) => {
 
       mutateVetConcerns(data)
 
+      const message = {
+        subject: 'Vet Concerns Report',
+        text: formatIncident(data)
+      }
+      await fetch('/api/sendEmail', {
+        method: 'POST',
+        body: JSON.stringify(message)
+      })
+
       router.push('/visit')
     }
   }
@@ -59,7 +85,8 @@ const VetForm = (props: VetFormProps) => {
           ? {
               userName: currentUser.displayName || '',
               userEmail: currentUser.email || '',
-              petName: props.pets
+              petName: props.pets,
+              visitTime: formatTimestamp(props.visitTime) || ''
             }
           : {}
       }

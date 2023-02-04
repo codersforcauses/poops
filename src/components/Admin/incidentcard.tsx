@@ -7,9 +7,7 @@ const IncidentCard = (props: Incident) => {
       <div className='flex justify-between'>
         <div className='font-bold'>
           <p className='font-bold text-primary'>
-            <>
-              {props.clientName} {formatTimestamp(props.time)}
-            </>
+            {props.clientName} {formatTimestamp(props.time)}
           </p>
           <p className='text-sm'>{props.userName}</p>
         </div>

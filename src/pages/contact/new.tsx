@@ -1,29 +1,45 @@
 import { ReactElement } from 'react'
+import { useRouter } from 'next/router'
 
 import ContactForm from '@/components/Contact/ContactForm'
 import Layout from '@/components/Layout'
 import { withProtected } from '@/components/PrivateRoute'
+import Button from '@/components/UI/button'
 import { useMutateContacts } from '@/hooks/contacts'
 import { NextPageWithLayout } from '@/pages/_app'
 
 const NewContact: NextPageWithLayout = () => {
   const { mutate: mutateContacts } = useMutateContacts()
+  const router = useRouter()
+
+  const newContact = {
+    name: '',
+    desc: '',
+    pets: '',
+    email: '',
+    phone: '',
+    streetAddress: '',
+    region: [],
+    notes: '',
+    tags: ['Client']
+  }
 
   return (
     <div className='main-style'>
-      <h1 className='m-3 text-center text-2xl'>Add Contact</h1>
+      <div className='my-4 ml-6 h-14 w-max text-center'>
+        <Button
+          type='button'
+          size='medium'
+          onClick={() => {
+            router.back()
+          }}
+        >
+          Back
+        </Button>
+      </div>
+
       <ContactForm
-        contact={{
-          name: '',
-          desc: '',
-          pets: '',
-          email: '',
-          phone: '',
-          streetAddress: '',
-          region: [],
-          notes: '',
-          tags: ['Client']
-        }}
+        contact={newContact}
         isNewContact={true}
         mutate={mutateContacts}
       />

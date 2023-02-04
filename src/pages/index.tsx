@@ -6,6 +6,7 @@ import Layout from '@/components/Layout'
 import { withProtected } from '@/components/PrivateRoute'
 import Button from '@/components/UI/button'
 import { useAuth } from '@/context/Firebase/Auth/context'
+import useUser from '@/hooks/user'
 import mod from '@/lib/temp/firebase/functions/setRole'
 
 import { NextPageWithLayout } from './_app'
@@ -13,8 +14,10 @@ import { NextPageWithLayout } from './_app'
 const Home: NextPageWithLayout = () => {
   const { currentUser, refreshUserToken } = useAuth()
 
+  const { data: tempUser } = useUser()
+
   const welcomeMessage = currentUser
-    ? `Welcome, ${currentUser?.displayName}!`
+    ? `Welcome, ${tempUser?.info.name}!`
     : 'Welcome!'
 
   const onMod = (adminAccess: boolean) => {

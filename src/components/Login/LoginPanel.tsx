@@ -84,7 +84,7 @@ const LoginPanel = ({
         display={displayMicrosoft}
       />
 
-      {/* Phone Button //TODO*/}
+      {/* Phone Button /TODO*/}
     </div>
   )
 }

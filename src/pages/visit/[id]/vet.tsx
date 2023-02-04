@@ -21,6 +21,7 @@ const Vet = () => {
           docId={visitId || ''}
           clientName={visit?.clientName || ''}
           pets={visit?.petNames || ''}
+          visitTime={visit?.startTime || ''}
         />
       ) : (
         'Error: Visit not found'
