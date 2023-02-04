@@ -88,42 +88,54 @@ service cloud.firestore {
         data.details is string &&
         data.createdAt is timestamp
   }
+  
   match /databases/{database}/documents {
-    match /users/{userId} {
-      match /contacts/{visitId} {
-        allow read: if isOwner(userId);
-        allow write: if isOwner(userId) && isValidContact(request.resource.data);
+    function isSignIn(){
+        return request.auth != null;
       }
 
-      match /visits/{visitId} {
-        allow read: if isOwner(userId);
-        allow write: if isOwner(userId) && isValidVisit(request.resource.data);
-      }
+    // function hasVerifiedEmail(){
+    //   return request.auth.token.email_verified;
+    // }
 
-      match /info {
-        allow read: if isOwner(userId);
-        allow write: if isOwner(userId) && isValidContact(request.resource.data);
-      }
-
-      allow read: if isOwner(userId);
-      allow write: if isOwner(userId) && isValidUser(request.resource.data);
+    function isOwner(uid){
+      return request.auth.uid == uid;
     }
 
-    match /incidents/{document=**} {
-      allow create: if isSignIn();
+    function isAdmin(){
+      return request.auth.token.admin;
+    }
+
+    // used by collectionGroup query
+    match /{somePath=**}/visits/{visit}{
       allow read: if isAdmin();
-      allow update, delete: if false;
+    }
+ 
+    match /users/{userId}/{document=**} {
+      allow read: if ((isSignIn() && isOwner(userId)) || isAdmin());
+      allow write: if isSignIn() && isOwner(userId);
     }
 
     match /roles/{userId} {
-      allow read: if isAdmin() && isOwner(userId);
+      // function checkEmail(){
+      //   return request.auth.token.email == email;
+      // }
+      allow read: if isSignIn() && isAdmin() && isOwner(userId);
       allow write: if false;
     }
 
     match /vet_concerns/{concern} {
-      allow create: if isSignIn() && isValidVetConcern(request.resource.data);
-      allow read: if isAdmin();
+      allow create: if isSignIn();
+      allow read: if isSignIn() && isAdmin();
       allow update, delete: if false;
     }
+    
+    match /incidents/{concern} {
+      allow create: if isSignIn();
+      allow read: if isSignIn() && isAdmin();
+      allow update, delete: if false;
+    }
+
   }
+
 }
