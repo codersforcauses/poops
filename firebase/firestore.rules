@@ -121,7 +121,8 @@ service cloud.firestore {
     match /users/{userId}/{document=**} {
       allow read: if ((isSignIn() && isOwner(userId)) || isAdmin());
       allow write: if isSignIn() && isOwner(userId);
-      
+    }
+
     match /incidents/{document=**} {
       allow create: if isSignIn();
       allow read: if isAdmin();
