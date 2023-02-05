@@ -105,22 +105,13 @@ service cloud.firestore {
         allow write: if isOwner(userId) && isValidContact(request.resource.data);
       }
 
-      allow read: if isOwner(userId);
+      allow read: if isOwner(userId) || isAdmin();
       allow write: if isOwner(userId) && isValidUser(request.resource.data);
-    }
-
-    function isAdmin(){
-      return request.auth.token.admin;
     }
 
     // used by collectionGroup query
     match /{somePath=**}/visits/{visit}{
       allow read: if isAdmin();
-    }
- 
-    match /users/{userId}/{document=**} {
-      allow read: if ((isSignIn() && isOwner(userId)) || isAdmin());
-      allow write: if isSignIn() && isOwner(userId);
     }
 
     match /incidents/{document=**} {
