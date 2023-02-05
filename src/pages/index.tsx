@@ -6,11 +6,11 @@ import Layout from '@/components/Layout'
 import { withProtected } from '@/components/PrivateRoute'
 import Button from '@/components/UI/button'
 import { useAuth } from '@/context/Firebase/Auth/context'
+import useDummyData from '@/hooks/dummyData'
 import useUser from '@/hooks/user'
 import mod from '@/lib/temp/firebase/functions/setRole'
 
 import { NextPageWithLayout } from './_app'
-import useDummyData from '@/hooks/dummyData'
 
 const Home: NextPageWithLayout = () => {
   const { currentUser, refreshUserToken } = useAuth()
