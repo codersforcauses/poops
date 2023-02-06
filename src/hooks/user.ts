@@ -14,6 +14,7 @@ import {
 import { db } from '@/components/Firebase/init'
 import { AlertVariant, useAlert } from '@/context/AlertContext'
 import { useAuth } from '@/context/Firebase/Auth/context'
+import { canDelete } from '@/hooks/utils'
 import { Contact, User } from '@/types/types'
 
 const newUser = (currentUser: AuthUser): User => {
@@ -84,8 +85,8 @@ export const useMutateUser = () => {
       if (currentUser?.uid) {
         const { docId: userId, ...userMut } = user
 
-        if (Object.keys(userMut).length === 0 && userId) {
-          console.error('Cannot Delete User')
+        if (canDelete(userMut, userId)) {
+          return console.error('Cannot Delete User')
         }
 
         const userDocRef = doc(db, 'users', currentUser.uid)
