@@ -76,9 +76,7 @@ const CustomSelect = <
       required={'required' in rules || required}
       disabled={formDisabled || isDisabled}
     >
-      <div
-        className={['flex w-full flex-col', props.className].join(' ').trim()}
-      >
+      <div className={`flex w-full flex-col ${props.className}`}>
         <FieldLabel>{label}</FieldLabel>
         <Select
           {...register?.(name, rules)}

@@ -1,10 +1,7 @@
-import { useEffect } from 'react'
 import { useRouter } from 'next/router'
 import { UseMutateFunction } from '@tanstack/react-query'
-import { useAtom } from 'jotai'
 import { SubmitHandler } from 'react-hook-form'
 
-import { contactFormAtom } from '@/atoms/contacts'
 import Avatar from '@/components/Contact/avatar'
 import validationSchema from '@/components/Contact/ContactForm/validation'
 import Form from '@/components/UI/FormComponents/Form'
@@ -43,13 +40,6 @@ const ContactForm = ({
   mutate
 }: ContactFormProps) => {
   const router = useRouter()
-  const [contactForm, setContactForm] = useAtom(contactFormAtom)
-
-  useEffect(() => {
-    setContactForm(contact)
-  }, [setContactForm, contact])
-
-  if (contactForm === null) return null
 
   const submitForm: SubmitHandler<FormValues> = (formData) => {
     const data: Contact = {

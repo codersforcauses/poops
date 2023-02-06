@@ -50,6 +50,7 @@ export const useMutateVisits = () => {
     try {
       if (currentUser?.uid) {
         const { docId: visitId, ...visitMut } = visit
+        console.log(visitId, visitMut)
         const collectionRef = collection(db, 'users', currentUser.uid, 'visits')
 
         const docRef = visitId

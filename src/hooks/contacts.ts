@@ -9,9 +9,7 @@ import {
   getDocs,
   setDoc
 } from 'firebase/firestore'
-import { useSetAtom } from 'jotai'
 
-import { currentContactAtom } from '@/atoms/contacts'
 import { db } from '@/components/Firebase/init'
 import { AlertVariant, useAlert } from '@/context/AlertContext'
 import { useAuth } from '@/context/Firebase/Auth/context'
@@ -42,7 +40,6 @@ export const useContacts = () => {
 export const useMutateContacts = () => {
   const { currentUser } = useAuth()
   const queryClient = useQueryClient()
-  const setCurrentContact = useSetAtom(currentContactAtom)
   const { setAlert } = useAlert()
 
   const mutationFn = async (contact: Contact & { deleteDoc?: boolean }) => {
@@ -62,10 +59,8 @@ export const useMutateContacts = () => {
 
         if (contactMut.deleteDoc) {
           await deleteDoc(docRef)
-          setCurrentContact(null)
         } else {
           await setDoc(docRef, contactMut, { merge: true })
-          setCurrentContact({ ...contact, docId: docRef.id })
           return docRef.id
         }
       }

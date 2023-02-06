@@ -50,12 +50,7 @@ const DurationSelect = ({
         <FieldLabel>{label}</FieldLabel>
 
         <div
-          className={[
-            'flex w-full flex-row justify-center rounded border border-gray-500 bg-white',
-            props.className
-          ]
-            .join(' ')
-            .trim()}
+          className={`flex w-full flex-row justify-center rounded border border-gray-500 bg-white ${props.className}`}
         >
           <select
             className='form-input flex w-full overflow-scroll rounded-l border-none text-center'

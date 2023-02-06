@@ -75,7 +75,6 @@ const CreateSelect = <
   }
 
   const handleChange = (data: OnChangeValue<Option, IsMulti>) => {
-    // console.log(data)
     setValue?.(name, data)
   }
 
@@ -86,9 +85,7 @@ const CreateSelect = <
       required={'required' in rules || required}
       disabled={formDisabled || isDisabled}
     >
-      <div
-        className={['flex w-full flex-col', props.className].join(' ').trim()}
-      >
+      <div className={`flex w-full flex-col ${props.className}`}>
         <FieldLabel>{label}</FieldLabel>
         <CreatableSelect
           {...register?.(name, rules)}

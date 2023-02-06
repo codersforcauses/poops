@@ -37,7 +37,7 @@ const Form = <T extends FieldValues>({
     <HookFormProvider {...methods}>
       <form
         onSubmit={methods.handleSubmit((data) => onSubmit(data as T))} // :(
-        className={['flex flex-col space-y-4', className || 'mt-4'].join(' ')}
+        className={`flex flex-col space-y-4 ${className || 'mt-4'}`}
       >
         <FormProvider value={value}>{children}</FormProvider>
       </form>

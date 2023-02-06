@@ -10,12 +10,7 @@ interface LabelProps {
 const FieldLabel = forwardRef<HTMLLabelElement, LabelProps>((props, ref) => {
   const { name, required } = useContext(FieldControlContext)
   return (
-    <label
-      htmlFor={name}
-      id={`${name}-label`}
-      ref={ref}
-      className={['font-bold'].join(' ').trim()}
-    >
+    <label htmlFor={name} id={`${name}-label`} ref={ref} className='font-bold'>
       {props.children}
       {required && (
         <>

@@ -19,9 +19,9 @@ const Vet = () => {
       {visit ? (
         <VetForm
           docId={visitId || ''}
-          clientName={visit?.clientName || ''}
-          pets={visit?.petNames || ''}
-          visitTime={visit?.startTime || ''}
+          clientName={visit.clientName}
+          pets={visit.petNames}
+          visitTime={visit.startTime}
         />
       ) : (
         'Error: Visit not found'
