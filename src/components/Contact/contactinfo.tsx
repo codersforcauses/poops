@@ -9,6 +9,7 @@ import { signOut } from 'firebase/auth'
 import tw from 'tailwind-styled-components'
 
 import Avatar from '@/components/Contact/avatar'
+import NavButtons from '@/components/Contact/navbuttons'
 import { auth } from '@/components/Firebase/init'
 import { AlertVariant, useAlert } from '@/context/AlertContext'
 import { Contact } from '@/types/types'
@@ -20,7 +21,7 @@ interface ContactFormProps {
   mutate: UseMutateFunction<
     unknown,
     unknown,
-    Contact & { deleteDoc?: boolean },
+    Contact | { docId?: string },
     unknown
   >
 }
@@ -31,14 +32,26 @@ function ContactInfo({ contact, mutate }: ContactFormProps) {
 
   const isContact = contact.docId !== 'USER'
 
+  const editRoute = isContact
+    ? `/contact/${contact.docId}/edit`
+    : `/profile/edit`
+
   return (
-    <div className='flex flex-col items-center justify-center gap-3 pb-24'>
-      {/* USER PROFILE IMAGE */}
-      <Avatar image='' height={48} width={48} iconClass='w-32 rounded-full' />
-      {/* FIRST AND LAST NAME */}
-      <h1 className='text-4xl font-normal'>{contact.name}</h1>
-      {/* DESCRIPTION */}
-      {isContact && <h3>{contact.desc}</h3>}
+    <div className='container flex flex-col items-center justify-center gap-4 pb-24'>
+      <div className='flex w-full flex-col items-center justify-center gap-2 p-8 pb-2'>
+        <NavButtons editRoute={editRoute} />
+        <Avatar
+          image=''
+          height={48}
+          width={48}
+          iconClass='w-32 rounded-full bg-white'
+        />
+        {/* FIRST AND LAST NAME */}
+        <h1 className='text-4xl font-normal'>{contact.name}</h1>
+        {/* DESCRIPTION */}
+        <h3>{contact.desc}</h3>
+      </div>
+
       {/* PHONE */}
       <Box>
         <div className='flex w-full justify-between'>
@@ -125,7 +138,7 @@ function ContactInfo({ contact, mutate }: ContactFormProps) {
           <label htmlFor={contact.notes} className='text-primary-dark'>
             Notes
           </label>
-          <span className='text-xl'> {contact.notes} </span>
+          <span className='min-h-[2rem] text-xl'> {contact.notes} </span>
         </Box>
       )}
       <div className='mb-2'>
@@ -140,7 +153,7 @@ function ContactInfo({ contact, mutate }: ContactFormProps) {
                 text: 'Are you sure?',
                 position: 'bottom',
                 confirmFunction: () => {
-                  mutate({ ...contact, deleteDoc: true })
+                  mutate({ docId: contact.docId })
                   router.replace('/contact')
                 }
               })

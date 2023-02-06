@@ -93,11 +93,13 @@ service cloud.firestore {
       match /contacts/{visitId} {
         allow read: if isOwner(userId);
         allow write: if isOwner(userId) && isValidContact(request.resource.data);
+        allow delete: if isOwner(userId);
       }
 
       match /visits/{visitId} {
         allow read: if isOwner(userId);
         allow write: if isOwner(userId) && isValidVisit(request.resource.data);
+        allow delete: if isOwner(userId);
       }
 
       match /info {
