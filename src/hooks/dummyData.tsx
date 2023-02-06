@@ -1,6 +1,8 @@
-import { Contact, Visit } from '@/types/types'
 import { faker } from '@faker-js/faker'
 import { Timestamp } from 'firebase/firestore'
+
+import { Contact, Visit } from '@/types/types'
+
 import { useContacts, useMutateContacts } from './contacts'
 import { useMutateVisits } from './visits'
 const useDummyData = () => {
