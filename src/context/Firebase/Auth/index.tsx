@@ -8,6 +8,7 @@ import {
   GoogleAuthProvider,
   linkWithRedirect,
   onAuthStateChanged,
+  signInWithPopup,
   signInWithRedirect,
   signOut,
   User
@@ -26,10 +27,11 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
 
   const externalAuthSignIn = async (auth: Auth, provider: AuthProvider) => {
     try {
-      const result = await signInWithRedirect(auth, provider)
+      const result = await signInWithPopup(auth, provider)
       return result
     } catch (error) {
-      return error
+      const result = await signInWithRedirect(auth, provider)
+      return result
     }
   }
 

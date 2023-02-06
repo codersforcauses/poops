@@ -91,6 +91,9 @@ function UpdateDetailsPanel({ contact }: ContactItemProps) {
     } catch (error) {
       setErr(true)
     }
+    if (phoneNumber && displayName && email) {
+      window.location.reload()
+    }
   }
 
   return (
