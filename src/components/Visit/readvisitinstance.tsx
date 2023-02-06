@@ -68,8 +68,8 @@ const VisitInfo = ({
           <p className='my-1 line-clamp-6'>{notes}</p>
         </div>
       </div>
-      <div className='flex items-center justify-around py-2'>
-        <div className='w-2/5'>
+      <div className='flex h-full items-center justify-around py-2'>
+        <div className='h-full'>
           <Button
             size='small'
             onClick={() => router.push(`/visit/${docId}/incident`)}
@@ -77,7 +77,7 @@ const VisitInfo = ({
             Report Incident
           </Button>
         </div>
-        <div className='w-2/5'>
+        <div className='h-full'>
           <Button
             size='small'
             onClick={() => router.push(`/visit/${docId}/vet`)}
@@ -85,7 +85,7 @@ const VisitInfo = ({
             Register Vet Concern
           </Button>
         </div>
-        <div className='w-fit'>
+        <div className='h-full'>
           <EditButton id={docId} />
         </div>
       </div>

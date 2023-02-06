@@ -1,4 +1,4 @@
-import { PropsWithChildren, useMemo } from 'react'
+import { PropsWithChildren } from 'react'
 import {
   FieldValues,
   FormProvider as HookFormProvider,
@@ -21,18 +21,16 @@ const Form = <T extends FieldValues>({
     mode: 'onSubmit'
   })
   const { register, formState, reset, watch, setFocus, setValue } = methods
-  const value: FormProps = useMemo(
-    () => ({
-      disabled,
-      register,
-      formState,
-      reset,
-      watch,
-      setFocus,
-      setValue
-    }),
-    [disabled, formState, register, reset, watch, setFocus, setValue]
-  )
+  const value: FormProps = {
+    disabled,
+    register,
+    formState,
+    reset,
+    watch,
+    setFocus,
+    setValue
+  }
+
   return (
     <HookFormProvider {...methods}>
       <form

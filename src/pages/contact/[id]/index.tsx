@@ -2,7 +2,6 @@ import { ReactElement } from 'react'
 import { useRouter } from 'next/router'
 
 import ContactInfo from '@/components/Contact/contactinfo'
-import NavButtons from '@/components/Contact/navbuttons'
 import Layout from '@/components/Layout'
 import { withProtected } from '@/components/PrivateRoute'
 import Spinner from '@/components/UI/loadingSpinner'
@@ -32,7 +31,6 @@ const Contact: NextPageWithLayout = () => {
 
   return (
     <div className='main-style'>
-      <NavButtons editRoute={`/contact/${contact.docId}/edit`} />
       <ContactInfo contact={contact} mutate={mutateContacts} />
     </div>
   )

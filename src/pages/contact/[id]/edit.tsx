@@ -2,7 +2,6 @@ import { ReactElement } from 'react'
 import { useRouter } from 'next/router'
 
 import ContactForm from '@/components/Contact/ContactForm'
-import NavButtons from '@/components/Contact/navbuttons'
 import Layout from '@/components/Layout'
 import { withProtected } from '@/components/PrivateRoute'
 import Spinner from '@/components/UI/loadingSpinner'
@@ -32,7 +31,6 @@ const Contact: NextPageWithLayout = () => {
 
   return (
     <div className='main-style'>
-      <NavButtons />
       <ContactForm contact={contact} mutate={mutateContacts} />
     </div>
   )

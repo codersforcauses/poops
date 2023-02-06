@@ -4,10 +4,15 @@ import { SubmitHandler } from 'react-hook-form'
 
 import Avatar from '@/components/Contact/avatar'
 import validationSchema from '@/components/Contact/ContactForm/validation'
+import NavButtons from '@/components/Contact/navbuttons'
 import Form from '@/components/UI/FormComponents/Form'
-import { CreateSelect } from '@/components/UI/FormComponents/SelectFields'
+import {
+  CreateSelect,
+  CustomSelect
+} from '@/components/UI/FormComponents/SelectFields'
 import TextField from '@/components/UI/FormComponents/TextField'
 import { Contact, SelectOption } from '@/types/types'
+import { regionOptions, roleTypes } from '@/utils/defaults'
 
 import Button from '../../UI/button'
 
@@ -17,7 +22,7 @@ interface ContactFormProps {
   mutate: UseMutateFunction<
     unknown,
     unknown,
-    Contact & { deleteDoc?: boolean },
+    Contact | { docId?: string },
     unknown
   >
 }
@@ -69,14 +74,20 @@ const ContactForm = ({
   }
 
   return (
-    <div className='mx-auto flex w-screen flex-col justify-center gap-4 p-4'>
-      <div className='flex w-full flex-col items-center justify-center gap-4 rounded-lg bg-gray-100 p-4'>
-        <Avatar
-          image=''
-          height={48}
-          width={48}
-          iconClass='w-32 rounded-full bg-white hover:bg-gray-200 hover:cursor-pointer'
-        />
+    // Padding
+    <div className='container p-4'>
+      {/* Grey area for form card */}
+      <div className='flex-col gap-4 rounded-lg bg-gray-100 p-4'>
+        {/* Nav and avatar */}
+        <div className='flex w-full flex-col items-center justify-center gap-2'>
+          <NavButtons />
+          <Avatar
+            image=''
+            height={48}
+            width={48}
+            iconClass='w-32 rounded-full bg-white'
+          />
+        </div>
         <div className='w-full border border-b-gray-300' />
         <Form<FormValues>
           className='w-full'
@@ -132,13 +143,15 @@ const ContactForm = ({
             <CreateSelect<SelectOption<string>, true>
               label='Tags'
               name='tags'
+              options={roleTypes}
               rules={validationSchema.tags}
               isMulti
               isSearchable
             />
-            <CreateSelect<SelectOption<string>, true>
+            <CustomSelect<SelectOption<string>, true>
               label='Region'
               name='region'
+              options={regionOptions}
               rules={validationSchema.region}
               isMulti
               isSearchable

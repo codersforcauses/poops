@@ -1,4 +1,4 @@
-import { createContext, PropsWithChildren, useMemo } from 'react'
+import { createContext, PropsWithChildren } from 'react'
 import { ValidationValueMessage } from 'react-hook-form'
 
 const FieldControlContext = createContext<FieldControlProps>({
@@ -12,9 +12,8 @@ const FieldControl = ({
   children,
   ...props
 }: PropsWithChildren<FieldControlProps>) => {
-  const value = useMemo(() => props, [props])
   return (
-    <FieldControlContext.Provider value={value}>
+    <FieldControlContext.Provider value={props}>
       {children}
     </FieldControlContext.Provider>
   )

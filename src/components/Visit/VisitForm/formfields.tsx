@@ -13,7 +13,7 @@ import validationSchema from '@/components/Visit/VisitForm/validation'
 import { useContacts } from '@/hooks/contacts'
 import { useVisits } from '@/hooks/visits'
 import { Contact, SelectOption } from '@/types/types'
-import { defaultCommuteMethods, visitTypes } from '@/utils'
+import { commuteMethods, visitTypes } from '@/utils/defaults'
 
 const FormFields = () => {
   const { data: contacts } = useContacts()
@@ -75,7 +75,7 @@ const FormFields = () => {
       <CreateSelect<SelectOption<string>, false>
         label='Commute Method:'
         name='commuteMethod'
-        options={defaultCommuteMethods}
+        options={commuteMethods}
         isClearable
         isSearchable
         rules={validationSchema.commuteMethod}

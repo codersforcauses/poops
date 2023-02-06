@@ -1,7 +1,5 @@
 import { Timestamp } from 'firebase/firestore'
 
-import { SelectOption } from '@/components/UI/FormComponents/SelectFields/utils'
-
 export const formatNumber = (value: string) => {
   if (isNaN(parseFloat(value))) {
     return 0
@@ -36,26 +34,6 @@ export const humanizeTimestamp = (timestamp?: Timestamp) => {
   const date = timestamp.toDate()
   return `${days[date.getDay()]}, ${date.toLocaleString().slice(0, -3)}`
 }
-
-export const visitTypes: SelectOption<string>[] = [
-  { label: 'Vet', value: 'Vet' },
-  { label: 'Walk', value: 'Walk' }
-]
-
-export const defaultCommuteMethods: SelectOption<string>[] = [
-  {
-    label: 'Bus',
-    value: 'Bus'
-  },
-  {
-    label: 'Car',
-    value: 'Car'
-  },
-  {
-    label: 'Train',
-    value: 'Train'
-  }
-]
 
 export const requiredMessage = 'This field is required'
 

@@ -15,6 +15,7 @@ import {
 import { db } from '@/components/Firebase/init'
 import { AlertVariant, useAlert } from '@/context/AlertContext'
 import { useAuth } from '@/context/Firebase/Auth/context'
+import { canDelete } from '@/hooks/utils'
 import { Visit } from '@/types/types'
 
 export const useVisits = () => {
@@ -50,14 +51,13 @@ export const useMutateVisits = () => {
     try {
       if (currentUser?.uid) {
         const { docId: visitId, ...visitMut } = visit
-        console.log(visitId, visitMut)
         const collectionRef = collection(db, 'users', currentUser.uid, 'visits')
 
         const docRef = visitId
           ? doc(collectionRef, visitId)
           : doc(collectionRef)
 
-        if (Object.keys(visitMut).length === 0 && visitId) {
+        if (canDelete(visitMut, visitId)) {
           await deleteDoc(docRef)
         } else {
           await setDoc(docRef, visitMut, { merge: true })

@@ -9,7 +9,8 @@ import { SelectOption } from '@/components/UI/FormComponents/SelectFields/utils'
 import FormFields from '@/components/Visit/VisitForm/formfields'
 import { useMutateVisits } from '@/hooks/visits'
 import { Duration, Visit } from '@/types/types'
-import { formatTimestamp, visitTypes } from '@/utils'
+import { formatTimestamp } from '@/utils'
+import { visitTypes } from '@/utils/defaults'
 
 interface VisitFormProps {
   visitData?: Visit

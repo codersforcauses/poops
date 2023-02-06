@@ -13,6 +13,7 @@ import {
 import { db } from '@/components/Firebase/init'
 import { AlertVariant, useAlert } from '@/context/AlertContext'
 import { useAuth } from '@/context/Firebase/Auth/context'
+import { canDelete } from '@/hooks/utils'
 import { Incident } from '@/types/types'
 
 export const useIncidents = () => {
@@ -43,7 +44,7 @@ export const useMutateIncidents = () => {
   const queryClient = useQueryClient()
   const { setAlert } = useAlert()
 
-  const mutationFn = async (incident: Incident & { deleteDoc?: boolean }) => {
+  const mutationFn = async (incident: Incident | { docId?: string }) => {
     try {
       if (currentUser?.uid) {
         const { docId: incidentId, ...incidentMut } = incident
@@ -53,7 +54,7 @@ export const useMutateIncidents = () => {
           ? doc(collectionRef, incidentId)
           : doc(collectionRef)
 
-        if (incidentMut.deleteDoc) {
+        if (canDelete(incidentMut, incidentId)) {
           await deleteDoc(docRef)
         } else {
           await setDoc(docRef, incidentMut, { merge: true })

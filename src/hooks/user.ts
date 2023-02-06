@@ -79,12 +79,17 @@ export const useMutateUser = () => {
   const queryClient = useQueryClient()
   const { setAlert } = useAlert()
 
-  const mutationFn = async (info: Contact) => {
+  const mutationFn = async (user: Contact | { docId?: string }) => {
     try {
       if (currentUser?.uid) {
-        delete info.docId
+        const { docId: userId, ...userMut } = user
+
+        if (Object.keys(userMut).length === 0 && userId) {
+          console.error('Cannot Delete User')
+        }
+
         const userDocRef = doc(db, 'users', currentUser.uid)
-        await updateDoc(userDocRef, 'info', info)
+        await updateDoc(userDocRef, 'info', userMut)
       }
     } catch (err: unknown) {
       //#region  //*=========== For logging ===========
