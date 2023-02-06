@@ -3,7 +3,9 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { XMarkIcon } from '@heroicons/react/24/solid'
 import { Timestamp } from 'firebase/firestore'
+import { addDoc, collection } from 'firebase/firestore'
 
+import { db } from '@/components/Firebase/init'
 import { withProtected } from '@/components/PrivateRoute'
 import Button from '@/components/UI/button'
 import FormField from '@/components/Visit/formfield'
@@ -78,10 +80,8 @@ const VetForm = () => {
       subject: 'Vet Concerns Report',
       text: formatIncident(data)
     }
-    await fetch('/api/sendEmail', {
-      method: 'POST',
-      body: JSON.stringify(message)
-    })
+    const docRef = await addDoc(collection(db, 'mail'), message)
+    console.log('Document written with ID: ', docRef.id)
 
     router.push('/visit')
   }
