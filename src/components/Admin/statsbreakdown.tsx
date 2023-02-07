@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import { useRef } from 'react'
 import { Timestamp } from 'firebase/firestore'
 
 import Statistics from '@/components/Home/statistics'

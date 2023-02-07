@@ -1,13 +1,20 @@
-import { FormEvent, useState } from 'react'
+import { useMemo, useState } from 'react'
 import { useQueryClient } from '@tanstack/react-query'
 import { Timestamp } from 'firebase/firestore'
+import { SubmitHandler } from 'react-hook-form'
 
 import Button from '@/components/UI/button'
 import Card from '@/components/UI/card'
+import Form from '@/components/UI/FormComponents/Form'
+import TextField from '@/components/UI/FormComponents/TextField'
 import Spinner from '@/components/UI/loadingSpinner'
-import FormField from '@/components/Visit/formfield'
 import { useVolunteerStatsByDateRange } from '@/hooks/admin'
-import { formatTimestamp } from '@/utils'
+import { formatTimestamp, requiredMessage } from '@/utils'
+
+interface FormValues {
+  fromTime: string
+  toTime: string
+}
 
 const YEAR_IN_MS = 31556952000
 const queryKey = 'mainVolunteerStatsTable'
@@ -26,13 +33,8 @@ const VolunteerStatsTable = () => {
   const start = Timestamp.fromMillis(now - YEAR_IN_MS)
   const end = Timestamp.fromMillis(now)
 
-  const [startTime, setStartTime] = useState(formatTimestamp(start) || '')
-  const [endTime, setEndTime] = useState(formatTimestamp(end) || '')
-
-  const [from, setFrom] = useState<Timestamp>(
-    Timestamp.fromDate(new Date(startTime))
-  )
-  const [to, setTo] = useState<Timestamp>(Timestamp.fromDate(new Date(endTime)))
+  const [from, setFrom] = useState<Timestamp>(start)
+  const [to, setTo] = useState<Timestamp>(end)
 
   const { isLoading, data: volunteerStats } = useVolunteerStatsByDateRange(
     queryKey,
@@ -55,28 +57,20 @@ const VolunteerStatsTable = () => {
   ]
 
   const refetchStats = () => {
-    if (startTime !== null && endTime !== null) {
-      // ! have to invalidate queries as staleTime and cacheTimes are infinite.
-      // queryClient.invalidateQueries({
-      //   type: 'inactive',
-      //   predicate: (q) => {
-      //     return q.queryKey[0] === queryKey
-      //   }
-      // })
-      queryClient.removeQueries({
-        type: 'inactive',
-        predicate: (q) => {
-          return q.queryKey[0] === queryKey
-        }
-      })
-    }
+    // ! have to remove queries as staleTime and cacheTimes are infinite.
+    queryClient.removeQueries({
+      type: 'inactive',
+      predicate: (q) => {
+        return q.queryKey[0] === queryKey
+      }
+    })
   }
 
-  const handleSubmit = (e: FormEvent) => {
-    e.preventDefault()
-    // TODO: prevent submission for startTime after endTime
-    setFrom(Timestamp.fromDate(new Date(startTime)))
-    setTo(Timestamp.fromDate(new Date(endTime)))
+  const handleSubmit: SubmitHandler<FormValues> = async (
+    formData: FormValues
+  ) => {
+    setFrom(Timestamp.fromDate(new Date(formData.fromTime)))
+    setTo(Timestamp.fromDate(new Date(formData.toTime)))
     refetchStats()
   }
 
@@ -84,32 +78,64 @@ const VolunteerStatsTable = () => {
     <div className='m-4 rounded-lg'>
       <Card title='Stats Table'>
         <div className='flex flex-col gap-4'>
-          <form onSubmit={handleSubmit}>
+          <Form<FormValues>
+            onSubmit={handleSubmit}
+            defaultValues={useMemo(() => {
+              return {
+                fromTime: formatTimestamp(from),
+                toTime: formatTimestamp(to)
+              }
+            }, [from, to])}
+          >
             <div className='flex flex-row justify-center gap-4 p-2 text-left'>
-              <FormField
+              <TextField
                 className='col-span-2 m-2'
-                id='fromTimeInput'
-                type='dateTime-local'
-                placeholder=''
-                value={startTime}
                 label='From:'
-                isRequired={false}
-                onChange={(event) => {
-                  event.target.value = event.target.value.substring(0, 16) // fixes invalid input on ios safari? can't test
-                  setStartTime(event.target.value)
+                name='fromTime'
+                type='dateTime-local'
+                placeholder='From'
+                rules={{
+                  required: {
+                    value: true,
+                    message: requiredMessage
+                  },
+                  validate: {
+                    value: (value: string) => {
+                      const date = new Date(value)
+
+                      if (!(date instanceof Date) || isNaN(date.valueOf())) {
+                        return requiredMessage
+                      }
+
+                      if (date > to.toDate()) {
+                        return 'Invalid date range'
+                      }
+                    }
+                  },
+                  valueAsDate: true
                 }}
               />
-              <FormField
+              <TextField
                 className='col-span-2 m-2'
-                id='toTimeInput'
-                type='dateTime-local'
-                placeholder=''
-                value={endTime}
                 label='To:'
-                isRequired={false}
-                onChange={(event) => {
-                  event.target.value = event.target.value.substring(0, 16) // fixes invalid input on ios safari? can't test
-                  setEndTime(event.target.value)
+                name='toTime'
+                type='dateTime-local'
+                placeholder='To'
+                rules={{
+                  required: {
+                    value: true,
+                    message: requiredMessage
+                  },
+                  validate: {
+                    value: (value: string) => {
+                      const date = new Date(value)
+                      return (
+                        (date instanceof Date && !isNaN(date.valueOf())) ||
+                        requiredMessage
+                      )
+                    }
+                  },
+                  valueAsDate: true
                 }}
               />
             </div>
@@ -122,7 +148,7 @@ const VolunteerStatsTable = () => {
                 Submit
               </Button>
             </div>
-          </form>
+          </Form>
 
           {isLoading ? (
             <div className='flex justify-center'>
