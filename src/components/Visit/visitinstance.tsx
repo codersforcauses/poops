@@ -4,7 +4,6 @@ import { ChevronDownIcon } from '@heroicons/react/24/outline'
 import { Visit } from '@/types/types'
 import { humanizeTimestamp } from '@/utils'
 
-import { EditButton } from './buttons'
 import VisitInfo from './readvisitinstance'
 
 const VisitInstance = (props: Visit) => {
@@ -13,15 +12,13 @@ const VisitInstance = (props: Visit) => {
   if (props.docId === undefined) return null
 
   return (
-    <div className='m-2 flex flex-col rounded-xl bg-gray-50 p-4 drop-shadow-default'>
+    <div className='m-2 flex flex-col rounded-xl bg-gray-50 p-4 shadow-lg'>
       <div className='flex justify-between'>
         <div className='font-bold'>
-          <p className='font-bold text-primary'>
-            {humanizeTimestamp(props.startTime)}
-          </p>
+          <p className='text-primary'>{humanizeTimestamp(props.startTime)}</p>
           <p className='text-sm'>{props.clientName}</p>
         </div>
-        <div>
+        <div className='flex flex-row'>
           <ChevronDownIcon
             className='h-7 w-7 cursor-pointer self-center text-primary transition-transform duration-300'
             style={{
@@ -34,7 +31,6 @@ const VisitInstance = (props: Visit) => {
           />
         </div>
       </div>
-      {isOpen && <EditButton id={props.docId} />}
       <VisitInfo {...props} isOpen={isOpen} />
     </div>
   )

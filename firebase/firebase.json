@@ -8,9 +8,10 @@
       "npm --prefix \"$RESOURCE_DIR\" run lint",
       "npm --prefix \"$RESOURCE_DIR\" run build"
     ],
-    "source": ".",
+    "source": "functions",
+    "codebase": "default",
     "ignore": [
-      "**/lib/**",
+      "**/functions/src/**",
       "**/node_modules/**",
       ".eslintrc.js",
       ".firebaserc",
@@ -23,8 +24,11 @@
       "firestore.rules",
       "package-lock.json",
       "pub_sub_sample_message.json",
+      "pubsub-debug.log",
       "README.md",
       "storage.rules",
+      "tsconfig.dev.json",
+      "tsconfig.json",
       "ui-debug.log",
       "yarn.lock"
     ]
