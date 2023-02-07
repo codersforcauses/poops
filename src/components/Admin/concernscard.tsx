@@ -9,10 +9,10 @@ const ConcernsCard = (props: Concerns) => {
       <div>User Phone: {props.user_phone}</div>
       <div>Client Name: {props.client_name}</div>
       <div>Pet Name: {props.pet_name}</div>
-      <div>Visit Time: {props.visit_time}</div>
+      <div>Visit Time: {props.visit_time.toString()}</div>
       <div>Visit ID: {props.visit_id}</div>
       <div>Detail: {props.detail}</div>
-      <div>Created At: {props.created_at}</div>
+      <div>Created At: {props.created_at.toString()}</div>
     </div>
   )
 }
