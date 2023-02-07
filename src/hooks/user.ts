@@ -1,5 +1,6 @@
 /* eslint-disable no-console */
 
+import { useRouter } from 'next/router'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { User as AuthUser } from 'firebase/auth'
 import {
@@ -13,6 +14,7 @@ import {
 import { db } from '@/components/Firebase/init'
 import { AlertVariant, useAlert } from '@/context/AlertContext'
 import { useAuth } from '@/context/Firebase/Auth/context'
+import { canDelete } from '@/hooks/utils'
 import { Contact, User } from '@/types/types'
 
 const newUser = (currentUser: AuthUser): User => {
@@ -39,8 +41,9 @@ const newUser = (currentUser: AuthUser): User => {
 
 export const useUser = () => {
   const { currentUser } = useAuth()
+  const router = useRouter()
 
-  const queryFn = async () => {
+  const queryFn = async (): Promise<User | undefined> => {
     if (currentUser?.uid) {
       //try to get existing doc if the doc does not exist then create a new doc with uid as its ref
       try {
@@ -53,7 +56,12 @@ export const useUser = () => {
         }
 
         const userData = userDocSnap.data() as User
-        return { ...userData, docId: 'USER' }
+        if (
+          !(userData.info.email && userData.info.phone && userData.info.name)
+        ) {
+          router.replace('/signupDetails')
+        }
+        return { ...userData, info: { ...userData.info, docId: 'USER' } }
       } catch (err: unknown) {
         //#region  //*=========== For logging ===========
         if (err instanceof FirestoreError) {
@@ -72,11 +80,17 @@ export const useMutateUser = () => {
   const queryClient = useQueryClient()
   const { setAlert } = useAlert()
 
-  const mutationFn = async (info: Contact) => {
+  const mutationFn = async (user: Contact | { docId?: string }) => {
     try {
       if (currentUser?.uid) {
+        const { docId: userId, ...userMut } = user
+
+        if (canDelete(userMut, userId)) {
+          return console.error('Cannot Delete User')
+        }
+
         const userDocRef = doc(db, 'users', currentUser.uid)
-        await updateDoc(userDocRef, 'info', info)
+        await updateDoc(userDocRef, 'info', userMut)
       }
     } catch (err: unknown) {
       //#region  //*=========== For logging ===========

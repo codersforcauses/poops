@@ -20,6 +20,7 @@ const Document = () => {
           href='/favicon/android-chrome-512x512.png'
         />
         <meta name='theme-color' content='#fff' />
+
         <Favicon />
       </Head>
       <body>
