@@ -1,9 +1,11 @@
-import Link from 'next/link'
-import { XMarkIcon } from '@heroicons/react/24/outline'
+import { useRouter } from 'next/router'
 
 import ConcernsCard from '@/components/Admin/concernscard'
 import NavBar from '@/components/NavBar'
-import { Concerns } from '@/types/types'
+import Button from '@/components/UI/button'
+import { useVetConcerns } from '@/hooks/vetconcerns'
+import { VetConcern } from '@/types/types'
+
 /* import { useConcerns } from '@/hooks/concerns' */
 
 /* Dummy Data */
@@ -20,42 +22,65 @@ const ctime = '[timestamp to be added]' */
 
 const Output = () => {
   /* const { data: concerns } = useConcerns() */
+  const { data: concerns } = useVetConcerns()
+  const router = useRouter()
 
   return (
-    <div className='space-4 z-50 flex h-full flex-col p-4'>
-      {/* Exit Button */}
-      <div className='fixed right-5 top-4 z-[100] h-10 w-10 rounded-full bg-primary drop-shadow-default'>
-        <Link href='/admin'>
-          <button>
-            <XMarkIcon className='h-full w-full text-white' />
-          </button>
-        </Link>
+    <>
+      <div className='m-auto flex h-14 w-full flex-row'>
+        <div className='m-auto flex-1 text-center'>
+          <Button
+            type='button'
+            size='medium'
+            onClick={() => router.push('/admin')}
+          >
+            Back
+          </Button>
+        </div>
+        <h1 className='m-3 flex-1 text-center text-2xl'>Concerns</h1>
+
+        <div className='flex-1'></div>
       </div>
 
-      {/* Heading */}
-      <h1 className='p-2 text-2xl font-bold'>Concerns</h1>
-      <div className='my-2 box-content border-t-2 border-primary' />
-
-      {/* Content */}
-      <div className='grid'>
-        {/* <h1 class='p-2'>user_uid: {uid}</h1>
-        <h1 class='p-2'>user_name: {uname}</h1>
-        <h1 class='p-2'>user_email: {uemail}</h1>
-        <h1 class='p-2'>user_phone: {uphone}</h1>
-        <h1 class='p-2'>client_name: {cname}</h1>
-        <h1 class='p-2'>pet_name: {pname}</h1>
-        <h1 class='p-2'>visit_time: {vtime}</h1>
-        <h1 class='p-2'>visit_id: {vid}</h1>
-        <h1 class='p-2'>detail: {detail}</h1>
-        <h1 class='p-2'>created_at: {ctime}</h1> */}
-
-        {/* {concerns?.map((concern: Concern, i: number) => (
+      {concerns?.map((concern: VetConcern, i: number) => (
         <ConcernsCard key={i} {...concern}></ConcernsCard>
-      ))} */}
-      </div>
-
+      ))}
       <NavBar />
-    </div>
+    </>
+    // <div className='space-4 z-50 flex h-full flex-col p-4'>
+    //   {/* Exit Button */}
+    //   <div className='fixed right-5 top-4 z-[100] h-10 w-10 rounded-full bg-primary drop-shadow-default'>
+    //     <Link href='/admin'>
+    //       <button>
+    //         <XMarkIcon className='h-full w-full text-white' />
+    //       </button>
+    //     </Link>
+    //   </div>
+
+    //   {/* Heading */}
+    //   <h1 className='p-2 text-2xl font-bold'>Concerns</h1>
+    //   <div className='my-2 box-content border-t-2 border-primary' />
+
+    //   {/* Content */}
+    //   <div className='grid'>
+    //     {/* <h1 class='p-2'>user_uid: {uid}</h1>
+    //     <h1 class='p-2'>user_name: {uname}</h1>
+    //     <h1 class='p-2'>user_email: {uemail}</h1>
+    //     <h1 class='p-2'>user_phone: {uphone}</h1>
+    //     <h1 class='p-2'>client_name: {cname}</h1>
+    //     <h1 class='p-2'>pet_name: {pname}</h1>
+    //     <h1 class='p-2'>visit_time: {vtime}</h1>
+    //     <h1 class='p-2'>visit_id: {vid}</h1>
+    //     <h1 class='p-2'>detail: {detail}</h1>
+    //     <h1 class='p-2'>created_at: {ctime}</h1> */}
+
+    //     {/* {concerns?.map((concern: Concern, i: number) => (
+    //     <ConcernsCard key={i} {...concern}></ConcernsCard>
+    //   ))} */}
+    //   </div>
+
+    //   <NavBar />
+    // </div>
   )
 }
 
