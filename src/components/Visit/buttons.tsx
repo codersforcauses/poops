@@ -7,15 +7,8 @@ interface EditButtonProps {
 
 export const EditButton = ({ id }: EditButtonProps) => {
   return (
-    <div className='absolute right-4 bottom-4 h-8 w-8 rounded-full bg-primary p-1 drop-shadow-default transition-all'>
-      <Link
-        href={{
-          pathname: '/visit/set',
-          query: {
-            id: id
-          }
-        }}
-      >
+    <div className='h-10 w-10 rounded-full bg-primary p-1.5 drop-shadow-default transition-all'>
+      <Link href={`/visit/${id}`}>
         <button type='button'>
           <PencilIcon className='h-full w-full text-white' />
         </button>

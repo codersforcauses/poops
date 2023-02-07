@@ -1,35 +1,33 @@
 import { useState } from 'react'
+import { ReactElement } from 'react'
 
-import Header from '@/components/Header'
-import NavBar from '@/components/NavBar'
+import Layout from '@/components/Layout'
 import { withProtected } from '@/components/PrivateRoute'
-import TopNav from '@/components/TopNav'
 import { AddButton } from '@/components/Visit/buttons'
 import SearchBar from '@/components/Visit/searchbar'
 import VisitList from '@/components/Visit/visitlist'
+import { NextPageWithLayout } from '@/pages/_app'
 
-const Visit = () => {
+const Visit: NextPageWithLayout = () => {
   const [searchQuery, setSearchQuery] = useState('')
   return (
-    <>
-      <Header pageTitle='Visit' />
-      <TopNav />
-      <main>
-        <div className='flex w-screen flex-col p-4'>
-          <div className='align-center flex flex-row justify-around'>
-            <SearchBar
-              onChange={(event) => setSearchQuery(event.target.value)}
-            />
-            <AddButton />
-          </div>
-
-          <VisitList searchQuery={searchQuery} />
+    <div className='main-style'>
+      <div className='flex w-screen flex-col p-4'>
+        <div className='align-center flex flex-row justify-around'>
+          <SearchBar onChange={(event) => setSearchQuery(event.target.value)} />
+          <AddButton />
         </div>
-      </main>
-      <NavBar />
-    </>
+
+        <VisitList searchQuery={searchQuery} />
+      </div>
+    </div>
   )
 }
 
-export default withProtected(Visit)
-// export default Visit
+const VisitWithProtected = withProtected(Visit)
+
+VisitWithProtected.getLayout = (page: ReactElement) => (
+  <Layout title='Visit'>{page}</Layout>
+)
+
+export default VisitWithProtected
