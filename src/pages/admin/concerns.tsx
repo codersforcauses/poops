@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import { XMarkIcon } from '@heroicons/react/24/outline'
 
-import { ConcernsCard } from '@/components/Admin/ConcernsCard'
+import ConcernsCard from '@/components/Admin/concernscard'
 import NavBar from '@/components/NavBar'
 import { Concerns } from '@/types/types'
 /* import { useConcerns } from '@/hooks/concerns' */
