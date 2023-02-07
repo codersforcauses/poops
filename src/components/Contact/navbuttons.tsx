@@ -11,7 +11,7 @@ const NavButtons = ({ editRoute }: Props) => {
   const router = useRouter()
 
   return (
-    <div className='my-4 mx-6 flex h-14 flex-row justify-between'>
+    <div className='flex w-full flex-row justify-between'>
       <div className='text-center'>
         <Button
           type='button'
