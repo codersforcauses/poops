@@ -55,9 +55,9 @@ export interface UserStat {
   walkedDist: number
 }
 
-export interface SelectOption {
+export interface SelectOption<T> {
   label: string
-  value: string
+  value: T
 }
 
 export type Duration = {

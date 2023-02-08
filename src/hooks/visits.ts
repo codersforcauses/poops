@@ -23,6 +23,7 @@ import {
 import { db } from '@/components/Firebase/init'
 import { AlertVariant, useAlert } from '@/context/AlertContext'
 import { useAuth } from '@/context/Firebase/Auth/context'
+import { canDelete } from '@/hooks/utils'
 import { Visit } from '@/types/types'
 
 const PAGE_SIZE = 20
@@ -81,7 +82,7 @@ export const useMutateVisits = () => {
   const queryClient = useQueryClient()
   const { setAlert } = useAlert()
 
-  const mutationFn = async (visit: Visit & { deleteDoc?: boolean }) => {
+  const mutationFn = async (visit: Visit | { docId?: string }) => {
     try {
       if (currentUser?.uid) {
         const { docId: visitId, ...visitMut } = visit
@@ -91,7 +92,7 @@ export const useMutateVisits = () => {
           ? doc(collectionRef, visitId)
           : doc(collectionRef)
 
-        if (visitMut.deleteDoc) {
+        if (canDelete(visitMut, visitId)) {
           await deleteDoc(docRef)
         } else {
           await setDoc(docRef, visitMut, { merge: true })

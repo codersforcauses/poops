@@ -20,7 +20,7 @@ const Contact: NextPageWithLayout = () => {
   if (currentUser === undefined) return null
 
   return (
-    <div className='main-style'>
+    <div className='main-style p-4'>
       {/* <Seo /> */}
       <div className='h-full'>
         <div className='m-auto flex h-14 max-w-md flex-row'>
