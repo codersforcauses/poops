@@ -56,22 +56,11 @@ const VolunteerStatsTable = () => {
     volunteerStats?.avgCommuteDistance
   ]
 
-  const refetchStats = () => {
-    // ! have to remove queries as staleTime and cacheTimes are infinite.
-    queryClient.invalidateQueries({
-      type: 'inactive',
-      predicate: (q) => {
-        return q.queryKey[0] === queryKey
-      }
-    })
-  }
-
   const handleSubmit: SubmitHandler<FormValues> = async (
     formData: FormValues
   ) => {
     setFrom(Timestamp.fromDate(new Date(formData.fromTime)))
     setTo(Timestamp.fromDate(new Date(formData.toTime)))
-    refetchStats()
   }
 
   return (
