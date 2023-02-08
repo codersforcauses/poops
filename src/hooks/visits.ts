@@ -110,6 +110,7 @@ export const useMutateVisits = () => {
 
   const onSuccess = () => {
     queryClient.invalidateQueries({ queryKey: ['visits'] })
+    queryClient.invalidateQueries({ queryKey: ['user'] })
     setAlert({
       variant: AlertVariant.info,
       title: 'Success!',
