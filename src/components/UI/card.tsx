@@ -9,12 +9,9 @@ const Card = ({ title, fullWidth, ...props }: CardProps) => {
   return (
     <div className='flex justify-center'>
       <div
-        className={[
-          'rounded-lg bg-zinc-100 py-4 px-5 text-center shadow-lg sm:py-4',
-          fullWidth ? 'w-full' : null
-        ]
-          .join(' ')
-          .trim()}
+        className={`rounded-lg bg-zinc-100 py-4 px-5 text-center shadow-lg sm:py-4 ${
+          fullWidth ? 'w-full' : 'null'
+        }`}
       >
         <h1 className='mb-2 text-xl text-primary-dark'>
           <b>{title}</b>

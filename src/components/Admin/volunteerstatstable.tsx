@@ -58,7 +58,7 @@ const VolunteerStatsTable = () => {
 
   const refetchStats = () => {
     // ! have to remove queries as staleTime and cacheTimes are infinite.
-    queryClient.removeQueries({
+    queryClient.invalidateQueries({
       type: 'inactive',
       predicate: (q) => {
         return q.queryKey[0] === queryKey
