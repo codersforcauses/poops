@@ -27,7 +27,6 @@ const headers = [
 ]
 
 const VolunteerStatsTable = () => {
-  const queryClient = useQueryClient()
   const now = Date.now()
 
   const start = Timestamp.fromMillis(now - YEAR_IN_MS)
