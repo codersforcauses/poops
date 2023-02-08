@@ -64,6 +64,14 @@ const Admin = () => {
         >
           View Roles
         </Button>
+        <Button
+          size='medium'
+          intent='primary'
+          type='button'
+          onClick={() => Router.push('/admin/stats')}
+        >
+          View Stats
+        </Button>
       </div>
 
       <NavBar />
