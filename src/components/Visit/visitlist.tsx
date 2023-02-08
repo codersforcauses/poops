@@ -1,34 +1,18 @@
 import { XCircleIcon } from '@heroicons/react/24/outline'
 
 import { useVisits } from '@/hooks/visits'
-import { Visit } from '@/types/types'
 
 import VisitInstance from './visitinstance'
 import Button from '../UI/button'
 import Spinner from '../UI/loadingSpinner'
 
-interface VisitListProps {
-  searchQuery: string
-}
-
-export const VisitList = ({ searchQuery }: VisitListProps) => {
+export const VisitList = () => {
   const {
     data: visits,
     fetchNextPage,
     isFetchingNextPage,
     hasNextPage
   } = useVisits()
-
-  // TODO: Search filter
-
-  const clientNameFilter = (visit: Visit) =>
-    visit.clientName.toLowerCase().includes(searchQuery.toLowerCase())
-
-  const petNameFilter = (visit: Visit) =>
-    visit.petNames?.toLowerCase().includes(searchQuery.toLowerCase())
-
-  const searchFilter = (visit: Visit) =>
-    searchQuery === '' || clientNameFilter(visit) || petNameFilter(visit)
 
   if (visits === undefined) return null
 

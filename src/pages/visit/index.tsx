@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import { ReactElement } from 'react'
 
 import Layout from '@/components/Layout'
@@ -11,7 +10,6 @@ import { NextPageWithLayout } from '@/pages/_app'
 
 const Visit: NextPageWithLayout = () => {
   const { isLoading } = useVisits()
-  const [searchQuery, setSearchQuery] = useState('')
 
   return (
     <div className='main-style'>
@@ -21,7 +19,7 @@ const Visit: NextPageWithLayout = () => {
             <Spinner style='h-10 w-10 fill-primary-dark text-gray-200' />
           </div>
         ) : (
-          <VisitList searchQuery={searchQuery} />
+          <VisitList />
         )}
       </div>
       <div className='absolute bottom-20 right-2 space-y-2'>
