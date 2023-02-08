@@ -26,12 +26,11 @@ export const AddButton = () => (
   </div>
 )
 
+// TODO: Implement search query + UI for visits
 export const SearchButton = () => (
-  <div className='h-12 w-12 rounded-full bg-primary p-1 drop-shadow-default'>
-    <Link href='/visit/search'>
-      <button type='button'>
-        <MagnifyingGlassIcon className='h-full w-full text-white' />
-      </button>
-    </Link>
+  <div className='h-12 w-12 rounded-full bg-gray-500 p-1 drop-shadow-default'>
+    <button disabled={true} type='button'>
+      <MagnifyingGlassIcon className='h-full w-full text-white' />
+    </button>
   </div>
 )
