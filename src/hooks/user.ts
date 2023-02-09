@@ -16,6 +16,7 @@ import { AlertVariant, useAlert } from '@/context/AlertContext'
 import { useAuth } from '@/context/Firebase/Auth/context'
 import { canDelete } from '@/hooks/utils'
 import { Contact, User } from '@/types/types'
+import { userSchema } from '@/types/zod/schema'
 
 const newUser = (currentUser: AuthUser): User => {
   return {
@@ -55,7 +56,8 @@ export const useUser = () => {
           userDocSnap = await getDoc(doc(db, 'users', currentUser.uid))
         }
 
-        const userData = userDocSnap.data() as User
+        const rawData = userDocSnap.data()
+        const userData = userSchema.parse(rawData)
         if (
           !(userData.info.email && userData.info.phone && userData.info.name)
         ) {

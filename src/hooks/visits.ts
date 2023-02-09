@@ -17,6 +17,7 @@ import { AlertVariant, useAlert } from '@/context/AlertContext'
 import { useAuth } from '@/context/Firebase/Auth/context'
 import { canDelete } from '@/hooks/utils'
 import { Visit } from '@/types/types'
+import { visitSchema } from '@/types/zod/schema'
 
 export const useVisits = () => {
   const { currentUser } = useAuth()
@@ -27,9 +28,11 @@ export const useVisits = () => {
         const visitsRef = collection(db, 'users', currentUser.uid, 'visits')
         const q = query(visitsRef, orderBy('startTime', 'desc'))
         const visitsDocs = await getDocs(q)
-        return visitsDocs.docs.map(
-          (doc) => ({ ...doc.data(), docId: doc.id } as Visit)
-        )
+        return visitsDocs.docs.map((doc) => {
+          const rawData = doc.data()
+          const parsedData = visitSchema.parse(rawData)
+          return { ...parsedData, docId: doc.id } as Visit
+        })
       } catch (err: unknown) {
         //#region  //*=========== For logging ===========
         if (err instanceof FirestoreError) {

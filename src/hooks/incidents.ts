@@ -15,6 +15,7 @@ import { AlertVariant, useAlert } from '@/context/AlertContext'
 import { useAuth } from '@/context/Firebase/Auth/context'
 import { canDelete } from '@/hooks/utils'
 import { Incident } from '@/types/types'
+import { incidentSchema } from '@/types/zod/schema'
 
 export const useIncidents = () => {
   const { currentUser } = useAuth()
@@ -23,9 +24,11 @@ export const useIncidents = () => {
       if (currentUser?.uid) {
         const incidentsRef = collection(db, 'incidents')
         const incidentsDocs = await getDocs(incidentsRef)
-        return incidentsDocs.docs.map(
-          (doc) => ({ ...doc.data(), docId: doc.id } as Incident)
-        )
+        return incidentsDocs.docs.map((doc) => {
+          const rawData = doc.data()
+          const parsedData = incidentSchema.parse(rawData)
+          return { ...parsedData, docId: doc.id } as Incident
+        })
       }
     } catch (err: unknown) {
       //#region  //*=========== For logging ===========

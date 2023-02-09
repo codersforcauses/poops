@@ -14,6 +14,7 @@ import {
 import { db } from '@/components/Firebase/init'
 import { AlertVariant, useAlert } from '@/context/AlertContext'
 import { VetConcern, Visit } from '@/types/types'
+import { vetConcernSchema } from '@/types/zod/schema'
 import { humanizeTimestamp } from '@/utils'
 
 export const useVetConcerns = () => {
@@ -21,9 +22,11 @@ export const useVetConcerns = () => {
     try {
       const vetConcernsRef = collection(db, 'vet_concerns')
       const vetConcernsDocs = await getDocs(vetConcernsRef)
-      return vetConcernsDocs.docs.map(
-        (doc) => ({ ...doc.data(), docId: doc.id } as VetConcern)
-      )
+      return vetConcernsDocs.docs.map((doc) => {
+        const rawData = doc.data()
+        const parsedData = vetConcernSchema.parse(rawData)
+        return { ...parsedData, docId: doc.id } as VetConcern
+      })
     } catch (err: unknown) {
       //#region  //*=========== For logging ===========
       if (err instanceof FirestoreError) {
