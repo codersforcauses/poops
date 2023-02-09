@@ -67,7 +67,7 @@ export type Duration = {
 
 export type Incident = {
   docId?: string
-  userID: string
+  userId: string
   userName: string | null | undefined
   visitId: string
   visitTime: Timestamp

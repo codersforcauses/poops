@@ -28,7 +28,7 @@ interface IncidentFormProps {
 
 const formatIncident = (data: Incident) => {
   return `Incident Report
-User ID: ${data.userID}
+User ID: ${data.userId}
 Username: ${data.userName}
 Email: ${data.email}
 Created At: ${formatTimestamp(data.createdAt)}
@@ -56,7 +56,7 @@ const IncidentForm = (props: IncidentFormProps) => {
         clientName: props.clientName,
         createdAt: Timestamp.fromDate(new Date()),
         time: Timestamp.fromDate(new Date(time)),
-        userID: currentUser.uid,
+        userId: currentUser.uid,
         visitId: props.docId,
         visitTime: props.visitTime
       }
