@@ -82,7 +82,7 @@ export default function NavBar() {
   return (
     <nav
       id='bottom-navigation'
-      className='fixed inset-x-0 bottom-0 z-10 block h-16 w-full bg-white shadow'
+      className='fixed inset-x-0 bottom-0 z-10 block h-20 w-full bg-white shadow'
     >
       <div className='flex justify-between'>{navLinks}</div>
     </nav>
