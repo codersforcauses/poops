@@ -47,7 +47,7 @@ export const useMutateIncidents = () => {
   const queryClient = useQueryClient()
   const { setAlert } = useAlert()
 
-  const mutationFn = async (incident: Incident | { docId?: string }) => {
+  const mutationFn = async (incident: Incident & { docId?: string }) => {
     try {
       if (currentUser?.uid) {
         const { docId: incidentId, ...incidentMut } = incident
