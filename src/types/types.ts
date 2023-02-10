@@ -78,3 +78,15 @@ export type Incident = {
   details: string
   createdAt: Timestamp
 }
+
+export type VolunteerStats = {
+  volunteerCount: number
+  avgCommuteDistance: number
+  avgVisitCount: number
+  avgWalkDistance: number
+  avgWalkTime: number
+  totalCommuteDistance: number
+  totalVisitCount: number
+  totalWalkDistance: number
+  totalWalkTime: number
+}
