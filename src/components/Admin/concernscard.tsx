@@ -1,4 +1,5 @@
 import { VetConcern } from '@/types/types'
+import { formatTimestamp } from '@/utils'
 
 const ConcernsCard = (props: VetConcern) => {
   return (
@@ -9,10 +10,10 @@ const ConcernsCard = (props: VetConcern) => {
       <div>User Phone: {props.userPhone}</div>
       <div>Client Name: {props.clientName}</div>
       <div>Pet Name: {props.petName}</div>
-      <div>Visit Time: {props.visitTime.toString()}</div>
+      <div>Visit Time: {formatTimestamp(props.visitTime)}</div>
       <div>Visit ID: {props.visitId}</div>
       <div>Detail: {props.detail}</div>
-      <div>Created At: {props.createdAt.toString()}</div>
+      <div>Created At: {formatTimestamp(props.createdAt)}</div>
     </div>
   )
 }

@@ -1,6 +1,7 @@
 import { useRouter } from 'next/router'
 
 import ConcernsCard from '@/components/Admin/concernscard'
+import Header from '@/components/Header'
 import NavBar from '@/components/NavBar'
 import Button from '@/components/UI/button'
 import { useVetConcerns } from '@/hooks/vetconcerns'
@@ -12,25 +13,29 @@ const Output = () => {
 
   return (
     <>
-      <div className='m-auto flex h-14 w-full flex-row'>
-        <div className='m-auto flex-1 text-center'>
+      <Header pageTitle='Concerns' />
+      <div className='main-style'>
+        <div className='mx-2 mt-2'>
           <Button
             type='button'
             size='medium'
             onClick={() => router.push('/admin')}
+            className='fixed top-2 left-2'
           >
             Back
           </Button>
+
+          <h1 className='text-center text-2xl'>Concerns</h1>
+
+          <div className='pt-2'>
+            {concerns?.map((concern: VetConcern, i: number) => (
+              <ConcernsCard key={i} {...concern}></ConcernsCard>
+            ))}
+          </div>
+
+          <NavBar />
         </div>
-        <h1 className='m-3 flex-1 text-center text-2xl'>Concerns</h1>
-
-        <div className='flex-1'></div>
       </div>
-
-      {concerns?.map((concern: VetConcern, i: number) => (
-        <ConcernsCard key={i} {...concern}></ConcernsCard>
-      ))}
-      <NavBar />
     </>
   )
 }
