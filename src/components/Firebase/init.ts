@@ -1,5 +1,3 @@
-/* eslint-disable no-console */
-
 import { FirebaseApp, getApp, getApps, initializeApp } from 'firebase/app'
 import { Auth, connectAuthEmulator, getAuth } from 'firebase/auth'
 import {
@@ -42,14 +40,14 @@ if (clientSide) {
       // Multiple tabs open, persistence can only be enabled
       // in one tab at a a time.
       // ...
-      console.log(
+      console.error(
         'The app is already open in another browser tab and multi-tab is not enabled'
       )
     } else if (err.code == 'unimplemented') {
       // The current browser does not support all of the
       // features required to enable persistence
       // ...
-      console.log(
+      console.error(
         'The current browser does not support all of the features required to enable persistence'
       )
     }
