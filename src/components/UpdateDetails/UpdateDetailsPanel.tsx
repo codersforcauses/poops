@@ -1,5 +1,4 @@
-import { useEffect, useState } from 'react'
-import Link from 'next/link'
+import { useState } from 'react'
 import {
   ConfirmationResult,
   RecaptchaVerifier,
@@ -91,6 +90,9 @@ function UpdateDetailsPanel({ contact }: ContactItemProps) {
       }
     } catch (error) {
       setErr(true)
+    }
+    if (phoneNumber && displayName && email) {
+      window.location.reload()
     }
   }
 

@@ -1,6 +1,5 @@
-import { useSetAtom } from 'jotai'
+import { useRouter } from 'next/router'
 
-import { currentContactAtom } from '@/atoms/contacts'
 import Avatar from '@/components/Contact/avatar'
 import { Contact } from '@/types/types'
 
@@ -9,13 +8,21 @@ type ContactItemProps = {
 }
 
 const ContactItem = ({ contact }: ContactItemProps) => {
-  const setCurrentContact = useSetAtom(currentContactAtom)
+  const router = useRouter()
+
+  if (contact.docId === undefined) return null
+
+  const navigateToContact = () => {
+    const contactUrl =
+      contact.docId === 'USER' ? '/profile' : `/contact/${contact.docId}`
+    router.push(contactUrl)
+  }
 
   return (
     <button
       className='w-full'
-      onClick={() => setCurrentContact(contact)}
-      onKeyDown={() => setCurrentContact(contact)}
+      onClick={navigateToContact}
+      onKeyDown={navigateToContact}
     >
       <li className='flex items-center justify-between gap-2 border-b border-gray-300 bg-white p-3 px-5 text-sm hover:bg-gray-300 focus:bg-gray-300 sm:py-4'>
         <span className='flex max-w-[60%] shrink items-center space-x-4'>
