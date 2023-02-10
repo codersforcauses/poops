@@ -55,9 +55,9 @@ export interface UserStat {
   walkedDist: number
 }
 
-export interface SelectOption {
+export interface SelectOption<T> {
   label: string
-  value: string
+  value: T
 }
 
 export type Duration = {
@@ -77,4 +77,16 @@ export type Incident = {
   time: Timestamp
   details: string
   createdAt: Timestamp
+}
+
+export type VolunteerStats = {
+  volunteerCount: number
+  avgCommuteDistance: number
+  avgVisitCount: number
+  avgWalkDistance: number
+  avgWalkTime: number
+  totalCommuteDistance: number
+  totalVisitCount: number
+  totalWalkDistance: number
+  totalWalkTime: number
 }

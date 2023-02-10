@@ -8,12 +8,11 @@ import Button from '@/components/UI/button'
 import { useAuth } from '@/context/Firebase/Auth/context'
 import useDummyData from '@/hooks/dummyData'
 import useUser from '@/hooks/user'
-import mod from '@/lib/temp/firebase/functions/setRole'
 
 import { NextPageWithLayout } from './_app'
 
 const Home: NextPageWithLayout = () => {
-  const { currentUser, refreshUserToken } = useAuth()
+  const { currentUser } = useAuth()
 
   const { data: tempUser } = useUser()
 
@@ -22,12 +21,6 @@ const Home: NextPageWithLayout = () => {
   const welcomeMessage = currentUser
     ? `Welcome, ${tempUser?.info.name}!`
     : 'Welcome!'
-
-  const onMod = (adminAccess: boolean) => {
-    if (currentUser) {
-      mod(adminAccess, currentUser, refreshUserToken)
-    }
-  }
 
   return (
     <div className='main-style'>
@@ -43,35 +36,7 @@ const Home: NextPageWithLayout = () => {
                   <Button size='large'>START VISIT</Button>
                 </a>
               </Link>
-              {process.env.NODE_ENV === 'development' && (
-                <div className='mt-4 flex flex-col gap-2'>
-                  <Button
-                    size='small'
-                    intent='secondary'
-                    type='button'
-                    onClick={() => onMod(true)}
-                  >
-                    Mod me!
-                  </Button>
-                  <Button
-                    size='small'
-                    intent='secondary'
-                    onClick={addDummyContacts}
-                  >
-                    Add Contacts
-                  </Button>
-                  <Button
-                    size='small'
-                    intent='secondary'
-                    onClick={addDummyVisits}
-                  >
-                    Add Visits
-                  </Button>
-                </div>
-              )}
             </div>
-            <br />
-            <br />
           </div>
         </div>
       </div>
