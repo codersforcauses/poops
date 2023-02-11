@@ -3,6 +3,7 @@ import { useRouter } from 'next/router'
 import { withProtected } from '@/components/PrivateRoute'
 import Modal from '@/components/UI/modal'
 import { useVisits } from '@/hooks/visits'
+import { humanizeTimestamp } from '@/utils'
 
 const Notes = () => {
   const { data: visits } = useVisits()
@@ -16,7 +17,13 @@ const Notes = () => {
   return (
     <Modal title='Notes' backLink='/visit'>
       {visit ? (
-        <p className='whitespace-pre-wrap leading-7'>{visit.notes}</p>
+        <div>
+          <div className='font-bold'>
+            <p className='text-primary'>{humanizeTimestamp(visit.startTime)}</p>
+            <p>{visit.clientName}</p>
+          </div>
+          <p className='whitespace-pre-wrap text-sm leading-6'>{visit.notes}</p>
+        </div>
       ) : (
         'Error: no notes found'
       )}
