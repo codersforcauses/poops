@@ -20,7 +20,7 @@ const Form = <T extends FieldValues>({
     defaultValues,
     mode: 'onSubmit'
   })
-  const { register, formState, reset, watch, setFocus, setValue } = methods
+  const { register, formState, reset, watch, setFocus, setValue, setError, trigger } = methods
   const value: FormProps = {
     disabled,
     register,
@@ -28,7 +28,9 @@ const Form = <T extends FieldValues>({
     reset,
     watch,
     setFocus,
-    setValue
+    setValue,
+    setError,
+    trigger
   }
 
   return (

@@ -48,3 +48,18 @@
 .phone-input input::-webkit-inner-spin-button {
   -webkit-appearance: none;
 }
+
+.PhoneInputCountry {
+  padding: 0.719rem;
+  padding-right: 0rem;
+  border-top-left-radius: 2px;
+  border-bottom-left-radius: 2px;
+}
+
+.PhoneInputInput {
+  width: 100%;
+  height: 100%;
+  padding: 0.719rem;
+  border-top-right-radius: 2px;
+  border-bottom-right-radius: 2px;
+}

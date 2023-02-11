@@ -9,6 +9,7 @@ import { AlertContextProvider } from '@/context/AlertContext'
 import { AuthContextProvider } from '@/context/Firebase/Auth'
 
 import '@/styles/main.css'
+import 'react-phone-number-input/style.css'
 
 const queryClient = new QueryClient()
 

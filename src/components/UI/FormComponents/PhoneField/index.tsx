@@ -1,14 +1,15 @@
-import { useContext, useEffect } from "react"
-import { SubmitHandler } from "react-hook-form"
+import { useContext, useEffect } from 'react'
 import PhoneInput from 'react-phone-number-input'
 
-import Form from "@/components/UI/FormComponents/Form"
-import { FormContext, FormFieldProps } from "@/components/UI/FormComponents/Form/context"
-import { FieldControl, FieldLabel, FieldMessage } from "@/components/UI/FormComponents/utils"
-
-interface FormValues {
-  phoneNumber: string
-}
+import {
+  FormContext,
+  FormFieldProps
+} from '@/components/UI/FormComponents/Form/context'
+import {
+  FieldControl,
+  FieldLabel,
+  FieldMessage
+} from '@/components/UI/FormComponents/utils'
 
 interface PhoneSelectProps extends FormFieldProps {
   isDisabled?: boolean
@@ -34,8 +35,7 @@ const PhoneSelect = ({
     setFocus
   } = useContext(FormContext)
   const error: string | undefined =
-  formState?.errors?.[name]?.message?.toString() || undefined
-
+    formState?.errors?.[name]?.message?.toString() || undefined
 
   const value = watch?.(name)
 
@@ -46,35 +46,34 @@ const PhoneSelect = ({
   useEffect(() => {
     register?.(name)
   }, [register, name])
-  
-  const handleSubmit: SubmitHandler<FormValues> = (data) => {
-    console.log(data)
-  }
 
   const handleChange = (value: string) => {
     console.log(value)
     setValue?.(name, value)
   }
 
-
-
-  return (<Form onSubmit={handleSubmit}>
-     <FieldControl
+  return (
+    <FieldControl
       name={name}
       error={error}
       required={'required' in rules || required}
       disabled={formDisabled || isDisabled}
     >
-      <div className={`flex w-full flex-col ${props.className}`}>
+      <div className='flex flex-col'>
         <FieldLabel>{label}</FieldLabel>
-        <PhoneInput
-          {...register?.(name, rules)}
-          {...props}
-          disabled={isDisabled}
-          value={value}
-          onChange={handleChange}
-          placeholder='Select...'
-          defaultCountr='AU'        />
+        <div
+          className={`form-input flex w-full flex-row justify-center rounded border border-gray-500 bg-white p-0 ${props.className}`}
+        >
+          <PhoneInput
+            {...register?.(name, rules)}
+            {...props}
+            disabled={isDisabled}
+            value={value}
+            onChange={handleChange}
+            placeholder='Select...'
+            defaultCountry='AU'
+          />
+        </div>
         {error ? (
           <FieldMessage>{error}</FieldMessage>
         ) : (
@@ -82,7 +81,7 @@ const PhoneSelect = ({
         )}
       </div>
     </FieldControl>
-  </Form>)
+  )
 }
 
 export default PhoneSelect

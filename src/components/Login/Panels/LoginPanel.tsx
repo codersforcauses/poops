@@ -5,10 +5,11 @@ import {
   FacebookAuthProvider,
   GoogleAuthProvider,
   OAuthProvider,
-  // TwitterAuthProvider,
   User
 } from 'firebase/auth'
+import { useSetAtom } from 'jotai'
 
+import { panelAtom } from '@/atoms/login'
 import LoginButton from '@/components/Login/LoginButton'
 import Logo from '@/components/UI/logoSvg'
 import { useAuth } from '@/context/Firebase/Auth/context'
@@ -29,6 +30,7 @@ const LoginPanel = ({
   displayPhone
 }: LoginPanelInterface) => {
   const { externalAuthSignIn, linkAuthProvider, currentUser, auth } = useAuth()
+  const setPanel = useSetAtom(panelAtom)
 
   const googleIcon = <Logo name='Google' viewBox='0 0 24 24' />
   const facebookIcon = <Logo name='Facebook' viewBox='0 0 24 24' />
@@ -91,7 +93,7 @@ const LoginPanel = ({
 
       {/* Phone Button //TODO*/}
       <LoginButton
-        onClick={() => router.push('/loginphone')}
+        onClick={() => setPanel('phone')}
         icon={phoneIcon}
         buttonlabel={buttonString('Phone')}
         style='group h-12 rounded-full border-4 border-[#68CC6A] px-6 transition duration-300'

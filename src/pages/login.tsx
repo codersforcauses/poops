@@ -1,6 +1,9 @@
 import Image from 'next/image'
+import { useAtomValue } from 'jotai'
 
-import LoginPanel from '@/components/Login/LoginPanel'
+import { panelAtom } from '@/atoms/login'
+import LoginPanel from '@/components/Login/Panels/LoginPanel'
+import PhonePanel from '@/components/Login/Panels/PhonePanel'
 import { withPublic } from '@/components/PrivateRoute'
 import { useAuth } from '@/context/Firebase/Auth/context'
 
@@ -8,6 +11,8 @@ import { NextPageWithLayout } from './_app'
 
 const Login: NextPageWithLayout = () => {
   const { logOut, currentUser } = useAuth()
+
+  const panel = useAtomValue(panelAtom)
 
   return (
     <div className='h-screen w-screen overflow-y-scroll'>
@@ -30,13 +35,17 @@ const Login: NextPageWithLayout = () => {
           Use any one of your profiles
         </div>
 
-        <LoginPanel 
-          linkAccount={false}
-          displayGoogle={true}
-          displayFacebook={true}
-          displayMicrosoft={true}
-          displayPhone={true}
-        />
+        {panel !== 'phone' ? (
+          <LoginPanel
+            linkAccount={false}
+            displayGoogle={true}
+            displayFacebook={true}
+            displayMicrosoft={true}
+            displayPhone={true}
+          />
+        ) : (
+          <PhonePanel />
+        )}
       </div>
       {/*! used for testing} */}
       <br />
