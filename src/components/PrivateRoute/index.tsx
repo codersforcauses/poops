@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { useRouter } from 'next/router'
+import Router from 'next/router'
 
 import { useAuth } from '@/context/Firebase/Auth/context'
 import useUser from '@/hooks/user'
@@ -9,9 +9,8 @@ export function withPublic(Component: NextPageWithLayout) {
   return function PublicComponent(props: object) {
     const { auth } = useAuth()
     const user = auth.currentUser
-    const router = useRouter()
     if (user !== null) {
-      router.replace('/')
+      Router.replace('/')
       return <h1>Loading...</h1> // TODO make a better looking loading screen?
     }
     return <Component {...props} />
@@ -23,9 +22,8 @@ export const withProtected = (Component: NextPageWithLayout) => {
     const { auth } = useAuth()
     const { data: userData } = useUser()
     const user = auth.currentUser
-    const router = useRouter()
     if (user === null) {
-      router.replace('/login')
+      Router.replace('/login')
     }
     useEffect(() => {
       console.log('New user check triggered')
@@ -33,9 +31,9 @@ export const withProtected = (Component: NextPageWithLayout) => {
         userData &&
         !(userData.info.email && userData.info.phone && userData.info.name)
       ) {
-        router.replace('/signupDetails')
+        Router.replace('/signupDetails')
       }
-    }, [router, userData])
+    }, [userData])
     return <Component {...props} />
   }
   return PrivateComponent as NextPageWithLayout
