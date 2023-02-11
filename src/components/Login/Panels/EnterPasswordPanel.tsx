@@ -27,7 +27,7 @@ const EnterPasswordPanel = (props: {
   /* TODO: add 'forgot password' functionality */
 
   function formFilled() {
-    return (password != '' && password.length > 7)
+    return password != '' && password.length > 7
   }
 
   return (

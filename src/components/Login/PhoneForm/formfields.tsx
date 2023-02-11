@@ -2,7 +2,8 @@ import { useContext, useEffect, useState } from 'react'
 import {
   ConfirmationResult,
   getAuth,
-  RecaptchaVerifier
+  RecaptchaVerifier,
+  signInWithPhoneNumber
 } from 'firebase/auth'
 import { useSetAtom } from 'jotai'
 
@@ -15,7 +16,7 @@ import TextField from '@/components/UI/FormComponents/TextField'
 
 export interface FormValues {
   phoneNumber: string
-  smsCode?: string
+  otpCode?: string
 }
 
 const FormFields = () => {
@@ -25,8 +26,6 @@ const FormFields = () => {
   const [otpShown, setOtpShown] = useState(false)
   const [recaptcha, setRecaptcha] = useState<RecaptchaVerifier>()
   const [result, setResult] = useState<ConfirmationResult>()
-
-
 
   useEffect(() => {
     setRecaptcha(
@@ -39,16 +38,33 @@ const FormFields = () => {
       )
     )
   }, [auth])
-  
-  const verifyPhone = () => {
-    // grab the phone number using getValues.?(name)
-    // validate it
+
+  const verifyPhone = async () => {
+    const valid = await trigger?.('phoneNumber')
+    if (!valid) return
+
+    const phoneNumber: string = getValues?.('phoneNumber')
+
+    if (recaptcha) {
+      signInWithPhoneNumber(auth, phoneNumber, recaptcha)
+        .then((confirmationResult) => {
+          setOtpShown(true)
+          setResult(confirmationResult)
+        })
+        .catch((error) => {
+          // Error; SMS not sent
+          // ...
+          console.log(error)
+        })
+    }
+    setOtpShown(true)
   }
 
   const verifyOTP = () => {
     // grab otp from form values
+    const otpCode: string = getValues?.('otpCode')
     result
-      ?.confirm(OTP)
+      ?.confirm(otpCode)
       .then((result) => {
         // User signed in successfully.
         console.log(result.user)
@@ -57,15 +73,15 @@ const FormFields = () => {
       .catch((error) => {
         // User couldn't sign in (bad verification code?)
         // ...
+        console.log(error)
+        setError?.('smsCode', { message: 'Incorrect code' })
       })
   }
-
-
 
   return (
     <>
       <div id='recaptcha-container'></div>
-      <div className='gap-2 flex flex-col self-center'>
+      <div className='flex flex-col gap-2 self-center'>
         <PhoneSelect
           name='phoneNumber'
           label='Phone Number:'
@@ -75,25 +91,29 @@ const FormFields = () => {
           <TextField
             name='smsCode'
             label='SMS Code:'
-            rules={validationSchema.smsCode}
+            rules={validationSchema.otpCode}
           />
         )}
 
-      <div className='flex flex-row justify-between gap-2'>
+        <div className='flex flex-row justify-between gap-2'>
+          <Button
+            className='w-1/2'
+            type='button'
+            intent='secondary'
+            onClick={() => setPanel('login')}
+          >
+            Back
+          </Button>
 
-      <Button className='w-1/2' type='button' intent='secondary' onClick={() => setPanel('login')}>
-        Back
-      </Button>
-        
-      <Button
-        className='w-1/2'
-        type={otpShown ? 'submit' : 'button'}
-        onClick={() => setOtpShown(true)}
-        // some switch depending on form stage
-      >
-        {otpShown ? 'Submit' : 'Continue'}
-      </Button>
-      </div>
+          <Button
+            className='w-1/2'
+            type={otpShown ? 'submit' : 'button'}
+            onClick={otpShown ? verifyOTP : verifyPhone}
+            // some switch depending on form stage
+          >
+            {otpShown ? 'Submit' : 'Continue'}
+          </Button>
+        </div>
       </div>
     </>
   )

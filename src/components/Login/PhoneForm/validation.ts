@@ -11,7 +11,7 @@ const validationSchema: Record<PhoneFormValues, RegisterOptions> = {
     },
     validate: (v) => isValidPhoneNumber(v)
   },
-  smsCode: {}
+  otpCode: {}
 }
 
 export default validationSchema
