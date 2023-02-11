@@ -17,24 +17,22 @@ const Login: NextPageWithLayout = () => {
   return (
     <div className='h-screen w-screen overflow-y-scroll'>
       <title>Login</title>
-      <div className='animate-text bg-white'>
-        <div className='m-auto max-w-sm p-10'>
-          <Image
-            src='/images/poops-logo-transparent.png'
-            width={36}
-            height={36}
-            layout='responsive'
-            alt='POOPS logo'
-            className='rounded-full'
-          ></Image>
-        </div>
+      <div className='mx-auto max-w-sm flex-col content-center justify-center gap-4 p-4'>
+        <Image
+          src='/images/poops-logo-transparent.png'
+          width={36}
+          height={36}
+          layout='responsive'
+          objectPosition='center'
+          alt='POOPS logo'
+          className='rounded-full p-10'
+        />
 
-        <div className='p-3 text-center text-xl font-bold'>Sign In</div>
+        <h1 className='p-3 text-center text-xl font-bold'>Sign In</h1>
 
-        <div className='text-x1 text-center font-sans'>
+        <div className='text-x1 mx-auto text-center font-sans'>
           Use any one of your profiles
         </div>
-
         {panel !== 'phone' ? (
           <LoginPanel
             linkAccount={false}

@@ -62,11 +62,12 @@ const PhoneSelect = ({
       <div className='flex flex-col'>
         <FieldLabel>{label}</FieldLabel>
         <div
-          className={`form-input flex w-full flex-row justify-center rounded border border-gray-500 bg-white p-0 ${props.className}`}
+          className={`form-input flex flex-row justify-center rounded border border-gray-500 bg-white p-0 ${props.className}`}
         >
           <PhoneInput
             {...register?.(name, rules)}
             {...props}
+            className='w-full'
             disabled={isDisabled}
             value={value}
             onChange={handleChange}
