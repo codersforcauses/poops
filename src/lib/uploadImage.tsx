@@ -106,20 +106,20 @@ export const UploadImage = async ({
       image,
       folder
     })
-    if (bucket !== undefined) {
-      const dest = `users/${userId}/visits/${visitId}/${folder}`
-      ImageToFirestore({
-        clientName,
-        email,
-        petName,
-        doctor,
-        time,
-        detail,
-        imageBucket: bucket,
-        destination: dest,
-        folder
-      })
-    }
+    // if (bucket !== undefined) {
+    const dest = `users/${userId}/visits/${visitId}/${folder}`
+    ImageToFirestore({
+      clientName,
+      email,
+      petName,
+      doctor,
+      time,
+      detail,
+      imageBucket: bucket ?? '',
+      destination: dest,
+      folder
+    })
+    // }
   } catch (error) {
     console.log(error)
   }

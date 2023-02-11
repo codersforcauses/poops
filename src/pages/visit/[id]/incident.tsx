@@ -2,6 +2,7 @@ import { FormEvent, useState } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { XMarkIcon } from '@heroicons/react/24/solid'
+import { Timestamp } from 'firebase/firestore'
 
 import { withProtected } from '@/components/PrivateRoute'
 import Button from '@/components/UI/button'
@@ -10,8 +11,7 @@ import FormField from '@/components/Visit/formfield'
 import { useAuth } from '@/context/Firebase/Auth/context'
 import { useMutateIncidents } from '@/hooks/incidents'
 import { UploadImage, UploadImageInterface } from '@/lib/uploadImage'
-import { Incident } from '@/types/types'
-import { Timestamp } from 'firebase/firestore'
+import { Incident as IncidentType } from '@/types/types'
 
 const Incident = () => {
   const { currentUser } = useAuth()
@@ -47,37 +47,37 @@ const Incident = () => {
   const handleSubmit = (click: FormEvent<HTMLFormElement>) => {
     click.preventDefault()
     if (currentUser !== null) {
-      const data: Incident = {
+      // const data: Incident = {
+      //   userId: currentUser.uid,
+      //   userName: userName,
+      //   clientName: clientName,
+      //   visitId: docId,
+      //   visitTime: time,
+      //   userEmail: email,
+      //   petName: petName,
+      //   reportTime: time,
+      //   detail: notes,
+      //   createdAt: Timestamp.fromDate(new Date())
+      // }
+      // mutateIncidents(data)
+
+      // if (image !== undefined) {
+      const imageData: UploadImageInterface = {
         userId: currentUser.uid,
         userName: userName,
         clientName: clientName,
         visitId: docId,
         visitTime: time,
-        userEmail: email,
+        email: email,
         petName: petName,
-        reportTime: time,
+        time: time,
         detail: notes,
-        createdAt: Date.now().toString()
+        createdAt: Date.now().toString(),
+        image: image ?? new File([''], 'default'),
+        folder: 'incidents'
       }
-      mutateIncidents(data)
-
-      if (image !== undefined) {
-        const imageData: UploadImageInterface = {
-          userId: currentUser.uid,
-          userName: userName,
-          clientName: clientName,
-          visitId: docId,
-          visitTime: time,
-          email: email,
-          petName: petName,
-          time: time,
-          detail: notes,
-          createdAt: Date.now().toString(),
-          image: image,
-          folder: 'incidents'
-        }
-        UploadImage(imageData)
-      }
+      UploadImage(imageData)
+      // }
       router.push('/visit')
     }
   }
