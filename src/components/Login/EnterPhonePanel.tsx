@@ -20,11 +20,15 @@ const EnterPhonePanel = () => {
     <form className='m-5 flex h-full flex-auto flex-col items-center justify-around'>
       <PhoneInput
         defaultCountry='AU'
-        placeholder='Enter phone number'
+        placeholder="Enter phone number"
         value={value}
         onChange={setValue}
       />
-      <Button className='w-fit' type='submit' disabled={value === undefined}>
+      <Button
+        className='w-fit'
+        type='submit'
+        disabled={value === undefined}
+      >
         CONTINUE
       </Button>
     </form>
