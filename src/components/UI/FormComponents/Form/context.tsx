@@ -8,7 +8,7 @@ export interface FormProps
   extends Partial<
     Pick<
       UseFormReturn,
-      'register' | 'formState' | 'reset' | 'watch' | 'setFocus' | 'setValue' | 'setError' | 'trigger'
+      'register' | 'formState' | 'reset' | 'watch' | 'setFocus' | 'setValue' | 'setError' | 'trigger' | 'getValues'
     >
   > {
   dark?: boolean

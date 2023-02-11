@@ -1,5 +1,6 @@
 import { useContext, useEffect, useState } from 'react'
 import {
+  ConfirmationResult,
   getAuth,
   RecaptchaVerifier
 } from 'firebase/auth'
