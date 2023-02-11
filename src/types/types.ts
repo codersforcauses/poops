@@ -44,7 +44,7 @@ export interface VetConcern {
   visitId: string
   reportTime: Timestamp
   detail: string
-  createdAt: string
+  createdAt: Timestamp
   imageBucket: string
 }
 
