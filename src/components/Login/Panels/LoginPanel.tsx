@@ -1,4 +1,3 @@
-import { useRouter } from 'next/router'
 import {
   Auth,
   AuthProvider,
@@ -40,7 +39,6 @@ const LoginPanel = ({
   const googleProvider = new GoogleAuthProvider()
   const facebookProvider = new FacebookAuthProvider()
   const microsoftProvider = new OAuthProvider('microsoft.com')
-  const router = useRouter()
 
   function buttonString(providerString: string) {
     return !linkAccount
@@ -73,7 +71,7 @@ const LoginPanel = ({
         display={displayGoogle}
       />
 
-      {/* FaceBook Button */}
+      {/* Facebook Button */}
       <LoginButton
         onClick={() => handleExternalAuth(auth, currentUser, facebookProvider)}
         icon={facebookIcon}
@@ -91,7 +89,7 @@ const LoginPanel = ({
         display={displayMicrosoft}
       />
 
-      {/* Phone Button //TODO*/}
+      {/* Phone Button */}
       <LoginButton
         onClick={() => setPanel('phone')}
         icon={phoneIcon}
