@@ -28,6 +28,7 @@ export const withProtected = (Component: NextPageWithLayout) => {
       router.replace('/login')
     }
     useEffect(() => {
+      console.log('New user check triggered')
       if (
         userData &&
         !(userData.info.email && userData.info.phone && userData.info.name)
