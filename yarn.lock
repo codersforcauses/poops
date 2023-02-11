@@ -879,11 +879,6 @@
     "@babel/types" "^7.4.4"
     esutils "^2.0.2"
 
-"@babel/regjsgen@^0.8.0":
-  version "0.8.0"
-  resolved "http://packages.tools.genvis.co/repository/npm-all/@babel/regjsgen/-/regjsgen-0.8.0.tgz#f0ba69b075e1f05fb2825b7fad991e7adbb18310"
-  integrity sha512-x/rqGMdzj+fWZvCOYForTghzbtqPDZ5gPwaoNGHdgDfF2QA/XZbCBp4Moo5scrkAMPhB7z26XM/AaHuIJdgauA==
-
 "@babel/runtime-corejs3@^7.10.2":
   version "7.20.13"
   resolved "https://registry.yarnpkg.com/@babel/runtime-corejs3/-/runtime-corejs3-7.20.13.tgz#ad012857db412ab0b5ccf184b67be2cfcc2a1dcf"
@@ -2037,6 +2032,13 @@
   version "18.0.10"
   resolved "http://packages.tools.genvis.co/repository/npm-all/@types/react-dom/-/react-dom-18.0.10.tgz#3b66dec56aa0f16a6cc26da9e9ca96c35c0b4352"
   integrity sha512-E42GW/JA4Qv15wQdqJq8DL4JhNpB3prJgjgapN3qJT9K2zO5IIAQh4VXvCEDupoqAwnz0cY4RlXeC/ajX5SFHg==
+  dependencies:
+    "@types/react" "*"
+
+"@types/react-phone-number-input@3.0.14":
+  version "3.0.14"
+  resolved "http://packages.tools.genvis.co/repository/npm-all/@types/react-phone-number-input/-/react-phone-number-input-3.0.14.tgz#6bcccf61110bc6f445061b36b0b817c283f2fd21"
+  integrity sha512-xOje1m+Z9n3kxj5/bCJzpDeokA95aYYuFbmcK8myyod+KLy3h5tKwCQwSEcU+603EeyfgTMkjz7GYY9S0aZLCQ==
   dependencies:
     "@types/react" "*"
 
@@ -5960,6 +5962,11 @@ regexpu-core@^5.2.1:
     regjsparser "^0.9.1"
     unicode-match-property-ecmascript "^2.0.0"
     unicode-match-property-value-ecmascript "^2.1.0"
+
+regjsgen@^0.7.1:
+  version "0.7.1"
+  resolved "http://packages.tools.genvis.co/repository/npm-all/regjsgen/-/regjsgen-0.7.1.tgz#ee5ef30e18d3f09b7c369b76e7c2373ed25546f6"
+  integrity sha512-RAt+8H2ZEzHeYWxZ3H2z6tF18zyyOnlcdaafLrm21Bguj7uZy6ULibiAFdXEtKQY4Sy7wDTwDiOazasMLc4KPA==
 
 regjsparser@^0.9.1:
   version "0.9.1"

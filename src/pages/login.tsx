@@ -10,7 +10,7 @@ const Login: NextPageWithLayout = () => {
   const { logOut, currentUser } = useAuth()
 
   return (
-    <div className='h-screen w-screen'>
+    <div className='h-screen w-screen overflow-y-scroll'>
       <title>Login</title>
       <div className='animate-text bg-white'>
         <div className='m-auto max-w-sm p-10'>
@@ -30,7 +30,7 @@ const Login: NextPageWithLayout = () => {
           Use any one of your profiles
         </div>
 
-        <LoginPanel
+        <LoginPanel 
           linkAccount={false}
           displayGoogle={true}
           displayFacebook={true}

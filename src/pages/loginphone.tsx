@@ -22,32 +22,41 @@ const Login: NextPage = () => {
     setpanel('phone')
   }
 
-  function renderPanel(state: string) {
-    if (state === 'phone') {
-      return (
-        <LoginHeader
-          pageTitle={pageTitle}
-          primaryMessage={primaryMessage}
-        >
+  // function renderPanel(state: string) {
+  //   if (state === 'phone') {
+  //     return (
+  //       <LoginHeader pageTitle={pageTitle} primaryMessage={primaryMessage}>
+  //         <EnterPhonePanel onClick={handlePhoneSubmit} />
+  //       </LoginHeader>
+  //     )
+  //   } else {
+  //     return (
+  //       <LoginHeader pageTitle={pageTitle} primaryMessage={primaryMessage}>
+  //         <EnterPasswordPanel
+  //           phoneNumber={phonenumber}
+  //           togglePanel={togglePanel}
+  //         />
+  //       </LoginHeader>
+  //     )
+  //   }
+  // }
+
+  return (
+    <main className='h-full pb-0'>
+      {panel === 'phone' ? (
+        <LoginHeader pageTitle={pageTitle} primaryMessage={primaryMessage}>
           <EnterPhonePanel onClick={handlePhoneSubmit} />
         </LoginHeader>
-      )
-    } else {
-      return (
-        <LoginHeader
-          pageTitle={pageTitle}
-          primaryMessage={primaryMessage}
-        >
+      ) : (
+        <LoginHeader pageTitle={pageTitle} primaryMessage={primaryMessage}>
           <EnterPasswordPanel
             phoneNumber={phonenumber}
             togglePanel={togglePanel}
           />
         </LoginHeader>
-      )
-    }
-  }
-
-  return <main className='h-full pb-0'>{renderPanel(panel)}</main>
+      )}
+    </main>
+  )
 }
 
 export default withPublic(Login)

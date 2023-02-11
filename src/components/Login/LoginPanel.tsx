@@ -10,6 +10,7 @@ import {
 } from 'firebase/auth'
 
 import LoginButton from '@/components/Login/LoginButton'
+import Logo from '@/components/UI/logoSvg'
 import { useAuth } from '@/context/Firebase/Auth/context'
 
 export interface LoginPanelInterface {
