@@ -97,8 +97,7 @@ function UpdateDetailsPanel({ contact }: ContactItemProps) {
   }
 
   return (
-    <form>
-      <div className='md:w-5/5 w-5/5 space-y-5'>
+    <form className='w-4/5 space-y-5 md:w-2/5'>
         <div>
           {!displayName ? (
             <div>
@@ -190,7 +189,6 @@ function UpdateDetailsPanel({ contact }: ContactItemProps) {
             />
           </div>
         )}
-      </div>
     </form>
   )
 }
