@@ -19,21 +19,7 @@ module.exports = {
       white: colors.white,
       black: colors.black,
       gray: colors.gray,
-      cream: '#f9f9f9',
-      facebook: '#4267B2',
-      twitter: '#00ACEE',
-      googleblue: '#4285F4',
-      googlegreen: '#34A853',
-      googleyellow: '#FBBC05',
-      googlered: '#EA4335',
-      applegrey: '#A2AAAD',
-      microsoftblue: '#00A4EF',
-      phonegreen: '#68CC6A',
-      yahoopurple: '#430297',
-      'dark-gray': '#7B7B7B',
-      'zinc-200': '#F2F2F2',
-      'zinc-300': '#D9D9D9',
-      'zinc-50': '#FFFFFF'
+      zinc: colors.zinc
     },
     extend: {
       fontFamily: {
