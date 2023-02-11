@@ -6,22 +6,18 @@ import Layout from '@/components/Layout'
 import { withProtected } from '@/components/PrivateRoute'
 import Button from '@/components/UI/button'
 import { useAuth } from '@/context/Firebase/Auth/context'
-import mod from '@/lib/temp/firebase/functions/setRole'
+import useUser from '@/hooks/user'
 
 import { NextPageWithLayout } from './_app'
 
 const Home: NextPageWithLayout = () => {
-  const { currentUser, refreshUserToken } = useAuth()
+  const { currentUser } = useAuth()
+
+  const { data: tempUser } = useUser()
 
   const welcomeMessage = currentUser
-    ? `Welcome, ${currentUser?.displayName}!`
+    ? `Welcome, ${tempUser?.info.name}!`
     : 'Welcome!'
-
-  const onMod = (adminAccess: boolean) => {
-    if (currentUser) {
-      mod(adminAccess, currentUser, refreshUserToken)
-    }
-  }
 
   return (
     <div className='main-style'>
@@ -37,18 +33,7 @@ const Home: NextPageWithLayout = () => {
                   <Button size='large'>START VISIT</Button>
                 </a>
               </Link>
-              <br />
-              <Button
-                size='medium'
-                intent='secondary'
-                type='button'
-                onClick={() => onMod(true)}
-              >
-                Mod me!
-              </Button>
             </div>
-            <br />
-            <br />
           </div>
         </div>
       </div>
