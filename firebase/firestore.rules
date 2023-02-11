@@ -135,7 +135,4 @@ service cloud.firestore {
       allow read: if isSignIn() && isAdmin();
       allow update, delete: if false;
     }
-
-  }
-
 }
