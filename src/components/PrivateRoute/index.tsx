@@ -1,6 +1,8 @@
+import { useEffect } from 'react'
 import { useRouter } from 'next/router'
 
 import { useAuth } from '@/context/Firebase/Auth/context'
+import useUser from '@/hooks/user'
 import { NextPageWithLayout } from '@/pages/_app'
 
 export function withPublic(Component: NextPageWithLayout) {
@@ -19,11 +21,20 @@ export function withPublic(Component: NextPageWithLayout) {
 export const withProtected = (Component: NextPageWithLayout) => {
   const PrivateComponent = (props: object) => {
     const { auth } = useAuth()
+    const { data: userData } = useUser()
     const user = auth.currentUser
     const router = useRouter()
     if (user === null) {
       router.replace('/login')
     }
+    useEffect(() => {
+      if (
+        userData &&
+        !(userData.info.email && userData.info.phone && userData.info.name)
+      ) {
+        router.replace('/signupDetails')
+      }
+    }, [router, userData])
     return <Component {...props} />
   }
   return PrivateComponent as NextPageWithLayout

@@ -56,11 +56,6 @@ export const useUser = () => {
         }
 
         const userData = userDocSnap.data() as User
-        if (
-          !(userData.info.email && userData.info.phone && userData.info.name)
-        ) {
-          router.replace('/signupDetails')
-        }
         return { ...userData, info: { ...userData.info, docId: 'USER' } }
       } catch (err: unknown) {
         //#region  //*=========== For logging ===========
