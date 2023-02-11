@@ -98,97 +98,100 @@ function UpdateDetailsPanel({ contact }: ContactItemProps) {
 
   return (
     <form className='w-4/5 space-y-5 md:w-2/5'>
-        <div>
-          {!displayName ? (
-            <div>
-              <div className='italic text-primary'>*Name required</div>
-              <input
-                className='h-10 w-full rounded-lg border border-primary bg-transparent pl-2 text-sm'
-                value={displayName}
-                onChange={(e) => editName(e)}
-                name={displayName}
-                placeholder='Name'
-              />
-            </div>
-          ) : (
-            <div>
-              <p>Name</p>
-              <input
-                className='h-10 w-full rounded-lg border border-[#6b7280] bg-transparent pl-2 text-sm'
-                value={displayName}
-                onChange={(e) => editName(e)}
-                name={displayName}
-                placeholder='Name'
-              />
-            </div>
-          )}
-        </div>
-        <div>
-          {!email ? (
-            <div>
-              <div className='italic text-primary'>*Email required</div>
-              <input
-                className='h-10 w-full rounded-lg border border-primary bg-transparent pl-2 text-sm'
-                value={email}
-                onChange={(e) => editEmail(e)}
-                name={email}
-                placeholder='Email'
-                type='email'
-              />
-            </div>
-          ) : (
-            <div>
-              <p>Email</p>
-              <input
-                className='h-10 w-full rounded-lg border border-[#6b7280] bg-transparent pl-2 text-sm'
-                value={email}
-                onChange={(e) => editEmail(e)}
-                name={email}
-                placeholder='Email'
-                type='email'
-              />
-            </div>
-          )}
-        </div>
-        <div className='phone-input'>
-          {!phoneNumber ? (
-            <div>
-              <div className='italic text-primary'>*Phone required</div>
-              <input
-                className='h-10 w-full rounded-lg border border-primary bg-transparent pl-2 text-sm'
-                value={phoneNumber}
-                onChange={(e) => editPhoneNumber(e)}
-                name={phoneNumber}
-                type='number'
-                placeholder='Phone Number'
-              />
-            </div>
-          ) : (
-            <div>
-              <p>Phone</p>
-              <input
-                className='h-10 w-full rounded-lg border border-[#6b7280] bg-transparent pl-2 text-sm'
-                value={phoneNumber}
-                onChange={(e) => editPhoneNumber(e)}
-                name={phoneNumber}
-                type='number'
-                placeholder='Phone Number'
-              />
-            </div>
-          )}
-        </div>
-
-        <div id='recaptcha-container'></div>
-        <div>{err && <span>Something Went Wrong...</span>}</div>
-        {!done && (
-          <div className='text-center'>
-            <SubmitButton
-              onClick={(e) => handleSubmit(e, contact, currentUser)}
-              buttonlabel='Submit'
-              style='group h-12 rounded-full border-4 border-primary bg-primary text-white px-6 transition duration-300'
+      <div>
+        {!displayName ? (
+          <div>
+            <div className='italic text-primary'>*Name required</div>
+            <input
+              className='h-10 w-full rounded-lg border border-primary bg-transparent pl-2 text-sm'
+              value={displayName}
+              onChange={(e) => editName(e)}
+              name={displayName}
+              placeholder='Name'
+            />
+          </div>
+        ) : (
+          <div>
+            <p>Name</p>
+            <input
+              className='h-10 w-full rounded-lg border border-[#6b7280] bg-transparent pl-2 text-sm'
+              value={displayName}
+              onChange={(e) => editName(e)}
+              name={displayName}
+              placeholder='Name'
             />
           </div>
         )}
+      </div>
+      <div>
+        {!email ? (
+          <div>
+            <div className='italic text-primary'>*Email required</div>
+            <input
+              className='h-10 w-full rounded-lg border border-primary bg-transparent pl-2 text-sm'
+              value={email}
+              onChange={(e) => editEmail(e)}
+              name={email}
+              placeholder='Email'
+              type='email'
+            />
+          </div>
+        ) : (
+          <div>
+            <p>Email</p>
+            <input
+              className='h-10 w-full rounded-lg border border-[#6b7280] bg-transparent pl-2 text-sm'
+              value={email}
+              onChange={(e) => editEmail(e)}
+              name={email}
+              placeholder='Email'
+              type='email'
+            />
+          </div>
+        )}
+      </div>
+      <div className='phone-input'>
+        {!phoneNumber ? (
+          <div>
+            <div className='italic text-primary'>*Phone required</div>
+            <input
+              className='h-10 w-full rounded-lg border border-primary bg-transparent pl-2 text-sm'
+              value={phoneNumber}
+              onChange={(e) => editPhoneNumber(e)}
+              name={phoneNumber}
+              type='number'
+              placeholder='Phone Number'
+            />
+          </div>
+        ) : (
+          <div>
+            <p>Phone</p>
+            <input
+              className='h-10 w-full rounded-lg border border-[#6b7280] bg-transparent pl-2 text-sm'
+              value={phoneNumber}
+              onChange={(e) => editPhoneNumber(e)}
+              name={phoneNumber}
+              type='number'
+              placeholder='Phone Number'
+            />
+          </div>
+        )}
+      </div>
+
+      <div id='recaptcha-container'></div>
+      <div>{err && <span>Something Went Wrong...</span>}</div>
+      {!done && (
+        <div className='text-center'>
+          <SubmitButton
+            onClick={(e) => handleSubmit(e, contact, currentUser)}
+            buttonlabel='Submit'
+            style='group h-12 rounded-full border-4 border-primary bg-primary text-white px-6 transition duration-300'
+            name={displayName}
+            email={email}
+            phoneNum={phoneNumber}
+          />
+        </div>
+      )}
     </form>
   )
 }
