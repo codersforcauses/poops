@@ -10,10 +10,11 @@ interface ReportListProps {
   visitId: string
 }
 
-const visitId = 'nWZ4FWWjBZMkhtzTYNAW'
+const visitId = 'saua9FeILODssTklYibl'
 
 export const ReportList = (props: ReportListProps) => {
   const { data: incidents } = useIncidents(visitId)
+  console.log(incidents)
 
   const clientNameFilter = (report: Incident) =>
     report.clientName.toLowerCase().includes(props.searchQuery.toLowerCase())

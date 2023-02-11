@@ -70,7 +70,7 @@ const Incident = () => {
         visitTime: time,
         email: email,
         petName: petName,
-        time: time,
+        reportTime: time,
         detail: notes,
         createdAt: Date.now().toString(),
         image: image ?? new File([''], 'default'),

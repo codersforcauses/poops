@@ -1,8 +1,8 @@
 import { useRouter } from 'next/router'
+import { serverTimestamp, Timestamp } from 'firebase/firestore'
 
 import Button from '@/components/UI/button'
 import { Incident } from '@/types/types'
-import { Timestamp } from 'firebase/firestore'
 import { humanizeTimestamp } from '@/utils'
 
 interface ReportInfoProps extends Incident {
@@ -15,13 +15,15 @@ const ReportInfo = ({
   imageBucket = '',
   clientName = '',
   petName = '',
-  reportTime = Timestamp,
+  reportTime = serverTimestamp() as Timestamp,
   detail = ''
 }: ReportInfoProps) => {
   const router = useRouter()
   const params = `pets=${petName}&client=${clientName}&visitId=${docId}`
 
   if (docId === undefined) return null
+
+  console.log(reportTime)
 
   return (
     <>
@@ -37,11 +39,15 @@ const ReportInfo = ({
           </div>
           <div className='space-x-1'>
             <span className='font-semibold'>Report Date & Time:</span>
-            <span>{reportTime}</span>
+            <span>{reportTime.toString()}</span>
           </div>
           <div>
             <div className='font-semibold'>Desscription:</div>
             <p className='my-1 line-clamp-6'>{detail}</p>
+          </div>
+          <div>
+            <div className='font-semibold'>Photo:</div>
+            <p className='my-1 line-clamp-6'>{imageBucket}</p>
           </div>
         </div>
         <div className='flex items-center justify-around py-2'>

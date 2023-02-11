@@ -4,8 +4,8 @@ import { ReactElement } from 'react'
 import Layout from '@/components/Layout'
 import { withProtected } from '@/components/PrivateRoute'
 import { AddButton } from '@/components/Visit/buttons'
-import SearchBar from '@/components/Visit/searchbar'
 import ReportList from '@/components/Visit/reportlist'
+import SearchBar from '@/components/Visit/searchbar'
 import { NextPageWithLayout } from '@/pages/_app'
 
 const Visit: NextPageWithLayout = () => {
