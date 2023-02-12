@@ -28,7 +28,8 @@ const Form = <T extends FieldValues>({
     setFocus,
     setValue,
     setError,
-    trigger
+    trigger,
+    getValues
   } = methods
   const value: FormProps = {
     disabled,
@@ -39,7 +40,8 @@ const Form = <T extends FieldValues>({
     setFocus,
     setValue,
     setError,
-    trigger
+    trigger,
+    getValues
   }
 
   return (

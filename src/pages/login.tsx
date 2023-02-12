@@ -30,9 +30,6 @@ const Login: NextPageWithLayout = () => {
 
         <h1 className='p-3 text-center text-xl font-bold'>Sign In</h1>
 
-        <div className='text-x1 mx-auto text-center font-sans'>
-          Use any one of your profiles
-        </div>
         {panel !== 'phone' ? (
           <LoginPanel
             linkAccount={false}

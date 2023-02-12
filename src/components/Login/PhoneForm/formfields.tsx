@@ -1,4 +1,5 @@
 import { useContext, useEffect, useState } from 'react'
+import { FirebaseError } from 'firebase/app'
 import {
   ConfirmationResult,
   getAuth,
@@ -11,7 +12,7 @@ import { panelAtom } from '@/atoms/login'
 import validationSchema from '@/components/Login/PhoneForm/validation'
 import Button from '@/components/UI/button'
 import { FormContext } from '@/components/UI/FormComponents/Form/context'
-import PhoneSelect from '@/components/UI/FormComponents/PhoneField'
+import PhoneField from '@/components/UI/FormComponents/PhoneField'
 import TextField from '@/components/UI/FormComponents/TextField'
 
 export interface FormValues {
@@ -40,10 +41,11 @@ const FormFields = () => {
   }, [auth])
 
   const verifyPhone = async () => {
-    const valid = await trigger?.('phoneNumber')
-    if (!valid) return
-
+    const valid = await trigger?.('phoneNumber', { shouldFocus: true })
     const phoneNumber: string = getValues?.('phoneNumber')
+
+    if (!valid)
+      return setError?.('phoneNumber', { message: 'Invalid phone number' })
 
     if (recaptcha) {
       signInWithPhoneNumber(auth, phoneNumber, recaptcha)
@@ -51,45 +53,38 @@ const FormFields = () => {
           setOtpShown(true)
           setResult(confirmationResult)
         })
-        .catch((error) => {
-          // Error; SMS not sent
-          // ...
-          console.log(error)
+        .catch((error: FirebaseError) => {
+          console.log(`Phone login failed with error code: ${error.code}`)
+
+          if (error.code === 'auth/invalid-phone-number')
+            setError?.('phoneNumber', { message: 'Invalid phone number' })
         })
     }
-    setOtpShown(true)
   }
 
-  const verifyOTP = () => {
+  const verifyOTP = async () => {
     // grab otp from form values
     const otpCode: string = getValues?.('otpCode')
-    result
-      ?.confirm(otpCode)
-      .then((result) => {
-        // User signed in successfully.
-        console.log(result.user)
-        // ...
-      })
-      .catch((error) => {
-        // User couldn't sign in (bad verification code?)
-        // ...
-        console.log(error)
-        setError?.('smsCode', { message: 'Incorrect code' })
-      })
+    try {
+      await result?.confirm(otpCode)
+    } catch (error) {
+      setError?.('otpCode', { message: 'Incorrect code' })
+    }
   }
 
   return (
     <>
-      <div id='recaptcha-container'></div>
-      <div className='flex flex-col gap-2 self-center'>
-        <PhoneSelect
+      <div className='flex w-full flex-col gap-2 self-center'>
+        <PhoneField
           name='phoneNumber'
           label='Phone Number:'
+          placeholder='0412 345 678'
           rules={validationSchema.phoneNumber}
+          isDisabled={otpShown}
         />
         {otpShown && (
           <TextField
-            name='smsCode'
+            name='otpCode'
             label='SMS Code:'
             rules={validationSchema.otpCode}
           />
@@ -106,6 +101,7 @@ const FormFields = () => {
           </Button>
 
           <Button
+            id='recaptcha-container'
             className='w-1/2'
             type={otpShown ? 'submit' : 'button'}
             onClick={otpShown ? verifyOTP : verifyPhone}

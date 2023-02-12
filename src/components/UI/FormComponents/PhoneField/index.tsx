@@ -1,5 +1,6 @@
 import { useContext, useEffect } from 'react'
-import PhoneInput from 'react-phone-number-input'
+import { CountryCode } from 'libphonenumber-js/min'
+import PhoneInputWithCountrySelect from 'react-phone-number-input/react-hook-form'
 
 import {
   FormContext,
@@ -14,9 +15,11 @@ import {
 interface PhoneSelectProps extends FormFieldProps {
   isDisabled?: boolean
   className?: string
+  defaultCountry?: CountryCode
+  placeholder?: string
 }
 
-const PhoneSelect = ({
+const PhoneField = ({
   name = '',
   label,
   description,
@@ -24,6 +27,7 @@ const PhoneSelect = ({
   required = false,
   rules = {},
   setFocused,
+  defaultCountry = 'AU',
   ...props
 }: PhoneSelectProps) => {
   const {
@@ -31,7 +35,6 @@ const PhoneSelect = ({
     disabled: formDisabled,
     register,
     watch,
-    setValue,
     setFocus
   } = useContext(FormContext)
   const error: string | undefined =
@@ -47,10 +50,9 @@ const PhoneSelect = ({
     register?.(name)
   }, [register, name])
 
-  const handleChange = (value: string) => {
-    console.log(value)
-    setValue?.(name, value)
-  }
+  // const handleChange = (value: string) => {
+  //   setValue?.(name, value)
+  // }
 
   return (
     <FieldControl
@@ -64,15 +66,14 @@ const PhoneSelect = ({
         <div
           className={`form-input flex flex-row justify-center rounded border border-gray-500 bg-white p-0 ${props.className}`}
         >
-          <PhoneInput
-            {...register?.(name, rules)}
-            {...props}
+          <PhoneInputWithCountrySelect
+            name={name}
+            defaultCountry={defaultCountry}
             className='w-full'
             disabled={isDisabled}
+            placeholder='0412 345 678'
             value={value}
-            onChange={handleChange}
-            placeholder='Select...'
-            defaultCountry='AU'
+            rules={rules}
           />
         </div>
         {error ? (
@@ -85,4 +86,4 @@ const PhoneSelect = ({
   )
 }
 
-export default PhoneSelect
+export default PhoneField

@@ -1,11 +1,11 @@
 import React from 'react'
 
-import PhoneForm from '@/components/Login/PhoneForm/formfields'
+import PhoneForm from '@/components/Login/PhoneForm/'
 
 const PhonePanel = () => {
   /* TODO: add 'auth update' functionality */
   return (
-    <div className='container mx-auto self-center'>
+    <div className='mx-4'>
       <PhoneForm />
     </div>
   )

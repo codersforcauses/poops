@@ -61,43 +61,52 @@ const LoginPanel = ({
   }
 
   return (
-    <div className='m-auto grid h-1/3 w-1/2 max-w-xs justify-center space-y-4 p-5'>
-      {/* Google Button */}
-      <LoginButton
-        onClick={() => handleExternalAuth(auth, currentUser, googleProvider)}
-        icon={googleIcon}
-        buttonlabel={buttonString('Google')}
-        style='h-12 rounded-full border-4 border-t-[#4285F4] border-r-[#34A853] border-b-[#FBBC05] border-l-[#EA4335] px-6 transition duration-300'
-        display={displayGoogle}
-      />
+    <>
+      <div className='text-x1 mx-auto text-center font-sans'>
+        Use any one of your profiles
+      </div>
+      <div className='m-auto grid h-1/3 w-1/2 max-w-xs justify-center space-y-4 p-5'>
+        {/* Google Button */}
+        <LoginButton
+          onClick={() => handleExternalAuth(auth, currentUser, googleProvider)}
+          icon={googleIcon}
+          buttonlabel={buttonString('Google')}
+          style='h-12 rounded-full border-4 border-t-[#4285F4] border-r-[#34A853] border-b-[#FBBC05] border-l-[#EA4335] px-6 transition duration-300'
+          display={displayGoogle}
+        />
 
-      {/* Facebook Button */}
-      <LoginButton
-        onClick={() => handleExternalAuth(auth, currentUser, facebookProvider)}
-        icon={facebookIcon}
-        buttonlabel={buttonString('Facebook')}
-        style='group h-12 rounded-full border-4 border-[#4267B2] px-6 transition duration-300'
-        display={displayFacebook}
-      />
+        {/* Facebook Button */}
+        <LoginButton
+          onClick={() =>
+            handleExternalAuth(auth, currentUser, facebookProvider)
+          }
+          icon={facebookIcon}
+          buttonlabel={buttonString('Facebook')}
+          style='group h-12 rounded-full border-4 border-[#4267B2] px-6 transition duration-300'
+          display={displayFacebook}
+        />
 
-      {/* Microsoft Button */}
-      <LoginButton
-        onClick={() => handleExternalAuth(auth, currentUser, microsoftProvider)}
-        icon={microsoftIcon}
-        buttonlabel={buttonString('Microsoft')}
-        style='group h-12 rounded-full border-4 border-[#00A4EF] px-6 transition duration-300'
-        display={displayMicrosoft}
-      />
+        {/* Microsoft Button */}
+        <LoginButton
+          onClick={() =>
+            handleExternalAuth(auth, currentUser, microsoftProvider)
+          }
+          icon={microsoftIcon}
+          buttonlabel={buttonString('Microsoft')}
+          style='group h-12 rounded-full border-4 border-[#00A4EF] px-6 transition duration-300'
+          display={displayMicrosoft}
+        />
 
-      {/* Phone Button */}
-      <LoginButton
-        onClick={() => setPanel('phone')}
-        icon={phoneIcon}
-        buttonlabel={buttonString('Phone')}
-        style='group h-12 rounded-full border-4 border-[#68CC6A] px-6 transition duration-300'
-        display={displayPhone}
-      />
-    </div>
+        {/* Phone Button */}
+        <LoginButton
+          onClick={() => setPanel('phone')}
+          icon={phoneIcon}
+          buttonlabel={buttonString('Phone')}
+          style='group h-12 rounded-full border-4 border-[#68CC6A] px-6 transition duration-300'
+          display={displayPhone}
+        />
+      </div>
+    </>
   )
 }
 
