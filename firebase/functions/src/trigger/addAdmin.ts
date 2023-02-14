@@ -1,7 +1,7 @@
 import { auth, functions } from '../main'
 import { REGION } from '../config'
 
-const WHITELISTED_DOMAINS = ['poops.org']
+const WHITELISTED_DOMAINS = ['poopswa.org.au']
 
 /**
  * Trigger to automatically assign admin role if email matches whitelisted

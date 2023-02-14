@@ -22,7 +22,9 @@ const Notes = () => {
             <p className='text-primary'>{humanizeTimestamp(visit.startTime)}</p>
             <p>{visit.clientName}</p>
           </div>
-          <p className='whitespace-pre-wrap text-sm leading-6'>{visit.notes}</p>
+          <p className='whitespace-pre-wrap break-words text-sm leading-6'>
+            {visit.notes}
+          </p>
         </div>
       ) : (
         'Error: no notes found'
