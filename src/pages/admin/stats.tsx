@@ -26,7 +26,9 @@ const Stats: NextPageWithLayout = () => {
         Admin Summary Dashboard
       </h1>
       <StatsBreakdown />
-      <VolunteerStatsTable />
+      <div className='mb-20'>
+        <VolunteerStatsTable />
+      </div>
     </div>
   )
 }
