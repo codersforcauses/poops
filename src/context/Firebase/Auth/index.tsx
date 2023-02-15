@@ -46,7 +46,7 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
       if (error instanceof FirebaseError) {
         switch (error.code) {
           case AuthErrorCodes.PROVIDER_ALREADY_LINKED:
-            console.log('auth/provider-already-linked')
+            console.error('auth/provider-already-linked')
           // TODO Send error alert to user
         }
       }

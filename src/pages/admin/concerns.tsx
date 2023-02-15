@@ -1,19 +1,19 @@
 import { useRouter } from 'next/router'
 
-import IncidentCard from '@/components/Admin/incidentcard'
+import ConcernsCard from '@/components/Admin/concernscard'
 import Header from '@/components/Header'
 import NavBar from '@/components/NavBar'
 import Button from '@/components/UI/button'
-import { useIncidents } from '@/hooks/incidents'
-import { Incident } from '@/types/types'
+import { useVetConcerns } from '@/hooks/vetconcerns'
+import { VetConcern } from '@/types/types'
 
-const AdminIncidents = () => {
-  const { data: incidents } = useIncidents()
+const Output = () => {
+  const { data: concerns } = useVetConcerns()
   const router = useRouter()
 
   return (
     <>
-      <Header pageTitle='Roles' />
+      <Header pageTitle='Concerns' />
       <div className='main-style'>
         <div className='m-auto flex h-14 w-full flex-row'>
           <div className='m-auto flex-1 text-center'>
@@ -25,13 +25,13 @@ const AdminIncidents = () => {
               Back
             </Button>
           </div>
-          <h1 className='m-3 flex-1 text-center text-2xl'>Incidents</h1>
+          <h1 className='m-3 flex-1 text-center text-2xl'>Concerns</h1>
           <div className='flex-1'></div>
         </div>
 
         <div className='max-h-screen'>
-          {incidents?.map((incident: Incident, i: number) => (
-            <IncidentCard key={i} {...incident}></IncidentCard>
+          {concerns?.map((concern: VetConcern, i: number) => (
+            <ConcernsCard key={i} {...concern}></ConcernsCard>
           ))}
         </div>
       </div>
@@ -40,4 +40,4 @@ const AdminIncidents = () => {
   )
 }
 
-export default AdminIncidents
+export default Output
