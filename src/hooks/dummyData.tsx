@@ -36,20 +36,20 @@ const useDummyData = () => {
 
       if (contact === undefined) return
 
-      const timestamp = new Timestamp(
-        Math.floor(
-          faker.date.between('2020-01-01T00:00:00.000Z', Date.now()).getTime() /
-            1000
-        ),
+      const fakeDate = faker.date.between(
+        '2020-01-01T00:00:00.000Z',
+        Date.now()
+      )
+      const fakeTimestamp = new Timestamp(
+        Math.floor(fakeDate.getTime() / 1000),
         0
       )
-      console.log(timestamp.toDate())
 
       const visit: Visit = {
         type: faker.datatype.boolean() ? 'Walk' : 'Vet',
         clientName: contact.name,
         petNames: contact.pets,
-        startTime: timestamp,
+        startTime: fakeTimestamp,
         duration: {
           hours: faker.datatype.number({ max: 3 }),
           minutes: 0
