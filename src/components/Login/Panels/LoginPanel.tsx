@@ -62,10 +62,7 @@ const LoginPanel = ({
 
   return (
     <>
-      <div className='text-x1 mx-auto text-center font-sans'>
-        Use any one of your profiles
-      </div>
-      <div className='m-auto grid h-1/3 w-1/2 max-w-xs justify-center space-y-4 p-5'>
+      <div className='m-auto grid h-1/3 w-1/2 max-w-xs justify-center space-y-4 p-5 pt-0'>
         {/* Google Button */}
         <LoginButton
           onClick={() => handleExternalAuth(auth, currentUser, googleProvider)}
