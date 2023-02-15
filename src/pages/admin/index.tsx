@@ -20,7 +20,7 @@ const Admin = () => {
         const userDocData = userDocSnapshot.data()
         setUserDoc(userDocData)
       } catch (error) {
-        console.log('Error getting document:', error)
+        console.error('Error getting document:', error)
         setUserDoc(error as DocumentData)
       }
     }
