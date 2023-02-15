@@ -65,7 +65,16 @@ const VisitInfo = ({
         </div>
         <div>
           <div className='font-semibold'>Notes:</div>
-          <p className='my-1 line-clamp-6'>{notes}</p>
+          <p className='my-1 whitespace-pre-wrap line-clamp-6'>{notes}</p>
+          {notes.length > 100 && (
+            <Button
+              size='small'
+              intent='secondary'
+              onClick={() => router.push(`/visit/${docId}/notes`)}
+            >
+              See More
+            </Button>
+          )}
         </div>
       </div>
       <div className='flex h-full items-center justify-around py-2'>

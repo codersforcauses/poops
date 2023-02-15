@@ -3,20 +3,24 @@ import { formatTimestamp } from '@/utils'
 
 const ConcernsCard = (props: VetConcern) => {
   return (
-    <div className='m-2 flex flex-col rounded-xl bg-gray-50 p-4 drop-shadow-default'>
-      <div>User ID: {props.userId}</div>
-      <div>User Name: {props.userName}</div>
-      <div>User Email: {props.userEmail}</div>
+    <div className='m-2 flex flex-col rounded-xl bg-gray-50 p-4 shadow-lg'>
+      <div className='flex justify-between'>
+        <div className='font-bold'>
+          <p className='font-bold text-primary'>
+            {props.clientName} {formatTimestamp(props.visitTime)}
+          </p>
+          <p className='text-sm'>{props.userName}</p>
+        </div>
+      </div>
+      <div>{props.userEmail}</div>
+      <div>Report date: {formatTimestamp(props.createdAt)}</div>
       <div>User Phone: {props.userPhone}</div>
-      <div>Client Name: {props.clientName}</div>
-      <div>Pet Name: {props.petName}</div>
-      <div>Visit Time: {formatTimestamp(props.visitTime)}</div>
       <div>Visit ID: {props.visitId}</div>
-      <div>Detail: {props.detail}</div>
-      <div>Created At: {formatTimestamp(props.createdAt)}</div>
+      <div>Client: {props.clientName}</div>
+      <div>Pet: {props.petName}</div>
+      <div>{props.detail}</div>
     </div>
   )
 }
 
 export default ConcernsCard
-//  testing

@@ -1,5 +1,3 @@
-/* eslint-disable no-console */
-
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { User as AuthUser } from 'firebase/auth'
 import {
