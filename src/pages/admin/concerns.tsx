@@ -15,27 +15,27 @@ const Output = () => {
     <>
       <Header pageTitle='Concerns' />
       <div className='main-style'>
-        <div className='mx-2 mt-2'>
-          <Button
-            type='button'
-            size='medium'
-            onClick={() => router.push('/admin')}
-            className='fixed top-2 left-2'
-          >
-            Back
-          </Button>
-
-          <h1 className='text-center text-2xl'>Concerns</h1>
-
-          <div className='pt-2'>
-            {concerns?.map((concern: VetConcern, i: number) => (
-              <ConcernsCard key={i} {...concern}></ConcernsCard>
-            ))}
+        <div className='m-auto flex h-14 w-full flex-row'>
+          <div className='m-auto flex-1 text-center'>
+            <Button
+              type='button'
+              size='medium'
+              onClick={() => router.push('/admin')}
+            >
+              Back
+            </Button>
           </div>
+          <h1 className='m-3 flex-1 text-center text-2xl'>Concerns</h1>
+          <div className='flex-1'></div>
+        </div>
 
-          <NavBar />
+        <div className='max-h-screen'>
+          {concerns?.map((concern: VetConcern, i: number) => (
+            <ConcernsCard key={i} {...concern}></ConcernsCard>
+          ))}
         </div>
       </div>
+      <NavBar />
     </>
   )
 }
