@@ -8,12 +8,11 @@ import Button from '@/components/UI/button'
 import { useAuth } from '@/context/Firebase/Auth/context'
 import useDummyData from '@/hooks/dummyData'
 import useUser from '@/hooks/user'
-import mod from '@/lib/temp/firebase/functions/setRole'
 
 import { NextPageWithLayout } from './_app'
 
 const Home: NextPageWithLayout = () => {
-  const { currentUser, refreshUserToken } = useAuth()
+  const { currentUser } = useAuth()
 
   const { data: tempUser } = useUser()
 
@@ -23,12 +22,6 @@ const Home: NextPageWithLayout = () => {
     ? `Welcome, ${tempUser?.info.name}!`
     : 'Welcome!'
 
-  const onMod = (adminAccess: boolean) => {
-    if (currentUser) {
-      mod(adminAccess, currentUser, refreshUserToken)
-    }
-  }
-
   return (
     <div className='main-style'>
       <div className='h-full bg-[url(/images/dog-home.png)] bg-contain bg-fixed bg-[left_50%_top_calc(100%-4rem)] bg-no-repeat'>
@@ -36,7 +29,6 @@ const Home: NextPageWithLayout = () => {
           <div className='flex flex-col px-4 '>
             <h1 className='py-3 text-center text-3xl'>{welcomeMessage}</h1>
             <Summary />
-            <br />
             <div className='flex flex-col justify-center'>
               <Link href='visit/set'>
                 <a className='flex justify-center'>
@@ -45,14 +37,6 @@ const Home: NextPageWithLayout = () => {
               </Link>
               {process.env.NODE_ENV === 'development' && (
                 <div className='mt-4 flex flex-col gap-2'>
-                  <Button
-                    size='small'
-                    intent='secondary'
-                    type='button'
-                    onClick={() => onMod(true)}
-                  >
-                    Mod me!
-                  </Button>
                   <Button
                     size='small'
                     intent='secondary'
@@ -70,8 +54,6 @@ const Home: NextPageWithLayout = () => {
                 </div>
               )}
             </div>
-            <br />
-            <br />
           </div>
         </div>
       </div>

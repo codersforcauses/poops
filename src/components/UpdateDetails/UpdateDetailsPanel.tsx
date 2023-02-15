@@ -97,7 +97,7 @@ function UpdateDetailsPanel({ contact }: ContactItemProps) {
   }
 
   return (
-    <div className='w-4/5 space-y-5 md:w-2/5'>
+    <form className='w-4/5 space-y-5 md:w-2/5'>
       <div>
         {!displayName ? (
           <div>
@@ -186,10 +186,13 @@ function UpdateDetailsPanel({ contact }: ContactItemProps) {
             onClick={(e) => handleSubmit(e, contact, currentUser)}
             buttonlabel='Submit'
             style='group h-12 rounded-full border-4 border-primary bg-primary text-white px-6 transition duration-300'
+            name={displayName}
+            email={email}
+            phoneNum={phoneNumber}
           />
         </div>
       )}
-    </div>
+    </form>
   )
 }
 

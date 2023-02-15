@@ -169,8 +169,7 @@ function ContactInfo({ contact, mutate }: ContactFormProps) {
                 await signOut(auth) //TODO
                 Router.push('/login')
               } catch (error) {
-                //eslint-disable-next-lineZ
-                console.log('log out failed', { cause: error })
+                console.error('log out failed', { cause: error })
               }
             }}
           >
