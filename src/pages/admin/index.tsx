@@ -60,6 +60,14 @@ const Admin = () => {
           size='medium'
           intent='primary'
           type='button'
+          onClick={() => Router.push('/admin/concerns')}
+        >
+          View Concerns
+        </Button>
+        <Button
+          size='medium'
+          intent='primary'
+          type='button'
           onClick={() => Router.push('/admin/roles')}
         >
           View Roles
