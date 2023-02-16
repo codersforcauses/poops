@@ -23,21 +23,21 @@ function Summary() {
       <table className='w-full'>
         <tbody>
           <tr>
-            <td className='pr-2'>
+            <td>
               <Statistics
                 title='Number of Visits'
                 data={numVisits.toString()}
               />
             </td>
-            <td className='pl-2'>
+            <td>
               <Statistics title='Distance Walked' data={walkedDist + ' km'} />
             </td>
           </tr>
           <tr>
-            <td className='pr-2'>
+            <td>
               <Statistics title='Number of Hours' data={numHours.toString()} />
             </td>
-            <td className='pl-2'>
+            <td>
               <Statistics
                 title='Distance Commuted'
                 data={commutedDist + ' km'}
