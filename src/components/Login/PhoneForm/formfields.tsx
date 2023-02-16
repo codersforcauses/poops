@@ -48,17 +48,18 @@ const FormFields = () => {
       return setError?.('phoneNumber', { message: 'Invalid phone number' })
 
     if (recaptcha) {
-      signInWithPhoneNumber(auth, phoneNumber, recaptcha)
-        .then((confirmationResult) => {
-          setOtpShown(true)
-          setResult(confirmationResult)
-        })
-        .catch((error: FirebaseError) => {
+      try {
+        const result = await signInWithPhoneNumber(auth, phoneNumber, recaptcha)
+        setResult(result)
+        setOtpShown(true)
+      } catch (error: unknown) {
+        if (error instanceof FirebaseError) {
           console.log(`Phone login failed with error code: ${error.code}`)
 
           if (error.code === 'auth/invalid-phone-number')
             setError?.('phoneNumber', { message: 'Invalid phone number' })
-        })
+        }
+      }
     }
   }
 

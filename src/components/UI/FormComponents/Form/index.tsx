@@ -47,7 +47,9 @@ const Form = <T extends FieldValues>({
   return (
     <HookFormProvider {...methods}>
       <form
-        onSubmit={methods.handleSubmit((data) => onSubmit(data as T))} // :(
+        onSubmit={methods.handleSubmit(
+          (data) => onSubmit && onSubmit(data as T)
+        )} // :(
         className={`flex flex-col space-y-4 ${className || 'mt-4'}`}
       >
         <FormProvider value={value}>{children}</FormProvider>
@@ -61,5 +63,5 @@ export default Form
 interface HookFormProps<T extends FieldValues> extends UseFormProps {
   disabled?: boolean
   className?: string
-  onSubmit: SubmitHandler<T>
+  onSubmit?: SubmitHandler<T>
 }
