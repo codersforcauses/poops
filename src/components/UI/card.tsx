@@ -7,7 +7,7 @@ interface CardProps extends PropsWithChildren {
 
 const Card = ({ title, fullWidth, ...props }: CardProps) => {
   return (
-    <div className='flex justify-center'>
+    <div className='container flex justify-center self-center'>
       <div
         className={`rounded-lg bg-zinc-100 py-4 px-5 text-center shadow-lg sm:py-4 ${
           fullWidth ? 'w-full' : 'null'

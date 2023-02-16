@@ -1,5 +1,5 @@
 import { ReactElement } from 'react'
-import Link from 'next/link'
+import { useRouter } from 'next/router'
 
 import Summary from '@/components/Home/summary'
 import Layout from '@/components/Layout'
@@ -12,7 +12,7 @@ import { NextPageWithLayout } from './_app'
 
 const Home: NextPageWithLayout = () => {
   const { currentUser } = useAuth()
-
+  const router = useRouter()
   const { data: tempUser } = useUser()
 
   const welcomeMessage = currentUser
@@ -23,16 +23,13 @@ const Home: NextPageWithLayout = () => {
     <div className='main-style'>
       <div className='h-full bg-[url(/images/dog-home.png)] bg-contain bg-fixed bg-[left_50%_top_calc(100%-4rem)] bg-no-repeat'>
         <div className='h-[calc(max-content +4rem)] m-auto flex w-screen flex-col'>
-          <div className='flex flex-col px-4 '>
-            <h1 className='py-3 text-center text-3xl'>{welcomeMessage}</h1>
+          <div className='mx-auto flex flex-col gap-4 py-4'>
+            <h1 className='text-center text-3xl'>{welcomeMessage}</h1>
             <Summary />
-            <br />
-            <div className='flex flex-col justify-center'>
-              <Link href='visit/set'>
-                <a className='flex justify-center'>
-                  <Button size='large'>START VISIT</Button>
-                </a>
-              </Link>
+            <div className='flex justify-center'>
+              <Button size='large' onClick={() => router.push('/visit/set')}>
+                START VISIT
+              </Button>
             </div>
           </div>
         </div>

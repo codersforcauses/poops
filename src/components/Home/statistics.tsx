@@ -8,7 +8,7 @@ interface SummaryStatistics {
 
 function Statistics(props: SummaryStatistics) {
   return (
-    <div>
+    <div className='p-2'>
       <p className='mt-2 text-lg'>{props.title}</p>
       <Tooltip tooltip={props.tooltip}>
         <p className='text-3xl text-primary-dark'>{props.data}</p>
