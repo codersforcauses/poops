@@ -7,6 +7,8 @@ import {
   FirestoreError,
   getDoc,
   getDocs,
+  orderBy,
+  query,
   writeBatch
 } from 'firebase/firestore'
 
@@ -23,7 +25,8 @@ export const useIncidents = () => {
     try {
       if (currentUser?.uid) {
         const incidentsRef = collection(db, 'incidents')
-        const incidentsDocs = await getDocs(incidentsRef)
+        const q = query(incidentsRef, orderBy('createdAt', 'desc'))
+        const incidentsDocs = await getDocs(q)
         return incidentsDocs.docs.map(
           (doc) => ({ ...doc.data(), docId: doc.id } as Incident)
         )
