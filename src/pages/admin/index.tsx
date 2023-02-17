@@ -20,7 +20,7 @@ const Admin = () => {
         const userDocData = userDocSnapshot.data()
         setUserDoc(userDocData)
       } catch (error) {
-        console.log('Error getting document:', error)
+        console.error('Error getting document:', error)
         setUserDoc(error as DocumentData)
       }
     }
@@ -55,6 +55,14 @@ const Admin = () => {
           onClick={() => Router.push('/admin/incidents')}
         >
           View Incidents
+        </Button>
+        <Button
+          size='medium'
+          intent='primary'
+          type='button'
+          onClick={() => Router.push('/admin/concerns')}
+        >
+          View Concerns
         </Button>
         <Button
           size='medium'

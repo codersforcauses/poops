@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { useQuery } from '@tanstack/react-query'
 import {
   collection,
