@@ -8,11 +8,13 @@ import {
   collection,
   deleteDoc,
   doc,
+  DocumentData,
   FirestoreError,
   getDoc,
   getDocs,
   limit,
   orderBy,
+  Query,
   query,
   setDoc,
   startAfter
@@ -33,7 +35,7 @@ export const useVisits = () => {
     if (!currentUser?.uid) return
     try {
       const visitsRef = collection(db, 'users', currentUser.uid, 'visits')
-      let q = undefined
+      let q: Query<DocumentData> | undefined = undefined
 
       if (lastDocId === undefined) {
         // First query
