@@ -54,8 +54,6 @@ const FormFields = () => {
         setOtpShown(true)
       } catch (error: unknown) {
         if (error instanceof FirebaseError) {
-          console.log(`Phone login failed with error code: ${error.code}`)
-
           if (error.code === 'auth/invalid-phone-number')
             setError?.('phoneNumber', { message: 'Invalid phone number' })
         }
