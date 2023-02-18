@@ -146,44 +146,29 @@ const VolunteerStatsTable = () => {
               <table className='border-4 border-primary-dark'>
                 <thead>
                   <tr>
-                    <th />
-                    {headers.map((header) => (
-                      <th
-                        key={header}
-                        className='border-4 border-primary-dark p-6 text-xl font-normal'
-                      >
-                        {header}
-                      </th>
-                    ))}
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
+                    <th></th>
                     <th className='border-4 border-primary-dark p-6 text-xl font-normal'>
                       Total
                     </th>
-                    {totalStats.map((stat, i) => (
-                      <td
-                        key={`${i}:${stat}`}
-                        className='border-4 border-primary-dark p-10 text-3xl text-primary-dark'
-                      >
-                        {stat}
-                      </td>
-                    ))}
-                  </tr>
-                  <tr>
                     <th className='border-4 border-primary-dark p-6 text-xl font-normal'>
                       Average (per volunteer)
                     </th>
-                    {avgStats.map((stat) => (
-                      <td
-                        key={stat}
-                        className='border-4 border-primary-dark p-10 text-3xl text-primary-dark'
-                      >
-                        {stat}
-                      </td>
-                    ))}
                   </tr>
+                </thead>
+                <tbody>
+                  {headers.map((header, i) => (
+                    <tr key={i}>
+                      <th className='border-4 border-primary-dark p-6 text-xl font-normal'>
+                        {header}
+                      </th>
+                      <td className='border-4 border-primary-dark p-10 text-3xl text-primary-dark'>
+                        {totalStats[i]}
+                      </td>
+                      <td className='border-4 border-primary-dark p-10 text-3xl text-primary-dark'>
+                        {avgStats[i]}
+                      </td>
+                    </tr>
+                  ))}
                 </tbody>
               </table>
             </div>
