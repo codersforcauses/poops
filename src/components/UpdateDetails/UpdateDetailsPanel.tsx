@@ -20,7 +20,6 @@ declare global {
 import { useRouter } from 'next/router'
 
 import SubmitButton from '@/components/UpdateDetails/SubmitButton'
-import PhoneNumberInput from '@/components/UpdateDetails/ValidatePhoneNumber'
 
 type ContactItemProps = {
   contact: Contact
@@ -53,11 +52,6 @@ function UpdateDetailsPanel({ contact }: ContactItemProps) {
   }
   const editPhoneNumber = (event: React.ChangeEvent<HTMLInputElement>) => {
     setPhoneNumber(event.target.value)
-  }
-
-  // debug only
-  const handleTest = (phoneNumber: string) => {
-    console.log(`${phoneNumber}`)
   }
 
   const handleDocUpdate = async (currentUser: User) => {
@@ -159,7 +153,7 @@ function UpdateDetailsPanel({ contact }: ContactItemProps) {
       <div className='phone-input'>
         {!phoneNumber ? (
           <div>
-            <div className='italic text-primary'>*Phone required</div>
+            <div className='italic text-primary'>*Valid phone required</div>
             <input
               className='h-10 w-full rounded-lg border border-primary bg-transparent pl-2 text-sm'
               value={phoneNumber}
@@ -182,9 +176,6 @@ function UpdateDetailsPanel({ contact }: ContactItemProps) {
             />
           </div>
         )}
-        <div>
-          <PhoneNumberInput onSubmit={handleTest} />
-        </div>
       </div>
 
       <div id='recaptcha-container'></div>
