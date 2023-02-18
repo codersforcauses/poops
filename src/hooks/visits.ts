@@ -1,13 +1,23 @@
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import {
+  QueryFunctionContext,
+  useInfiniteQuery,
+  useMutation,
+  useQueryClient
+} from '@tanstack/react-query'
 import {
   collection,
   deleteDoc,
   doc,
+  DocumentData,
   FirestoreError,
+  getDoc,
   getDocs,
+  limit,
   orderBy,
+  Query,
   query,
-  setDoc
+  setDoc,
+  startAfter
 } from 'firebase/firestore'
 
 import { db } from '@/components/Firebase/init'
@@ -16,28 +26,55 @@ import { useAuth } from '@/context/Firebase/Auth/context'
 import { canDelete } from '@/hooks/utils'
 import { Visit } from '@/types/types'
 
+const PAGE_SIZE = 20
+
 export const useVisits = () => {
   const { currentUser } = useAuth()
 
-  const queryFn = async () => {
-    if (currentUser?.uid) {
-      try {
-        const visitsRef = collection(db, 'users', currentUser.uid, 'visits')
-        const q = query(visitsRef, orderBy('startTime', 'desc'))
-        const visitsDocs = await getDocs(q)
-        return visitsDocs.docs.map(
-          (doc) => ({ ...doc.data(), docId: doc.id } as Visit)
+  const queryFn = async ({ pageParam: lastDocId }: QueryFunctionContext) => {
+    if (!currentUser?.uid) return
+    try {
+      const visitsRef = collection(db, 'users', currentUser.uid, 'visits')
+      let q: Query<DocumentData> | undefined = undefined
+
+      if (lastDocId === undefined) {
+        // First query
+        q = query(visitsRef, orderBy('startTime', 'desc'), limit(PAGE_SIZE))
+      } else {
+        // Successive queries
+        const docRef = doc(db, 'users', currentUser.uid, 'visits', lastDocId)
+        const docSnap = await getDoc(docRef)
+
+        q = query(
+          visitsRef,
+          orderBy('startTime', 'desc'),
+          startAfter(docSnap),
+          limit(PAGE_SIZE)
         )
-      } catch (err: unknown) {
-        //#region  //*=========== For logging ===========
-        if (err instanceof FirestoreError) {
-          console.error(err.message)
-        } else console.error(err)
-        //#endregion  //*======== For logging ===========
       }
+
+      const querySnapshot = await getDocs(q)
+      return querySnapshot.docs.map(
+        (doc) => ({ ...doc.data(), docId: doc.id } as Visit)
+      )
+    } catch (err: unknown) {
+      //#region  //*=========== For logging ===========
+      if (err instanceof FirestoreError) {
+        console.error(err.message)
+      } else console.error(err)
+      //#endregion  //*======== For logging ===========
     }
   }
-  return useQuery(['visits'], queryFn)
+
+  return useInfiniteQuery({
+    queryKey: ['visits'],
+    queryFn,
+    getNextPageParam: (lastPage, _allPages): unknown | undefined => {
+      return lastPage?.length !== PAGE_SIZE
+        ? undefined
+        : lastPage?.at(lastPage.length - 1)?.docId
+    }
+  })
 }
 
 export const useMutateVisits = () => {
@@ -73,6 +110,7 @@ export const useMutateVisits = () => {
 
   const onSuccess = () => {
     queryClient.invalidateQueries({ queryKey: ['visits'] })
+    queryClient.invalidateQueries({ queryKey: ['user'] })
     setAlert({
       variant: AlertVariant.info,
       title: 'Success!',

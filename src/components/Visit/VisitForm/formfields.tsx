@@ -22,7 +22,9 @@ const FormFields = () => {
 
   const fillValues = (data: OnChangeValue<SelectOption<ClientInfo>, false>) => {
     const clientName = data?.label
-    const latestVisit = visits?.find((v) => v.clientName == clientName)
+    const latestVisit = visits?.pages
+      .flatMap((page) => page)
+      .find((v) => v?.clientName == clientName)
 
     if (!latestVisit) return
     const d: Partial<FormValues> = {
