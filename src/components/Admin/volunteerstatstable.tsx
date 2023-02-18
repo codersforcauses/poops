@@ -18,12 +18,7 @@ interface FormValues {
 const YEAR_IN_MS = 31556952000
 const queryKey = 'mainVolunteerStatsTable'
 
-const headers = [
-  'Number of Visits',
-  'Walk Duration (mins)',
-  'Walk Distance (kms)',
-  'Commute Distance (kms)'
-]
+const headers = ['Visit Count', 'Walk (mins)', 'Walk (kms)', 'Commute (kms)']
 
 const VolunteerStatsTable = () => {
   const now = Date.now()
@@ -74,7 +69,7 @@ const VolunteerStatsTable = () => {
               }
             }, [from, to])}
           >
-            <div className='flex flex-row justify-center gap-4 p-2 text-left'>
+            <div className='flex flex-col justify-center gap-4 p-2 text-left'>
               <TextField
                 className='col-span-2 m-2'
                 label='From:'
@@ -142,29 +137,32 @@ const VolunteerStatsTable = () => {
               <Spinner style='h-10 w-10 fill-primary-dark text-gray-200 m-4' />
             </div>
           ) : (
-            <div className='w-full text-center'>
-              <table className='border-4 border-primary-dark'>
+            <div className='m-auto flex flex-col items-center justify-center'>
+              <div className='mb-2 p-2 text-lg'>
+                Total Number of Volunteers: {volunteerStats?.volunteerCount}
+              </div>
+              <table className='border-2 border-primary-dark'>
                 <thead>
                   <tr>
                     <th></th>
-                    <th className='border-4 border-primary-dark p-6 text-xl font-normal'>
+                    <th className='text-md border-2 border-primary-dark p-2 font-normal md:text-lg lg:text-xl'>
                       Total
                     </th>
-                    <th className='border-4 border-primary-dark p-6 text-xl font-normal'>
-                      Average (per volunteer)
+                    <th className='text-md border-2 border-primary-dark p-2 font-normal md:text-lg lg:text-xl'>
+                      Avg (per volunteer)
                     </th>
                   </tr>
                 </thead>
                 <tbody>
                   {headers.map((header, i) => (
                     <tr key={i}>
-                      <th className='border-4 border-primary-dark p-6 text-xl font-normal'>
+                      <th className='text-md border-2 border-primary-dark p-2 font-normal md:text-lg lg:text-xl'>
                         {header}
                       </th>
-                      <td className='border-4 border-primary-dark p-10 text-3xl text-primary-dark'>
+                      <td className='border-2 border-primary-dark p-2 text-lg text-primary-dark md:text-xl lg:text-2xl'>
                         {totalStats[i]}
                       </td>
-                      <td className='border-4 border-primary-dark p-10 text-3xl text-primary-dark'>
+                      <td className='border-2 border-primary-dark p-2 text-lg text-primary-dark md:text-xl lg:text-2xl'>
                         {avgStats[i]}
                       </td>
                     </tr>
@@ -175,13 +173,6 @@ const VolunteerStatsTable = () => {
           )}
         </div>
       </Card>
-
-      <div className='mt-4 flex items-baseline gap-2 p-2 text-3xl'>
-        <div>Total Number of Volunteers: </div>
-        <div className='text-primary-dark'>
-          {volunteerStats?.volunteerCount}
-        </div>
-      </div>
     </div>
   )
 }
