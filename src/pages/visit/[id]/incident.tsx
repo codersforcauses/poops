@@ -11,7 +11,6 @@ import FormField from '@/components/Visit/formfield'
 import { useAuth } from '@/context/Firebase/Auth/context'
 import { useMutateIncidents } from '@/hooks/incidents'
 import { UploadImage, UploadImageInterface } from '@/lib/uploadImage'
-import { Incident as IncidentType } from '@/types/types'
 
 const Incident = () => {
   const { currentUser } = useAuth()
@@ -47,21 +46,6 @@ const Incident = () => {
   const handleSubmit = (click: FormEvent<HTMLFormElement>) => {
     click.preventDefault()
     if (currentUser !== null) {
-      // const data: Incident = {
-      //   userId: currentUser.uid,
-      //   userName: userName,
-      //   clientName: clientName,
-      //   visitId: docId,
-      //   visitTime: time,
-      //   userEmail: email,
-      //   petName: petName,
-      //   reportTime: time,
-      //   detail: notes,
-      //   createdAt: Timestamp.fromDate(new Date())
-      // }
-      // mutateIncidents(data)
-
-      // if (image !== undefined) {
       const imageData: UploadImageInterface = {
         userId: currentUser.uid,
         userName: userName,
@@ -77,7 +61,6 @@ const Incident = () => {
         folder: 'incidents'
       }
       UploadImage(imageData)
-      // }
       router.push('/visit')
     }
   }
