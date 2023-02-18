@@ -18,7 +18,12 @@ interface FormValues {
 const YEAR_IN_MS = 31556952000
 const queryKey = 'mainVolunteerStatsTable'
 
-const headers = ['Visit Count', 'Walk (mins)', 'Walk (kms)', 'Commute (kms)']
+const headers = [
+  'Visit Count',
+  'Walk Duration (mins)',
+  'Walk Distance (kms)',
+  'Commute Distance (kms)'
+]
 
 const VolunteerStatsTable = () => {
   const now = Date.now()
@@ -149,7 +154,7 @@ const VolunteerStatsTable = () => {
                       Total
                     </th>
                     <th className='text-md border-2 border-primary-dark p-2 font-normal md:text-lg lg:text-xl'>
-                      Avg (per volunteer)
+                      Average (per volunteer)
                     </th>
                   </tr>
                 </thead>

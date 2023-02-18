@@ -11,20 +11,18 @@ import { NextPageWithLayout } from '@/pages/_app'
 const Stats: NextPageWithLayout = () => {
   return (
     <div className='main-style container m-4 mx-auto flex flex-col gap-4'>
-      <div>
+      <div className='flex-1'>
         <Button
           size='medium'
-          intent='primary'
           type='button'
-          className='m-3'
           onClick={() => Router.push('/admin')}
         >
           Back
         </Button>
+        <h1 className='m-3 flex-1 text-center text-3xl font-bold text-primary-dark'>
+          Admin Summary Dashboard
+        </h1>
       </div>
-      <h1 className='mx-auto text-center text-4xl font-bold text-primary-dark'>
-        Admin Summary Dashboard
-      </h1>
       <StatsBreakdown />
       <div className='mb-20'>
         <VolunteerStatsTable />
