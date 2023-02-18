@@ -10,10 +10,8 @@ interface ReportListProps {
   visitId: string
 }
 
-const visitId = 'saua9FeILODssTklYibl'
-
 export const ReportList = (props: ReportListProps) => {
-  const { data: incidents } = useIncidents(visitId)
+  const { data: incidents } = useIncidents(props.visitId)
   console.log(incidents)
 
   const clientNameFilter = (report: Incident) =>

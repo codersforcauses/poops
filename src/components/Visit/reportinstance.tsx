@@ -1,10 +1,9 @@
 import { useState } from 'react'
 import { ChevronDownIcon } from '@heroicons/react/24/outline'
 
+import ReportInfo from '@/components/Visit/readreportinstance'
 import { Incident } from '@/types/types'
 import { humanizeTimestamp } from '@/utils'
-
-import ReportInfo from '@/components/Visit/readreportinstance'
 
 const ReportInstance = (props: Incident) => {
   const [isOpen, setIsOpen] = useState(false)

@@ -1,5 +1,6 @@
 import { useRouter } from 'next/router'
 import { serverTimestamp, Timestamp } from 'firebase/firestore'
+import moment from 'moment';
 
 import Button from '@/components/UI/button'
 import { Incident } from '@/types/types'
@@ -23,7 +24,6 @@ const ReportInfo = ({
 
   if (docId === undefined) return null
 
-  console.log(reportTime)
 
   return (
     <>
@@ -39,7 +39,7 @@ const ReportInfo = ({
           </div>
           <div className='space-x-1'>
             <span className='font-semibold'>Report Date & Time:</span>
-            <span>{reportTime.toString()}</span>
+            <span>{moment(reportTime.toDate()).format("YYYY-MM-DD HH:mm:ss").toString()}</span>
           </div>
           <div>
             <div className='font-semibold'>Desscription:</div>

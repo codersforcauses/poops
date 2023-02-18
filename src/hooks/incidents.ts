@@ -17,7 +17,7 @@ import { AlertVariant, useAlert } from '@/context/AlertContext'
 import { useAuth } from '@/context/Firebase/Auth/context'
 import { Incident } from '@/types/types'
 
-export const useIncidents = (visitId: string) => {
+export const useIncidents = (visitId: string ) => {
   const { currentUser } = useAuth()
   const queryFn = async () => {
     if (currentUser?.uid) {
@@ -30,7 +30,7 @@ export const useIncidents = (visitId: string) => {
           visitId,
           'incidents'
         )
-        const q = query(incidentsRef, orderBy('time', 'desc'))
+        const q = query(incidentsRef, orderBy('reportTime', 'desc'))
         const incidentsDocs = await getDocs(q)
         return incidentsDocs.docs.map(
           (doc) => ({ ...doc.data(), docId: doc.id } as Incident)

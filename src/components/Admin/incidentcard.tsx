@@ -6,17 +6,17 @@ const IncidentCard = (props: Incident) => {
       <div className='flex justify-between'>
         <div className='font-bold'>
           <p className='font-bold text-primary'>
-            {props.clientName} {props.time}
+            {props.clientName} {props.reportTime}
           </p>
           <p className='text-sm'>{props.userName}</p>
         </div>
       </div>
-      <div>{props.email}</div>
-      <div>Report date: {props.createdAt}</div>
+      <div>{props.userEmail}</div>
+      <div>Report date: {props.reportTime}</div>
       <div>Visit ID: {props.visitId}</div>
       <div>Client: {props.clientName}</div>
       <div>Pet: {props.petName}</div>
-      <div>{props.details}</div>
+      <div>{props.detail}</div>
     </div>
   )
 }
