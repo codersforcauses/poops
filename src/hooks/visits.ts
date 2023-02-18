@@ -8,13 +8,11 @@ import {
   collection,
   deleteDoc,
   doc,
-  DocumentData,
   FirestoreError,
   getDoc,
   getDocs,
   limit,
   orderBy,
-  Query,
   query,
   setDoc,
   startAfter
@@ -28,29 +26,27 @@ import { Visit } from '@/types/types'
 
 const PAGE_SIZE = 20
 
-export const useVisits = () => {
+export const useVisits = (isSearch: boolean) => {
   const { currentUser } = useAuth()
 
   const queryFn = async ({ pageParam: lastDocId }: QueryFunctionContext) => {
     if (!currentUser?.uid) return
     try {
       const visitsRef = collection(db, 'users', currentUser.uid, 'visits')
-      let q: Query<DocumentData> | undefined = undefined
+      let q = query(visitsRef, orderBy('startTime', 'desc'))
 
       if (lastDocId === undefined) {
         // First query
-        q = query(visitsRef, orderBy('startTime', 'desc'), limit(PAGE_SIZE))
+        // Searches are not paginated
+        if (!isSearch) {
+          q = query(q, limit(PAGE_SIZE))
+        }
       } else {
         // Successive queries
         const docRef = doc(db, 'users', currentUser.uid, 'visits', lastDocId)
         const docSnap = await getDoc(docRef)
 
-        q = query(
-          visitsRef,
-          orderBy('startTime', 'desc'),
-          startAfter(docSnap),
-          limit(PAGE_SIZE)
-        )
+        q = query(q, startAfter(docSnap), limit(PAGE_SIZE))
       }
 
       const querySnapshot = await getDocs(q)
@@ -67,9 +63,13 @@ export const useVisits = () => {
   }
 
   return useInfiniteQuery({
-    queryKey: ['visits'],
+    queryKey: ['visits', isSearch],
     queryFn,
     getNextPageParam: (lastPage, _allPages): unknown | undefined => {
+      if (isSearch) {
+        return undefined
+      }
+
       return lastPage?.length !== PAGE_SIZE
         ? undefined
         : lastPage?.at(lastPage.length - 1)?.docId

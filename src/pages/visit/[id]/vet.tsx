@@ -7,7 +7,7 @@ import { useVisits } from '@/hooks/visits'
 
 const Vet = () => {
   // getting specific visit info
-  const { data: visits } = useVisits()
+  const { data: visits } = useVisits(false)
   const router = useRouter()
   const { id: queryId } = router.query
   const visitId =
