@@ -26,8 +26,8 @@
 }
 
 .main-style {
-  /* 4rem is bottom nav height */
-  height: calc(100vh - 4rem);
+  /* 5rem is bottom nav height */
+  height: calc(100vh - 5rem);
   padding-bottom: 4rem;
   overflow-y: scroll;
   overflow-x: hidden;
@@ -36,4 +36,35 @@
 .firebase-emulator-warning {
   opacity: 0.15;
   pointer-events: none;
+}
+
+.phone-input input[type='number'] {
+  -moz-appearance: textfield;
+}
+
+.phone-input input::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+}
+
+.phone-input input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
+
+.PhoneInputCountry {
+  padding-top: 0.5rem /* 8px */;
+  padding-bottom: 0.5rem /* 8px */;
+  padding-left: 0.75rem /* 12px */;
+  padding-right: 0rem;
+  border-top-left-radius: 2px;
+  border-bottom-left-radius: 2px;
+}
+
+.PhoneInputInput {
+  width: 100%;
+  padding-top: 0.5rem /* 8px */;
+  padding-right: 0.75rem /* 12px */;
+  padding-bottom: 0.5rem /* 8px */;
+  padding-left: 0.75rem /* 12px */;
+  border-top-right-radius: 2px;
+  border-bottom-right-radius: 2px;
 }

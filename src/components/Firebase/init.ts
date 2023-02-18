@@ -1,5 +1,3 @@
-/* eslint-disable no-console */
-
 import { FirebaseApp, getApp, getApps, initializeApp } from 'firebase/app'
 import { Auth, connectAuthEmulator, getAuth } from 'firebase/auth'
 import {
@@ -44,25 +42,23 @@ if (clientSide) {
   }
 
   // Enables offline support for firestore
-  if (!isEmu)
-    // disable persistence for emus because it desyncs with firestore when db is cleared
-    enableMultiTabIndexedDbPersistence(db).catch((err) => {
-      if (err.code == 'failed-precondition') {
-        // Multiple tabs open, persistence can only be enabled
-        // in one tab at a a time.
-        // ...
-        console.log(
-          'The app is already open in another browser tab and multi-tab is not enabled'
-        )
-      } else if (err.code == 'unimplemented') {
-        // The current browser does not support all of the
-        // features required to enable persistence
-        // ...
-        console.log(
-          'The current browser does not support all of the features required to enable persistence'
-        )
-      }
-    })
+  enableMultiTabIndexedDbPersistence(db).catch((err) => {
+    if (err.code == 'failed-precondition') {
+      // Multiple tabs open, persistence can only be enabled
+      // in one tab at a a time.
+      // ...
+      console.error(
+        'The app is already open in another browser tab and multi-tab is not enabled'
+      )
+    } else if (err.code == 'unimplemented') {
+      // The current browser does not support all of the
+      // features required to enable persistence
+      // ...
+      console.error(
+        'The current browser does not support all of the features required to enable persistence'
+      )
+    }
+  })
   // Subsequent queries will use persistence, if it was enabled successfully
 }
 

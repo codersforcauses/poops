@@ -1,41 +1,48 @@
-import { NextPage } from 'next'
 import Image from 'next/image'
+import { useAtomValue } from 'jotai'
 
-import LoginPanel from '@/components/Login/LoginPanel'
+import { panelAtom } from '@/atoms/login'
+import LoginPanel from '@/components/Login/Panels/LoginPanel'
+import PhonePanel from '@/components/Login/Panels/PhonePanel'
 import { withPublic } from '@/components/PrivateRoute'
 import { useAuth } from '@/context/Firebase/Auth/context'
 
-const Login: NextPage = () => {
+import { NextPageWithLayout } from './_app'
+
+const Login: NextPageWithLayout = () => {
   const { logOut, currentUser } = useAuth()
+
+  const panel = useAtomValue(panelAtom)
+
   return (
-    <>
+    <div className='h-screen w-screen overflow-y-scroll'>
       <title>Login</title>
-      <div className='animate-text bg-gradient-to-b from-zinc-200 via-zinc-100 to-white'>
-        <div className='m-auto max-w-sm p-10'>
-          <Image
-            src='/images/poops-logo-transparent.png'
-            width={36}
-            height={36}
-            layout='responsive'
-            alt='POOPS logo'
-            className='rounded-full'
-          ></Image>
-        </div>
-
-        <div className='p-3 text-center text-xl font-bold'>Sign In</div>
-
-        <div className='text-x1 text-center font-sans'>
-          Use any one of your profiles
-        </div>
-
-        <LoginPanel
-          linkAccount={false}
-          displayGoogle={true}
-          displayFacebook={true}
-          displayMicrosoft={true}
+      <div className='mx-auto max-w-sm flex-col content-center justify-center gap-4 p-4'>
+        <Image
+          src='/images/poops-logo-transparent.png'
+          width={36}
+          height={36}
+          layout='responsive'
+          objectPosition='center'
+          alt='POOPS logo'
+          className='rounded-full p-10'
         />
+
+        <h1 className='p-3 text-center text-xl font-bold'>Sign In</h1>
+
+        {panel !== 'phone' ? (
+          <LoginPanel
+            linkAccount={false}
+            displayGoogle={true}
+            displayFacebook={true}
+            displayMicrosoft={true}
+            displayPhone={true}
+          />
+        ) : (
+          <PhonePanel />
+        )}
       </div>
-      {/* //! used for testing} */}
+      {/*! used for testing} */}
       <br />
       <br />
       {currentUser && (
@@ -44,7 +51,7 @@ const Login: NextPage = () => {
           <button onClick={() => logOut?.()}>logout</button>
         </div>
       )}
-    </>
+    </div>
   )
 }
 

@@ -15,7 +15,7 @@ module.exports = {
   ],
   rules: {
     'no-unused-vars': 'off',
-    'no-console': 'off',
+    'no-console': ['error', { allow: ['error'] }],
     '@typescript-eslint/explicit-module-boundary-types': 'off',
 
     'react/jsx-curly-brace-presence': [
@@ -25,7 +25,7 @@ module.exports = {
 
     //#region  //*=========== Unused Import ===========
     '@typescript-eslint/no-unused-vars': 'off',
-    'unused-imports/no-unused-imports': 'off',
+    'unused-imports/no-unused-imports': 'warn',
     'unused-imports/no-unused-vars': [
       'warn',
       {
