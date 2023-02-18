@@ -6,6 +6,8 @@ import {
   FirestoreError,
   getDoc,
   getDocs,
+  orderBy,
+  query,
   writeBatch
 } from 'firebase/firestore'
 
@@ -18,7 +20,8 @@ export const useVetConcerns = () => {
   const queryFn = async () => {
     try {
       const vetConcernsRef = collection(db, 'vet_concerns')
-      const vetConcernsDocs = await getDocs(vetConcernsRef)
+      const q = query(vetConcernsRef, orderBy('createdAt', 'desc'))
+      const vetConcernsDocs = await getDocs(q)
       return vetConcernsDocs.docs.map(
         (doc) => ({ ...doc.data(), docId: doc.id } as VetConcern)
       )

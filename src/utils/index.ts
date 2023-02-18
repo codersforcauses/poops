@@ -1,12 +1,5 @@
 import { Timestamp } from 'firebase/firestore'
 
-export const formatNumber = (value: string) => {
-  if (isNaN(parseFloat(value))) {
-    return 0
-  }
-  return parseFloat(value)
-}
-
 export const padNumber = (value: number) => {
   return value.toString().padStart(2, '0')
 }

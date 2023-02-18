@@ -13,7 +13,6 @@ import { NextPageWithLayout } from './_app'
 
 const Home: NextPageWithLayout = () => {
   const { currentUser } = useAuth()
-
   const { data: tempUser } = useUser()
 
   const { addDummyContacts, addDummyVisits } = useDummyData()
@@ -26,8 +25,8 @@ const Home: NextPageWithLayout = () => {
     <div className='main-style'>
       <div className='h-full bg-[url(/images/dog-home.png)] bg-contain bg-fixed bg-[left_50%_top_calc(100%-4rem)] bg-no-repeat'>
         <div className='h-[calc(max-content +4rem)] m-auto flex w-screen flex-col'>
-          <div className='flex flex-col px-4 '>
-            <h1 className='py-3 text-center text-3xl'>{welcomeMessage}</h1>
+          <div className='mx-auto flex flex-col gap-4 py-4'>
+            <h1 className='text-center text-3xl'>{welcomeMessage}</h1>
             <Summary />
             <div className='flex flex-col justify-center'>
               <Link href='visit/set'>
