@@ -9,15 +9,17 @@ import ReportInstance from './reportinstance'
 interface ReportListProps {
   searchQuery: string
   visitId: string
-  vet: boolean
 }
 
 export const ReportList = (props: ReportListProps) => {
-  const [incidentsData, vetConcernsData] = [useIncidents(props.visitId), useVetConcerns(props.visitId)]
+  const [incidentsData, vetConcernsData] = [
+    useIncidents(props.visitId),
+    useVetConcerns(props.visitId)
+  ]
   const reports = [
     ...(incidentsData?.data || []),
     ...(vetConcernsData?.data || [])
-  ];  
+  ]
   console.log(reports)
 
   const clientNameFilter = (reports: Incident | VetConcern) =>

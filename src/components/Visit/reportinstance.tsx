@@ -14,8 +14,15 @@ const ReportInstance = (props: Incident | VetConcern) => {
     <div className='m-2 flex flex-col rounded-xl bg-gray-50 p-4 shadow-lg'>
       <div className='flex justify-between'>
         <div className='font-bold'>
-          <p className='text-primary'>{moment(props.reportTime.toDate()).format("YYYY-MM-DD HH:mm:ss").toString()}</p>
-          <p className='text-sm'> {!props.vetName ? 'Incident Report' : 'Vet Concern'}</p>
+          <p className='text-primary'>
+            {moment(props.reportTime.toDate())
+              .format('YYYY-MM-DD HH:mm:ss')
+              .toString()}
+          </p>
+          <p className='text-sm'>
+            {' '}
+            {!props.vetName ? 'Incident Report' : 'Vet Concern'}
+          </p>
         </div>
         <div>
           <ChevronDownIcon

@@ -17,7 +17,7 @@ import { AlertVariant, useAlert } from '@/context/AlertContext'
 import { useAuth } from '@/context/Firebase/Auth/context'
 import { Incident } from '@/types/types'
 
-export const useIncidents = ( visitId: string ) => {
+export const useIncidents = (visitId: string) => {
   const { currentUser } = useAuth()
   const queryFn = async () => {
     if (currentUser?.uid) {

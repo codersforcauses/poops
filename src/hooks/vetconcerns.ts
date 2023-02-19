@@ -12,7 +12,8 @@ import {
   orderBy,
   query,
   setDoc,
-  writeBatch} from 'firebase/firestore'
+  writeBatch
+} from 'firebase/firestore'
 
 import { db } from '@/components/Firebase/init'
 import { AlertVariant, useAlert } from '@/context/AlertContext'
@@ -20,8 +21,7 @@ import { useAuth } from '@/context/Firebase/Auth/context'
 import { VetConcern, Visit } from '@/types/types'
 import { humanizeTimestamp } from '@/utils'
 
-
-export const useVetConcerns = ( visitId: string  ) => {
+export const useVetConcerns = (visitId: string) => {
   const { currentUser } = useAuth()
   const queryFn = async () => {
     if (currentUser?.uid) {
@@ -32,7 +32,8 @@ export const useVetConcerns = ( visitId: string  ) => {
           currentUser.uid,
           'visits',
           visitId,
-          'vet_concerns')
+          'vet_concerns'
+        )
         const q = query(vetConcernsRef, orderBy('reportTime', 'desc'))
         const vetConcernsDocs = await getDocs(q)
         return vetConcernsDocs.docs.map(
@@ -55,7 +56,9 @@ export const useMutateVetConcerns = () => {
   const queryClient = useQueryClient()
   const { setAlert } = useAlert()
 
-  const mutationFn = async (vetConcern: VetConcern & { deleteDoc?: boolean }) => {
+  const mutationFn = async (
+    vetConcern: VetConcern & { deleteDoc?: boolean }
+  ) => {
     try {
       if (currentUser?.uid) {
         const { docId: vetConcernId, ...vetConcernMut } = vetConcern
@@ -64,20 +67,20 @@ export const useMutateVetConcerns = () => {
         const docRef = vetConcernId
           ? doc(collectionRef, vetConcernId)
           : doc(collectionRef)
-          if (vetConcernMut.deleteDoc) {
-            await deleteDoc(docRef)
-          } else {
-            await setDoc(docRef, vetConcernMut, { merge: true })
-          }
+        if (vetConcernMut.deleteDoc) {
+          await deleteDoc(docRef)
+        } else {
+          await setDoc(docRef, vetConcernMut, { merge: true })
         }
-      } catch (err: unknown) {
-        console.log(err)
-        //#region  //*=========== For logging ===========
-        if (err instanceof FirestoreError) {
-          console.error(err.message)
-        } else console.error(err)
-        //#endregion  //*======== For logging ===========
       }
+    } catch (err: unknown) {
+      console.log(err)
+      //#region  //*=========== For logging ===========
+      if (err instanceof FirestoreError) {
+        console.error(err.message)
+      } else console.error(err)
+      //#endregion  //*======== For logging ===========
+    }
   }
 
   const onSuccess = () => {

@@ -1,7 +1,7 @@
-import React, { useEffect,useState } from 'react';
+import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import { serverTimestamp, Timestamp } from 'firebase/firestore'
-import { getDownloadURL, ref } from "firebase/storage";
+import { getDownloadURL, ref } from 'firebase/storage'
 
 import { storage } from '@/components/Firebase/init'
 import { Incident, VetConcern } from '@/types/types'
@@ -21,12 +21,12 @@ const ReportInfo = ({
 }: ReportInfoProps) => {
   const router = useRouter()
   const params = `pets=${petName}&client=${clientName}&visitId=${docId}`
-  const [imageUrl, setImageUrl] = useState('');
+  const [imageUrl, setImageUrl] = useState('')
 
   useEffect(() => {
-    if (imageBucket === '') return; // Return early if imageBucket is empty
+    if (imageBucket === '') return // Return early if imageBucket is empty
     // Create a reference to the file
-    const storageRef = ref(storage, imageBucket);
+    const storageRef = ref(storage, imageBucket)
 
     // Get the download URL of the file
     getDownloadURL(storageRef)
@@ -60,7 +60,12 @@ const ReportInfo = ({
           <div>
             <div className='font-semibold'>Photo:</div>
             <div>
-              {imageUrl ? (<img src={imageUrl} alt='Download from Firestorage' />) : (<p>Loading image...</p>)}</div>
+              {imageUrl ? (
+                <img src={imageUrl} alt='Download from Firestorage' />
+              ) : (
+                <p>Loading image...</p>
+              )}
+            </div>
           </div>
         </div>
       </div>

@@ -24,7 +24,7 @@ const VetForm = () => {
 
   // const { id: queryId } = router.query
   // const visitId =
-    // queryId === undefined || Array.isArray(queryId) ? null : queryId
+  // queryId === undefined || Array.isArray(queryId) ? null : queryId
   // const visit = visits?.find((visit) => queryId && visit.docId === visitId)
 
   const [userName, setUserName] = useState(
@@ -34,13 +34,12 @@ const VetForm = () => {
     currentUser?.email ? currentUser?.email : ''
   )
   const [vetName, setVetName] = useState('')
-  const [time, setTime] = useState<Timestamp>(Timestamp.fromDate(new Date())) 
+  const [time, setTime] = useState<Timestamp>(Timestamp.fromDate(new Date()))
   const [notes, setNotes] = useState('')
 
   const router = useRouter()
   let { pets } = router.query
   const { client, visitId } = router.query
-  
 
   if (pets === undefined) pets = ''
   if (Array.isArray(pets)) pets = pets.length > 0 ? pets[0] : ''
@@ -140,7 +139,15 @@ const VetForm = () => {
   }
 
   const isSubmitEnabled = () => {
-    return currentUser?.uid && userName && email && petName && time && notes && vetName
+    return (
+      currentUser?.uid &&
+      userName &&
+      email &&
+      petName &&
+      time &&
+      notes &&
+      vetName
+    )
   }
 
   return (

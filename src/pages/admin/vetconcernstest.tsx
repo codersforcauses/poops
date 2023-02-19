@@ -1,8 +1,10 @@
 import { useVetConcerns } from '@/hooks/vetconcerns'
 import { formatTimestamp } from '@/utils'
 
+const visitId = ''
+
 const VetConcernsTest = () => {
-  const { data: vetConcerns } = useVetConcerns()
+  const { data: vetConcerns } = useVetConcerns(visitId)
 
   return (
     <div className='flex'>

@@ -10,9 +10,8 @@ import SearchBar from '@/components/Visit/searchbar'
 import { NextPageWithLayout } from '@/pages/_app'
 
 const Visit: NextPageWithLayout = () => {
-  
-  const router = useRouter();
-  const { visitId } = router.query;
+  const router = useRouter()
+  const visitId = router.query.visitId as string | undefined
 
   const [searchQuery, setSearchQuery] = useState('')
   return (
@@ -22,7 +21,7 @@ const Visit: NextPageWithLayout = () => {
           <SearchBar onChange={(event) => setSearchQuery(event.target.value)} />
           <AddButton />
         </div>
-        <ReportList searchQuery={searchQuery} visitId={visitId}/>
+        {visitId && <ReportList searchQuery={searchQuery} visitId={visitId} />}
       </div>
     </div>
   )
