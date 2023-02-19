@@ -1,5 +1,5 @@
 import { ReactElement } from 'react'
-import { useRouter } from 'next/router'
+import Link from 'next/link'
 
 import Summary from '@/components/Home/summary'
 import Layout from '@/components/Layout'
@@ -13,7 +13,6 @@ import { NextPageWithLayout } from './_app'
 
 const Home: NextPageWithLayout = () => {
   const { currentUser } = useAuth()
-  const router = useRouter()
   const { data: tempUser } = useUser()
 
   const { addDummyContacts, addDummyVisits } = useDummyData()
@@ -29,10 +28,30 @@ const Home: NextPageWithLayout = () => {
           <div className='mx-auto flex flex-col gap-4 py-4'>
             <h1 className='text-center text-3xl'>{welcomeMessage}</h1>
             <Summary />
-            <div className='flex justify-center'>
-              <Button size='large' onClick={() => router.push('/visit/set')}>
-                START VISIT
-              </Button>
+            <div className='flex flex-col justify-center'>
+              <Link href='visit/set'>
+                <a className='flex justify-center'>
+                  <Button size='large'>START VISIT</Button>
+                </a>
+              </Link>
+              {process.env.NODE_ENV === 'development' && (
+                <div className='mt-4 flex flex-col gap-2'>
+                  <Button
+                    size='small'
+                    intent='secondary'
+                    onClick={addDummyContacts}
+                  >
+                    Add Contacts
+                  </Button>
+                  <Button
+                    size='small'
+                    intent='secondary'
+                    onClick={addDummyVisits}
+                  >
+                    Add Visits
+                  </Button>
+                </div>
+              )}
             </div>
           </div>
         </div>

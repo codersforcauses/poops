@@ -13,7 +13,9 @@ const Vet = () => {
   const { id: queryId } = router.query
   const visitId =
     queryId === undefined || Array.isArray(queryId) ? null : queryId
-  const visit = visits?.find((visit) => queryId && visit.docId === visitId)
+  const visit = visits?.pages
+    .flatMap((page) => page)
+    .find((visit) => queryId && visit?.docId === visitId)
 
   return (
     <Modal title='Register a Vet Concern' backLink='/visit'>
