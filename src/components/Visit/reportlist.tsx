@@ -1,38 +1,44 @@
 import { XCircleIcon } from '@heroicons/react/24/outline'
 
 import { useIncidents } from '@/hooks/incidents'
-import { Incident } from '@/types/types'
+import { useVetConcerns } from '@/hooks/vetconcerns'
+import { Incident, VetConcern } from '@/types/types'
 
 import ReportInstance from './reportinstance'
 
 interface ReportListProps {
   searchQuery: string
   visitId: string
+  vet: boolean
 }
 
 export const ReportList = (props: ReportListProps) => {
-  const { data: incidents } = useIncidents(props.visitId)
-  console.log(incidents)
+  const [incidentsData, vetConcernsData] = [useIncidents(props.visitId), useVetConcerns(props.visitId)]
+  const reports = [
+    ...(incidentsData?.data || []),
+    ...(vetConcernsData?.data || [])
+  ];  
+  console.log(reports)
 
-  const clientNameFilter = (report: Incident) =>
-    report.clientName.toLowerCase().includes(props.searchQuery.toLowerCase())
+  const clientNameFilter = (reports: Incident | VetConcern) =>
+    reports.clientName.toLowerCase().includes(props.searchQuery.toLowerCase())
 
-  const petNameFilter = (report: Incident) =>
-    report.petName?.toLowerCase().includes(props.searchQuery.toLowerCase())
+  const petNameFilter = (reports: Incident | VetConcern) =>
+    reports.petName?.toLowerCase().includes(props.searchQuery.toLowerCase())
 
-  const searchFilter = (report: Incident) =>
+  const searchFilter = (reports: Incident | VetConcern) =>
     props.searchQuery === '' ||
-    clientNameFilter(report) ||
-    petNameFilter(report)
+    clientNameFilter(reports) ||
+    petNameFilter(reports)
 
   return (
     <div className='m-2 h-full flex-col'>
-      {incidents && incidents.length !== 0 ? (
-        incidents
+      {reports && reports.length !== 0 ? (
+        reports
           .filter(searchFilter)
-          .map((report) =>
-            report.docId ? (
-              <ReportInstance key={report.docId} {...report} />
+          .map((reports) =>
+            reports.docId ? (
+              <ReportInstance key={reports.docId} {...reports} />
             ) : null
           )
       ) : (

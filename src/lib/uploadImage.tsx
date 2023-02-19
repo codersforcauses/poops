@@ -29,7 +29,7 @@ export interface ImageToFirestoreInterface {
   clientName: string
   email: string
   petName: string
-  doctor?: string
+  vetName?: string
   reportTime: Timestamp
   detail: string
   imageBucket: string
@@ -41,7 +41,7 @@ export const ImageToFirestore = ({
   clientName,
   email,
   petName,
-  doctor,
+  vetName,
   reportTime,
   detail,
   imageBucket,
@@ -54,7 +54,7 @@ export const ImageToFirestore = ({
       clientName,
       email,
       petName,
-      doctor,
+      vetName,
       reportTime,
       detail,
       imageBucket
@@ -80,7 +80,7 @@ export interface UploadImageInterface {
   clientName: string
   email: string
   petName: string
-  doctor?: string
+  vetName?: string
   reportTime: Timestamp
   detail: string
   image: File
@@ -94,7 +94,7 @@ export const UploadImage = async ({
   clientName,
   email,
   petName,
-  doctor,
+  vetName,
   reportTime,
   detail,
   image,
@@ -111,7 +111,7 @@ export const UploadImage = async ({
       clientName,
       email,
       petName,
-      doctor,
+      vetName,
       reportTime,
       detail,
       imageBucket: bucket ?? '',

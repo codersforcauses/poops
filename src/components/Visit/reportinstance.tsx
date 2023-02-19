@@ -1,11 +1,11 @@
 import { useState } from 'react'
 import { ChevronDownIcon } from '@heroicons/react/24/outline'
+import moment from 'moment'
 
 import ReportInfo from '@/components/Visit/readreportinstance'
-import { Incident } from '@/types/types'
-import { humanizeTimestamp } from '@/utils'
+import { Incident, VetConcern } from '@/types/types'
 
-const ReportInstance = (props: Incident) => {
+const ReportInstance = (props: Incident | VetConcern) => {
   const [isOpen, setIsOpen] = useState(false)
 
   if (props.docId === undefined) return null
@@ -14,8 +14,8 @@ const ReportInstance = (props: Incident) => {
     <div className='m-2 flex flex-col rounded-xl bg-gray-50 p-4 shadow-lg'>
       <div className='flex justify-between'>
         <div className='font-bold'>
-          <p className='text-primary'>{props.docId} </p>
-          <p className='text-sm'>Incident Report</p>
+          <p className='text-primary'>{moment(props.reportTime.toDate()).format("YYYY-MM-DD HH:mm:ss").toString()}</p>
+          <p className='text-sm'> {!props.vetName ? 'Incident Report' : 'Vet Concern'}</p>
         </div>
         <div>
           <ChevronDownIcon

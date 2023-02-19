@@ -20,90 +20,117 @@ const VetForm = () => {
   const { mutate: mutateVetConcerns } = useMutateVetConcerns()
 
   // getting specific visit info
-  const { data: visits } = useVisits()
-  const router = useRouter()
-  const { id: queryId } = router.query
-  const visitId =
-    queryId === undefined || Array.isArray(queryId) ? null : queryId
-  const visit = visits?.find((visit) => queryId && visit.docId === visitId)
+  // const { data: visits } = useVisits()
 
-  const [userName, setUserName] = useState('')
-  const [email, setEmail] = useState('')
+  // const { id: queryId } = router.query
+  // const visitId =
+    // queryId === undefined || Array.isArray(queryId) ? null : queryId
+  // const visit = visits?.find((visit) => queryId && visit.docId === visitId)
+
+  const [userName, setUserName] = useState(
+    currentUser?.displayName ? currentUser?.displayName : ''
+  )
+  const [email, setEmail] = useState(
+    currentUser?.email ? currentUser?.email : ''
+  )
   const [vetName, setVetName] = useState('')
-  const [time, setTime] = useState('') //check issue comments for date/time
+  const [time, setTime] = useState<Timestamp>(Timestamp.fromDate(new Date())) 
   const [notes, setNotes] = useState('')
-  const [petName, setPetName] = useState('')
+
+  const router = useRouter()
+  let { pets } = router.query
+  const { client, visitId } = router.query
+  
+
+  if (pets === undefined) pets = ''
+  if (Array.isArray(pets)) pets = pets.length > 0 ? pets[0] : ''
+
+  let clientName = ''
+  if (Array.isArray(client)) clientName = client.length > 0 ? client[0] : ''
+  else if (client) clientName = client
+
+  let docId = ''
+  if (Array.isArray(visitId)) docId = visitId.length > 0 ? visitId[0] : ''
+  else if (visitId) docId = visitId
+
+  const [petName, setPetName] = useState(pets)
   const [image, setImage] = useState<File>()
 
-  const userId = useRef('')
-  const userPhone = useRef('')
-  const client = useRef('')
+  // const userId = useRef('')
+  // const userPhone = useRef('')
+  // const client = useRef('')
 
-  useEffect(() => {
-    // prefilling any form values.
-    if (visit === undefined || currentUser == null) return
+  // useEffect(() => {
+  //   // prefilling any form values.
+  //   if (visit === undefined || currentUser == null) return
 
-    const { petNames, startTime, clientName } = visit
+  //   const { petNames, startTime, clientName } = visit
 
-    const displayName = currentUser.displayName ?? ''
-    const email = currentUser.email ?? ''
-    const visitTime = formatTimestamp(startTime)
+  //   const displayName = currentUser.displayName ?? ''
+  //   const email = currentUser.email ?? ''
+  //   const visitTime = formatTimestamp(startTime)
 
-    if (userName === '') {
-      setUserName(displayName)
-    }
-    if (email === '') {
-      setEmail(email)
-    }
-    if (time === '') {
-      setTime(visitTime ?? '')
-    }
-    if (petName === '') {
-      setPetName(petNames)
-    }
+  //   if (userName === '') {
+  //     setUserName(displayName)
+  //   }
+  //   if (email === '') {
+  //     setEmail(email)
+  //   }
+  //   if (time === '') {
+  //     setTime(visitTime ?? '')
+  //   }
+  //   if (petName === '') {
+  //     setPetName(petNames)
+  //   }
 
-    userId.current = currentUser.uid
-    userPhone.current = currentUser.phoneNumber ? currentUser.phoneNumber : ''
-    client.current = clientName
-  }, [userName, email, time, petName, visit, currentUser])
+  //   userId.current = currentUser.uid
+  //   userPhone.current = currentUser.phoneNumber ? currentUser.phoneNumber : ''
+  //   client.current = clientName
+  // }, [userName, email, time, petName, visit, currentUser])
 
   const handleSubmit = (click: FormEvent<HTMLFormElement>) => {
     click.preventDefault()
-    const data: VetConcern = {
-      userId: userId.current,
-      userName: userName,
-      userEmail: email,
-      userPhone: userPhone.current,
-      clientName: client.current,
-      petName: petName,
-      vetName: vetName,
-      visitTime: Timestamp.fromDate(new Date(time)),
-      visitId: visitId ? visitId : '',
-      detail: notes,
-      createdAt: Timestamp.fromDate(new Date())
-    }
-
-    mutateVetConcerns(data)
-
-    if (image !== undefined && visitId !== null) {
+    if (currentUser !== null) {
       const imageData: UploadImageInterface = {
-        userID: userId.current,
-        visitID: visitId,
-        name: userName,
+        userId: currentUser.uid,
+        userName: userName,
+        clientName: clientName,
+        visitId: docId,
+        visitTime: time,
         email: email,
-        pet: petName,
-        doctor: vetName,
-        time: time,
-        notes: notes,
-        image: image,
+        petName: petName,
+        vetName: vetName,
+        reportTime: time,
+        detail: notes,
+        createdAt: Date.now().toString(),
+        image: image ?? new File([''], 'default'),
         folder: 'vet_concerns'
       }
-
       UploadImage(imageData)
+      router.push('/visit')
     }
-
-    router.push('/visit')
   }
+  //   mutateVetConcerns(data)
+
+  //   if (image !== undefined && visitId !== null) {
+  //     const imageData: UploadImageInterface = {
+  //       userID: userId.current,
+  //       visitID: visitId,
+  //       name: userName,
+  //       email: email,
+  //       pet: petName,
+  //       doctor: vetName,
+  //       time: time,
+  //       notes: notes,
+  //       image: image,
+  //       folder: 'vet_concerns'
+  //     }
+
+  //     UploadImage(imageData)
+  //   }
+
+  //   router.push('/visit')
+  // }
 
   const handleFile = async (file: File) => {
     if (currentUser !== null) {
@@ -113,7 +140,7 @@ const VetForm = () => {
   }
 
   const isSubmitEnabled = () => {
-    return currentUser?.uid && userName && email && petName && time && notes
+    return currentUser?.uid && userName && email && petName && time && notes && vetName
   }
 
   return (
@@ -173,11 +200,13 @@ const VetForm = () => {
           <FormField
             id='timeInput'
             type='dateTime-local'
-            value={time}
             placeholder='Time'
             label='Date & Time'
             isRequired={false}
-            onChange={(event) => setTime(event.target.value)}
+            onChange={(event) => {
+              const dateTime = new Date(event.target.value)
+              setTime(Timestamp.fromDate(dateTime))
+            }}
           />
 
           <FormField
@@ -195,7 +224,7 @@ const VetForm = () => {
                 <div>
                   <img
                     alt='not fount'
-                    width='250px'
+                    width='200px'
                     src={URL.createObjectURL(image)}
                   />
                 </div>
