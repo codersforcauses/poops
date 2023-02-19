@@ -1,4 +1,4 @@
-import { MouseEvent, useRef } from 'react'
+import { useRef } from 'react'
 
 import Button from '@/components/UI/button'
 

@@ -48,7 +48,6 @@ export const ImageToFirestore = ({
   destination,
   folder = 'incidents'
 }: ImageToFirestoreInterface) => {
-  console.log(destination)
   if (folder === 'vet_concerns') {
     addDoc(collection(db, destination), {
       clientName,
@@ -119,6 +118,6 @@ export const UploadImage = async ({
       folder
     })
   } catch (error) {
-    console.log(error)
+    console.error()
   }
 }

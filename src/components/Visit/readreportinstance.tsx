@@ -1,6 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import { useRouter } from 'next/router'
-import { serverTimestamp, Timestamp } from 'firebase/firestore'
 import { getDownloadURL, ref } from 'firebase/storage'
 
 import { storage } from '@/components/Firebase/init'
@@ -14,13 +12,13 @@ const ReportInfo = ({
   isOpen,
   docId = '',
   imageBucket = '',
-  clientName = '',
   petName = '',
-  reportTime = serverTimestamp() as Timestamp,
   detail = ''
+  // clientName = '',
+  // reportTime = serverTimestamp() as Timestamp,
 }: ReportInfoProps) => {
-  const router = useRouter()
-  const params = `pets=${petName}&client=${clientName}&visitId=${docId}`
+  // const router = useRouter()
+  // const params = `pets=${petName}&client=${clientName}&visitId=${docId}`
   const [imageUrl, setImageUrl] = useState('')
 
   useEffect(() => {
@@ -35,7 +33,7 @@ const ReportInfo = ({
         setImageUrl(url)
       })
       .catch((error) => {
-        console.log(error)
+        console.error()
       })
   })
 

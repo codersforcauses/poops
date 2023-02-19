@@ -1,12 +1,20 @@
+import { FormEvent, useState } from 'react'
+import Link from 'next/link'
 import { useRouter } from 'next/router'
+import { XMarkIcon } from '@heroicons/react/24/solid'
+import { Timestamp } from 'firebase/firestore'
 
 import { withProtected } from '@/components/PrivateRoute'
 import Button from '@/components/UI/button'
 import FileUploader from '@/components/Visit/fileUploader'
 import FormField from '@/components/Visit/formfield'
+import { useAuth } from '@/context/Firebase/Auth/context'
+import { useMutateVetConcerns } from '@/hooks/vetconcerns'
 import { UploadImage, UploadImageInterface } from '@/lib/uploadImage'
 
 const Vet = () => {
+  const { currentUser } = useAuth()
+  const { mutate: mutateVetConcerns } = useMutateVetConcerns()
   // getting specific visit info
   // const { data: visits } = useVisits()
 
@@ -122,7 +130,6 @@ const Vet = () => {
   const handleFile = async (file: File) => {
     if (currentUser !== null) {
       setImage(file)
-      console.log(file.name)
     }
   }
 

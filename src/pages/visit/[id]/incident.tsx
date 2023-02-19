@@ -1,3 +1,5 @@
+import { FormEvent, useState } from 'react'
+import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { XMarkIcon } from '@heroicons/react/24/solid'
 import { Timestamp } from 'firebase/firestore'
@@ -23,7 +25,8 @@ const Incident = () => {
   const [time, setTime] = useState<Timestamp>(Timestamp.fromDate(new Date())) //check issue comments for date/time
   const [notes, setNotes] = useState('')
   const router = useRouter()
-
+  let { pets } = router.query
+  const { client, visitId } = router.query
   if (pets === undefined) pets = ''
   if (Array.isArray(pets)) pets = pets.length > 0 ? pets[0] : ''
 
@@ -64,7 +67,6 @@ const Incident = () => {
   const handleFile = async (file: File) => {
     if (currentUser !== null) {
       setImage(file)
-      console.log(file.name)
     }
   }
 
