@@ -56,5 +56,8 @@
       "enabled": true,
       "port": 4000
     }
+  },
+  "extensions": {
+    "firestore-send-email": "firebase/firestore-send-email@0.1.23"
   }
 }
