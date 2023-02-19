@@ -7,6 +7,7 @@ import Form from '@/components/UI/FormComponents/Form'
 import TextField from '@/components/UI/FormComponents/TextField'
 import validationSchema from '@/components/Visit/IncidentForm/validation'
 import { useAuth } from '@/context/Firebase/Auth/context'
+import sendEmail from '@/hooks/email'
 import { useMutateIncidents } from '@/hooks/incidents'
 import { Incident } from '@/types/types'
 import { formatTimestamp } from '@/utils'
@@ -67,10 +68,11 @@ const IncidentForm = (props: IncidentFormProps) => {
         subject: 'Incident Report',
         text: formatIncident(data)
       }
-      await fetch('/api/sendEmail', {
-        method: 'POST',
-        body: JSON.stringify(message)
-      })
+      // await fetch('/api/sendEmail', {
+      //   method: 'POST',
+      //   body: JSON.stringify(message)
+      // }) 
+      await sendEmail(message)
 
       router.push('/visit')
     }
