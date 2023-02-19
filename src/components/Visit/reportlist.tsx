@@ -20,7 +20,6 @@ export const ReportList = (props: ReportListProps) => {
     ...(incidentsData?.data || []),
     ...(vetConcernsData?.data || [])
   ]
-  
 
   const clientNameFilter = (reports: Incident | VetConcern) =>
     reports.clientName.toLowerCase().includes(props.searchQuery.toLowerCase())
