@@ -1,5 +1,3 @@
-/* eslint-disable no-console */
-
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import {
   collection,
@@ -74,7 +72,7 @@ export const useMutateVetConcerns = () => {
         }
       }
     } catch (err: unknown) {
-      console.log(err)
+      console.error(err)
       //#region  //*=========== For logging ===========
       if (err instanceof FirestoreError) {
         console.error(err.message)

@@ -8,6 +8,7 @@ import {
   GoogleAuthProvider,
   linkWithRedirect,
   onAuthStateChanged,
+  signInWithPopup,
   signInWithRedirect,
   signOut,
   User
@@ -26,10 +27,11 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
 
   const externalAuthSignIn = async (auth: Auth, provider: AuthProvider) => {
     try {
-      const result = await signInWithRedirect(auth, provider)
+      const result = await signInWithPopup(auth, provider)
       return result
     } catch (error) {
-      return error
+      const result = await signInWithRedirect(auth, provider)
+      return result
     }
   }
 
@@ -44,7 +46,7 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
       if (error instanceof FirebaseError) {
         switch (error.code) {
           case AuthErrorCodes.PROVIDER_ALREADY_LINKED:
-            console.log('auth/provider-already-linked')
+            console.error('auth/provider-already-linked')
           // TODO Send error alert to user
         }
       }

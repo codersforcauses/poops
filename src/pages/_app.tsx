@@ -9,6 +9,7 @@ import { AlertContextProvider } from '@/context/AlertContext'
 import { AuthContextProvider } from '@/context/Firebase/Auth'
 
 import '@/styles/main.css'
+import 'react-phone-number-input/style.css'
 
 const queryClient = new QueryClient()
 
@@ -27,7 +28,7 @@ const POOPS = ({ Component, pageProps }: AppPropsWithLayout) => {
       <Head>
         <meta
           name='viewport'
-          content='width=device-width, initial-scale=1 viewport-fit=cover'
+          content='width=device-width, initial-scale=1 viewport-fit=cover maximum-scale=1'
         />
       </Head>
       <AuthContextProvider>

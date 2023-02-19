@@ -1,14 +1,5 @@
 import { Timestamp } from 'firebase/firestore'
 
-import { SelectOption } from '@/types/types'
-
-export const formatNumber = (value: string) => {
-  if (isNaN(parseFloat(value))) {
-    return 0
-  }
-  return parseFloat(value)
-}
-
 export const padNumber = (value: number) => {
   return value.toString().padStart(2, '0')
 }
@@ -45,7 +36,12 @@ export const humanizeTimestamp = (timestamp?: Timestamp) => {
   return `${days[date.getDay()]}, ${date.toLocaleString().slice(0, -3)}`
 }
 
-export const visitSelectOptions: SelectOption[] = [
-  { label: 'Walk', value: 'Walk' },
-  { label: 'Vet', value: 'Vet' }
-]
+export const requiredMessage = 'This field is required'
+
+export const validateEmail = (email: string) => {
+  return String(email)
+    .toLowerCase()
+    .match(
+      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+    )
+}

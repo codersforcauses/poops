@@ -1,25 +1,15 @@
-import { useEffect, useState } from 'react'
-import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { XMarkIcon } from '@heroicons/react/24/outline'
-import { Timestamp } from 'firebase/firestore'
-import { SingleValue } from 'react-select'
 
 import { withProtected } from '@/components/PrivateRoute'
-import Button from '@/components/UI/button'
-import ClientSelector from '@/components/Visit/clientselector'
-import CommuteSelector from '@/components/Visit/commuteselector'
-import DurationSelector from '@/components/Visit/durationselector'
-import FormField from '@/components/Visit/formfield'
-import { useMutateVisits, useVisits } from '@/hooks/visits'
-import { Duration, SelectOption, Visit } from '@/types/types'
-import { formatTimestamp, visitSelectOptions } from '@/utils'
+import { useVisits } from '@/hooks/visits'
 
 const Set = () => {
   const { data: visits } = useVisits()
   const { mutate: mutateVisits } = useMutateVisits()
   const router = useRouter()
   const { id: queryId } = router.query
+
+  const visits = visitData?.pages?.flatMap((p) => p)
   const visitId =
     queryId === undefined || Array.isArray(queryId) ? null : queryId
   const visit = visits?.find((visit) => queryId && visit.docId === visitId)
@@ -62,72 +52,6 @@ const Set = () => {
   }, [visit])
 
   const isNewVisit = visit === undefined || visit.docId === null
-
-  const handleSubmit = async (click: React.FormEvent<HTMLFormElement>) => {
-    click.preventDefault()
-
-    const data: Visit = {
-      clientName: clientPetNames.clientName,
-      commuteDist: commuteDist,
-      commuteMethod: commuteMethod,
-      docId: isNewVisit || visitId === null ? undefined : visitId,
-      duration: duration,
-      notes: notes,
-      petNames: clientPetNames.petNames,
-      startTime: Timestamp.fromDate(new Date(startTime)),
-      type: visitType,
-      walkDist: walkDist
-    }
-
-    mutateVisits(data)
-
-    router.push('/visit')
-  }
-
-  const handleDelete = async () => {
-    const data: Visit = {
-      clientName: clientPetNames.clientName,
-      commuteDist: commuteDist,
-      commuteMethod: commuteMethod,
-      docId: isNewVisit || visitId === null ? undefined : visitId,
-      duration: duration,
-      notes: notes,
-      petNames: clientPetNames.petNames,
-      startTime: Timestamp.fromDate(new Date(startTime)),
-      type: visitType,
-      walkDist: walkDist
-    }
-
-    mutateVisits({ ...data, deleteDoc: true })
-
-    router.push('/visit')
-  }
-
-  const isSubmitEnabled = () =>
-    visitType &&
-    clientPetNames &&
-    startTime &&
-    duration.hours >= 0 &&
-    duration.minutes >= 0
-  walkDist >= 0 && commuteDist >= 0 && commuteMethod
-
-  const handleClientChange = (newValue: SingleValue<SelectOption>) => {
-    if (newValue === null) return
-
-    setClientPetNames({ clientName: newValue.label, petNames: newValue.value })
-
-    if (!isNewVisit) return
-
-    const pastVisit = visits?.find(
-      (visit) => visit.clientName === newValue.label
-    )
-    if (pastVisit !== undefined) {
-      setDuration(pastVisit.duration)
-      setCommuteDist(pastVisit.commuteDist)
-      setCommuteMethod(pastVisit.commuteMethod)
-      setWalkDist(pastVisit.walkDist)
-    }
-  }
 
   return (
     <div className='space-4 z-50 flex h-full flex-col p-4'>

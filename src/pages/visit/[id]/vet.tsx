@@ -1,24 +1,12 @@
-import { FormEvent, useEffect, useRef, useState } from 'react'
-import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { XMarkIcon } from '@heroicons/react/24/solid'
-import { Timestamp } from 'firebase/firestore'
 
 import { withProtected } from '@/components/PrivateRoute'
 import Button from '@/components/UI/button'
 import FileUploader from '@/components/Visit/fileUploader'
 import FormField from '@/components/Visit/formfield'
-import { useAuth } from '@/context/Firebase/Auth/context'
-import { useMutateVetConcerns } from '@/hooks/vetconcerns'
-import { useVisits } from '@/hooks/visits'
 import { UploadImage, UploadImageInterface } from '@/lib/uploadImage'
-import { VetConcern } from '@/types/types'
-import { formatTimestamp } from '@/utils'
 
-const VetForm = () => {
-  const { currentUser } = useAuth()
-  const { mutate: mutateVetConcerns } = useMutateVetConcerns()
-
+const Vet = () => {
   // getting specific visit info
   // const { data: visits } = useVisits()
 
@@ -252,4 +240,4 @@ const VetForm = () => {
   )
 }
 
-export default withProtected(VetForm)
+export default withProtected(Vet)
