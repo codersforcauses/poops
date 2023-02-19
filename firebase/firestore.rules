@@ -88,6 +88,16 @@ service cloud.firestore {
         data.details is string &&
         data.createdAt is timestamp
   }
+
+  function isValidEmail(data) {
+    return
+      data.size() == 2 &&
+        data.to is string &&
+        data.message.size() == 2 &&
+          data.message.subject is string &&
+          data.message.text is string
+  }
+
   match /databases/{database}/documents {
     match /users/{userId} {
       match /contacts/{visitId} {
@@ -117,7 +127,7 @@ service cloud.firestore {
     }
 
     match /incidents/{document=**} {
-      allow create: if isSignIn();
+      allow create: if isSignIn() && isValidIncident(request.resource.data);
       allow read: if isAdmin();
       allow update, delete: if false;
     }
@@ -131,6 +141,11 @@ service cloud.firestore {
       allow create: if isSignIn() && isValidVetConcern(request.resource.data);
       allow read: if isAdmin();
       allow update, delete: if false;
+    }
+
+    match /mail/{emailId}{
+      allow create: if isSignIn() && isValidEmail(request.resource.data);
+      allow read, update, delete: if false;
     }
   }
 }
