@@ -1,11 +1,24 @@
 import Button from '@/components/UI/button'
-import { VetConcern } from '@/types/types'
+import { AlertVariant, useAlert } from '@/context/AlertContext'
+import { useMutateVetConcerns } from '@/hooks/vetconcerns'
+import { Status, VetConcern } from '@/types/types'
 import { formatTimestamp } from '@/utils'
 
 const ConcernsCard = (props: VetConcern) => {
+  const { mutate } = useMutateVetConcerns()
+  const { setAlert } = useAlert()
+
   const handleResolve = () => {
-    // send request to resolve concern
-    // if successful, remove card from page, show success with option to undo?
+    setAlert({
+      variant: AlertVariant.security,
+      title: 'Resolve vet concern',
+      text: 'Are you sure?',
+      position: 'bottom',
+      confirmFunction: () => {
+        const vetConcern: VetConcern = { ...props, status: Status.resolved }
+        mutate(vetConcern)
+      }
+    })
   }
 
   return (
@@ -26,6 +39,7 @@ const ConcernsCard = (props: VetConcern) => {
         <div>Client: {props.clientName}</div>
         <div>Pet: {props.petName}</div>
         <div>{props.detail}</div>
+        <div>{`Status: ${props.status}`}</div>
       </div>
       <div className='flex justify-center'>
         <Button onClick={handleResolve}>Mark as Resolved</Button>

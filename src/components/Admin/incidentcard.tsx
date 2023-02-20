@@ -1,11 +1,24 @@
 import Button from '@/components/UI/button'
-import { Incident } from '@/types/types'
+import { AlertVariant, useAlert } from '@/context/AlertContext'
+import { useMutateIncidents } from '@/hooks/incidents'
+import { Incident, Status } from '@/types/types'
 import { formatTimestamp } from '@/utils'
 
 const IncidentCard = (props: Incident) => {
+  const { mutate } = useMutateIncidents()
+  const { setAlert } = useAlert()
+
   const handleResolve = () => {
-    // send request to resolve incident
-    // if successful, remove card from page, show success with option to undo?
+    setAlert({
+      variant: AlertVariant.security,
+      title: 'Resolve Incident',
+      text: 'Are you sure?',
+      position: 'bottom',
+      confirmFunction: () => {
+        const incident: Incident = { ...props, status: Status.resolved }
+        mutate(incident)
+      }
+    })
   }
 
   return (
@@ -25,8 +38,9 @@ const IncidentCard = (props: Incident) => {
         <div>Client: {props.clientName}</div>
         <div>Pet: {props.petName}</div>
         <div>{props.details}</div>
+        <div>{`Status: ${props.status}`}</div>
       </div>
-      <div className='flex justify-center'>
+      <div className='flex justify-around'>
         <Button onClick={handleResolve}>Mark as Resolved</Button>
       </div>
     </div>

@@ -8,7 +8,7 @@ import TextField from '@/components/UI/FormComponents/TextField'
 import validationSchema from '@/components/Visit/IncidentForm/validation'
 import { useAuth } from '@/context/Firebase/Auth/context'
 import { useMutateIncidents } from '@/hooks/incidents'
-import { Incident } from '@/types/types'
+import { Incident, Status } from '@/types/types'
 import { formatTimestamp } from '@/utils'
 
 interface FormValues {
@@ -58,7 +58,8 @@ const IncidentForm = (props: IncidentFormProps) => {
         time: Timestamp.fromDate(new Date(time)),
         userID: currentUser.uid,
         visitId: props.docId,
-        visitTime: props.visitTime
+        visitTime: props.visitTime,
+        status: Status.unresolved
       }
 
       mutateIncidents(data)
