@@ -38,7 +38,6 @@ const IncidentCard = (props: Incident) => {
         <div>Client: {props.clientName}</div>
         <div>Pet: {props.petName}</div>
         <div>{props.details}</div>
-        <div>{`Status: ${props.status}`}</div>
       </div>
       <div className='flex justify-around'>
         <Button onClick={handleResolve}>Mark as Resolved</Button>

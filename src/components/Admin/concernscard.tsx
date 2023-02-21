@@ -39,7 +39,6 @@ const ConcernsCard = (props: VetConcern) => {
         <div>Client: {props.clientName}</div>
         <div>Pet: {props.petName}</div>
         <div>{props.detail}</div>
-        <div>{`Status: ${props.status}`}</div>
       </div>
       <div className='flex justify-center'>
         <Button onClick={handleResolve}>Mark as Resolved</Button>

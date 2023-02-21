@@ -9,19 +9,24 @@ import {
   orderBy,
   query,
   setDoc,
+  where,
   writeBatch
 } from 'firebase/firestore'
 
 import { db } from '@/components/Firebase/init'
 import { AlertVariant, useAlert } from '@/context/AlertContext'
-import { VetConcern, Visit } from '@/types/types'
+import { Status, VetConcern, Visit } from '@/types/types'
 import { humanizeTimestamp } from '@/utils'
 
 export const useVetConcerns = () => {
   const queryFn = async () => {
     try {
       const vetConcernsRef = collection(db, 'vet_concerns')
-      const q = query(vetConcernsRef, orderBy('createdAt', 'desc'))
+      const q = query(
+        vetConcernsRef,
+        orderBy('createdAt', 'desc'),
+        where('status', '==', Status.unresolved)
+      )
       const vetConcernsDocs = await getDocs(q)
       return vetConcernsDocs.docs.map(
         (doc) => ({ ...doc.data(), docId: doc.id } as VetConcern)
@@ -47,6 +52,7 @@ export const useMutateVetConcerns = () => {
       const collectionRef = collection(db, 'vet_concerns')
 
       if (vetConcernId) {
+        // updating vet concern
         await setDoc(doc(collectionRef, vetConcernId), vetConcernMut, {
           merge: true
         })
