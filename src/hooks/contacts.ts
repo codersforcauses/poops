@@ -1,12 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
-import {
-  collection,
-  deleteDoc,
-  doc,
-  FirestoreError,
-  getDocs,
-  setDoc
-} from 'firebase/firestore'
+import { collection, deleteDoc, doc, getDocs, setDoc } from 'firebase/firestore'
 
 import { db } from '@/components/Firebase/init'
 import { AlertVariant, useAlert } from '@/context/AlertContext'
@@ -18,19 +11,11 @@ export const useContacts = () => {
   const { currentUser } = useAuth()
   const queryFn = async () => {
     if (currentUser?.uid) {
-      try {
-        const contactsRef = collection(db, 'users', currentUser.uid, 'contacts')
-        const contactsDocs = await getDocs(contactsRef)
-        return contactsDocs.docs.map(
-          (doc) => ({ ...doc.data(), docId: doc.id } as Contact)
-        )
-      } catch (err: unknown) {
-        //#region  //*=========== For logging ===========
-        if (err instanceof FirestoreError) {
-          console.error(err.message)
-        } else console.error(err)
-        //#endregion  //*======== For logging ===========
-      }
+      const contactsRef = collection(db, 'users', currentUser.uid, 'contacts')
+      const contactsDocs = await getDocs(contactsRef)
+      return contactsDocs.docs.map(
+        (doc) => ({ ...doc.data(), docId: doc.id } as Contact)
+      )
     }
   }
   return useQuery(['contacts'], queryFn)
@@ -42,34 +27,20 @@ export const useMutateContacts = () => {
   const { setAlert } = useAlert()
 
   const mutationFn = async (contact: Contact | { docId?: string }) => {
-    try {
-      if (currentUser?.uid) {
-        const { docId: contactId, ...contactMut } = contact
-        const collectionRef = collection(
-          db,
-          'users',
-          currentUser.uid,
-          'contacts'
-        )
+    if (currentUser?.uid) {
+      const { docId: contactId, ...contactMut } = contact
+      const collectionRef = collection(db, 'users', currentUser.uid, 'contacts')
 
-        const docRef = contactId
-          ? doc(collectionRef, contactId)
-          : doc(collectionRef)
+      const docRef = contactId
+        ? doc(collectionRef, contactId)
+        : doc(collectionRef)
 
-        if (canDelete(contactMut, contactId)) {
-          await deleteDoc(docRef)
-        } else {
-          await setDoc(docRef, contactMut, { merge: true })
-          return docRef.id
-        }
+      if (canDelete(contactMut, contactId)) {
+        await deleteDoc(docRef)
+      } else {
+        await setDoc(docRef, contactMut, { merge: true })
+        return docRef.id
       }
-    } catch (err: unknown) {
-      console.error(err)
-      //#region  //*=========== For logging ===========
-      if (err instanceof FirestoreError) {
-        console.error(err.message)
-      } else console.error(err)
-      //#endregion  //*======== For logging ===========
     }
   }
 

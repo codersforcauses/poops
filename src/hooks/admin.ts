@@ -2,7 +2,6 @@ import { useQuery } from '@tanstack/react-query'
 import {
   collection,
   collectionGroup,
-  FirestoreError,
   getCountFromServer,
   getDocs,
   query,
@@ -19,7 +18,6 @@ export const useVolunteerStatsByDateRange = (
   endTime: Timestamp
 ) => {
   const queryFn = async () => {
-    try {
       const usersRef = collection(db, 'users')
       const snapshot = await getCountFromServer(usersRef)
       const volunteerCount = snapshot.data().count
@@ -58,13 +56,6 @@ export const useVolunteerStatsByDateRange = (
       }
 
       return volunteerStats
-    } catch (err: unknown) {
-      //#region  //*=========== For logging ===========
-      if (err instanceof FirestoreError) {
-        console.error(err.message)
-      } else console.error(err)
-      //#endregion  //*======== For logging ===========
-    }
   }
 
   return useQuery({
