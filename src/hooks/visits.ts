@@ -32,7 +32,7 @@ export const useVisits = () => {
 
   const queryFn = async ({ pageParam: lastDocId }: QueryFunctionContext) => {
     if (!currentUser?.uid) return
-    
+
     const visitsRef = collection(db, 'users', currentUser.uid, 'visits')
     let q: Query<DocumentData> | undefined = undefined
 
