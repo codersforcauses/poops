@@ -9,7 +9,6 @@ import {
   deleteDoc,
   doc,
   DocumentData,
-  FirestoreError,
   getDoc,
   getDocs,
   limit,
@@ -33,37 +32,30 @@ export const useVisits = () => {
 
   const queryFn = async ({ pageParam: lastDocId }: QueryFunctionContext) => {
     if (!currentUser?.uid) return
-    try {
-      const visitsRef = collection(db, 'users', currentUser.uid, 'visits')
-      let q: Query<DocumentData> | undefined = undefined
 
-      if (lastDocId === undefined) {
-        // First query
-        q = query(visitsRef, orderBy('startTime', 'desc'), limit(PAGE_SIZE))
-      } else {
-        // Successive queries
-        const docRef = doc(db, 'users', currentUser.uid, 'visits', lastDocId)
-        const docSnap = await getDoc(docRef)
+    const visitsRef = collection(db, 'users', currentUser.uid, 'visits')
+    let q: Query<DocumentData> | undefined = undefined
 
-        q = query(
-          visitsRef,
-          orderBy('startTime', 'desc'),
-          startAfter(docSnap),
-          limit(PAGE_SIZE)
-        )
-      }
+    if (lastDocId === undefined) {
+      // First query
+      q = query(visitsRef, orderBy('startTime', 'desc'), limit(PAGE_SIZE))
+    } else {
+      // Successive queries
+      const docRef = doc(db, 'users', currentUser.uid, 'visits', lastDocId)
+      const docSnap = await getDoc(docRef)
 
-      const querySnapshot = await getDocs(q)
-      return querySnapshot.docs.map(
-        (doc) => ({ ...doc.data(), docId: doc.id } as Visit)
+      q = query(
+        visitsRef,
+        orderBy('startTime', 'desc'),
+        startAfter(docSnap),
+        limit(PAGE_SIZE)
       )
-    } catch (err: unknown) {
-      //#region  //*=========== For logging ===========
-      if (err instanceof FirestoreError) {
-        console.error(err.message)
-      } else console.error(err)
-      //#endregion  //*======== For logging ===========
     }
+
+    const querySnapshot = await getDocs(q)
+    return querySnapshot.docs.map(
+      (doc) => ({ ...doc.data(), docId: doc.id } as Visit)
+    )
   }
 
   return useInfiniteQuery({
@@ -83,28 +75,17 @@ export const useMutateVisits = () => {
   const { setAlert } = useAlert()
 
   const mutationFn = async (visit: Visit | { docId?: string }) => {
-    try {
-      if (currentUser?.uid) {
-        const { docId: visitId, ...visitMut } = visit
-        const collectionRef = collection(db, 'users', currentUser.uid, 'visits')
+    if (currentUser?.uid) {
+      const { docId: visitId, ...visitMut } = visit
+      const collectionRef = collection(db, 'users', currentUser.uid, 'visits')
 
-        const docRef = visitId
-          ? doc(collectionRef, visitId)
-          : doc(collectionRef)
+      const docRef = visitId ? doc(collectionRef, visitId) : doc(collectionRef)
 
-        if (canDelete(visitMut, visitId)) {
-          await deleteDoc(docRef)
-        } else {
-          await setDoc(docRef, visitMut, { merge: true })
-        }
+      if (canDelete(visitMut, visitId)) {
+        await deleteDoc(docRef)
+      } else {
+        await setDoc(docRef, visitMut, { merge: true })
       }
-    } catch (err: unknown) {
-      console.error(err)
-      //#region  //*=========== For logging ===========
-      if (err instanceof FirestoreError) {
-        console.error(err.message)
-      } else console.error(err)
-      //#endregion  //*======== For logging ===========
     }
   }
 

@@ -3,7 +3,6 @@ import {
   collection,
   doc,
   DocumentReference,
-  FirestoreError,
   getDoc,
   getDocs,
   orderBy,
@@ -21,29 +20,21 @@ import { humanizeTimestamp } from '@/utils'
 
 export const useIncidents = () => {
   const { currentUser } = useAuth()
-  const queryFn = async (): Promise<Incident[]> => {
-    try {
-      if (currentUser?.uid) {
-        const incidentsRef = collection(db, 'incidents')
-        const q = query(
-          incidentsRef,
-          orderBy('createdAt', 'desc'),
-          where('status', '==', Status.unresolved)
-        )
-        const incidentsDocs = await getDocs(q)
-        return incidentsDocs.docs.map(
-          (doc) => ({ ...doc.data(), docId: doc.id } as Incident)
-        )
-      }
-    } catch (err: unknown) {
-      //#region  //*=========== For logging ===========
-      if (err instanceof FirestoreError) {
-        console.error(err.message)
-      } else console.error(err)
-      //#endregion  //*======== For logging ===========
+  const queryFn = async () => {
+    if (currentUser?.uid) {
+      const incidentsRef = collection(db, 'incidents')
+      const q = query(
+        incidentsRef,
+        orderBy('createdAt', 'desc'),
+        where('status', '==', Status.unresolved)
+      )
+      const incidentsDocs = await getDocs(q)
+      return incidentsDocs.docs.map(
+        (doc) => ({ ...doc.data(), docId: doc.id } as Incident)
+      )
     }
-    return []
   }
+  
   return useQuery(['incidents'], queryFn)
 }
 
@@ -53,27 +44,18 @@ export const useMutateIncidents = () => {
   const { setAlert } = useAlert()
 
   const mutationFn = async (incident: Incident) => {
-    try {
-      if (currentUser?.uid) {
-        const { docId: incidentId, ...incidentMut } = incident
-        const collectionRef = collection(db, 'incidents')
+    if (currentUser?.uid) {
+      const { docId: incidentId, ...incidentMut } = incident
+      const collectionRef = collection(db, 'incidents')
 
-        if (incidentId) {
-          // updating incident
-          await setDoc(doc(collectionRef, incidentId), incidentMut, {
-            merge: true
-          })
-        } else {
-          await addIncident(doc(collectionRef), incident)
-        }
+      if (incidentId) {
+        // updating incident
+        await setDoc(doc(collectionRef, incidentId), incidentMut, {
+          merge: true
+        })
+      } else {
+        await addIncident(doc(collectionRef), incident)
       }
-    } catch (err: unknown) {
-      console.error(err)
-      //#region  //*=========== For logging ===========
-      if (err instanceof FirestoreError) {
-        console.error(err.message)
-      } else console.error(err)
-      //#endregion  //*======== For logging ===========
     }
   }
 

@@ -3,7 +3,6 @@ import {
   collection,
   doc,
   DocumentReference,
-  FirestoreError,
   getDoc,
   getDocs,
   orderBy,
@@ -20,7 +19,6 @@ import { humanizeTimestamp } from '@/utils'
 
 export const useVetConcerns = () => {
   const queryFn = async () => {
-    try {
       const vetConcernsRef = collection(db, 'vet_concerns')
       const q = query(
         vetConcernsRef,
@@ -31,14 +29,7 @@ export const useVetConcerns = () => {
       return vetConcernsDocs.docs.map(
         (doc) => ({ ...doc.data(), docId: doc.id } as VetConcern)
       )
-    } catch (err: unknown) {
-      //#region  //*=========== For logging ===========
-      if (err instanceof FirestoreError) {
-        console.error(err.message)
-      } else console.error(err)
-      //#endregion  //*======== For logging ===========
     }
-  }
   return useQuery(['vetConcerns'], queryFn)
 }
 
@@ -47,7 +38,6 @@ export const useMutateVetConcerns = () => {
   const { setAlert } = useAlert()
 
   const mutationFn = async (vetConcern: VetConcern & { docId?: string }) => {
-    try {
       const { docId: vetConcernId, ...vetConcernMut } = vetConcern
       const collectionRef = collection(db, 'vet_concerns')
 
@@ -59,14 +49,6 @@ export const useMutateVetConcerns = () => {
       } else {
         await addVetConcern(doc(collectionRef), vetConcern)
       }
-    } catch (err: unknown) {
-      console.error(err)
-      //#region  //*=========== For logging ===========
-      if (err instanceof FirestoreError) {
-        console.error(err.message)
-      } else console.error(err)
-      //#endregion  //*======== For logging ===========
-    }
   }
 
   const onSuccess = () => {
