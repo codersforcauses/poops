@@ -8,13 +8,12 @@ import {
   orderBy,
   query,
   setDoc,
-  where,
   writeBatch
 } from 'firebase/firestore'
 
 import { db } from '@/components/Firebase/init'
 import { AlertVariant, useAlert } from '@/context/AlertContext'
-import { Status, VetConcern, Visit } from '@/types/types'
+import { VetConcern, Visit } from '@/types/types'
 import { humanizeTimestamp } from '@/utils'
 
 export const useVetConcerns = () => {
@@ -23,7 +22,6 @@ export const useVetConcerns = () => {
     const q = query(
       vetConcernsRef,
       orderBy('createdAt', 'desc'),
-      where('status', '==', Status.unresolved)
     )
     const vetConcernsDocs = await getDocs(q)
     return vetConcernsDocs.docs.map(

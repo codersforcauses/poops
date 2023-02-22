@@ -8,14 +8,13 @@ import {
   orderBy,
   query,
   setDoc,
-  where,
   writeBatch
 } from 'firebase/firestore'
 
 import { db } from '@/components/Firebase/init'
 import { AlertVariant, useAlert } from '@/context/AlertContext'
 import { useAuth } from '@/context/Firebase/Auth/context'
-import { Incident, Status, Visit } from '@/types/types'
+import { Incident, Visit } from '@/types/types'
 import { humanizeTimestamp } from '@/utils'
 
 export const useIncidents = () => {
@@ -26,7 +25,6 @@ export const useIncidents = () => {
       const q = query(
         incidentsRef,
         orderBy('createdAt', 'desc'),
-        where('status', '==', Status.unresolved)
       )
       const incidentsDocs = await getDocs(q)
       return incidentsDocs.docs.map(
