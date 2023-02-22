@@ -1,13 +1,7 @@
 import { useRouter } from 'next/router'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { User as AuthUser } from 'firebase/auth'
-import {
-  doc,
-  FirestoreError,
-  getDoc,
-  setDoc,
-  updateDoc
-} from 'firebase/firestore'
+import { doc, getDoc, setDoc, updateDoc } from 'firebase/firestore'
 
 import { db } from '@/components/Firebase/init'
 import { AlertVariant, useAlert } from '@/context/AlertContext'
@@ -44,29 +38,19 @@ export const useUser = () => {
   const queryFn = async (): Promise<User | undefined> => {
     if (currentUser?.uid) {
       //try to get existing doc if the doc does not exist then create a new doc with uid as its ref
-      try {
-        let userDocSnap = await getDoc(doc(db, 'users', currentUser.uid))
+      let userDocSnap = await getDoc(doc(db, 'users', currentUser.uid))
 
-        if (!userDocSnap.exists()) {
-          // doc.data() will be undefined in this case
-          await setDoc(doc(db, 'users', currentUser.uid), newUser(currentUser))
-          userDocSnap = await getDoc(doc(db, 'users', currentUser.uid))
-        }
-
-        const userData = userDocSnap.data() as User
-        if (
-          !(userData.info.email && userData.info.phone && userData.info.name)
-        ) {
-          router.replace('/signupDetails')
-        }
-        return { ...userData, info: { ...userData.info, docId: 'USER' } }
-      } catch (err: unknown) {
-        //#region  //*=========== For logging ===========
-        if (err instanceof FirestoreError) {
-          console.error(err.message)
-        } else console.error(err)
-        //#endregion  //*======== For logging ===========
+      if (!userDocSnap.exists()) {
+        // doc.data() will be undefined in this case
+        await setDoc(doc(db, 'users', currentUser.uid), newUser(currentUser))
+        userDocSnap = await getDoc(doc(db, 'users', currentUser.uid))
       }
+
+      const userData = userDocSnap.data() as User
+      if (!(userData.info.email && userData.info.phone && userData.info.name)) {
+        router.replace('/signupDetails')
+      }
+      return { ...userData, info: { ...userData.info, docId: 'USER' } }
     }
   }
 
@@ -79,23 +63,15 @@ export const useMutateUser = () => {
   const { setAlert } = useAlert()
 
   const mutationFn = async (user: Contact | { docId?: string }) => {
-    try {
-      if (currentUser?.uid) {
-        const { docId: userId, ...userMut } = user
+    if (currentUser?.uid) {
+      const { docId: userId, ...userMut } = user
 
-        if (canDelete(userMut, userId)) {
-          return console.error('Cannot Delete User')
-        }
-
-        const userDocRef = doc(db, 'users', currentUser.uid)
-        await updateDoc(userDocRef, 'info', userMut)
+      if (canDelete(userMut, userId)) {
+        return console.error('Cannot Delete User')
       }
-    } catch (err: unknown) {
-      //#region  //*=========== For logging ===========
-      if (err instanceof FirestoreError) {
-        console.error(err.message)
-      } else console.error(err)
-      //#endregion  //*======== For logging ===========
+
+      const userDocRef = doc(db, 'users', currentUser.uid)
+      await updateDoc(userDocRef, 'info', userMut)
     }
   }
 
