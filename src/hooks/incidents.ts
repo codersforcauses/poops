@@ -34,7 +34,7 @@ export const useIncidents = () => {
       )
     }
   }
-  
+
   return useQuery(['incidents'], queryFn)
 }
 

@@ -19,17 +19,17 @@ import { humanizeTimestamp } from '@/utils'
 
 export const useVetConcerns = () => {
   const queryFn = async () => {
-      const vetConcernsRef = collection(db, 'vet_concerns')
-      const q = query(
-        vetConcernsRef,
-        orderBy('createdAt', 'desc'),
-        where('status', '==', Status.unresolved)
-      )
-      const vetConcernsDocs = await getDocs(q)
-      return vetConcernsDocs.docs.map(
-        (doc) => ({ ...doc.data(), docId: doc.id } as VetConcern)
-      )
-    }
+    const vetConcernsRef = collection(db, 'vet_concerns')
+    const q = query(
+      vetConcernsRef,
+      orderBy('createdAt', 'desc'),
+      where('status', '==', Status.unresolved)
+    )
+    const vetConcernsDocs = await getDocs(q)
+    return vetConcernsDocs.docs.map(
+      (doc) => ({ ...doc.data(), docId: doc.id } as VetConcern)
+    )
+  }
   return useQuery(['vetConcerns'], queryFn)
 }
 
@@ -38,17 +38,17 @@ export const useMutateVetConcerns = () => {
   const { setAlert } = useAlert()
 
   const mutationFn = async (vetConcern: VetConcern & { docId?: string }) => {
-      const { docId: vetConcernId, ...vetConcernMut } = vetConcern
-      const collectionRef = collection(db, 'vet_concerns')
+    const { docId: vetConcernId, ...vetConcernMut } = vetConcern
+    const collectionRef = collection(db, 'vet_concerns')
 
-      if (vetConcernId) {
-        // updating vet concern
-        await setDoc(doc(collectionRef, vetConcernId), vetConcernMut, {
-          merge: true
-        })
-      } else {
-        await addVetConcern(doc(collectionRef), vetConcern)
-      }
+    if (vetConcernId) {
+      // updating vet concern
+      await setDoc(doc(collectionRef, vetConcernId), vetConcernMut, {
+        merge: true
+      })
+    } else {
+      await addVetConcern(doc(collectionRef), vetConcern)
+    }
   }
 
   const onSuccess = () => {
