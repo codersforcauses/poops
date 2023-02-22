@@ -8,8 +8,6 @@ import {
   collection,
   deleteDoc,
   doc,
-  FirestoreError,
-  DocumentData,
   getDoc,
   getDocs,
   limit,
