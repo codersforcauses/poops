@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { isValidPhoneNumber } from 'react-phone-number-input'
 export interface SubmitButtonInterface {
@@ -20,9 +20,15 @@ const SubmitButton = ({
 }: SubmitButtonInterface) => {
   const isEmpty = !name || !email || !phoneNum
   const [valid, setValid] = useState(false)
-  if (isValidPhoneNumber(phoneNum)) {
-    setValid(true)
-  }
+
+  useEffect(() => {
+    if (isValidPhoneNumber('+61' + phoneNum)) {
+      setValid(true)
+    } else {
+      setValid(false)
+    }
+  }, [phoneNum])
+
   return (
     <button className={style} onClick={onClick} disabled={isEmpty}>
       <div className='relative flex items-center space-x-4'>
