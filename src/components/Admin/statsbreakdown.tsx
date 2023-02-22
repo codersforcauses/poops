@@ -22,48 +22,50 @@ const StatsBreakdown = ({ days = 7 }: StatsBreakdownProps) => {
   )
 
   return (
-    <Card title={`${days} Day Breakdown (Average per Volunteer)`}>
-      {isLoading || data === undefined ? (
-        <Spinner style='h-10 w-10 fill-primary-dark text-gray-200 m-4' />
-      ) : (
-        <table className='w-full'>
-          <tbody>
-            <tr>
-              <td>
-                <Statistics
-                  title='Visits'
-                  data={`${data.avgVisitCount}`}
-                  tooltip={`Total: ${data.totalVisitCount}`}
-                />
-              </td>
-              <td>
-                <Statistics
-                  title='Walk Duration: '
-                  data={`${data.avgWalkTime} min`}
-                  tooltip={`Total: ${data.totalWalkTime} min`}
-                />
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <Statistics
-                  title='Walk Distance'
-                  data={`${data.avgWalkDistance} km`}
-                  tooltip={`Total: ${data.totalWalkDistance} km`}
-                />
-              </td>
-              <td>
-                <Statistics
-                  title='Commute Distance'
-                  data={`${data.avgCommuteDistance} km`}
-                  tooltip={`Total: ${data.totalCommuteDistance} km`}
-                />
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      )}
-    </Card>
+    <div className='px-4'>
+      <Card title={`${days} Day Breakdown (Average per Volunteer)`}>
+        {isLoading || data === undefined ? (
+          <Spinner style='h-10 w-10 fill-primary-dark text-gray-200 m-4' />
+        ) : (
+          <table className='w-full'>
+            <tbody>
+              <tr>
+                <td>
+                  <Statistics
+                    title='Visits'
+                    data={`${data.avgVisitCount}`}
+                    tooltip={`Total: ${data.totalVisitCount}`}
+                  />
+                </td>
+                <td>
+                  <Statistics
+                    title='Walk Duration: '
+                    data={`${data.avgWalkTime} min`}
+                    tooltip={`Total: ${data.totalWalkTime} min`}
+                  />
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <Statistics
+                    title='Walk Distance'
+                    data={`${data.avgWalkDistance} km`}
+                    tooltip={`Total: ${data.totalWalkDistance} km`}
+                  />
+                </td>
+                <td>
+                  <Statistics
+                    title='Commute Distance'
+                    data={`${data.avgCommuteDistance} km`}
+                    tooltip={`Total: ${data.totalCommuteDistance} km`}
+                  />
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        )}
+      </Card>
+    </div>
   )
 }
 
