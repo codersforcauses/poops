@@ -22,10 +22,7 @@ export const useIncidents = () => {
   const queryFn = async () => {
     if (currentUser?.uid) {
       const incidentsRef = collection(db, 'incidents')
-      const q = query(
-        incidentsRef,
-        orderBy('createdAt', 'desc'),
-      )
+      const q = query(incidentsRef, orderBy('createdAt', 'desc'))
       const incidentsDocs = await getDocs(q)
       return incidentsDocs.docs.map(
         (doc) => ({ ...doc.data(), docId: doc.id } as Incident)

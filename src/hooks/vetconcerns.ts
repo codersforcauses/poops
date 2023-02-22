@@ -19,10 +19,7 @@ import { humanizeTimestamp } from '@/utils'
 export const useVetConcerns = () => {
   const queryFn = async () => {
     const vetConcernsRef = collection(db, 'vet_concerns')
-    const q = query(
-      vetConcernsRef,
-      orderBy('createdAt', 'desc'),
-    )
+    const q = query(vetConcernsRef, orderBy('createdAt', 'desc'))
     const vetConcernsDocs = await getDocs(q)
     return vetConcernsDocs.docs.map(
       (doc) => ({ ...doc.data(), docId: doc.id } as VetConcern)
