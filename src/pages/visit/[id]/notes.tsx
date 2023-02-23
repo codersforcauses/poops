@@ -6,7 +6,7 @@ import { useVisits } from '@/hooks/visits'
 import { humanizeTimestamp } from '@/utils'
 
 const Notes = () => {
-  const { data: visits } = useVisits()
+  const { data: visits } = useVisits(false)
   const router = useRouter()
 
   const { id: queryId } = router.query

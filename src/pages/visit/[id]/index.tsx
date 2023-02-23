@@ -6,7 +6,7 @@ import { VisitForm } from '@/components/Visit/VisitForm'
 import { useVisits } from '@/hooks/visits'
 
 const Set = () => {
-  const { data: visitData } = useVisits()
+  const { data: visitData } = useVisits(false)
 
   const router = useRouter()
   const { id: queryId } = router.query

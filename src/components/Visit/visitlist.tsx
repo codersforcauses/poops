@@ -1,18 +1,32 @@
 import { XCircleIcon } from '@heroicons/react/24/outline'
 
 import { useVisits } from '@/hooks/visits'
+import { Visit } from '@/types/types'
 
 import VisitInstance from './visitinstance'
 import Button from '../UI/button'
 import Spinner from '../UI/loadingSpinner'
 
-export const VisitList = () => {
+interface VisitListProps {
+  searchQuery: string
+}
+
+const VisitList = ({ searchQuery }: VisitListProps) => {
   const {
     data: visits,
     fetchNextPage,
     isFetchingNextPage,
     hasNextPage
-  } = useVisits()
+  } = useVisits(searchQuery !== '')
+
+  const clientNameFilter = (visit: Visit) =>
+    visit.clientName.toLowerCase().includes(searchQuery.toLowerCase())
+
+  const petNameFilter = (visit: Visit) =>
+    visit.petNames?.toLowerCase().includes(searchQuery.toLowerCase())
+
+  const searchFilter = (visit: Visit) =>
+    searchQuery === '' || clientNameFilter(visit) || petNameFilter(visit)
 
   if (visits === undefined) return null
 
@@ -28,17 +42,21 @@ export const VisitList = () => {
   return (
     <div className='m-2 h-full flex-col'>
       {visits.pages.flatMap((page) =>
-        page?.map((visit) => <VisitInstance key={visit.docId} {...visit} />)
+        page
+          ?.filter(searchFilter)
+          .map((visit) => <VisitInstance key={visit.docId} {...visit} />)
       )}
-      <div className='flex h-20 items-center justify-center'>
-        {isFetchingNextPage ? (
-          <Spinner style='h-10 w-10 fill-primary-dark text-gray-200' />
-        ) : hasNextPage ? (
-          <Button onClick={() => fetchNextPage()}>Load More</Button>
-        ) : (
-          <div className='mt-4 text-sm'>No more visits found...</div>
-        )}
-      </div>
+      {searchQuery === '' && (
+        <div className='flex h-20 items-center justify-center'>
+          {isFetchingNextPage ? (
+            <Spinner style='h-10 w-10 fill-primary-dark text-gray-200' />
+          ) : hasNextPage ? (
+            <Button onClick={() => fetchNextPage()}>Load More</Button>
+          ) : (
+            <div className='mt-4 text-sm'>No more visits found...</div>
+          )}
+        </div>
+      )}
     </div>
   )
 }
