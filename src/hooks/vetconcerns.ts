@@ -19,30 +19,14 @@ import { humanizeTimestamp } from '@/utils'
 
 export const useVetConcerns = () => {
   const queryFn = async () => {
-<<<<<<< HEAD
-    try {
-      const vetConcernsRef = collection(db, 'vet_concerns')
-      const vetConcernsDocs = await getDocs(vetConcernsRef)
-      return vetConcernsDocs.docs.map((doc) => {
-        const rawData = doc.data()
-        const parsedData = vetConcernSchema.parse(rawData)
-        return { ...parsedData, docId: doc.id } as VetConcern
-      })
-    } catch (err: unknown) {
-      //#region  //*=========== For logging ===========
-      if (err instanceof FirestoreError) {
-        console.error(err.message)
-      } else console.error(err)
-      //#endregion  //*======== For logging ===========
-    }
-=======
     const vetConcernsRef = collection(db, 'vet_concerns')
     const q = query(vetConcernsRef, orderBy('createdAt', 'desc'))
     const vetConcernsDocs = await getDocs(q)
-    return vetConcernsDocs.docs.map(
-      (doc) => ({ ...doc.data(), docId: doc.id } as VetConcern)
-    )
->>>>>>> main
+    return vetConcernsDocs.docs.map((doc) => {
+      const rawData = doc.data()
+      const parsedData = vetConcernSchema.parse(rawData)
+      return { ...parsedData, docId: doc.id } as VetConcern
+    })
   }
   return useQuery(['vetConcerns'], queryFn)
 }

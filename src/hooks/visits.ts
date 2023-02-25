@@ -29,26 +29,6 @@ const PAGE_SIZE = 20
 export const useVisits = (isSearch: boolean) => {
   const { currentUser } = useAuth()
 
-<<<<<<< HEAD
-  const queryFn = async () => {
-    if (currentUser?.uid) {
-      try {
-        const visitsRef = collection(db, 'users', currentUser.uid, 'visits')
-        const q = query(visitsRef, orderBy('startTime', 'desc'))
-        const visitsDocs = await getDocs(q)
-        return visitsDocs.docs.map((doc) => {
-          const rawData = doc.data()
-          const parsedData = visitSchema.parse(rawData)
-          return { ...parsedData, docId: doc.id } as Visit
-        })
-      } catch (err: unknown) {
-        //#region  //*=========== For logging ===========
-        if (err instanceof FirestoreError) {
-          console.error(err.message)
-        } else console.error(err)
-        //#endregion  //*======== For logging ===========
-      }
-=======
   const queryFn = async ({ pageParam: lastDocId }: QueryFunctionContext) => {
     if (!currentUser?.uid) return
     const visitsRef = collection(db, 'users', currentUser.uid, 'visits')
@@ -60,7 +40,6 @@ export const useVisits = (isSearch: boolean) => {
       const docSnap = await getDoc(docRef)
 
       q = query(q, startAfter(docSnap))
->>>>>>> main
     }
 
     if (!isSearch) {
@@ -68,9 +47,11 @@ export const useVisits = (isSearch: boolean) => {
     }
 
     const querySnapshot = await getDocs(q)
-    return querySnapshot.docs.map(
-      (doc) => ({ ...doc.data(), docId: doc.id } as Visit)
-    )
+    return querySnapshot.docs.map((doc) => {
+      const rawData = doc.data()
+      const parsedData = visitSchema.parse(rawData)
+      return { ...parsedData, docId: doc.id } as Visit
+    })
   }
 
   return useInfiniteQuery({
