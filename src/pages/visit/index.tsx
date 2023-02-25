@@ -1,30 +1,32 @@
-import { ReactElement } from 'react'
+import { ReactElement, useState } from 'react'
 
 import Layout from '@/components/Layout'
 import { withProtected } from '@/components/PrivateRoute'
 import Spinner from '@/components/UI/loadingSpinner'
-import { AddButton, SearchButton } from '@/components/Visit/buttons'
+import { AddButton } from '@/components/Visit/buttons'
+import SearchBar from '@/components/Visit/searchbar'
 import VisitList from '@/components/Visit/visitlist'
 import { useVisits } from '@/hooks/visits'
 import { NextPageWithLayout } from '@/pages/_app'
 
 const Visit: NextPageWithLayout = () => {
-  const { isLoading } = useVisits()
+  const [searchQuery, setSearchQuery] = useState('')
+  const { isLoading } = useVisits(searchQuery !== '')
 
   return (
     <div className='main-style'>
       <div className='flex w-screen flex-col p-4'>
+        <div className='align-center flex flex-row justify-around'>
+          <SearchBar onChange={(event) => setSearchQuery(event.target.value)} />
+          <AddButton />
+        </div>
         {isLoading ? (
           <div className='flex h-20 items-center justify-center'>
             <Spinner style='h-10 w-10 fill-primary-dark text-gray-200' />
           </div>
         ) : (
-          <VisitList />
+          <VisitList searchQuery={searchQuery} />
         )}
-      </div>
-      <div className='absolute bottom-20 right-2 space-y-2'>
-        <AddButton />
-        <SearchButton />
       </div>
     </div>
   )

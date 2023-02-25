@@ -7,7 +7,7 @@ import IncidentForm from '@/components/Visit/IncidentForm'
 import { useVisits } from '@/hooks/visits'
 
 const Incident = () => {
-  const { data: visits } = useVisits()
+  const { data: visits } = useVisits(false)
   const router = useRouter()
 
   const { id: queryId } = router.query
