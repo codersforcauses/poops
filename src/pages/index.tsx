@@ -31,7 +31,7 @@ const Home: NextPageWithLayout = () => {
             <div className='flex flex-col justify-center'>
               <Link href='visit/set'>
                 <a className='flex justify-center'>
-                  <Button size='large'>START VISIT</Button>
+                  <Button size='large'>Add Visit</Button>
                 </a>
               </Link>
               {process.env.NODE_ENV === 'development' && (
