@@ -3,9 +3,11 @@ import {
   collection,
   doc,
   DocumentReference,
-  FirestoreError,
   getDoc,
   getDocs,
+  orderBy,
+  query,
+  setDoc,
   writeBatch
 } from 'firebase/firestore'
 
@@ -16,19 +18,12 @@ import { humanizeTimestamp } from '@/utils'
 
 export const useVetConcerns = () => {
   const queryFn = async () => {
-    try {
-      const vetConcernsRef = collection(db, 'vet_concerns')
-      const vetConcernsDocs = await getDocs(vetConcernsRef)
-      return vetConcernsDocs.docs.map(
-        (doc) => ({ ...doc.data(), docId: doc.id } as VetConcern)
-      )
-    } catch (err: unknown) {
-      //#region  //*=========== For logging ===========
-      if (err instanceof FirestoreError) {
-        console.error(err.message)
-      } else console.error(err)
-      //#endregion  //*======== For logging ===========
-    }
+    const vetConcernsRef = collection(db, 'vet_concerns')
+    const q = query(vetConcernsRef, orderBy('createdAt', 'desc'))
+    const vetConcernsDocs = await getDocs(q)
+    return vetConcernsDocs.docs.map(
+      (doc) => ({ ...doc.data(), docId: doc.id } as VetConcern)
+    )
   }
   return useQuery(['vetConcerns'], queryFn)
 }
@@ -37,18 +32,17 @@ export const useMutateVetConcerns = () => {
   const queryClient = useQueryClient()
   const { setAlert } = useAlert()
 
-  const mutationFn = async (vetConcern: VetConcern) => {
-    try {
-      const collectionRef = collection(db, 'vet_concerns')
-      const docRef = doc(collectionRef)
-      await addVetConcern(docRef, vetConcern)
-    } catch (err: unknown) {
-      console.error(err)
-      //#region  //*=========== For logging ===========
-      if (err instanceof FirestoreError) {
-        console.error(err.message)
-      } else console.error(err)
-      //#endregion  //*======== For logging ===========
+  const mutationFn = async (vetConcern: VetConcern & { docId?: string }) => {
+    const { docId: vetConcernId, ...vetConcernMut } = vetConcern
+    const collectionRef = collection(db, 'vet_concerns')
+
+    if (vetConcernId) {
+      // updating vet concern
+      await setDoc(doc(collectionRef, vetConcernId), vetConcernMut, {
+        merge: true
+      })
+    } else {
+      await addVetConcern(doc(collectionRef), vetConcern)
     }
   }
 
@@ -58,7 +52,7 @@ export const useMutateVetConcerns = () => {
     setAlert({
       variant: AlertVariant.info,
       title: 'Success!',
-      text: 'Vet concern submitted',
+      text: 'Updated vet concern',
       position: 'bottom',
       showFor: 1000
     })
@@ -67,7 +61,7 @@ export const useMutateVetConcerns = () => {
     setAlert({
       variant: AlertVariant.critical,
       title: 'Error!',
-      text: 'Vet concern was not submitted',
+      text: 'Could not update vet concern',
       position: 'bottom',
       showFor: 1000
     })

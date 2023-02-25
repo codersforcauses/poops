@@ -20,7 +20,17 @@ const Form = <T extends FieldValues>({
     defaultValues,
     mode: 'onSubmit'
   })
-  const { register, formState, reset, watch, setFocus, setValue } = methods
+  const {
+    register,
+    formState,
+    reset,
+    watch,
+    setFocus,
+    setValue,
+    setError,
+    trigger,
+    getValues
+  } = methods
   const value: FormProps = {
     disabled,
     register,
@@ -28,13 +38,18 @@ const Form = <T extends FieldValues>({
     reset,
     watch,
     setFocus,
-    setValue
+    setValue,
+    setError,
+    trigger,
+    getValues
   }
 
   return (
     <HookFormProvider {...methods}>
       <form
-        onSubmit={methods.handleSubmit((data) => onSubmit(data as T))} // :(
+        onSubmit={methods.handleSubmit(
+          (data) => onSubmit && onSubmit(data as T)
+        )} // :(
         className={`flex flex-col space-y-4 ${className || 'mt-4'}`}
       >
         <FormProvider value={value}>{children}</FormProvider>
@@ -48,5 +63,5 @@ export default Form
 interface HookFormProps<T extends FieldValues> extends UseFormProps {
   disabled?: boolean
   className?: string
-  onSubmit: SubmitHandler<T>
+  onSubmit?: SubmitHandler<T>
 }

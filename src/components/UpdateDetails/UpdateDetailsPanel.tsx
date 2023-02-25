@@ -18,6 +18,7 @@ declare global {
 }
 
 import { useRouter } from 'next/router'
+import { isValidPhoneNumber } from 'react-phone-number-input'
 
 import SubmitButton from '@/components/UpdateDetails/SubmitButton'
 
@@ -75,7 +76,7 @@ function UpdateDetailsPanel({ contact }: ContactItemProps) {
         if (!contact) {
           return
         }
-        if (phoneNumber.length >= 9) {
+        if (isValidPhoneNumber('+610' + phoneNumber)) {
           window.recaptchaVerifier = new RecaptchaVerifier(
             'recaptcha-container',
             {
@@ -153,7 +154,7 @@ function UpdateDetailsPanel({ contact }: ContactItemProps) {
       <div className='phone-input'>
         {!phoneNumber ? (
           <div>
-            <div className='italic text-primary'>*Phone required</div>
+            <div className='italic text-primary'>*Valid phone required</div>
             <input
               className='h-10 w-full rounded-lg border border-primary bg-transparent pl-2 text-sm'
               value={phoneNumber}

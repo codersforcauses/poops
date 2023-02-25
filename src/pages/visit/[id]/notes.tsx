@@ -6,13 +6,15 @@ import { useVisits } from '@/hooks/visits'
 import { humanizeTimestamp } from '@/utils'
 
 const Notes = () => {
-  const { data: visits } = useVisits()
+  const { data: visits } = useVisits(false)
   const router = useRouter()
 
   const { id: queryId } = router.query
   const visitId =
     queryId === undefined || Array.isArray(queryId) ? null : queryId
-  const visit = visits?.find((visit) => queryId && visit.docId === visitId)
+  const visit = visits?.pages
+    .flatMap((page) => page)
+    .find((visit) => queryId && visit?.docId === visitId)
 
   return (
     <Modal title='Notes' backLink='/visit'>

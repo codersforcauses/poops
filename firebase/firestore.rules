@@ -60,7 +60,7 @@ service cloud.firestore {
 
   function isValidVetConcern(data) {
     return
-      data.size() == 11 &&
+      data.size() == 12 &&
       data.clientName is string &&
       data.createdAt is timestamp &&
       data.detail is string &&
@@ -71,12 +71,13 @@ service cloud.firestore {
       data.userPhone is string &&
       data.vetName is string &&
       data.visitId is string &&
-      data.visitTime is timestamp;
+      data.visitTime is timestamp && 
+      data.status is string;
   }
 
   function isValidIncident(data) {
     return
-      data.size() == 10 &&
+      data.size() == 11 &&
         data.userID is string &&
         data.userName is string &&
         data.clientName is string &&
@@ -86,7 +87,8 @@ service cloud.firestore {
         data.petName is string &&
         data.time is timestamp &&
         data.details is string &&
-        data.createdAt is timestamp
+        data.createdAt is timestamp &&
+        data.status is string;
   }
   match /databases/{database}/documents {
     match /users/{userId} {
@@ -117,9 +119,8 @@ service cloud.firestore {
     }
 
     match /incidents/{document=**} {
-      allow create: if isSignIn();
-      allow read: if isAdmin();
-      allow update, delete: if false;
+      allow create: if isSignIn() && isValidIncident(request.resource.data);
+      allow read, update, delete: if isAdmin();
     }
 
     match /roles/{userId} {
@@ -129,8 +130,7 @@ service cloud.firestore {
 
     match /vet_concerns/{concern} {
       allow create: if isSignIn() && isValidVetConcern(request.resource.data);
-      allow read: if isAdmin();
-      allow update, delete: if false;
+      allow read, update, delete: if isAdmin();
     }
   }
 }
