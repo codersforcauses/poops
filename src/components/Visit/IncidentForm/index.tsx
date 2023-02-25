@@ -71,7 +71,7 @@ const IncidentForm = (props: IncidentFormProps) => {
       // await fetch('/api/sendEmail', {
       //   method: 'POST',
       //   body: JSON.stringify(message)
-      // }) 
+      // })
       await sendEmail(message)
 
       router.push('/visit')

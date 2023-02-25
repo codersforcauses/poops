@@ -1,6 +1,5 @@
 import { useRouter } from 'next/router'
 
-import { db } from '@/components/Firebase/init'
 import { withProtected } from '@/components/PrivateRoute'
 import Modal from '@/components/UI/modal'
 import VetForm from '@/components/Visit/VetForm'
