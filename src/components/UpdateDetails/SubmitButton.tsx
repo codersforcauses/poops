@@ -1,5 +1,4 @@
 import Link from 'next/link'
-
 export interface SubmitButtonInterface {
   onClick: (e: React.MouseEvent<HTMLButtonElement>) => void
   buttonlabel: string
@@ -18,6 +17,7 @@ const SubmitButton = ({
   phoneNum
 }: SubmitButtonInterface) => {
   const isEmpty = !name || !email || !phoneNum
+
   return (
     <button className={style} onClick={onClick} disabled={isEmpty}>
       <div className='relative flex items-center space-x-4'>

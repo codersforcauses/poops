@@ -17,12 +17,14 @@ import { commuteMethods, visitTypes } from '@/utils/defaults'
 
 const FormFields = () => {
   const { data: contacts } = useContacts()
-  const { data: visits } = useVisits()
+  const { data: visits } = useVisits(false)
   const { reset } = useContext(FormContext)
 
   const fillValues = (data: OnChangeValue<SelectOption<ClientInfo>, false>) => {
     const clientName = data?.label
-    const latestVisit = visits?.find((v) => v.clientName == clientName)
+    const latestVisit = visits?.pages
+      .flatMap((page) => page)
+      .find((v) => v?.clientName == clientName)
 
     if (!latestVisit) return
     const d: Partial<FormValues> = {

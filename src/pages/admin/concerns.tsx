@@ -5,7 +5,7 @@ import Header from '@/components/Header'
 import NavBar from '@/components/NavBar'
 import Button from '@/components/UI/button'
 import { useVetConcerns } from '@/hooks/vetconcerns'
-import { VetConcern } from '@/types/types'
+import { Status, VetConcern } from '@/types/types'
 
 const Output = () => {
   const { data: concerns } = useVetConcerns()
@@ -30,9 +30,13 @@ const Output = () => {
         </div>
 
         <div className='max-h-screen'>
-          {concerns?.map((concern: VetConcern, i: number) => (
-            <ConcernsCard key={i} {...concern}></ConcernsCard>
-          ))}
+          {concerns
+            ?.filter(
+              (concern: VetConcern) => concern.status === Status.unresolved
+            )
+            .map((concern: VetConcern, i: number) => (
+              <ConcernsCard key={i} {...concern}></ConcernsCard>
+            ))}
         </div>
       </div>
       <NavBar />

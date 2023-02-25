@@ -33,55 +33,66 @@ const Admin = () => {
   return (
     <>
       <Header pageTitle='Admin' />
-      <h1 className='m-3 flex-1 text-center text-2xl'>Admin</h1>
-      <p>User: {currentUser?.displayName}</p>
-      <p>Email: {currentUser?.email}</p>
-      <p>Admin status: {isAdmin.toString()}</p>
-      <p>User role firestore document: {JSON.stringify(userDoc)}</p>
-      <Button
-        size='medium'
-        intent='secondary'
-        type='button'
-        onClick={async () => refreshUserToken()}
-      >
-        Refresh Token
-      </Button>
+      <div className='main-style'>
+        <div className='flex h-full w-screen flex-col justify-center text-center'>
+          <div className='mb-4'>
+            <h1 className='flex-1 text-2xl'>Admin</h1>
+          </div>
+          <div>
+            <p>User: {currentUser?.displayName}</p>
+            <p>Email: {currentUser?.email}</p>
+            <p>Admin status: {isAdmin.toString()}</p>
+            <p>User role firestore document: {JSON.stringify(userDoc)}</p>
+            <Button
+              size='medium'
+              intent='secondary'
+              type='button'
+              onClick={async () => refreshUserToken()}
+            >
+              Refresh Token
+            </Button>
 
-      <div className='m-2'>
-        <Button
-          size='medium'
-          intent='primary'
-          type='button'
-          onClick={() => Router.push('/admin/incidents')}
-        >
-          View Incidents
-        </Button>
-        <Button
-          size='medium'
-          intent='primary'
-          type='button'
-          onClick={() => Router.push('/admin/concerns')}
-        >
-          View Concerns
-        </Button>
-        <Button
-          size='medium'
-          intent='primary'
-          type='button'
-          onClick={() => Router.push('/admin/roles')}
-        >
-          View Roles
-        </Button>
-        <Button
-          size='medium'
-          intent='primary'
-          type='button'
-          onClick={() => Router.push('/admin/stats')}
-        >
-          View Stats
-        </Button>
+            <div className='m-2'>
+              <Button
+                size='medium'
+                intent='primary'
+                type='button'
+                onClick={() => Router.push('/admin/incidents')}
+                className='m-1'
+              >
+                View Incidents
+              </Button>
+              <Button
+                size='medium'
+                intent='primary'
+                type='button'
+                onClick={() => Router.push('/admin/concerns')}
+                className='m-1'
+              >
+                View Concerns
+              </Button>
+              <Button
+                size='medium'
+                intent='primary'
+                type='button'
+                onClick={() => Router.push('/admin/roles')}
+                className='m-1'
+              >
+                View Roles
+              </Button>
+              <Button
+                size='medium'
+                intent='primary'
+                type='button'
+                onClick={() => Router.push('/admin/stats')}
+                className='m-1'
+              >
+                View Stats
+              </Button>
+            </div>
+          </div>
+        </div>
       </div>
-
       <NavBar />
     </>
   )
