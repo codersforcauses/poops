@@ -30,7 +30,7 @@ export const withProtected = (Component: NextPageWithLayout) => {
         userData &&
         !(userData.info.email && userData.info.phone && userData.info.name)
       ) {
-        Router.replace('/signupDetails')
+        Router.replace('/profile/sign-up')
       }
     }, [userData])
     return <Component {...props} />
