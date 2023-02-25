@@ -1,20 +1,19 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import {
   collection,
-  deleteDoc,
   doc,
   DocumentReference,
   getDoc,
   getDocs,
   orderBy,
   query,
+  setDoc,
   writeBatch
 } from 'firebase/firestore'
 
 import { db } from '@/components/Firebase/init'
 import { AlertVariant, useAlert } from '@/context/AlertContext'
 import { useAuth } from '@/context/Firebase/Auth/context'
-import { canDelete } from '@/hooks/utils'
 import { Incident, Visit } from '@/types/types'
 import { humanizeTimestamp } from '@/utils'
 
@@ -30,6 +29,7 @@ export const useIncidents = () => {
       )
     }
   }
+
   return useQuery(['incidents'], queryFn)
 }
 
@@ -38,19 +38,18 @@ export const useMutateIncidents = () => {
   const queryClient = useQueryClient()
   const { setAlert } = useAlert()
 
-  const mutationFn = async (incident: Incident & { docId?: string }) => {
+  const mutationFn = async (incident: Incident) => {
     if (currentUser?.uid) {
       const { docId: incidentId, ...incidentMut } = incident
       const collectionRef = collection(db, 'incidents')
 
-      const docRef = incidentId
-        ? doc(collectionRef, incidentId)
-        : doc(collectionRef)
-
-      if (canDelete(incidentMut, incidentId)) {
-        await deleteDoc(docRef)
+      if (incidentId) {
+        // updating incident
+        await setDoc(doc(collectionRef, incidentId), incidentMut, {
+          merge: true
+        })
       } else {
-        await addIncident(docRef, incident)
+        await addIncident(doc(collectionRef), incident)
       }
     }
   }

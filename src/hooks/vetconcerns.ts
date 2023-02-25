@@ -7,6 +7,7 @@ import {
   getDocs,
   orderBy,
   query,
+  setDoc,
   writeBatch
 } from 'firebase/firestore'
 
@@ -31,10 +32,18 @@ export const useMutateVetConcerns = () => {
   const queryClient = useQueryClient()
   const { setAlert } = useAlert()
 
-  const mutationFn = async (vetConcern: VetConcern) => {
+  const mutationFn = async (vetConcern: VetConcern & { docId?: string }) => {
+    const { docId: vetConcernId, ...vetConcernMut } = vetConcern
     const collectionRef = collection(db, 'vet_concerns')
-    const docRef = doc(collectionRef)
-    await addVetConcern(docRef, vetConcern)
+
+    if (vetConcernId) {
+      // updating vet concern
+      await setDoc(doc(collectionRef, vetConcernId), vetConcernMut, {
+        merge: true
+      })
+    } else {
+      await addVetConcern(doc(collectionRef), vetConcern)
+    }
   }
 
   const onSuccess = () => {
@@ -43,7 +52,7 @@ export const useMutateVetConcerns = () => {
     setAlert({
       variant: AlertVariant.info,
       title: 'Success!',
-      text: 'Vet concern submitted',
+      text: 'Updated vet concern',
       position: 'bottom',
       showFor: 1000
     })
@@ -52,7 +61,7 @@ export const useMutateVetConcerns = () => {
     setAlert({
       variant: AlertVariant.critical,
       title: 'Error!',
-      text: 'Vet concern was not submitted',
+      text: 'Could not update vet concern',
       position: 'bottom',
       showFor: 1000
     })
