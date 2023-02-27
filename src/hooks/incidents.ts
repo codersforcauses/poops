@@ -15,6 +15,7 @@ import { db } from '@/components/Firebase/init'
 import { AlertVariant, useAlert } from '@/context/AlertContext'
 import { useAuth } from '@/context/Firebase/Auth/context'
 import { Incident, Visit } from '@/types/types'
+import { incidentSchema } from '@/types/zod/schema'
 import { humanizeTimestamp } from '@/utils'
 
 export const useIncidents = () => {
@@ -24,9 +25,11 @@ export const useIncidents = () => {
       const incidentsRef = collection(db, 'incidents')
       const q = query(incidentsRef, orderBy('createdAt', 'desc'))
       const incidentsDocs = await getDocs(q)
-      return incidentsDocs.docs.map(
-        (doc) => ({ ...doc.data(), docId: doc.id } as Incident)
-      )
+      return incidentsDocs.docs.map((doc) => {
+        const rawData = doc.data()
+        const parsedData = incidentSchema.parse(rawData)
+        return { ...parsedData, docId: doc.id } as Incident
+      })
     }
   }
 
@@ -95,7 +98,7 @@ const addIncident = async (
   const visitRef = doc(
     db,
     'users',
-    incidentMut.userID,
+    incidentMut.userId,
     'visits',
     incidentMut.visitId
   )

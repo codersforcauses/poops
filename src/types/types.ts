@@ -73,8 +73,8 @@ export enum Status {
 
 export type Incident = {
   docId?: string
+  userId: string
   status: Status
-  userID: string
   userName: string | null | undefined
   visitId: string
   visitTime: Timestamp
