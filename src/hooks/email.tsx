@@ -8,11 +8,9 @@ interface Message {
 }
 
 const sendEmail = async (message: Message) => {
-  // to: process.env.INCIDENT_EMAIL,
-
   // Add a new document with a generated id.
   await addDoc(collection(db, 'mail'), {
-    to: process.env.FIREBASE_INCIDENT_EMAIL,
+    to: process.env.NEXT_PUBLIC_FIREBASE_INCIDENT_EMAIL,
     message: message
   })
 }
