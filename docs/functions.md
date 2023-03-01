@@ -20,7 +20,7 @@ Then add the extension to Firestore.
 7. Click it and search for the [Trigger Email](https://extensions.dev/extensions/firebase/firestore-send-email) extension. Click install. This should take you back to the Firebase console.
 8. Set the options to something like the following:
 
-```
+```nash
 SMTP connection URI: smtps://poops.cfc.test@gmail.com@smtp.gmail.com:465
 SMTP password: <password generated before> (press add secret to add this)
 mail: poops.cfc.test@gmail.com
@@ -28,10 +28,15 @@ mail: poops.cfc.test@gmail.com
 
 9. Press install application, and enable it.
 10. Wait 3-5 minutes, and it should be completely installed.
+11. Add your email address in the `.env` file.
+
+```bash
+NEXT_PUBLIC_FIREBASE_INCIDENT_EMAIL=poops.cfc.test@gmail.com
+```
 
 Now any documents added to the mail collection should can have this schema, and they will be delivered.
 
-```js
+```ts
 interface Message {
   message: {
     subject: string
