@@ -78,16 +78,16 @@ service cloud.firestore {
   function isValidIncident(data) {
     return
       data.size() == 11 &&
-        data.userId is string &&
         data.userName is string &&
-        data.clientName is string &&
-        data.visitId is string &&
-        data.visitTime is timestamp &&
         data.email is string &&
         data.petName is string &&
-        data.time is timestamp &&
         data.details is string &&
+        data.clientName is string &&
         data.createdAt is timestamp &&
+        data.time is timestamp &&
+        data.userId is string &&
+        data.visitId is string &&
+        data.visitTime is timestamp &&
         data.status is string;
   }
 
@@ -128,7 +128,7 @@ service cloud.firestore {
       allow read: if isAdmin();
     }
 
-    match /incidents/{document=**} {
+    match /incidents/{incidentId} {
       allow create: if isSignIn() && isValidIncident(request.resource.data);
       allow read, update, delete: if isAdmin();
     }
@@ -138,7 +138,7 @@ service cloud.firestore {
       allow write: if false;
     }
 
-    match /vet_concerns/{concern} {
+    match /vet_concerns/{concernId} {
       allow create: if isSignIn() && isValidVetConcern(request.resource.data);
       allow read, update, delete: if isAdmin();
     }
