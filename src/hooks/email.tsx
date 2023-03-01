@@ -5,6 +5,7 @@ import { db } from '@/components/Firebase/init'
 interface Message {
   subject: string
   text: string
+  html?: string
 }
 
 const sendEmail = async (message: Message) => {
