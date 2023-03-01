@@ -49,9 +49,6 @@ export const useUser = () => {
 
       const rawData = userDocSnap.data() as User
       const userData = userSchema.parse(rawData)
-      if (!(userData.info.email && userData.info.phone && userData.info.name)) {
-        router.replace('/signupDetails')
-      }
       return { ...userData, info: { ...userData.info, docId: 'USER' } } as User
     }
   }
