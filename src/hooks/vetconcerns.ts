@@ -7,12 +7,14 @@ import {
   getDocs,
   orderBy,
   query,
+  setDoc,
   writeBatch
 } from 'firebase/firestore'
 
 import { db } from '@/components/Firebase/init'
 import { AlertVariant, useAlert } from '@/context/AlertContext'
 import { VetConcern, Visit } from '@/types/types'
+import { vetConcernSchema } from '@/types/zod/schema'
 import { humanizeTimestamp } from '@/utils'
 
 export const useVetConcerns = () => {
@@ -20,9 +22,11 @@ export const useVetConcerns = () => {
     const vetConcernsRef = collection(db, 'vet_concerns')
     const q = query(vetConcernsRef, orderBy('createdAt', 'desc'))
     const vetConcernsDocs = await getDocs(q)
-    return vetConcernsDocs.docs.map(
-      (doc) => ({ ...doc.data(), docId: doc.id } as VetConcern)
-    )
+    return vetConcernsDocs.docs.map((doc) => {
+      const rawData = doc.data()
+      const parsedData = vetConcernSchema.parse(rawData)
+      return { ...parsedData, docId: doc.id } as VetConcern
+    })
   }
   return useQuery(['vetConcerns'], queryFn)
 }
@@ -31,10 +35,18 @@ export const useMutateVetConcerns = () => {
   const queryClient = useQueryClient()
   const { setAlert } = useAlert()
 
-  const mutationFn = async (vetConcern: VetConcern) => {
+  const mutationFn = async (vetConcern: VetConcern & { docId?: string }) => {
+    const { docId: vetConcernId, ...vetConcernMut } = vetConcern
     const collectionRef = collection(db, 'vet_concerns')
-    const docRef = doc(collectionRef)
-    await addVetConcern(docRef, vetConcern)
+
+    if (vetConcernId) {
+      // updating vet concern
+      await setDoc(doc(collectionRef, vetConcernId), vetConcernMut, {
+        merge: true
+      })
+    } else {
+      await addVetConcern(doc(collectionRef), vetConcern)
+    }
   }
 
   const onSuccess = () => {
@@ -43,7 +55,7 @@ export const useMutateVetConcerns = () => {
     setAlert({
       variant: AlertVariant.info,
       title: 'Success!',
-      text: 'Vet concern submitted',
+      text: 'Updated vet concern',
       position: 'bottom',
       showFor: 1000
     })
@@ -52,7 +64,7 @@ export const useMutateVetConcerns = () => {
     setAlert({
       variant: AlertVariant.critical,
       title: 'Error!',
-      text: 'Vet concern was not submitted',
+      text: 'Could not update vet concern',
       position: 'bottom',
       showFor: 1000
     })

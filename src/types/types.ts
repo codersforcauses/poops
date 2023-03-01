@@ -35,6 +35,7 @@ export interface Contact {
 
 export interface VetConcern {
   docId?: string
+  status: Status
   userId: string
   userName: string
   userEmail: string
@@ -65,9 +66,15 @@ export type Duration = {
   minutes: number
 }
 
+export enum Status {
+  unresolved = 'unresolved',
+  resolved = 'resolved'
+}
+
 export type Incident = {
   docId?: string
-  userID: string
+  userId: string
+  status: Status
   userName: string | null | undefined
   visitId: string
   visitTime: Timestamp

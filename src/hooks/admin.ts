@@ -11,6 +11,7 @@ import {
 
 import { db } from '@/components/Firebase/init'
 import { Visit, VolunteerStats } from '@/types/types'
+import { visitSchema } from '@/types/zod/schema'
 
 export const useVolunteerStatsByDateRange = (
   queryKey: string,
@@ -35,7 +36,8 @@ export const useVolunteerStatsByDateRange = (
     let totalDistWalked = 0
     let totalDurationMins = 0
     visitDocs.forEach((doc) => {
-      const visitData = doc.data() as Visit
+      const rawData = doc.data()
+      const visitData = visitSchema.parse(rawData) as Visit
       totalVisits += 1
       totalDistCommuted += visitData.commuteDist
       totalDistWalked += visitData.walkDist

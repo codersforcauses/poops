@@ -1,21 +1,21 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import {
   collection,
-  deleteDoc,
   doc,
   DocumentReference,
   getDoc,
   getDocs,
   orderBy,
   query,
+  setDoc,
   writeBatch
 } from 'firebase/firestore'
 
 import { db } from '@/components/Firebase/init'
 import { AlertVariant, useAlert } from '@/context/AlertContext'
 import { useAuth } from '@/context/Firebase/Auth/context'
-import { canDelete } from '@/hooks/utils'
 import { Incident, Visit } from '@/types/types'
+import { incidentSchema } from '@/types/zod/schema'
 import { humanizeTimestamp } from '@/utils'
 
 export const useIncidents = () => {
@@ -25,11 +25,14 @@ export const useIncidents = () => {
       const incidentsRef = collection(db, 'incidents')
       const q = query(incidentsRef, orderBy('createdAt', 'desc'))
       const incidentsDocs = await getDocs(q)
-      return incidentsDocs.docs.map(
-        (doc) => ({ ...doc.data(), docId: doc.id } as Incident)
-      )
+      return incidentsDocs.docs.map((doc) => {
+        const rawData = doc.data()
+        const parsedData = incidentSchema.parse(rawData)
+        return { ...parsedData, docId: doc.id } as Incident
+      })
     }
   }
+
   return useQuery(['incidents'], queryFn)
 }
 
@@ -38,19 +41,18 @@ export const useMutateIncidents = () => {
   const queryClient = useQueryClient()
   const { setAlert } = useAlert()
 
-  const mutationFn = async (incident: Incident & { docId?: string }) => {
+  const mutationFn = async (incident: Incident) => {
     if (currentUser?.uid) {
       const { docId: incidentId, ...incidentMut } = incident
       const collectionRef = collection(db, 'incidents')
 
-      const docRef = incidentId
-        ? doc(collectionRef, incidentId)
-        : doc(collectionRef)
-
-      if (canDelete(incidentMut, incidentId)) {
-        await deleteDoc(docRef)
+      if (incidentId) {
+        // updating incident
+        await setDoc(doc(collectionRef, incidentId), incidentMut, {
+          merge: true
+        })
       } else {
-        await addIncident(docRef, incident)
+        await addIncident(doc(collectionRef), incident)
       }
     }
   }
@@ -96,7 +98,7 @@ const addIncident = async (
   const visitRef = doc(
     db,
     'users',
-    incidentMut.userID,
+    incidentMut.userId,
     'visits',
     incidentMut.visitId
   )

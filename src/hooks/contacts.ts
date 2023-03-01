@@ -6,6 +6,7 @@ import { AlertVariant, useAlert } from '@/context/AlertContext'
 import { useAuth } from '@/context/Firebase/Auth/context'
 import { canDelete } from '@/hooks/utils'
 import { Contact } from '@/types/types'
+import { contactSchema } from '@/types/zod/schema'
 
 export const useContacts = () => {
   const { currentUser } = useAuth()
@@ -13,9 +14,11 @@ export const useContacts = () => {
     if (currentUser?.uid) {
       const contactsRef = collection(db, 'users', currentUser.uid, 'contacts')
       const contactsDocs = await getDocs(contactsRef)
-      return contactsDocs.docs.map(
-        (doc) => ({ ...doc.data(), docId: doc.id } as Contact)
-      )
+      return contactsDocs.docs.map((doc) => {
+        const rawData = doc.data()
+        const parsedData = contactSchema.parse(rawData)
+        return { ...parsedData, docId: doc.id } as Contact
+      })
     }
   }
   return useQuery(['contacts'], queryFn)

@@ -5,7 +5,7 @@ import Header from '@/components/Header'
 import NavBar from '@/components/NavBar'
 import Button from '@/components/UI/button'
 import { useIncidents } from '@/hooks/incidents'
-import { Incident } from '@/types/types'
+import { Incident, Status } from '@/types/types'
 
 const AdminIncidents = () => {
   const { data: incidents } = useIncidents()
@@ -13,7 +13,7 @@ const AdminIncidents = () => {
 
   return (
     <>
-      <Header pageTitle='Roles' />
+      <Header pageTitle='Incidents' />
       <div className='main-style'>
         <div className='m-auto flex h-14 w-full flex-row'>
           <div className='m-auto flex-1 text-center'>
@@ -30,9 +30,13 @@ const AdminIncidents = () => {
         </div>
 
         <div className='max-h-screen'>
-          {incidents?.map((incident: Incident, i: number) => (
-            <IncidentCard key={i} {...incident}></IncidentCard>
-          ))}
+          {incidents
+            ?.filter(
+              (incident: Incident) => incident.status === Status.unresolved
+            )
+            .map((incident: Incident, i: number) => (
+              <IncidentCard key={i} {...incident}></IncidentCard>
+            ))}
         </div>
       </div>
       <NavBar />

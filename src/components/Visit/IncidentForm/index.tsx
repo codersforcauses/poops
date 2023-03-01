@@ -9,7 +9,7 @@ import validationSchema from '@/components/Visit/IncidentForm/validation'
 import { useAuth } from '@/context/Firebase/Auth/context'
 import sendEmail from '@/hooks/email'
 import { useMutateIncidents } from '@/hooks/incidents'
-import { Incident } from '@/types/types'
+import { Incident, Status } from '@/types/types'
 import { formatTimestamp } from '@/utils'
 
 interface FormValues {
@@ -29,7 +29,7 @@ interface IncidentFormProps {
 
 const formatIncident = (data: Incident) => {
   return `Incident Report
-User ID: ${data.userID}
+User ID: ${data.userId}
 Username: ${data.userName}
 Email: ${data.email}
 Created At: ${formatTimestamp(data.createdAt)}
@@ -57,9 +57,10 @@ const IncidentForm = (props: IncidentFormProps) => {
         clientName: props.clientName,
         createdAt: Timestamp.fromDate(new Date()),
         time: Timestamp.fromDate(new Date(time)),
-        userID: currentUser.uid,
+        userId: currentUser.uid,
         visitId: props.docId,
-        visitTime: props.visitTime
+        visitTime: props.visitTime,
+        status: Status.unresolved
       }
       const message = {
         subject: 'Incident Report',

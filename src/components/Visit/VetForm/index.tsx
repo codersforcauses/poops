@@ -9,7 +9,7 @@ import validationSchema from '@/components/Visit/VetForm/validation'
 import { useAuth } from '@/context/Firebase/Auth/context'
 import sendEmail from '@/hooks/email'
 import { useMutateVetConcerns } from '@/hooks/vetconcerns'
-import { VetConcern } from '@/types/types'
+import { Status, VetConcern } from '@/types/types'
 import { formatTimestamp } from '@/utils'
 
 interface FormValues {
@@ -59,7 +59,8 @@ const VetForm = (props: VetFormProps) => {
         clientName: props.clientName,
         visitTime: Timestamp.fromDate(new Date(time)),
         visitId: props.docId,
-        createdAt: Timestamp.fromDate(new Date())
+        createdAt: Timestamp.fromDate(new Date()),
+        status: Status.unresolved
       }
       const message = {
         subject: 'Vet Concerns Report',
