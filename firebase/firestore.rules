@@ -78,7 +78,7 @@ service cloud.firestore {
   function isValidIncident(data) {
     return
       data.size() == 11 &&
-        data.userID is string &&
+        data.userId is string &&
         data.userName is string &&
         data.clientName is string &&
         data.visitId is string &&

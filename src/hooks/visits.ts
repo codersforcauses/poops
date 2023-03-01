@@ -22,6 +22,7 @@ import { AlertVariant, useAlert } from '@/context/AlertContext'
 import { useAuth } from '@/context/Firebase/Auth/context'
 import { canDelete } from '@/hooks/utils'
 import { Visit } from '@/types/types'
+import { visitSchema } from '@/types/zod/schema'
 
 const PAGE_SIZE = 20
 
@@ -46,9 +47,11 @@ export const useVisits = (isSearch: boolean) => {
     }
 
     const querySnapshot = await getDocs(q)
-    return querySnapshot.docs.map(
-      (doc) => ({ ...doc.data(), docId: doc.id } as Visit)
-    )
+    return querySnapshot.docs.map((doc) => {
+      const rawData = doc.data()
+      const parsedData = visitSchema.parse(rawData)
+      return { ...parsedData, docId: doc.id } as Visit
+    })
   }
 
   return useInfiniteQuery({
