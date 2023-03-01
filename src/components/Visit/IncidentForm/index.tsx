@@ -61,19 +61,11 @@ const IncidentForm = (props: IncidentFormProps) => {
         visitId: props.docId,
         visitTime: props.visitTime
       }
-
-      mutateIncidents(data)
-
       const message = {
         subject: 'Incident Report',
         text: formatIncident(data)
       }
-      // await fetch('/api/sendEmail', {
-      //   method: 'POST',
-      //   body: JSON.stringify(message)
-      // })
-      await sendEmail(message)
-
+      await Promise.all([mutateIncidents(data), sendEmail(message)])
       router.push('/visit')
     }
   }

@@ -61,20 +61,11 @@ const VetForm = (props: VetFormProps) => {
         visitId: props.docId,
         createdAt: Timestamp.fromDate(new Date())
       }
-
-      mutateVetConcerns(data)
-
       const message = {
         subject: 'Vet Concerns Report',
         text: formatIncident(data)
       }
-      // await fetch('/api/sendEmail', {
-      //   method: 'POST',
-      //   body: JSON.stringify(message)
-      // })
-
-      await sendEmail(message)
-
+      await Promise.all([mutateVetConcerns(data), sendEmail(message)])
       router.push('/visit')
     }
   }
