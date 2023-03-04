@@ -4,12 +4,9 @@ import Image from 'next/image'
 import { withProtected } from '@/components/PrivateRoute'
 import UpdateDetailsPanel from '@/components/UpdateDetails/UpdateDetailsPanel'
 import { useAuth } from '@/context/Firebase/Auth/context'
-import useUser from '@/hooks/user'
 
 const SignupDetails: NextPage = () => {
   const { logOut } = useAuth()
-  const { data: currentUser } = useUser()
-  if (currentUser === undefined) return null
 
   return (
     <div className='flex h-screen w-screen animate-text flex-col items-center justify-center bg-gradient-to-b from-zinc-200 via-zinc-100 to-white'>
@@ -34,7 +31,7 @@ const SignupDetails: NextPage = () => {
 
         <div className='pb-2 text-xl font-bold'>Welcome, New User!</div>
       </div>
-      <UpdateDetailsPanel contact={currentUser.info} />
+      <UpdateDetailsPanel />
     </div>
   )
 }
