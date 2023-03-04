@@ -20,7 +20,7 @@ Then add the extension to Firestore.
 7. Click it and search for the [Trigger Email](https://extensions.dev/extensions/firebase/firestore-send-email) extension. Click install. This should take you back to the Firebase console.
 8. Set the options to something like the following:
 
-```nash
+```bash
 SMTP connection URI: smtps://poops.cfc.test@gmail.com@smtp.gmail.com:465
 SMTP password: <password generated before> (press add secret to add this)
 mail: poops.cfc.test@gmail.com
@@ -54,11 +54,3 @@ message: {
 ```
 
 This is implemented in the `sendEmail` API.
-
-## Billing Killswitch
-
-BLAH BLAH BLAH
-
-## Visit Trigger
-
-BLAH BLAH BLAH
