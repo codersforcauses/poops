@@ -1,3 +1,5 @@
+import Image from 'next/image'
+
 import Button from '@/components/UI/button'
 import { AlertVariant, useAlert } from '@/context/AlertContext'
 import { useMutateVetConcerns } from '@/hooks/vetconcerns'
@@ -39,6 +41,16 @@ const ConcernsCard = (props: VetConcern) => {
         <div>Client: {props.clientName}</div>
         <div>Pet: {props.petName}</div>
         <div>{props.detail}</div>
+        {props?.imageUrl && (
+          <Image
+            src={props.imageUrl}
+            alt='Uploaded Photo'
+            width={300}
+            height={300}
+            layout='responsive'
+            objectFit='contain'
+          />
+        )}
       </div>
       <div className='flex justify-center'>
         <Button onClick={handleResolve}>Mark as Resolved</Button>
