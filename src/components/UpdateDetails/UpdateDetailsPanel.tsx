@@ -76,7 +76,7 @@ function UpdateDetailsPanel({ contact }: ContactItemProps) {
         if (!contact) {
           return
         }
-        if (isValidPhoneNumber('+610' + phoneNumber)) {
+        if (isValidPhoneNumber('+61' + phoneNumber)) {
           window.recaptchaVerifier = new RecaptchaVerifier(
             'recaptcha-container',
             {
@@ -102,7 +102,7 @@ function UpdateDetailsPanel({ contact }: ContactItemProps) {
       <div>
         {!displayName ? (
           <div>
-            <div className='italic text-primary'>*Name required</div>
+            <div className='italic text-primary'>*Name Required</div>
             <input
               className='h-10 w-full rounded-lg border border-primary bg-transparent pl-2 text-sm'
               value={displayName}
@@ -127,7 +127,7 @@ function UpdateDetailsPanel({ contact }: ContactItemProps) {
       <div>
         {!email ? (
           <div>
-            <div className='italic text-primary'>*Email required</div>
+            <div className='italic text-primary'>*Email Required</div>
             <input
               className='h-10 w-full rounded-lg border border-primary bg-transparent pl-2 text-sm'
               value={email}
@@ -154,14 +154,16 @@ function UpdateDetailsPanel({ contact }: ContactItemProps) {
       <div className='phone-input'>
         {!phoneNumber ? (
           <div>
-            <div className='italic text-primary'>*Valid phone required</div>
+            <div className='italic text-primary'>
+              *Valid Phone Number Required
+            </div>
             <input
               className='h-10 w-full rounded-lg border border-primary bg-transparent pl-2 text-sm'
               value={phoneNumber}
               onChange={(e) => editPhoneNumber(e)}
               name={phoneNumber}
               type='number'
-              placeholder='Phone Number'
+              placeholder='0412 345 678'
             />
           </div>
         ) : (
