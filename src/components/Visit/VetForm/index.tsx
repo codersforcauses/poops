@@ -1,4 +1,6 @@
+import { ChangeEvent, useState } from 'react'
 import { useRouter } from 'next/dist/client/router'
+import Image from 'next/image'
 import { Timestamp } from 'firebase/firestore'
 import { SubmitHandler } from 'react-hook-form'
 
@@ -9,6 +11,7 @@ import validationSchema from '@/components/Visit/VetForm/validation'
 import { useAuth } from '@/context/Firebase/Auth/context'
 import sendEmail from '@/hooks/email'
 import { useMutateVetConcerns } from '@/hooks/vetconcerns'
+import { uploadImage } from '@/lib/storage/uploadImage'
 import { Status, VetConcern } from '@/types/types'
 import { formatTimestamp } from '@/utils'
 
@@ -19,6 +22,7 @@ interface FormValues {
   time: string
   vetName: string
   detail: string
+  photo: FileList
 }
 
 interface VetFormProps {
@@ -33,12 +37,12 @@ const formatIncident = (data: VetConcern) => {
 User ID: ${data.userId}
 Username: ${data.userName}
 Email: ${data.userEmail}
-Created At: ${formatTimestamp(data.createdAt)}
+Created At: ${data.createdAt.toDate().toJSON()}
 
 Client Name: ${data.clientName}
 Pet Name: ${data.petName}
 Visit ID: ${data.visitId}
-Visit Time: ${formatTimestamp(data.visitTime)}
+Visit Time: ${data.visitTime.toDate().toJSON()}
 
 Details: ${data.detail}`
 }
@@ -47,29 +51,63 @@ const VetForm = (props: VetFormProps) => {
   const router = useRouter()
   const { currentUser } = useAuth()
   const { mutate: mutateVetConcerns } = useMutateVetConcerns()
+  const [photoUrl, setPhotoUrl] = useState('')
+
+  const handleImageUpload = (e: ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
+    if (file) {
+      const photoUrlString = URL.createObjectURL(file)
+      setPhotoUrl(photoUrlString)
+    } else {
+      setPhotoUrl('')
+    }
+  }
 
   const handleSubmit: SubmitHandler<FormValues> = async (formData) => {
-    if (currentUser) {
-      const { time, ...rest } = formData
-
-      const data: VetConcern = {
-        ...rest,
-        userId: currentUser.uid,
-        userPhone: currentUser.phoneNumber ?? '',
-        clientName: props.clientName,
-        visitTime: Timestamp.fromDate(new Date(time)),
-        visitId: props.docId,
-        createdAt: Timestamp.fromDate(new Date()),
-        status: Status.unresolved
+    if (!currentUser) return
+    const { time, photo, ...rest } = formData
+    let imageUrl: string | undefined
+    if (photo.length > 0) {
+      const photoItem = photo.item(0)
+      if (photoItem && photoItem.type.match('image.*')) {
+        imageUrl = await uploadImage(
+          photoItem,
+          currentUser.uid,
+          'incident',
+          time
+        )
+        if (photoItem && imageUrl === undefined) {
+          console.error('Image upload failed')
+        }
       }
-      const message = {
-        subject: 'Vet Concerns Report',
-        text: formatIncident(data)
-      }
-      mutateVetConcerns(data)
-      await sendEmail(message)
-      router.push('/visit')
     }
+    const timeDate = new Date(time)
+    const data: VetConcern = {
+      ...rest,
+      userId: currentUser.uid,
+      userPhone: currentUser.phoneNumber ?? '',
+      clientName: props.clientName,
+      visitTime: Timestamp.fromDate(timeDate),
+      visitId: props.docId,
+      createdAt: Timestamp.fromDate(new Date()),
+      status: Status.unresolved,
+      ...(imageUrl && { imageUrl })
+    }
+    const message = {
+      subject: 'Vet Concerns Report',
+      text: formatIncident(data),
+      ...(imageUrl && {
+        attachments: [
+          {
+            filename: `${timeDate.toJSON()}.png`,
+            path: imageUrl
+          }
+        ]
+      })
+    }
+    mutateVetConcerns(data)
+    await sendEmail(message)
+    router.push('/visit')
   }
 
   return (
@@ -145,6 +183,31 @@ const VetForm = (props: VetFormProps) => {
                 placeholder='Add notes here'
                 rules={validationSchema.detail}
               />
+            </td>
+          </tr>
+          <tr className='align-top'>
+            <td colSpan={2}>
+              <TextField
+                name='photo'
+                label='Upload Photo'
+                type='file'
+                accept='image/*'
+                rules={{ onChange: handleImageUpload }}
+              />
+            </td>
+          </tr>
+          <tr>
+            <td>
+              {photoUrl && (
+                <Image
+                  src={photoUrl}
+                  alt='Uploaded Photo'
+                  width={300}
+                  height={300}
+                  layout='responsive'
+                  objectFit='contain'
+                />
+              )}
             </td>
           </tr>
           <tr className='align-top'>

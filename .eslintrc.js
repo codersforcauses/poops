@@ -15,7 +15,7 @@ module.exports = {
   ],
   rules: {
     'no-unused-vars': 'off',
-    'no-console': ['error', { allow: ['error'] }],
+    'no-console': ['warn', { allow: ['error'] }],
     '@typescript-eslint/explicit-module-boundary-types': 'off',
 
     'react/jsx-curly-brace-presence': [

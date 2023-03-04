@@ -19,7 +19,15 @@ const nextConfig = {
       source: '/__/auth/:path*',
       destination: `https://${url}/__/auth/:path*`
     }
-  ]
+  ],
+  images: {
+    domains: [
+      'images.unsplash.com',
+      'storage.googleapis.com',
+      'localhost',
+      'firebasestorage.googleapis.com'
+    ]
+  }
 }
 
 const PWAConfig = withPWA({
