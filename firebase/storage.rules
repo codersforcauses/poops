@@ -2,7 +2,12 @@ rules_version = '2';
 service firebase.storage {
   match /b/{bucket}/o {
     match /{allPaths=**} {
-      allow read, write: if request.auth!=null;
+      function isSignIn() {
+        return request.auth != null;
+      }
+      allow create: if isSignIn() && request.resource.contentType.matches('image/.*');
+      allow read: if isSignIn();
+      allow update, delete: if false;
     }
   }
 }
