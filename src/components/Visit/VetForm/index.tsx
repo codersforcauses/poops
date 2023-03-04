@@ -225,4 +225,4 @@ const VetForm = (props: VetFormProps) => {
 
 export default VetForm
 
-export type VetFormValues = keyof FormValues
+export type VetFormValues = keyof Omit<FormValues, 'photo'>
