@@ -66,7 +66,8 @@ const IncidentForm = (props: IncidentFormProps) => {
         subject: 'Incident Report',
         text: formatIncident(data)
       }
-      await Promise.all([mutateIncidents(data), sendEmail(message)])
+      mutateIncidents(data)
+      await sendEmail(message)
       router.push('/visit')
     }
   }

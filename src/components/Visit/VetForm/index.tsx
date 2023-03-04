@@ -66,7 +66,8 @@ const VetForm = (props: VetFormProps) => {
         subject: 'Vet Concerns Report',
         text: formatIncident(data)
       }
-      await Promise.all([mutateVetConcerns(data), sendEmail(message)])
+      mutateVetConcerns(data)
+      await sendEmail(message)
       router.push('/visit')
     }
   }
