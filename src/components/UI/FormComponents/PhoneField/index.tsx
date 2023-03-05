@@ -31,7 +31,9 @@ const PhoneField = ({
 
   return (
     <div className='flex flex-col'>
-      <FieldLabel>{label}</FieldLabel>
+      <FieldLabel required={'required' in rules || required}>
+        {label}
+      </FieldLabel>
       <div
         className={`form-input flex flex-row justify-center rounded border border-gray-500 bg-white p-0 ${props.className}`}
       >

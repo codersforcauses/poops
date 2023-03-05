@@ -5,6 +5,7 @@ import { FieldControlContext } from './fieldcontrol'
 
 interface LabelProps {
   children: ReactNode
+  required?: boolean
 }
 
 const FieldLabel = forwardRef<HTMLLabelElement, LabelProps>((props, ref) => {
@@ -12,7 +13,7 @@ const FieldLabel = forwardRef<HTMLLabelElement, LabelProps>((props, ref) => {
   return (
     <label htmlFor={name} id={`${name}-label`} ref={ref} className='font-bold'>
       {props.children}
-      {required && (
+      {(required || props.required) && (
         <>
           <span aria-hidden className='text-primary'>
             *
