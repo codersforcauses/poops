@@ -15,7 +15,7 @@ function TopNav() {
         <div className='flex justify-between'>
           <Image alt='logo' src='/images/logo.png' width={100} height={64} />
           {isAdmin && (
-            <Link href='admin/'>
+            <Link href='/admin/'>
               <a className='flex justify-center'>
                 <Button size='small' intent='secondary'>
                   Admin Page
