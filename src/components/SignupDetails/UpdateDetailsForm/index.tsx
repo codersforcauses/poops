@@ -3,10 +3,10 @@ import { useRouter } from 'next/router'
 import { RecaptchaVerifier, updateProfile } from 'firebase/auth'
 import { SubmitHandler } from 'react-hook-form'
 
-import Form from '@/components/UI/FormComponents/Form'
 import FormFields, {
   FormValues
-} from '@/components/UpdateDetails/UpdateDetailsForm/formfields'
+} from '@/components/SignupDetails/UpdateDetailsForm/formfields'
+import Form from '@/components/UI/FormComponents/Form'
 import { useAuth } from '@/context/Firebase/Auth/context'
 import useUser, { useMutateUser } from '@/hooks/user'
 
@@ -31,6 +31,7 @@ const UpdateDetailsForm = () => {
     } catch (error) {
       console.error(error)
       setError('Error verifying recaptcha. Please try again.')
+      return
     }
 
     // update user doc

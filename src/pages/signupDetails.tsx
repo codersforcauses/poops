@@ -3,7 +3,7 @@ import { useRouter } from 'next/dist/client/router'
 import Image from 'next/image'
 
 import { withProtected } from '@/components/PrivateRoute'
-import UpdateDetailsForm from '@/components/UpdateDetails/UpdateDetailsForm'
+import UpdateDetailsForm from '@/components/SignupDetails/UpdateDetailsForm'
 import { useAuth } from '@/context/Firebase/Auth/context'
 import useUser from '@/hooks/user'
 

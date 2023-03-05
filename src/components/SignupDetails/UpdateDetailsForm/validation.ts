@@ -1,7 +1,7 @@
 import { RegisterOptions } from 'react-hook-form'
 import { isValidPhoneNumber } from 'react-phone-number-input'
 
-import { UpdateDetailsFormValues } from '@/components/UpdateDetails/UpdateDetailsForm/formfields'
+import { UpdateDetailsFormValues } from '@/components/SignupDetails/UpdateDetailsForm/formfields'
 import { requiredMessage } from '@/utils'
 
 const validationSchema: Record<UpdateDetailsFormValues, RegisterOptions> = {

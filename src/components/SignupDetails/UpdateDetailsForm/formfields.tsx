@@ -1,10 +1,10 @@
 import { useContext } from 'react'
 
+import validationSchema from '@/components/SignupDetails/UpdateDetailsForm/validation'
 import Button from '@/components/UI/button'
 import { FormContext } from '@/components/UI/FormComponents/Form/context'
 import PhoneField from '@/components/UI/FormComponents/PhoneField'
 import TextField from '@/components/UI/FormComponents/TextField'
-import validationSchema from '@/components/UpdateDetails/UpdateDetailsForm/validation'
 
 export interface FormValues {
   name: string
