@@ -75,15 +75,6 @@ const Admin = () => {
                 size='medium'
                 intent='primary'
                 type='button'
-                onClick={() => Router.push('/admin/roles')}
-                className='m-1'
-              >
-                View Roles
-              </Button>
-              <Button
-                size='medium'
-                intent='primary'
-                type='button'
                 onClick={() => Router.push('/admin/stats')}
                 className='m-1'
               >
