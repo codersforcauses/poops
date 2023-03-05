@@ -75,7 +75,7 @@ const ContactForm = ({
 
   return (
     // Padding
-    <div className='container p-4'>
+    <div className='container mx-auto p-4'>
       {/* Grey area for form card */}
       <div className='flex-col gap-4 rounded-lg bg-gray-100 p-4'>
         {/* Nav and avatar */}
