@@ -58,9 +58,6 @@ export const useUser = () => {
        * so we need to redirect beforehand
        */
       const userData = userSchema.parse(rawData)
-      if (!(userData.info.email && userData.info.phone && userData.info.name)) {
-        router.replace('/signupDetails')
-      }
       return { ...userData, info: { ...userData.info, docId: 'USER' } } as User
     }
   }
