@@ -37,18 +37,6 @@
   display: none;
 }
 
-.phone-input input[type='number'] {
-  -moz-appearance: textfield;
-}
-
-.phone-input input::-webkit-outer-spin-button {
-  -webkit-appearance: none;
-}
-
-.phone-input input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-}
-
 .PhoneInputCountry {
   padding-top: 0.5rem /* 8px */;
   padding-bottom: 0.5rem /* 8px */;
@@ -66,4 +54,8 @@
   padding-left: 0.75rem /* 12px */;
   border-top-right-radius: 2px;
   border-bottom-right-radius: 2px;
+}
+
+.PhoneInput--disabled {
+  background-color: rgb(229 231 235) /* bg-gray-200 */;
 }

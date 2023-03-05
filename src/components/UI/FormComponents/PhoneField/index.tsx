@@ -9,7 +9,6 @@ import {
 import { FieldLabel, FieldMessage } from '@/components/UI/FormComponents/utils'
 
 interface PhoneSelectProps extends FormFieldProps {
-  isDisabled?: boolean
   className?: string
   defaultCountry?: CountryCode
   placeholder?: string
@@ -19,7 +18,7 @@ const PhoneField = ({
   name = '',
   label,
   description,
-  isDisabled = false,
+  disabled = false,
   required = false,
   rules = {},
   defaultCountry = 'AU',
@@ -41,7 +40,7 @@ const PhoneField = ({
           name={name}
           defaultCountry={defaultCountry}
           className='w-full'
-          disabled={formDisabled || isDisabled}
+          disabled={formDisabled || disabled}
           error={error}
           required={'required' in rules || required}
           placeholder='0412 345 678'

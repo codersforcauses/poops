@@ -1,4 +1,7 @@
+import { useContext } from 'react'
+
 import Button from '@/components/UI/button'
+import { FormContext } from '@/components/UI/FormComponents/Form/context'
 import PhoneField from '@/components/UI/FormComponents/PhoneField'
 import TextField from '@/components/UI/FormComponents/TextField'
 import validationSchema from '@/components/UpdateDetails/UpdateDetailsForm/validation'
@@ -10,6 +13,7 @@ export interface FormValues {
 }
 
 const FormFields = () => {
+  const { getValues } = useContext(FormContext)
   return (
     <>
       <TextField
@@ -17,18 +21,22 @@ const FormFields = () => {
         label='Name:'
         placeholder='Name'
         rules={validationSchema.name}
+        disabled={getValues?.('name') && true}
       />
       <TextField
         name='email'
         label='Email:'
         placeholder='Email'
         rules={validationSchema.email}
+        disabled={getValues?.('email') && true}
+        type='email'
       />
       <PhoneField
-        name='phone]'
+        name='phone'
         label='Phone Number:'
         placeholder='01234 345 678'
         rules={validationSchema.phone}
+        disabled={getValues?.('phone') && true}
       />
       <Button id='recaptcha-container' type='submit'>
         Submit

@@ -66,6 +66,7 @@ const FormFields = () => {
     const otpCode: string = getValues?.('otpCode')
     try {
       await result?.confirm(otpCode)
+      setPanel('')
     } catch (error) {
       setError?.('otpCode', { message: 'Incorrect code' })
     }
@@ -79,7 +80,7 @@ const FormFields = () => {
           label='Phone Number:'
           placeholder='0412 345 678'
           rules={validationSchema.phoneNumber}
-          isDisabled={otpShown}
+          disabled={otpShown}
         />
         {otpShown && (
           <TextField

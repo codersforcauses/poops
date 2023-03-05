@@ -1,5 +1,6 @@
+import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
-import { updateProfile } from 'firebase/auth'
+import { RecaptchaVerifier, updateProfile } from 'firebase/auth'
 import { SubmitHandler } from 'react-hook-form'
 
 import Form from '@/components/UI/FormComponents/Form'
@@ -11,13 +12,12 @@ import useUser, { useMutateUser } from '@/hooks/user'
 
 const UpdateDetailsForm = () => {
   const router = useRouter()
-  const { currentUser: firebaseUser } = useAuth()
+  const { currentUser: firebaseUser, auth } = useAuth()
   const { data: appUser } = useUser()
   const { mutate: mutateAppUser } = useMutateUser()
 
-  if (appUser?.info.name && appUser?.info.email && appUser?.info.phone) {
-    router.replace('/')
-  }
+  const [error, setError] = useState('')
+  const [recaptcha, setRecaptcha] = useState<RecaptchaVerifier>()
 
   const handleSubmit: SubmitHandler<FormValues> = async (data) => {
     if (!firebaseUser) {
@@ -25,6 +25,13 @@ const UpdateDetailsForm = () => {
       return
     }
     if (!appUser) return
+
+    try {
+      await recaptcha?.verify()
+    } catch (error) {
+      console.error(error)
+      setError('Error verifying recaptcha. Please try again.')
+    }
 
     // update user doc
     mutateAppUser({ ...appUser.info, ...data })
@@ -34,18 +41,32 @@ const UpdateDetailsForm = () => {
 
     router.reload()
   }
+
+  useEffect(() => {
+    setRecaptcha(
+      new RecaptchaVerifier(
+        'recaptcha-container',
+        {
+          size: 'invisible'
+        },
+        auth
+      )
+    )
+  }, [auth])
+
   return (
     <Form<FormValues>
       onSubmit={handleSubmit}
       defaultValues={
         {
-          name: appUser?.info.name,
-          email: appUser?.info.email,
-          phone: appUser?.info.phone
+          name: firebaseUser?.displayName,
+          email: firebaseUser?.email,
+          phone: firebaseUser?.phoneNumber
         } as FormValues
       }
     >
       <FormFields />
+      {error && <>{error}</>}
     </Form>
   )
 }
