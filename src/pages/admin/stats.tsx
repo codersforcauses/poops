@@ -4,7 +4,7 @@ import Router from 'next/router'
 import StatsBreakdown from '@/components/Admin/statsbreakdown'
 import VolunteerStatsTable from '@/components/Admin/volunteerstatstable'
 import Layout from '@/components/Layout'
-import { withProtected } from '@/components/PrivateRoute'
+import { withAdmin } from '@/components/PrivateRoute'
 import Button from '@/components/UI/button'
 import { NextPageWithLayout } from '@/pages/_app'
 
@@ -31,7 +31,7 @@ const Stats: NextPageWithLayout = () => {
   )
 }
 
-const StatsWithProtected = withProtected(Stats)
+const StatsWithProtected = withAdmin(Stats)
 
 StatsWithProtected.getLayout = (page: ReactElement) => (
   <Layout title='Statistics'>{page}</Layout>

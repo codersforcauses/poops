@@ -9,14 +9,18 @@ export interface FirebaseContextProps {
   linkAuthProvider?: (currentUser: User, provider: AuthProvider) => void
   externalAuthSignIn?: (auth: Auth, provider: AuthProvider) => void
   logOut?: () => void
+  userLoading: boolean
   currentUser: User | null
+  tokenLoading: boolean
   isAdmin: boolean
   refreshUserToken: () => Promise<void>
 }
 //set auth and current user as a context api to be called by other funcs
 export const AuthContext = createContext<FirebaseContextProps>({
   auth: auth,
+  userLoading: true,
   currentUser: null,
+  tokenLoading: true,
   isAdmin: false,
   refreshUserToken: async () => undefined
 })

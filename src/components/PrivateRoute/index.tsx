@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { useRouter } from 'next/router'
 
 import { useAuth } from '@/context/Firebase/Auth/context'
@@ -27,4 +28,21 @@ export const withProtected = (Component: NextPageWithLayout) => {
     return <Component {...props} />
   }
   return PrivateComponent as NextPageWithLayout
+}
+
+export const withAdmin = (Component: NextPageWithLayout) => {
+  const AdminComponent = (props: object) => {
+    const { currentUser, userLoading, tokenLoading, isAdmin } = useAuth()
+    const router = useRouter()
+    useEffect(() => {
+      if (!userLoading && currentUser === null) {
+        router.push('/signin')
+      }
+      if (!tokenLoading && !isAdmin) {
+        router.push('/')
+      }
+    }, [currentUser, router, userLoading, tokenLoading, isAdmin])
+    return <>{isAdmin && <Component {...props} />}</>
+  }
+  return AdminComponent as NextPageWithLayout
 }

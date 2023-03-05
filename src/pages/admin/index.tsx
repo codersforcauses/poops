@@ -1,10 +1,12 @@
-import { useCallback, useEffect, useState } from 'react'
+import { ReactElement, useCallback, useEffect, useState } from 'react'
 import Router from 'next/router'
 import { doc, DocumentData, getDoc } from '@firebase/firestore'
 
 import { db } from '@/components/Firebase/init'
 import Header from '@/components/Header'
+import Layout from '@/components/Layout'
 import NavBar from '@/components/NavBar'
+import { withAdmin } from '@/components/PrivateRoute'
 import Button from '@/components/UI/button'
 import { useAuth } from '@/context/Firebase/Auth/context'
 
@@ -89,4 +91,10 @@ const Admin = () => {
   )
 }
 
-export default Admin
+const AdminWithProtected = withAdmin(Admin)
+
+AdminWithProtected.getLayout = (page: ReactElement) => (
+  <Layout title='Admin'>{page}</Layout>
+)
+
+export default AdminWithProtected

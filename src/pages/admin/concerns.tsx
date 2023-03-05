@@ -1,13 +1,16 @@
+import { ReactElement } from 'react'
 import { useRouter } from 'next/router'
 
 import ConcernsCard from '@/components/Admin/concernscard'
 import Header from '@/components/Header'
+import Layout from '@/components/Layout'
 import NavBar from '@/components/NavBar'
+import { withAdmin } from '@/components/PrivateRoute'
 import Button from '@/components/UI/button'
 import { useVetConcerns } from '@/hooks/vetconcerns'
 import { Status, VetConcern } from '@/types/types'
 
-const Output = () => {
+const VetConcerns = () => {
   const { data: concerns } = useVetConcerns()
   const router = useRouter()
 
@@ -44,4 +47,10 @@ const Output = () => {
   )
 }
 
-export default Output
+const VetConcernsWithProtected = withAdmin(VetConcerns)
+
+VetConcernsWithProtected.getLayout = (page: ReactElement) => (
+  <Layout title='Vet Concerns'>{page}</Layout>
+)
+
+export default VetConcernsWithProtected
