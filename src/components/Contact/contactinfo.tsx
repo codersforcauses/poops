@@ -37,7 +37,7 @@ function ContactInfo({ contact, mutate }: ContactFormProps) {
     : `/profile/edit`
 
   return (
-    <div className='container flex flex-col items-center justify-center gap-4 pb-24'>
+    <div className='container mx-auto flex flex-col items-center justify-center gap-4 pb-24'>
       <div className='flex w-full flex-col items-center justify-center gap-2 p-8 pb-2'>
         <NavButtons editRoute={editRoute} />
         <Avatar
