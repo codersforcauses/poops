@@ -1,15 +1,20 @@
 import { NextPage } from 'next'
+import { useRouter } from 'next/dist/client/router'
 import Image from 'next/image'
 
 import { withProtected } from '@/components/PrivateRoute'
-import UpdateDetailsPanel from '@/components/UpdateDetails/UpdateDetailsPanel'
+import UpdateDetailsForm from '@/components/SignupDetails/UpdateDetailsForm'
 import { useAuth } from '@/context/Firebase/Auth/context'
 import useUser from '@/hooks/user'
 
 const SignupDetails: NextPage = () => {
+  const router = useRouter()
   const { logOut } = useAuth()
-  const { data: currentUser } = useUser()
-  if (currentUser === undefined) return null
+  const { data: user } = useUser()
+
+  if (user?.info.name && user?.info.email && user?.info.phone) {
+    router.replace('/')
+  }
 
   return (
     <div className='flex h-screen w-screen animate-text flex-col items-center justify-center bg-gradient-to-b from-zinc-200 via-zinc-100 to-white'>
@@ -20,8 +25,8 @@ const SignupDetails: NextPage = () => {
         <span className='text-3xl'>&larr;</span>
       </button>
 
-      <div className='text-center'>
-        <div className='m-auto max-w-sm pb-2'>
+      <div>
+        <div className='m-auto max-w-sm pb-4'>
           <Image
             src='/images/poops-logo-transparent.png'
             width={36}
@@ -31,10 +36,9 @@ const SignupDetails: NextPage = () => {
             className='rounded-full'
           />
         </div>
-
-        <div className='pb-2 text-xl font-bold'>Welcome, New User!</div>
+        <div className='text-center text-xl font-bold'>Welcome, New User!</div>
+        <UpdateDetailsForm />
       </div>
-      <UpdateDetailsPanel contact={currentUser.info} />
     </div>
   )
 }

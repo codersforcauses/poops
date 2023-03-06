@@ -48,10 +48,16 @@ export const useUser = () => {
       }
 
       const rawData = userDocSnap.data() as User
-      const userData = userSchema.parse(rawData)
-      if (!(userData.info.email && userData.info.phone && userData.info.name)) {
+      if (!(rawData.info.email && rawData.info.phone && rawData.info.name)) {
         router.replace('/signupDetails')
       }
+
+      /*
+       * this throws and kills the hook if the data is not valid
+       * (i.e. when signing in with phone, there is no email)
+       * so we need to redirect beforehand
+       */
+      const userData = userSchema.parse(rawData)
       return { ...userData, info: { ...userData.info, docId: 'USER' } } as User
     }
   }
