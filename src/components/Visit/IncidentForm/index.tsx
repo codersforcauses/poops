@@ -7,6 +7,7 @@ import Form from '@/components/UI/FormComponents/Form'
 import TextField from '@/components/UI/FormComponents/TextField'
 import validationSchema from '@/components/Visit/IncidentForm/validation'
 import { useAuth } from '@/context/Firebase/Auth/context'
+import sendEmail from '@/hooks/email'
 import { useMutateIncidents } from '@/hooks/incidents'
 import { Incident, Status } from '@/types/types'
 import { formatTimestamp } from '@/utils'
@@ -61,18 +62,12 @@ const IncidentForm = (props: IncidentFormProps) => {
         visitTime: props.visitTime,
         status: Status.unresolved
       }
-
-      mutateIncidents(data)
-
       const message = {
         subject: 'Incident Report',
         text: formatIncident(data)
       }
-      await fetch('/api/sendEmail', {
-        method: 'POST',
-        body: JSON.stringify(message)
-      })
-
+      mutateIncidents(data)
+      await sendEmail(message)
       router.push('/visit')
     }
   }

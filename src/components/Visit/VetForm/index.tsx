@@ -7,6 +7,7 @@ import Form from '@/components/UI/FormComponents/Form'
 import TextField from '@/components/UI/FormComponents/TextField'
 import validationSchema from '@/components/Visit/VetForm/validation'
 import { useAuth } from '@/context/Firebase/Auth/context'
+import sendEmail from '@/hooks/email'
 import { useMutateVetConcerns } from '@/hooks/vetconcerns'
 import { Status, VetConcern } from '@/types/types'
 import { formatTimestamp } from '@/utils'
@@ -61,18 +62,12 @@ const VetForm = (props: VetFormProps) => {
         createdAt: Timestamp.fromDate(new Date()),
         status: Status.unresolved
       }
-
-      mutateVetConcerns(data)
-
       const message = {
         subject: 'Vet Concerns Report',
         text: formatIncident(data)
       }
-      await fetch('/api/sendEmail', {
-        method: 'POST',
-        body: JSON.stringify(message)
-      })
-
+      mutateVetConcerns(data)
+      await sendEmail(message)
       router.push('/visit')
     }
   }

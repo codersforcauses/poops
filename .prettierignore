@@ -38,7 +38,7 @@ yarn-error.log*
 CHANGELOG.md
 
 # firebase ts build
-/firebase/lib
+/firebase/functions/lib
 
 # next-pwa
 public/

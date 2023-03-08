@@ -78,18 +78,28 @@ service cloud.firestore {
   function isValidIncident(data) {
     return
       data.size() == 11 &&
-        data.userId is string &&
         data.userName is string &&
-        data.clientName is string &&
-        data.visitId is string &&
-        data.visitTime is timestamp &&
         data.email is string &&
         data.petName is string &&
-        data.time is timestamp &&
         data.details is string &&
+        data.clientName is string &&
         data.createdAt is timestamp &&
+        data.time is timestamp &&
+        data.userId is string &&
+        data.visitId is string &&
+        data.visitTime is timestamp &&
         data.status is string;
   }
+
+  function isValidEmail(data) {
+    return
+      data.size() == 2 &&
+        data.to is string &&
+        data.message.size() == 2 &&
+          data.message.subject is string &&
+          data.message.text is string
+  }
+
   match /databases/{database}/documents {
     match /users/{userId} {
       match /contacts/{visitId} {
@@ -118,7 +128,7 @@ service cloud.firestore {
       allow read: if isAdmin();
     }
 
-    match /incidents/{document=**} {
+    match /incidents/{incidentId} {
       allow create: if isSignIn() && isValidIncident(request.resource.data);
       allow read, update, delete: if isAdmin();
     }
@@ -128,9 +138,14 @@ service cloud.firestore {
       allow write: if false;
     }
 
-    match /vet_concerns/{concern} {
+    match /vet_concerns/{concernId} {
       allow create: if isSignIn() && isValidVetConcern(request.resource.data);
       allow read, update, delete: if isAdmin();
+    }
+
+    match /mail/{emailId}{
+      allow create: if isSignIn() && isValidEmail(request.resource.data);
+      allow read, update, delete: if false;
     }
   }
 }
