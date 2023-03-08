@@ -36,7 +36,7 @@ export const withAdmin = (Component: NextPageWithLayout) => {
     const router = useRouter()
     useEffect(() => {
       if (!userLoading && currentUser === null) {
-        router.push('/signin')
+        router.push('/login')
       }
       if (!tokenLoading && !isAdmin) {
         router.push('/')
