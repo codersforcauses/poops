@@ -7,6 +7,9 @@ const WHITELISTED_DOMAINS = ['poopswa.org.au']
 interface Role {
   role: string
   createdAt: Timestamp
+  userId: string
+  userName: string
+  userEmail: string
 }
 
 /**
@@ -26,7 +29,13 @@ export const addAdmin = functions
         claims[role] = true
         await auth.setCustomUserClaims(userId, claims)
 
-        const newRole: Role = { role: 'Admin', createdAt: Timestamp.now() }
+        const newRole: Role = {
+          role: 'Admin',
+          createdAt: Timestamp.now(),
+          userId,
+          userName: user.displayName ?? '',
+          userEmail: user.email
+        }
         await firestore.collection('roles').doc(userId).set(newRole)
 
         break
