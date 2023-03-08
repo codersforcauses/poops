@@ -39,7 +39,7 @@ const visitSchema = z.object({
 })
 
 const vetConcernSchema = z.object({
-  userId: z.string().uuid(),
+  userId: z.string(),
   userName: z.string(),
   userEmail: z.string().email(),
   userPhone: z.string(),
@@ -47,22 +47,26 @@ const vetConcernSchema = z.object({
   petName: z.string(),
   vetName: z.string(),
   visitTime: z.instanceof(Timestamp),
-  visitId: z.string().uuid(),
+  visitId: z.string(),
   detail: z.string(),
-  createdAt: z.instanceof(Timestamp)
+  createdAt: z.instanceof(Timestamp),
+  status: z.union([z.literal('resolved'), z.literal('unresolved')]),
+  imageUrl: z.string().url().optional()
 })
 
 const incidentSchema = z.object({
-  userId: z.string().uuid(),
+  userId: z.string(),
   userName: z.string().nullish(),
-  visitId: z.string().uuid(),
+  visitId: z.string(),
   visitTime: z.instanceof(Timestamp),
   clientName: z.string(),
   email: z.string().email().nullish(),
   petName: z.string(),
   time: z.instanceof(Timestamp),
   details: z.string(),
-  createdAt: z.instanceof(Timestamp)
+  createdAt: z.instanceof(Timestamp),
+  status: z.union([z.literal('resolved'), z.literal('unresolved')]),
+  imageUrl: z.string().url().optional()
 })
 
 const volunteerStatsSchema = z.object({

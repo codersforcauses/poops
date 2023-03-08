@@ -5,8 +5,7 @@ export const padNumber = (value: number) => {
 }
 
 // Returns YYYY-MM-DDTHH:mm for select option values
-export const formatTimestamp = (timestamp?: Timestamp) => {
-  if (!timestamp) return null
+export const formatTimestamp = (timestamp: Timestamp) => {
   const date = timestamp.toDate()
   return `${date.getFullYear()}-${padNumber(date.getMonth() + 1)}-${padNumber(
     date.getDate()

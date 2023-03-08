@@ -47,6 +47,7 @@ export interface VetConcern {
   visitId: string
   detail: string
   createdAt: Timestamp
+  imageUrl?: string
 }
 
 export interface UserStat {
@@ -84,6 +85,7 @@ export type Incident = {
   time: Timestamp
   details: string
   createdAt: Timestamp
+  imageUrl?: string
 }
 
 export type VolunteerStats = {

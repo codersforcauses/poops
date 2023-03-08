@@ -1,3 +1,5 @@
+import Image from 'next/image'
+
 import Button from '@/components/UI/button'
 import { AlertVariant, useAlert } from '@/context/AlertContext'
 import { useMutateIncidents } from '@/hooks/incidents'
@@ -38,6 +40,16 @@ const IncidentCard = (props: Incident) => {
         <div>Client: {props.clientName}</div>
         <div>Pet: {props.petName}</div>
         <div>{props.details}</div>
+        {props?.imageUrl && (
+          <Image
+            src={props.imageUrl}
+            alt='Uploaded Photo'
+            width={300}
+            height={300}
+            layout='responsive'
+            objectFit='contain'
+          />
+        )}
       </div>
       <div className='flex justify-around'>
         <Button onClick={handleResolve}>Mark as Resolved</Button>

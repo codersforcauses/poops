@@ -58,26 +58,47 @@ service cloud.firestore {
       data.notes is string;
   }
 
+  function checkImageUrl(data) {
+    return data.imageUrl is string || data.imageUrl == null;
+  }
+
   function isValidVetConcern(data) {
     return
-      data.size() == 12 &&
-      data.clientName is string &&
-      data.createdAt is timestamp &&
-      data.detail is string &&
-      data.petName is string &&
-      data.userEmail is string &&
-      data.userId is string &&
-      data.userName is string &&
-      data.userPhone is string &&
-      data.vetName is string &&
-      data.visitId is string &&
-      data.visitTime is timestamp && 
-      data.status is string;
+      (
+        data.size() == 12 &&
+        data.clientName is string &&
+        data.createdAt is timestamp &&
+        data.detail is string &&
+        data.petName is string &&
+        data.userEmail is string &&
+        data.userId is string &&
+        data.userName is string &&
+        data.userPhone is string &&
+        data.vetName is string &&
+        data.visitId is string &&
+        data.visitTime is timestamp && 
+        data.status is string) 
+        ||
+      ( data.size() == 13 &&
+        data.clientName is string &&
+        data.createdAt is timestamp &&
+        data.detail is string &&
+        data.petName is string &&
+        data.userEmail is string &&
+        data.userId is string &&
+        data.userName is string &&
+        data.userPhone is string &&
+        data.vetName is string &&
+        data.visitId is string &&
+        data.visitTime is timestamp && 
+        data.status is string &&
+        checkImageUrl(data)) ;
   }
 
   function isValidIncident(data) {
     return
-      data.size() == 11 &&
+      (
+        data.size() == 11 &&
         data.userName is string &&
         data.email is string &&
         data.petName is string &&
@@ -88,17 +109,41 @@ service cloud.firestore {
         data.userId is string &&
         data.visitId is string &&
         data.visitTime is timestamp &&
-        data.status is string;
+        data.status is string) 
+        ||
+      ( data.size() == 12 &&
+        data.userName is string &&
+        data.email is string &&
+        data.petName is string &&
+        data.details is string &&
+        data.clientName is string &&
+        data.createdAt is timestamp &&
+        data.time is timestamp &&
+        data.userId is string &&
+        data.visitId is string &&
+        data.visitTime is timestamp &&
+        data.status is string &&
+        checkImageUrl(data));
   }
 
   function isValidEmail(data) {
     return
-      data.size() == 2 &&
+      (data.size() == 2 &&
         data.to is string &&
         data.message.size() == 2 &&
           data.message.subject is string &&
-          data.message.text is string
-  }
+          data.message.text is string) ||
+      (data.size() == 2 &&
+        data.to is string &&
+        data.message.size() == 3 &&
+          data.message.subject is string &&
+          data.message.text is string &&
+          data.message.attachments is list &&
+          data.message.attachments.size() == 1 &&
+          data.message.attachments[0].size() == 2 &&
+          data.message.attachments[0].filename is string &&
+          data.message.attachments[0].path is string);
+    }
 
   match /databases/{database}/documents {
     match /users/{userId} {
