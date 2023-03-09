@@ -22,8 +22,9 @@ import {
 
 export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
   const [currentUser, setCurrentUser] = useState<User | null>(null)
-  const [loading, setLoading] = useState(true)
+  const [userLoading, setUserLoading] = useState(true)
   const [isAdmin, setIsAdmin] = useState(false)
+  const [tokenLoading, setTokenLoading] = useState(true)
 
   const externalAuthSignIn = async (auth: Auth, provider: AuthProvider) => {
     try {
@@ -86,7 +87,7 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       setCurrentUser(user)
-      setLoading(false)
+      setUserLoading(false)
     })
     return () => unsubscribe()
   }, [])
@@ -95,6 +96,7 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
     if (currentUser) {
       const token = await currentUser.getIdTokenResult(true)
       setIsAdmin(token.claims.admin ?? false)
+      setTokenLoading(false)
     }
   }, [currentUser])
 
@@ -110,14 +112,16 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
     linkAuthProvider,
     externalAuthSignIn,
     logOut,
+    userLoading,
     currentUser,
     isAdmin,
+    tokenLoading,
     refreshUserToken
   }
 
   return (
     <AuthContext.Provider value={value}>
-      {!loading && children}
+      {!userLoading && children}
     </AuthContext.Provider>
   )
 }

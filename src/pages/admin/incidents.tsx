@@ -1,13 +1,16 @@
+import { ReactElement } from 'react'
 import { useRouter } from 'next/router'
 
 import IncidentCard from '@/components/Admin/incidentcard'
 import Header from '@/components/Header'
+import Layout from '@/components/Layout'
 import NavBar from '@/components/NavBar'
+import { withAdmin } from '@/components/PrivateRoute'
 import Button from '@/components/UI/button'
 import { useIncidents } from '@/hooks/incidents'
 import { Incident, Status } from '@/types/types'
 
-const AdminIncidents = () => {
+const Incidents = () => {
   const { data: incidents } = useIncidents()
   const router = useRouter()
 
@@ -44,4 +47,10 @@ const AdminIncidents = () => {
   )
 }
 
-export default AdminIncidents
+const IncidentsWithProtected = withAdmin(Incidents)
+
+IncidentsWithProtected.getLayout = (page: ReactElement) => (
+  <Layout title='Incidents'>{page}</Layout>
+)
+
+export default IncidentsWithProtected
