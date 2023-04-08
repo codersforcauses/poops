@@ -57,6 +57,34 @@ A custom hook to access the current user's contacts.
 const { data: contacts, isError, isLoading, ... } = useContacts()
 ```
 
+#### useVolunteerStatsByDateRange()
+
+A custom hook for admins to access the stats of volunteers.
+
+```tsx
+const { data: volunteerStats, isError, isLoading, ... } = useVolunteerStatsByDateRange(
+                                                            queryKey: string,
+                                                            startTime: Timestamp,
+                                                            endTime: Timestamp
+                                                          )
+```
+
+#### useVetConcerns()
+
+A custom hook for admins to view the vet conerns.
+
+```tsx
+const { data: vetConcerns, isError, isLoading, ... } = useVetConcerns()
+```
+
+#### useIncidents()
+
+A custom hook for admins to view the incidents.
+
+```tsx
+const { data: incidents, isError, isLoading, ... } = useIncidents()
+```
+
 ### Data Mutation
 
 Create, update, and delete actions all mutate the server state in some way, and are handled separately to data fetching. The data mutation hooks behave slighltly differently to the data fetching hooks. In addition to passing a database query to React Query, they also pass an onSuccess function which will, on a successful return from the database, invalidate the client state so that the new server state is fetched by the client.
@@ -147,4 +175,32 @@ mutateContacts({
   docId: 'some UUID from firestore here',
   deleteDoc: true
 })
+```
+
+#### useMutateVetConcerns()
+
+A custom hook for user to report a vet concern and for admins to resolve a vet concern.
+
+```tsx
+const { mutate: mutateVetConcerns, ... } = useMutateVetConcerns()
+```
+
+To resolve a vet concern.
+
+```tsx
+mutateVetConcerns({ ...vetConcerns, status: Status.resolved })
+```
+
+#### useMutateIncidents()
+
+A custom hook for user to report an incident and for admins to resolve an incident.
+
+```tsx
+const { mutate: mutateIncidents, ... } = useMutateIncidents()
+```
+
+To resolve an incident.
+
+```tsx
+mutateIncidents({ ...incident, status: Status.resolved })
 ```
