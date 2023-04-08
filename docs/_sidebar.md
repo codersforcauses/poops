@@ -19,12 +19,17 @@
       - [useUser()](custom_hooks.md#useuser)
       - [useVisits()](custom_hooks.md#usevisits)
       - [useContacts()](custom_hooks.md#usecontacts)
+      - [useVolunteerStatsByDateRange()](custom_hooks.md#usevolunteerstatsbydaterange)
+      - [useVetConcerns()](custom_hooks.md#usevetconcerns)
+      - [useIncidents()](custom_hooks.md#useincidents)
 
     - useMutation
 
       - [useMutateUser()](custom_hooks.md#usemutateuser)
       - [useMutateVisits()](custom_hooks.md#usemutatevisits)
       - [useMutateContacts()](custom_hooks.md#usemutatecontacts)
+      - [useMutateVetConcerns()](custom_hooks.md#usemutatevetconcerns)
+      - [useMutateIncidents()](custom_hooks.md#usemutateincidents)
 
 - Firebase Setup
 
@@ -33,7 +38,6 @@
     - [Sign-in Methods](firebase_setup.md#sign-in-methods)
   - [Firestore](firebase_setup.md#step-5-set-up-firestore)
   - [Functions](firebase_setup.md#step-6-set-up-firebase-functions)
-    - [Billing Killswitch](billing_killswitch.md)
 
 - Firestore
 
@@ -43,8 +47,9 @@
 
 - Firebase Functions and Extensions
 
-  - [Trigger Email](functions.md#trigger-email)
-  - [Billing Killswitch](functions.md#billing-killswitch)
-  - [Visit Trigger](functions.md#visit-trigger)
+  - [Trigger Email](extensions.md)
+  - [Billing Killswitch](billing_killswitch.md)
+  - [Add Admin](functions.md)
+  - [Update Visit Trigger](functions.md)
 
 - Testing
